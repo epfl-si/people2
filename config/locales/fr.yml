@@ -47,6 +47,10 @@ fr:
       free: Notes on publications
       infoscience: EPFL Infoscience
       people: Other Publications
+  semester:
+    ete: été
+    hiver: hiver
+    undef: indéfini
   student:
     female: Etudiante
     male: Etudiant

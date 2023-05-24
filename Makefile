@@ -41,6 +41,10 @@ fulldown:
 down: 
 	docker-compose -f $(COMPOSE) down
 
+reload:
+	docker-compose -f $(COMPOSE) stop webapp
+	docker compose -f $(COMPOSE) up -d	
+
 logs:
 	docker-compose -f $(COMPOSE) logs -f
 

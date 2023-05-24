@@ -36,7 +36,7 @@ class Legacy::Person < Legacy::BaseDinfo
       adh = address_by_unit
       phh = phones_by_unit
       prh = prefs_by_unit
-      self.accreds.all.map do |a| 
+      self.accreds.all.map do |a|
         uid=a.unit_id
         aa = a.attributes.merge({address: adh[uid], phones: phh[uid], prefs: prh[uid]})
         Legacy::Affiliation.new(aa)
@@ -65,81 +65,6 @@ class Legacy::Person < Legacy::BaseDinfo
 
   def prefs_by_unit
     @prefs_by_unit ||= self.accred_prefs.all.each_with_object({}) {|v, h| h[v.unit_id] = v}
-  end
-
-  # def address
-  #   self.affiliations.first.address
-  # end
-
-  # def phone
-  #   atela.phone
-  # end
-
-  # def room 
-  #   atela.room
-  # end
-
-
-
-  # def affiliations
-  #   accreds.map{|a| Legacy::Affiliation.new(a, atela.accreds[a.unitid], sex)}
-  # end
-
-  # def atela
-  #   @atela ||= Atela::Person.new(self.sciper)
-  # end
-
-
-# # {
-#   "address"=>{
-#     "adr"=>"EPFL SI IDEV-FSD $ INN 012 (Bâtiment INN) $ Station 14 $ CH-1015 Lausanne", 
-#     "cmd_id"=>796438, 
-#     "line1"=>"EPFL SI IDEV-FSD", 
-#     "line2"=>"INN 012 (Bâtiment INN)", 
-#     "line3"=>"Station 14", 
-#     "line4"=>"CH-1015 Lausanne", 
-#     "line5"=>"", 
-#     "pays"=>"Suisse", 
-#     "pers_id"=>121769, 
-#     "room_unit_id"=>"", 
-#     "type"=>"custom", 
-#     "type_related_id"=>"0", 
-#     "unit_id"=>13030, 
-#     "valid_from"=>"2021-08-11 09:13:17", 
-#     "valid_to"=>"", 
-#     "value"=>"EPFL SI IDEV-FSD $ INN 012 (Bâtiment INN) $ Station 14 $ CH-1015 Lausanne"
-#   }, 
-#   "hierarchie"=>"EPFL VPO-SI ISAS ISAS-FSD", 
-#   "ordre"=>1, 
-#   "phones"=>[
-#     {
-#       "from_default"=>"true", 
-#       "other_room"=>"", 
-#       "outgoing_right"=>"NATIONAL", 
-#       "phone_hidden"=>"0", 
-#       "phone_id"=>3971, 
-#       "phone_nb"=>"+41216937526", 
-#       "phone_order"=>1, 
-#       "phone_type"=>"FIXE_OFFICE", 
-#       "room_id"=>""
-#     }
-#   ], 
-#   "rooms"=>[
-#     {
-#       "description"=>"Bureau", 
-#       "from_default"=>"true", 
-#       "room_abr"=>"INN 014", 
-#       "room_hidden"=>"0", 
-#       "room_id"=>31559, 
-#       "room_order"=>1, 
-#       "type"=>"internal"
-#     }
-#   ], 
-#   "sigle"=>"ISAS-FSD"
-# }
-
-  def contact(unit_id)
-
   end
 
   def birthday

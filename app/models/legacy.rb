@@ -53,4 +53,9 @@ module Legacy
     end
   end
 
+  class BaseIsa < LegacyBase
+    self.abstract_class = true
+    establish_connection :isa
+  end
+
 end

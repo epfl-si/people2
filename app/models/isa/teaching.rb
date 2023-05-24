@@ -154,17 +154,21 @@ class Isa::Teaching
 
  private
 
-  # TODO: this is for the tmp version coming from the old people
   def load_courses(sciper)
-    data = IsaCourseGetter.call(sciper)
-    return nil if data.nil?
-    return nil unless data.key?('bycours')
-    return nil unless data['bycours']
-    res = []
-    data['bycours'].each do |s|
-      res.concat s['coursLoop'] if s.key?('coursLoop')
+    if Rails.configuration.isa_use_oracle
+      Legacy::IsaCours.for_sciper(sciper)
+    else
+      # TODO: this is for the tmp version coming from the old people
+      data = IsaCourseGetter.call(sciper)
+      return nil if data.nil?
+      return nil unless data.key?('bycours')
+      return nil unless data['bycours']
+      res = []
+      data['bycours'].each do |s|
+        res.concat s['coursLoop'] if s.key?('coursLoop')
+      end
+      return res.map{|c| Isa::Course.new(c)}
     end
-    return res.map{|c| Isa::Course.new(c)}
   end
 
   def load_ta(sciper)

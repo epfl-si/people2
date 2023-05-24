@@ -12,10 +12,9 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
 gem "mysql2"
-# TODO: for oracle to work the oracle client have to be present. As far as I
-#       understand it needs to be downloaded as binary from oracle. 
-#       Usual commercial software shit. 
-# gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
+
+# Note: Tim is writing an API for ISA. Therefore we might be able to get rid of this
+gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

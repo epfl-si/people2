@@ -26,6 +26,8 @@ module HelloRails
       SprocketsRequireInGemExtension::inject_for_javascript(env)
     end
 
+    # config.middleware.use Rack::Locale
+
     # This is a cookie-free Web app!
     config.middleware.delete ActionDispatch::Cookies
     config.middleware.delete ActionDispatch::Session::CookieStore
@@ -47,6 +49,7 @@ module HelloRails
     config.isa_no_check_ssl = ENV.fetch("ISA_NO_CHECK_SSL", false)
     config.intranet_re = Regexp.new(ENV.fetch("INTRANET_RE", '^128\.17[89]'))
     config.official_url = ENV.fetch("OFFICIAL_URL", "https://people.epfl.ch")
+    config.isa_use_oracle = ENV.fetch("ISA_USE_ORACLE", true)
 
   end
 end

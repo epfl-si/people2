@@ -1,4 +1,4 @@
-# SQLite. Versions 3.8.0 and up are supported.
+ # SQLite. Versions 3.8.0 and up are supported.
 #   gem install sqlite3
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
@@ -30,6 +30,33 @@ production:
   database: people
 
 # ---------------------------------------------------------- External/Legacy DBs
+
+isa:
+  adapter: oracle_enhanced
+  host: host.docker.internal
+  port: 50315
+  database: AGAP
+  username: people
+  password: <%= ENV['ORACOURS_PWD'] %> 
+
+# isa:
+#   adapter: oracle_enhanced
+#   database: "(DESCRIPTION=
+#     (FAILOVER=true)
+#     (ADDRESS=(PROTOCOL=TCP)(HOST=host.docker.internal)(PORT=50315))
+#     (CONNECT_DATA=
+#       (FAILOVER_MODE=
+#         (TYPE=select)
+#         (METHOD=basic)
+#         (RETRIES=600)
+#         (DELAY=1)
+#       )
+#       (SERVICE_NAME=AGAP)
+#     )
+#   )"
+#   username: people
+#   password: <%= ENV['ORACOURS_PWD'] %> 
+
 legacy_dev_default: &legacy_dev 
   adapter: mysql2
   host: mariadb
