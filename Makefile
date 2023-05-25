@@ -22,8 +22,7 @@ codecheck:
 kup:
 	KILLPID=1 docker-compose -f $(COMPOSE) up -d
 
-up:
-	docker compose -f $(COMPOSE) up -d
+up: tunnel_up dcup
 
 dcup:
 	docker-compose -f $(COMPOSE) up --no-recreate -d 
@@ -38,7 +37,8 @@ fulldown:
 	docker-compose --profile test -f $(COMPOSE) down
 	docker-compose --profile kc   -f $(COMPOSE) down
 	docker-compose -f $(COMPOSE) down
-down: 
+
+down: tunnel_down
 	docker-compose -f $(COMPOSE) down
 
 reload:
@@ -78,6 +78,16 @@ cacheon:
 
 cacheoff:
 	docker-compose -f $(COMPOSE) exec webapp rm -f tmp/caching-dev.txt	
+
+# ------------------------------------------------------------------- ssh tunnel
+.PHONY: tunnel_up tunnel_down
+
+tunnel_up:
+	./bin/tunnel.sh -m local start
+
+tunnel_down:
+	./bin/tunnel.sh -m local stop
+
 
 # setup_kc: dcup
 # 	sleep 10
