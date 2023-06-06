@@ -5,6 +5,8 @@ set -e
 COMPOSE="${COMPOSE:-docker-compose.yml}"
 DATASRC="${DATASRC:-peo1}"
 
+DUMPDIR="${DUMPDIR:-tmp/dbdumps}"
+
 ACCRED_TABLES="accreds accreds_properties classes deputations guests positions properties properties_units properties_status properties_classes rights rights_classes rights_persons rights_roles rights_statuses rights_units roles_persons statuses"
 BOTTIN_TABLES="annuaire_adrspost annuaire_persons annuaire_persphones annuaire_persrooms annuaire_phones rooms"
 CADI_TABLES="DBClients Manco WSAppsCallers WSAppsHosts WSClients WSServices batch_executions batch_params champs config datafields datatypes dbs delegates eventstypes filters operations pendingnotifications providers resources resources_types subscriptions tbls"
@@ -57,7 +59,9 @@ restore() {
 	u="$(db_secret $db 4)"
 	p="$(db_secret $db 5)"
 
-	dumpfile=${db}_dump.sql.gz
+	[ -d $DUMPDIR ] || mkdir -p $DUMPDIR
+
+	dumpfile=$DUMPDIR/${db}_dump.sql.gz
 
 	# dump="mysqldump -h $h -u $u -p'$p' $db $tables | gzip"
 	# ssh -C $DATASRC "mysqldump -h $h -u $u -p'$p' $db $tables | gzip"

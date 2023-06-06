@@ -21,7 +21,7 @@ boxes and three special cases:
 5. The `profresearch` table is full of interesting infos but, for some reason, it is no longer editable and only used as a fallback for awards when those are not present.
 
 Boxes are divided in blocks
- - Contacg block (pos K)
+ - Contact block (pos K)
  - Biography block (pos B) also includes Education and Professional Course
  - Publication block (pos P)
  - Research block (pos R)
@@ -105,3 +105,7 @@ sub initBoxes {
   }
 }
 ```
+
+## Importing boxes
+Boxes contain all sort of crap. It will be hard to auto-migrate. 
+I think we should do it by hand (e.g. @ SDF) and only for currently active people.
