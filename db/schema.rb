@@ -63,8 +63,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
     t.string "locale", default: "fr"
     t.string "title", null: false
     t.boolean "show_title", default: true
-    t.boolean "frozen_title", default: false
-    t.boolean "visible", default: false
+    t.boolean "frozen", default: false
+    t.string "kind", default: "user"
+    t.boolean "visible", default: true
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -74,12 +75,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
 
   create_table "cvs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "sciper"
-    t.boolean "show_bio"
     t.boolean "show_birthday"
-    t.boolean "show_curriculum"
-    t.boolean "show_expertise"
-    t.boolean "show_education"
-    t.boolean "show_mission"
+    t.boolean "show_function"
     t.boolean "show_nationality"
     t.boolean "show_phone"
     t.boolean "show_photo"
@@ -103,6 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
 
   create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "section_id", null: false
+    t.string "label"
     t.string "locale", default: "fr"
     t.string "title", null: false
     t.boolean "show_title", default: true

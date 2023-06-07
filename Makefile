@@ -110,9 +110,9 @@ seed: migrate
 SQL=docker-compose -f $(COMPOSE) exec -T mariadb mysql -u root --password=mariadb
 reseed:
 	echo "DROP DATABASE people" | $(SQL)
-	sleep 5
+	sleep 2
 	echo "CREATE DATABASE people;" | $(SQL)
-	sleep 5
+	sleep 2
 	make seed
 
 # -------------------------------------------------- restore legacy DB from prod

@@ -1,9 +1,8 @@
 class Cv < ApplicationRecord
   include Translatable
   translates :nationality
-  has_translated_rich_text :curriculum, :expertise, :mission
 
-  has_many :boxes,  :class_name => "box",   :foreign_key => "reference_id"
+  has_many :boxes,  :class_name => "Box"
 
   def sciper
     self.id
@@ -12,4 +11,14 @@ class Cv < ApplicationRecord
   def sciper=(v)
     self.id=(v.to_i)
   end
+
+  def init_boxes!
+    return unless self.boxes.empty?
+    ModelBox.all.each do |mb|
+      b = Box.from_model(mb)
+      b.cv = self
+      b.save
+    end
+  end
+
 end

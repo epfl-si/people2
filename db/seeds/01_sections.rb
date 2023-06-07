@@ -11,8 +11,9 @@ def seed_sections
         LANGS.each do |l|
           s.model_boxes.create({
             locale: l,
+            label: b["label"],
             title: b["title_#{l}"],
-            show_title: b["show_title"]
+            show_title: b["show_title"],
           })
         end
       end
