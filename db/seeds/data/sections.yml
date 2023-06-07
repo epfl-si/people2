@@ -1,0 +1,36 @@
+---
+sections:
+  - title_en: "Contact"
+    title_fr: "Contact"
+    show_title: false
+    create_allowed: true
+  - title_en: "Biography"
+    title_fr: "Biographie"
+    show_title: false
+    create_allowed: true
+    model_boxes:
+      - title_en: "Biography"
+        title_fr: "Biographie"
+        show_title: false
+      - title_en: "Education"
+        title_fr: "Education"
+        show_title: true
+      - title_en: "Mission"
+        title_fr: "Mission"
+        show_title: true
+  - title_en: "Publications"
+    title_fr: "Publications"
+    show_title: true
+    create_allowed: true
+    model_boxes:
+      - title_en: "Selected Publications"
+        title_fr: "Publications Representatives"
+        show_title: true
+  - title_en: "Research"
+    title_fr: "Recherche"
+    show_title: true
+    create_allowed: true
+  - title_en: "Teaching"
+    title_fr: "Enseignement"
+    show_title: true
+    create_allowed: true

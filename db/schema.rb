@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_06_144939) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -57,6 +57,40 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144939) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "cv_id", null: false
+    t.bigint "section_id", null: false
+    t.string "locale", default: "fr"
+    t.string "title", null: false
+    t.boolean "show_title", default: true
+    t.boolean "frozen_title", default: false
+    t.boolean "visible", default: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cv_id"], name: "index_boxes_on_cv_id"
+    t.index ["section_id"], name: "index_boxes_on_section_id"
+  end
+
+  create_table "cvs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "sciper"
+    t.boolean "show_bio"
+    t.boolean "show_birthday"
+    t.boolean "show_curriculum"
+    t.boolean "show_expertise"
+    t.boolean "show_education"
+    t.boolean "show_mission"
+    t.boolean "show_nationality"
+    t.boolean "show_phone"
+    t.boolean "show_photo"
+    t.string "personal_web_url"
+    t.string "nationality_en"
+    t.string "nationality_fr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sciper"], name: "unique_emails", unique: true
+  end
+
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -67,7 +101,41 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144939) do
     t.index ["artist_id"], name: "index_items_on_artist_id"
   end
 
+  create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "section_id", null: false
+    t.string "locale", default: "fr"
+    t.string "title", null: false
+    t.boolean "show_title", default: true
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_model_boxes_on_section_id"
+  end
+
+  create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "title_en"
+    t.string "title_fr"
+    t.integer "position"
+    t.boolean "show_title"
+    t.boolean "create_allowed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "item_type", limit: 191, null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object", size: :long
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "boxes", "cvs"
+  add_foreign_key "boxes", "sections"
   add_foreign_key "items", "artists"
+  add_foreign_key "model_boxes", "sections"
 end

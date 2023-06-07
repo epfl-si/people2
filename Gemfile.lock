@@ -54,6 +54,10 @@ GEM
     activerecord (7.0.4.3)
       activemodel (= 7.0.4.3)
       activesupport (= 7.0.4.3)
+    activerecord-oracle_enhanced-adapter (7.0.2)
+      activerecord (~> 7.0.0)
+      ruby-oci8
+      ruby-plsql (>= 0.6.0)
     activestorage (7.0.4.3)
       actionpack (= 7.0.4.3)
       activejob (= 7.0.4.3)
@@ -154,6 +158,9 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.14.4-x86_64-darwin)
       racc (~> 1.4)
+    paper_trail (14.0.0)
+      activerecord (>= 6.0)
+      request_store (~> 1.4)
     prime (0.1.2)
       forwardable
       singleton
@@ -199,7 +206,11 @@ GEM
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
+    request_store (1.5.1)
+      rack (>= 1.4)
     rexml (3.2.5)
+    ruby-oci8 (2.2.12)
+    ruby-plsql (0.8.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     rubyzip (2.3.2)
@@ -249,6 +260,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  activerecord-oracle_enhanced-adapter (~> 7.0.0)
   bootsnap
   brakeman
   bundler-audit
@@ -261,6 +273,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   mysql2
+  paper_trail (~> 14)
   prime (~> 0.1.2)
   puma (~> 5.0)
   rack-cors

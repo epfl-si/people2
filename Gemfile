@@ -93,6 +93,13 @@ gem "prime", "~> 0.1.2"
 # To enable CORS from keycloak
 gem 'rack-cors'
 
+# https://github.com/paper-trail-gem/paper_trail
+# 
+gem 'paper_trail', "~> 14"
+
+# https://github.com/brendon/acts_as_list
+gem 'acts_as_list'
+
 # ------------------------------------------------------------------------------
 # To be tested, possibly usefull for increasing security in production:
 

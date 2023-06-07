@@ -60,10 +60,8 @@ shell: dcup
 dbconsole: dcup
 	docker-compose -f $(COMPOSE) exec mariadb mysql -u root --password=mariadb 
 
-.PHONY: migrate
-migrate: dcup
-	docker-compose -f $(COMPOSE) exec webapp ./bin/rails db:migrate
 
+# ---------------------------------------------------------------------- testing
 .PHONY: test testup test-system
 testup:
 	docker-compose --profile test -f $(COMPOSE) up --no-recreate -d
@@ -88,7 +86,6 @@ tunnel_up:
 tunnel_down:
 	./bin/tunnel.sh -m local stop
 
-
 # setup_kc: dcup
 # 	sleep 10
 # 	docker-compose -f $(COMPOSE) stop keycloak
@@ -97,6 +94,26 @@ tunnel_down:
 # 	sleep 2
 # 	echo "CREATE DATABASE keycloak;" | $(MYSQL)
 # 	make up
+
+# -------------------------------------------------------------------- migration
+.PHONY: migrate seed
+
+migrate: dcup
+	docker-compose -f $(COMPOSE) exec webapp ./bin/rails db:migrate
+
+seed: migrate
+	docker-compose -f $(COMPOSE) exec webapp bin/rails db:seed
+
+# --------------------------------------------------- destroy and reload mock db
+.PHONY: reseed
+
+SQL=docker-compose -f $(COMPOSE) exec -T mariadb mysql -u root --password=mariadb
+reseed:
+	echo "DROP DATABASE people" | $(SQL)
+	sleep 5
+	echo "CREATE DATABASE people;" | $(SQL)
+	sleep 5
+	make seed
 
 # -------------------------------------------------- restore legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder
@@ -122,4 +139,3 @@ restore_cv:
 
 restore_dinfo:
 	./bin/restoredb.sh dinfo
-

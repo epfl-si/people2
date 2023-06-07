@@ -92,6 +92,17 @@ The standard layout of EPFL. References:
  * [documentation](https://epfl-si.github.io/elements/#/)
  * [styleguide](https://github.com/epfl-si/epfl-theme-elements)
 
+### Oracle connector
+is quite cumbersome to install because it needs official binaries from oracle. For linux, see the `Dockerfile`. For osx, use brew to install the oracle client as explained [here](https://github.com/kubo/ruby-oci8/blob/master/docs/install-on-osx.md):
+
+```
+brew tap InstantClientTap/instantclient
+brew install instantclient-basic
+brew install instantclient-sdk
+brew install instantclient-sqlplus
+gem install ruby-oci8
+```
+
 ### OpenID Connect
 
 It has become fashionable to split Web apps between front-end and back-end, if only to provide division of labor for those who hate JavaScript (see above). Security can become a problem at the interface between both.
@@ -117,3 +128,10 @@ In the out-of-the-box configuration for this demo app, _only_ the `/graphql` URL
 
 GraphQL provides for all your data access and mutation needs. It is pretty straightforward to enforce the security policy (for both access control and auditing) by checking for a so-called OpenID “claim” that is mapped to a role directly from within the relevant GraphQL controllers. The rest of your app should not disclose information (except information intended for public use) at any other endpoint; nor should it permit any mutation except, over GraphQL. In other words, you should refrain from using “traditional” Rails controllers and Web templates (either Web 1.0-style with `application/x-www-form-urlencoded` POSTs; or “modern” REST-style APIs with other HTTP verbs), except to serve “traditional” Web content (using HTTP GET) to unauthenticated users (such as search engines). Examples of concerns that you will be able to disregard entirely are [XSRF tokens](https://guides.rubyonrails.org/action_controller_overview.html#request-forgery-protection) (and the secret management headaches they entail when [deploying a load-balanced Rails app](https://www.jetbrains.com/help/ruby/capistrano.html#credentials)), [ad-hoc signaling and UX](https://www.rubyguides.com/2019/11/rails-flash-messages/), and more.
 
+### Web 1.0 CRUD and REST still viable when leveraging all the work behind RoR
+
+In my opinion (giova), the development overhead introduced by the so called web 2.0 is justified only in two cases:
+ 1. when the volumes are huge (e.g. facebook) and it it is less expensive to delegate as much computation as possible to the client;
+ 2. when one tries to emulate a desktop application that requires a lot of reactivity and real time rendering of the UI (e.g. google docs);
+
+Our tiny application people.epfl.ch serves at most few requests per second and is a read-only application for most of the data. The user editable part is quite limited and simple. Therefore, it does not match any of the above use cases. The amount of nice features provided natively by RoR that would have to be discarded for embracing the web 2.0 is not justified at all. 
