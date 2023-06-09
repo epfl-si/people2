@@ -39,6 +39,7 @@ class Legacy::SocialId < Legacy::BaseCv
     'googlescholar' => {
         'img' => 'google_scholar.png',
         'url' => 'https://scholar.google.com/citations?user=XXX&hl=en&oi=ao',
+        # 'url' => "https://scholar.google.com/citations?user=XXX"
         'label' => 'Google Scholar ID',
         'order' => 3,
         'icon' => 'google',
