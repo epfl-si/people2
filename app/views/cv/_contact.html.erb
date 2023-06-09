@@ -1,0 +1,49 @@
+<% if @editable && @cv.show_title? %>
+<h2 class="people-title mb-3"><%= @cv.title %></h2>
+<% end %>
+<p>
+  <% if @email %>
+  <%= link_to @email.address, "mailto:#{@email.address}", class: "btn btn-sm btn-primary" %>
+  <% end %>
+
+  <% if @person.default_phone and @cv.show_phone %>
+  <%= phone_link(@person.default_phone.number, class: "btn btn-sm btn-secondary") %>
+  <% end %>
+
+  <% if @editable && @cv.personal_web_url? %>
+    <%= link_to(@cv.personal_web_url, @cv.personal_web_url, class: "btn btn-sm btn-secondary") %>
+  <% end %>
+</p>
+<% if @editable %>
+<% if @cv.show_nationality? and @cv.nationality.present? %>
+<p>
+  <%= t 'nationality' %> : <%= @cv.nationality %>
+</p>
+<% end %>
+<% if @cv.show_birthday? %>
+<p>
+  <%= t 'birthday' %> : <%= @person.birthday %>
+</p>
+<% end %>
+
+
+<% if false # TODO @cv.visible_social_ids.present? %>
+<div class="mt-1">
+  <p>
+<% @cv.visible_social_ids.each do |s| %>
+  <% if s.icon.present? %>
+    <a href="true" class="social-icon social-icon-details social-icon-<%= s.icon %> social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-<%= s.icon %>"></use>
+      </svg>
+  <% else %>
+    <a href="true" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
+  <% end %>
+      <span class="user"><%= s.content %></span>
+    </a>
+<% end %>
+  </p>
+</div>
+<% end %>
+
+<% end %>

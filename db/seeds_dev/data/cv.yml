@@ -8,6 +8,7 @@ default_cv: &shyguy
   show_nationality: false
   show_phone: false
   show_photo: false
+  show_title: false
   nationality_fr: Suisse
   nationality_en: Swiss
 
@@ -21,15 +22,68 @@ cvs:
     show_mission: true
     show_nationality: true
     show_photo: true
+    show_title: true
     personal_web_url: https://slideshot.epfl.ch/
     nationality_en: italian, swiss
     nationality_fr: italien
+    title_en: His Majesty
+    title_fr: Sa majesté
+    expertise_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    expertise_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    curriculum_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    curriculum_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    mission_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    mission_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    education_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    education_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   olivier:
     <<: *shyguy
     sciper: "107931"
     show_nationality: true
     show_photo: true
     show_expertise: true
+    title_en: PhD
+    title_fr: Docteur ès sciences
     personal_web_url: "http://ipgold.epfl.ch/~leveque/index.html"
     curriculum_fr: "Olivier Lévêque est né en Suisse en 1971. Il a reçu le diplôme d'ingénieur-physicien de l'EPFL en 1995 et obtenu le doctorat au Département de Mathématiques de l'EPFL en 2001. Depuis lors, il travaille au Laboratoire de Théorie de l'Information à l' EPFL. Il a passé l'année académique 2006-2007 au Département d'Electricité de l'Université de Stanford, où il a été nommé chargé de cours temporaire. Ses domaines d'intérêt comprennent la théorie de l'information, les matrices aléatoires et les équations aux dérivées partielles stochastiques."
     curriculum_en: "Olivier Lévêque was born in Switzerland in 1971. He received the engineer physicist diploma from EPFL in 1995 and completed his PhD at the Mathematics Department of EPFL in 2001. Since then, he has been with the Laboratory of Information Theory at EPFL. He spent the academical year 2005-2006 at the Electrical Engineering Department of Stanford University, where he was appointed as a temporary lecturer. His research interests include information theory, random matrices and stochastic partial differential equations."
@@ -51,6 +105,9 @@ cvs:
     <<: *shyguy
     sciper: "229105"
     show_photo: true
+    show_title: true
+    title_en: Professor
+    title_fr: Professeur
     personal_web_url: "http://dcsl.epfl.ch"
     show_expertise: true
     expertise_fr: "Computer Systems, Data center networks, Virtualization"

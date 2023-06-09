@@ -8,7 +8,7 @@ class CreateBoxes < ActiveRecord::Migration[7.0]
       t.boolean :show_title, default: true
       t.boolean :frozen, default: false
       t.string  :kind, default: "user"
-      t.boolean :visible, default: true
+      t.boolean :visible, default: false
       t.integer :position
       t.timestamps
     end

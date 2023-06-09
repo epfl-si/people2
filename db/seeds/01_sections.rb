@@ -5,7 +5,7 @@ def seed_sections
   return unless data
 
   data.each do |d|
-    s=Section.create(d.slice("title_en", "title_fr", "show_title", "create_allowed"))
+    s=Section.create(d.slice("title_en", "title_fr", "label", "zone", "show_title", "create_allowed"))
     if d['model_boxes'].present?
       d['model_boxes'].each do |b|
         LANGS.each do |l|

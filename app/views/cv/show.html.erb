@@ -1,0 +1,138 @@
+<div class="container">
+  <div class="d-flex flex-wrap justify-content-between align-items-baseline">
+    <h1 class="mr-3"><%= @person.display_name %></h1>
+    <div>
+      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
+      <a href="#">
+        <%= t 'action.edit_profile' %> <span class="sr-only"><%= t 'action.of' %> <%= @person.display_name %></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="row people-basic-info">
+
+        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3">
+          
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <!-- TODO: add real picture -->
+              <!-- Placeholder when there is no profile picture -->
+              <img src="<%= belurl 'svg/portrait-placeholder.svg' %>" alt="Avatar placeholder image" class="img-fluid bg-gray-100">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <p>
+                <small>
+                  <%= link_to "vCard", person_path(format: "vcf") %>
+                  <br>
+                  <a href="#"><%= t 'action.accred_full_list' %></a>
+                  <br>
+                  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-lock"></use></svg>
+                  <a href="#"><% t 'action.admin_data' %></a>
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="people-contacts col-md-8">
+          <div class="row">
+            <div class="col-sm-12 mb-4">
+              <%= render "contact" %>
+            </div>
+          </div>
+          <%= render "accreds" %>
+        </div>
+      </div><!-- people basic infos -->
+      <% if @contact_sections.present?  %>
+      <% @contact_sections.each do |section| %>
+      <%= render partial: "section", object: section %>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% # section tab links %>
+<% if @main_sections.present? %>
+<div class="position-relative mt-5">
+  <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
+    <div class="container">
+      <ul class="nav nav-tabs-light">
+        <% @main_sections.each do |section| %>
+        <li class="nav-item">
+          <%= link_to(section.title, "#section_#{section.label}", class: "nav-link") %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<% @main_sections.each do |section| %>
+<div class="container people-contents">
+<%= render partial: "section", object: section %>
+</div>
+<% end %>
+<% end %>
+
+<% if false %>
+<div class="position-relative mt-5">
+  <% if @cv.present? && (@cv.any_publication? or @tcv.any_publication? or @ta.present? and @ta.has_ta? or @boxes['R'].present?) %>
+  <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
+    <div class="container">
+      <ul class="nav nav-tabs-light">
+        <li class="nav-item">
+          <a class="nav-link" href="#biography"><%= t "nav.biography" %></a>
+        </li>
+        <% if @cv.any_publication? or @tcv.any_publication? %>
+        <li class="nav-item">
+          <a class="nav-link" href="#publications"><%= t "nav.publications" %></a>
+        </li>
+        <% end %>
+        <% if @ta.present? and @ta.has_ta? %>
+        <li class="nav-item">
+          <a class="nav-link" href="#teaching"><%= t "nav.teaching" %></a>
+        </li>
+        <% end %>
+        <% unless @boxes['R'].empty? %>
+        <li class="nav-item">
+          <a class="nav-link" href="#research"><%= t "nav.research" %></a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+  <% end %>
+
+  <% 
+    # TODO: move this crap into a model or to the controller...
+    if ( 
+      @tcv.present? and (@tcv.curriculum.present? or @tcv.visible_expertise?) or
+      @boxes['B'].present? or 
+      @cv.educations.present? or 
+      @cv.experiences.present? or 
+      @person.awards.present?
+    )
+      render "legacy/s1/biography"
+    end
+  %>
+
+  <% if @cv.any_publication? or @tcv.present? and @tcv.any_publication? %>
+  <hr class="darker">
+  <%= render "legacy/s1/publications" %>
+  <% end %>
+
+  <% if @ta.present? and @ta.has_ta? %>
+  <hr class="darker">
+  <%= render "legacy/s1/teaching" %>
+  <% end %>
+
+  <% unless @boxes['R'].empty? %>
+  <hr class="darker">
+  <%= render "legacy/s1/research" %>
+  <% end %>
+</div>
+<% end %>

@@ -2,15 +2,19 @@
 sections:
   - title_en: "Contact"
     title_fr: "Contact"
+    zone: "contact"
+    label: "contact"
     show_title: false
     create_allowed: true
     model_boxes:
-      - label: "label"
+      - label: "expertise"
         title_en: "Expertise"
         title_fr: "Expertise"
         show_title: true
   - title_en: "Biography"
     title_fr: "Biographie"
+    zone: "main"
+    label: "bio"
     show_title: false
     create_allowed: true
     model_boxes:
@@ -32,6 +36,8 @@ sections:
         show_title: true
   - title_en: "Publications"
     title_fr: "Publications"
+    zone: "main"
+    label: "pub"
     show_title: true
     create_allowed: true
     model_boxes:
@@ -41,9 +47,13 @@ sections:
         show_title: true
   - title_en: "Research"
     title_fr: "Recherche"
+    zone: "main"
+    label: "research"
     show_title: true
     create_allowed: true
   - title_en: "Teaching"
     title_fr: "Enseignement"
+    zone: "main"
+    label: "teaching"
     show_title: true
     create_allowed: true

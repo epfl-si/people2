@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get '/cv1/:sciper_or_name', to: 'legacy#show', as: "person",
       :constraints => { :sciper_or_name => /([0-9]{6})|([a-z]+\.[a-z]+)/ }
 
+  get '/cv2/:sciper_or_name', to: 'cv#show', as: "cv2",
+      :constraints => { :sciper_or_name => /([0-9]{6})|([a-z]+\.[a-z]+)/ }
+
   # Defines the root path route ("/")
   root "application#homepage"
 end

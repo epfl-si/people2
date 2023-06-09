@@ -28,8 +28,14 @@ def seed_cv
       k="#{b.kind}_#{b.locale}"
       if d[k].present?
         b.content = d[k]
-        b.save
-      end      
+      end   
+      k="show_#{b.kind}"
+      if d[k].present?
+        b.visible = d[k]
+      else
+        b.visible = false
+      end 
+      b.save
     end
 
     # tcontent.each do |k|

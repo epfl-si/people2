@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
     t.boolean "show_title", default: true
     t.boolean "frozen", default: false
     t.string "kind", default: "user"
-    t.boolean "visible", default: true
+    t.boolean "visible", default: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,9 +80,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
     t.boolean "show_nationality"
     t.boolean "show_phone"
     t.boolean "show_photo"
+    t.boolean "show_title"
     t.string "personal_web_url"
     t.string "nationality_en"
     t.string "nationality_fr"
+    t.string "title_en"
+    t.string "title_fr"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sciper"], name: "unique_emails", unique: true
@@ -113,6 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "title_en"
     t.string "title_fr"
+    t.string "label"
+    t.string "zone"
     t.integer "position"
     t.boolean "show_title"
     t.boolean "create_allowed"
