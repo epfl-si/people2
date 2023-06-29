@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
     t.boolean "show_phone"
     t.boolean "show_photo"
     t.boolean "show_title"
+    t.string "force_lang"
     t.string "personal_web_url"
     t.string "nationality_en"
     t.string "nationality_fr"
@@ -88,6 +89,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
     t.string "title_fr"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "profile_picture_id"
+    t.index ["profile_picture_id"], name: "index_cvs_on_profile_picture_id"
     t.index ["sciper"], name: "unique_emails", unique: true
   end
 
@@ -111,6 +114,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
+  end
+
+  create_table "profile_pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "cv_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cv_id"], name: "index_profile_pictures_on_cv_id"
   end
 
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -139,6 +149,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_133305) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boxes", "cvs"
   add_foreign_key "boxes", "sections"
+  add_foreign_key "cvs", "profile_pictures"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
+  add_foreign_key "profile_pictures", "cvs"
 end

@@ -70,6 +70,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts_as_list (1.1.0)
+      activerecord (>= 4.2)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     bindex (0.8.1)
@@ -261,6 +263,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-oracle_enhanced-adapter (~> 7.0.0)
+  acts_as_list
   bootsnap
   brakeman
   bundler-audit

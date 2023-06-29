@@ -38,6 +38,13 @@ def seed_cv
       b.save
     end
 
+    if d['photo'].present?
+      p=DEV_SEEDS_DIR + "/" + d['photo']
+      if File.exists?(p)
+        cv.profile_pictures.create(image: File.open(p))
+      end
+    end
+
     # tcontent.each do |k|
     #   if d[k].present?
     #     ActionText::RichText.create!(

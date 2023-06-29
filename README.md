@@ -135,3 +135,20 @@ In my opinion (giova), the development overhead introduced by the so called web 
  2. when one tries to emulate a desktop application that requires a lot of reactivity and real time rendering of the UI (e.g. google docs);
 
 Our tiny application people.epfl.ch serves at most few requests per second and is a read-only application for most of the data. The user editable part is quite limited and simple. Therefore, it does not match any of the above use cases. The amount of nice features provided natively by RoR that would have to be discarded for embracing the web 2.0 is not justified at all. 
+
+## Migration
+
+### Profile pictures
+
+Current application offers two options for the profile picture:
+ 1. use remote camipro image (actually locally cached version of it);
+ 2. use one of the locally uploaded images;
+
+The GUI for selecting the image must be composed of three parts: 
+ 1. toggle if picture should be visible or not;
+ 2. toggle if camipro picture is to be used (currently camipro photo is used if common.photo_ext is not 1);
+ 3. list selector for the uploaded images (currently this is decided by common.photo_ts)
+
+
+### Useful reads
+ * [rails design patterns](https://rubyhero.dev/rails-design-patterns-the-big-picture)

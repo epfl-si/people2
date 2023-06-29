@@ -1,11 +1,14 @@
-	-include .env
 KBPATH = /keybase/team/epfl_people.prod
+-include .env
+-include $(KBPATH)/$(SECRETS)
 COMPOSE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
 SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
 export
 
+all:
+	env
 # ---------------------------------------------------------------- run local app
 .PHONY: build codecheck up kup dcup down fulldown logs ps console dbconsole shell 
 

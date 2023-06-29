@@ -10,6 +10,7 @@ class CreateCv < ActiveRecord::Migration[7.0]
       t.boolean :show_photo
       t.boolean :show_title
 
+      t.string :force_lang
       t.string :personal_web_url
 
       # Translatable attributes

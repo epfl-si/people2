@@ -43,16 +43,25 @@ class CvController < ApplicationController
     #   @ta = nil
     # end
 
-    # TODO: the person can force a single locale. The cleanest way is, I think
-    #       to just have the "l=" parameter to override browser setting and 
-    #       redirect when the visitor's locle does not match the person's locale
+    # TODO: would a sort of "PublicSection" class make things easier here ?
+    #       keep in mind that here we only manage boxes but we will have 
+    #       more content like awards, work experiences, infoscience pubs etc.
+    #       that is not just a simple free text box with a title.
     if @editable
       # get sections that contain at least one box in the current locale 
-      @contact_sections = Section.includes(:boxes).where(zone: "contact", "boxes.cv_id": @cv.id, "boxes.visible": true, "boxes.locale": I18n.locale).order(:position, "boxes.position").select{|s| s.boxes.present? }
-      @main_sections = Section.includes(:boxes).where(zone: "main", "boxes.cv_id": @cv.id, "boxes.visible": true, "boxes.locale": I18n.locale).order(:position, "boxes.position").select{|s| s.boxes.present?}
-      # remove sections containing only empty boxes
-      @contact_sections.select!{|s| s.boxes.to_a.count{|b| b.content?}>0}
-      @main_sections.select!{|s| s.boxes.to_a.count{|b| b.content?}>0}
+      @cvlocale = @cv.force_lang || I18n.locale
+      @contact_sections = Section.includes(:boxes).where(
+        zone: "contact", 
+        "boxes.cv_id": @cv.id, 
+        "boxes.visible": true, 
+        "boxes.locale": @cvlocale
+      ).order(:position, "boxes.position").select{|s| s.have_content? }
+      @main_sections = Section.includes(:boxes).where(
+        zone: "main", 
+        "boxes.cv_id": @cv.id, 
+        "boxes.visible": true, 
+        "boxes.locale": @cvlocale
+      ).order(:position, "boxes.position").select{|s| s.have_content?}
     end    
   end
 end

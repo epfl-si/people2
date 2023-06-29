@@ -9,6 +9,7 @@ default_cv: &shyguy
   show_phone: false
   show_photo: false
   show_title: false
+
   nationality_fr: Suisse
   nationality_en: Swiss
 
@@ -28,54 +29,55 @@ cvs:
     nationality_fr: italien
     title_en: His Majesty
     title_fr: Sa majesté
-    expertise_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    photo: images/giova.jpg
+    expertise_en: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    expertise_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    expertise_fr: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    curriculum_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    curriculum_en: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    curriculum_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    curriculum_fr: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    mission_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    mission_en: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    mission_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    mission_fr: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    education_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    education_en: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    education_fr: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    education_fr: <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   olivier:
     <<: *shyguy
     sciper: "107931"
@@ -97,6 +99,7 @@ cvs:
     show_curriculum: true
     show_expertise: true
     show_mission: true
+    force_lang: fr
     personal_web_url: "https://go.epfl.ch/web-EPFL"
     curriculum_fr: "Séminaire «User Experience» 2006 par Nielsen Norman Group, San Francisco, USA<br><b>2005</b> Séminaire d'une journée: «Optimiser sa présence sur le Web pour acquérir et fidéliser»<br><b>2004</b> Séminaire «User Experience 2004» par Nielsen Norman Group, USA à Amsterdam, <br><b>2002</b> Séminaire «Usability Week 2002» par Nielsen Norman Group, NY, USA <br> <b>2001</b> Certificat de spécialisation postgrade en Visualisation et communication informatique, EPFL <br><b>1995</b> Diplôme d'architecte EPFL"
     mission_fr: "Architecte de formation, s'est spécialisée dans le graphisme, la création et l'ergonomie des sites web. Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie, de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites. Elle dispense aussi des conseils sur la manière de concevoir et de mettre en oeuvre un site web, ainsi que sur le choix des applications et des outils mis à disposition par le KIS. Elle propose une analyse stratégique pour la conduite de projets Internet, et intervient comme expert web dans les groupes de réflexion sur la politique de communication des différentes unités de l'Ecole (VPAA, BSS-IC, SAC, bibliothèque...) Elle est également responsable du suivi de l'actualité et de la mise à jour des portails institutionnels. Depuis le printemps 2004, elle est en charge du projet PolyNex, qui s'intéresse aux équipements multimedia sur le campus. Pendant ses loisirs, elle gère les sites du fameux groupe folk-rock, les <a href=\"http://www.paradajz.com\">Paradajz Vampiri</a>, de sa prof préférée de <a href='http://www.pilates-fitforlife.com/'>Pilates, Miranda Mattig</a>, et de l'<a href='http://a3.epfl.ch/''>Association des Diplômés de l'EPFL</a>, l'A3, où elle est responsable de la COSI (liaison entre l'association et le campus EPFL). Vous pouvez suivre ses aventures exotiques sur le blog <a href='http://nmeystre.hautetfort.com/'>http://nmeystre.hautetfort.com/</a>. Sites de référence: <a href='http://atelierweb.epfl.ch'>atelier web:</a> création de site web à l'epfl  et <a href='http://kis.epfl.ch'>KIS</a>."
@@ -104,12 +107,12 @@ cvs:
   edouard:
     <<: *shyguy
     sciper: "229105"
-    show_photo: true
+    show_photo: false
     show_title: true
+    show_expertise: true
     title_en: Professor
     title_fr: Professeur
     personal_web_url: "http://dcsl.epfl.ch"
-    show_expertise: true
     expertise_fr: "Computer Systems, Data center networks, Virtualization"
     expertise_en: "Computer Systems, Data center infrastructure and networking, Operating systems, Virtualization"
 

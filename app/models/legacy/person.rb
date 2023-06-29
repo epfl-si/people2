@@ -132,6 +132,7 @@ class Legacy::Person < Legacy::BaseDinfo
     self.sexe
   end
 
+  # TODO: possibly move this to a Presenter or Decorator class (see patterns)
   def gender
     self.sexe == "F" ? "female" : "male"
   end

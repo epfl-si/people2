@@ -63,6 +63,7 @@ class Legacy::Accreditation < Legacy::BaseAccred
     Legacy::Accreditation.is_student_with_given_accred?(self)
   end
 
+  # TODO: possibly move this to a Presenter or Decorator class (see patterns)
   def t_position(lang=I18n.locale)
     gender = self.person.gender
     tablegender = gender == "female" ? "xx" : lang
