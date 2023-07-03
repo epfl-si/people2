@@ -2,3 +2,86 @@
 #   record: name_of_fixture (ClassOfFixture)
 #   name: content
 #   body: <p>In a <i>million</i> stars!</p>
+# cvfr0:
+#   record: box_cvfr0 (Box)
+#   name: content
+#   body: >
+
+oli_box_expertise_en:
+  record: oli_box_expertise_en (Box)
+  name: content
+  body: >
+    Information theory<br/>Random matrices<br/>Stochastic calculus
+
+oli_box_expertise_fr:
+  record: oli_box_expertise_fr (Box)
+  name: content
+  body: >
+    Théorie de l'information&nbsp;<br/>Matrices aléatoires<br/>Calcul stochastique
+
+# oli_box_bio_en:
+#   record: oli_box_bio_en (Box)
+#   name: content
+#   body: >
+
+# oli_box_bio_fr:
+#   record: oli_box_bio_fr (Box)
+#   name: content
+#   body: >
+
+oli_box_cv_en:
+  record: oli_box_cv_en (Box)
+  name: content
+  body: >
+    Olivier Lévêque was born in Switzerland in 1971. He received the engineer 
+    physicist diploma from EPFL in 1995 and completed his PhD at the Mathematics 
+    Department of EPFL in 2001. Since then, he has been with the Laboratory of 
+    Information Theory at EPFL. He spent the academical year 2005-2006 at the 
+    Electrical Engineering Department of Stanford University, where he was 
+    appointed as a temporary lecturer. His research interests include 
+    information theory, random matrices and stochastic partial differential 
+    equations.
+
+oli_box_cv_fr:
+  record: oli_box_cv_fr (Box)
+  name: content
+  body: >
+    Olivier Lévêque est né en Suisse en 1971. Il a reçu le diplôme 
+    d'ingénieur-physicien de l'EPFL en 1995 et obtenu le doctorat au Département
+    de Mathématiques de l'EPFL en 2001. Depuis lors, il travaille au Laboratoire
+    de Théorie de l'Information à l' EPFL. Il a passé l'année académique 
+    2006-2007 au Département d'Electricité de l'Université de Stanford, où il 
+    a été nommé chargé de cours temporaire. Ses domaines d'intérêt comprennent 
+    la théorie de l'information, les matrices aléatoires et les équations aux 
+    dérivées partielles stochastiques.
+
+# oli_box_edu_en:
+#   record: oli_box_edu_en (Box)
+#   name: content
+#   body: >
+
+# oli_box_edu_fr:
+#   record: oli_box_edu_fr (Box)
+#   name: content
+#   body: >
+
+# oli_box_mission_en:
+#   record: oli_box_mission_en (Box)
+#   name: content
+#   body: >
+
+# oli_box_mission_fr:
+#   record: oli_box_mission_fr (Box)
+#   name: content
+#   body: >
+
+# oli_box_pubs_en:
+#   record: oli_box_pubs_en (Box)
+#   name: content
+#   body: >
+
+# oli_box_pubs_fr:
+#   record: oli_box_pubs_fr (Box)
+#   name: content
+#   body: >
+

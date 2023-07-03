@@ -1,0 +1,35 @@
+contact:
+  title_en: "Contact"
+  title_fr: "Contact"
+  zone: "contact"
+  label: "contact"
+  show_title: false
+  create_allowed: true
+bio:
+  title_en: "Biography"
+  title_fr: "Biographie"
+  zone: "main"
+  label: "bio"
+  show_title: false
+  create_allowed: true
+pub:
+  title_en: "Publications"
+  title_fr: "Publications"
+  zone: "main"
+  label: "pub"
+  show_title: true
+  create_allowed: true
+research:
+  title_en: "Research"
+  title_fr: "Recherche"
+  zone: "main"
+  label: "research"
+  show_title: true
+  create_allowed: true
+teaching:
+  title_en: "Teaching"
+  title_fr: "Enseignement"
+  zone: "main"
+  label: "teaching"
+  show_title: true
+  create_allowed: true

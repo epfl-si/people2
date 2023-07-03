@@ -6,7 +6,7 @@ class Cv < ApplicationRecord
   # avoid N+1 using with_attached_attachment helper:
   # @cv.with_attached_images.each do |cv|
   has_many :profile_pictures, :class_name => "ProfilePicture", :foreign_key => "cv_id"
-  belongs_to :profile_picture, :class_name => "ProfilePicture", :foreign_key => "profile_picture_id"
+  belongs_to :selected_picture, :class_name => "ProfilePicture", :foreign_key => "profile_picture_id"
   def sciper
     self.id
   end
@@ -32,8 +32,8 @@ class Cv < ApplicationRecord
   end
 
   def photo_url!
-    self.profile_picture.present? ?
-      Rails.application.routes.url_helpers.url_for(self.profile_picture.image)
+    self.selected_picture.present? ?
+      Rails.application.routes.url_helpers.url_for(self.selected_picture.image)
       : camipro_photo_url
   end
 

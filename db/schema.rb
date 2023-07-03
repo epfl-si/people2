@@ -11,9 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
-  create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
-    t.text "body", size: :long
+    t.text "body"
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.datetime "created_at", null: false
@@ -21,17 +21,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -43,13 +43,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "artists", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "artists", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -57,9 +57,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "cv_id", null: false
-    t.bigint "section_id", null: false
+  create_table "boxes", force: :cascade do |t|
+    t.integer "cv_id", null: false
+    t.integer "section_id", null: false
     t.string "locale", default: "fr"
     t.string "title", null: false
     t.boolean "show_title", default: true
@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.index ["section_id"], name: "index_boxes_on_section_id"
   end
 
-  create_table "cvs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "cvs", force: :cascade do |t|
     t.string "sciper"
     t.boolean "show_birthday"
     t.boolean "show_function"
@@ -89,23 +89,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.string "title_fr"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "profile_picture_id"
+    t.integer "profile_picture_id"
     t.index ["profile_picture_id"], name: "index_cvs_on_profile_picture_id"
     t.index ["sciper"], name: "unique_emails", unique: true
   end
 
-  create_table "items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "image_url"
-    t.bigint "artist_id", null: false
+    t.integer "artist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["artist_id"], name: "index_items_on_artist_id"
   end
 
-  create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "section_id", null: false
+  create_table "model_boxes", force: :cascade do |t|
+    t.integer "section_id", null: false
     t.string "label"
     t.string "locale", default: "fr"
     t.string "title", null: false
@@ -116,14 +116,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
   end
 
-  create_table "profile_pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "cv_id", null: false
+  create_table "profile_pictures", force: :cascade do |t|
+    t.integer "cv_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cv_id"], name: "index_profile_pictures_on_cv_id"
   end
 
-  create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "sections", force: :cascade do |t|
     t.string "title_en"
     t.string "title_fr"
     t.string "label"
@@ -135,12 +135,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "versions", force: :cascade do |t|
     t.string "item_type", limit: 191, null: false
     t.bigint "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object", size: :long
+    t.text "object"
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end

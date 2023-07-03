@@ -1,0 +1,3 @@
+profile1: <%= ActiveStorage::FixtureSet.blob filename: "profile1.jpg" %>
+profile2: <%= ActiveStorage::FixtureSet.blob filename: "profile2.jpg" %>
+profile3: <%= ActiveStorage::FixtureSet.blob filename: "profile3.jpg" %>

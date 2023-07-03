@@ -63,17 +63,32 @@ shell: dcup
 dbconsole: dcup
 	docker-compose -f $(COMPOSE) exec mariadb mysql -u root --password=mariadb 
 
+dconfig:
+	docker-compose -f $(COMPOSE) config
 
 # ---------------------------------------------------------------------- testing
 .PHONY: test testup test-system
 testup:
 	docker-compose --profile test -f $(COMPOSE) up --no-recreate -d
+	# TODO: find a way to fix this by selecting the good deps (stopped working 
+	# after an upgrade don't know if due to ruby or packages version.
+	docker-compose -f $(COMPOSE) exec webapp sed -i '0,/end/{s/initialize(\*)/initialize(*args)/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
+	docker-compose -f $(COMPOSE) exec webapp sed -i '0,/end/{s/super/super args/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
 
-test: test-system
+# testprepare:
+# 	docker-compose -f $(COMPOSE) exec webapp ./bin/rails db:test:prepare
+# 	docker-compose -f $(COMPOSE) exec -e RAILS_ENV=test webapp ./bin/rails db:migrate
+
+# test: test-system
 
 test-system: testup
 	docker-compose -f $(COMPOSE) exec webapp ./bin/rails test:system
 
+test:
+	docker-compose -f $(COMPOSE) exec -e RAILS_ENV=test webapp ./bin/rails test
+
+# ------------------------------------------------------------------------ cache
+# turn on/off cache in dev (default is off)
 cacheon:
 	docker-compose -f $(COMPOSE) exec webapp touch tmp/caching-dev.txt
 
