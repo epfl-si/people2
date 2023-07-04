@@ -4,69 +4,81 @@ expertise_en:
   title: "Expertise"
   locale: en
   show_title: true
+  position: 1
 expertise_fr:
   section: contact
   label: "expertise"
   title: "Expertise"
   locale: fr
   show_title: true
+  position: 1
+mission_en:
+  section: contact
+  label: "mission"
+  title: "Mission"
+  locale: en
+  show_title: true
+  position: 2
+mission_fr:
+  section: contact
+  label: "mission"
+  title: "Mission"
+  locale: fr
+  show_title: true
+  position: 2
 biography_en:
   section: bio
   label: "biography"
   title: "Biography"
   locale: en
   show_title: false
+  position: 2
 biography_fr:
   section: bio
   label: "biography"
   title: "Biographie"
   locale: fr
   show_title: false
+  position: 2
 curriculum:
   section: bio
   label: "curriculum"
   title: "Curriculum vitae"
   locale: en
   show_title: false
+  position: 3
 curriculum:
   section: bio
   label: "curriculum"
   title: "Curriculum vitae"
   locale: fr
   show_title: false
+  position: 3
 education_en:
   section: bio
   label: "education"
   title: "Education"
   locale: en
   show_title: true
+  position: 4
 education_fr:
   section: bio
   label: "education"
   title: "Education"
   locale: fr
   show_title: true
-mission_en:
-  section: bio
-  label: "mission"
-  title: "Mission"
-  locale: en
-  show_title: true
-mission_fr:
-  section: bio
-  label: "mission"
-  title: "Mission"
-  locale: fr
-  show_title: true
+  position: 4
 publications_en:
   section: pub
   label: "publications"
   title: "Selected Publications"
   locale: en
   show_title: true
+  position: 1
 publications_fr:
   section: pub
   label: "publications"
   title: "Publications Representatives"
   locale: fr
   show_title: true
+  position: 1

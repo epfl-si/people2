@@ -65,6 +65,8 @@ RUN yarn cache clean && yarn install --verbose
 ADD Gemfile* $APP_HOME/
 ADD bin/bundle $APP_HOME/bin/bundle
 RUN ./bin/bundle
+RUN if [ "$RAILS_ENV" == "development" ] ; then RAILS_ENV='test' ./bin/bundle ; fi
+RUN if [ "$RAILS_ENV" == "development" ] ; then yarn install --verbose ; fi
 
 
 EXPOSE 3000

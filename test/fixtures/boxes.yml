@@ -1,3 +1,4 @@
+# ---------------------------------------------------------------------- Olivier
 oli_box_expertise_en:
   cv: olivier
   section: contact
@@ -121,6 +122,183 @@ oli_box_pubs_en:
 
 oli_box_pubs_fr:
   cv: olivier
+  section: pub
+  locale: fr
+  title: Publications Representatives
+  show_title: true
+  frozen: true
+  kind: publications
+  visible: false
+  position: 1
+
+# ---------------------------------------------------------------------- Natalie
+nat_box_expertise_en:
+  cv: natalie
+  section: contact
+  locale: en
+  title: Expertise
+  show_title: true
+  frozen: true
+  kind: expertise
+  visible: false
+  position: 1
+
+nat_box_expertise_fr:
+  cv: natalie
+  section: contact
+  locale: fr
+  title: Expertise
+  show_title: true
+  frozen: true
+  kind: expertise
+  visible: true
+  position: 1
+
+nat_box_work_fr:
+  cv: natalie
+  section: contact
+  locale: en
+  title: Disponibilité
+  show_title: true
+  frozen: false
+  kind: free
+  visible: true
+  position: 2
+
+nat_box_work_fr:
+  cv: natalie
+  section: bio
+  locale: en
+  title: Travail en Cours
+  show_title: true
+  frozen: false
+  kind: free
+  visible: true
+  position: 1
+
+nat_box_mission_en:
+  cv: natalie
+  section: bio
+  locale: en
+  title: Mission
+  show_title: true
+  frozen: true
+  kind: mission
+  visible: false
+  position: 1
+
+nat_box_mission_fr:
+  cv: natalie
+  section: bio
+  locale: fr
+  title: Mission
+  show_title: true
+  frozen: true
+  kind: mission
+  visible: true
+  position: 1
+
+nat_box_bio_en:
+  cv: natalie
+  section: bio
+  locale: en
+  title: Biography
+  show_title: false
+  frozen: true
+  kind: biography
+  visible: false
+  position: 1
+
+nat_box_bio_fr:
+  cv: natalie
+  section: bio
+  locale: fr
+  title: Biographie
+  show_title: false
+  frozen: true
+  kind: biography
+  visible: false
+  position: 1
+
+nat_box_cv_en:
+  cv: natalie
+  section: bio
+  locale: en
+  title: Curriculum vitae
+  show_title: false
+  frozen: true
+  kind: curriculum
+  visible: true
+  position: 2
+
+nat_box_cv_fr:
+  cv: natalie
+  section: bio
+  locale: fr
+  title: Curriculum vitae
+  show_title: false
+  frozen: true
+  kind: curriculum
+  visible: true
+  position: 2
+
+nat_box_edu_en:
+  cv: natalie
+  section: bio
+  locale: en
+  title: Education
+  show_title: true
+  frozen: true
+  kind: education
+  visible: false
+  position: 3
+
+nat_box_edu_fr:
+  cv: natalie
+  section: bio
+  locale: fr
+  title: Education
+  show_title: true
+  frozen: true
+  kind: education
+  visible: false
+  position: 3
+
+nat_box_mission_en:
+  cv: natalie
+  section: bio
+  locale: en
+  title: Mission
+  show_title: true
+  frozen: true
+  kind: mission
+  visible: false
+  position: 4
+
+nat_box_mission_fr:
+  cv: natalie
+  section: bio
+  locale: fr
+  title: Mission
+  show_title: true
+  frozen: true
+  kind: mission
+  visible: false
+  position: 4
+
+nat_box_pubs_en:
+  cv: natalie
+  section: pub
+  locale: en
+  title: Selected Publications
+  show_title: true
+  frozen: true
+  kind: publications
+  visible: false
+  position: 1
+
+nat_box_pubs_fr:
+  cv: natalie
   section: pub
   locale: fr
   title: Publications Representatives

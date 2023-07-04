@@ -1,12 +1,4 @@
-# one:
-#   record: name_of_fixture (ClassOfFixture)
-#   name: content
-#   body: <p>In a <i>million</i> stars!</p>
-# cvfr0:
-#   record: box_cvfr0 (Box)
-#   name: content
-#   body: >
-
+# ---------------------------------------------------------------------- Olivier
 oli_box_expertise_en:
   record: oli_box_expertise_en (Box)
   name: content
@@ -18,16 +10,6 @@ oli_box_expertise_fr:
   name: content
   body: >
     Théorie de l'information&nbsp;<br/>Matrices aléatoires<br/>Calcul stochastique
-
-# oli_box_bio_en:
-#   record: oli_box_bio_en (Box)
-#   name: content
-#   body: >
-
-# oli_box_bio_fr:
-#   record: oli_box_bio_fr (Box)
-#   name: content
-#   body: >
 
 oli_box_cv_en:
   record: oli_box_cv_en (Box)
@@ -55,33 +37,77 @@ oli_box_cv_fr:
     la théorie de l'information, les matrices aléatoires et les équations aux 
     dérivées partielles stochastiques.
 
-# oli_box_edu_en:
-#   record: oli_box_edu_en (Box)
-#   name: content
-#   body: >
+oli_box_pubs_en:
+  record: oli_box_pubs_en (Box)
+  name: content
+  body: >
+    <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
+      Google Scholar Profile
+    </a>
 
-# oli_box_edu_fr:
-#   record: oli_box_edu_fr (Box)
-#   name: content
-#   body: >
+oli_box_pubs_fr:
+  record: oli_box_pubs_fr (Box)
+  name: content
+  body: >
+    <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
+      Google Scholar Profile
+    </a>
 
-# oli_box_mission_en:
-#   record: oli_box_mission_en (Box)
-#   name: content
-#   body: >
+# ---------------------------------------------------------------------- Natalie
+nat_box_mission_fr:
+  record: nat_box_mission_fr (Box)
+  name: content
+  body: >
+    Architecte de formation, s'est spécialisée dans le graphisme, la création et l'ergonomie des sites web.
+    Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie, de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites.
+    Elle dispense aussi des conseils sur la manière de concevoir et de mettre en oeuvre un site web, ainsi que sur le choix des applications et des outils mis à disposition par le KIS. 
+    Elle propose une analyse stratégique pour la conduite de projets Internet, et intervient comme expert web dans les groupes de réflexion sur la politique de communication des différentes unités de l'Ecole (VPAA, BSS-IC, SAC, bibliothèque...)
+    Elle est également responsable du suivi de l'actualité et de la mise à jour des portails institutionnels.
+    Depuis le printemps 2004, elle est en charge du projet PolyNex, qui s'intéresse aux équipements multimedia sur le campus.
+    Pendant ses loisirs, elle gère les sites du fameux groupe folk-rock, les <a href="http://www.paradajz.com">Paradajz Vampiri</a>, de sa prof préférée de <a href="http://www.pilates-fitforlife.com/">Pilates, Miranda Mattig</a>, et de l'<a href="http://a3.epfl.ch/">Association des Diplômés de l'EPFL</a>, l'A3, où elle est responsable de la COSI (liaison entre l'association et le campus EPFL). 
+    Vous pouvez suivre ses aventures exotiques sur le blog <a href="http://nmeystre.hautetfort.com/">http://nmeystre.hautetfort.com/</a>.
 
-# oli_box_mission_fr:
-#   record: oli_box_mission_fr (Box)
-#   name: content
-#   body: >
+nat_box_mission_en:
+  record: nat_box_mission_en (Box)
+  name: content
+  body: >
+    Architecte de formation à l'epfl, s'est spécialisée dans le graphisme, la création et l'ergonomie des sites web.
+    Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites.
+    Elle est également responsable du suivi de l'actualité et de la mise à jour sur les portails institutionnels.
+    Sites de référence: <a href="http://atelierweb.epfl.ch">atelier web:</a> création de site web à l'epfl  et <a href="http://kis.epfl.ch">KIS</a>.
 
-# oli_box_pubs_en:
-#   record: oli_box_pubs_en (Box)
-#   name: content
-#   body: >
+nat_box_expertise_fr:
+  record: nat_box_expertise_fr (Box)
+  name: content
+  body: >
+    architecture web - ergonomie - usability - ergonomie - design et 
+    architecture de l&apos;information - cms - iconographie - 
+    graphisme web - charte graphique - design - logo - expertise communication 
+    web - html - css2 - ui design
 
-# oli_box_pubs_fr:
-#   record: oli_box_pubs_fr (Box)
-#   name: content
-#   body: >
+nat_box_cv_fr:
+  record: nat_box_cv_fr (Box)
+  name: content
+  body: >
+    <b>2006</b> Séminaire "User Experience 2006" par Nielsen Norman Group, San Francisco, USA<br/>
+    <b>2005</b> Séminaire d'une journée: "Optimiser sa présence sur le Web pour acquérir et fidéliser"<br/>
+    <b>2004</b> Séminaire "User Experience 2004" par Nielsen Norman Group, USA à Amsterdam,<br/>
+    <b>2002</b> Séminaire "Usability Week 2002" par Nielsen Norman Group, NY, USA <br/>
+    <b>2001</b> Certificat de spécialisation postgrade en Visualisation et communication informatique, EPFL<br/>
+    <b>1995</b> Diplôme d'architecte EPFL
 
+nat_box_pubs_en:
+  record: nat_box_pubs_en (Box)
+  name: content
+  body: >
+    <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
+      Google Scholar Profile
+    </a>
+
+nat_box_pubs_fr:
+  record: nat_box_pubs_fr (Box)
+  name: content
+  body: >
+    <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
+      Google Scholar Profile
+    </a>
