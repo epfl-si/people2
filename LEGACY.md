@@ -109,3 +109,45 @@ sub initBoxes {
 ## Importing boxes
 Boxes contain all sort of crap. It will be hard to auto-migrate. 
 I think we should do it by hand (e.g. @ SDF) and only for currently active people.
+
+
+## New Structure
+### First attempt
+ * Section: the various sections of the Cv page with localized title.
+   - title_en
+   - title_fr
+   - label
+   - zone
+   - position
+   - show_title
+   - create_allowed
+   - have_many :boxes
+   - has_many :model_boxes
+ * ModelBox: the standard boxes that will be used as templates for the boxes
+   that will be automatically added to each profile. 
+   - label
+   - locale
+   - title
+   - show_title
+   - position
+   - belongs_to :section
+ * Box: the actual boxes for the user profiles.  
+   - locale
+   - title
+   - show_title
+   - frozen
+   - kind
+   - visible
+   - position
+   - belongs_to :cv
+   - belongs_to :section
+
+Pros: 
+ - similar to the current implementation;
+ - extensible multilanguage (more languages can be added later)
+Cons:
+ - not very general wrt the fact of having different types of boxes (e.g. education, awards, etc)
+ - the fact of creating the boxes from model boxes for each profile will introduce a lot of useless lines in the database and complicates testing. It is probably better to only create the used boxes and allow to chose the template upon creation.
+
+
+ 
