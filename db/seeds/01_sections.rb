@@ -5,20 +5,21 @@ def seed_sections
   return unless data
 
   data.each do |d|
-    s=Section.create(d.slice("title_en", "title_fr", "label", "zone", "show_title", "create_allowed"))
+    next if 
+    s=Section.where(label: d['label']).first || Section.create(d.slice("title_en", "title_fr", "label", "zone", "show_title", "create_allowed"))
     if d['model_boxes'].present?
       d['model_boxes'].each do |b|
-        LANGS.each do |l|
-          s.model_boxes.create({
-            locale: l,
-            label: b["label"],
-            title: b["title_#{l}"],
-            show_title: b["show_title"],
-          })
-        end
+        next if ModelBox.where(label: b["label"]).present?
+        s.model_boxes.create({
+          locale: l,
+          label: b["label"],
+          title_en: b["title_en"],
+          title_fr: b["title_fr"],
+          show_title: b["show_title"],
+        })
       end
     end
   end
 end
 
-seed_sections if Section.count == 0
+# seed_sections if Section.count == 0

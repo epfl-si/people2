@@ -25,17 +25,4 @@ class CvTest < ActiveSupport::TestCase
     assert_no_match(/camipro-photos\.epfl\.ch/, u.photo_url)
   end
 
-  test "default boxes creation" do 
-    u = cv(:edouard)
-    assert_empty(u.boxes)
-    u.init_boxes!
-    assert_not_empty(u.boxes)
-
-    # should not re-create the standard boxes if they are already present
-    n0 = u.boxes.count
-    u.init_boxes!
-    n1 = u.boxes.count
-    assert_equal(n0, n1)
-  end
-
 end

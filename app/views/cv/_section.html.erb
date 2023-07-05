@@ -3,7 +3,7 @@
 <h2 id="section_#{section.label}"><%= section.title %></h2>
 <% end %>
 <div class="#{section.label}-content">
-<% section.boxes.each do |box| %>
+<% boxes.each do |box| %>
 <%= render partial: 'box', object: box %>
 <% end %>
 </div>

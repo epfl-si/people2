@@ -1,19 +1,27 @@
+# ------------------------------------------------------------------------ Giova
+gio_box_expertise_en:
+  record: gio_box_expertise (Box)
+  name: content_en
+  body: >
+    HPC, Algorithms, Networking, Programming, IT, DBA, Unix, Computational 
+    Solid State Physics
+
 # ---------------------------------------------------------------------- Olivier
 oli_box_expertise_en:
-  record: oli_box_expertise_en (Box)
-  name: content
+  record: oli_box_expertise (Box)
+  name: content_en
   body: >
     Information theory<br/>Random matrices<br/>Stochastic calculus
 
 oli_box_expertise_fr:
-  record: oli_box_expertise_fr (Box)
-  name: content
+  record: oli_box_expertise (Box)
+  name: content_fr
   body: >
     Théorie de l'information&nbsp;<br/>Matrices aléatoires<br/>Calcul stochastique
 
 oli_box_cv_en:
-  record: oli_box_cv_en (Box)
-  name: content
+  record: oli_box_cv (Box)
+  name: content_en
   body: >
     Olivier Lévêque was born in Switzerland in 1971. He received the engineer 
     physicist diploma from EPFL in 1995 and completed his PhD at the Mathematics 
@@ -25,8 +33,8 @@ oli_box_cv_en:
     equations.
 
 oli_box_cv_fr:
-  record: oli_box_cv_fr (Box)
-  name: content
+  record: oli_box_cv (Box)
+  name: content_fr
   body: >
     Olivier Lévêque est né en Suisse en 1971. Il a reçu le diplôme 
     d'ingénieur-physicien de l'EPFL en 1995 et obtenu le doctorat au Département
@@ -38,16 +46,16 @@ oli_box_cv_fr:
     dérivées partielles stochastiques.
 
 oli_box_pubs_en:
-  record: oli_box_pubs_en (Box)
-  name: content
+  record: oli_box_pubs (Box)
+  name: content_en
   body: >
     <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
       Google Scholar Profile
     </a>
 
 oli_box_pubs_fr:
-  record: oli_box_pubs_fr (Box)
-  name: content
+  record: oli_box_pubs (Box)
+  name: content_fr
   body: >
     <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
       Google Scholar Profile
@@ -55,8 +63,8 @@ oli_box_pubs_fr:
 
 # ---------------------------------------------------------------------- Natalie
 nat_box_mission_fr:
-  record: nat_box_mission_fr (Box)
-  name: content
+  record: nat_box_mission (Box)
+  name: content_fr
   body: >
     Architecte de formation, s'est spécialisée dans le graphisme, la création et l'ergonomie des sites web.
     Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie, de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites.
@@ -68,8 +76,8 @@ nat_box_mission_fr:
     Vous pouvez suivre ses aventures exotiques sur le blog <a href="http://nmeystre.hautetfort.com/">http://nmeystre.hautetfort.com/</a>.
 
 nat_box_mission_en:
-  record: nat_box_mission_en (Box)
-  name: content
+  record: nat_box_mission (Box)
+  name: content_en
   body: >
     Architecte de formation à l'epfl, s'est spécialisée dans le graphisme, la création et l'ergonomie des sites web.
     Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites.
@@ -77,8 +85,8 @@ nat_box_mission_en:
     Sites de référence: <a href="http://atelierweb.epfl.ch">atelier web:</a> création de site web à l'epfl  et <a href="http://kis.epfl.ch">KIS</a>.
 
 nat_box_expertise_fr:
-  record: nat_box_expertise_fr (Box)
-  name: content
+  record: nat_box_expertise (Box)
+  name: content_fr
   body: >
     architecture web - ergonomie - usability - ergonomie - design et 
     architecture de l&apos;information - cms - iconographie - 
@@ -86,8 +94,8 @@ nat_box_expertise_fr:
     web - html - css2 - ui design
 
 nat_box_cv_fr:
-  record: nat_box_cv_fr (Box)
-  name: content
+  record: nat_box_cv (Box)
+  name: content_fr
   body: >
     <b>2006</b> Séminaire "User Experience 2006" par Nielsen Norman Group, San Francisco, USA<br/>
     <b>2005</b> Séminaire d'une journée: "Optimiser sa présence sur le Web pour acquérir et fidéliser"<br/>
@@ -97,16 +105,16 @@ nat_box_cv_fr:
     <b>1995</b> Diplôme d'architecte EPFL
 
 nat_box_pubs_en:
-  record: nat_box_pubs_en (Box)
-  name: content
+  record: nat_box_pubs (Box)
+  name: content_en
   body: >
     <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
       Google Scholar Profile
     </a>
 
 nat_box_pubs_fr:
-  record: nat_box_pubs_fr (Box)
-  name: content
+  record: nat_box_pubs (Box)
+  name: content_fr
   body: >
     <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
       Google Scholar Profile

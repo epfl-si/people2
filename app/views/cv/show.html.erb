@@ -47,21 +47,21 @@
           <%= render "accreds" %>
         </div>
       </div><!-- people basic infos -->
-      <% if @contact_sections.present?  %>
-      <% @contact_sections.each do |section| %>
-      <%= render partial: "section", object: section %>
-      <% end %>
+      <% contact_zone_bbs = @boxes_by_section.select{|s,b| s.zone == "contact"} %>
+      <% contact_zone_bbs.each do |section, boxes| %>
+      <%= render partial: "section", locals: {section: section, boxes: boxes} %>
       <% end %>
     </div>
   </div>
 </div>
 <% # section tab links %>
-<% if @main_sections.present? %>
+<% main_zone_bbs = @boxes_by_section.select{|s,b| s.zone == "contact"} %>
+<% if main_zone_bbs.present? %>
 <div class="position-relative mt-5">
   <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
     <div class="container">
       <ul class="nav nav-tabs-light">
-        <% @main_sections.each do |section| %>
+        <% main_zone_bbs.each do |section, boxes| %>
         <li class="nav-item">
           <%= link_to(section.title, "#section_#{section.label}", class: "nav-link") %>
         </li>
@@ -71,9 +71,9 @@
   </nav>
 </div>
 
-<% @main_sections.each do |section| %>
+<% main_zone_bbs.each do |section, boxes| %>
 <div class="container people-contents">
-<%= render partial: "section", object: section %>
+<%= render partial: "section", locals: {section: section, boxes: boxes} %>
 <hr class="darker">
 </div>
 <% end %>

@@ -19,14 +19,17 @@ module Translatable
       end      
     end
   end
-  def translation_for(attribute)
-    read_attribute("#{attribute}_#{I18n.locale}") ||
+  def translation_for(attribute, locale=I18n.locale)
+    read_attribute("#{attribute}_#{locale}") ||
     read_attribute("#{attribute}_#{I18n.default_locale}")
   end
-  def translated_body_for(attribute)
-    locales = [I18n.locale, I18n.default_locale].uniq
-    t = send("#{attribute}_#{I18n.locale}")
-    t = send("#{attribute}_#{I18n.default_locale}") if (t.id.nil? || t.body.empty?) && I18n.locale != I18n.default_locale
+  def translated_body_for(attribute, locale=I18n.locale)
+    puts "tbf attr=#{attribute}, locale=#{locale}"
+    puts "self: #{self}"
+    t = self.send("#{attribute}_#{locale}")
+    puts "t1 = #{t}"
+    t = self.send("#{attribute}_#{I18n.default_locale}") if (t.id.nil? || t.body.empty? && locale != I18n.default_locale)
+    puts "t2 = #{t}"
     t.body
   end
 end

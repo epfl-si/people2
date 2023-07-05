@@ -1,30 +1,24 @@
 class Cv < ApplicationRecord
   include Translatable
+
   translates :nationality, :title
-  has_many :boxes,  :class_name => "Box"
+  has_many :boxes
 
   # avoid N+1 using with_attached_attachment helper:
   # @cv.with_attached_images.each do |cv|
   has_many :profile_pictures, :class_name => "ProfilePicture", :foreign_key => "cv_id"
   belongs_to :selected_picture, :class_name => "ProfilePicture", :foreign_key => "profile_picture_id"
+
+  def self.for_sciper(sciper)
+    self.where(sciper: sciper).first
+  end
+
   def sciper
     self.id
   end
 
   def sciper=(v)
     self.id=(v.to_i)
-  end
-
-  # create an instance of each standard box for a new person. Most might
-  # remain empty but it simplifies a lot. This will be executed only
-  # the first time the user tries to edit his profile
-  def init_boxes!
-    return unless self.boxes.empty?
-    ModelBox.all.each do |mb|
-      b = Box.from_model(mb)
-      b.cv = self
-      b.save
-    end
   end
 
   def photo_url

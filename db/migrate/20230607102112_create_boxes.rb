@@ -1,8 +1,7 @@
 class CreateBoxes < ActiveRecord::Migration[7.0]
   def change
     create_table :boxes do |t|
-      t.string     :type, default: "TextBox"
-      t.string     :kind, default: "user"
+      t.string     :type, null: false
       t.references :cv, null: false, foreign_key: true
       t.references :section, null: false, foreign_key: true
       t.string     :title_en
