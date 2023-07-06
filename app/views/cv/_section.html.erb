@@ -4,7 +4,7 @@
 <% end %>
 <div class="#{section.label}-content">
 <% boxes.each do |box| %>
-<%= render partial: 'box', object: box %>
+<%= render partial: box.class.to_s.underscore, locals: {box: box} %>
 <% end %>
 </div>
 </div>
