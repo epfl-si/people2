@@ -50,20 +50,6 @@ class CvController < ApplicationController
     if @editable
       # get sections that contain at least one box in the current locale 
       @cvlocale = @cv.force_lang || I18n.locale
-      # @contact_sections = Section.includes(:boxes).where(
-      #   zone: "contact", 
-      #   "boxes.cv_id": @cv.id, 
-      #   "boxes.visible": true, 
-      # ).order(:position, "boxes.position").select{|s| s.have_content? }
-      # @main_sections = Section.includes(:boxes).where(
-      #   zone: "main", 
-      #   "boxes.cv_id": @cv.id, 
-      #   "boxes.visible": true, 
-      # ).order(:position, "boxes.position").select{|s| s.have_content?}
-      # @contact_sections = Section.where(zone: "contact")
-      # @main_sections = Section.where(zone: "main")
-      @cv=Cv.for_sciper(107931)
-      @cvlocale="en"
       @boxes = @cv.boxes.visible.includes(:section).select{|b| b.have_content?(@cvlocale)}.sort{|a,b| [a.section.position, a.position] <=> [b.section.position, b.position]}
       @boxes_by_section = @boxes.group_by{|b| b.section}
 
