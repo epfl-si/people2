@@ -23,14 +23,11 @@ class Box < ApplicationRecord
   end
 end
 
-class RichTextBox < Box
-  has_translated_rich_text :content
+# Subclasses in STI need to be on their own file because otherwise 
+# autoreload in dev does not work
 
-  def have_content?(locale=I18n.default_locale)
-    # puts "TextBox::have_content? locale=#{locale}"
-    super(locale) && translated_body_for(:content, locale).present?
-  end
-end
+# class RichTextBox < Box
+# end
 
 # class AchievementsBox < Box
 #   has_many :achievements
