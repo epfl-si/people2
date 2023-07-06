@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------ Giova
-oli_box_expertise:
+gio_box_expertise:
   type: "RichTextBox"
   cv: giova
   section: contact
