@@ -78,6 +78,8 @@ group :development do
   # security tools
   gem "bundler-audit"
   gem "brakeman"
+
+  gem "rails-mermaid_erd"
 end
 
 group :test do
