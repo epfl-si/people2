@@ -1,7 +1,14 @@
 class Cv < ApplicationRecord
-  include Translatable
+  # predefined primary key will brake testing when labels are used in fixtures
+  # therefore, although I would much prefer to have sciper as the primary key,
+  # I decided to abandon the idea in favor of ehnanced fixture readability.
+  # I will probably duplicate sciper value in all models where it can be useful.
+  # https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+  # self.primary_key = 'sciper'
 
+  include Translatable
   translates :nationality, :title
+  
   has_many :boxes
 
   # avoid N+1 using with_attached_attachment helper:
@@ -11,14 +18,6 @@ class Cv < ApplicationRecord
 
   def self.for_sciper(sciper)
     self.where(sciper: sciper).first
-  end
-
-  def sciper
-    self.id
-  end
-
-  def sciper=(v)
-    self.id=(v.to_i)
   end
 
   def photo_url

@@ -28,6 +28,11 @@ module HelloRails
 
     config.active_storage.draw_routes = true
 
+    # TODO: reverto to default vips for image processing
+    # this is not the default because it is slower but it avoids having to
+    # install libvips which has tons of deps...  
+    config.active_storage.variant_processor = :mini_magick
+
     # config.middleware.use Rack::Locale
 
     # This is a cookie-free Web app!

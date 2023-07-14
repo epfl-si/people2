@@ -4,7 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= @page_title || "EPFL - people directory" %></title>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+
+  <title><%= @page_title || "EPFL - people directory" %><%= Rails.env.development? ? " (DEV)" : "" %></title>
   <script src="https://cdn.polyfill.io/v2/polyfill.js?features=String.prototype.includes,Array.prototype.includes,Array.prototype.find,CustomEvent"></script>
 
   <!-- Favicons -->
@@ -40,6 +45,7 @@
 </head>
 
 <body>
+<% console if Rails.env.development? %>
 <header role="banner" class="header header-light">
   <div class="header-light-content">
     <a class="logo" href="https://www.epfl.ch/">

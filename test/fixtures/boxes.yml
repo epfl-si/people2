@@ -30,7 +30,7 @@ oli_box_bio:
   title_fr: Biographie
   show_title: false
   frozen: true
-  visible: false
+  visible: true
   position: 1
 
 oli_box_cv:
@@ -52,7 +52,7 @@ oli_box_edu:
   title_fr: Education
   show_title: true
   frozen: true
-  visible: false
+  visible: true
   position: 3
 
 oli_box_mission:
@@ -63,7 +63,7 @@ oli_box_mission:
   title_fr: Mission
   show_title: true
   frozen: true
-  visible: false
+  visible: true
   position: 4
 
 oli_box_pubs:
@@ -74,7 +74,7 @@ oli_box_pubs:
   title_fr: Publications Representatives
   show_title: true
   frozen: true
-  visible: false
+  visible: true
   position: 1
 
 # ---------------------------------------------------------------------- Natalie

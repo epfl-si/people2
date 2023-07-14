@@ -2,6 +2,7 @@ class Box < ApplicationRecord
   include Translatable
   belongs_to :section, :class_name => "Section", :foreign_key => "section_id"
   belongs_to :cv, :class_name => "Cv", :foreign_key => "cv_id"
+  # before_create :ensure_sciper
   scope :visible, -> { where(visible: true) }
   acts_as_list scope: [:cv, :section, :frozen]
 
@@ -21,6 +22,15 @@ class Box < ApplicationRecord
   def have_content?(locale=I18n.default_locale)
     true
   end
+
+  def sciper
+    cv.sciper
+  end
+
+ private
+  # def ensure_sciper
+  #   self.sciper ||= self.cv.sciper
+  # end
 end
 
 # Subclasses in STI need to be on their own file because otherwise 

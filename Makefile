@@ -46,7 +46,7 @@ down: tunnel_down
 
 reload:
 	docker-compose -f $(COMPOSE) stop webapp
-	docker compose -f $(COMPOSE) up -d	
+	KILLPID=1 docker-compose -f $(COMPOSE) up -d
 
 logs:
 	docker-compose -f $(COMPOSE) logs -f
@@ -65,6 +65,9 @@ dbconsole: dcup
 
 dconfig:
 	docker-compose -f $(COMPOSE) config
+
+mermaid:
+	docker-compose -f $(COMPOSE) exec webapp ./bin/rails mermaid_erd
 
 # ---------------------------------------------------------------------- testing
 .PHONY: test testup test-system

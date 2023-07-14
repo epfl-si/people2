@@ -2,11 +2,11 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  
+
+  # config.hosts << "2.tcp.eu.ngrok.io"
+
   # Allow web console also from outside localhost (for using it with docker)
-  if (ENV['WEB_CONSOLE_PERMISSIONS'].present?)
-    config.web_console.permissions = ENV['WEB_CONSOLE_PERMISSIONS']
-  end
+  config.web_console.permissions = '0.0.0.0/0'
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
