@@ -24,16 +24,15 @@ class ApplicationService
 
   def fetch_http
     uri=URI.parse(url)
-    req = Net::HTTP::Get.new(uri)
-    req_params.each {|k,v| req[k] = v}
+    @req = Net::HTTP::Get.new(uri)
+    req_customize
+    req_params.each {|k,v| @req[k] = v}
     opts={:use_ssl => true, :read_timeout => 100}
-    if Rails.configuration.isa_no_check_ssl
-      opts[:verify_mode] = OpenSSL::SSL::VERIFY_NONE
-    end
     opts.merge!(http_opts)
     res = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
-      http.request(req)
+      http.request(@req)
     end
+puts "res=#{res}"
     case res
     when Net::HTTPOK then
       res.body
@@ -61,6 +60,9 @@ class ApplicationService
   # extra parameters for the request
   def req_params
     {}
+  end
+  # Class specific request modifiers (e.g. req.basic_auth user, pass)
+  def req_customize(req)
   end
   # extra options for Net::HTTP.start 
   def http_opts

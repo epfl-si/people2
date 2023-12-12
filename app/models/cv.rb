@@ -32,10 +32,10 @@ class Cv < ApplicationRecord
 
   def camipro_photo_url
     @camipro_photo_url ||= begin
-      k=Rails.configuration.camipro_key
+      k=Rails.application.config_for(:epflapi).camipro_key
       t=Time.now.in_time_zone("Europe/Rome").strftime("%Y%m%d%H%M%S")
-      baseurl="https://#{Rails.configuration.camipro_host}/api/v1/photos/#{sciper}?time=#{t}&app=people"
-      digest=OpenSSL::HMAC.hexdigest("SHA256", Rails.configuration.camipro_key, baseurl)
+      baseurl="https://#{Rails.application.config_for(:epflapi).camipro_host}/api/v1/photos/#{sciper}?time=#{t}&app=people"
+      digest=OpenSSL::HMAC.hexdigest("SHA256", k, baseurl)
       baseurl + "&hash=#{digest}"
     end
   end

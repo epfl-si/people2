@@ -1,0 +1,37 @@
+# OpenID Connect (OIDC) configuration for the app
+# Available as `Rails.application.config_for(:epflapi)`
+
+epflapi_config: &epflapi_config
+  # ATELA (will be replaced by api)
+  prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>
+  atela_backend_url: <%= ENV.fetch("ATELA_BACKEND_URL", 'https://atela.epfl.ch/cgi-bin/atela-backend') %>
+  atela_key: <%= ENV.fetch("ATELA_KEY") %>
+
+  # API
+  backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/v1') %>
+  real_backend_url: <%= ENV.fetch("REAL_EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/v1') %>
+  username: <%= ENV.fetch("EPFLAPI_USERNAME", 'people') %>
+  password: <%= ENV.fetch("EPFLAPI_PASSWORD") %>
+
+  # CAMIPRO
+  camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY") %>
+  camipro_host: <%= ENV.fetch("CAMIPRO_PHOTO_HOST", "camipro-photos.epfl.ch") %>
+
+  # ISA
+  isa_url: <%= ENV.fetch("ISA_URL", 'https://isa.epfl.ch/services') %>
+  isa_no_check_ssl: <%= ENV.fetch("ISA_NO_CHECK_SSL", false) %>
+  isa_use_oracle: <%= ENV.fetch("ISA_USE_ORACLE", true) %>
+
+# 12-factor trumps Rails dogma, see
+# https://nebulab.com/blog/12-factor-rails-settings
+# 💡 You want all three aliases, even in dev, otherwise `./bin/rake` won't work!
+development:
+  <<: *epflapi_config
+test:
+  <<: *epflapi_config
+production:
+  <<: *epflapi_config
+
+
+
+

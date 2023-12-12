@@ -66,7 +66,7 @@ dbconsole: dcup
 dconfig:
 	docker-compose -f $(COMPOSE) config
 
-mermaid:
+erd:
 	docker-compose -f $(COMPOSE) exec webapp ./bin/rails mermaid_erd
 
 # ---------------------------------------------------------------------- testing
@@ -124,6 +124,9 @@ migrate: dcup
 
 seed: migrate
 	docker-compose -f $(COMPOSE) exec webapp bin/rails db:seed
+
+fakeapi: dcup
+	docker-compose -f $(COMPOSE) exec webapp bin/rails devel:fakeapi
 
 # --------------------------------------------------- destroy and reload mock db
 .PHONY: reseed

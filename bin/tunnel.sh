@@ -3,57 +3,24 @@ set -e
 . .env
 
 PIDFILE=tunnel.pid
-MODE=${TUNNELMODE:-local}
 
 if [ "$1" == "-m" ] ; then
   MODE=$2
   shift 2
 fi
 
-case $MODE in
-  tunneltest)
-    # 'present' mode is for running the original application
-    # directly connecting to the original test databases
-    TUN1=0.0.0.0:50024:agatst02.epfl.ch:50024
-    TUN2=0.0.0.0:3306:test-cadidb.epfl.ch:3306
-    SSHCMD="ssh -T -N -L $TUN2 dinfo@test-dinfo1.epfl.ch"
-    ;;
-  staging)
-    # 'present' mode is for running the original application
-    # directly connecting to the original test databases
-    TUN1=0.0.0.0:50024:agatst02.epfl.ch:50024
-    TUN2=0.0.0.0:3306:db-cadi-staging.epfl.ch:3306
-    SSHCMD="kubectl port-forward pods/mongo-75f59d57f4-4nd6q 28015:27017
-kubectl ssh -T -N -L $TUN2 dinfo@test-dinfo1.epfl.ch"
-    ;;
-  tunnelprod|localcv)
+case $TUNNEL_MODE in
+  prod)
     # 'past' mode is for running the original application
     # directly connecting to the original production databases
     TUN1=0.0.0.0:50315:agaprd01.epfl.ch:50315
-    TUN2=0.0.0.0:3306:cadidb.epfl.ch:3306
-    SSHCMD="ssh -T -N -L $TUN1 -L $TUN2 dinfo@dinfo1.epfl.ch"
+    SSHCMD="ssh -T -N -L $TUN1 dinfo@dinfo11.epfl.ch"
     ;;
-  local)
+  test)
     # 'past' mode is for running the original application
     # directly connecting to the original production databases
-    TUN1=0.0.0.0:50315:agaprd01.epfl.ch:50315
-    SSHCMD="ssh -T -N -L $TUN1 dinfo@dinfo1.epfl.ch"
-    ;;
-  views)
-    # 'future' mode is using the read-only view that is only
-    # available on the production server. 
-    TUN1=0.0.0.0:50315:agaprd01.epfl.ch:50315
-    TUN2=0.0.0.0:3306:cadidb.epfl.ch:3306
-    # Unfortunatelly we would need a third tunnel but thru a different machine (root@10.95.80.132)
-    # TUN3=0.0.0.0:33006:mysql-scx.epfl.ch:33006
-    SSHCMD="ssh -T -N -L $TUN1 -L $TUN2 dinfo@dinfo1.epfl.ch"
-    ;;
-  tunnelkube)
-    # 'future' mode is using the read-only view that is only
-    # available on the production server. 
-    TUN1=0.0.0.0:50315:agaprd01.epfl.ch:50315
-    TUN2=0.0.0.0:3306:cadidb.epfl.ch:3306
-    SSHCMD="ssh -T -N -L $TUN1 -L $TUN2 root@10.95.80.132"
+    TUN1=0.0.0.0:50024:agatst02.epfl.ch:50024
+    SSHCMD="ssh -T -N -L $TUN1 dinfo@test-dinfo1.epfl.ch"
     ;;
   *)
     echo "Invalid mode '$MODE'. Please use either 'present' or 'future'" >&2
@@ -127,4 +94,3 @@ status)
   echo "Invalid command $1" >&2
   exit 1
 esac
-

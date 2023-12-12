@@ -3,6 +3,7 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # For this we can use the Env vari RAILS_DEVELOPMENT_HOSTS
   # config.hosts << "2.tcp.eu.ngrok.io"
 
   # Allow web console also from outside localhost (for using it with docker)

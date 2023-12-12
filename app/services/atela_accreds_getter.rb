@@ -4,12 +4,12 @@ class AtelaAccredsGetter < ApplicationService
   
   def initialize(sciper)
     @id=sciper
-    @url = Rails.configuration.atela_backend_url + "/getPerson/#{sciper}"
+    @url = Rails.application.config_for(:epflapi).atela_backend_url + "/getPerson/#{sciper}"
   end
 
   def req_params
     {
-      'authorization' => "People.key " + ENV.fetch("ATELA_KEY")
+      'authorization' => "People.key " + Rails.application.config_for(:epflapi).atela_key
     }
   end
 end

@@ -155,7 +155,7 @@ class Isa::Teaching
  private
 
   def load_courses(sciper)
-    if Rails.configuration.isa_use_oracle
+    if Rails.application.config_for(:epflapi).isa_use_oracle
       Legacy::IsaCours.for_sciper(sciper)
     else
       # TODO: this is for the tmp version coming from the old people
