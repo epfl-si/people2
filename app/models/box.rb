@@ -1,15 +1,15 @@
 class Box < ApplicationRecord
   include Translatable
-  belongs_to :section, :class_name => "Section", :foreign_key => "section_id"
-  belongs_to :cv, :class_name => "Cv", :foreign_key => "cv_id"
+  belongs_to :section, class_name: "Section"
+  belongs_to :cv, class_name: "Cv"
   # before_create :ensure_sciper
   scope :visible, -> { where(visible: true) }
-  acts_as_list scope: [:cv, :section, :frozen]
+  acts_as_list scope: %i[cv section frozen]
 
   translates :title
 
   def self.from_model(mb)
-    self.new(
+    new(
       section_id: mb.section_id,
       title_en: mb.title_en,
       title_fr: mb.title_fr,
@@ -19,21 +19,18 @@ class Box < ApplicationRecord
     )
   end
 
-  def have_content?(locale=I18n.default_locale)
+  def have_content?(_locale = I18n.default_locale)
     true
   end
 
-  def sciper
-    cv.sciper
-  end
+  delegate :sciper, to: :cv
 
- private
   # def ensure_sciper
   #   self.sciper ||= self.cv.sciper
   # end
 end
 
-# Subclasses in STI need to be on their own file because otherwise 
+# Subclasses in STI need to be on their own file because otherwise
 # autoreload in dev does not work
 
 # class RichTextBox < Box

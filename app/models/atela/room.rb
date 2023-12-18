@@ -9,6 +9,7 @@
 # },
 class Atela::Room
   attr_reader :id, :description, :abbr, :order, :category
+
   def initialize(data)
     @id = data['room_id']
     @description = data['description']
@@ -17,14 +18,17 @@ class Atela::Room
     @category = data['type']
     @hidden = data['room_hidden'].to_i != 0
   end
+
   def label
     @abbr
   end
+
   # TODO: use config variable for EPFL plan base address
   def url
     # "https://plan.epfl.ch/?"+@abbr.to_query(:room)
     "https://plan.epfl.ch/?room=#{@abbr.gsub(' ', '%20')}"
   end
+
   def hidden?
     @hidden
   end

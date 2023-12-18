@@ -2,23 +2,28 @@ class Legacy::TranslatedCv < Legacy::BaseCv
   self.table_name = 'cv'
   self.primary_key = 'sciper'
 
-  has_many :boxes, -> (object) {where cvlang: object.cvlang }, :class_name => "Box", :foreign_key => "sciper"
-  has_many :publication_boxes, -> (object) {where cvlang: object.cvlang }, :class_name => "PublicationBox", :foreign_key => "sciper"
-  has_many :infosciences, -> (object) {where cvlang: object.cvlang }, :class_name => "Infoscience", :foreign_key => "sciper"
+  has_many :boxes, ->(object) { where cvlang: object.cvlang }, class_name: "Box", foreign_key: "sciper"
+  has_many :publication_boxes, lambda { |object|
+                                 where cvlang: object.cvlang
+                               }, class_name: "PublicationBox", foreign_key: "sciper"
+  has_many :infosciences, lambda { |object|
+                            where cvlang: object.cvlang
+                          }, class_name: "Infoscience", foreign_key: "sciper"
 
   def title
-    self.titre
+    titre
   end
 
   def visible_title?
-    self.titre_show == "1" && self.titre.present?
+    titre_show == "1" && titre.present?
   end
+
   def visible_expertise?
-    self.expertise_show == "1" && self.expertise.present?
+    expertise_show == "1" && expertise.present?
   end
 
   def any_publication?
-    self.infosciences.present? or self.publication_boxes.present?
+    infosciences.present? or publication_boxes.present?
   end
 
   # def method_missing(method_id, *arguments, &block)
@@ -28,5 +33,4 @@ class Legacy::TranslatedCv < Legacy::BaseCv
   #     super
   #   end
   # end
-
 end

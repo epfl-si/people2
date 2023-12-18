@@ -25,6 +25,6 @@ module SprocketsRequireInGemExtension
   end
 
   def self.inject_for_javascript(env)
-    self.inject(env, "application/javascript")
+    inject(env, "application/javascript")
   end
 end

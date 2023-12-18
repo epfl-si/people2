@@ -2,33 +2,34 @@ class Legacy::Person < Legacy::BaseDinfo
   self.table_name = 'sciper'
   self.primary_key = 'sciper'
 
-  has_one :email, :class_name => "Email", :foreign_key => "sciper"
-  has_one :delegate, :class_name => "Delegate", :foreign_key => "sciper"
+  has_one :email, class_name: "Email", foreign_key: "sciper"
+  has_one :delegate, class_name: "Delegate", foreign_key: "sciper"
 
-  default_scope {includes(:email, :delegate)}
+  default_scope { includes(:email, :delegate) }
 
-  # has_many :accreds, -> { 
+  # has_many :accreds, -> {
   #   where("#{Legacy::Accreditation.table_name}.finval IS NULL OR #{Legacy::Accreditation.table_name}.finval > ?", Date.today.strftime).
   #   order(:ordre).
   #   joins(:status).
-  #   joins("LEFT OUTER JOIN classes ON classes.id = accreds.classid"). 
+  #   joins("LEFT OUTER JOIN classes ON classes.id = accreds.classid").
   #   joins("LEFT OUTER JOIN positions ON positions.id = accreds.posid")
   # }, :class_name => "Accreditation", :foreign_key => "persid"
   # in the end the following is faster and easier
-  has_many :accreds, :class_name => "Accreditation", :foreign_key => "persid"
-  
-  has_many :address, :class_name => "PostalAddress", :foreign_key => "pers_id"
-  has_many :phones, :class_name => "PersonalPhone", :foreign_key => "pers_id"
-  has_many :accred_prefs, :class_name => "AccredPref", :foreign_key => "sciper"
+  has_many :accreds, class_name: "Accreditation", foreign_key: "persid"
 
-  has_one  :account, :class_name => "Account", :foreign_key => "sciper"
-  has_many :awards, :class_name => "Award", :foreign_key => "sciper"
+  has_many :address, class_name: "PostalAddress", foreign_key: "pers_id"
+  has_many :phones, class_name: "PersonalPhone", foreign_key: "pers_id"
+  has_many :accred_prefs, class_name: "AccredPref", foreign_key: "sciper"
 
-  has_many :units, :class_name => "Unit", :through => :accreds, :foreign_key => "persid", :source => "unit"
-  has_many :positions, :class_name => "Position", :through => :accreds, :foreign_key => "persid", :source => "position"
-  has_many :policies, :class_name => "Policy", :foreign_key => "persid"
-  has_many :active_policies, :class_name => "Policy", :foreign_key => "persid"
-  has_many :active_properties, :class_name => "Property", :through => :active_policies, :foreign_key => "persid", :source => "property"
+  has_one  :account, class_name: "Account", foreign_key: "sciper"
+  has_many :awards, class_name: "Award", foreign_key: "sciper"
+
+  has_many :units, class_name: "Unit", through: :accreds, foreign_key: "persid", source: "unit"
+  has_many :positions, class_name: "Position", through: :accreds, foreign_key: "persid", source: "position"
+  has_many :policies, class_name: "Policy", foreign_key: "persid"
+  has_many :active_policies, class_name: "Policy", foreign_key: "persid"
+  has_many :active_properties, class_name: "Property", through: :active_policies, foreign_key: "persid",
+                               source: "property"
 
   # merge accred data with data from dinfo (office, address) and people (prefs)
   def full_accreds
@@ -36,16 +37,16 @@ class Legacy::Person < Legacy::BaseDinfo
       adh = address_by_unit
       phh = phones_by_unit
       prh = prefs_by_unit
-      self.accreds.all.map do |a|
-        uid=a.unit_id
-        aa = a.attributes.merge({address: adh[uid], phones: phh[uid], prefs: prh[uid]})
+      accreds.all.map do |a|
+        uid = a.unit_id
+        aa = a.attributes.merge({ address: adh[uid], phones: phh[uid], prefs: prh[uid] })
         Legacy::Affiliation.new(aa)
       end.sort
     end
   end
 
   def visible_full_accreds
-    full_accreds.select{|a| a.visible?}
+    full_accreds.select { |a| a.visible? }
   end
 
   def default_phone
@@ -53,32 +54,32 @@ class Legacy::Person < Legacy::BaseDinfo
   end
 
   def address_by_unit
-    @address_by_unit ||= self.address.all.each_with_object({}) {|v, h| h[v.unit_id] = v}
+    @address_by_unit ||= address.all.index_by { |v| v.unit_id }
   end
 
   def phones_by_unit
-    @phones_by_unit ||= self.phones.all.each_with_object({}) do |v, h| 
+    @phones_by_unit ||= phones.all.each_with_object({}) do |v, h|
       h[v.unit_id] ||= []
       h[v.unit_id] << v
     end
   end
 
   def prefs_by_unit
-    @prefs_by_unit ||= self.accred_prefs.all.each_with_object({}) {|v, h| h[v.unit_id] = v}
+    @prefs_by_unit ||= accred_prefs.all.index_by { |v| v.unit_id }
   end
 
   def birthday
-    self.date_naiss
+    date_naiss
   end
 
   def can_edit_profile?
     # avoid doing twice the request for self.accreds if full_accreds already computed
-    (@full_accreds || self.accreds).any? {|a| a.can_edit_profile?} ||
-      self.active_properties.map{|p| p.name}.include?("gestprofil")
+    (@full_accreds || accreds).any? { |a| a.can_edit_profile? } ||
+      active_properties.map { |p| p.name }.include?("gestprofil")
   end
 
   def is_student?
-    (@full_accreds || self.accreds).any? {|a| a.is_student?}
+    (@full_accreds || accreds).any? { |a| a.is_student? }
   end
 
   # $is_achieving_professor = $ENV{FORCE_ACHIEVING_PROF} || does_have_right_anywhere($self, $sciper, 'AAR.report.control');
@@ -96,7 +97,7 @@ class Legacy::Person < Legacy::BaseDinfo
   #   } else {
   #     return 0;
   #   }
-  # }  
+  # }
   # TODO implement Rights model
   def is_achieving_professor?
     true
@@ -108,75 +109,69 @@ class Legacy::Person < Legacy::BaseDinfo
   end
 
   def display_name
-    @display_name ||= "#{self.prenom_usuel || self.prenom_acc} #{self.nom_usuel || self.nom_acc}"
+    @display_name ||= "#{prenom_usuel || prenom_acc} #{nom_usuel || nom_acc}"
   end
 
   def name
-    self.prenom_usuel || self.prenom_acc
+    prenom_usuel || prenom_acc
   end
 
   def surname
-    self.nom_usuel || self.nom_acc
+    nom_usuel || nom_acc
   end
 
   def email_address
-    self.email.addrlog
+    email.addrlog
   end
 
   def people_url
-    nps=self.email.addrlog.gsub(/@.*$/, '')
+    nps = email.addrlog.gsub(/@.*$/, '')
     "#{Rails.configuration.official_url}/#{nps}"
   end
 
   def sex
-    self.sexe
+    sexe
   end
 
   # TODO: possibly move this to a Presenter or Decorator class (see patterns)
   def gender
-    self.sexe == "F" ? "female" : "male"
+    sexe == "F" ? "female" : "male"
   end
 
   def units
-    self.accreditations.map{|a| a.unit }
+    accreditations.map { |a| a.unit }
   end
 
-  def username
-    atela.username
-  end
+  delegate :username, to: :atela
 
   def visible_units
-    self.accreditations.select{|a| a.accred_show == "1"}.map{|a| a.unit }
+    accreditations.select { |a| a.accred_show == "1" }.map { |a| a.unit }
   end
 
+  # dinfo
+  #       dinfo.sciper.nom_acc,      dinfo.sciper.nom_usuel,
+  #       dinfo.sciper.prenom_acc,   dinfo.sciper.prenom_usuel, dinfo.sciper.sexe,
+  #       dinfo.allunits.sigle,      dinfo.allunits.libelle, dinfo.allunits.libelle_en,
+  #       dinfo.allunits.hierarchie,
+  #       dinfo.groups.gid,
+  #       dinfo.annu.`local`            AS room,
+  #       dinfo.annu.telephone1,
+  #       dinfo.annu.telephone2,
+  #       dinfo.adrspost.adresse  AS address,
+  #       dinfo.adrspost.ordre    AS address_ordre,
 
-# dinfo
-#       dinfo.sciper.nom_acc,      dinfo.sciper.nom_usuel,
-#       dinfo.sciper.prenom_acc,   dinfo.sciper.prenom_usuel, dinfo.sciper.sexe,
-#       dinfo.allunits.sigle,      dinfo.allunits.libelle, dinfo.allunits.libelle_en,
-#       dinfo.allunits.hierarchie,
-#       dinfo.groups.gid,
-#       dinfo.annu.`local`            AS room,
-#       dinfo.annu.telephone1,
-#       dinfo.annu.telephone2,
-#       dinfo.adrspost.adresse  AS address,
-#       dinfo.adrspost.ordre    AS address_ordre,
-
-# accred
-#       accreds.*,
-#       statuses.`name`         AS statusname,
-#       statuses.labelfr        AS statuslabelfr,
-#       statuses.labelen        AS statuslabelen,
-#       classes.`name`          AS classname,
-#       classes.labelfr         AS classlabelfr,
-#       classes.labelen         AS classlabelen,
-#       positions.labelfr       AS poslabelfr,
-#       positions.labelen       AS poslabelen,
-#       positions.labelxx       AS poslabelxx
-
-
+  # accred
+  #       accreds.*,
+  #       statuses.`name`         AS statusname,
+  #       statuses.labelfr        AS statuslabelfr,
+  #       statuses.labelen        AS statuslabelen,
+  #       classes.`name`          AS classname,
+  #       classes.labelfr         AS classlabelfr,
+  #       classes.labelen         AS classlabelen,
+  #       positions.labelfr       AS poslabelfr,
+  #       positions.labelen       AS poslabelen,
+  #       positions.labelxx       AS poslabelxx
 end
-
 
 # ItemToSku.joins("LEFT JOIN inventory ON item_to_sku.sku_id = inventory.sku_id").where("item_id in (?)", [12345, 67890])
 

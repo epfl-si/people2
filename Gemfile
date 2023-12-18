@@ -10,10 +10,10 @@ gem "rails", "~> 7.0.4"
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
 gem "mysql2"
+gem "sqlite3", "~> 1.4"
 
-# Note: Tim is writing an API for ISA. Therefore we might be able to get rid of this
+# NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
 gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -38,7 +38,7 @@ gem "redis", "~> 4.0"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -53,8 +53,8 @@ gem "image_processing", "~> 1.2"
 gem 'dotenv-rails', group: :development
 
 # GraphQL server
-gem "graphql", "~> 2.0"
 gem "graphiql-rails", group: :development
+gem "graphql", "~> 2.0"
 
 # Requirements for an OpenID-Connect Resource Server
 gem "rails_warden", "~> 0.6.0"
@@ -62,7 +62,7 @@ gem "warden_openid_bearer", "~> 0.1.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -76,15 +76,14 @@ group :development do
   # gem "spring"
 
   # security tools
-  gem "bundler-audit"
   gem "brakeman"
+  gem "bundler-audit"
 
   gem "rails-mermaid_erd"
 
   # Code Linter / checker
   gem "rubocop", require: false
   gem 'rubocop-rails', require: false
-
 end
 
 group :test do
@@ -101,7 +100,7 @@ gem "prime", "~> 0.1.2"
 gem 'rack-cors'
 
 # https://github.com/paper-trail-gem/paper_trail
-# 
+#
 gem 'paper_trail', "~> 14"
 
 # https://github.com/brendon/acts_as_list

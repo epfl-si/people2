@@ -53,17 +53,17 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
   if ENV['REDIS_CACHE'].present?
-    config.cache_store = :redis_cache_store, { 
+    config.cache_store = :redis_cache_store, {
       url: ENV['REDIS_CACHE'],
-      connect_timeout:    10,  # Defaults to 20 seconds
-      read_timeout:       0.2, # Defaults to 1 second
-      write_timeout:      0.2, # Defaults to 1 second
-      reconnect_attempts: 1,   # Defaults to 0
+      connect_timeout: 10, # Defaults to 20 seconds
+      read_timeout: 0.2, # Defaults to 1 second
+      write_timeout: 0.2, # Defaults to 1 second
+      reconnect_attempts: 1 # Defaults to 0
     }
   end
 

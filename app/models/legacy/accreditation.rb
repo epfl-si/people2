@@ -18,41 +18,41 @@
 # 363674  50099         5      15  NULL
 # 363674  50133         5      15  NULL
 
-
 class Legacy::Accreditation < Legacy::BaseAccred
   self.table_name = 'accreds'
   self.primary_key = 'persid'
-  belongs_to :person, :class_name => "Person", :foreign_key => "persid", :inverse_of => :accreds
-  belongs_to :unit, :class_name => "Unit", :foreign_key => "unitid"
-  belongs_to :position, :class_name => "Position", :foreign_key => "posid"
-  belongs_to :status, :class_name => "Status", :foreign_key => "statusid"
-  belongs_to :kind, :class_name => "PersonClass", :foreign_key => "classid"
+  belongs_to :person, class_name: "Person", foreign_key: "persid", inverse_of: :accreds
+  belongs_to :unit, class_name: "Unit", foreign_key: "unitid"
+  belongs_to :position, class_name: "Position", foreign_key: "posid"
+  belongs_to :status, class_name: "Status", foreign_key: "statusid"
+  belongs_to :kind, class_name: "PersonClass", foreign_key: "classid"
 
-  default_scope {
+  default_scope do
     joins(:position, :status, :kind).includes(:unit).where(finval: nil)
-  }
+  end
 
   # TODO: these arrays could become obsolete if server never reloads
   def self.can_edit_profile_with_given_accred?(a)
-    @can_edit_position_ids ||= Legacy::Position.where(labelfr: 'Professeur honoraire').map{|p| p.id}
-    @can_edit_status_ids ||= Legacy::Status.where(labelen: ['Staff', 'Student']).map{|s| s.id}
+    @can_edit_position_ids ||= Legacy::Position.where(labelfr: 'Professeur honoraire').map { |p| p.id }
+    @can_edit_status_ids ||= Legacy::Status.where(labelen: %w[Staff Student]).map { |s| s.id }
     @can_edit_status_ids.include?(a.statusid) or @can_edit_position_ids.include?(a.posid)
   end
+
   def self.is_student_with_given_accred?(a)
-    @student_status_ids ||= Legacy::Status.where(labelen: ['Student', 'External student']).map{|s| s.id}
+    @student_status_ids ||= Legacy::Status.where(labelen: ['Student', 'External student']).map { |s| s.id }
     @student_status_ids.include?(a.statusid)
   end
 
   def unit_id
-    self.unitid
+    unitid
   end
 
   def sciper
-    self.persid
+    persid
   end
 
   def order
-    self.ordre
+    ordre
   end
 
   def can_edit_profile?
@@ -64,28 +64,26 @@ class Legacy::Accreditation < Legacy::BaseAccred
   end
 
   # TODO: possibly move this to a Presenter or Decorator class (see patterns)
-  def t_position(lang=I18n.locale)
-    gender = self.person.gender
+  def t_position(lang = I18n.locale)
+    gender = person.gender
     tablegender = gender == "female" ? "xx" : lang
-    if self.position.nil?
+    if position.nil?
       I18n.t "student.#{gender}"
     else
-      self.position["label#{tablegender}"]
+      position["label#{tablegender}"]
     end
   end
 
   def hierarchy
-    self.unit.present? ? self.unit.hierarchie : nil
+    unit.present? ? unit.hierarchie : nil
   end
 
   def class_delegate
-    se, pe = self.unit.sigle.split("-")
-    d = self.person.delegate
-    if d.nil? or d.section != se or d.periode != pe
-      return nil
-    else
-      return d
-    end
+    se, pe = unit.sigle.split("-")
+    d = person.delegate
+    return nil if d.nil? or d.section != se or d.periode != pe
+
+    d
   end
 end
 
@@ -246,4 +244,3 @@ end
 
 #   return @accreds;
 # }
-

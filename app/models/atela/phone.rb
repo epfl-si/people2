@@ -11,6 +11,7 @@
 #   },
 class Atela::Phone
   attr_reader :id, :order, :category, :number
+
   def initialize(data)
     @id = data['phone_id']
     @number = data['phone_nb']
@@ -18,6 +19,7 @@ class Atela::Phone
     @category = data['phone_type']
     @hidden = data['phone_hidden'].to_i != 0
   end
+
   def hidden?
     @hidden
   end

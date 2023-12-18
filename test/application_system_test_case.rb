@@ -8,5 +8,4 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     browser: :remote,
     url: "http://selenium:4444"
   }
-
 end

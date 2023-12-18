@@ -6,6 +6,7 @@ class ApplicationService
   def self.call(*args, &block)
     new(*args, &block).cached_fetch
   end
+
   def self.uncached_call(*args, &block)
     new(*args, &block).fetch
   end
@@ -18,26 +19,24 @@ class ApplicationService
 
   # by default we assume request body is json
   def fetch
-    body=fetch_http
+    body = fetch_http
     body.nil? ? nil : JSON.parse(body)
   end
 
   def fetch_http
-    uri=URI.parse(url)
+    uri = URI.parse(url)
     @req = Net::HTTP::Get.new(uri)
     req_customize
-    req_params.each {|k,v| @req[k] = v}
-    opts={:use_ssl => true, :read_timeout => 100}
+    req_params.each { |k, v| @req[k] = v }
+    opts = { use_ssl: true, read_timeout: 100 }
     opts.merge!(http_opts)
     res = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
       http.request(@req)
     end
-puts "res=#{res}"
+    puts "res=#{res}"
     case res
-    when Net::HTTPOK then
+    when Net::HTTPOK
       res.body
-    else
-      nil
     end
   end
 
@@ -47,24 +46,28 @@ puts "res=#{res}"
   def id
     nil
   end
+
   def cache_key
     # TODO: url hash might not be unique if params are added to the request.
     # Therefore it is safer to override cache_key or to provide an id method
     # for the moment it is responsability of the derived class
-    uid=id.present? ? id : Digest::MD5.hexdigest(url)
+    uid = id.presence || Digest::MD5.hexdigest(url)
     "#{self.class.name.underscore}/#{uid}"
   end
+
   def expire_in
     24.hours
   end
+
   # extra parameters for the request
   def req_params
     {}
   end
+
   # Class specific request modifiers (e.g. req.basic_auth user, pass)
-  def req_customize(req)
-  end
-  # extra options for Net::HTTP.start 
+  def req_customize(req); end
+
+  # extra options for Net::HTTP.start
   def http_opts
     {}
   end

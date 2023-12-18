@@ -22,11 +22,11 @@ class Legacy::IsaCours < Legacy::BaseIsa
     c_langue
   end
 
-  def section(lang=I18n.locale)
+  def section(lang = I18n.locale)
     IsaCode.t_pedago(c_section, lang)
   end
 
-  def semester(lang=I18n.locale)
+  def semester(lang = I18n.locale)
     I18n.translate "semester.#{c_semestre || 'undef'}", locale: lang
   end
 
@@ -37,7 +37,6 @@ class Legacy::IsaCours < Legacy::BaseIsa
   def url
     x_url
   end
-
 end
 
 # sub getCoursData {
@@ -169,7 +168,6 @@ end
 #       # I make it optional but empty by default. Let's see what brakes.
 #       # next unless $data->{X_OBJECTIFS};
 #       $data->{X_OBJECTIFS} = " " unless $data->{X_OBJECTIFS};
-
 
 #       if ($INDEX ne $crtINDEX) {
 #         push @outloop, {

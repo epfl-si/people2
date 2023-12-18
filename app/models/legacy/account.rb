@@ -3,13 +3,13 @@ class Legacy::Account < Legacy::BaseDinfo
   self.primary_key = 'sciper'
 
   # We need a single column from another table. Don't want to add a model just for that
-  default_scope {
-    select("accounts.sciper as sciper, user, uid, gid, home, shell, numsap").
-    distinct.
-    joins("left join Personnel on accounts.sciper = Personnel.sciper")
-  }
+  default_scope do
+    select("accounts.sciper as sciper, user, uid, gid, home, shell, numsap")
+      .distinct
+      .joins("left join Personnel on accounts.sciper = Personnel.sciper")
+  end
 
   def sap_id
-    self.numsap
+    numsap
   end
 end

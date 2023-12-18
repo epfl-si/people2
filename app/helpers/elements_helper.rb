@@ -7,9 +7,9 @@
 #   Content
 # </div>
 module ElementsHelper
-  def ee_collapse(title, content_or_options_with_block = nil, options={}, &block)
+  def ee_collapse(title, content_or_options_with_block = nil, options = {}, &block)
     @ee_collapse_indx ||= 0
-    @ee_collapse_indx = @ee_collapse_indx + 1
+    @ee_collapse_indx += 1
     indx = @ee_collapse_indx
     if block_given?
       content = capture(&block)
@@ -19,7 +19,7 @@ module ElementsHelper
     end
     expanded = options.delete(:expanded)
     title_opts = {
-      class: expanded ? %w(collapse-title collapse-title-desktop) : %w(collapse-title collapse-title-desktop collapsed),
+      class: expanded ? %w[collapse-title collapse-title-desktop] : %w[collapse-title collapse-title-desktop collapsed],
       data: {
         toggle: "collapse",
         target: "#collapse-#{indx}"
@@ -30,18 +30,17 @@ module ElementsHelper
       }
     }
     content_opts = {
-      class: %w(collapse collapse-item collapse-item-desktop),
+      class: %w[collapse collapse-item collapse-item-desktop],
       id: "collapse-#{indx}"
     }
     content_opts[:class] << "show" if expanded
     # res = content_tag(:section, class: "collapse-container") do
-    #   content_tag(:header, hopts) do 
+    #   content_tag(:header, hopts) do
     #     content_tag(:p, title, class: "title")
     #   end << content_tag(:div, content, class: %w(collapse collapse-item collapse-item-desktop), id: "collapse-#{indx}")
     # end
-    res = content_tag(:button, title_opts) do 
+    res = content_tag(:button, title_opts) do
       content_tag(:p, title, class: "title")
     end << content_tag(:div, content, content_opts)
-
   end
 end

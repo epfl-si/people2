@@ -33,17 +33,17 @@ Rails.application.configure do
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
 
-    if ENV['REDIS_CACHE'].present?
-      config.cache_store = :redis_cache_store, { 
-        url: ENV['REDIS_CACHE'],
-        connect_timeout:    10,  # Defaults to 20 seconds
-        read_timeout:       0.2, # Defaults to 1 second
-        write_timeout:      0.2, # Defaults to 1 second
-        reconnect_attempts: 1,   # Defaults to 0
-      }
-    else
-      config.cache_store = :memory_store
-    end
+    config.cache_store = if ENV['REDIS_CACHE'].present?
+                           [:redis_cache_store, {
+                             url: ENV['REDIS_CACHE'],
+                             connect_timeout: 10, # Defaults to 20 seconds
+                             read_timeout: 0.2, # Defaults to 1 second
+                             write_timeout: 0.2, # Defaults to 1 second
+                             reconnect_attempts: 1 # Defaults to 0
+                           }]
+                         else
+                           :memory_store
+                         end
   else
     config.action_controller.perform_caching = false
 

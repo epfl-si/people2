@@ -2,9 +2,10 @@ class Legacy::Phone < Legacy::BaseBottin
   self.table_name = 'annuaire_phones'
   self.primary_key = 'phone_id'
 
-  default_scope {
-    where("annuaire_phones.valid_from < ? AND (annuaire_phones.valid_to > ? OR annuaire_phones.valid_to IS NULL)", DateTime.now, DateTime.now)
-  }
+  default_scope do
+    where("annuaire_phones.valid_from < ? AND (annuaire_phones.valid_to > ? OR annuaire_phones.valid_to IS NULL)",
+          DateTime.now, DateTime.now)
+  end
 
   def number
     phone_nb
@@ -14,7 +15,6 @@ class Legacy::Phone < Legacy::BaseBottin
     phone_type
   end
 end
-
 
 # sub getPersonPhones {
 #     my ($self, $pers_id) = @_;

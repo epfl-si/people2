@@ -2,7 +2,7 @@
 # ssh peo1 "curl 'https://isa.epfl.ch/services/teachers/103561'" | jq
 class IsaTaGetter < IsaService
   def initialize(sciper)
-    @id=sciper
+    @id = sciper
     @url = Rails.application.config_for(:epflapi).isa_url + "/teachers/#{sciper}"
   end
 

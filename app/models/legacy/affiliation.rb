@@ -1,9 +1,10 @@
 # Extended accred including address, phones, people preferences
 class Legacy::Affiliation < Legacy::Accreditation
-  attr_reader :address
+  attr_accessor :address
+  attr_reader :phones
 
   def <=>(other)
-    self.order <=> other.order
+    order <=> other.order
   end
 
   def hidden?
@@ -11,31 +12,21 @@ class Legacy::Affiliation < Legacy::Accreditation
   end
 
   def visible?
-    not hidden?
+    !hidden?
   end
 
   def phones=(o)
     @phones = o.sort
   end
 
-  def address=(a)
-    @address = a
-  end
-
-  def prefs=(p)
-    @prefs = p
-  end
+  attr_writer :prefs
 
   def order
     @prefs.present? ? @prefs.order : super
   end
 
-  def phones
-    @phones
-  end
-
   def visible_phones
-    @phones.select{|p| p.visible?}.sort #.map{|p| p.phone}
+    @phones.select { |p| p.visible? }.sort # .map{|p| p.phone}
   end
 
   def phone
@@ -45,5 +36,4 @@ class Legacy::Affiliation < Legacy::Accreditation
   # def room
   #   @phones.present? ? @phones.local : nil
   # end
-
 end

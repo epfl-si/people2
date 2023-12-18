@@ -10,6 +10,7 @@
 # default_room: {...},         -> @room
 class Atela::Person
   attr_reader :first_name, :family_name, :sciper, :username, :phone, :room, :accreds
+
   MAX_ATTEMPTS = 1
   def initialize(sciper)
     @sciper = sciper
@@ -21,7 +22,7 @@ class Atela::Person
     @room = nil
 
     data = load(sciper)
-    
+
     if data.nil?
       Rails.logger.warn("failed to find Atela data for sciper #{sciper}")
     else
@@ -30,23 +31,25 @@ class Atela::Person
   end
 
   def sorted_accreds
-    @accreds.values.sort{|a,b| a.order <=> b.order}
+    @accreds.values.sort { |a, b| a.order <=> b.order }
   end
 
   def display_name
     @first_name + " " + @family_name
   end
 
- private
+  private
+
   def load(sciper)
     @attempts ||= 0
     return nil if @attempts >= MAX_ATTEMPTS
-    @attempts=@attempts + 1
+
+    @attempts += 1
     AtelaAccredsGetter.call(sciper) || nil
   end
 
   def parse(data)
-    if d=data['person']
+    if d = data['person']
       @first_name = d['firstname']
       @family_name = d['name']
       @username = d['username']
@@ -62,19 +65,19 @@ class Atela::Person
       end
     end
     if d = data['accreds']
-      d.each do |k,v|
+      d.each do |k, v|
         a = Atela::Accred.new(v)
         u = units[k]
-        a.unit=u unless u.nil?
+        a.unit = u unless u.nil?
         @accreds[k] = a
       end
     end
     if d = data['default_phone']
       @phone = Atela::Phone.new(d)
     end
-    if d = data['default_room']
-      @room = Atela::Room.new(d)
-    end
+    return unless d = data['default_room']
+
+    @room = Atela::Room.new(d)
   end
 end
 

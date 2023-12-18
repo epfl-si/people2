@@ -2,20 +2,20 @@ class Legacy::Cv < Legacy::BaseCv
   self.table_name = 'common'
   self.primary_key = 'sciper'
 
-  has_one :naming, :class_name => "Naming", :foreign_key => "sciper"
+  has_one :naming, class_name: "Naming", foreign_key: "sciper"
 
-  # personal data is stored in two parts. 
+  # personal data is stored in two parts.
   # This class is the language independent (common) part
   # TranslatedCv is instead the language-dependent part
-  has_many :translations, :class_name => "TranslatedCv", :foreign_key => "sciper"
-  has_many :boxes, :class_name => "Box", :foreign_key => "sciper"
+  has_many :translations, class_name: "TranslatedCv", foreign_key: "sciper"
+  has_many :boxes, class_name: "Box", foreign_key: "sciper"
 
-  has_many :achievements,   :class_name => "Achievement", :foreign_key => "sciper"
-  has_many :educations,     :class_name => "Education", :foreign_key => "sciper"
-  has_many :experiences,    :class_name => "Experience", :foreign_key => "sciper"
-  has_many :publications,   :class_name => "Publication", :foreign_key => "sciper"
-  has_many :social_ids,     :class_name => "SocialId", :foreign_key => "sciper"
-  has_many :teaching_activities, :class_name => "TeachingActivity", :foreign_key => "sciper"
+  has_many :achievements,   class_name: "Achievement", foreign_key: "sciper"
+  has_many :educations,     class_name: "Education", foreign_key: "sciper"
+  has_many :experiences,    class_name: "Experience", foreign_key: "sciper"
+  has_many :publications,   class_name: "Publication", foreign_key: "sciper"
+  has_many :social_ids,     class_name: "SocialId", foreign_key: "sciper"
+  has_many :teaching_activities, class_name: "TeachingActivity", foreign_key: "sciper"
 
   # has_one  :account, :class_name => "Account", :foreign_key => "sciper"
   # has_many :offices, :class_name => "Office", :foreign_key => "sciper"
@@ -32,31 +32,31 @@ class Legacy::Cv < Legacy::BaseCv
   end
 
   def show_birthday?
-    self.datenaiss_show == "1"
+    datenaiss_show == "1"
   end
 
   def show_photo?
-    self.photo_show == "1"
+    photo_show == "1"
   end
 
   def any_publication?
-    self.publications.present?
+    publications.present?
   end
 
-  # TODO use default language config for fallback
+  # TODO: use default language config for fallback
   def translated_part(lang)
-    self.translations.where(cvlang: lang).first || self.translated_part.where(cvlang: self.defaultcv).first
+    translations.where(cvlang: lang).first || translated_part.where(cvlang: defaultcv).first
   end
 
   def visible_social_ids
     # needs to be sorted after db fetch because most of the "ordre" entries
     # are NULL. Therefore, we mostly sort by the default order
-    self.social_ids.where("id_show = '1' AND content IS NOT NULL").sort{|a,b| a.order <=> b.order}
+    social_ids.where("id_show = '1' AND content IS NOT NULL").sort { |a, b| a.order <=> b.order }
   end
 
   # forward all getters that cannot be found to self.data (common table)
   # def method_missing(method_id, *arguments, &block)
-  #   if self.data 
+  #   if self.data
   #     if self.data.respond_to?(method_id)
   #       self.data.send(method_id, *arguments)
   #     else
@@ -67,5 +67,4 @@ class Legacy::Cv < Legacy::BaseCv
   #     nil
   #   end
   # end
-
 end

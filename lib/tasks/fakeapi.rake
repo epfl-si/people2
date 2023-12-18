@@ -1,25 +1,25 @@
 # Implement `./bin/rake devel:fakeapi`
 
-require "#{Rails.root}/app/services/application_service"
-require "#{Rails.root}/app/services/epfl_api_service"
-require "#{Rails.root}/app/services/api_accreds_getter"
-require "#{Rails.root}/app/services/api_persons_getter"
+require "#{Rails.root.join('app/services/application_service')}"
+require "#{Rails.root.join('app/services/epfl_api_service')}"
+require "#{Rails.root.join('app/services/api_accreds_getter')}"
+require "#{Rails.root.join('app/services/api_persons_getter')}"
 
 namespace :devel do
   desc "Refresh fakeapi cache data"
   task :fakeapi do
     SCIPERS = [
-      "121769",     # GC / one accred 
+      "121769",     # GC / one accred
       "116080",     # NM / one accred
       "229105",     # Edouard / prof / several accreds
-      "103561",     # Vincenzo / prof / several accreds
+      "103561" # Vincenzo / prof / several accreds
     ]
     NAMES = [
-      "giovanni.cangiani",
+      "giovanni.cangiani"
     ]
     Dir.chdir(Rails.root.join("tmp/fakeapi"))
 
-    apiurl=Rails.application.config_for(:epflapi).real_backend_url
+    apiurl = Rails.application.config_for(:epflapi).real_backend_url
 
     persons_by_sciper = {}
     accreds_by_sciper = {}
@@ -40,7 +40,7 @@ namespace :devel do
 
     persons_by_name = {}
     NAMES.each do |name|
-      g=APIPersonsGetter.for_email(name, apiurl)
+      g = APIPersonsGetter.for_email(name, apiurl)
       v = g.fetch
       persons_by_name[name] = v
     end

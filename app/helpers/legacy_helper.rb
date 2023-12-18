@@ -2,7 +2,7 @@ module LegacyHelper
   def position_with_class_delegate(affiliation)
     [
       "<strong>#{affiliation.t_position(I18n.locale)}</strong>",
-      affiliation.class_delegate.nil? ? nil : t("class_delegate"), 
+      affiliation.class_delegate.nil? ? nil : t("class_delegate"),
       "<span class='font-weight-normal'>#{affiliation.unit.label(I18n.locale)}</span>"
     ].compact.join(", ").html_safe
   end
@@ -17,6 +17,4 @@ module LegacyHelper
       link_to(l, "https://search.epfl.ch/?filter=unit&acro=#{l}")
     end.join(" › ").html_safe
   end
-
-
 end

@@ -18,6 +18,7 @@
 # },
 class Atela::Address
   attr_reader :lines, :country, :category
+
   def initialize(data)
     @full = data['adr']
     @lines = [data['line1'], data['line2'], data['line3'], data['line4'], data['line5']]
@@ -27,27 +28,29 @@ class Atela::Address
     @valid_from = datetime_or_nil(data['valid_from'])
     @valid_to = datetime_or_nil(data['valid_to'])
   end
+
   def full
     @full || @lines.join(" $ ")
   end
+
   # don't use valid? to avoid confusion with AR::valid? that implies validation
   def enabled?
     return false if @valid_from.nil?
-    t = DateTime.now()
-    if @valid_to.nil?
-      return @valid_from < t
-    else
-      return (@valid_from < t) && (t < @valid_to)
-    end
+
+    t = DateTime.now
+    return @valid_from < t if @valid_to.nil?
+
+    (@valid_from < t) && (t < @valid_to)
   end
- private
+
+  private
+
   def datetime_or_nil(s)
     begin
       d = DateTime.strptime(s, '%Y-%m-%d %H:%M:%S')
-    rescue
+    rescue StandardError
       d = nil
     end
     d
   end
-
 end

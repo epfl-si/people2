@@ -7,12 +7,12 @@ class CvController < ApplicationController
   def show
     @page_title = "EPFL - #{@person.display_name}"
     respond_to do |format|
-      format.html { render layout: 'legacy'  }
+      format.html { render layout: 'legacy' }
       format.vcf { render layout: false }
     end
   end
 
- private
+  private
 
   def set_sciper_and_email
     sciper_or_name = params[:sciper_or_name]
@@ -20,9 +20,10 @@ class CvController < ApplicationController
     if sciper_or_name =~ /^\d{6}$/
       @sciper = sciper_or_name
       @email = Legacy::Email.find(@sciper)
-    else 
-      @email = Legacy::Email.where("addrlog = ? OR addrlog LIKE ?", "#{sciper_or_name}@epfl.ch", "#{sciper_or_name}@epfl.%").first
-      @sciper=@email.sciper unless @email.nil?
+    else
+      @email = Legacy::Email.where("addrlog = ? OR addrlog LIKE ?", "#{sciper_or_name}@epfl.ch",
+                                   "#{sciper_or_name}@epfl.%").first
+      @sciper = @email.sciper unless @email.nil?
     end
   end
 
@@ -36,7 +37,7 @@ class CvController < ApplicationController
     @cv = Cv.for_sciper(@sciper)
     @editable = !@cv.nil? && @person.can_edit_profile?
 
-    # TODO: figure out why this does not work anymore. 
+    # TODO: figure out why this does not work anymore.
     # if @person.possibly_teacher?
     #   @ta = Isa::Teaching.new(@sciper)
     # else
@@ -44,20 +45,19 @@ class CvController < ApplicationController
     # end
 
     # TODO: would a sort of "PublicSection" class make things easier here ?
-    #       keep in mind that here we only manage boxes but we will have 
+    #       keep in mind that here we only manage boxes but we will have
     #       more content like awards, work experiences, infoscience pubs etc.
     #       that is not just a simple free text box with a title.
-    if @editable
-      # get sections that contain at least one box in the current locale 
-      @cvlocale = @cv.force_lang || I18n.locale
-      @boxes = @cv.boxes.visible.includes(:section).select{|b| b.have_content?(@cvlocale)}.sort{|a,b| [a.section.position, a.position] <=> [b.section.position, b.position]}
-      @boxes_by_section = @boxes.group_by{|b| b.section}
+    return unless @editable
 
+    # get sections that contain at least one box in the current locale
+    @cvlocale = @cv.force_lang || I18n.locale
+    @boxes = @cv.boxes.visible.includes(:section).select do |b|
+               b.have_content?(@cvlocale)
+             end.sort { |a, b| [a.section.position, a.position] <=> [b.section.position, b.position] }
+    @boxes_by_section = @boxes.group_by { |b| b.section }
 
-
-      # @contact_sections = []
-      # @main_sections = []
-
-    end    
+    # @contact_sections = []
+    # @main_sections = []
   end
 end

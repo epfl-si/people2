@@ -1,9 +1,9 @@
 class Legacy::Infoscience < Legacy::BaseCv
   self.table_name = 'boxes'
   self.primary_key = 'sciper'
-  belongs_to :cv, :class_name => "Cv", :foreign_key => "sciper"
+  belongs_to :cv, class_name: "Cv", foreign_key: "sciper"
 
-  URL_RE = %r{(http|https)://infoscience\-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?}
+  URL_RE = %r{(http|https)://infoscience-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?}
 
   scope  :visible, -> { where(box_show: '1') }
 
@@ -17,6 +17,7 @@ class Legacy::Infoscience < Legacy::BaseCv
 
   def html_content
     return nil if url.nil?
+
     @html_content ||= begin
       c = InfoscienceGetter.call(url)
       c = c.to_s.force_encoding("UTF-8") unless c.nil? or c.encoding == "UTF-8"
@@ -24,11 +25,9 @@ class Legacy::Infoscience < Legacy::BaseCv
     end
   end
 
-# content of the box is just the infoscience url and must validate the following regex
-# return 1 if $src =~ m#^(http|https)://infoscience\-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?#;
-
+  # content of the box is just the infoscience url and must validate the following regex
+  # return 1 if $src =~ m#^(http|https)://infoscience\-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?#;
 end
-
 
 # if ($box->{sys} eq 'I' && $box->{src} =~ m#$URLinfoscience#i) {
 #   if ($USE_INFOCACHE) {

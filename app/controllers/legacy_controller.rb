@@ -1,25 +1,25 @@
 class LegacyController < ApplicationController
   protect_from_forgery
-  before_action :set_sciper_and_email, only: [:show0, :show]
-  before_action :set_show_data, only: [:show0, :show]
+  before_action :set_sciper_and_email, only: %i[show0 show]
+  before_action :set_show_data, only: %i[show0 show]
   layout "legacy"
 
   def show0
     @page_title = "EPFL - #{@person.display_name}"
     respond_to do |format|
-      format.html { render layout: 'legacy0'  }
+      format.html { render layout: 'legacy0' }
     end
   end
 
   def show
     @page_title = "EPFL - #{@person.display_name}"
     respond_to do |format|
-      format.html { render layout: 'legacy'  }
+      format.html { render layout: 'legacy' }
       format.vcf { render layout: false }
     end
   end
 
- private
+  private
 
   def set_sciper_and_email
     sciper_or_name = params[:sciper_or_name]
@@ -27,9 +27,10 @@ class LegacyController < ApplicationController
     if sciper_or_name =~ /^\d{6}$/
       @sciper = sciper_or_name
       @email = Legacy::Email.find(@sciper)
-    else 
-      @email = Legacy::Email.where("addrlog = ? OR addrlog LIKE ?", "#{sciper_or_name}@epfl.ch", "#{sciper_or_name}@epfl.%").first
-      @sciper=@email.sciper unless @email.nil?
+    else
+      @email = Legacy::Email.where("addrlog = ? OR addrlog LIKE ?", "#{sciper_or_name}@epfl.ch",
+                                   "#{sciper_or_name}@epfl.%").first
+      @sciper = @email.sciper unless @email.nil?
     end
   end
 
@@ -43,21 +44,17 @@ class LegacyController < ApplicationController
     @cv = Legacy::Cv.where(sciper: @sciper).first
     @editable = !@cv.nil? && @person.can_edit_profile?
 
-    if @person.possibly_teacher?
-      @ta = Isa::Teaching.new(@sciper)
-    else
-      @ta = nil
+    @ta = (Isa::Teaching.new(@sciper) if @person.possibly_teacher?)
+    return unless @editable
+
+    @tcv = @cv.translated_part(I18n.locale)
+    bb = @tcv.boxes.visible.with_content.order(:position, :ordre)
+    @boxes = {}
+    %w[K B P R T].each do |k|
+      @boxes[k] = bb.select { |b| b.position == k }
     end
-    if @editable
-      @tcv = @cv.translated_part(I18n.locale)
-      bb = @tcv.boxes.visible.with_content.order(:position, :ordre)
-      @boxes={}
-      ['K', 'B', 'P', 'R', 'T'].each do |k|
-        @boxes[k] = bb.select{|b| b.position == k}
-      end
-      unless @boxes['B'].empty?
-        @boxes['B'].first.label = "" if @boxes['B'].first.label == t("biography")
-      end
-    end
+    return if @boxes['B'].empty?
+
+    @boxes['B'].first.label = "" if @boxes['B'].first.label == t("biography")
   end
 end

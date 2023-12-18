@@ -1,5 +1,4 @@
-module Legacy 
-
+module Legacy
   class LegacyBase < ApplicationRecord
     self.abstract_class = true
     self.inheritance_column = :_type_disabled
@@ -57,5 +56,4 @@ module Legacy
     self.abstract_class = true
     establish_connection :isa
   end
-
 end

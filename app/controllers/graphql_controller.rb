@@ -7,10 +7,11 @@ class GraphqlController < APIController
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = HelloRailsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = HelloRailsSchema.execute(query, variables:, context:, operation_name:)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
+
     handle_error_in_development(e)
   end
 
@@ -40,6 +41,6 @@ class GraphqlController < APIController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
   end
 end

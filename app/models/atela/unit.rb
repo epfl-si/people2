@@ -13,6 +13,7 @@
 # }
 class Atela::Unit
   attr_reader :id, :label, :level, :name
+
   def initialize(data)
     @id = data['id']
     @label = data['label']

@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module HelloRails
   class Application < Rails::Application
-
     config.encoding = "utf-8"
 
     # Initialize configuration defaults for originally generated Rails version.
@@ -23,14 +22,14 @@ module HelloRails
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.assets.configure do |env|
-      SprocketsRequireInGemExtension::inject_for_javascript(env)
+      SprocketsRequireInGemExtension.inject_for_javascript(env)
     end
 
     config.active_storage.draw_routes = true
 
     # TODO: reverto to default vips for image processing
     # this is not the default because it is slower but it avoids having to
-    # install libvips which has tons of deps...  
+    # install libvips which has tons of deps...
     config.active_storage.variant_processor = :mini_magick
 
     # config.middleware.use Rack::Locale
@@ -39,9 +38,7 @@ module HelloRails
     config.middleware.delete ActionDispatch::Cookies
     config.middleware.delete ActionDispatch::Session::CookieStore
     config.session_store :disabled
-    if Rails.env.development?
-      GraphiQL::Rails.config.csrf = false
-    end
+    GraphiQL::Rails.config.csrf = false if Rails.env.development?
 
     # config.generators do |g|
     #   g.helper false

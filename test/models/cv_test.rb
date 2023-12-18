@@ -1,7 +1,7 @@
 require "test_helper"
 
 class CvTest < ActiveSupport::TestCase
-  test "shy person does not provide his personal photo url" do 
+  test "shy person does not provide his personal photo url" do
     u = cv(:edouard)
     assert_equal(false, u.show_photo)
     assert_nil(u.photo_url)
@@ -24,5 +24,4 @@ class CvTest < ActiveSupport::TestCase
     assert_not_nil(u.photo_url)
     assert_no_match(/camipro-photos\.epfl\.ch/, u.photo_url)
   end
-
 end

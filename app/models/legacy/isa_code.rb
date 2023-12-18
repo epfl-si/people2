@@ -4,21 +4,21 @@ class Legacy::IsaCode < Legacy::BaseDinfo
 
   def self.load_all_codes
     @all_codes ||= begin
-      cc={
-        'SECTION'   => {},
+      cc = {
+        'SECTION' => {},
         'SECTIONEN' => {},
-        'PEDAGO'    => {},
-        'PEDAGOEN'  => {},
+        'PEDAGO' => {},
+        'PEDAGOEN' => {}
       }
-      where(type: ['SECTION','SECTIONENG','PEDAGO','PEDAGOENG']).each do |c|
+      where(type: %w[SECTION SECTIONENG PEDAGO PEDAGOENG]).each do |c|
         cc[c.type][c.code] = c.libelle
       end
       cc
     end
   end
 
-  def self.t_pedago(k, lang=I18n.locale)
-    codes=load_all_codes
+  def self.t_pedago(k, lang = I18n.locale)
+    codes = load_all_codes
     t = case lang
         when "fr"
           "PEDAGO"
@@ -30,8 +30,8 @@ class Legacy::IsaCode < Legacy::BaseDinfo
     codes[t][k]
   end
 
-  def self.t_section(k, lang=I18n.locale)
-    codes=load_all_codes
+  def self.t_section(k, lang = I18n.locale)
+    codes = load_all_codes
     t = case lang
         when "fr"
           "SECTION"
@@ -42,9 +42,6 @@ class Legacy::IsaCode < Legacy::BaseDinfo
         end
     codes[t][k]
   end
-
-
-
 
   # def self.pedagos_by_code(lang=I18n.locale)
   #   t = case lang
@@ -121,7 +118,6 @@ end
 
 #    my $ISAPedago = $lang eq 'en' ? 'PEDAGOENG' :'PEDAGO';
 #    my $ISASect   = $lang eq 'en' ? 'SECTIONENG' :'SECTION';
-
 
 #    my $dbh = ORAConnect ($self, 'cours');
 #    return {
@@ -208,7 +204,6 @@ end
 #       # I make it optional but empty by default. Let's see what brakes.
 #       # next unless $data->{X_OBJECTIFS};
 #       $data->{X_OBJECTIFS} = " " unless $data->{X_OBJECTIFS};
-
 
 #       if ($INDEX ne $crtINDEX) {
 #         push @outloop, {

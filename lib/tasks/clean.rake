@@ -7,13 +7,13 @@ namespace :devel do
     Rake::Task["javascript:clobber"].invoke
 
     ["node_modules", "vendor/bundle"].each do |dir|
-      FileUtils.remove_dir(dir) if File.exists?(dir)
+      FileUtils.remove_dir(dir) if File.exist?(dir)
     end
 
     Rake::Task["tmp:clear"].invoke
     (["tmp/development_secret.txt", "tmp/restart.txt"] +
-     Dir.glob("app/assets/builds/*")). each do |path|
-      File.delete(path) if File.exists?(path)
+     Dir.glob("app/assets/builds/*")).each do |path|
+      File.delete(path) if File.exist?(path)
     end
   end
 
