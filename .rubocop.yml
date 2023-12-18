@@ -1,0 +1,6 @@
+require:
+  - rubocop-rails
+Style/StringLiterals:
+  Enabled: false
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: false

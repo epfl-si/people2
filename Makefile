@@ -90,6 +90,14 @@ test-system: testup
 test:
 	docker-compose -f $(COMPOSE) exec -e RAILS_ENV=test webapp ./bin/rails test
 
+
+cop:
+	bundle exec rubocop
+
+docop:
+	bundle exec rubocop --autocorrect
+
+
 # ------------------------------------------------------------------------ cache
 # turn on/off cache in dev (default is off)
 cacheon:

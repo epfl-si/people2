@@ -80,6 +80,11 @@ group :development do
   gem "brakeman"
 
   gem "rails-mermaid_erd"
+
+  # Code Linter / checker
+  gem "rubocop", require: false
+  gem 'rubocop-rails', require: false
+
 end
 
 group :test do
