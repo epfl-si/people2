@@ -1,11 +1,15 @@
-class Legacy::Policy < Legacy::BaseAccred
-  self.table_name = 'accreds_properties'
-  self.primary_key = nil
+# frozen_string_literal: true
 
-  belongs_to :person, class_name: "Person", foreign_key: "persid"
-  belongs_to :property, class_name: "Property", foreign_key: "propid"
+module Legacy
+  class Policy < Legacy::BaseAccred
+    self.table_name = 'accreds_properties'
+    self.primary_key = nil
 
-  default_scope do
-    where(finval: nil).includes(:property)
+    belongs_to :person, class_name: 'Person', foreign_key: 'persid', inverse_of: :policies
+    belongs_to :property, class_name: 'Property', foreign_key: 'propid', inverse_of: false
+
+    default_scope do
+      where(finval: nil).includes(:property)
+    end
   end
 end

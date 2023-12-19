@@ -1,23 +1,26 @@
+# frozen_string_literal: true
+
 # Implement `./bin/rake devel:fakeapi`
 
-require "#{Rails.root.join('app/services/application_service')}"
-require "#{Rails.root.join('app/services/epfl_api_service')}"
-require "#{Rails.root.join('app/services/api_accreds_getter')}"
-require "#{Rails.root.join('app/services/api_persons_getter')}"
+require Rails.root.join('app/services/application_service').to_s
+require Rails.root.join('app/services/epfl_api_service').to_s
+require Rails.root.join('app/services/api_accreds_getter').to_s
+require Rails.root.join('app/services/api_persons_getter').to_s
+
+SCIPERS = [
+  '121769',     # GC / one accred
+  '116080',     # NM / one accred
+  '229105',     # Edouard / prof / several accreds
+  '103561' # Vincenzo / prof / several accreds
+].freeze
+NAMES = [
+  'giovanni.cangiani'
+].freeze
 
 namespace :devel do
-  desc "Refresh fakeapi cache data"
-  task :fakeapi do
-    SCIPERS = [
-      "121769",     # GC / one accred
-      "116080",     # NM / one accred
-      "229105",     # Edouard / prof / several accreds
-      "103561" # Vincenzo / prof / several accreds
-    ]
-    NAMES = [
-      "giovanni.cangiani"
-    ]
-    Dir.chdir(Rails.root.join("tmp/fakeapi"))
+  desc 'Refresh fakeapi cache data'
+  task fakeapi: :environment do
+    Dir.chdir(Rails.root.join('tmp/fakeapi'))
 
     apiurl = Rails.application.config_for(:epflapi).real_backend_url
 

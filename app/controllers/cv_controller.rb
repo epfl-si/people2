@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class CvController < ApplicationController
   protect_from_forgery
   before_action :set_sciper_and_email, only: [:show]
   before_action :set_show_data, only: [:show]
-  layout "legacy"
+  layout 'legacy'
 
   def show
     @page_title = "EPFL - #{@person.display_name}"
@@ -21,7 +23,7 @@ class CvController < ApplicationController
       @sciper = sciper_or_name
       @email = Legacy::Email.find(@sciper)
     else
-      @email = Legacy::Email.where("addrlog = ? OR addrlog LIKE ?", "#{sciper_or_name}@epfl.ch",
+      @email = Legacy::Email.where('addrlog = ? OR addrlog LIKE ?', "#{sciper_or_name}@epfl.ch",
                                    "#{sciper_or_name}@epfl.%").first
       @sciper = @email.sciper unless @email.nil?
     end
@@ -52,10 +54,13 @@ class CvController < ApplicationController
 
     # get sections that contain at least one box in the current locale
     @cvlocale = @cv.force_lang || I18n.locale
-    @boxes = @cv.boxes.visible.includes(:section).select do |b|
-               b.have_content?(@cvlocale)
-             end.sort { |a, b| [a.section.position, a.position] <=> [b.section.position, b.position] }
-    @boxes_by_section = @boxes.group_by { |b| b.section }
+    unsorted_boxes = @cv.boxes.visible.includes(:section).select do |b|
+      b.content?(@cvlocale)
+    end
+    @boxes = unsorted_boxes.sort do |a, b|
+      [a.section.position, a.position] <=> [b.section.position, b.position]
+    end
+    @boxes_by_section = @boxes.group_by(&:section)
 
     # @contact_sections = []
     # @main_sections = []

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InfoscienceGetter < ApplicationService
   attr_reader :url
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
 class AtelaAccredsGetter < ApplicationService
   attr_reader :url, :id
@@ -9,7 +11,7 @@ class AtelaAccredsGetter < ApplicationService
 
   def req_params
     {
-      'authorization' => "People.key " + Rails.application.config_for(:epflapi).atela_key
+      'authorization' => "People.key #{Rails.application.config_for(:epflapi).atela_key}"
     }
   end
 end

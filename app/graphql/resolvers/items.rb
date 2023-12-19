@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Resolvers
   class Items < GraphQL::Schema::Resolver
     type Types::ItemType.connection_type, null: false

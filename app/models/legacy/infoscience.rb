@@ -1,32 +1,36 @@
-class Legacy::Infoscience < Legacy::BaseCv
-  self.table_name = 'boxes'
-  self.primary_key = 'sciper'
-  belongs_to :cv, class_name: "Cv", foreign_key: "sciper"
+# frozen_string_literal: true
 
-  URL_RE = %r{(http|https)://infoscience-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?}
+module Legacy
+  class Infoscience < Legacy::BaseCv
+    self.table_name = 'boxes'
+    self.primary_key = 'sciper'
+    belongs_to :cv, class_name: 'Cv', foreign_key: 'sciper', inverse_of: false
 
-  scope  :visible, -> { where(box_show: '1') }
+    URL_RE = %r{(http|https)://infoscience-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?}
 
-  default_scope do
-    where(position: 'P', sys: 'I')
-  end
+    scope  :visible, -> { where(box_show: '1') }
 
-  def url
-    URL_RE.match?(src) ? src : nil
-  end
-
-  def html_content
-    return nil if url.nil?
-
-    @html_content ||= begin
-      c = InfoscienceGetter.call(url)
-      c = c.to_s.force_encoding("UTF-8") unless c.nil? or c.encoding == "UTF-8"
-      c
+    default_scope do
+      where(position: 'P', sys: 'I')
     end
-  end
 
-  # content of the box is just the infoscience url and must validate the following regex
-  # return 1 if $src =~ m#^(http|https)://infoscience\-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?#;
+    def url
+      URL_RE.match?(src) ? src : nil
+    end
+
+    def html_content
+      return nil if url.nil?
+
+      @html_content ||= begin
+        c = InfoscienceGetter.call(url)
+        c = c.to_s.force_encoding('UTF-8') unless c.nil? || (c.encoding == 'UTF-8')
+        c
+      end
+    end
+
+    # content of the box is just the infoscience url and must validate the following regex
+    # return 1 if $src =~ m#^(http|https)://infoscience\-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?#;
+  end
 end
 
 # if ($box->{sys} eq 'I' && $box->{src} =~ m#$URLinfoscience#i) {

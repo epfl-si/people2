@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # accred part of getAllAccredsSolved
 #       accreds.*,
 #       statuses.`name`         AS statusname,
@@ -18,72 +20,74 @@
 # 363674  50099         5      15  NULL
 # 363674  50133         5      15  NULL
 
-class Legacy::Accreditation < Legacy::BaseAccred
-  self.table_name = 'accreds'
-  self.primary_key = 'persid'
-  belongs_to :person, class_name: "Person", foreign_key: "persid", inverse_of: :accreds
-  belongs_to :unit, class_name: "Unit", foreign_key: "unitid"
-  belongs_to :position, class_name: "Position", foreign_key: "posid"
-  belongs_to :status, class_name: "Status", foreign_key: "statusid"
-  belongs_to :kind, class_name: "PersonClass", foreign_key: "classid"
+module Legacy
+  class Accreditation < Legacy::BaseAccred
+    self.table_name = 'accreds'
+    self.primary_key = 'persid'
+    belongs_to :person, class_name: 'Person', foreign_key: 'persid', inverse_of: :accreds
+    belongs_to :unit, class_name: 'Unit', foreign_key: 'unitid', inverse_of: :accreditations
+    belongs_to :position, class_name: 'Position', foreign_key: 'posid', inverse_of: false
+    belongs_to :status, class_name: 'Status', foreign_key: 'statusid', inverse_of: false
+    belongs_to :kind, class_name: 'PersonClass', foreign_key: 'classid', inverse_of: false
 
-  default_scope do
-    joins(:position, :status, :kind).includes(:unit).where(finval: nil)
-  end
-
-  # TODO: these arrays could become obsolete if server never reloads
-  def self.can_edit_profile_with_given_accred?(a)
-    @can_edit_position_ids ||= Legacy::Position.where(labelfr: 'Professeur honoraire').map { |p| p.id }
-    @can_edit_status_ids ||= Legacy::Status.where(labelen: %w[Staff Student]).map { |s| s.id }
-    @can_edit_status_ids.include?(a.statusid) or @can_edit_position_ids.include?(a.posid)
-  end
-
-  def self.is_student_with_given_accred?(a)
-    @student_status_ids ||= Legacy::Status.where(labelen: ['Student', 'External student']).map { |s| s.id }
-    @student_status_ids.include?(a.statusid)
-  end
-
-  def unit_id
-    unitid
-  end
-
-  def sciper
-    persid
-  end
-
-  def order
-    ordre
-  end
-
-  def can_edit_profile?
-    Legacy::Accreditation.can_edit_profile_with_given_accred?(self)
-  end
-
-  def is_student?
-    Legacy::Accreditation.is_student_with_given_accred?(self)
-  end
-
-  # TODO: possibly move this to a Presenter or Decorator class (see patterns)
-  def t_position(lang = I18n.locale)
-    gender = person.gender
-    tablegender = gender == "female" ? "xx" : lang
-    if position.nil?
-      I18n.t "student.#{gender}"
-    else
-      position["label#{tablegender}"]
+    default_scope do
+      joins(:position, :status, :kind).includes(:unit).where(finval: nil)
     end
-  end
 
-  def hierarchy
-    unit.present? ? unit.hierarchie : nil
-  end
+    # TODO: these arrays could become obsolete if server never reloads
+    def self.can_edit_profile_with_given_accred?(a)
+      @can_edit_position_ids ||= Legacy::Position.where(labelfr: 'Professeur honoraire').map(&:id)
+      @can_edit_status_ids ||= Legacy::Status.where(labelen: %w[Staff Student]).map(&:id)
+      @can_edit_status_ids.include?(a.statusid) or @can_edit_position_ids.include?(a.posid)
+    end
 
-  def class_delegate
-    se, pe = unit.sigle.split("-")
-    d = person.delegate
-    return nil if d.nil? or d.section != se or d.periode != pe
+    def self.student_with_given_accred?(a)
+      @student_status_ids ||= Legacy::Status.where(labelen: ['Student', 'External student']).map(&:id)
+      @student_status_ids.include?(a.statusid)
+    end
 
-    d
+    def unit_id
+      unitid
+    end
+
+    def sciper
+      persid
+    end
+
+    def order
+      ordre
+    end
+
+    def can_edit_profile?
+      Legacy::Accreditation.can_edit_profile_with_given_accred?(self)
+    end
+
+    def student?
+      Legacy::Accreditation.student_with_given_accred?(self)
+    end
+
+    # TODO: possibly move this to a Presenter or Decorator class (see patterns)
+    def t_position(lang = I18n.locale)
+      gender = person.gender
+      tablegender = gender == 'female' ? 'xx' : lang
+      if position.nil?
+        I18n.t "student.#{gender}"
+      else
+        position["label#{tablegender}"]
+      end
+    end
+
+    def hierarchy
+      unit.present? ? unit.hierarchie : nil
+    end
+
+    def class_delegate
+      se, pe = unit.sigle.split('-')
+      d = person.delegate
+      return nil if d.nil? || (d.section != se) || (d.periode != pe)
+
+      d
+    end
   end
 end
 
@@ -91,7 +95,8 @@ end
 #   my ($self, $type, $val) = @_;
 #   my $persid = $val if $type eq 'persid';
 #   my $unitid = $val if $type eq 'unitid';
-#   #FIXME if there's a typo in type the method will return the whole consolidated table and it will take a loooooong time
+#   #FIXME if there's a typo in type the method will return the whole
+#   # consolidated table and it will take a loooooong time
 #   my $sql = qq{
 #     SELECT
 #       accreds.*,
@@ -122,8 +127,10 @@ end
 #       INNER JOIN statuses            ON              statuses.id = accreds.statusid
 #       LEFT OUTER JOIN classes        ON               classes.id = accreds.classid
 #       LEFT OUTER JOIN positions      ON             positions.id = accreds.posid
-#       LEFT OUTER JOIN dinfo.annu     ON (dinfo.annu.sciper = accreds.persid AND dinfo.annu.unite = accreds.unitid)
-#       LEFT OUTER JOIN dinfo.adrspost ON (dinfo.adrspost.sciper = accreds.persid AND dinfo.adrspost.unite = accreds.unitid)
+#       LEFT OUTER JOIN dinfo.annu
+#            ON (dinfo.annu.sciper = accreds.persid AND dinfo.annu.unite = accreds.unitid)
+#       LEFT OUTER JOIN dinfo.adrspost
+#            ON (dinfo.adrspost.sciper = accreds.persid AND dinfo.adrspost.unite = accreds.unitid)
 #   };
 #   my ($debcond, $fincond, @dateconds);
 #   $debcond = "(accreds.debval is NULL or accreds.debval <= now())";
@@ -142,13 +149,15 @@ end
 #       if (ref $unitid eq 'ARRAY') {
 #           $sql .= ' and (0 ';
 #           foreach my $uid (@{$unitid}) {
-#               $sql .= 'OR ? IN (dinfo.allunits.level1, dinfo.allunits.level2, dinfo.allunits.level3, dinfo.allunits.level4)';
+#               $sql .= 'OR ? IN (dinfo.allunits.level1,
+#     dinfo.allunits.level2, dinfo.allunits.level3, dinfo.allunits.level4)';
 #               push @args, $uid;
 #           }
 #           $sql .= ')';
 #       }
 #       else {
-#           $sql .= ' and ? IN (dinfo.allunits.level1, dinfo.allunits.level2, dinfo.allunits.level3, dinfo.allunits.level4)';
+#           $sql .= ' and ? IN (dinfo.allunits.level1,
+#      dinfo.allunits.level2, dinfo.allunits.level3, dinfo.allunits.level4)';
 #           @args = $unitid;
 #       }
 #   }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # {
 #   "description": "Bureau",
 #   "from_default": "true",
@@ -7,29 +9,31 @@
 #   "room_order": 1,
 #   "type": "internal"
 # },
-class Atela::Room
-  attr_reader :id, :description, :abbr, :order, :category
+module Atela
+  class Room
+    attr_reader :id, :description, :abbr, :order, :category
 
-  def initialize(data)
-    @id = data['room_id']
-    @description = data['description']
-    @abbr = data['room_abr']
-    @order = data['room_order'].to_i
-    @category = data['type']
-    @hidden = data['room_hidden'].to_i != 0
-  end
+    def initialize(data)
+      @id = data['room_id']
+      @description = data['description']
+      @abbr = data['room_abr']
+      @order = data['room_order'].to_i
+      @category = data['type']
+      @hidden = data['room_hidden'].to_i != 0
+    end
 
-  def label
-    @abbr
-  end
+    def label
+      @abbr
+    end
 
-  # TODO: use config variable for EPFL plan base address
-  def url
-    # "https://plan.epfl.ch/?"+@abbr.to_query(:room)
-    "https://plan.epfl.ch/?room=#{@abbr.gsub(' ', '%20')}"
-  end
+    # TODO: use config variable for EPFL plan base address
+    def url
+      # "https://plan.epfl.ch/?"+@abbr.to_query(:room)
+      "https://plan.epfl.ch/?room=#{@abbr.gsub(' ', '%20')}"
+    end
 
-  def hidden?
-    @hidden
+    def hidden?
+      @hidden
+    end
   end
 end

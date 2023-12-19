@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :register_client_origin
@@ -5,6 +7,12 @@ class ApplicationController < ActionController::Base
   # INTRANET_RE = Regexp.new(ENV.fetch("INTRANET_RE", '^128\.17[89]'))
 
   def homepage; end
+
+  def unique_counter_value
+    @indx ||= 0
+    @indx += 1
+    @indx
+  end
 
   private
 

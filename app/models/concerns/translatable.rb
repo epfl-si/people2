@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Idea taken from:
 # https://phrase.com/blog/posts/localizing-rails-active-record-models/
 module Translatable
@@ -11,7 +13,7 @@ module Translatable
       end
     end
 
-    def self.has_translated_rich_text(*attributes)
+    def self.translated_rich_text(*attributes)
       attributes.each do |attribute|
         %w[en fr].each { |l| has_rich_text "#{attribute}_#{l}" }
         define_method("#{attribute}_body") do
@@ -26,12 +28,12 @@ module Translatable
   end
 
   def translated_body_for(attribute, locale = I18n.locale)
-    puts "tbf attr=#{attribute}, locale=#{locale}"
-    puts "self: #{self}"
+    Rails.logger.debug "tbf attr=#{attribute}, locale=#{locale}"
+    Rails.logger.debug "self: #{self}"
     t = send("#{attribute}_#{locale}")
-    puts "t1 = #{t}"
+    Rails.logger.debug "t1 = #{t}"
     t = send("#{attribute}_#{I18n.default_locale}") if t.id.nil? || t.body.empty? && locale != I18n.default_locale
-    puts "t2 = #{t}"
+    Rails.logger.debug "t2 = #{t}"
     t.body
   end
 end

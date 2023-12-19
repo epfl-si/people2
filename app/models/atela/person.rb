@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # person: {
 #   "firstname": "Giovanni",
 #   "name": "Cangiani",
@@ -8,76 +10,78 @@
 # units: [{...},{...}],
 # default_phone: {...},        -> @phone
 # default_room: {...},         -> @room
-class Atela::Person
-  attr_reader :first_name, :family_name, :sciper, :username, :phone, :room, :accreds
+module Atela
+  class Person
+    attr_reader :first_name, :family_name, :sciper, :username, :phone, :room, :accreds
 
-  MAX_ATTEMPTS = 1
-  def initialize(sciper)
-    @sciper = sciper
-    @accreds = {}
-    @first_name = "NA"
-    @family_name = "NA"
-    @username = "NA"
-    @phone = nil
-    @room = nil
+    MAX_ATTEMPTS = 1
+    def initialize(sciper)
+      @sciper = sciper
+      @accreds = {}
+      @first_name = 'NA'
+      @family_name = 'NA'
+      @username = 'NA'
+      @phone = nil
+      @room = nil
 
-    data = load(sciper)
+      data = load(sciper)
 
-    if data.nil?
-      Rails.logger.warn("failed to find Atela data for sciper #{sciper}")
-    else
-      parse(data)
-    end
-  end
-
-  def sorted_accreds
-    @accreds.values.sort { |a, b| a.order <=> b.order }
-  end
-
-  def display_name
-    @first_name + " " + @family_name
-  end
-
-  private
-
-  def load(sciper)
-    @attempts ||= 0
-    return nil if @attempts >= MAX_ATTEMPTS
-
-    @attempts += 1
-    AtelaAccredsGetter.call(sciper) || nil
-  end
-
-  def parse(data)
-    if d = data['person']
-      @first_name = d['firstname']
-      @family_name = d['name']
-      @username = d['username']
-    else
-      Rails.logger.error("Data from Atela for #{@sciper} does not contain minimal person data")
-    end
-    units = {}
-    if d = data['units']
-      # units = d.map{|u| AtelaUnit.new(d)}.map{|u| [u.id, u]}.to_h
-      d.each do |ud|
-        u = Atela::Unit.new(ud)
-        units[u.id] = u
+      if data.nil?
+        Rails.logger.warn("failed to find Atela data for sciper #{sciper}")
+      else
+        parse(data)
       end
     end
-    if d = data['accreds']
-      d.each do |k, v|
-        a = Atela::Accred.new(v)
-        u = units[k]
-        a.unit = u unless u.nil?
-        @accreds[k] = a
-      end
-    end
-    if d = data['default_phone']
-      @phone = Atela::Phone.new(d)
-    end
-    return unless d = data['default_room']
 
-    @room = Atela::Room.new(d)
+    def sorted_accreds
+      @accreds.values.sort { |a, b| a.order <=> b.order }
+    end
+
+    def display_name
+      "#{@first_name} #{@family_name}"
+    end
+
+    private
+
+    def load(sciper)
+      @attempts ||= 0
+      return nil if @attempts >= MAX_ATTEMPTS
+
+      @attempts += 1
+      AtelaAccredsGetter.call(sciper) || nil
+    end
+
+    def parse(data)
+      if (d = data['person'])
+        @first_name = d['firstname']
+        @family_name = d['name']
+        @username = d['username']
+      else
+        Rails.logger.error("Data from Atela for #{@sciper} does not contain minimal person data")
+      end
+      units = {}
+      if (d = data['units'])
+        # units = d.map{|u| AtelaUnit.new(d)}.map{|u| [u.id, u]}.to_h
+        d.each do |ud|
+          u = Atela::Unit.new(ud)
+          units[u.id] = u
+        end
+      end
+      if (d = data['accreds'])
+        d.each do |k, v|
+          a = Atela::Accred.new(v)
+          u = units[k]
+          a.unit = u unless u.nil?
+          @accreds[k] = a
+        end
+      end
+      if (d = data['default_phone'])
+        @phone = Atela::Phone.new(d)
+      end
+      return unless (d = data['default_room'])
+
+      @room = Atela::Room.new(d)
+    end
   end
 end
 

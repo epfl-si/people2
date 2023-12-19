@@ -1,32 +1,29 @@
+# frozen_string_literal: true
 
-
-
-class FakeAPIController < ActionController::Base
+class FakeAPIController < ApplicationController
   # person data for one sciper
-  # /fakeapi/persons/:sciper 
+  # /fakeapi/persons/:sciper
   def person
     respond_to do |format|
-      format.json { render json: {sciper: params[:sciper] } }
+      format.json { render json: { sciper: params[:sciper] } }
     end
-  end 
+  end
+
   # list of person data for query data
-  # /fakeapi/persons         
-  def persons
-  end
+  # /fakeapi/persons
+  def persons; end
+
   # accred for one sciper
-  # /fakeapi/accreds/:sciper 
-  def accred
-  end
+  # /fakeapi/accreds/:sciper
+  def accred; end
+
   # list of accreds data for query data
-  # /fakeapi/accreds         
-  def accreds
-  end
+  # /fakeapi/accreds
+  def accreds; end
 
-  PERSON_FAKEDATA = File.read(Rails.root.join("path/to/gcs.keyfile")
-    persons: {
+  # PERSON_FAKEDATA = File.read(Rails.root.join("path/to/gcs.keyfile")
+  #   persons: {
 
-    }
-  } 
-
-
+  #   }
+  # }
 end

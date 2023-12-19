@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # {
 #   "address": {
 #     "line1": "EPFL VPO-SI ISAS-FSD",
@@ -11,13 +13,15 @@
 #   "level": 4,
 #   "sigle": "ISAS-FSD"
 # }
-class Atela::Unit
-  attr_reader :id, :label, :level, :name
+module Atela
+  class Unit
+    attr_reader :id, :label, :level, :name
 
-  def initialize(data)
-    @id = data['id']
-    @label = data['label']
-    @level = data['level']
-    @name = data['sigle']
+    def initialize(data)
+      @id = data['id']
+      @label = data['label']
+      @level = data['level']
+      @name = data['sigle']
+    end
   end
 end

@@ -1,7 +1,9 @@
-class RichTextBox < Box
-  has_translated_rich_text :content
+# frozen_string_literal: true
 
-  def have_content?(locale = I18n.default_locale)
+class RichTextBox < Box
+  translated_rich_text :content
+
+  def content?(locale = I18n.default_locale)
     super(locale) && send("content_#{locale}?")
   end
 end

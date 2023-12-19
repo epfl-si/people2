@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'digest'
 
 # Remember to touch tmp/caching-dev.txt for caching to work in dev
@@ -33,7 +35,7 @@ class ApplicationService
     res = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
       http.request(@req)
     end
-    puts "res=#{res}"
+    Rails.logger.debug "res=#{res}"
     case res
     when Net::HTTPOK
       res.body

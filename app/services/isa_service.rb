@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IsaService < ApplicationService
   attr_reader :url, :id
 

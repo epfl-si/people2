@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Box < ApplicationRecord
   include Translatable
-  belongs_to :section, class_name: "Section"
-  belongs_to :cv, class_name: "Cv"
+  belongs_to :section, class_name: 'Section'
+  belongs_to :cv, class_name: 'Cv'
   # before_create :ensure_sciper
   scope :visible, -> { where(visible: true) }
   acts_as_list scope: %i[cv section frozen]
@@ -19,7 +21,8 @@ class Box < ApplicationRecord
     )
   end
 
-  def have_content?(_locale = I18n.default_locale)
+  # TODO: implement this
+  def content?(_locale = I18n.default_locale)
     true
   end
 

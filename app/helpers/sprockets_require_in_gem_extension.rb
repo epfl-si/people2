@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SprocketsRequireInGemExtension
   # This inherited class implements the `require_in_gem`
   # Sprockets directive (in addition to all the pristine Sprockets
@@ -25,6 +27,6 @@ module SprocketsRequireInGemExtension
   end
 
   def self.inject_for_javascript(env)
-    inject(env, "application/javascript")
+    inject(env, 'application/javascript')
   end
 end

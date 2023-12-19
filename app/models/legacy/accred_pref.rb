@@ -1,20 +1,26 @@
-class Legacy::AccredPref < Legacy::BaseCv
-  self.table_name = 'accreds'
-  self.primary_key = nil
+# frozen_string_literal: true
 
-  def self.by_sciper(sciper)
-    where(sciper:).order(:ordre)
-  end
+module Legacy
+  class AccredPref < Legacy::BaseCv
+    self.table_name = 'accreds'
+    self.primary_key = nil
 
-  def order
-    ordre
-  end
+    belongs_to :person, class_name: "Person", foreign_key: "sciper", inverse_of: :accred_prefs
 
-  def unit_id
-    unit
-  end
+    def self.by_sciper(sciper)
+      where(sciper:).order(:ordre)
+    end
 
-  def hidden?
-    accred_show == 0
+    def order
+      ordre
+    end
+
+    def unit_id
+      unit
+    end
+
+    def hidden?
+      accred_show.zero?
+    end
   end
 end

@@ -53,7 +53,7 @@
 </div>
 <% end %>
 
-<% if @person.is_achieving_professor? and @cv.achievements.present? %>
+<% if @person.achieving_professor? and @cv.achievements.present? %>
 <div class="col-mt5">
   <h3><%= t "awards" %></h3>
   <div class="list-group">

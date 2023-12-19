@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # {
 #   "address": { ... },
 #   "hierarchie": "EPFL VPO-SI ISAS ISAS-FSD",
@@ -12,17 +14,19 @@
 #   ],
 #   "sigle": "ISAS-FSD"
 # }
-class Atela::Accred
-  attr_reader :address, :hierarchy, :order, :phones, :rooms
+module Atela
+  class Accred
+    attr_reader :address, :hierarchy, :order, :phones, :rooms
 
-  def initialize(data)
-    @unit = nil
-    @address = Atela::Address.new(data['address'])
-    @phones = data['phones'].present? ? data['phones'].map { |d| Atela::Phone.new(d) } : []
-    @hierarchy = data['hierarchie']
-    @order = data['ordre']
-    @rooms = data.key?('rooms') ? data['rooms'].map { |d| Atela::Room.new(d) } : []
+    def initialize(data)
+      @unit = nil
+      @address = Atela::Address.new(data['address'])
+      @phones = data['phones'].present? ? data['phones'].map { |d| Atela::Phone.new(d) } : []
+      @hierarchy = data['hierarchie']
+      @order = data['ordre']
+      @rooms = data.key?('rooms') ? data['rooms'].map { |d| Atela::Room.new(d) } : []
+    end
+
+    attr_writer :unit
   end
-
-  attr_writer :unit
 end

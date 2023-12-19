@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IsaCourseGetter < IsaService
   def initialize(sciper)
     # TODO: waiting for Tim to adapt the ISA api. In the mean time I use the old people

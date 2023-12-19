@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # curl https://isa.epfl.ch/services/teachers/103561/thesis/directors/doctorants | jq
 # ssh peo1 "curl 'https://isa.epfl.ch/services/teachers/103561/thesis/directors/doctorants'" | jq
 class IsaPhdGetter < IsaService

@@ -81,7 +81,7 @@
 
 <% if false %>
 <div class="position-relative mt-5">
-  <% if @cv.present? && (@cv.any_publication? or @tcv.any_publication? or @ta.present? and @ta.has_ta? or @boxes['R'].present?) %>
+  <% if @cv.present? && (@cv.any_publication? or @tcv.any_publication? or @ta.present? and @ta.ta? or @boxes['R'].present?) %>
   <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
     <div class="container">
       <ul class="nav nav-tabs-light">
@@ -93,7 +93,7 @@
           <a class="nav-link" href="#publications"><%= t "nav.publications" %></a>
         </li>
         <% end %>
-        <% if @ta.present? and @ta.has_ta? %>
+        <% if @ta.present? and @ta.ta? %>
         <li class="nav-item">
           <a class="nav-link" href="#teaching"><%= t "nav.teaching" %></a>
         </li>
@@ -126,7 +126,7 @@
   <%= render "legacy/s1/publications" %>
   <% end %>
 
-  <% if @ta.present? and @ta.has_ta? %>
+  <% if @ta.present? and @ta.ta? %>
   <hr class="darker">
   <%= render "legacy/s1/teaching" %>
   <% end %>

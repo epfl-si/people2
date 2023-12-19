@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OIDC
   class FrontendConfigController < ApplicationController
     # Implements GET to /oidc/config so that the front-end app knows

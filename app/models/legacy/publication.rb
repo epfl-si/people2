@@ -1,22 +1,26 @@
-class Legacy::Publication < Legacy::BaseCv
-  self.table_name = 'publications'
-  belongs_to :cv, class_name: "Cv", foreign_key: "sciper"
+# frozen_string_literal: true
 
-  scope :visible, -> { where(showpub: '1').order(:ordre) }
+module Legacy
+  class Publication < Legacy::BaseCv
+    self.table_name = 'publications'
+    belongs_to :cv, class_name: 'Cv', foreign_key: 'sciper', inverse_of: :publications
 
-  def author
-    auteurspub
-  end
+    scope :visible, -> { where(showpub: '1').order(:ordre) }
 
-  def title
-    titrepub
-  end
+    def author
+      auteurspub
+    end
 
-  def journal
-    revuepub
-  end
+    def title
+      titrepub
+    end
 
-  def url
-    urlpub
+    def journal
+      revuepub
+    end
+
+    def url
+      urlpub
+    end
   end
 end

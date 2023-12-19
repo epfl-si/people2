@@ -1,6 +1,8 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -8,7 +10,7 @@ Bundler.require(*Rails.groups)
 
 module HelloRails
   class Application < Rails::Application
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -47,8 +49,8 @@ module HelloRails
 
     # Custom generic app configs: everything from ENV with defaults
     # Use as Rails.configuration.key
-    config.intranet_re = Regexp.new(ENV.fetch("INTRANET_RE", '^128\.17[89]'))
-    config.official_url = ENV.fetch("OFFICIAL_URL", "https://people.epfl.ch")
-    routes.default_url_options[:host] = ENV.fetch("DEFAULT_URL", config.official_url)
+    config.intranet_re = Regexp.new(ENV.fetch('INTRANET_RE', '^128\.17[89]'))
+    config.official_url = ENV.fetch('OFFICIAL_URL', 'https://people.epfl.ch')
+    routes.default_url_options[:host] = ENV.fetch('DEFAULT_URL', config.official_url)
   end
 end

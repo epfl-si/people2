@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration creates the `versions` table, the only schema PT requires.
 # All other migrations PT provides are optional.
 class CreateVersions < ActiveRecord::Migration[7.0]
@@ -8,7 +10,7 @@ class CreateVersions < ActiveRecord::Migration[7.0]
   TEXT_BYTES = 1_073_741_823
 
   def change
-    create_table :versions, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci" do |t|
+    create_table :versions, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci' do |t|
       t.string   :item_type, null: false, limit: 191
       t.bigint   :item_id,   null: false
       t.string   :event,     null: false
