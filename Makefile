@@ -7,30 +7,21 @@ SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
 export
 
-all:
-	env
 # ---------------------------------------------------------------- run local app
 .PHONY: build codecheck up kup dcup down fulldown logs ps console dbconsole shell 
 
-build: codecheck
+build: envcheck codecheck
 	docker-compose -f $(COMPOSE) build
 
-codecheck:
-	# TODO: add linters and automated tests too...
-	# bundle-audit returns 1 if there are vulnerabilities => prevents build
-	# nicer gui available at https://audit.fastruby.io
-	# 	bundle exec bundle-audit check --update
-	# 	bundle exec brakeman
-
-kup:
+kup: envcheck
 	KILLPID=1 docker-compose -f $(COMPOSE) up -d
 
 up: tunnel_up dcup
 
-dcup:
+dcup: envcheck
 	docker-compose -f $(COMPOSE) up --no-recreate -d 
 
-kc:
+kc: envcheck
 	docker-compose --profile kc -f $(COMPOSE) up -d keycloak
 
 # atela:
@@ -44,7 +35,7 @@ fulldown:
 down: tunnel_down
 	docker-compose -f $(COMPOSE) down
 
-reload:
+reload: envcheck
 	docker-compose -f $(COMPOSE) stop webapp
 	KILLPID=1 docker-compose -f $(COMPOSE) up -d
 
@@ -69,6 +60,22 @@ dconfig:
 erd:
 	docker-compose -f $(COMPOSE) exec webapp ./bin/rails mermaid_erd
 
+envcheck: .env .git/hooks/pre-commit
+
+codecheck: cop
+	# TODO: automated tests too...
+	# bundle-audit returns 1 if there are vulnerabilities => prevents build
+	# nicer gui available at https://audit.fastruby.io
+	#	bundle exec bundle-audit check --update
+	#	bundle exec brakeman
+
+.git/hooks/pre-commit:
+	if [ ! -l .git/hooks ] ; then mv .git/hooks .git/hooks.trashme && ln -s ../.git_hooks .git/hooks ; fi
+
+.env:
+	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
+	exit 1
+
 # ---------------------------------------------------------------------- testing
 .PHONY: test testup test-system
 testup:
@@ -90,13 +97,14 @@ test-system: testup
 test:
 	docker-compose -f $(COMPOSE) exec -e RAILS_ENV=test webapp ./bin/rails test
 
-
 cop:
-	bundle exec rubocop
+	bundle exec rubocop --extra-details # 2>/dev/null
 
 docop:
 	bundle exec rubocop --autocorrect
 
+dodocop:
+	bundle exec rubocop --autocorrect-all
 
 # ------------------------------------------------------------------------ cache
 # turn on/off cache in dev (default is off)
