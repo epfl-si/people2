@@ -8,7 +8,7 @@ module Legacy
     belongs_to :person, class_name: "Person", foreign_key: "sciper", inverse_of: :accred_prefs
 
     def self.by_sciper(sciper)
-      where(sciper:).order(:ordre)
+      where(sciper: sciper).order(:ordre)
     end
 
     def order

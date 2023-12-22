@@ -9,7 +9,7 @@ class GraphqlController < APIController
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = HelloRailsSchema.execute(query, variables:, context:, operation_name:)
+    result = HelloRailsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?

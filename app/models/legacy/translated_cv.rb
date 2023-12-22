@@ -15,11 +15,11 @@ module Legacy
     #   }, class_name: 'Infoscience', foreign_key: 'sciper', inverse_of: false
 
     def publication_boxes
-      @publication_boxes ||= PublicationBox.where(sciper:, cvlang:)
+      @publication_boxes ||= PublicationBox.where(sciper: sciper, cvlang: cvlang)
     end
 
     def infosciences
-      @infosciences ||= Infoscience.where(sciper:, cvlang:)
+      @infosciences ||= Infoscience.where(sciper: sciper, cvlang: cvlang)
     end
 
     def title
