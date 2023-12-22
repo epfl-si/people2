@@ -1,17 +1,34 @@
 # frozen_string_literal: true
 
-# curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
 class APIAccredsGetter < EpflAPIService
   attr_reader :url, :id
 
-  def initialize(sciper, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    @id = sciper
-    @url = baseurl + "/persons/#{sciper}"
+  private_class_method :new
+
+  def initialize(url, single: true)
+    @url = url
+    @single = single
   end
 
-  # def req_params
-  #   {
-  #     'authorization' => "People.key " + ENV.fetch("ATELA_KEY")
-  #   }
-  # end
+  def self.for_sciper(sciper, baseurl = Rails.application.config_for(:epflapi).backend_url)
+    url = URI.join(baseurl, "v1/accreds")
+    url.query = URI.encode_www_form(persid: sciper)
+    new(url)
+  end
+
+  def self.for_status(status_id, baseurl = Rails.application.config_for(:epflapi).backend_url)
+    url = URI.join(baseurl, "v1/accreds")
+    url.query = URI.encode_www_form(statusid: status_id)
+    new(url)
+  end
+
+  def dofetch
+    body = fetch_http
+    return [] unless body
+
+    data = JSON.parse(body)
+    return [] unless data.key? 'accreds'
+
+    data['accreds']
+  end
 end

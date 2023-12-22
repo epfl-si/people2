@@ -16,22 +16,12 @@ class CvController < ApplicationController
 
   private
 
-  def set_sciper_and_email
-    sciper_or_name = params[:sciper_or_name]
-    @sciper = nil
-    if sciper_or_name =~ /^\d{6}$/
-      @sciper = sciper_or_name
-      @email = Legacy::Email.find(@sciper)
-    else
-      @email = Legacy::Email.where('addrlog = ? OR addrlog LIKE ?', "#{sciper_or_name}@epfl.ch",
-                                   "#{sciper_or_name}@epfl.%").first
-      @sciper = @email.sciper unless @email.nil?
-    end
-  end
+  def set_person; end
 
   def set_show_data
-    set_sciper_and_email unless @sciper
-    @person = Legacy::Person.find(@sciper)
+    @person = Person.find(params[:sciper_or_name])
+    @sciper = @person.sciper
+
     @affiliations = @person.full_accreds
 
     # @cv can be nil because not everybody can edit his personal page

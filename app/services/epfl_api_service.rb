@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
-# curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
+# TODO: consider using ActiveResource for this
+
 class EpflAPIService < ApplicationService
-  def req_customize
-    # @req.basic_auth Rails.application.config_for(:epflapi).username, Rails.application.config_for(:epflapi).password
-    @req.basic_auth 'people', 'GialloRosso12%'
+  def genreq
+    Rails.logger.debug "epfl api genreq"
+    cfg = Rails.application.config_for(:epflapi)
+    req = Net::HTTP::Get.new(@url)
+    req.basic_auth cfg.username, cfg.password
+    req
   end
 end

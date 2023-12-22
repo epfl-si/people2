@@ -19,7 +19,7 @@ class Cv < ApplicationRecord
   belongs_to :selected_picture, class_name: 'ProfilePicture', foreign_key: 'profile_picture_id', inverse_of: false
 
   def self.for_sciper(sciper)
-    where(sciper:).first
+    where(sciper: sciper).first
   end
 
   def photo_url

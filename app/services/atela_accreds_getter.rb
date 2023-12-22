@@ -9,9 +9,11 @@ class AtelaAccredsGetter < ApplicationService
     @url = Rails.application.config_for(:epflapi).atela_backend_url + "/getPerson/#{sciper}"
   end
 
-  def req_params
+  def genreq
+    req = super
     {
       'authorization' => "People.key #{Rails.application.config_for(:epflapi).atela_key}"
-    }
+    }.each { |k, v| req[k] = v }
+    req
   end
 end
