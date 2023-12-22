@@ -3,14 +3,14 @@ set -e
 # set -x
 . .env
 COMPOSE="${COMPOSE:-docker-compose.yml}"
-DATASRC="${DATASRC:-peo1}"
+DATASRC="${DATASRC:-peo11}"
 
 DUMPDIR="${DUMPDIR:-tmp/dbdumps}"
 
 ACCRED_TABLES="accreds accreds_properties classes deputations guests positions properties properties_units properties_status properties_classes rights rights_classes rights_persons rights_roles rights_statuses rights_units roles_persons statuses"
 BOTTIN_TABLES="annuaire_adrspost annuaire_persons annuaire_persphones annuaire_persrooms annuaire_phones rooms"
 CADI_TABLES="DBClients Manco WSAppsCallers WSAppsHosts WSClients WSServices batch_executions batch_params champs config datafields datatypes dbs delegates eventstypes filters operations pendingnotifications providers resources resources_types subscriptions tbls"
-DINFO_TABLES="SwitchAAIUsers accounts accred adrspost allunits annu annu_new delegues emails externalids fonds groups isa_codes locaux Personnel sciper unites_reorg21 unites unites1 isa_etu"
+DINFO_TABLES="SwitchAAIUsers accounts accred adrspost allunits annu delegues emails externalids fonds groups isa_codes locaux Personnel sciper unites_reorg21 unites unites1 isa_etu"
 CV_TABLES="" 
 
 dbs=$(mktemp "/tmp/XXXXX")
@@ -90,7 +90,7 @@ restore() {
 db=$1
 
 if [ "$db" == "all" ] ; then
-	for db in accred bottin cadi cv dinfo ; do
+	for db in accred cadi cv dinfo ; do
 		restore $db
 	done
 else
