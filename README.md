@@ -149,6 +149,11 @@ The GUI for selecting the image must be composed of three parts:
  2. toggle if camipro picture is to be used (currently camipro photo is used if common.photo_ext is not 1);
  3. list selector for the uploaded images (currently this is decided by common.photo_ts)
 
+### Useful links
+ * EPFL api doc for [person](https://api-test.epfl.ch/docs/persons-api/index.html), [accred](https://api-test.epfl.ch/docs/accred-api/index.html)
 
 ### Useful reads
+ * [rails guides](https://guides.rubyonrails.org/) of course!
  * [rails design patterns](https://rubyhero.dev/rails-design-patterns-the-big-picture)
+ * [Arel doc](https://www.rubydoc.info/gems/arel#description) and examples of usage: [one](https://dev.to/ashawareb/arel-and-ruby-on-rails-58m3), [two](https://www.cloudbees.com/blog/creating-advanced-active-record-db-queries-arel)
+ * Logging [best practices](https://stackify.com/rails-logger-and-rails-logging-best-practices/)

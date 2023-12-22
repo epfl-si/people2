@@ -90,6 +90,11 @@ group :development do
   gem 'rubocop-minitest', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+
+  # unused for the moment but I'd like to keep it just to remember that it exists
+  # (a sentimental matter because I was involved in its early development)
+  # https://github.com/guard/guard
+  gem 'guard', require: false
 end
 
 group :test do
