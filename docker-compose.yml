@@ -89,8 +89,8 @@ services:
       - PMA_HOST=mariadb
       - PMA_ABSOLUTE_URI=https://peopledb.${DOMAIN:-dev.jkldsa.com}
       - PMA_ARBITRARY=1
-    volumes:
-      - ./storage/phpmyadmin_sessions:/sessions
+    # volumes:
+    #   - ./storage/phpmyadmin_sessions:/sessions
     labels:
       - traefik.docker.network=traefik
       - traefik.http.routers.peodb.rule=Host("peopledb.${DOMAIN:-dev.jkldsa.com}")
