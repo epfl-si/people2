@@ -93,9 +93,9 @@ services:
     #   - ./storage/phpmyadmin_sessions:/sessions
     labels:
       - traefik.docker.network=traefik
-      - traefik.http.routers.peodb.rule=Host("peopledb.${DOMAIN:-dev.jkldsa.com}")
-      - traefik.http.routers.peodb.tls=true
-      - traefik.http.services.peodb.loadbalancer.server.port=80
+      - traefik.http.routers.peodb2.rule=Host("peopledb.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.peodb2.tls=true
+      - traefik.http.services.peodb2.loadbalancer.server.port=80
     networks:
       - traefik
       - default

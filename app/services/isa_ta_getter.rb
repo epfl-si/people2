@@ -5,7 +5,7 @@
 class IsaTaGetter < IsaService
   def initialize(sciper)
     @id = sciper
-    @url = Rails.application.config_for(:epflapi).isa_url + "/teachers/#{sciper}"
+    @url = URI.join(Rails.application.config_for(:epflapi).isa_url, "/teachers/#{sciper}")
   end
 
   def expire_in

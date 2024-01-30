@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   # This uses cv_controller (therefore privileges new models instead
   # of all legacy) with the legacy layout
-  get '/cv2/:sciper_or_name', to: 'cv#show', as: 'cv',
+  get '/cv2/:sciper_or_name', to: 'profile#show', as: 'profile',
                               constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
 
   # useful queries:

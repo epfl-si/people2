@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def homepage; end
 
-  def unique_counter_value
+  def self.unique_counter_value
     @indx ||= 0
     @indx += 1
     @indx

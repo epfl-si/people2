@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CvController < ApplicationController
+class ProfileController < ApplicationController
   protect_from_forgery
-  before_action :set_sciper_and_email, only: [:show]
+  # before_action :set_sciper_and_email, only: [:show]
   before_action :set_show_data, only: [:show]
   layout 'legacy'
 
@@ -22,19 +22,12 @@ class CvController < ApplicationController
     @person = Person.find(params[:sciper_or_name])
     @sciper = @person.sciper
 
-    @affiliations = @person.full_accreds
+    @profile = @person.profile
+    @editable = @person.can_edit_profile? && @profile.present?
 
-    # @cv can be nil because not everybody can edit his personal page
-    # @cv = Legacy::Cv.find(@sciper)
-    @cv = Cv.for_sciper(@sciper)
-    @editable = !@cv.nil? && @person.can_edit_profile?
+    @accreds = @person.sorted_accreds.select(&:visible?)
 
-    # TODO: figure out why this does not work anymore.
-    # if @person.possibly_teacher?
-    #   @ta = Isa::Teaching.new(@sciper)
-    # else
-    #   @ta = nil
-    # end
+    @ta = (Isa::Teaching.new(@sciper) if @person.possibly_teacher?)
 
     # TODO: would a sort of "PublicSection" class make things easier here ?
     #       keep in mind that here we only manage boxes but we will have
@@ -42,15 +35,20 @@ class CvController < ApplicationController
     #       that is not just a simple free text box with a title.
     return unless @editable
 
+    @visible_socials = @profile.socials.select(&:visible?)
+
     # get sections that contain at least one box in the current locale
-    @cvlocale = @cv.force_lang || I18n.locale
-    unsorted_boxes = @cv.boxes.visible.includes(:section).select do |b|
+    @cvlocale = @profile.force_lang || I18n.locale
+    unsorted_boxes = @profile.boxes.visible.includes(:section).select do |b|
       b.content?(@cvlocale)
     end
     @boxes = unsorted_boxes.sort do |a, b|
       [a.section.position, a.position] <=> [b.section.position, b.position]
     end
     @boxes_by_section = @boxes.group_by(&:section)
+
+    @contact_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "contact" }
+    @main_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "main" }
 
     # @contact_sections = []
     # @main_sections = []

@@ -1,7 +1,7 @@
-# ------------------------------------------------------------------------ Giova
+# --------------------------------------------------------------------------- Me
 gio_box_expertise:
   type: "RichTextBox"
-  cv: giova
+  profile: giova
   section: contact
   title_en: Expertise
   title_fr: Expertise
@@ -13,7 +13,7 @@ gio_box_expertise:
 # ---------------------------------------------------------------------- Olivier
 oli_box_expertise:
   type: "RichTextBox"
-  cv: olivier
+  profile: olivier
   section: contact
   title_en: Expertise
   title_fr: Expertise
@@ -24,7 +24,7 @@ oli_box_expertise:
 
 oli_box_bio:
   type: "RichTextBox"
-  cv: olivier
+  profile: olivier
   section: bio
   title_en: Biography
   title_fr: Biographie
@@ -35,7 +35,7 @@ oli_box_bio:
 
 oli_box_cv:
   type: "RichTextBox"
-  cv: olivier
+  profile: olivier
   section: bio
   title_en: Curriculum vitae
   title_fr: Curriculum vitae
@@ -46,7 +46,7 @@ oli_box_cv:
 
 oli_box_edu:
   type: "RichTextBox"
-  cv: olivier
+  profile: olivier
   section: bio
   title_en: Education
   title_fr: Education
@@ -57,7 +57,7 @@ oli_box_edu:
 
 oli_box_mission:
   type: "RichTextBox"
-  cv: olivier
+  profile: olivier
   section: bio
   title_en: Mission
   title_fr: Mission
@@ -68,7 +68,7 @@ oli_box_mission:
 
 oli_box_pubs:
   type: "RichTextBox"
-  cv: olivier
+  profile: olivier
   section: pub
   title_en: Selected Publications
   title_fr: Publications Representatives
@@ -80,7 +80,7 @@ oli_box_pubs:
 # ---------------------------------------------------------------------- Natalie
 nat_box_expertise:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: contact
   title_en: Expertise
   title_fr: Expertise
@@ -91,7 +91,7 @@ nat_box_expertise:
 
 nat_box_work:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: contact
   title_fr: Disponibilité
   show_title: true
@@ -101,7 +101,7 @@ nat_box_work:
 
 nat_box_work:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: bio
   title_fr: Travail en Cours
   show_title: true
@@ -111,7 +111,7 @@ nat_box_work:
 
 nat_box_mission:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: bio
   title_en: Mission
   title_fr: Mission
@@ -122,7 +122,7 @@ nat_box_mission:
 
 nat_box_bio:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: bio
   title_en: Biography
   title_fr: Biographie
@@ -133,7 +133,7 @@ nat_box_bio:
 
 nat_box_cv:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: bio
   title_en: Curriculum vitae
   title_fr: Curriculum vitae
@@ -144,7 +144,7 @@ nat_box_cv:
 
 nat_box_edu_en:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: bio
   title_en: Education
   title_fr: Education
@@ -155,7 +155,7 @@ nat_box_edu_en:
 
 nat_box_mission:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: bio
   title_en: Mission
   title_fr: Mission
@@ -166,7 +166,7 @@ nat_box_mission:
 
 nat_box_pubs:
   type: "RichTextBox"
-  cv: natalie
+  profile: natalie
   section: pub
   title_en: Selected Publications
   title_fr: Publications Representatives

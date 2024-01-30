@@ -1,3 +1,19 @@
+<% if false %>
+<div class="container">
+<h3>Person:</h3>
+<pre>
+  <%= @person.to_yaml %>
+</pre>
+<h3>Profile:</h3>
+<pre>
+  <%= @profile.to_yaml %>
+</pre>
+<h3>Accreds:</h3>
+<pre>
+  <%= @accreds.to_yaml %>
+</pre>
+</div>
+<% end %>
 <div class="container">
   <div class="d-flex flex-wrap justify-content-between align-items-baseline">
     <h1 class="mr-3"><%= @person.display_name %></h1>
@@ -19,7 +35,7 @@
             <div class="col-sm-12 mb-3">
               <!-- TODO: add real picture -->
               <!-- Placeholder when there is no profile picture -->
-              <%= profile_picture(@cv) %>
+              <%= profile_picture(@profile) %>
             </div>
           </div>
           <div class="row">
@@ -47,48 +63,48 @@
           <%= render "accreds" %>
         </div>
       </div><!-- people basic infos -->
-      <% contact_zone_bbs = @boxes_by_section.select{|s,b| s.zone == "contact"} %>
-      <% contact_zone_bbs.each do |section, boxes| %>
+      <% @contact_zone_bbs.each do |section, boxes| %>
       <%= render partial: "section", locals: {section: section, boxes: boxes} %>
       <% end %>
     </div>
   </div>
 </div>
-<% # section tab links %>
-<% main_zone_bbs = @boxes_by_section.select{|s,b| s.zone == "main"} %>
-<% if main_zone_bbs.present? %>
-<div class="position-relative mt-5">
-  <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
-    <div class="container">
-      <ul class="nav nav-tabs-light">
-        <% main_zone_bbs.each do |section, boxes| %>
-        <li class="nav-item">
-          <%= link_to(section.title, "#section_#{section.label}", class: "nav-link") %>
-        </li>
-        <% end %>
-      </ul>
-    </div>
-  </nav>
-</div>
 
-<% main_zone_bbs.each do |section, boxes| %>
-<div class="container people-contents">
-<%= render partial: "section", locals: {section: section, boxes: boxes} %>
-<hr class="darker">
-</div>
+<% # section tab links %>
+<% if @main_zone_bbs.present? %>
+  <div class="position-relative mt-5">
+    <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
+      <div class="container">
+        <ul class="nav nav-tabs-light">
+          <% @main_zone_bbs.each do |section, boxes| %>
+          <li class="nav-item">
+            <%= link_to(section.t_title, "#section_#{section.label}", class: "nav-link") %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <% @main_zone_bbs.each do |section, boxes| %>
+    <div class="container people-contents">
+      <%= render partial: "section", locals: {section: section, boxes: boxes} %>
+      <hr class="darker">
+    </div>
+  <% end %>
 <% end %>
-<% end %>
+
 
 <% if false %>
 <div class="position-relative mt-5">
-  <% if @cv.present? && (@cv.any_publication? or @tcv.any_publication? or @ta.present? and @ta.ta? or @boxes['R'].present?) %>
+  <% if @profile.present? && (@profile.any_publication? or @tcv.any_publication? or @ta.present? and @ta.ta? or @boxes['R'].present?) %>
   <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
     <div class="container">
       <ul class="nav nav-tabs-light">
         <li class="nav-item">
           <a class="nav-link" href="#biography"><%= t "nav.biography" %></a>
         </li>
-        <% if @cv.any_publication? or @tcv.any_publication? %>
+        <% if @profile.any_publication? or @tcv.any_publication? %>
         <li class="nav-item">
           <a class="nav-link" href="#publications"><%= t "nav.publications" %></a>
         </li>
@@ -111,17 +127,18 @@
   <% 
     # TODO: move this crap into a model or to the controller...
     if ( 
+      false and
       @tcv.present? and (@tcv.curriculum.present? or @tcv.visible_expertise?) or
       @boxes['B'].present? or 
-      @cv.educations.present? or 
-      @cv.experiences.present? or 
+      @profile.educations.present? or 
+      @profile.experiences.present? or 
       @person.awards.present?
     )
       render "legacy/s1/biography"
     end
   %>
 
-  <% if @cv.any_publication? or @tcv.present? and @tcv.any_publication? %>
+  <% if @profile.any_publication? or @tcv.present? and @tcv.any_publication? %>
   <hr class="darker">
   <%= render "legacy/s1/publications" %>
   <% end %>

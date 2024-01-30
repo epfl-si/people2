@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_081855) do
+  create_table "accred_prefs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "profile_id"
+    t.integer "unit_id"
+    t.integer "order"
+    t.string "sciper"
+    t.boolean "hidden"
+    t.boolean "hidden_addr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_accred_prefs_on_profile_id"
+  end
+
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -59,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
 
   create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "type", null: false
-    t.bigint "cv_id", null: false
+    t.bigint "profile_id", null: false
     t.bigint "section_id", null: false
     t.string "title_en"
     t.string "title_fr"
@@ -69,29 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cv_id"], name: "index_boxes_on_cv_id"
+    t.index ["profile_id"], name: "index_boxes_on_profile_id"
     t.index ["section_id"], name: "index_boxes_on_section_id"
-  end
-
-  create_table "cvs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "sciper"
-    t.boolean "show_birthday"
-    t.boolean "show_function"
-    t.boolean "show_nationality"
-    t.boolean "show_phone"
-    t.boolean "show_photo"
-    t.boolean "show_title"
-    t.string "force_lang"
-    t.string "personal_web_url"
-    t.string "nationality_en"
-    t.string "nationality_fr"
-    t.string "title_en"
-    t.string "title_fr"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "profile_picture_id"
-    t.index ["profile_picture_id"], name: "index_cvs_on_profile_picture_id"
-    t.index ["sciper"], name: "unique_emails", unique: true
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -117,10 +108,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
   end
 
   create_table "profile_pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "cv_id", null: false
+    t.bigint "profile_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cv_id"], name: "index_profile_pictures_on_cv_id"
+    t.index ["profile_id"], name: "index_profile_pictures_on_profile_id"
+  end
+
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "sciper"
+    t.boolean "show_birthday"
+    t.boolean "show_function"
+    t.boolean "show_nationality"
+    t.boolean "show_phone"
+    t.boolean "show_photo"
+    t.boolean "show_title"
+    t.string "force_lang"
+    t.string "personal_web_url"
+    t.string "nationality_en"
+    t.string "nationality_fr"
+    t.string "title_en"
+    t.string "title_fr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "profile_picture_id"
+    t.index ["profile_picture_id"], name: "index_profiles_on_profile_picture_id"
+    t.index ["sciper"], name: "unique_scipers", unique: true
   end
 
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -135,6 +147,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "socials", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "profile_id"
+    t.string "sciper"
+    t.string "tag"
+    t.string "value"
+    t.integer "order", default: 1
+    t.boolean "hidden", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_socials_on_profile_id"
+  end
+
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "item_type", limit: 191, null: false
     t.bigint "item_id", null: false
@@ -147,10 +171,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_075555) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "boxes", "cvs"
+  add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
-  add_foreign_key "cvs", "profile_pictures"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
-  add_foreign_key "profile_pictures", "cvs"
+  add_foreign_key "profile_pictures", "profiles"
+  add_foreign_key "profiles", "profile_pictures"
 end

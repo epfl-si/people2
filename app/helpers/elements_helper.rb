@@ -17,7 +17,7 @@
 # </div>
 module ElementsHelper
   def ee_collapse(title, content_or_options_with_block = nil, options = {}, &block)
-    indx = unique_counter_value
+    indx = ApplicationController.unique_counter_value
     if block_given?
       content = capture(&block)
       options = content_or_options_with_block || {}

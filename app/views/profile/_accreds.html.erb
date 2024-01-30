@@ -1,0 +1,41 @@
+<% @accreds.each_with_index do |accred, indx| %>
+  <%= ee_collapse(position_with_class_delegate(accred,@person.class_delegate?,@person.gender), {expanded: indx==0}) do -%>
+    <div class="row pt-2 pb-2">
+      <div class="col-md-5">
+        <p itemprop="location" itemscope="" itemtype="http://schema.org/Place">
+          <% unless accred.hidden_address? || (a=@person.address(accred.unit_id)).nil? %>
+            <strong itemprop="name"><%= a.hierarchy %></strong>
+            <br>
+            <span itemprop="address">
+              <%= address(a) %>
+            </span>
+          <% end %>
+        </p>
+      </div>
+      <div class="col-md-7">
+        <% unless accred.hidden_address? || (phones=@person.visible_phones(accred.unit_id)).nil? %>
+          <p>
+            <% phones.each_with_index do |phone, phindx| %>
+              <span class="people-btn">
+                <%= phone_link(phone.number, class: "btn btn-sm btn-secondary mb-2 align-baseline") %>
+                <br>
+              </span>
+            <% end %>
+            <small>
+              <%= hierarchy_links accred.unit.hierarchy %>
+            </small>
+          </p>
+        <% end %>
+      </div>
+      <% if accred.unit.url.present? %>
+        <div class="col-sm-12">
+          <p>
+            <span class="sr-only"><%= t "website" %>: </span>
+            <%= link_to accred.unit.url, accred.unit.url %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+

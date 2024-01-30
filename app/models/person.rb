@@ -6,10 +6,17 @@ class Person
 
   private_class_method :new
 
+  # has one profile
+
   def initialize(person)
+    Rails.logger.debug person
     @data = person
     @position = @data.delete('position')
     @position = Position.new(@position) unless @position.nil?
+
+    # phones and addresses are hash with the unit_id as key
+    @phones = (@data.delete('phones') || []).map { |d| Phone.new(d) }.group_by(&:unit_id)
+    @addresses = (@data.delete('addresses') || []).map { |d| Address.new(d) }.group_by(&:unit_id)
   end
 
   def self.find(sciper_or_email)
@@ -22,6 +29,29 @@ class Person
     new(p)
   end
 
+  def profile
+    @profile = Profile.for_sciper(sciper) unless defined?(@profile)
+    @profile
+  end
+
+  def can_edit_profile?
+    unless defined?(@can_edit_profile)
+      @can_edit_profile = begin
+        a = APIAuthGetter.new(sciper).fetch
+        a.any? { |d| d['status'] == 'active' }
+      end
+    end
+    @can_edit_profile
+  end
+
+  def achieving_professor?
+    unless defined?(@is_achieving_professor)
+      aa = Authorisation.right_for_sciper(sciper, 'AAR.report.control')
+      @is_achieving_professor = aa.any?(&:ok?)
+    end
+    @is_achieving_professor
+  end
+
   def display_name
     @display_name ||= "#{firstnameusual || firstname} #{lastnameusual || lastname}"
   end
@@ -29,6 +59,70 @@ class Person
   def sciper
     id
   end
+
+  def visible_phones(unit)
+    @phones[unit].select(&:visible?)
+  end
+
+  def phones(unit)
+    @phones[unit]
+  end
+
+  def addresses(unit)
+    @addresses.key?(unit) ? @addresses[unit] : []
+  end
+
+  def address(unit)
+    addresses(unit).first
+  end
+
+  def default_phone
+    @default_phone ||= @phones.values.flatten.min
+  end
+
+  # TODO: fix once the actual data is available in api
+  def class_delegate?
+    rand(1..10) == 1
+  end
+
+  # TODO: check errors on api calls and decide how to recover
+  def accreds
+    @accreds ||= begin
+      # exclude accreditations that do not have the 'botweb' property
+      pp = Authorisation.botweb_for_sciper(sciper).select(&:ok?).index_by(&:unit_id)
+      aa = Accreditation.for_sciper(sciper).select { |a| pp.key?(a.unit_id.to_s) }
+
+      # attach preferences from people (order, visibility)
+      if (p = profile).present?
+        ap = p.accred_prefs.index_by(&:unit_id)
+        aa.each { |a| a.set_options(ap[a.unit_id]) if ap.key?(a.unit_id.to_s) }
+      end
+      aa
+    end
+  end
+
+  def sorted_accreds
+    accreds.sort
+  end
+
+  def units
+    @units ||= accreds.map(&:unit)
+  end
+
+  def positions
+    @positions ||= accreds.map(&:position)
+  end
+
+  def student?
+    accreds.any?(&:student?)
+  end
+
+  # TODO: see if it is possible to guess if person could be a teacher in order to avoid useless requests to ISA
+  def possibly_teacher?
+    positions.any?(&:possibly_teacher?)
+  end
+
+  # ----------------------------------------------------------------------------
 
   # Methods that are not explicitly defined are assumed to be keys of @data
   # Fields that are expected to be always present will except if not found

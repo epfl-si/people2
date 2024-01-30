@@ -7,7 +7,7 @@ class APIAuthGetter < EpflAPIService
 
   def initialize(
     sciper,
-    authid: 'gestprofil',
+    authid: 'gestprofil', # 'botweb',
     type: 'property',
     baseurl: Rails.application.config_for(:epflapi).backend_url
   )

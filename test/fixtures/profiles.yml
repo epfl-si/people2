@@ -1,19 +1,60 @@
 ---
 
-olivier:
-  sciper: "107931"
+edouard:
+  sciper: "229105"
+  show_birthday: false
+  show_nationality: false
+  show_phone: false
+  show_photo: false
+  show_title: false
+  nationality_fr: Suisse
+  nationality_en: Swiss
+  title_en: Professor
+  title_fr: Professeur
+  personal_web_url: "http://dcsl.epfl.ch"
+  # expertise_fr: "Computer Systems, Data center networks, Virtualization"
+  # expertise_en: "Computer Systems, Data center infrastructure and networking, Operating systems, Virtualization"
+
+francesco:
+  sciper: "363674"
+  show_birthday: false
+  show_nationality: false
+  show_phone: false
+  show_photo: false
+  show_title: false
+  nationality_fr: Italienne
+  nationality_en: Italian
+  # title_en:
+  # title_fr:
+  # personal_web_url:
+
+giova:
+  sciper: "110635"
+  show_birthday: false
+  show_nationality: false
+  show_phone: true
+  show_photo: true
+  show_title: false
+  nationality_en: italian, swiss
+  nationality_fr: italien
+  # title_en: His Majesty
+  # title_fr: Sa majesté
+  # personal_web_url: https://slideshot.epfl.ch/
+
+martin:
+  sciper: "126003"
   show_birthday: false
   show_nationality: true
   show_phone: true
   show_photo: true
-  show_title: true
-  nationality_fr: Suisse
-  nationality_en: Swiss
-  title_en: PhD
-  title_fr: Docteur ès sciences
-  personal_web_url: "http://ipgold.epfl.ch/~leveque/index.html"
+  show_title: false
+  nationality_fr: Allemande
+  nationality_en: German
+  title_en: Professor
+  title_fr: Professeur
+  personal_web_url: "http://lampwww.epfl.ch/~odersky/"
 
-giova: 
+me: 
   sciper: "121769"
   show_birthday: true
   show_nationality: true
@@ -25,7 +66,6 @@ giova:
   title_en: His Majesty
   title_fr: Sa majesté
   personal_web_url: https://slideshot.epfl.ch/
-  selected_picture: giova1
 
 natalie:
   sciper: "116080"
@@ -42,17 +82,13 @@ natalie:
   # mission_fr: "Architecte de formation, s'est spécialisée dans le graphisme, la création et l'ergonomie des sites web. Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie, de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites. Elle dispense aussi des conseils sur la manière de concevoir et de mettre en oeuvre un site web, ainsi que sur le choix des applications et des outils mis à disposition par le KIS. Elle propose une analyse stratégique pour la conduite de projets Internet, et intervient comme expert web dans les groupes de réflexion sur la politique de communication des différentes unités de l'Ecole (VPAA, BSS-IC, SAC, bibliothèque...) Elle est également responsable du suivi de l'actualité et de la mise à jour des portails institutionnels. Depuis le printemps 2004, elle est en charge du projet PolyNex, qui s'intéresse aux équipements multimedia sur le campus. Pendant ses loisirs, elle gère les sites du fameux groupe folk-rock, les <a href=\"http://www.paradajz.com\">Paradajz Vampiri</a>, de sa prof préférée de <a href='http://www.pilates-fitforlife.com/'>Pilates, Miranda Mattig</a>, et de l'<a href='http://a3.epfl.ch/''>Association des Diplômés de l'EPFL</a>, l'A3, où elle est responsable de la COSI (liaison entre l'association et le campus EPFL). Vous pouvez suivre ses aventures exotiques sur le blog <a href='http://nmeystre.hautetfort.com/'>http://nmeystre.hautetfort.com/</a>. Sites de référence: <a href='http://atelierweb.epfl.ch'>atelier web:</a> création de site web à l'epfl  et <a href='http://kis.epfl.ch'>KIS</a>."
   # expertise_fr: "Architecture web - ergonomie - usability - ergonomie - design et architecture de l&apos;information - cms - iconographie - graphisme web - charte graphique - design - logo - expertise communication web - html - css2 - ui design"
 
-edouard:
-  sciper: "229105"
+olivier:
+  sciper: "107931"
   show_birthday: false
-  show_nationality: false
-  show_phone: false
-  show_photo: false
-  show_title: false
-  nationality_fr: Suisse
-  nationality_en: Swiss
-  title_en: Professor
-  title_fr: Professeur
-  personal_web_url: "http://dcsl.epfl.ch"
-  # expertise_fr: "Computer Systems, Data center networks, Virtualization"
-  # expertise_en: "Computer Systems, Data center infrastructure and networking, Operating systems, Virtualization"
+  show_nationality: true
+  show_phone: true
+  show_photo: true
+  show_title: true
+  nationality_fr: CH
+  nationality_en: CH
+  personal_web_url: "https://ipgold.epfl.ch/"

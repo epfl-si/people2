@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class CreateCv < ActiveRecord::Migration[7.0]
+class CreateProfiles < ActiveRecord::Migration[7.0]
   def change
-    create_table :cvs do |t|
-      t.string  :sciper, index: { unique: true, name: 'unique_emails' }
+    create_table :profiles do |t|
+      t.string  :sciper, index: { unique: true, name: 'unique_scipers' }
 
       t.boolean :show_birthday
       t.boolean :show_function

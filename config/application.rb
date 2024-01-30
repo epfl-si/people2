@@ -51,6 +51,7 @@ module HelloRails
     # Use as Rails.configuration.key
     config.intranet_re = Regexp.new(ENV.fetch('INTRANET_RE', '^128\.17[89]'))
     config.official_url = ENV.fetch('OFFICIAL_URL', 'https://people.epfl.ch')
+    config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', true)
     routes.default_url_options[:host] = ENV.fetch('DEFAULT_URL', config.official_url)
   end
 end

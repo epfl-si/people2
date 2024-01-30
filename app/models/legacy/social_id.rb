@@ -58,6 +58,10 @@ module Legacy
       }
     }.freeze
 
+    def self.for_sciper(sciper)
+      where(sciper: sciper).order(:ordre)
+    end
+
     def url
       @url ||= begin
         @s = RESEARCH_IDS[tag]

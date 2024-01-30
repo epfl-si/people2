@@ -3,7 +3,7 @@
 class Box < ApplicationRecord
   include Translatable
   belongs_to :section, class_name: 'Section'
-  belongs_to :cv, class_name: 'Cv'
+  belongs_to :profile, class_name: 'Profile'
   # before_create :ensure_sciper
   scope :visible, -> { where(visible: true) }
   acts_as_list scope: %i[cv section frozen]
