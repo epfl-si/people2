@@ -11,8 +11,6 @@ class Accreditation
     ud = data.delete('unit')
     sd = data.delete('status')
     data.delete('class')
-    @position = data.delete('position')
-    @position = Position.new(@position) unless @position.nil?
     @sciper = data['persid']
     @unit_id = ud["id"]
     @unit_name = ud["name"]
@@ -22,6 +20,18 @@ class Accreditation
     @status_label_fr = sd['labelfr']
     @status_label_en = sd['labelfr']
     @order = data['order']
+
+    @position = data.delete('position')
+    if @position.nil?
+      # TODO: check if using status where position is not provided makes sense
+      # TODO: inclusive position (at least for students)
+      @position = Position.new({
+                                 'labelen' => @status_label_en,
+                                 'labelfr' => @status_label_fr,
+                               })
+    else
+      @position = Position.new(@position) unless @position.nil?
+    end
 
     # @class_label_fr = cd['labelfr']
     # @class_label_en = cd['labelen']
@@ -73,6 +83,10 @@ class Accreditation
 
   def <=>(other)
     [@people_order, @order] <=> [other.people_order, other.order]
+  end
+
+  def possibly_teacher?
+    position.nil? ? false : position.possibly_teacher?
   end
 
   def visible?

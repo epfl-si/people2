@@ -10,11 +10,11 @@ class Position
   ENS_RE = /professeur honoraire|-ENS$/i
 
   def initialize(h)
-    @id = h['id']
+    @id = h.key?('id') ? h['id'] : 0
     @label_en = h['labelen']
     @label_frm = h['labelfr']
-    @label_fri = h['labelinclusive']
-    @label_frf = h['labelxx']
+    @label_fri = h.key?('labelinclusive') ? h['labelinclusive'] : h['labelfr']
+    @label_frf = h.key?('labelxx') ? h['labelxx'] : h['labelfr']
   end
 
   # TODO: there must be a less silly way of doing this!

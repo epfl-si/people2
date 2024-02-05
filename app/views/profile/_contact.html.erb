@@ -2,8 +2,8 @@
 <h2 class="people-title mb-3"><%= @profile.t_title %></h2>
 <% end %>
 <p>
-  <% if @email %>
-  <%= link_to @email.address, "mailto:#{@email.address}", class: "btn btn-sm btn-primary" %>
+  <% if @person.email %>
+  <%= link_to @person.email, "mailto:#{@person.email}", class: "btn btn-sm btn-primary" %>
   <% end %>
 
   <% if @person.default_phone and @profile.show_phone %>

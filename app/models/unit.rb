@@ -18,7 +18,7 @@ class Unit
     @label_it = data['labelid']
     @hierarchy = data['path']
     @level = data['level']
-    @type = data['unittype']['label']
+    # @type = data['unittype']['label']
     @url = data['url']
     @address = Address.new(
       'unitid' => @id,

@@ -61,7 +61,7 @@ class Person
   end
 
   def visible_phones(unit)
-    @phones[unit].select(&:visible?)
+    @phones.present? ? @phones[unit].select(&:visible?) : []
   end
 
   def phones(unit)
@@ -77,7 +77,10 @@ class Person
   end
 
   def default_phone
-    @default_phone ||= @phones.values.flatten.min
+    unless defined?(@default_phone)
+      @default_phone = @phones.present? ? @phones.values.flatten.select(&:visible?).flatten.min : nil
+    end
+    @default_phone
   end
 
   # TODO: fix once the actual data is available in api
@@ -117,9 +120,11 @@ class Person
     accreds.any?(&:student?)
   end
 
-  # TODO: see if it is possible to guess if person could be a teacher in order to avoid useless requests to ISA
+  # TODO: see if it is possible to guess if person could be a teacher in order
+  # to avoid useless requests to ISA.
   def possibly_teacher?
-    positions.any?(&:possibly_teacher?)
+    accreds.any?(&:possibly_teacher?)
+    accreds.map(&:position).compact.any?(&:possibly_teacher?)
   end
 
   # ----------------------------------------------------------------------------
