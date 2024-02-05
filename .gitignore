@@ -43,6 +43,7 @@
 # May contain secrets:
 .env
 /env.giova
+/devindex.html
 
 # Downloaded / generated JavaScript stuff:
 /node_modules

@@ -42,6 +42,8 @@ module HelloRails
     config.session_store :disabled
     GraphiQL::Rails.config.csrf = false if Rails.env.development?
 
+    config.i18n.default_locale = :fr
+
     # config.generators do |g|
     #   g.helper false
     #   g.assets false
