@@ -14,14 +14,22 @@ class ApplicationService
   end
 
   def fetch
-    Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+    if Rails.application.config_for(:epflapi).disable_cache
       dofetch
+    else
+      Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+        dofetch
+      end
     end
   end
 
   def fetch!
-    Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+    if Rails.application.config_for(:epflapi).disable_cache
       dofetch!
+    else
+      Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+        dofetch!
+      end
     end
   end
 
@@ -40,6 +48,8 @@ class ApplicationService
   end
 
   def fetch_http(uri = @url)
+    Rails.logger.debug("api fetch_http / uri: #{uri}")
+
     req = genreq
     opts = { use_ssl: true, read_timeout: 100 }
     opts.merge!(http_opts)

@@ -2,6 +2,9 @@
 # Available as `Rails.application.config_for(:epflapi)`
 
 epflapi_config: &epflapi_config
+  # COMMON
+  disable_cache: <%= ENV.fetch("DISABLE_API_CACHE", false) %>
+
   # ATELA (will be replaced by api)
   prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>
   atela_backend_url: <%= ENV.fetch("ATELA_BACKEND_URL", 'https://atela.epfl.ch/cgi-bin/atela-backend') %>
