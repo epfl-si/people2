@@ -90,6 +90,10 @@ class Accreditation
   end
 
   def visible?
+    # There are actually 3 level of visibility check fir accreditations.
+    # 1. (done in Person::accreds) must have the 'botweb' property
+    # 2. (done here) purely teaching position can be hidden
+    # 3. (done in set_options) user can decide ti hide certains accreds
     unless defined?(@visible)
       if Rails.configuration.hide_teacher_accreds && @position.enseignant?
         @visible = false

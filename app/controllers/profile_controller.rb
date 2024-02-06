@@ -25,7 +25,7 @@ class ProfileController < ApplicationController
     @profile = @person.profile
     @editable = @person.can_edit_profile? && @profile.present?
 
-    @accreds = @person.sorted_accreds.select(&:visible?)
+    @accreds = @person.accreds.select(&:visible?).sort
 
     @ta = (Isa::Teaching.new(@sciper) if @person.possibly_teacher?)
 

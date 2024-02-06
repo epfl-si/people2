@@ -93,19 +93,15 @@ class Person
     @accreds ||= begin
       # exclude accreditations that do not have the 'botweb' property
       pp = Authorisation.botweb_for_sciper(sciper).select(&:ok?).index_by(&:unit_id)
-      aa = Accreditation.for_sciper(sciper).select { |a| pp.key?(a.unit_id.to_s) }
-
+      all_accreds = Accreditation.for_sciper(sciper)
+      visible_accreds = all_accreds.select { |a| pp.key?(a.unit_id.to_s) }
       # attach preferences from people (order, visibility)
       if (p = profile).present?
         ap = p.accred_prefs.index_by(&:unit_id)
-        aa.each { |a| a.set_options(ap[a.unit_id]) if ap.key?(a.unit_id.to_s) }
+        visible_accreds.each { |a| a.set_options(ap[a.unit_id]) if ap.key?(a.unit_id.to_s) }
       end
-      aa
+      visible_accreds
     end
-  end
-
-  def sorted_accreds
-    accreds.sort
   end
 
   def units
