@@ -14,22 +14,26 @@ class ApplicationService
   end
 
   def fetch
-    if Rails.application.config_for(:epflapi).disable_cache
-      dofetch
-    else
+    Rails.logger.debug "De we need to fetch cache for key: #{cache_key} (cache_store = #{Rails.application.config.cache_store}) url=#{@url}"
+    # api services cache have to be enabled explicitly
+    if Rails.application.config_for(:epflapi).perform_caching
+      Rails.logger.debug("Fetching cache for key: #{cache_key}")
       Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+        Rails.logger.debug("Cache miss for key: #{cache_key}")
         dofetch
       end
+    else
+      dofetch
     end
   end
 
   def fetch!
-    if Rails.application.config_for(:epflapi).disable_cache
-      dofetch!
-    else
+    if Rails.application.config_for(:epflapi).perform_caching
       Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
         dofetch!
       end
+    else
+      dofetch!
     end
   end
 

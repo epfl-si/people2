@@ -3,7 +3,9 @@
 
 epflapi_config: &epflapi_config
   # COMMON
-  disable_cache: <%= ENV.fetch("DISABLE_API_CACHE", false) %>
+  # api services cache have to be enabled explicitly so that api calls will be
+  # cached only if both general AND specific caching is enabled
+  perform_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
 
   # ATELA (will be replaced by api)
   prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>

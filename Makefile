@@ -124,14 +124,13 @@ dodocop:
 	bundle exec rubocop --autocorrect-all
 
 # ------------------------------------------------------------------------ cache
-## turn on cache in dev (default is off)
-cacheon:
-	docker-compose -f $(COMPOSE) exec webapp touch tmp/caching-dev.txt
+## toggle dev cache
+devcache:
+	docker-compose -f $(COMPOSE) exec webapp bin/rails dev:cache
 
-## turn off cache in dev (default is off)
-cacheoff:
-	docker-compose -f $(COMPOSE) exec webapp rm -f tmp/caching-dev.txt	
-
+## flush cache from redis db
+flush:
+	docker-compose -f $(COMPOSE) exec cache redis-cli FLUSHALL 
 # ------------------------------------------------------------------- ssh tunnel
 .PHONY: tunnel_up tunnel_down
 
