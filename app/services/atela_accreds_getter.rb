@@ -5,7 +5,6 @@ class AtelaAccredsGetter < ApplicationService
   attr_reader :url, :id
 
   def initialize(sciper)
-    @id = sciper
     @url = Rails.application.config_for(:epflapi).atela_backend_url + "/getPerson/#{sciper}"
   end
 

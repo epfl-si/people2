@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class APIAccredsGetter < EpflAPIService
-  attr_reader :url, :id
+  attr_reader :url
 
   private_class_method :new
 

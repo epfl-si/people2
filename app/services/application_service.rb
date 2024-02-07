@@ -14,7 +14,6 @@ class ApplicationService
   end
 
   def fetch
-    Rails.logger.debug "De we need to fetch cache for key: #{cache_key} (cache_store = #{Rails.application.config.cache_store}) url=#{@url}"
     # api services cache have to be enabled explicitly
     if Rails.application.config_for(:epflapi).perform_caching
       Rails.logger.debug("Fetching cache for key: #{cache_key}")
@@ -66,23 +65,17 @@ class ApplicationService
     end
   end
 
-  # The url method have to be overridden (usually with a getter for @url)
-  # next methods are configuration and can be overridden by derived class
-
-  def id
-    nil
-  end
-
   def genreq
     Rails.logger.debug "base genreq"
     Net::HTTP::Get.new(@url)
   end
 
   def cache_key
-    # TODO: url hash might not be unique if params are added to the request.
-    # Therefore it is safer to override cache_key or to provide an id method
-    # for the moment it is responsability of the derived class
-    uid = id.presence || Digest::MD5.hexdigest(url.to_s)
+    # TODO: url hash might not be unique if params are added to the request as
+    # for example when parameters are sent with post instead of being encoded
+    # in the url. Anyway this is better than the original idea that triggered
+    # a bug that took me some time to find.
+    uid = Digest::MD5.hexdigest(url.to_s)
     "#{self.class.name.underscore}/#{uid}"
   end
 

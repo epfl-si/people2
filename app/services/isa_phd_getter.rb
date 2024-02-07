@@ -3,10 +3,9 @@
 # curl https://isa.epfl.ch/services/teachers/103561/thesis/directors/doctorants | jq
 # ssh peo1 "curl 'https://isa.epfl.ch/services/teachers/103561/thesis/directors/doctorants'" | jq
 class IsaPhdGetter < IsaService
-  attr_reader :url, :id
+  attr_reader :url
 
   def initialize(sciper)
-    @id = sciper
     @url = URI.join(Rails.application.config_for(:epflapi).isa_url, "/teachers/#{sciper}/thesis/directors/doctorants")
   end
 

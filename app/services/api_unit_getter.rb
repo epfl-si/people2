@@ -2,7 +2,7 @@
 
 # curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
 class APIUnitGetter < EpflAPIService
-  attr_accessor :url, :id
+  attr_accessor :url
 
   private_class_method :new
 

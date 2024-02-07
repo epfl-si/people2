@@ -3,7 +3,7 @@
 # curl --basic --user 'people:xxx' -X GET \
 # 'https://api.epfl.ch/v1/authorizations?type=property&authid=gestprofil&persid=121769&status=active'
 class APIAuthGetter < EpflAPIService
-  attr_reader :url, :id
+  attr_reader :url
 
   def initialize(
     sciper,
@@ -11,7 +11,6 @@ class APIAuthGetter < EpflAPIService
     type: 'property',
     baseurl: Rails.application.config_for(:epflapi).backend_url
   )
-    @id = sciper
     @url = URI.join(baseurl, "v1/authorizations")
     @url.query = URI.encode_www_form(
       persid: sciper,

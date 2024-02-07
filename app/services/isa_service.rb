@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class IsaService < ApplicationService
-  attr_reader :url, :id
+  attr_reader :url
 
   def http_opts
     return {} unless Rails.application.config_for(:epflapi).isa_no_check_ssl
