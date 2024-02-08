@@ -91,16 +91,16 @@ class Person
   # TODO: check errors on api calls and decide how to recover
   def accreds
     @accreds ||= begin
-      # exclude accreditations that do not have the 'botweb' property
+      # only accreds that have the 'botweb' property are allowed
       pp = Authorisation.botweb_for_sciper(sciper).select(&:ok?).index_by(&:unit_id)
       all_accreds = Accreditation.for_sciper(sciper)
-      visible_accreds = all_accreds.select { |a| pp.key?(a.unit_id.to_s) }
+      allowed_accreds = all_accreds.select { |a| pp.key?(a.unit_id.to_s) }
       # attach preferences from people (order, visibility)
       if (p = profile).present?
         ap = p.accred_prefs.index_by(&:unit_id)
-        visible_accreds.each { |a| a.set_options(ap[a.unit_id]) if ap.key?(a.unit_id.to_s) }
+        allowed_accreds.each { |a| a.prefs(ap[a.unit_id]) if ap.key?(a.unit_id.to_s) }
       end
-      visible_accreds
+      allowed_accreds
     end
   end
 

@@ -36,12 +36,12 @@ class Accreditation
     # @class_label_fr = cd['labelfr']
     # @class_label_en = cd['labelen']
 
-    # default values. Should be reset in set_options.
+    # default values. Should be reset in prefs.
     @people_order = 1
     @visible = true
     @hidden_address = false
 
-    set_options(opts) unless opts.nil?
+    prefs(opts) unless opts.nil?
   end
 
   def self.for_sciper(sciper)
@@ -67,17 +67,17 @@ class Accreditation
   end
 
   def hidden_address?
-    set_options unless defined?(@hidden_address)
+    prefs unless defined?(@hidden_address)
     @hidden_address
   end
 
   def hidden_office?
-    set_options unless defined?(@hidden_office)
+    prefs unless defined?(@hidden_office)
     @hidden_office
   end
 
   def people_order
-    set_options unless defined?(@people_order)
+    prefs unless defined?(@people_order)
     @people_order
   end
 
@@ -93,18 +93,18 @@ class Accreditation
     # There are actually 3 level of visibility check fir accreditations.
     # 1. (done in Person::accreds) must have the 'botweb' property
     # 2. (done here) purely teaching position can be hidden
-    # 3. (done in set_options) user can decide ti hide certains accreds
+    # 3. (done in prefs) user can decide ti hide certains accreds
     unless defined?(@visible)
       if Rails.configuration.hide_teacher_accreds && @position.enseignant?
         @visible = false
       else
-        set_options
+        prefs
       end
     end
     @visible
   end
 
-  def set_options(opts = AccredPref.for_sciper(@sciper).find { |o| o.unit_id == @unit_id })
+  def prefs(opts)
     # fetching all the prefs for this sciper I hope to avoid multiple
     # sql requests thanks to AR caching
 
