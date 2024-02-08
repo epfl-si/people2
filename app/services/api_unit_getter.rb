@@ -19,6 +19,8 @@ class APIUnitGetter < EpflAPIService
     find(unitid, baseurl).fetch
   end
 
+  # TODO: ask IAM if there is a way to send a single request for multiple units
+  # there is https://api.epfl.ch/v1/units?query=... but I cannot guess how it works
   def self.fetch_units(unit_ids, baseurl = Rails.application.config_for(:epflapi).backend_url)
     unit_ids.uniq.map { |uid| find!(uid, baseurl) }
   end

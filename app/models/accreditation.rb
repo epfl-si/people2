@@ -1,47 +1,53 @@
 # frozen_string_literal: true
 
 class Accreditation
-  attr_reader :sciper, :unit_id, :unit_name, :position, :order
-  attr_writer :unit
+  attr_reader :sciper, :unit_id, :unit_name, :position
+  attr_writer :unit, :botweb
 
   include Translatable
   translates :unit_label, :status_label, :class_label
 
-  def initialize(data, opts = nil)
+  def initialize(data)
     ud = data.delete('unit')
     sd = data.delete('status')
     data.delete('class')
     @sciper = data['persid']
-    @unit_id = ud["id"]
+    @unit_id = ud["id"].to_i
     @unit_name = ud["name"]
     @unit_label_fr = ud["labelfr"]
     @unit_label_en = ud["labelfr"]
-    @status_id = sd['id']
+    @status_id = sd['id'].to_i
     @status_label_fr = sd['labelfr']
     @status_label_en = sd['labelfr']
-    @order = data['order']
+    @accred_order = data['order'].to_i
 
-    @position = data.delete('position')
-    if @position.nil?
-      # TODO: check if using status where position is not provided makes sense
-      # TODO: inclusive position (at least for students)
-      @position = Position.new({
-                                 'labelen' => @status_label_en,
-                                 'labelfr' => @status_label_fr,
-                               })
-    else
-      @position = Position.new(@position) unless @position.nil?
+    # TODO: check if using status where position is not provided makes sense
+    # TODO: inclusive position (at least for students)
+    posdata = data.delete('position') || {
+      'labelen' => @status_label_en,
+      'labelfr' => @status_label_fr,
+
+    }
+    @position = Position.new(posdata)
+  end
+
+  def self.for_profile(profile)
+    sciper = profile.sciper
+    accreds = for_sciper(sciper)
+    ap = profile.accred_prefs.index_by(&:unit_id)
+    accreds.each do |a|
+      a.prefs = if ap.key?(a.unit_id)
+                  ap[a.unit_id]
+                else
+                  profile.accred_prefs.new(
+                    {
+                      unit_id: a.unit_id,
+                      sciper: sciper,
+                    }.merge(AccredPref::DEFAULTS)
+                  )
+                end
     end
-
-    # @class_label_fr = cd['labelfr']
-    # @class_label_en = cd['labelen']
-
-    # default values. Should be reset in prefs.
-    @people_order = 1
-    @visible = true
-    @hidden_address = false
-
-    prefs(opts) unless opts.nil?
+    accreds
   end
 
   def self.for_sciper(sciper)
@@ -51,10 +57,13 @@ class Accreditation
 
     accreds = accreds_data.map { |data| new(data) }
 
-    # TODO: ask IAM if we can avoid N+1 queries
+    # prefetch botweb and unit properties for all accreds at once for optimization
+    botwebs = Authorisation.botweb_for_sciper(sciper).select(&:ok?).index_by(&:unit_id)
     units = APIUnitGetter.fetch_units(accreds.map(&:unit_id)).map { |d| Unit.new(d) }.index_by(&:id)
+
     accreds.each do |a|
       a.unit = units[a.unit_id]
+      a.botweb = botwebs.key?(a.unit_id.to_s) ? true : false
     end
     accreds
   end
@@ -66,57 +75,52 @@ class Accreditation
     end
   end
 
-  def hidden_address?
-    prefs unless defined?(@hidden_address)
-    @hidden_address
+  def prefs=(p)
+    raise 'Unexpected class' unless p.is_a?(AccredPref)
+
+    @prefs = p
   end
 
-  def hidden_office?
-    prefs unless defined?(@hidden_office)
-    @hidden_office
+  def prefs
+    # this is not a valid record
+    @prefs ||= AccredPrefs.new(AccredPrefs::DEFAULTS)
   end
 
-  def people_order
-    prefs unless defined?(@people_order)
-    @people_order
-  end
-
-  def <=>(other)
-    [@people_order, @order] <=> [other.people_order, other.order]
-  end
-
-  def possibly_teacher?
-    position.nil? ? false : position.possibly_teacher?
+  def botweb?
+    unless defined?(@botweb)
+      aa = Authorisation.botweb_for_sciper(sciper)
+      @botweb = aa.find { |a| a.unit_id == @unit_id && a.ok? }.present?
+    end
+    @botweb
   end
 
   def visible?
     # There are actually 3 level of visibility check fir accreditations.
-    # 1. (done in Person::accreds) must have the 'botweb' property
+    # 1. must have the 'botweb' property (self.for_sciper)
     # 2. (done here) purely teaching position can be hidden
     # 3. (done in prefs) user can decide ti hide certains accreds
     unless defined?(@visible)
-      if Rails.configuration.hide_teacher_accreds && @position.enseignant?
-        @visible = false
-      else
-        prefs
-      end
+      @visible =
+        botweb? &&
+        prefs.visible? &&
+        !(Rails.configuration.hide_teacher_accreds && @position.enseignant?)
     end
     @visible
   end
 
-  def prefs(opts)
-    # fetching all the prefs for this sciper I hope to avoid multiple
-    # sql requests thanks to AR caching
+  def hidden_address?
+    prefs.hidden_addr
+  end
 
-    if opts.nil?
-      # default values if nothing was found about this unit
-      @people_order = 1
-      @visible = true
-      @hidden_address = false
-    else
-      @people_order = opts.order
-      @visible = opts.visible?
-      @hidden_address = opts.hidden_addr
-    end
+  def order
+    [prefs.order, @accred_order]
+  end
+
+  def <=>(other)
+    order <=> other.order
+  end
+
+  def possibly_teacher?
+    position.nil? ? false : position.possibly_teacher?
   end
 end
