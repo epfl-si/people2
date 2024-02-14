@@ -2,20 +2,46 @@
 
 # TODO: this is for the tmp version coming from the old people
 module Isa
-  class Course
+  class Lecture
     attr_reader :code, :description, :lang, :section, :semester, :title, :url, :year
 
     def initialize(c)
+      @course_id = c['I_MATIERE']
       @year = c['C_PERACAD']
       @code = c['C_CODECOURS']
       @description = c['X_OBJECTIFS']
       @lang = c['C_LANGUEENS']
+      @loc = c['C_LANGUE']
       @section = c['C_PEDAGO']
       @semester = c['C_SEMESTRE']
       @title = c['X_MATIERE']
       @url = c['X_URL']
     end
   end
+
+  # class CourseGroup
+  #   include Translatable
+  #   translates :title, :description
+
+  #   def initialize(c)
+  #     @loc = c.loc
+  #     instance_variable_set("@title_#{c.loc}", c.title) unless instance_variable_get("@title_#{c.loc}")
+  #     unless instance_variable_get("@description_#{c.loc}")
+  #       instance_variable_set("@description_#{c.loc}",
+  #                             c.description)
+  #     end
+  #     @lang = c.lang
+  #     @urls = {
+  #       [c.section, c.semester] => @url
+  #     }
+  #   end
+
+  #   def add(c)
+  #     return false unless c.title == @title && c.loc == @loc
+  #     @description ||= c.description
+
+  #   end
+  # end
 end
 
 module Isa
@@ -52,16 +78,24 @@ end
 #   @courses  the list of courses given.
 module Isa
   class Teaching
-    attr_reader :courses, :ta, :sciper, :phd
+    attr_reader :ta, :sciper, :phd, :lectures
 
     def initialize(sciper)
       @sciper = sciper
       @ta = load_ta(sciper)
       @phd = load_phd(sciper)
-      @courses = load_courses(sciper)
+      @lectures = load_lectures(sciper)
       return unless @ta.nil? || @phd.nil?
 
       Rails.logger.warn("failed to fetch ISA teaching data for sciper #{sciper}")
+    end
+
+    def courses
+      @lectures.uniq(&:title)
+    end
+
+    def grouped_courses
+      @lectures.uniq { |c| c.course_id == 3_659_768_971 }
     end
 
     def primary_teaching
@@ -125,8 +159,6 @@ module Isa
     end
 
     def ta?
-      return false if @ta.nil?
-
       primary_teaching.present? ||
         secondary_teaching.present? ||
         phd_directorships.present? ||
@@ -159,7 +191,7 @@ module Isa
 
     private
 
-    def load_courses(sciper)
+    def load_lectures(sciper)
       if Rails.application.config_for(:epflapi).isa_use_oracle
         Legacy::IsaCours.for_sciper(sciper)
       else
@@ -173,7 +205,7 @@ module Isa
         data['bycours'].each do |s|
           res.concat s['coursLoop'] if s.key?('coursLoop')
         end
-        res.map { |c| Isa::Course.new(c) }
+        res.map { |c| Isa::Lecture.new(c) }
       end
     end
 

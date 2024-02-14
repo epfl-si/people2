@@ -27,7 +27,7 @@ class ProfileController < ApplicationController
 
     @accreds = @person.accreds.select(&:visible?).sort
 
-    @ta = (Isa::Teaching.new(@sciper) if @person.possibly_teacher?)
+    @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
 
     # TODO: would a sort of "PublicSection" class make things easier here ?
     #       keep in mind that here we only manage boxes but we will have
@@ -37,8 +37,10 @@ class ProfileController < ApplicationController
 
     @visible_socials = @profile.socials.select(&:visible?)
 
-    # get sections that contain at least one box in the current locale
+    # User's provided data (boxes) is coerced to @profile.force_lang locale
     @cvlocale = @profile.force_lang || I18n.locale
+    logger.debug("sciper: #{@sciper} locale=#{I18n.locale} cvlocale=#{@cvlocale}")
+    # get sections that contain at least one box in the chosen locale
     unsorted_boxes = @profile.boxes.visible.includes(:section).select do |b|
       b.content?(@cvlocale)
     end

@@ -22,7 +22,15 @@ module Legacy
     end
 
     def lang
+      c_langueens
+    end
+
+    def loc
       c_langue
+    end
+
+    def course_id
+      i_matiere
     end
 
     def section(lang = I18n.locale)

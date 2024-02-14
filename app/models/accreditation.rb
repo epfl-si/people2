@@ -121,6 +121,6 @@ class Accreditation
   end
 
   def possibly_teacher?
-    position.nil? ? false : position.possibly_teacher?
+    position.present? && position.possibly_teacher?
   end
 end

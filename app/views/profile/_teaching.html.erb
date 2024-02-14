@@ -1,0 +1,13 @@
+<% if @ta.courses.present? %>
+<div class="mt-5">
+  <h3><%= t "title.courses" %></h3>
+  <div class="list-group">
+    <% @ta.courses.each do |c| %>
+    <div class="list-group-item list-group-item-borderless">
+      <h4><%= link_to_or_text(c.title, c.url) %></h4>
+      <p><%= c.description %></p>
+    </div>
+    <% end %>
+  </div>
+</div>
+<% end %>

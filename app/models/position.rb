@@ -6,9 +6,6 @@ class Position
   include Translatable
   inclusively_translates :label
 
-  PROF_RE = /^Profess/i
-  ENS_RE = /professeur honoraire|-ENS$/i
-
   def initialize(h)
     @id = h.key?('id') ? h['id'] : 0
     @label_en = h['labelen']
@@ -17,11 +14,15 @@ class Position
     @label_frf = h.key?('labelxx') ? h['labelxx'] : h['labelfr']
   end
 
-  # TODO: there must be a less silly way of doing this!
+  # In the original People, prof were determined by the followint regex
+  # /ordinaire|tenure|assoc|bours|enseignement|titulaire|professeur invit/
+  # TODO: there must be a better way using accred properties or similar
+  PROF_RE = /(^Profess)|enseignement/i
   def possibly_teacher?
     PROF_RE.match(@label_frm)
   end
 
+  ENS_RE = /professeur honoraire|-ENS$/i
   def enseignant?
     ENS_RE.match(@label_frm)
   end

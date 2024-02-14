@@ -113,7 +113,6 @@ class Person
   # to avoid useless requests to ISA.
   def possibly_teacher?
     accreds.any?(&:possibly_teacher?)
-    accreds.map(&:position).compact.any?(&:possibly_teacher?)
   end
 
   # ----------------------------------------------------------------------------

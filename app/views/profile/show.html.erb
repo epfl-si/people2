@@ -94,6 +94,13 @@
   <% end %>
 <% end %>
 
+<% if @ta.present? %>
+<div class="position-relative mt-5">
+  <div class="container">
+    <%= render "teaching" %>
+  </div>
+</div>
+<% end %>
 
 <% if false %>
 <div class="position-relative mt-5">
@@ -143,10 +150,6 @@
   <%= render "legacy/s1/publications" %>
   <% end %>
 
-  <% if @ta.present? and @ta.ta? %>
-  <hr class="darker">
-  <%= render "legacy/s1/teaching" %>
-  <% end %>
 
   <% unless @boxes['R'].empty? %>
   <hr class="darker">
