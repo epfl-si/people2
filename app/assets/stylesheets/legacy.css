@@ -1,9 +1,11 @@
-/* 
-  TODO: why the fuck it is no longer possible to link assets ?!
-  <%= stylesheet_link_tag "legacy" %> will crash with the following error:
-  Asset `legacy.css` was not declared to be precompiled in production.
-  Declare links to your assets in `app/assets/config/manifest.js`.
-*/
 h2.section_title {
 	margin-top: 2em;
+}
+
+.people-contents {
+  padding-top: 1rem;
+}
+
+.people-contents h3 {
+  margin-top: 1rem;
 }
