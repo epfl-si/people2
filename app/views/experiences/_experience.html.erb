@@ -1,0 +1,8 @@
+<div class="list-group-item list-group-item-borderless">
+<p><strong><%= experience.t_title %></strong></p>
+<%= experience.t_description("en") %>
+<div class="item-metadata">
+  <p class="item-date"><%= [experience.year_begin, experience.year_end].compact.join("–") %></p>
+  <p class="small"><%= experience.location %></p>
+</div>
+</div>

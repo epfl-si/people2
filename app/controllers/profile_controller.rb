@@ -16,9 +16,17 @@ class ProfileController < ApplicationController
 
   private
 
+  # TODO
+  def set_audience
+    # @audience = rand(0..3)
+    @audience = 3
+  end
+
   def set_person; end
 
   def set_show_data
+    set_audience
+
     @person = Person.find(params[:sciper_or_name])
     @sciper = @person.sciper
 
@@ -35,13 +43,13 @@ class ProfileController < ApplicationController
     #       that is not just a simple free text box with a title.
     return unless @editable
 
-    @visible_socials = @profile.socials.select(&:visible?)
+    @visible_socials = @profile.socials.for_audience(@audience)
 
     # User's provided data (boxes) is coerced to @profile.force_lang locale
     @cvlocale = @profile.force_lang || I18n.locale
     logger.debug("sciper: #{@sciper} locale=#{I18n.locale} cvlocale=#{@cvlocale}")
     # get sections that contain at least one box in the chosen locale
-    unsorted_boxes = @profile.boxes.visible.includes(:section).select do |b|
+    unsorted_boxes = @profile.boxes.for_audience(@audience).includes(:section).select do |b|
       b.content?(@cvlocale)
     end
     @boxes = unsorted_boxes.sort do |a, b|

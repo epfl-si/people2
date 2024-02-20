@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_10_081855) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_19_112048) do
   create_table "accred_prefs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -69,6 +69,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_081855) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "awards", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "issuer"
+    t.integer "year"
+    t.integer "audience", default: 0
+    t.boolean "visible", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_awards_on_profile_id"
+  end
+
   create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "type", null: false
     t.bigint "profile_id", null: false
@@ -77,12 +90,45 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_081855) do
     t.string "title_fr"
     t.boolean "show_title", default: true
     t.boolean "frozen", default: false
+    t.integer "audience", default: 0
     t.boolean "visible", default: false
     t.integer "position"
+    t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_boxes_on_profile_id"
     t.index ["section_id"], name: "index_boxes_on_section_id"
+  end
+
+  create_table "educations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "field_en"
+    t.string "field_fr"
+    t.string "director"
+    t.string "school", null: false
+    t.integer "year_begin"
+    t.integer "year", null: false
+    t.integer "audience", default: 0
+    t.boolean "visible", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_educations_on_profile_id"
+  end
+
+  create_table "experiences", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "location"
+    t.integer "year_begin", null: false
+    t.integer "year_end"
+    t.integer "audience", default: 0
+    t.boolean "visible", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_experiences_on_profile_id"
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -153,7 +199,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_081855) do
     t.string "tag"
     t.string "value"
     t.integer "order", default: 1
-    t.boolean "hidden", default: false
+    t.boolean "visible", default: true
+    t.integer "audience", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_socials_on_profile_id"
@@ -171,8 +218,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_081855) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "awards", "profiles"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
+  add_foreign_key "educations", "profiles"
+  add_foreign_key "experiences", "profiles"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
   add_foreign_key "profile_pictures", "profiles"

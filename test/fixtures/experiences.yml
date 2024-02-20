@@ -1,0 +1,28 @@
+giova_exp_algo:
+  profile: giova
+  title_en: "IT manager / Developer"
+  title_fr: "Responsable IT / Developpeur"
+  location: "EPFL – Lausanne"
+  year_begin: 2002
+  year_end: 2015
+  visible: true
+  audience: 0
+
+giova_exp_kandou:
+  profile: giova
+  title_en: "Head of IT"
+  title_fr: "Responsable IT"
+  location: "Kandou"
+  year_begin: 2011
+  year_end: 2017
+  visible: true
+  audience: 0
+
+giova_exp_vpsi:
+  profile: giova
+  title_en: "DevOps / FullStack dev"
+  title_fr: "DevOps / FullStack dev"
+  location: "EPFL"
+  year_begin: 2017
+  visible: true
+  audience: 0

@@ -1,0 +1,14 @@
+# --------------------------------------------------------------------------- Me
+gio_social_linkedin:
+  profile: giova
+  tag: linkedin
+  value: giovannicangiani
+  visible: true
+  audience: 0
+
+gio_social_github:
+  profile: giova
+  tag: github
+  value: multiscan
+  visible: false
+  audience: 0

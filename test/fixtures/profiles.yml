@@ -28,7 +28,7 @@ francesco:
   # title_fr:
   # personal_web_url:
 
-giova:
+giovanni:
   sciper: "110635"
   show_birthday: false
   show_nationality: false
@@ -54,7 +54,7 @@ martin:
   title_fr: Professeur
   personal_web_url: "http://lampwww.epfl.ch/~odersky/"
 
-me: 
+giova: 
   sciper: "121769"
   show_birthday: true
   show_nationality: true

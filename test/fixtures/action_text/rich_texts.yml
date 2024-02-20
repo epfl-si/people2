@@ -6,6 +6,27 @@ gio_box_expertise_en:
     HPC, Algorithms, Networking, Programming, IT, DBA, Unix, Computational 
     Solid State Physics
 
+giova_exp_text_algo: 
+  record: giova_exp_algo (Experience) 
+  name: description_en
+  body: >
+    As a researcher and developer, I mostly work on the implementation of
+    demonstrative, didactical as well as real-world application (ipTV, file
+    transfer, and social networking) of the algorithms invented in our laboratory.
+
+    As IT manager I take care of a computer network serving about 50 users. We run
+    our own file/web/mail and backup servers, single sign-on system, printing
+    system and HPC cluster. I also work as a scientific advisor and developer in a
+    web2.0 project.
+
+giova_exp_text_kandou: 
+  record: giova_exp_kandou (Experience) 
+  name: description_en
+  body: >
+    In charge of everything related to IT for the company: hardware acquisition,
+    deployment, software installation and maintenance, security, networking,
+    HPC, web developer.
+
 # ---------------------------------------------------------------------- Olivier
 oli_box_expertise_en:
   record: oli_box_expertise (Box)

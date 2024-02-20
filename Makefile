@@ -170,11 +170,14 @@ fakeapi: dcup
 SQL=docker-compose -f $(COMPOSE) exec -T mariadb mysql -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
 reseed:
-	echo "DROP DATABASE people" | $(SQL)
-	sleep 2
-	echo "CREATE DATABASE people;" | $(SQL)
+	make nukedb
 	sleep 2
 	make seed
+
+## delete the people database
+nukedb:
+	echo "DROP DATABASE people" | $(SQL)
+	echo "CREATE DATABASE people;" | $(SQL)
 
 # -------------------------------------------------- restore legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder

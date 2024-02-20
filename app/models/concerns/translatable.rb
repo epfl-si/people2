@@ -29,6 +29,8 @@ module Translatable
         end
       end
     end
+
+    def self.validates_translatability(*attributes); end
   end
 
   def translation_for(attribute, locale = I18n.locale)

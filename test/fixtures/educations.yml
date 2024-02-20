@@ -1,0 +1,23 @@
+gio_edu_uni:
+  profile: giova
+  title_en: "Master"
+  title_fr: "Master"
+  field_en: "Physics"
+  field_fr: "Physique"
+  director: "Maria Peressi"
+  school:   "Università di Trieste"
+  year:     1997
+  visible: true
+  audience: 0
+gio_edu_phd:
+  profile: giova
+  title_en: "PhD"
+  title_fr: "Doctorat"
+  field_en: "Solid State Physics"
+  field_fr: "Physique de la matiere condensée"
+  director: "Alfonso Baldereschi"
+  school:   "EPFL"
+  year:     2002
+  visible: true
+  audience: 0
+

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Social < ApplicationRecord
+  include AudienceLimitable
+
   RESEARCH_IDS = {
     # https://orcid.org/0000-0002-1825-0097
     'orcid' => {
@@ -49,7 +51,17 @@ class Social < ApplicationRecord
       'order' => 4,
       'icon' => 'linkedin',
       're' => %r{^[a-z][a-z0-9-]+/?$} # TODO: check this!
-    }
+    },
+    # https://github.com/XXX
+    'github' => {
+      'img' => 'github.png',
+      'url' => 'https://github.com/XXX',
+      'label' => 'GitHub',
+      'order' => 5,
+      'icon' => 'github',
+      're' => /^[A-Za-z0-9_.-]+$/,
+    },
+    # TODO: stack overflow, mastodon, facebook, twitter, instagram, ...
   }.freeze
 
   belongs_to :profile, class_name: "Profile", inverse_of: :socials
@@ -59,25 +71,10 @@ class Social < ApplicationRecord
   validates :tag, inclusion: { in: RESEARCH_IDS.keys }
   validate :validate_format_of_value
 
-  def validate_format_of_value
-    unless RESEARCH_IDS.key?(tag)
-      errors.add(:tag, "Invalid social network name/tag")
-      return false
-    end
-    re = RESEARCH_IDS[tag]['re']
-    unless re.match?(value)
-      errors.add(:value, "incorrect format")
-      return false
-    end
-    true
-  end
+  before_save :ensure_sciper
 
   def self.for_sciper(sciper)
     where(sciper: sciper).order(:order)
-  end
-
-  def visible?
-    !hidden
   end
 
   def url
@@ -110,5 +107,25 @@ class Social < ApplicationRecord
   def default_order
     @s ||= RESEARCH_IDS[tag]
     @s['order']
+  end
+
+  private
+
+  # we call this before save so that profile is present due to passed validation
+  def ensure_sciper
+    sciper || profile.sciper
+  end
+
+  def validate_format_of_value
+    unless RESEARCH_IDS.key?(tag)
+      errors.add(:tag, "Invalid social network name/tag")
+      return false
+    end
+    re = RESEARCH_IDS[tag]['re']
+    unless re.match?(value)
+      errors.add(:value, "incorrect format")
+      return false
+    end
+    true
   end
 end

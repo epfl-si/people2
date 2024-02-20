@@ -1,0 +1,16 @@
+<div class="mt-5">
+<% if box.show_title? %>
+  <h3><%= box.t_title %></h3>
+<% end %>
+  <%= 
+    render partial: "#{box.plural_variant}/#{box.plural_variant}", 
+           locals: {"#{box.plural_variant}".to_sym => box.items} 
+  %>
+</div>
+
+
+
+
+
+
+  

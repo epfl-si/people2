@@ -8,6 +8,35 @@ gio_box_expertise:
   show_title: true
   frozen: true
   visible: true
+  audience: 0
+  position: 1
+
+gio_box_education:
+  type: "StandardBox"
+  data:
+    variant: 'education'
+  profile: giova
+  section: bio
+  title_en: Education
+  title_fr: Formation
+  show_title: true
+  frozen: true
+  visible: true
+  audience: 0
+  position: 1
+
+gio_box_experience:
+  type: "StandardBox"
+  data:
+    variant: 'experience'
+  profile: giova
+  section: bio
+  title_en: Professional experience
+  title_fr: Parcours professionnel
+  show_title: true
+  frozen: true
+  visible: true
+  audience: 0
   position: 1
 
 # ---------------------------------------------------------------------- Olivier
@@ -20,6 +49,7 @@ oli_box_expertise:
   show_title: true
   frozen: true
   visible: true
+  audience: 0
   position: 1
 
 oli_box_bio:
@@ -31,6 +61,7 @@ oli_box_bio:
   show_title: false
   frozen: true
   visible: true
+  audience: 0
   position: 1
 
 oli_box_cv:
@@ -42,17 +73,21 @@ oli_box_cv:
   show_title: false
   frozen: true
   visible: true
+  audience: 0
   position: 2
 
 oli_box_edu:
-  type: "RichTextBox"
+  type: "StandardBox"
   profile: olivier
   section: bio
+  data:
+    variant: 'education'
   title_en: Education
   title_fr: Education
   show_title: true
   frozen: true
   visible: true
+  audience: 0
   position: 3
 
 oli_box_mission:
@@ -64,6 +99,7 @@ oli_box_mission:
   show_title: true
   frozen: true
   visible: true
+  audience: 0
   position: 4
 
 oli_box_pubs:
@@ -75,6 +111,7 @@ oli_box_pubs:
   show_title: true
   frozen: true
   visible: true
+  audience: 0
   position: 1
 
 # ---------------------------------------------------------------------- Natalie
@@ -87,8 +124,10 @@ nat_box_expertise:
   show_title: true
   frozen: true
   visible: false
+  audience: 0
   position: 1
 
+# Disponibilité only visible from intranet
 nat_box_work:
   type: "RichTextBox"
   profile: natalie
@@ -97,6 +136,7 @@ nat_box_work:
   show_title: true
   frozen: false
   visible: true
+  audience: 1
   position: 2
 
 nat_box_work:
@@ -107,6 +147,7 @@ nat_box_work:
   show_title: true
   frozen: false
   visible: true
+  audience: 0
   position: 1
 
 nat_box_mission:
@@ -118,6 +159,7 @@ nat_box_mission:
   show_title: true
   frozen: true
   visible: false
+  audience: 0
   position: 1
 
 nat_box_bio:
@@ -129,6 +171,7 @@ nat_box_bio:
   show_title: false
   frozen: true
   visible: false
+  audience: 0
   position: 1
 
 nat_box_cv:
@@ -140,17 +183,21 @@ nat_box_cv:
   show_title: false
   frozen: true
   visible: true
+  audience: 0
   position: 2
 
 nat_box_edu_en:
-  type: "RichTextBox"
+  type: "StandardBox"
   profile: natalie
   section: bio
+  data:
+    variant: 'education'
   title_en: Education
   title_fr: Education
   show_title: true
   frozen: true
   visible: false
+  audience: 0
   position: 3
 
 nat_box_mission:
@@ -162,6 +209,7 @@ nat_box_mission:
   show_title: true
   frozen: true
   visible: false
+  audience: 0
   position: 4
 
 nat_box_pubs:
@@ -173,5 +221,6 @@ nat_box_pubs:
   show_title: true
   frozen: true
   visible: false
+  audience: 0
   position: 1
 

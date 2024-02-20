@@ -18,6 +18,9 @@ class Profile < ApplicationRecord
 
   has_many :boxes, dependent: :destroy
   has_many :socials, dependent: :destroy
+  has_many :awards, dependent: :destroy
+  has_many :educations, dependent: :destroy
+  has_many :experiences, dependent: :destroy
 
   # avoid N+1 using with_attached_attachment helper:
   # @cv.with_attached_images.each do |cv|
