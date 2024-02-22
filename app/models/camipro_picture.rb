@@ -21,7 +21,7 @@ class CamiproPicture < ApplicationRecord
   def fetch!
     sciper = profile.sciper
     url = URI.parse(CamiproPicture.url(sciper))
-    image.attach(io: url.open, filename: "#{sciper}jpg")
+    image.attach(io: url.open, filename: "#{sciper}.jpg")
   end
 
   def fetch
