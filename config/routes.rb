@@ -25,6 +25,12 @@ Rails.application.routes.draw do
   get '/cv2/:sciper_or_name', to: 'profile#show', as: 'profile',
                               constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
 
+  namespace :api do
+    # namespace /api/v0 is actually /cgi-bin via traefik rewrite
+    namespace :v0 do
+      get '/wsgetPhoto', to: 'legacy#photo'
+    end
+  end
   # useful queries:
   #   firstname=giovanni&lastname=cangiani
   #   persid=121769
