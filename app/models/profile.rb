@@ -22,11 +22,13 @@ class Profile < ApplicationRecord
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
 
-  # avoid N+1 using with_attached_attachment helper:
+  # TIP: avoid N+1 using with_attached_attachment helper:
   # @cv.with_attached_images.each do |cv|
   has_many :profile_pictures, class_name: 'ProfilePicture', dependent: :destroy
-  belongs_to :selected_picture, class_name: 'ProfilePicture', foreign_key: 'profile_picture_id', inverse_of: false
+  belongs_to :selected_picture, class_name: 'ProfilePicture',
+                                foreign_key: 'profile_picture_id', optional: true, inverse_of: false
   has_many :accred_prefs, class_name: 'AccredPref', dependent: :destroy
+  has_one :camipro_picture, class_name: 'CamiproPicture', dependent: :destroy
 
   # TODO: switch to new model
   has_many :publications, class_name: 'Legacy::Publication', primary_key: 'sciper', foreign_key: 'sciper',
@@ -38,25 +40,17 @@ class Profile < ApplicationRecord
     where(sciper: sciper).first
   end
 
-  def photo_url
-    show_photo ? photo_url! : nil
+  def photo
+    show_photo ? photo! : nil
   end
 
-  def photo_url!
+  def photo!
     if selected_picture.present?
-      Rails.application.routes.url_helpers.url_for(selected_picture.image)
+      selected_picture
+    elsif camipro_picture.present?
+      camipro_picture
     else
-      camipro_photo_url
-    end
-  end
-
-  def camipro_photo_url
-    @camipro_photo_url ||= begin
-      k = Rails.application.config_for(:epflapi).camipro_key
-      t = Time.now.in_time_zone('Europe/Rome').strftime('%Y%m%d%H%M%S')
-      baseurl = "https://#{Rails.application.config_for(:epflapi).camipro_host}/api/v1/photos/#{sciper}?time=#{t}&app=people"
-      digest = OpenSSL::HMAC.hexdigest('SHA256', k, baseurl)
-      baseurl + "&hash=#{digest}"
+      create_camipro_picture!
     end
   end
 

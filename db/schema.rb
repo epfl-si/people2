@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_19_112048) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_133406) do
   create_table "accred_prefs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -98,6 +98,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_19_112048) do
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_boxes_on_profile_id"
     t.index ["section_id"], name: "index_boxes_on_section_id"
+  end
+
+  create_table "camipro_pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.integer "failed_attempts", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_camipro_pictures_on_profile_id"
   end
 
   create_table "educations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -221,6 +229,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_19_112048) do
   add_foreign_key "awards", "profiles"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
+  add_foreign_key "camipro_pictures", "profiles"
   add_foreign_key "educations", "profiles"
   add_foreign_key "experiences", "profiles"
   add_foreign_key "items", "artists"
