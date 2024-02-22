@@ -8,14 +8,14 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= render "layouts/legacy/favicons" %>
+    <%= render "layouts/legacy0/favicons" %>
     <%= render "layouts/epfl-elements/head" %>
     <!-- TODO: try to understand why the fuck the asset pipeline no longer works %>
     <%= stylesheet_link_tag "legacy" if false  %>
   </head>
 
   <body>
-    <%= render "layouts/legacy/header" %>
+    <%= render "layouts/legacy0/header" %>
 
     <div class="main-container">
       <div class="overlay"></div>

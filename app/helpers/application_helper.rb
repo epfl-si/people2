@@ -29,6 +29,6 @@ module ApplicationHelper
 
   # Return the full url for static stuff coming from EPFL elements cdn
   def belurl(path)
-    "https://epfl-si.github.io/elements/#{path}"
+    "https://web2018.epfl.ch/6.5.1/#{path}"
   end
 end

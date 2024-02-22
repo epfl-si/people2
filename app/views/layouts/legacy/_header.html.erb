@@ -1,27 +1,63 @@
 <header role="banner" class="header header-light">
-  <div class="drawer mr-3 mr-xl-0">
-    <button class="drawer-toggle">
-      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chevron-right"></use></svg>
-    </button>
-    <a href="/" class="drawer-link"><span class="text">Go to main site</span></a>
-  </div>
-  <div class="header-light-content"><!-- header content -->
-    <a class="logo" href="#">
-      <%= image_tag "epfl-elements/dist/svg/epfl-logo.svg", :alt => "Logo EPFL, École polytechnique fédérale de Lausanne", :class => "img-fluid" %>
-    </a>
-    <h1><%= @title || "Online People Directory" %></h1>
+	<div class="header-light-content">
+		<!-- LOGO -->		
+		<a class="logo" href="https://www.epfl.ch">
+			<img src="<%= belurl 'icons/epfl-logo.svg' %>" alt="Logo EPFL, Ecole polytechnique fédérale de Lausanne" class="img-fluid">
+		</a>
+		<p class="site-title"><a href="/">ONLINE PEOPLE DIRECTORY</a></p>
 
-    <!-- TODO make this dynamic -->
-    <nav class="nav-lang nav-lang-short ml-auto">
+		<!-- SEARCH -->		
+    <%= form_with url: "https://search.epfl.ch", method: :get, html: {class: "d-xl-none"} do |form| %>
+      <%= form.hidden_field :filter, value: "people" %>
+      <a id="search-mobile-toggle" class="search-mobile-toggle searchform-controller" href="#">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
+        <span class="toggle-label sr-only"><%= t "action.show_hide_search_form" %></span>
+      </a>
+      <div class="input-group search-mobile" role="search">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
+          </span>
+        </div>
+        <label for="search" class="sr-only"><% t "action.search_people" %></label>
+        <input type="text" class="form-control" name="search" placeholder="<%= t "action.search" %> >
+        <div class="input-group-append">
+          <a id="search-mobile-close" class="search-mobile-close searchform-controller" href="#">
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg>
+            <span class="toggle-label sr-only"><%= t "action.hide_search_form" %></span>
+          </a>
+        </div>
+    <% end %>
+    <div class="dropdown dropright search d-none d-xl-block show">
+      <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="true">
+        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
+      </a>
+      <%= form_with url: "https://search.epfl.ch", method: :get, html: {"class" => "dropdown-menu border-0 p-0", "x-placement" => "right-start", "style" => "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(50px, -12.75px, 0px);"} do |form| %>
+        <%= form.hidden_field :filter, value: "people" %>
+        <div class="search-form mt-1 input-group">
+          <label for="search" class="sr-only"><% t "action.search_people" %></label>
+          <input type="text" class="form-control" name="q" placeholder="<%= t "action.search" %>">
+          <button type="submit" class="d-none d-xl-block btn btn-primary input-group-append"><%= t "action.valider" %></button>
+        </div>
+      <% end %>
+    </div>
+
+		<!-- language switcher, two elements -->
+		<nav class="nav-lang nav-lang-short ml-auto pr-lg-5">
       <ul>
         <li>
-          <span class="active" aria-label="Français">FR</span>
+          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
+          <a href="#">
+            <%= t 'action.edit_profile' %>
+            <span class="sr-only">
+              <%= t 'action.of' %> <%= @person.display_name %>
+            </span>
+          </a>
         </li>
-        <li>
-          <a href="#" aria-label="English">EN</a>
-        </li>
+        <li><span class="active" aria-label="Français">FR</span></li>
+        <li><a href="#" aria-label="English">EN</a></li>
       </ul>
-    </nav>
+		</nav>
 
-  </div>
+	</div>
 </header>

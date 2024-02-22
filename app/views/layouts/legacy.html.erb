@@ -1,224 +1,25 @@
 <!doctype html>
 <html lang="en">
+  <%= render "layouts/legacy/head" %>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <body>
+    <%= render "layouts/legacy/header" %>
+    <% console if Rails.env.development? %>
 
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+    <div class="main-container pt-5 pb-5">
 
-
-  <title><%= @page_title || "EPFL - people directory" %><%= Rails.env.development? ? " (DEV)" : "" %></title>
-  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=String.prototype.includes,Array.prototype.includes,Array.prototype.find,CustomEvent"></script>
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="228x228" href="<%= belurl 'favicons/favicon-228.png' %>">
-  <link rel="icon" type="image/png" sizes="180x180" href="<%= belurl 'favicons/favicon-180.png' %>">
-  <link rel="icon" type="image/png" sizes="152x152" href="<%= belurl 'favicons/favicon-152.png' %>">
-  <link rel="icon" type="image/png" sizes="144x144" href="<%= belurl 'favicons/favicon-144.png' %>">
-  <link rel="icon" type="image/png" sizes="128x128" href="<%= belurl 'favicons/favicon-128.png' %>">
-  <link rel="icon" type="image/png" sizes="120x120" href="<%= belurl 'favicons/favicon-120.png' %>">
-  <link rel="icon" type="image/png" sizes="96x96" href="<%= belurl 'favicons/favicon-96.png' %>">
-  <link rel="icon" type="image/png" sizes="76x76" href="<%= belurl 'favicons/favicon-76.png' %>">
-  <link rel="icon" type="image/png" sizes="57x57" href="<%= belurl 'favicons/favicon-57.png' %>">
-  <link rel="icon" type="image/png" sizes="32x32" href="<%= belurl 'favicons/favicon-32.png' %>">
-  <link rel="icon" type="image/png" sizes="16x16" href="<%= belurl 'favicons/favicon-16.png' %>">
-  <link rel="apple-touch-icon" sizes="180x180" href="<%= belurl 'favicons/favicons/apple-touch-icon.png' %>">
-  <link rel="manifest" href="<%= belurl 'favicons/site.webmanifest' %>">
-  <link rel="mask-icon" href="<%= belurl 'favicons/safari-pinned-tab.svg' %>" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="theme-color" content="#e30713">
-  <!-- end favicons -->
-
-  <link rel="stylesheet" href="<%= belurl 'css/vendors.min.css' %>">
-  <link rel="stylesheet" href="<%= belurl 'css/elements.css' %>">
-  <link rel="stylesheet" href="<%= belurl 'css/reader.css' %>">
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="<%= belurl 'js/vendors.min.js' %>"></script>
-  <script src="<%= belurl 'js/elements.js' %>"></script>
-  <script>
-    window.svgPath = "<%= belurl 'icons/icons.svg' %>";
-    window.featherSvgPath = "<%= belurl 'icons/feather-sprite.svg' %>";
-  </script>
-</head>
-
-<body>
-<% console if Rails.env.development? %>
-<header role="banner" class="header header-light">
-  <div class="header-light-content">
-    <a class="logo" href="https://www.epfl.ch/">
-      <img src="<%= belurl 'svg/epfl-logo.svg' %>" alt="Logo EPFL, École polytechnique fédérale de Lausanne" class="img-fluid">
-    </a>
-    <p class="site-title">
-      <a href="">Online People Directory</a>
-    </p>
-
-    <%= form_with url: "https://search.epfl.ch", method: :get, html: {class: "d-xl-none"} do |form| %>
-      <%= form.hidden_field :filter, value: "people" %>
-      <a id="search-mobile-toggle" class="search-mobile-toggle searchform-controller" href="#">
-        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
-        <span class="toggle-label sr-only"><%= t "action.show_hide_search_form" %></span>
-      </a>
-      <div class="input-group search-mobile" role="search">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
-          </span>
-        </div>
-        <label for="search" class="sr-only"><% t "action.search_people" %></label>
-        <input type="text" class="form-control" name="search" placeholder="<%= t "action.search" %> >
-        <div class="input-group-append">
-          <a id="search-mobile-close" class="search-mobile-close searchform-controller" href="#">
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg>
-            <span class="toggle-label sr-only"><%= t "action.hide_search_form" %></span>
-          </a>
-        </div>
-    <% end %>
-    
-    <div class="dropdown dropright search d-none d-xl-block show">
-      <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="true">
-        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
-      </a>
-      <%= form_with url: "https://search.epfl.ch", method: :get, html: {"class" => "dropdown-menu border-0 p-0", "x-placement" => "right-start", "style" => "position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(50px, -12.75px, 0px);"} do |form| %>
-        <%= form.hidden_field :filter, value: "people" %>
-        <div class="search-form mt-1 input-group">
-          <label for="search" class="sr-only"><% t "action.search_people" %></label>
-          <input type="text" class="form-control" name="q" placeholder="<%= t "action.search" %>">
-          <button type="submit" class="d-none d-xl-block btn btn-primary input-group-append"><%= t "action.valider" %></button>
-        </div>
-      <% end %>
-    </div>
-
-    <nav class="nav-lang ml-auto dropdown" aria-label="Change language">
-      <a href="#" class="dropdown-toggle btn btn-secondary" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
-        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-planet"></use></svg>
-        <span>FR</span>
-      </a>
-      <ul class="dropdown-menu">
-        <li>
-          <a aria-label="Français (Current language)" class="active dropdown-item">
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-planet"></use></svg>
-            <span>FR</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" aria-label="English" class="dropdown-item">
-            <span>EN</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="btn btn-secondary nav-toggle-mobile d-xl-none">
-      <span class="label">Menu</span>
-      <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
-</header>
-
-<div class="main-container">
-  <div class="breadcrumb-container">
-    <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="#">
-          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-home"></use></svg>
-        </a>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">people directory</li>
-    </ol>
-    </nav>
-  </div>
-  <div class="w-100 pb-5">
-    <main id="main" class="content" role="main" >
+      <main id="main" class="content" role="main" >
         <%= yield %>
-      </div>
-      </div>
-    </main>      
-  </div>
+      </main>      
 
-  <div class="bg-gray-100 pt-5">
-  <div class="container">
+      <%= render "layouts/legacy/footer" %>
 
-    <footer class="footer-light" role="contentinfo">
-      <div class="row">
-        <div class="col-6 mx-auto mx-md-0 mb-4 col-md-3 col-lg-2">
-          <a href="#">
-            <img src="<%= belurl 'svg/epfl-logo.svg' %>" alt="Logo EPFL, École polytechnique fédérale de Lausanne" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-md-9 col-lg-10 mb-4">
-        <div class="ml-md-2 ml-lg-5">
-          <ul class="list-inline list-unstyled">
-            <li class="list-inline-item">Contact</li>
-            <li class="list-inline-item text-muted pl-3"><small>EPFL  CH-1015 Lausanne</small></li>
-            <li class="list-inline-item text-muted pl-3"><small>+41 21 693 11 11</small></li>
-          </ul>
-          <div class="footer-light-socials">
-            <p class="footer-title footer-title-no-underline">Suivez l'EPFL sur les réseaux sociaux</p>
-
-          <ul class="social-icon-list list-inline">
-            <li>
-              <a href="https://www.facebook.com/epflcampus" class="social-icon social-icon-facebook social-icon-negative" target="_blank" rel="nofollow noopener">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-facebook"></use></svg>
-                <span class="sr-only">Follow us on Facebook</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com/epfl_en" class="social-icon social-icon-twitter social-icon-negative" target="_blank" rel="nofollow noopener">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter"></use></svg>
-                <span class="sr-only">Follow us on Twitter</span>
-              </a>
-            </li>
-            <li>
-              <a href="http://instagram.com/epflcampus" class="social-icon social-icon-instagram social-icon-negative" target="_blank" rel="nofollow noopener">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-instagram"></use></svg>
-                <span class="sr-only">Follow us on Instagram</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.youtube.com/user/epflnews" class="social-icon social-icon-youtube social-icon-negative" target="_blank" rel="nofollow noopener">
-               <svg class="icon" aria-hidden="true"><use xlink:href="#icon-youtube"></use></svg>
-                <span class="sr-only">Follow us on Youtube</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/school/epfl/" class="social-icon social-icon-linkedin social-icon-negative" target="_blank" rel="nofollow noopener">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-linkedin"></use></svg>
-                <span class="sr-only">Follow us on LinkedIn</span>
-              </a>
-            </li>
-          </ul>
-          </div>
-          <div class="footer-legal">
-          <div class="footer-legal-links">
-            <a href="https://www.epfl.ch/about/overview/fr/reglements-et-directives/mentions-legales/">Accessibilité</a>
-            <a href="https://www.epfl.ch/about/overview/fr/reglements-et-directives/mentions-legales/">Mentions légales</a>
-            <a href="https://go.epfl.ch/protection-des-donnees/">Protection des données</a>
-          </div>
-          <div>
-            <p>© 2021 EPFL, tous droits réservés</p>
-          </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </footer>
-
-    <button id="back-to-top" class="btn btn-primary btn-back-to-top">
-      <span class="sr-only">Back to top</span>
-      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chevron-top"></use></svg>
-    </button>
-  </div>
-  </div>
-</div>
-
-</body>
+    </div>
+    <script>
+      svgPath = '<%= belurl "icons/icons.svg" %>';
+      featherSvgPath = '<%= belurl "icons/feather-sprite.svg" %>';
+    </script>
+  </body>
 </html>
 
 

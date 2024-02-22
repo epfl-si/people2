@@ -70,5 +70,17 @@ fr:
     research: "Recherche"
     teaching: "Enseignement"
     work_experience: "Parcours professionnel"
+  footer:
+    follow_us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"
+    follow_facebook: "Suivez l'EPFL sur Facebook"
+    follow_instagram: "Suivez l'EPFL sur Instagram"
+    follow_linkedin: "Suivez l'EPFL sur LinkedIn"
+    follow_twitter: "Suivez l'EPFL sur X"
+    follow_youtube: "Suivez l'EPFL sur Youtube"
+    accessibility: "Accessibilité"
+    legal: "Mentions légales"
+    data_protection: "Protection des données"
+    copy: "EPFL, tous droits réservés"
+    back_to_the_top: "Retour en haut de la page"
 
   work_experience: "Parcours professionnel"
