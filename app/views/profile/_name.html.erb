@@ -1,0 +1,6 @@
+<% if @editable && @profile.show_title? %>
+  <h1 class="mb-2"><%= @person.display_name %></h1>
+  <h3 class="mb-4"><%= @profile.t_title %></h3>
+<% else %>
+  <h1 class="mb-3"><%= @person.display_name %></h1>
+<% end %>

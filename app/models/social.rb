@@ -80,7 +80,7 @@ class Social < ApplicationRecord
   def url
     @url ||= begin
       @s = RESEARCH_IDS[tag]
-      @s['url'].sub('XXX', content)
+      @s['url'].sub('XXX', value)
     end
   end
 

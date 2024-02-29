@@ -120,6 +120,23 @@ The starter-kit app comes bundled with [Keycloak](https://www.keycloak.org/)-in-
 
 Once your front-end is authenticated, it will want to talk to the back-end. GraphQL is a more versatile approach than plain old REST, which future-proofs your app by alleviating some of the headaches of long-term schema maintenance, especially if more than one front-end exists to access your back-end (think mobile app). In development mode, your starter-kit app comes with a GraphQL console at the `/graphiql` URL.
 
+### Relevant ENV variables for configuration
+
+Common variables:
+ - `RAILS_ENV`: standard
+ - `REDIS_CACHE`: the url of the redis server for storing cache (RoR defaults to local memory storage)
+ - `CAMIPRO_PHOTO_HOST`: the server for camipro profile photos
+ - `ENABLE_API_CACHE`: enable caching of call to external api servers (api, atela, etc.)
+
+Common secrets:
+ - `CAMIPRO_PHOTO_KEY`: secret key for accessing the camipro photos server
+ - `ORACOURS_PWD`: ${ORACOURS_PWD} password for the orable database containing the ISA courses
+ - `ATELA_KEY`: ${ATELA_KEY} secret key for accessing `atela.epfl.ch` 
+ - `EPFLAPI_PASSWORD`: ${EPFLAPI_PASSWORD} password for `api.epfl.ch`
+
+Development only variables:
+ - `RAILS_DEVELOPMENT_HOSTS`: normally only localhost is considered a dev host. Using traefik we need to add the hosts that are actually used for Rails not to complain about security.
+
 ## Opinions
 
 ### GraphQL and OpenID _only_, or: Web 1.0 CRUD (and REST) Considered Obsolete

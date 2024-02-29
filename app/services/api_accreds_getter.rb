@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: ask IAM for missing class delegate (done, waiting)
+
 class APIAccredsGetter < EpflAPIService
   attr_reader :url
 

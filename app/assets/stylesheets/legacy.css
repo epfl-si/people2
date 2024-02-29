@@ -9,3 +9,16 @@ h2.section_title {
 .people-contents h3 {
   margin-top: 1rem;
 }
+
+#admin-data dl {
+  font-size: 75%;
+}
+#admin-data h3 {
+  font-size: 100%;
+  margin-bottom: 0;
+}
+
+#edit-action {
+  padding-right: 1em;
+}
+

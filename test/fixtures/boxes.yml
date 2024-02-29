@@ -2,9 +2,9 @@
 gio_box_expertise:
   type: "RichTextBox"
   profile: giova
-  section: contact
+  section: bio
   title_en: Expertise
-  title_fr: Expertise
+  title_fr: Domaines de compétences
   show_title: true
   frozen: true
   visible: true
@@ -23,7 +23,7 @@ gio_box_education:
   frozen: true
   visible: true
   audience: 0
-  position: 1
+  position: 2
 
 gio_box_experience:
   type: "StandardBox"
@@ -37,13 +37,28 @@ gio_box_experience:
   frozen: true
   visible: true
   audience: 0
-  position: 1
+  position: 3
+
+# ---------------------------------------------------------------------- Edouard
+edo_box_awards:
+  type: "StandardBox"
+  data:
+    variant: 'award'
+  profile: edouard
+  section: bio
+  title_en: Awards
+  title_fr: Récompenses
+  show_title: true
+  frozen: true
+  visible: true
+  audience: 0
+  position: 4
 
 # ---------------------------------------------------------------------- Olivier
 oli_box_expertise:
   type: "RichTextBox"
   profile: olivier
-  section: contact
+  section: bio
   title_en: Expertise
   title_fr: Expertise
   show_title: true
@@ -62,7 +77,7 @@ oli_box_bio:
   frozen: true
   visible: true
   audience: 0
-  position: 1
+  position: 2
 
 oli_box_cv:
   type: "RichTextBox"
@@ -74,7 +89,7 @@ oli_box_cv:
   frozen: true
   visible: true
   audience: 0
-  position: 2
+  position: 3
 
 oli_box_edu:
   type: "StandardBox"
@@ -88,7 +103,7 @@ oli_box_edu:
   frozen: true
   visible: true
   audience: 0
-  position: 3
+  position: 4
 
 oli_box_mission:
   type: "RichTextBox"
@@ -100,7 +115,7 @@ oli_box_mission:
   frozen: true
   visible: true
   audience: 0
-  position: 4
+  position: 5
 
 oli_box_pubs:
   type: "RichTextBox"
@@ -118,7 +133,7 @@ oli_box_pubs:
 nat_box_expertise:
   type: "RichTextBox"
   profile: natalie
-  section: contact
+  section: bio
   title_en: Expertise
   title_fr: Expertise
   show_title: true

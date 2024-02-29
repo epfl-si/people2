@@ -1,159 +1,92 @@
-<% if false %>
-<div class="container">
-<h3>Person:</h3>
-<pre>
-  <%= @person.to_yaml %>
-</pre>
-<h3>Profile:</h3>
-<pre>
-  <%= @profile.to_yaml %>
-</pre>
-<h3>Accreds:</h3>
-<pre>
-  <%= @accreds.to_yaml %>
-</pre>
-</div>
+<% content_for :head do %>
+    <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="EPFL People">
+  <meta property="og:title" content="EPFL People – <%= @person.display_name %>">
+  <meta property="og:description" content="@person.display_name's EPFL profile">
+  <meta property="og:profile:first_name" content="<% @person.display_firstname %>">
+  <meta property="og:profile:last_name" content="<% @person.display_lastname %>">
+  <meta property="og:url" content="<%= profile_path(sciper_or_name: @person.email_user) %>">
+  <% if @photo %>
+  <meta property="og:image" content="<%= url_for(@photo.image) %>">
+  <% end %>
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="<%= @person.display_name %>'s EPFL profile picture">
+  <meta property="fb:app_id" content="966242223397117">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EPFL People – <%= @person.display_name %>">
+  <meta name="twitter:description" content="<%= @person.display_name %>'s EPFL profile">
+  <% if @photo %>
+  <meta name="twitter:image" content="<%= url_for(@photo.image) %>">
+  <% end %>
 <% end %>
+
 <div class="container">
-  <div class="d-flex flex-wrap justify-content-between align-items-baseline">
-    <h1 class="mr-3"><%= @person.display_name %></h1>
-    <div>
-      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
-      <a href="#">
-        <%= t 'action.edit_profile' %> <span class="sr-only"><%= t 'action.of' %> <%= @person.display_name %></span>
-      </a>
+  <div class="row people-basic-info">
+    <div class="col-md-6 col-lg-4">      
+      <%= profile_picture(@profile) %>
+      <%= render "admin_data" if @admin_data %>
+      <%= render "socials" unless @visible_socials.empty? %>
     </div>
-  </div>
-
-  <div class="row mt-5">
-    <div class="col-md-12">
-      <div class="row people-basic-info">
-
-        <div class="col-md-4 col-lg-3 offset-lg-1 mb-3">
-          
-          <div class="row">
-            <div class="col-sm-12 mb-3">
-              <!-- TODO: add real picture -->
-              <!-- Placeholder when there is no profile picture -->
-              <%= profile_picture(@profile) %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <p>
-                <small>
-                  <%= link_to "vCard", person_path(format: "vcf") %>
-                  <br>
-                  <a href="#"><%= t 'action.accred_full_list' %></a>
-                  <br>
-                  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-lock"></use></svg>
-                  <a href="#"><% t 'action.admin_data' %></a>
-                </small>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="people-contacts col-md-8">
-          <div class="row">
-            <div class="col-sm-12 mb-4">
-              <%= render "contact" %>
-            </div>
-          </div>
-          <%= render "accreds" %>
-        </div>
-      </div><!-- people basic infos -->
+    <div class="people-contacts col-md-6 col-lg-8">
+      <%= render "name" %>
+      <%= render "contact" %>
+      <%= render "accreds" %>
       <% @contact_zone_bbs.each do |section, boxes| %>
-      <%= render partial: "section", locals: {section: section, boxes: boxes} %>
+        <%= render partial: "section", locals: {section: section, boxes: boxes} %>
       <% end %>
     </div>
-  </div>
-</div>
+  </div><!-- people basic infos -->
 
-<% # section tab links %>
-<% if @main_zone_bbs.present? %>
-  <div class="position-relative mt-5">
-    <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
-      <div class="container">
-        <ul class="nav nav-tabs-light">
-          <% @main_zone_bbs.each do |section, boxes| %>
-          <li class="nav-item">
-            <%= link_to(section.t_title, "#section_#{section.label}", class: "nav-link") %>
-          </li>
-          <% end %>
-        </ul>
+
+  <% # section tab links %>
+  <% if @main_zone_bbs.present? || @ta.present? %>
+  <ul class="nav nav-tabs mt-5" role="tablist">
+    <% active="active" %>
+    <% @main_zone_bbs.each do |section, boxes| %>
+      <% id="section_#{section.label}" %> 
+      <li class="nav-item">
+        <%= link_to(
+              section.t_title, "#"+id,
+              id: "#{id}-tab", role: "tab", class: "nav-link #{active}", 
+              data: {toggle: "tab"},
+              aria: {controls: id, selected: active ? "true" : "false"}
+            )
+        %>
+      </li>
+      <% active=false %>
+    <% end %>
+
+    <% if @ta.present? %>
+      <% id="section_teaching" %>
+      <li class="nav-item">
+        <%= link_to(
+              t("teaching"), "#"+id,
+              id: "#{id}-tab", role: "tab", class: "nav-link", 
+              data: {toggle: "tab"},
+              aria: {controls: id, selected: active ? "true" : "false"}
+            )
+        %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content p-3">
+    <% active="active" %>
+    <% @main_zone_bbs.each do |section, boxes| %>
+      <% id="section_#{section.label}" %> 
+      <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+        <%= render partial: "section", locals: {section: section, boxes: boxes} %>
       </div>
-    </nav>
-  </div>
-
-  <% @main_zone_bbs.each do |section, boxes| %>
-    <div class="container people-contents">
-      <%= render partial: "section", locals: {section: section, boxes: boxes} %>
-      <hr class="darker">
-    </div>
-  <% end %>
-<% end %>
-
-<% if @ta.present? %>
-<div class="position-relative mt-5">
-  <div class="container">
-    <%= render "teaching" %>
-  </div>
+      <% active = nil %>
+    <% end %>
+    <% if @ta.present? %>
+      <% id="section_teaching" %> 
+      <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+      <%= render "teaching" %>
+      </div>
+    <% end %>  
+  <% end # if main_zone_bbs.present? %>
 </div>
-<% end %>
-
-<% if false %>
-<div class="position-relative mt-5">
-  <% if @profile.present? && (@profile.any_publication? or @tcv.any_publication? or @ta.present? and @ta.ta? or @boxes['R'].present?) %>
-  <nav class="nav-tabs-light-wrapper sticky-top" id="intermediate-nav">
-    <div class="container">
-      <ul class="nav nav-tabs-light">
-        <li class="nav-item">
-          <a class="nav-link" href="#biography"><%= t "nav.biography" %></a>
-        </li>
-        <% if @profile.any_publication? or @tcv.any_publication? %>
-        <li class="nav-item">
-          <a class="nav-link" href="#publications"><%= t "nav.publications" %></a>
-        </li>
-        <% end %>
-        <% if @ta.present? and @ta.ta? %>
-        <li class="nav-item">
-          <a class="nav-link" href="#teaching"><%= t "nav.teaching" %></a>
-        </li>
-        <% end %>
-        <% unless @boxes['R'].empty? %>
-        <li class="nav-item">
-          <a class="nav-link" href="#research"><%= t "nav.research" %></a>
-        </li>
-        <% end %>
-      </ul>
-    </div>
-  </nav>
-  <% end %>
-
-  <% 
-    # TODO: move this crap into a model or to the controller...
-    if ( 
-      false and
-      @tcv.present? and (@tcv.curriculum.present? or @tcv.visible_expertise?) or
-      @boxes['B'].present? or 
-      @profile.educations.present? or 
-      @profile.experiences.present? or 
-      @person.awards.present?
-    )
-      render "legacy/s1/biography"
-    end
-  %>
-
-  <% if @profile.any_publication? or @tcv.present? and @tcv.any_publication? %>
-  <hr class="darker">
-  <%= render "legacy/s1/publications" %>
-  <% end %>
-
-
-  <% unless @boxes['R'].empty? %>
-  <hr class="darker">
-  <%= render "legacy/s1/research" %>
-  <% end %>
-</div>
-<% end %>

@@ -14,6 +14,10 @@ class Person
     @position = @data.delete('position')
     @position = Position.new(@position) unless @position.nil?
 
+    @account = @data.delete('account')
+    @automap = @data.delete('automap')
+    @camipro = @data.delete('camipro')
+
     # phones and addresses are hash with the unit_id as key
     @phones = (@data.delete('phones') || []).map { |d| Phone.new(d) }.group_by(&:unit_id)
     @addresses = (@data.delete('addresses') || []).map { |d| Address.new(d) }.group_by(&:unit_id)
@@ -52,8 +56,28 @@ class Person
     @is_achieving_professor
   end
 
+  def admin_data
+    @admin_data ||= OpenStruct.new(
+      @account.merge(@automap).merge(@camipro).merge({ sciper: sciper })
+    )
+  end
+
+  def display_firstname
+    firstnameusual || firstname
+  end
+
+  def display_lastname
+    lastnameusual || lastname
+  end
+
   def display_name
     @display_name ||= "#{firstnameusual || firstname} #{lastnameusual || lastname}"
+  end
+
+  # TODO: check if this is always the case as there might be issues with people
+  #       changing name, with modified usual names etc.
+  def email_user
+    email.gsub(/@.*$/, '')
   end
 
   def sciper

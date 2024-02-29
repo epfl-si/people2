@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en">
-  <%= render "layouts/legacy/head" %>
+  <head>
+    <%= render "layouts/legacy/head" %>
+    <%= yield :head %>
+    <%= render "layouts/legacy/google" if Rails.env.production? %>
+  </head>
 
   <body>
     <%= render "layouts/legacy/header" %>

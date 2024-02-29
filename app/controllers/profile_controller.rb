@@ -30,6 +30,8 @@ class ProfileController < ApplicationController
     @person = Person.find(params[:sciper_or_name])
     @sciper = @person.sciper
 
+    @admin_data = @audience > 1 ? @person.admin_data : nil
+
     @profile = @person.profile
     @editable = @person.can_edit_profile? && @profile.present?
 
@@ -42,6 +44,8 @@ class ProfileController < ApplicationController
     #       more content like awards, work experiences, infoscience pubs etc.
     #       that is not just a simple free text box with a title.
     return unless @editable
+
+    @photo = @profile.photo if @profile.photo.image.present?
 
     @visible_socials = @profile.socials.for_audience(@audience)
 

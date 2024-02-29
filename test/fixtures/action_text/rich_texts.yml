@@ -6,6 +6,13 @@ gio_box_expertise_en:
     HPC, Algorithms, Networking, Programming, IT, DBA, Unix, Computational 
     Solid State Physics
 
+gio_box_expertise_fr:
+  record: gio_box_expertise (Box)
+  name: content_fr
+  body: >
+    HPC, Algorithms, Networking, Programming, IT, DBA, Unix, Computational 
+    Solid State Physics
+
 giova_exp_text_algo: 
   record: giova_exp_algo (Experience) 
   name: description_en

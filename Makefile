@@ -9,7 +9,7 @@ SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 export
 
 # ---------------------------------------------------------------- run local app
-.PHONY: build codecheck up kup dcup down fulldown logs ps console dbconsole shell 
+.PHONY: build codecheck up kup dcup down fulldown logs ps console dbconsole shell
 
 ## build the web app and atela container
 build: envcheck codecheck
@@ -202,6 +202,12 @@ restore_cv:
 
 restore_dinfo:
 	./bin/restoredb.sh dinfo
+
+# ------------------------------------------------------------------------------
+.PHONY: clean
+clean:
+	rm -f api_examples.txt
+
 
 # ------------------------------------------------------------------------------
 .PHONY: help

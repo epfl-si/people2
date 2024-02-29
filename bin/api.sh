@@ -18,5 +18,5 @@ apiget() {
 if [[ "$1" == ${BASE}* ]] ; then
   apiget "$1" "$2"
 else
-  apiget "?${BASE}/$1" "$2"
+  apiget "${BASE}/$1" "$2"
 fi

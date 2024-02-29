@@ -2,7 +2,7 @@
 
 module CvHelper
   def profile_picture(profile = nil)
-    opts = { alt: 'Avatar image', class: 'img-fluid bg-gray-100' }
+    opts = { alt: 'Avatar image', class: 'mx-auto img-fluid bg-gray-100' }
     if profile.present? && profile.show_photo
       p = profile.photo
       if p.image.present?

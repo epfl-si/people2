@@ -1,7 +1,5 @@
-<% if @editable && @profile.show_title? %>
-<h2 class="people-title mb-3"><%= @profile.t_title %></h2>
-<% end %>
-<p>
+<div class='d-flex flex-wrap justify-content-between align-items-baseline'>
+<p id='contact'>
   <% if @person.email %>
   <%= link_to @person.email, "mailto:#{@person.email}", class: "btn btn-sm btn-primary" %>
   <% end %>
@@ -14,36 +12,9 @@
     <%= link_to(@profile.personal_web_url, @profile.personal_web_url, class: "btn btn-sm btn-secondary") %>
   <% end %>
 </p>
-<% if @editable %>
-<% if @profile.show_nationality? and @profile.t_nationality.present? %>
 <p>
-  <%= t 'nationality' %> : <%= @profile.t_nationality %>
+  <small>
+    <%= link_to "vCard", person_path(format: "vcf") %>
+  </small>
 </p>
-<% end %>
-<% if @profile.show_birthday? %>
-<p>
-  <%= t 'birthday' %> : <%= @person.birthday %>
-</p>
-<% end %>
-
-
-<% unless @visible_socials.empty? %>
-<div class="mt-1">
-  <p>
-<% @visible_socials.each do |s| %>
-  <% if s.icon.present? %>
-    <a href="true" class="social-icon social-icon-details social-icon-<%= s.icon %> social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-<%= s.icon %>"></use>
-      </svg>
-  <% else %>
-    <a href="true" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
-  <% end %>
-      <span class="user"><%= s.value %></span>
-    </a>
-<% end %>
-  </p>
 </div>
-<% end %>
-
-<% end %>

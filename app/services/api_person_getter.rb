@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: ask IAM for missing field Matricule SAP (numsap)
 # curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
 class APIPersonGetter < EpflAPIService
   attr_accessor :url
