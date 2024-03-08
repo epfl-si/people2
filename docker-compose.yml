@@ -71,7 +71,7 @@ services:
   cache:
     image: redis:latest
     command:
-      - --maxmemory 32mb    
+      - --maxmemory 32mb
     networks:
       - default
 
@@ -81,6 +81,8 @@ services:
       dockerfile: Dockerfile
       args:
         - RAILS_ENV=development
+        - APP_HOME=/srv/app
+        - LIB_HOME=/srv/lib
     env_file: .env
 
   phpmyadmin:
@@ -118,7 +120,8 @@ services:
 
 volumes:
   mariadb: {}
-
+  people_filecache: {}
+  people_storage: {}
 networks:
   traefik:
     external: true

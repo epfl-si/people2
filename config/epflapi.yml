@@ -6,6 +6,8 @@ epflapi_config: &epflapi_config
   # api services cache have to be enabled explicitly so that api calls will be
   # cached only if both general AND specific caching is enabled
   perform_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
+  offline_dev_caching: <%= Rails.env.development? && ENV.fetch("ENABLE_API_CACHE", false) %>
+  offline_cachedir: <%= ENV.fetch("OFFLINE_CACHEDIR", Rails.root.join("var/offline_cache")) %>
 
   # ATELA (will be replaced by api)
   prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>
@@ -13,8 +15,7 @@ epflapi_config: &epflapi_config
   atela_key: <%= ENV.fetch("ATELA_KEY") %>
 
   # API
-  backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/v1') %>
-  real_backend_url: <%= ENV.fetch("REAL_EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/v1') %>
+  backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/') %>
   username: <%= ENV.fetch("EPFLAPI_USERNAME", 'people') %>
   password: <%= ENV.fetch("EPFLAPI_PASSWORD") %>
 
@@ -23,7 +24,7 @@ epflapi_config: &epflapi_config
   camipro_host: <%= ENV.fetch("CAMIPRO_PHOTO_HOST", "camipro-photos.epfl.ch") %>
 
   # ISA
-  isa_url: <%= ENV.fetch("ISA_URL", 'https://isa.epfl.ch/services') %>
+  isa_url: <%= ENV.fetch("ISA_URL", 'https://isa.epfl.ch/') %>
   isa_no_check_ssl: <%= ENV.fetch("ISA_NO_CHECK_SSL", false) %>
   isa_use_oracle: <%= ENV.fetch("ISA_USE_ORACLE", true) %>
 

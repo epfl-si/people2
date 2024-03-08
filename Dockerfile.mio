@@ -1,14 +1,10 @@
-FROM ruby:3.1-bullseye
+FROM ruby:3.0-bullseye
 ARG RAILS_ENV=production
 ENV RAILS_ENV $RAILS_ENV
 
-ARG APP_HOME=/srv/app
-ARG LIB_HOME=/srv/lib
-ENV APP_HOME $APP_HOME
-ENV LIB_HOME $LIB_HOME
-
-ENV BUNDLE_PATH $LIB_HOME/bundle
-ENV MODULES_PATH $LIB_HOME/node_modules
+ENV APP_HOME /srv/app
+ENV BUNDLE_PATH /srv/lib/bundle
+ENV MODULES_PATH /srv/lib/node_modules
 RUN mkdir -p $APP_HOME
 RUN mkdir -p $BUNDLE_PATH
 RUN mkdir -p $MODULES_PATH
@@ -76,11 +72,11 @@ ADD Gemfile* $APP_HOME/
 ADD bin/bundle $APP_HOME/bin/bundle
 RUN ./bin/bundle
 RUN if [ "$RAILS_ENV" == "development" ] ; then RAILS_ENV='test' ./bin/bundle ; fi
-# RUN if [ "$RAILS_ENV" == "development" ] ; then yarn install --verbose --modules-folder $MODULES_PATH ; fi
+RUN if [ "$RAILS_ENV" == "development" ] ; then yarn install --verbose --modules-folder $MODULES_PATH ; fi
 
 
 EXPOSE 3000
 
 ADD . $APP_HOME/
 
-CMD [./bin/dev"]
+CMD ["MODULES_PATH=$MODULE_PATH BUNDLE_PATH=$BUNDLE_PATH ./bin/dev"]

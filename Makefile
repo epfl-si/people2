@@ -6,6 +6,11 @@ COMPOSE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
 SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
+# Figure out the ip address of the host machine so that we can use "public" 
+# dns names served by traefik from within the containers when the name is
+# resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs. 
+DOCKER_IP ?= $(shell docker run -it --rm nicolaka/netshoot dig +short host.docker.internal)
+
 export
 
 # ---------------------------------------------------------------- run local app

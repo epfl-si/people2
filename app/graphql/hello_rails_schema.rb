@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class HelloRailsSchema < GraphQL::Schema
+  # Uncomment to add server timing:
+  # trace_with(GraphQL::Tracing::ActiveSupportNotificationsTrace)
   mutation(Types::MutationType)
   query(Types::QueryType)
 

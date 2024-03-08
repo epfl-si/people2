@@ -5,8 +5,11 @@
 # an attempt to hot-update these moving parts everytime you modify
 # their source files (i.e. `Gemfile`, `package.json` or
 # `db/migrate/*`):
-[ -d vendor/bundle ] || ./bin/bundle
-[ -d node_modules ] || yarn
+NODE_MODULES_PATH=${NODE_MODULES:-node_modules}
+BUNDLE_PATH=${BUNDLE_PATH:-vendor/bundle}
+
+[ -d $NODE_MODULES_PATH ] || ./bin/bundle
+[ -d NODE_MODULES_PATH ] || yarn
 
 
 echo "here is the content of db:"

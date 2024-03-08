@@ -34,3 +34,5 @@ Style/StringLiterals:
   Enabled: false
 Style/TrailingCommaInHashLiteral:
   Enabled: false
+Security/MarshalLoad:
+  Enabled: false

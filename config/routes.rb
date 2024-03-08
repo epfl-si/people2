@@ -31,15 +31,20 @@ Rails.application.routes.draw do
       get '/wsgetPhoto', to: 'legacy#photo'
     end
   end
-  # useful queries:
-  #   firstname=giovanni&lastname=cangiani
-  #   persid=121769
-  #   persid=121769,116080
-  #   uinitid=13030         # does not work
-  get '/fakeapi/persons/:sciper', to: 'fake_api#person_by_sciper'
-  get '/fakeapi/persons',         to: 'fake_api#persons'
-  get '/fakeapi/accreds/:sciper', to: 'fake_api#accred_by_sciper'
-  get '/fakeapi/accreds',         to: 'fake_api#accreds'
+
+  # if Rails.env.development?
+  #   match '/fakeapi/*other', to: 'fake_api#cache', via: [:get]
+
+  #   # # useful queries:
+  #   # #   firstname=giovanni&lastname=cangiani
+  #   # #   persid=121769
+  #   # #   persid=121769,116080
+  #   # #   uinitid=13030         # does not work
+  #   # get '/fakeapi/persons/:sciper', to: 'fake_api#person_by_sciper'
+  #   # get '/fakeapi/persons',         to: 'fake_api#persons'
+  #   # get '/fakeapi/accreds/:sciper', to: 'fake_api#accred_by_sciper'
+  #   # get '/fakeapi/accreds',         to: 'fake_api#accreds'
+  # end
 
   # Defines the root path route ("/")
   root 'application#homepage'

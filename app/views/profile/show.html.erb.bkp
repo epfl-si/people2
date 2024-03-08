@@ -40,52 +40,53 @@
     </div>
   </div><!-- people basic infos -->
 
+
   <% # section tab links %>
   <% if @main_zone_bbs.present? || @ta.present? %>
-    <ul class="nav nav-tabs mt-5" role="tablist">
-      <% active="active" %>
-      <% @main_zone_bbs.each do |section, boxes| %>
-        <% id="section_#{section.label}" %> 
-        <li class="nav-item">
-          <%= link_to(
-                section.t_title, "#"+id,
-                id: "#{id}-tab", role: "tab", class: "nav-link #{active}", 
-                data: {toggle: "tab"},
-                aria: {controls: id, selected: active ? "true" : "false"}
-              )
-          %>
-        </li>
-        <% active=false %>
-      <% end %>
+  <ul class="nav nav-tabs mt-5" role="tablist">
+    <% active="active" %>
+    <% @main_zone_bbs.each do |section, boxes| %>
+      <% id="section_#{section.label}" %> 
+      <li class="nav-item">
+        <%= link_to(
+              section.t_title, "#"+id,
+              id: "#{id}-tab", role: "tab", class: "nav-link #{active}", 
+              data: {toggle: "tab"},
+              aria: {controls: id, selected: active ? "true" : "false"}
+            )
+        %>
+      </li>
+      <% active=false %>
+    <% end %>
 
-      <% if @ta.present? %>
-        <% id="section_teaching" %>
-        <li class="nav-item">
-          <%= link_to(
-                t("teaching"), "#"+id,
-                id: "#{id}-tab", role: "tab", class: "nav-link", 
-                data: {toggle: "tab"},
-                aria: {controls: id, selected: active ? "true" : "false"}
-              )
-          %>
-        </li>
-      <% end %>
-    </ul>
-    <div class="tab-content p-3">
-      <% active="active" %>
-      <% @main_zone_bbs.each do |section, boxes| %>
-        <% id="section_#{section.label}" %> 
-        <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-          <%= render partial: "section", locals: {section: section, boxes: boxes} %>
-        </div>
-        <% active = nil %>
-      <% end %>
-      <% if @ta.present? %>
-        <% id="section_teaching" %> 
-        <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-        <%= render "teaching" %>
-        </div>
-      <% end %>  
-    </div>
+    <% if @ta.present? %>
+      <% id="section_teaching" %>
+      <li class="nav-item">
+        <%= link_to(
+              t("teaching"), "#"+id,
+              id: "#{id}-tab", role: "tab", class: "nav-link", 
+              data: {toggle: "tab"},
+              aria: {controls: id, selected: active ? "true" : "false"}
+            )
+        %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content p-3">
+    <% active="active" %>
+    <% @main_zone_bbs.each do |section, boxes| %>
+      <% id="section_#{section.label}" %> 
+      <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+        <%= render partial: "section", locals: {section: section, boxes: boxes} %>
+      </div>
+      <% active = nil %>
+    <% end %>
+    <% if @ta.present? %>
+      <% id="section_teaching" %> 
+      <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+      <%= render "teaching" %>
+      </div>
+    <% end %>  
   <% end # if main_zone_bbs.present? %>
 </div>

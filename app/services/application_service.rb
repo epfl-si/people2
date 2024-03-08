@@ -13,9 +13,14 @@ class ApplicationService
     new(*args, &block).dofetch
   end
 
+  # override to decide when to cache on a model base
+  def do_cache
+    true
+  end
+
   def fetch
     # api services cache have to be enabled explicitly
-    if Rails.application.config_for(:epflapi).perform_caching
+    if do_cache && Rails.application.config_for(:epflapi).perform_caching
       Rails.logger.debug("Fetching cache for key: #{cache_key}")
       Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
         Rails.logger.debug("Cache miss for key: #{cache_key}")
@@ -43,6 +48,29 @@ class ApplicationService
     body.nil? ? nil : JSON.parse(body)
   end
 
+  # overwrite dofetch function for offline development
+  if Rails.application.config_for(:epflapi).offline_dev_caching
+    def dofetch
+      res = nil
+      ActiveSupport::Notifications.instrument('fetch_external_api') do
+        key = Digest::SHA256.hexdigest @url.to_s
+        fpath = File.join(Rails.application.config_for(:epflapi).offline_cachedir, "#{key}.marshal")
+        if File.exist?(fpath)
+          Rails.logger.debug("app_service: reading offline cache file for #{@url}")
+          res = Marshal.load(File.binread(fpath))
+        else
+          body = fetch_http
+          res = body.nil? ? nil : JSON.parse(body)
+          unless res.nil?
+            Rails.logger.debug("app_service: saving offline cache file for #{@url}")
+            File.open(fpath, 'wb') { |f| f.write(Marshal.dump(res)) }
+          end
+        end
+      end
+      res
+    end
+  end
+
   def dofetch!
     res = dofetch
     raise "Remote resource not found. #{@url}" if res.nil?
@@ -51,7 +79,7 @@ class ApplicationService
   end
 
   def fetch_http(uri = @url)
-    Rails.logger.debug("api fetch_http / uri: #{uri}")
+    Rails.logger.debug("app_service: fetching #{uri}")
 
     req = genreq
     opts = { use_ssl: true, read_timeout: 100 }
@@ -61,12 +89,11 @@ class ApplicationService
     end
     case res
     when Net::HTTPOK
-      res.body
+      res.body.force_encoding('UTF-8')
     end
   end
 
   def genreq
-    Rails.logger.debug "base genreq"
     Net::HTTP::Get.new(@url)
   end
 

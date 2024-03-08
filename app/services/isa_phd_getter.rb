@@ -6,7 +6,8 @@ class IsaPhdGetter < IsaService
   attr_reader :url
 
   def initialize(sciper)
-    @url = URI.join(Rails.application.config_for(:epflapi).isa_url, "/teachers/#{sciper}/thesis/directors/doctorants")
+    @url = URI.join(Rails.application.config_for(:epflapi).isa_url,
+                    "/services/teachers/#{sciper}/thesis/directors/doctorants")
   end
 
   def expire_in

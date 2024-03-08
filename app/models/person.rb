@@ -14,9 +14,9 @@ class Person
     @position = @data.delete('position')
     @position = Position.new(@position) unless @position.nil?
 
-    @account = @data.delete('account')
-    @automap = @data.delete('automap')
-    @camipro = @data.delete('camipro')
+    @account = @data.delete('account') || {}
+    @automap = @data.delete('automap') || {}
+    @camipro = @data.delete('camipro') || {}
 
     # phones and addresses are hash with the unit_id as key
     @phones = (@data.delete('phones') || []).map { |d| Phone.new(d) }.group_by(&:unit_id)
