@@ -36,7 +36,7 @@ db_secret() {
 
 exec_mysql() {
 	db=$1
-	docker-compose -f $COMPOSE exec -T mariadb mysql -u root --password=mariadb -D $db
+	docker-compose -f $COMPOSE exec -T mariadb mariadb -u root --password=mariadb -D $db
 }
 
 

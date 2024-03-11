@@ -19,6 +19,7 @@ class ApplicationService
   end
 
   def fetch
+    Rails.logger.debug("app_service: fetch for url=#{@url}")
     # api services cache have to be enabled explicitly
     if do_cache && Rails.application.config_for(:epflapi).perform_caching
       Rails.logger.debug("Fetching cache for key: #{cache_key}")
@@ -32,6 +33,7 @@ class ApplicationService
   end
 
   def fetch!
+    Rails.logger.debug("app_service: fetch! for url=#{@url}")
     if Rails.application.config_for(:epflapi).perform_caching
       Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
         dofetch!
@@ -48,30 +50,8 @@ class ApplicationService
     body.nil? ? nil : JSON.parse(body)
   end
 
-  # overwrite dofetch function for offline development
-  if Rails.application.config_for(:epflapi).offline_dev_caching
-    def dofetch
-      res = nil
-      ActiveSupport::Notifications.instrument('fetch_external_api') do
-        key = Digest::SHA256.hexdigest @url.to_s
-        fpath = File.join(Rails.application.config_for(:epflapi).offline_cachedir, "#{key}.marshal")
-        if File.exist?(fpath)
-          Rails.logger.debug("app_service: reading offline cache file for #{@url}")
-          res = Marshal.load(File.binread(fpath))
-        else
-          body = fetch_http
-          res = body.nil? ? nil : JSON.parse(body)
-          unless res.nil?
-            Rails.logger.debug("app_service: saving offline cache file for #{@url}")
-            File.open(fpath, 'wb') { |f| f.write(Marshal.dump(res)) }
-          end
-        end
-      end
-      res
-    end
-  end
-
   def dofetch!
+    Rails.logger.debug("app_service: dofetch! for url=#{@url}")
     res = dofetch
     raise "Remote resource not found. #{@url}" if res.nil?
 
@@ -80,6 +60,25 @@ class ApplicationService
 
   def fetch_http(uri = @url)
     Rails.logger.debug("app_service: fetching #{uri}")
+    unless Rails.env.development? && Rails.application.config_for(:epflapi).offline_dev_caching
+      return do_fetch_http(uri)
+    end
+
+    key = Digest::SHA256.hexdigest @url.to_s
+    fpath = File.join(Rails.application.config_for(:epflapi).offline_cachedir, "#{key}.marshal")
+    if File.exist?(fpath)
+      Rails.logger.debug("app_service: reading offline cache file for #{@url}")
+      Marshal.load(File.binread(fpath))
+    else
+      res = do_fetch_http(uri)
+      Rails.logger.debug("app_service: saving offline cache file for #{@url}")
+      File.open(fpath, 'wb') { |f| f.write(Marshal.dump(res)) }
+      res
+    end
+  end
+
+  def do_fetch_http(uri = @url)
+    Rails.logger.debug("app_service: do_fetch_http fetching #{uri}")
 
     req = genreq
     opts = { use_ssl: true, read_timeout: 100 }

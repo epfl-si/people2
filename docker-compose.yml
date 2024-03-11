@@ -120,8 +120,8 @@ services:
 
 volumes:
   mariadb: {}
-  people_filecache: {}
-  people_storage: {}
+  filecache: {}
+  storage: {}
 networks:
   traefik:
     external: true

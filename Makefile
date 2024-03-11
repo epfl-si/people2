@@ -14,10 +14,10 @@ DOCKER_IP ?= $(shell docker run -it --rm nicolaka/netshoot dig +short host.docke
 export
 
 # ---------------------------------------------------------------- run local app
-.PHONY: build codecheck up kup dcup down fulldown logs ps console dbconsole shell
+.PHONY: build codecheck up kup dcup down fulldown logs ps top console dbconsole shell
 
 ## build the web app and atela container
-build: envcheck codecheck
+build: envcheck #codecheck
 	docker-compose -f $(COMPOSE) build
 
 kup: envcheck
@@ -58,6 +58,10 @@ logs:
 ps:
 	docker-compose -f $(COMPOSE) ps
 
+## show memory and cpu usage off all containers
+top:
+	docker stats
+
 ## start a rails console on the webapp container
 console: dcup
 	docker-compose -f $(COMPOSE) exec webapp ./bin/rails console
@@ -68,7 +72,7 @@ shell: dcup
 
 ## start an sql console con the database container
 dbconsole: dcup
-	docker-compose -f $(COMPOSE) exec mariadb mysql -u root --password=mariadb 
+	docker-compose -f $(COMPOSE) exec mariadb mariadb -u root --password=mariadb  
 
 dconfig:
 	docker-compose -f $(COMPOSE) config
@@ -164,15 +168,20 @@ migrate: dcup
 ## run rails migration and seed with initial data
 seed: migrate
 	docker-compose -f $(COMPOSE) exec webapp bin/rails db:seed
+	make courses
 
 ## prefetch dev data from api.epfl.ch for the fake (local) api server 
 fakeapi: dcup
 	docker-compose -f $(COMPOSE) exec webapp bin/rails devel:fakeapi
 
+## reload the list of all courses from ISA
+courses: dcup
+	docker-compose -f $(COMPOSE) exec webapp bin/rails data:courses
+
 # --------------------------------------------------- destroy and reload mock db
 .PHONY: reseed
 
-SQL=docker-compose -f $(COMPOSE) exec -T mariadb mysql -u root --password=mariadb
+SQL=docker-compose -f $(COMPOSE) exec -T mariadb mariadb -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb

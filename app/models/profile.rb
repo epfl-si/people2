@@ -34,7 +34,29 @@ class Profile < ApplicationRecord
   has_many :publications, class_name: 'Legacy::Publication', primary_key: 'sciper', foreign_key: 'sciper',
                           dependent: :destroy, inverse_of: :cv
 
+  # has_and_belongs_to_many :courses, join_table: "teacherships"
+  has_many :teacherships, class_name: "Teachership", dependent: :destroy
+  has_many :courses, through: :teacherships
+
   validates :sciper, uniqueness: { message: "must be unique" }
+
+  def self.create_with_defaults(sciper)
+    create(
+      sciper: sciper,
+      show_birthday: false,
+      show_function: true,
+      show_nationality: false,
+      show_phone: true,
+      show_photo: false,
+      show_title: false,
+      force_lang: nil,
+      personal_web_url: nil,
+      nationality_en: nil,
+      nationality_fr: nil,
+      title_en: nil,
+      title_fr: nil
+    )
+  end
 
   def self.for_sciper(sciper)
     where(sciper: sciper).first

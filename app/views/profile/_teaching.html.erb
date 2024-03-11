@@ -1,4 +1,4 @@
-<% if @ta.courses.present? %>
+<% if false && @ta.courses.present? %>
 <div class="mt-5">
   <h3><%= t "title.courses" %></h3>
   <div class="list-group">
@@ -6,6 +6,23 @@
     <div class="list-group-item list-group-item-borderless">
       <h4><%= link_to_or_text(c.title, c.edu_url) %></h4>
       <p><%= c.description %></p>
+    </div>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<% if @courses.present? %>
+<div class="mt-5">
+  <h3><%= t "title.courses" %></h3>
+  <div class="list-group">
+
+    <% @courses.each do |title, cc| %>
+    <div class="list-group-item list-group-item-borderless">
+      <h4><%= title %></h4>
+      <p class="small">
+        <%= cc.map{|c| link_to(c.code, c.edu_url(I18n.locale))}.join(" | ").html_safe %>
+      </p>
     </div>
     <% end %>
   </div>

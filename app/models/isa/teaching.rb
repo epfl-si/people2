@@ -84,7 +84,8 @@ module Isa
       @sciper = sciper
       @ta = load_ta(sciper)
       @phd = load_phd(sciper)
-      @lectures = load_lectures(sciper)
+      # @lectures = load_lectures(sciper)
+
       return unless @ta.nil? || @phd.nil?
 
       Rails.logger.warn("failed to fetch ISA teaching data for sciper #{sciper}")

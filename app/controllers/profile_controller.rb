@@ -55,6 +55,8 @@ class ProfileController < ApplicationController
     #       that is not just a simple free text box with a title.
     return unless @editable
 
+    @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
+
     ActiveSupport::Notifications.instrument('set_show_data_part_4') do
       @photo = @profile.photo if @profile.photo.present?
 

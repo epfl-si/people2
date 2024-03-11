@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_22_133406) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
   create_table "accred_prefs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -106,6 +106,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_133406) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_camipro_pictures_on_profile_id"
+  end
+
+  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "code"
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "language_en"
+    t.string "language_fr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "educations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -214,6 +224,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_133406) do
     t.index ["profile_id"], name: "index_socials_on_profile_id"
   end
 
+  create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "profile_id"
+    t.string "sciper"
+    t.string "role"
+    t.string "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_teacherships_on_course_id"
+    t.index ["profile_id"], name: "index_teacherships_on_profile_id"
+  end
+
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "item_type", limit: 191, null: false
     t.bigint "item_id", null: false
@@ -236,4 +258,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_22_133406) do
   add_foreign_key "model_boxes", "sections"
   add_foreign_key "profile_pictures", "profiles"
   add_foreign_key "profiles", "profile_pictures"
+  add_foreign_key "teacherships", "courses"
+  add_foreign_key "teacherships", "profiles"
 end

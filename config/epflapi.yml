@@ -7,7 +7,7 @@ epflapi_config: &epflapi_config
   # cached only if both general AND specific caching is enabled
   perform_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
   offline_dev_caching: <%= Rails.env.development? && ENV.fetch("ENABLE_API_CACHE", false) %>
-  offline_cachedir: <%= ENV.fetch("OFFLINE_CACHEDIR", Rails.root.join("var/offline_cache")) %>
+  offline_cachedir: <%= ENV.fetch("OFFLINE_CACHEDIR", "/srv/filecache") %>
 
   # ATELA (will be replaced by api)
   prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>
