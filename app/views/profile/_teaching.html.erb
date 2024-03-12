@@ -12,11 +12,34 @@
 </div>
 <% end %>
 
+<% if @ta.phd.present? %>
+<% if @current_phds.present? %>
+<div class="mt-5">
+  <h3><%= t "title.current_phd" %></h3>
+  <p>
+    <%= @current_phds.map{|t| 
+      link_to(t.full_name, profile_url(sciper_or_name: t.sciper))}.join(", ").html_safe 
+    %>
+  </p>
+</div>
+<% end %>
+
+<% if @past_phds.present? %>
+<div class="mt-5">
+  <h3><%= t "title.past_phd" %></h3>
+  <p>
+    <%= @past_phds.map{|t| 
+      link_to(t.full_name, t.doi_url)}.join(", ").html_safe 
+    %>
+  </p>
+</div>
+<%end %>
+<% end %>
+
 <% if @courses.present? %>
 <div class="mt-5">
   <h3><%= t "title.courses" %></h3>
   <div class="list-group">
-
     <% @courses.each do |title, cc| %>
     <div class="list-group-item list-group-item-borderless">
       <h4><%= title %></h4>

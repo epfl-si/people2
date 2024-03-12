@@ -70,6 +70,9 @@ fr:
     research: "Recherche"
     teaching: "Enseignement"
     work_experience: "Parcours professionnel"
+    current_phd: "Doctorants"
+    past_phd: "A dirigé les thèses EPFL de"
+    teaching_domain: "Enseignement"
   footer:
     follow_us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"
     follow_facebook: "Suivez l'EPFL sur Facebook"

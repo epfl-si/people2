@@ -68,6 +68,10 @@ module Isa
     def current?
       !past?
     end
+
+    def doi_url
+      "http://dx.doi.org/10.5075/epfl-thesis-#{@number}"
+    end
   end
 end
 

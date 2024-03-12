@@ -47,6 +47,15 @@ class ProfileController < ApplicationController
 
     ActiveSupport::Notifications.instrument('set_show_data_part_3') do
       @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
+      if @ta.present?
+        @current_phds = @ta.phd.select(&:current?)
+        @past_phds = @ta.phd.select(&:past?)
+        @teachings = @ta.primary_teaching + @ta.secondary_teaching + @ta.doctoral_teaching
+      else
+        @current_phds = nil
+        @past_phds = nil
+        @teachings = nil
+      end
     end
 
     # TODO: would a sort of "PublicSection" class make things easier here ?

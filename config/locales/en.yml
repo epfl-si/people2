@@ -101,6 +101,9 @@ en:
     research: "Research"
     teaching: "Teaching & PhD"
     work_experience: "Work Experience"
+    current_phd: "PhD Students"
+    past_phd: "Past EPFL PhD Students"
+    teaching_domain: "Teaching"
   footer:
     follow_us: "Suivez l'EPFL sur les réseaux sociaux"
     follow_facebook: "Suivez l'EPFL sur Facebook"
