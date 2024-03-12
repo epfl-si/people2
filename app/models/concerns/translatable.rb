@@ -7,7 +7,7 @@ module Translatable
   included do
     def self.translates(*attributes)
       attributes.each do |attribute|
-        define_method("t_#{attribute}") do |locale = I18n.default_locale|
+        define_method("t_#{attribute}") do |locale = I18n.locale|
           translation_for(attribute, locale)
         end
       end
@@ -15,7 +15,7 @@ module Translatable
 
     def self.inclusively_translates(*attributes)
       attributes.each do |attribute|
-        define_method("t_#{attribute}") do |gender, locale = I18n.default_locale|
+        define_method("t_#{attribute}") do |gender, locale = I18n.locale|
           inclusive_translation_for(attribute, gender, locale)
         end
       end
@@ -24,7 +24,7 @@ module Translatable
     def self.translates_rich_text(*attributes)
       attributes.each do |attribute|
         %w[en fr].each { |l| has_rich_text "#{attribute}_#{l}" }
-        define_method("t_#{attribute}") do |locale = I18n.default_locale|
+        define_method("t_#{attribute}") do |locale = I18n.locale|
           translated_body_for(attribute, locale)
         end
       end

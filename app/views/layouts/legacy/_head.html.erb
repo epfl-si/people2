@@ -1,6 +1,6 @@
 <title>
   <%= @page_title || "EPFL - people directory" %>
-  <%= Rails.env.development? ? " (DEV)" : "" %>
+  <%= Rails.env.development? ? " (DEV / #{I18n.locale})" : "" %>
 </title>
 
 <%= csrf_meta_tags %>

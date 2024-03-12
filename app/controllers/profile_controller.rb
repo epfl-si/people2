@@ -8,6 +8,7 @@ class ProfileController < ApplicationController
 
   def show
     @page_title = "EPFL - #{@person.display_name}"
+
     respond_to do |format|
       format.html do
         ActiveSupport::Notifications.instrument('profile_controller_render') do
@@ -71,6 +72,9 @@ class ProfileController < ApplicationController
 
       @visible_socials = @profile.socials.for_audience(@audience)
 
+      # TODO: should we simply redirect to the page with selected locale ? May
+      #       be not because this is just for user provided content and not for
+      #       automatic adata like accreds etc.
       # User's provided data (boxes) is coerced to @profile.force_lang locale
       @cvlocale = @profile.force_lang || I18n.locale
       logger.debug("sciper: #{@sciper} locale=#{I18n.locale} cvlocale=#{@cvlocale}")

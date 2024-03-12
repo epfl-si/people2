@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     @indx
   end
 
+  def default_url_options
+    { lang: I18n.locale }
+  end
+
   private
 
   def switch_locale(&action)

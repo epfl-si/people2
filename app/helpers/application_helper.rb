@@ -31,4 +31,23 @@ module ApplicationHelper
   def belurl(path)
     "https://web2018.epfl.ch/6.5.1/#{path}"
   end
+
+  def language_switcher
+    res = String.new
+    {
+      fr: "Français",
+      en: "English",
+    }.each do |loc, language|
+      res << content_tag(:li) do
+        if I18n.locale == loc
+          content_tag(:span, loc.to_s.upcase, class: "active", aria: { label: language })
+        else
+          link_to loc.to_s.upcase, { lang: loc.to_s }, aria: { label: language }
+        end
+      end
+    end
+    # rubocop:disable Rails/OutputSafety
+    res.html_safe
+    # rubocop:enable Rails/OutputSafety
+  end
 end
