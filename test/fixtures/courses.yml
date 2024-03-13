@@ -1,19 +1,48 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  code: MyString
-  title_en: MyString
-  title_fr: MyString
-  language_en: MyString
-  language_fr: MyString
-  acad: MyString
-  term: MyString
+# edouard
+cs311:
+  code: "CS-311"
+  title_fr: "The software enterprise - from ideas to products"
+  language_en: "english"
+  language_fr: "anglais"
+cs202:
+  code: "CS-202"
+  title_fr: "Computer systems"
+  language_en: "English"
+  language_fr: "anglais"
 
-two:
-  code: MyString
-  title_en: MyString
-  title_fr: MyString
-  language_en: MyString
-  language_fr: MyString
-  acad: MyString
-  term: MyString
+# giovanni
+phys201:
+  code: "PHYS-201(c)"
+  title_en: "General physics : electromagnetism"
+  title_fr: "Physique générale : électromagnétisme"
+  language_en: "french"
+  language_fr: "français"
+micro530:
+  code: "MICRO-530"
+  title_en: "Nanotechnology"
+  title_fr: "Nanotechnology"
+  language_en: "english"
+  language_fr: "anglais"
+
+# martin
+cs214:
+  code: "CS-214"
+  title_en: "Software construction"
+  title_fr: "Software construction"
+  language_en: "english"
+  language_fr: "anglais"
+
+# olivier
+cs308:
+  title_fr: "Introduction to quantum computation"
+  language_en: "english"
+  language_fr: "anglais"
+
+com516:
+  code: "COM-516"
+  title_en: nil
+  title_fr: "Markov chains and algorithmic applications"
+  language_en: "english"
+  language_fr: "anglais"

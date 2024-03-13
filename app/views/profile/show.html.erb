@@ -7,8 +7,8 @@
   <meta property="og:profile:first_name" content="<% @person.display_firstname %>">
   <meta property="og:profile:last_name" content="<% @person.display_lastname %>">
   <meta property="og:url" content="<%= profile_path(sciper_or_name: @person.email_user) %>">
-  <% if @photo %>
-  <meta property="og:image" content="<%= url_for(@photo.image) %>">
+  <% if @profile_picture %>
+  <meta property="og:image" content="<%= url_for(@profile_picture) %>">
   <% end %>
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:alt" content="<%= @person.display_name %>'s EPFL profile picture">
@@ -18,15 +18,33 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="EPFL People – <%= @person.display_name %>">
   <meta name="twitter:description" content="<%= @person.display_name %>'s EPFL profile">
-  <% if @photo %>
-  <meta name="twitter:image" content="<%= url_for(@photo.image) %>">
+  <% if @profile_picture %>
+  <meta name="twitter:image" content="<%= url_for(@profile_picture) %>">
+  <% end %>
+<% end %>
+<% content_for :menu do %>
+  <!-- TODO: implement auth control -->
+  <% if @editable %>
+  <li>
+    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
+    <%= link_to edit_profile_path(@profile) do %>
+      <%= t('action.edit_profile') %>
+      <span class="sr-only">
+        <%= t 'action.of' %> <%= @person.display_name %>
+      </span>
+    <% end %>
+  </li>
   <% end %>
 <% end %>
 
 <div class="container">
   <div class="row people-basic-info">
-    <div class="col-md-6 col-lg-4">      
-      <%= profile_picture(@profile) %>
+    <div class="col-md-6 col-lg-4">
+      <% if @profile_picture %>
+        <%= image_tag(@profile_picture.representation(resize_to_limit: [400, 400]), alt: 'Avatar image', class: 'mx-auto img-fluid bg-gray-100') %>
+      <% else %>
+        <%= image_tag(belurl('svg/portrait-placeholder.svg'), alt: 'Avatar image', class: 'mx-auto img-fluid bg-gray-100') %>
+      <% end %>
       <%= render "admin_data" if @admin_data %>
       <%= render "socials" unless @visible_socials.empty? %>
     </div>

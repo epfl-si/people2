@@ -100,14 +100,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.index ["section_id"], name: "index_boxes_on_section_id"
   end
 
-  create_table "camipro_pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "profile_id", null: false
-    t.integer "failed_attempts", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_camipro_pictures_on_profile_id"
-  end
-
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "code"
     t.string "title_en"
@@ -171,11 +163,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
   end
 
-  create_table "profile_pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
+    t.boolean "camipro", default: false
+    t.integer "failed_attempts", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_profile_pictures_on_profile_id"
+    t.index ["profile_id"], name: "index_pictures_on_profile_id"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -194,9 +188,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.string "title_fr"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "profile_picture_id"
-    t.index ["profile_picture_id"], name: "index_profiles_on_profile_picture_id"
+    t.bigint "selected_picture_id"
+    t.bigint "camipro_picture_id"
+    t.index ["camipro_picture_id"], name: "index_profiles_on_camipro_picture_id"
     t.index ["sciper"], name: "unique_scipers", unique: true
+    t.index ["selected_picture_id"], name: "index_profiles_on_selected_picture_id"
   end
 
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -251,13 +247,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
   add_foreign_key "awards", "profiles"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
-  add_foreign_key "camipro_pictures", "profiles"
   add_foreign_key "educations", "profiles"
   add_foreign_key "experiences", "profiles"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
-  add_foreign_key "profile_pictures", "profiles"
-  add_foreign_key "profiles", "profile_pictures"
+  add_foreign_key "pictures", "profiles"
   add_foreign_key "teacherships", "courses"
   add_foreign_key "teacherships", "profiles"
 end

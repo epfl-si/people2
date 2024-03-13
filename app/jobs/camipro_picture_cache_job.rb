@@ -4,7 +4,7 @@ class CamiproPictureCacheJob < ApplicationJob
   queue_as :default
 
   def perform(id)
-    picture = CamiproPicture.where(id: id).includes(:profile).first
+    picture = Picture.where(id: id).includes(:profile).first
     return unless picture
 
     begin

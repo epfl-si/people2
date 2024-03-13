@@ -3,6 +3,7 @@
 class ProfileController < ApplicationController
   protect_from_forgery
   # before_action :set_sciper_and_email, only: [:show]
+  before_action :set_audience, only: [:show]
   before_action :set_show_data, only: [:show]
   layout 'legacy'
 
@@ -19,6 +20,8 @@ class ProfileController < ApplicationController
     end
   end
 
+  def edit; end
+
   private
 
   # TODO
@@ -29,24 +32,32 @@ class ProfileController < ApplicationController
 
   def set_person; end
 
-  def set_show_data
-    set_audience
-
-    ActiveSupport::Notifications.instrument('set_show_data_part_1') do
+  def set_base_data
+    ActiveSupport::Notifications.instrument('set_base_data') do
       @person = Person.find(params[:sciper_or_name])
       @sciper = @person.sciper
-
-      @admin_data = @audience > 1 ? @person.admin_data : nil
-    end
-
-    ActiveSupport::Notifications.instrument('set_show_data_part_2') do
       @profile = @person.profile
-      @editable = @person.can_edit_profile? && @profile.present?
+    end
+  end
 
+  def set_edit_data
+    set_base_data
+    @accreds = @person.accreds.sort
+    # @camipro_picture = @profile.camipro_picture
+    # @profile_pictures = @profile.profile_pictures
+    # @accred_prefs = @profile.accred_prefs
+  end
+
+  def set_show_data
+    set_base_data
+
+    ActiveSupport::Notifications.instrument('set_show_data_part_1_admin_accreds') do
+      @admin_data = @audience > 1 ? @person.admin_data : nil
+      @editable = @person.can_edit_profile? && @profile.present?
       @accreds = @person.accreds.select(&:visible?).sort
     end
 
-    ActiveSupport::Notifications.instrument('set_show_data_part_3') do
+    ActiveSupport::Notifications.instrument('set_show_data_part_2_teaching') do
       @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
       if @ta.present?
         @current_phds = @ta.phd.select(&:current?)
@@ -57,6 +68,7 @@ class ProfileController < ApplicationController
         @past_phds = nil
         @teachings = nil
       end
+      @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
     end
 
     # TODO: would a sort of "PublicSection" class make things easier here ?
@@ -65,22 +77,17 @@ class ProfileController < ApplicationController
     #       that is not just a simple free text box with a title.
     return unless @editable
 
-    @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
+    @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
+    @visible_socials = @profile.socials.for_audience(@audience)
 
-    ActiveSupport::Notifications.instrument('set_show_data_part_4') do
-      @photo = @profile.photo if @profile.photo.present?
+    # TODO: should we simply redirect to the page with selected locale ? May
+    #       be not because this is just for user provided content and not for
+    #       automatic adata like accreds etc.
+    # User's provided data (boxes) is coerced to @profile.force_lang locale
+    @cvlocale = @profile.force_lang || I18n.locale
+    logger.debug("sciper: #{@sciper} locale=#{I18n.locale} cvlocale=#{@cvlocale}")
 
-      @visible_socials = @profile.socials.for_audience(@audience)
-
-      # TODO: should we simply redirect to the page with selected locale ? May
-      #       be not because this is just for user provided content and not for
-      #       automatic adata like accreds etc.
-      # User's provided data (boxes) is coerced to @profile.force_lang locale
-      @cvlocale = @profile.force_lang || I18n.locale
-      logger.debug("sciper: #{@sciper} locale=#{I18n.locale} cvlocale=#{@cvlocale}")
-    end
-
-    ActiveSupport::Notifications.instrument('set_show_data_part_5') do
+    ActiveSupport::Notifications.instrument('set_show_data_part_3_boxes') do
       # get sections that contain at least one box in the chosen locale
       unsorted_boxes = @profile.boxes.for_audience(@audience).includes(:section).select do |b|
         b.content?(@cvlocale)

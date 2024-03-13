@@ -27,12 +27,13 @@ namespace :data do
       # In dev we only keep the course for profile we have in the DB
       next if Rails.env.development? && tt.none? { |t| profiles_by_sciper.key?(t['sciper']) }
 
+      # TODO: the titles are sometime provided in a single language
       course = Course.new
       course.code = cdata['courseCode']
       course.title_en = cc['name']['en']
       course.title_fr = cc['name']['fr']
-      course.language_en = cc['lang']['en']
-      course.language_fr = cc['lang']['fr']
+      course.language_en = cc['lang']['en'].downcase
+      course.language_fr = cc['lang']['fr'].downcase
       course.save!
 
       tt.each do |t|
@@ -48,7 +49,7 @@ namespace :data do
         end
         Teachership.create!(
           course: course,
-          profile: profile,
+          teacher: profile,
           sciper: sciper,
           role: t['role']['fr'],
           kind: t['type']

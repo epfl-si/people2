@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'open-uri'
 # TODO: periodic job fetching outdated camipro pictures
-class CamiproPicture < ApplicationRecord
+require 'open-uri'
+
+class Picture < ApplicationRecord
   MAX_ATTEMPTS = 3
 
   belongs_to :profile
@@ -10,7 +11,11 @@ class CamiproPicture < ApplicationRecord
 
   after_commit :check_attachment
 
-  def self.url(sciper)
+  scope :camipro, -> { where(camipro: true) }
+
+  # -------------------------------------------------------------------- camipro
+
+  def self.camipro_url(sciper)
     k = Rails.application.config_for(:epflapi).camipro_key
     t = Time.now.in_time_zone('Europe/Rome').strftime('%Y%m%d%H%M%S')
     baseurl = "https://#{Rails.application.config_for(:epflapi).camipro_host}/api/v1/photos/#{sciper}?time=#{t}&app=people"
@@ -20,7 +25,7 @@ class CamiproPicture < ApplicationRecord
 
   def fetch!
     sciper = profile.sciper
-    url = URI.parse(CamiproPicture.url(sciper))
+    url = URI.parse(Picture.camipro_url(sciper))
     image.attach(io: url.open, filename: "#{sciper}.jpg")
   end
 
@@ -29,6 +34,6 @@ class CamiproPicture < ApplicationRecord
   end
 
   def check_attachment
-    fetch if image.blank?
+    fetch if camipro? && image.blank?
   end
 end

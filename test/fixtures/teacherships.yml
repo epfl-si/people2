@@ -1,15 +1,54 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  course: one
-  profile: one
-  sciper: MyString
-  role: MyString
-  kind: MyString
 
-two:
-  course: two
-  profile: two
-  sciper: MyString
-  role: MyString
-  kind: MyString
+# edouard
+e1:
+  course: cs311
+  teacher: edouard
+  sciper: "229105"
+  role: "Professeur ordinaire"
+  kind: "Enseignant"
+e2:
+  course: cs202
+  teacher: edouard
+  sciper: "229105"
+  role: "Professeur ordinaire"
+  kind: "Enseignant"
+
+# giovanni
+g1:
+  course: phys201
+  teacher: giovanni
+  sciper: "110635"
+  role: "Professeur titulaire"
+  kind: "Enseignant"
+g2:
+  course: micro530
+  teacher: giovanni
+  sciper: "110635"
+  role: "Professeur titulaire"
+  kind: "Enseignant"
+
+
+# martin
+m1:
+  course: cs214
+  teacher: martin                                            
+  sciper: "126003"
+  role: "Professeur ordinaire"
+  kind: "Enseignant"
+
+# olivier
+o1:
+  course: cs308
+  teacher: olivier
+  sciper: "107931"
+  role: "Maître d'enseignement et de recherche"
+  kind: "Enseignant"
+o2:
+  course: com516,
+  teacher: olivier
+  sciper: "107931"
+  role: "Maître d'enseignement et de recherche"
+  kind: "Enseignant"
+# 

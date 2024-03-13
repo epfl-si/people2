@@ -24,14 +24,16 @@ class Profile < ApplicationRecord
 
   # TIP: avoid N+1 using with_attached_attachment helper:
   # @cv.with_attached_images.each do |cv|
-  has_many :profile_pictures, class_name: 'ProfilePicture', dependent: :destroy
-  belongs_to :selected_picture, class_name: 'ProfilePicture',
-                                foreign_key: 'profile_picture_id', optional: true, inverse_of: false
-  has_many :accred_prefs, class_name: 'AccredPref', dependent: :destroy
-  has_one :camipro_picture, class_name: 'CamiproPicture', dependent: :destroy
+  has_many :pictures, class_name: 'Picture', dependent: :destroy
+  belongs_to :selected_picture, class_name: 'Picture',
+                                optional: true, inverse_of: false
+  belongs_to :camipro_picture, class_name: 'Picture',
+                               optional: true, inverse_of: false
 
+  has_many :accred_prefs, class_name: 'AccredPref', dependent: :destroy
   # TODO: switch to new model
-  has_many :publications, class_name: 'Legacy::Publication', primary_key: 'sciper', foreign_key: 'sciper',
+  has_many :publications, class_name: 'Legacy::Publication',
+                          primary_key: 'sciper', foreign_key: 'sciper',
                           dependent: :destroy, inverse_of: :cv
 
   # has_and_belongs_to_many :courses, join_table: "teacherships"
@@ -72,9 +74,13 @@ class Profile < ApplicationRecord
     elsif camipro_picture.present?
       camipro_picture
     else
-      create_camipro_picture!
+      cache_camipro_picture!
     end
   end
+
+  # def camipro_picture
+  #   pictures.camipro.first
+  # end
 
   def any_publication?
     publications.present?
@@ -87,5 +93,13 @@ class Profile < ApplicationRecord
 
   def birthday
     nil
+  end
+
+  def cache_camipro_picture!
+    cpp = pictures.create!(camipro: true)
+    self.selected_picture_id = cpp.id
+    self.camipro_picture_id = cpp.id
+    save!
+    cpp
   end
 end
