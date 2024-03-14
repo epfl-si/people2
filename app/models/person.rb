@@ -35,6 +35,7 @@ class Person
 
   def profile
     @profile = Profile.for_sciper(sciper) unless defined?(@profile)
+    @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_edit_profile?
     @profile
   end
 

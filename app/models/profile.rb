@@ -61,6 +61,7 @@ class Profile < ApplicationRecord
   end
 
   def self.for_sciper(sciper)
+    # returns nil when nothing found
     where(sciper: sciper).first
   end
 
