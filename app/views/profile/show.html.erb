@@ -6,7 +6,7 @@
   <meta property="og:description" content="@person.display_name's EPFL profile">
   <meta property="og:profile:first_name" content="<% @person.display_firstname %>">
   <meta property="og:profile:last_name" content="<% @person.display_lastname %>">
-  <meta property="og:url" content="<%= profile_path(sciper_or_name: @person.email_user) %>">
+  <meta property="og:url" content="<%= person_path(sciper_or_name: @person.email_user) %>">
   <% if @profile_picture %>
   <meta property="og:image" content="<%= url_for(@profile_picture) %>">
   <% end %>

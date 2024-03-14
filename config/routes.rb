@@ -10,20 +10,16 @@ Rails.application.routes.draw do
 
   mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
   post '/graphql', to: 'graphql#execute'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # This uses legacy_controller with the old legacy0 layout
-  get '/cv0/:sciper_or_name', to: 'legacy#show0', as: 'person0',
-                              constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
-
-  # This uses legacy_controller with the legacy layout
-  get '/cv1/:sciper_or_name', to: 'legacy#show', as: 'person',
-                              constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
-
-  # This uses cv_controller (therefore privileges new models instead
-  # of all legacy) with the legacy layout
-  get '/cv2/:sciper_or_name', to: 'profile#show', as: 'profile',
-                              constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
+  resources :profiles, only: %i[edit create update] do
+    resources :boxes
+    resources :socials
+    resources :awards
+    resources :educations
+    resources :experiences
+    resources :profile_pictures
+    resources :accred_prefs
+  end
 
   namespace :api do
     # namespace /api/v0 is actually /cgi-bin via traefik rewrite
@@ -32,20 +28,9 @@ Rails.application.routes.draw do
     end
   end
 
-  # if Rails.env.development?
-  #   match '/fakeapi/*other', to: 'fake_api#cache', via: [:get]
+  # profile#show using _legacy_ layout
+  get '/:sciper_or_name', to: 'profile#show', as: 'person',
+                          constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
 
-  #   # # useful queries:
-  #   # #   firstname=giovanni&lastname=cangiani
-  #   # #   persid=121769
-  #   # #   persid=121769,116080
-  #   # #   uinitid=13030         # does not work
-  #   # get '/fakeapi/persons/:sciper', to: 'fake_api#person_by_sciper'
-  #   # get '/fakeapi/persons',         to: 'fake_api#persons'
-  #   # get '/fakeapi/accreds/:sciper', to: 'fake_api#accred_by_sciper'
-  #   # get '/fakeapi/accreds',         to: 'fake_api#accreds'
-  # end
-
-  # Defines the root path route ("/")
   root 'application#homepage'
 end

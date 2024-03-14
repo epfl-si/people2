@@ -18,6 +18,7 @@ class APIPersonGetter < EpflAPIService
     new(url)
   end
 
+  # TODO: check if this works for everybody
   def self.for_email(email, baseurl = Rails.application.config_for(:epflapi).backend_url)
     firstname, lastname = email.gsub(/@.*$/, '').split('.')
     url = URI.join(baseurl, "v1/persons")

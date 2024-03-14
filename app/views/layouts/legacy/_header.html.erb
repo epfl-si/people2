@@ -45,15 +45,7 @@
 		<!-- language switcher, two elements -->
 		<nav class="nav-lang nav-lang-short ml-auto pr-lg-5">
       <ul>
-        <li>
-          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
-          <a href="#">
-            <%= t 'action.edit_profile' %>
-            <span class="sr-only">
-              <%= t 'action.of' %> <%= @person.display_name %>
-            </span>
-          </a>
-        </li>
+        <%= yield :menu %>
         <%= language_switcher %>
       </ul>
 		</nav>
