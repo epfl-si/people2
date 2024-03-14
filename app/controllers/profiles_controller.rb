@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProfileController < ApplicationController
+class ProfilesController < ApplicationController
   protect_from_forgery
   # before_action :set_sciper_and_email, only: [:show]
   before_action :set_audience, only: [:show]
@@ -20,7 +20,10 @@ class ProfileController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @profile = Profile.find(params[:id])
+    render layout: 'legacy'
+  end
 
   private
 
@@ -32,24 +35,21 @@ class ProfileController < ApplicationController
 
   def set_person; end
 
-  def set_base_data
+  # def set_edit_data
+  #   @
+  #   set_base_data
+  #   @accreds = @person.accreds.sort
+  #   # @camipro_picture = @profile.camipro_picture
+  #   # @profile_pictures = @profile.profile_pictures
+  #   # @accred_prefs = @profile.accred_prefs
+  # end
+
+  def set_show_data
     ActiveSupport::Notifications.instrument('set_base_data') do
       @person = Person.find(params[:sciper_or_name])
       @sciper = @person.sciper
       @profile = @person.profile
     end
-  end
-
-  def set_edit_data
-    set_base_data
-    @accreds = @person.accreds.sort
-    # @camipro_picture = @profile.camipro_picture
-    # @profile_pictures = @profile.profile_pictures
-    # @accred_prefs = @profile.accred_prefs
-  end
-
-  def set_show_data
-    set_base_data
 
     ActiveSupport::Notifications.instrument('set_show_data_part_1_admin_accreds') do
       @admin_data = @audience > 1 ? @person.admin_data : nil
