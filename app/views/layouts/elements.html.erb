@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <%= render "layouts/legacy/head" %>
+    <%= render "layouts/elements/head" %>
     <%= yield :head %>
-    <%= render "layouts/legacy/google" if Rails.env.production? %>
+    <%= render "layouts/elements/google" if Rails.env.production? %>
   </head>
 
   <body>
-    <%= render "layouts/legacy/header" %>
+    <%= render "layouts/elements/header" %>
     <% console if Rails.env.development? %>
 
     <div class="main-container pt-5 pb-5">
@@ -16,7 +16,7 @@
         <%= yield %>
       </main>      
 
-      <%= render "layouts/legacy/footer" %>
+      <%= render "layouts/elements/footer" %>
 
     </div>
     <script>

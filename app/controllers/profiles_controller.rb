@@ -5,7 +5,7 @@ class ProfilesController < ApplicationController
   # before_action :set_sciper_and_email, only: [:show]
   before_action :set_audience, only: [:show]
   before_action :set_show_data, only: [:show]
-  layout 'legacy'
+  layout 'elements'
 
   def show
     @page_title = "EPFL - #{@person.display_name}"
@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       format.html do
         ActiveSupport::Notifications.instrument('profile_controller_render') do
-          render layout: 'legacy'
+          render layout: 'elements'
         end
       end
       format.vcf { render layout: false }
@@ -22,7 +22,11 @@ class ProfilesController < ApplicationController
 
   def edit
     @profile = Profile.find(params[:id])
-    render layout: 'legacy'
+    respond_to do |format|
+      format.html do
+        render
+      end
+    end
   end
 
   private
