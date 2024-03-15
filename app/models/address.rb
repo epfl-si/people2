@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: is it worth including ActiveModel::API ?
 class Address
   attr_reader :unit_id, :order, :lines, :hierarchy
 
