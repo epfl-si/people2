@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   # profile#show using _legacy_ layout
-  get '/:sciper_or_name', to: 'profiles#show', as: 'person',
+  get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
 
   root 'application#homepage'

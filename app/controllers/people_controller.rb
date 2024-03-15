@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-class ProfilesController < ApplicationController
+class PeopleController < ApplicationController
   protect_from_forgery
-  # before_action :set_sciper_and_email, only: [:show]
-  before_action :ensure_auth
-  before_action :set_show_data, only: [:show]
   layout 'elements'
 
   def show
+    set_audience
+    set_show_data
     @page_title = "EPFL - #{@person.display_name}"
 
     respond_to do |format|
@@ -20,38 +19,13 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def edit
-    @profile = Profile.find(params[:id])
-    respond_to do |format|
-      format.html do
-        render
-      end
-    end
-  end
-
   private
 
-  # TODO: implement this!
-  def ensure_auth
-    true
-  end
-
-  # TODO: implement this!
+  # TODO
   def set_audience
     # @audience = rand(0..3)
     @audience = 3
   end
-
-  def set_person; end
-
-  # def set_edit_data
-  #   @
-  #   set_base_data
-  #   @accreds = @person.accreds.sort
-  #   # @camipro_picture = @profile.camipro_picture
-  #   # @profile_pictures = @profile.profile_pictures
-  #   # @accred_prefs = @profile.accred_prefs
-  # end
 
   def set_show_data
     ActiveSupport::Notifications.instrument('set_base_data') do
