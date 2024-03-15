@@ -2,7 +2,7 @@
 
 class PeopleController < ApplicationController
   protect_from_forgery
-  layout 'elements'
+  layout 'public'
 
   def show
     set_audience

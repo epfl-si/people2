@@ -1,21 +1,32 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title><%= @page_title || "HelloRails" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= render "layouts/elements/head" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <%= render "layouts/epfl-elements/head" %>
+    <%= yield :head %>
   </head>
 
   <body>
-    <div class="container">
-    <%= render "layouts/epfl-elements/nav-fr" unless @disable_nav %>
-    <%= yield %>
-    <%= render "layouts/epfl-elements/footer-fr" %>
+    <%= render "layouts/elements/header_minimal" %>
+    <% console if Rails.env.development? %>
+
+    <div class="main-container">
+
+      <%= yield :breadcrumbs %>
+
+      <div class="container pt-5 pb-5">
+        <main id="main" class="content" role="main" >
+          <%= yield %>
+        </main>      
+      </div>
+
     </div>
+    <script>
+      svgPath = '<%= belurl "icons/icons.svg" %>';
+      featherSvgPath = '<%= belurl "icons/feather-sprite.svg" %>';
+    </script>
   </body>
 </html>
+
+

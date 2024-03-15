@@ -50,4 +50,21 @@ module ApplicationHelper
     res.html_safe
     # rubocop:enable Rails/OutputSafety
   end
+
+  def fake_breadcrumbs(list = [])
+    return if list.empty?
+
+    content_for :breadcrumbs do
+      tag.div(class: "breadcrumb-container") do
+        tag.nav(class: "breadcrumb-wrapper", aria: { label: "breadcrumb" }) do
+          tag.ol(class: "breadcrumb") do
+            list[..-2].each do |v|
+              concat tag.li(h(v), class: "breadcrumb-item")
+            end
+            concat tag.li(h(list.last), class: "breadcrumb-item active", aria: { current: "page" })
+          end
+        end
+      end
+    end
+  end
 end
