@@ -8,7 +8,7 @@ class CreateModelBoxes < ActiveRecord::Migration[7.0]
       t.string :title_en, null: false
       t.string :title_fr, null: false
       t.boolean :show_title, default: true
-      t.integer :position
+      t.integer :position, null: false
       t.timestamps
     end
   end

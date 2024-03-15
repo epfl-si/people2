@@ -7,7 +7,8 @@ class Box < ApplicationRecord
   belongs_to :section, class_name: 'Section'
   belongs_to :profile, class_name: 'Profile'
   # before_create :ensure_sciper
-  acts_as_list scope: %i[cv section frozen]
+  positioned on: %i[profile section frozen]
+
   translates :title
 
   def self.from_model(mb)

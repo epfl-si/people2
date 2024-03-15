@@ -7,7 +7,7 @@ class CreateSections < ActiveRecord::Migration[7.0]
       t.string :title_fr
       t.string :label
       t.string :zone
-      t.integer :position
+      t.integer :position, null: false
       t.boolean :show_title
       t.boolean :create_allowed
 

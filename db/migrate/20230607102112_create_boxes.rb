@@ -12,7 +12,7 @@ class CreateBoxes < ActiveRecord::Migration[7.0]
       t.boolean    :frozen, default: false
       t.integer    :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user
       t.boolean    :visible, default: false
-      t.integer    :position
+      t.integer    :position, null: false
       t.text       :data
       t.timestamps
     end

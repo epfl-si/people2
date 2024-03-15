@@ -117,8 +117,9 @@ gem 'rack-cors'
 #
 gem 'paper_trail', '~> 14'
 
-# https://github.com/brendon/acts_as_list
-gem 'acts_as_list'
+# Positioning replaces acts_as_list by the same author
+# https://github.com/brendon/positioning
+gem 'positioning'
 
 # ------------------------------------------------------------------------------
 # To be tested, possibly usefull for increasing security in production:

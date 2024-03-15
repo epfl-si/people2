@@ -5,7 +5,7 @@ class Section < ApplicationRecord
   translates :title
   has_many :boxes, inverse_of: :section, dependent: :nullify
   has_many :model_boxes, class_name: 'ModelBox', inverse_of: :section, dependent: :nullify
-  acts_as_list
+  positioned
 
   # TODO: will have to take into account also the other types of content
   # FIXME this does not make much sense

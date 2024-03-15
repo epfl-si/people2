@@ -70,8 +70,6 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    acts_as_list (1.1.0)
-      activerecord (>= 4.2)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -191,6 +189,9 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
+    positioning (0.2.0)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     prime (0.1.2)
       forwardable
       singleton
@@ -338,7 +339,6 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-oracle_enhanced-adapter (~> 7.0.0)
-  acts_as_list
   bootsnap
   brakeman
   bundler-audit
@@ -353,6 +353,7 @@ DEPENDENCIES
   jsbundling-rails
   mysql2
   paper_trail (~> 14)
+  positioning
   prime (~> 0.1.2)
   puma (~> 5.0)
   rack-cors

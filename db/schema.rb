@@ -92,7 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.boolean "frozen", default: false
     t.integer "audience", default: 0
     t.boolean "visible", default: false
-    t.integer "position"
+    t.integer "position", null: false
     t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -157,7 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.string "title_en", null: false
     t.string "title_fr", null: false
     t.boolean "show_title", default: true
-    t.integer "position"
+    t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
@@ -200,7 +200,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.string "title_fr"
     t.string "label"
     t.string "zone"
-    t.integer "position"
+    t.integer "position", null: false
     t.boolean "show_title"
     t.boolean "create_allowed"
     t.datetime "created_at", null: false

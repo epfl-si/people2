@@ -5,6 +5,7 @@ contact:
   label: "contact"
   show_title: false
   create_allowed: true
+  position: 1
 bio:
   title_en: "Biography"
   title_fr: "Biographie"
@@ -12,6 +13,7 @@ bio:
   label: "bio"
   show_title: false
   create_allowed: true
+  position: 2
 pub:
   title_en: "Publications"
   title_fr: "Publications"
@@ -19,6 +21,7 @@ pub:
   label: "pub"
   show_title: true
   create_allowed: true
+  position: 3
 research:
   title_en: "Research"
   title_fr: "Recherche"
@@ -26,6 +29,7 @@ research:
   label: "research"
   show_title: true
   create_allowed: true
+  position: 4
 teaching:
   title_en: "Teaching"
   title_fr: "Enseignement"
@@ -33,3 +37,4 @@ teaching:
   label: "teaching"
   show_title: true
   create_allowed: true
+  position: 5
