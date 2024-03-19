@@ -1,5 +1,58 @@
 <% fake_breadcrumbs [t("edit_profile"), @person.display_name] %>
 
-<pre>
-	<%= @profile.inspect %>
-</pre>
+<%= form_with(model: @profile) do |form| %>
+
+	<%= error_alert(@profile) %>
+
+	<div class="form-group">
+		<h4><%= t "edit_personal_data" %></h4>
+
+		<div class="row">
+			<div class="col-sm">
+				<%= form.label Profile.human_attribute_name(:nationality_fr) %>
+				<%= form.text_field :nationality_fr, class: "form-control", placeholder: "suisse, français" %>
+			</div>
+			<div class="col-sm">
+				<%= form.label Profile.human_attribute_name(:nationality_en) %>
+				<%= form.text_field :nationality_en, class: "form-control", placeholder: "swiss, french" %>
+			</div>
+		</div>
+
+		<div class="row mt-3">
+			<div class="col-sm">
+				<%= form.label Profile.human_attribute_name(:title_fr) %>
+				<%= form.text_field :title_fr, class: "form-control", placeholder: "président" %>
+			</div>
+			<div class="col-sm">
+				<%= form.label Profile.human_attribute_name(:title_en) %>
+				<%= form.text_field :title_en, class: "form-control", placeholder: "president" %>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<h4><%= t "edit_visibility_options" %></h4>
+
+		<div class="custom-control custom-checkbox">
+			<%= form.check_box :show_nationality, class: "custom-control-input", id: "switch2" %>
+			<%= form.label Profile.human_attribute_name(:show_nationality), class: "custom-control-label", for: "switch2" %>
+		</div>
+		<div class="custom-control custom-checkbox">
+			<%= form.check_box :show_title, class: "custom-control-input", id: "switch3" %>
+			<%= form.label Profile.human_attribute_name(:show_title), class: "custom-control-label", for: "switch3" %>
+		</div>
+		<div class="custom-control custom-checkbox">
+			<%= form.check_box :show_function, class: "custom-control-input", id: "switch4" %>
+			<%= form.label Profile.human_attribute_name(:show_function), class: "custom-control-label", for: "switch4" %>
+		</div>
+		<div class="custom-control custom-checkbox">
+			<%= form.check_box :show_phone, class: "custom-control-input", id: "switch5" %>
+			<%= form.label Profile.human_attribute_name(:show_phone), class: "custom-control-label", for: "switch5" %>
+		</div>
+	</div>
+
+	<%= form.submit %>
+<% end %>
+
+
+

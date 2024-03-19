@@ -5,6 +5,7 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
     create_table :profiles do |t|
       t.string  :sciper, index: { unique: true, name: 'unique_scipers' }
 
+      # TODO: remove show_birthday as it is no longer available from API
       t.boolean :show_birthday
       t.boolean :show_function
       t.boolean :show_nationality

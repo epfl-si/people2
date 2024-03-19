@@ -87,7 +87,7 @@ class Profile < ApplicationRecord
     publications.present?
   end
 
-  # Birthday is no long available in data from api
+  # TODO: Birthday is no long available in data from api. Get rid of it.
   def show_birthday?
     false
   end

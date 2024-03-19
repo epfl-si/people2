@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  # TODO: cleanup and use tag helpers consistently
   # forms for input phone: +41216937526, 0041216937526, 0216937526, 7526
   def phone_link(phone, opts = {})
     sep = '&nbsp;'
@@ -64,6 +65,17 @@ module ApplicationHelper
             concat tag.li(h(list.last), class: "breadcrumb-item active", aria: { current: "page" })
           end
         end
+      end
+    end
+  end
+
+  def error_alert(obj)
+    return unless obj.errors.any?
+
+    tag.div(class: "alert alert-danger show", role: "alert") do
+      concat tag.p(t(errors_prevented_save))
+      obj.errors.each do |error|
+        concat tag.li(error.full_message)
       end
     end
   end
