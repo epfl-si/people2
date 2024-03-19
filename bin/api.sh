@@ -4,8 +4,7 @@
 
 . .env
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
-# BASE="https://api.dev.jkldsa.com/v1"
-BASE="https://api.epfl.ch/v1"
+BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 
 apiget() {
   if [ -n "$2" ] ; then

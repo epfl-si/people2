@@ -4,8 +4,7 @@
 
 . .env
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
-# BASE="https://api.epfl.ch/v1"
-BASE="https://api.dev.jkldsa.com/v1"
+BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 GIO=121769
 NAT=116080
 EDO=229105
@@ -23,12 +22,6 @@ rawapiget() {
   curl --basic --user "people:${EPFLAPI_PASSWORD}" \
        -X GET "$1" 2>/dev/null
 }
-
-
-echo "#------------------------------------------------ Giovanni's full profile"
-rawapiget "$BASE/persons/${GIO}"
-exit
-
 
 echo "#----------------------------------------------- Similarly (array result)"
 apiget "$BASE/persons?persid=${GIO}"
