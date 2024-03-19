@@ -1,0 +1,50 @@
+<%
+# TODO: put this in a (secret) config yaml file 
+data=[
+  {
+    name: "Natalie",
+    sciper: "116080",
+    desc: "profile with forced french language and some bio box",
+  },
+  {
+    name: "Me",
+    sciper: "121769",
+    desc: "nothing special but its me ;)",
+  },
+  {
+    name: "Edouard",
+    sciper: "229105",
+    desc: "a professor with a lot of affiliations",
+  },
+  {
+    name: "Giovanni",
+    sciper: "110635",
+    desc: "a standard prof",
+  },
+  {
+    name: "Martin",
+    sciper: "126003",
+    desc: "a prof with various affiliations and links",
+  },
+  {
+    name: "Olivier",
+    sciper: "107931",
+    desc: "a teacher",
+  },
+  {
+    name: "Francesco",
+    sciper: "363674",
+    desc: "a student",
+  },
+] 
+%>
+
+<ul>
+  <% data.map{|d| OpenStruct.new(d)}.each do |d| %>
+  <li>
+    <%= link_to d.name, person_path(d.sciper) %>
+    <%= d.desc %>
+    <%= link_to "(reference)", "https://people.epfl.ch/#{d.sciper}" %>
+  </li>
+  <% end %>
+</ul>

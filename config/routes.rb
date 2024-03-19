@@ -32,5 +32,9 @@ Rails.application.routes.draw do
   get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
 
-  root 'application#homepage'
+  if Rails.env.production?
+    root 'application#homepage'
+  else
+    root 'application#devindex'
+  end
 end
