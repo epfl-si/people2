@@ -332,6 +332,11 @@
   dependencies:
     spark-md5 "^3.0.1"
 
+"@rails/request.js@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@rails/request.js/-/request.js-0.0.9.tgz#89e2a575405dc07eb8a9b3d2fe04289e1f057cd0"
+  integrity sha512-VleYUyrA3rwKMvYnz7MI9Ada85Vekjb/WVz7NuGgDO24Y3Zy9FFSpDMQW+ea/tlftD+CdX/W/sUosRA9/HkDOQ==
+
 "@selectize/selectize@^0.13.6":
   version "0.13.6"
   resolved "https://registry.yarnpkg.com/@selectize/selectize/-/selectize-0.13.6.tgz#d54dd64afa7341e9cb2fc098a34b5a0adbb4484c"
@@ -1319,6 +1324,11 @@ shoestring@^2.0.0:
   resolved "https://registry.yarnpkg.com/shoestring/-/shoestring-2.0.1.tgz#7dd35a600b7e5826788124452c4a8acf64648b06"
   integrity sha512-F2jX6NN5OtZLzmt2Pnsfr4YZf7+H+3oZMTgRubtcS9Q+RuH0jZZASNsHkbrosX3GlHHfCF6QJgih+pxEY/pXhQ==
 
+sortablejs@^1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.2.tgz#4e9f7bda4718bd1838add9f1866ec77169149809"
+  integrity sha512-FJF5jgdfvoKn1MAKSdGs33bIqLi3LmsgVTliuX6iITj834F+JRQZN90Z93yql8h0K2t0RwDPBmxwlbZfDcxNZA==
+
 source-map@^0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
@@ -1333,6 +1343,11 @@ spawn-command@^0.0.2-1:
   version "0.0.2-1"
   resolved "https://registry.yarnpkg.com/spawn-command/-/spawn-command-0.0.2-1.tgz#62f5e9466981c1b796dc5929937e11c9c6921bd0"
   integrity sha512-n98l9E2RMSJ9ON1AKisHzz7V42VDiBQGY6PB1BwRglz99wpVsSuGzQ+jOi6lFXBGVTCrRpltvjm+/XA+tpeJrg==
+
+stimulus-sortable@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/stimulus-sortable/-/stimulus-sortable-4.1.1.tgz#aa34e0f1ac53112cf568bc46e6b20acbf603c521"
+  integrity sha512-UDpgzIIklvBL+X+KB4GuTQOnIvK3k2Zocwm946myA48xBS1vMPomkUhNLEAXpg1PWYDaQ3pyaS0mbKo2mLrTbQ==
 
 string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
