@@ -214,3 +214,10 @@ nat_box_pubs_fr:
     <a href="http://scholar.google.com/citations?user=BGggDBwAAAAJ&amp;hl=en">
       Google Scholar Profile
     </a>
+
+nat_box_work_fr:
+  record: nat_box_work (Box)
+  name: content_fr
+  body: >
+    Absente tous les vendredis.
+    La permanence web a lieu tous les mardis de 14h à 15h à la Cafétéria de l'Esplanade (Coupole).
