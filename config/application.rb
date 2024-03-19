@@ -8,7 +8,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module HelloRails
+module People
   class Application < Rails::Application
     config.encoding = 'utf-8'
 
@@ -37,6 +37,7 @@ module HelloRails
     # config.middleware.use Rack::Locale
 
     # This is a cookie-free Web app!
+    # TODO: this will be useless one we have standardised the app
     config.middleware.delete ActionDispatch::Cookies
     config.middleware.delete ActionDispatch::Session::CookieStore
     config.session_store :disabled

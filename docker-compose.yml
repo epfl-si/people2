@@ -84,6 +84,72 @@ services:
         - APP_HOME=/srv/app
         - LIB_HOME=/srv/lib
     env_file: .env
+    # entrypoint: ${APPENTRY:-/srv/app/bin/dev}
+    # entrypoint: ${APPENTRY:-/srv/app/bin/docker-entrypoint}
+    entrypoint: /srv/app/bin/docker-entrypoint
+    command:
+      - ./bin/rails
+      - server
+      - -p 
+      - ${PORT:-3000}
+      - -b 
+      - ${ADDR:-127.0.0.1}
+
+    environment:
+      # PORT: ${PORT:-3000}
+      # ADDR: ${ADDR:-127.0.0.1}
+      KILLPID: ${KILLPID:-no}
+      RAILS_ENV: development
+      RAILS_DEVELOPMENT_HOSTS: "people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}"
+      DEFAULT_URL: "https://people.${DOMAIN:-dev.jkldsa.com}"
+      ENABLE_API_CACHE: true
+      # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
+      # if REDIS_CACHE is defined then redis is used otherwise default to memory
+      REDIS_CACHE: redis://cache:6379/0
+      # I set this to get rid of an warning msg but it does not work.
+      # https://www.oracle.com/database/technologies/faq-nls-lang.html
+      # NLS_LANG: "en_US.UTF-8"
+      CAMIPRO_PHOTO_KEY: ${CAMIPRO_PHOTO_KEY}
+      CAMIPRO_PHOTO_HOST: ${CAMIPRO_PHOTO_HOST:-camipro-photos.epfl.ch}
+      ORACOURS_PWD: ${ORACOURS_PWD}
+      ATELA_KEY: ${ATELA_KEY}
+      EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
+      EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
+      OFFLINE_CACHEDIR: "/srv/filecache"
+    volumes:
+      - ./app:/srv/app/app
+      - ./config:/srv/app/config
+      - ./lib:/srv/app/lib
+      - ./bin:/srv/app/bin
+      - ./public:/srv/app/public
+      - ./db:/srv/app/db
+      - ./test:/srv/app/test
+      - storage:/srv/app/storage
+      - filecache:/srv/filecache
+    labels:
+      - traefik.http.middlewares.cgibin.replacepathregex.regex=^/cgi-bin/(.*)
+      - traefik.http.middlewares.cgibin.replacepathregex.replacement=/api/v0/$$1
+
+      - traefik.docker.network=traefik
+      - traefik.http.services.people2.loadbalancer.server.port=${PORT:-3000}
+      - traefik.http.routers.people2.rule=Host("people.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.people2.tls=true
+      - traefik.http.routers.people2.middlewares=cgibin
+
+      - traefik.http.middlewares.api.addPrefix.prefix=/fakeapi
+      - traefik.http.routers.epflapi.rule=Host("api.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.epflapi.middlewares=api
+      - traefik.http.routers.epflapi.tls=true
+
+      # - traefik.http.routers.peoplengrok.rule=Host("2.tcp.eu.ngrok.io")
+      # - traefik.http.routers.peoplengrok.tls=true
+    extra_hosts:
+      - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
+    networks:
+      - traefik
+      - default
+    tty: true
+    stdin_open: true
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
