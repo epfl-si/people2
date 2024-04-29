@@ -99,6 +99,13 @@ codecheck: cop
 	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
 	exit 1
 
+# enable/disable web console
+.PHONY: coff con
+con:
+	docker-compose -f $(COMPOSE) exec webapp touch tmp/console-dev.txt
+coff:
+	docker-compose -f $(COMPOSE) exec webapp rm -f tmp/console-dev.txt
+
 # ---------------------------------------------------------------------- testing
 .PHONY: test testup test-system
 ## prepare and run the test server 

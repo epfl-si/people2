@@ -2,22 +2,22 @@
     <!-- Open Graph / Facebook -->
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="EPFL People">
-  <meta property="og:title" content="EPFL People – <%= @person.display_name %>">
-  <meta property="og:description" content="@person.display_name's EPFL profile">
-  <meta property="og:profile:first_name" content="<% @person.display_firstname %>">
-  <meta property="og:profile:last_name" content="<% @person.display_lastname %>">
+  <meta property="og:title" content="EPFL People – <%= @person.name.display %>">
+  <meta property="og:description" content="<%= @person.name.display %>'s EPFL profile">
+  <meta property="og:profile:first_name" content="<% @person.name.display_first %>">
+  <meta property="og:profile:last_name" content="<% @person.name.display_last %>">
   <meta property="og:url" content="<%= person_path(sciper_or_name: @person.email_user) %>">
   <% if @profile_picture %>
   <meta property="og:image" content="<%= url_for(@profile_picture) %>">
   <% end %>
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="<%= @person.display_name %>'s EPFL profile picture">
+  <meta property="og:image:alt" content="<%= @person.name.display %>'s EPFL profile picture">
   <meta property="fb:app_id" content="966242223397117">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="EPFL People – <%= @person.display_name %>">
-  <meta name="twitter:description" content="<%= @person.display_name %>'s EPFL profile">
+  <meta name="twitter:title" content="EPFL People – <%= @person.name.display %>">
+  <meta name="twitter:description" content="<%= @person.name.display %>'s EPFL profile">
   <% if @profile_picture %>
   <meta name="twitter:image" content="<%= url_for(@profile_picture) %>">
   <% end %>
@@ -30,7 +30,7 @@
     <%= link_to edit_profile_path(@profile) do %>
       <%= t('action.edit_profile') %>
       <span class="sr-only">
-        <%= t 'action.of' %> <%= @person.display_name %>
+        <%= t 'action.of' %> <%= @person.name.display %>
       </span>
     <% end %>
   </li>
@@ -94,7 +94,7 @@
       <% @main_zone_bbs.each do |section, boxes| %>
         <% id="section_#{section.label}" %> 
         <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-          <%= render partial: "section", locals: {section: section, boxes: boxes} %>
+          <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
         </div>
         <% active = nil %>
       <% end %>

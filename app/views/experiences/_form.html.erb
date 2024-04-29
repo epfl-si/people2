@@ -1,0 +1,49 @@
+<%= turbo_fram_tag "experience_form" %>
+<%= form_with(model: [profile, experience], local: false) do |expform| %>
+  <% if experience.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(experience.errors.count, "error") %> prohibited this experience from being saved:</h2>
+
+      <ul>
+        <% experience.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+
+    <%= expform.label Experience.human_attribute_name(:title_fr), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= expform.text_field :title_fr, class: "form-control", placeholder: "developeur d'applications" %>
+    </div>
+    <%= expform.label Experience.human_attribute_name(:title_en), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= expform.text_field :title_en, class: "form-control", placeholder: "software developer" %>
+    </div>
+
+    <%= expform.label Experience.human_attribute_name(:location), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= expform.text_field :location, class: "form-control", placeholder: "Apple corporation" %>
+    </div>
+
+    <%= expform.label Experience.human_attribute_name(:period), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-4">
+      <% # TODO: here it would be nice to have the birthday for a more specific date range %>
+      <%= expform.number_field :year_begin, in: 1950..Date.today.year, class: "form-control" %>
+    </div>  
+    <div class="col-sm-4">
+      <%= expform.number_field :year_end, in: 1950..Date.today.year, class: "form-control" %>
+    </div>
+
+    <%= expform.label Experience.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
+    <%= audience_selector(expform) %>
+    
+    <%= visibility_switch expform %>
+
+  </div>
+  <hr>  
+  <%= expform.submit %>
+<% end %>
+<% end %>

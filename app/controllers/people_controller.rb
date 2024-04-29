@@ -7,7 +7,7 @@ class PeopleController < ApplicationController
   def show
     set_audience
     set_show_data
-    @page_title = "EPFL - #{@person.display_name}"
+    @page_title = "EPFL - #{@person.name.display}"
 
     respond_to do |format|
       format.html do

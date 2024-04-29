@@ -1,0 +1,10 @@
+<%= tag.h4(t('title.experiences')) %>
+
+<%= turbo_frame_tag "experiences" do %>
+	<% experiences.each do |experience| %>
+		<%= render 'editable_experience', experience: experience %>
+	<% end %>
+<% end %>
+
+<p><%= t("add_new_experience") %></p>
+<%= render 'form', profile: @profile, experience: Experience.new %>

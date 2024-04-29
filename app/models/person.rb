@@ -2,7 +2,7 @@
 
 # This class represents a person as described by api.epfl.ch
 class Person
-  attr_reader :data, :position
+  attr_reader :data, :position, :name
 
   private_class_method :new
 
@@ -21,6 +21,14 @@ class Person
     # phones and addresses are hash with the unit_id as key
     @phones = (@data.delete('phones') || []).map { |d| Phone.new(d) }.group_by(&:unit_id)
     @addresses = (@data.delete('addresses') || []).map { |d| Address.new(d) }.group_by(&:unit_id)
+
+    @name = Name.new({
+                       id: sciper,
+                       usual_first: @data.delete('firstnameusual'),
+                       usual_last: @data.delete('lastnameusual'),
+                       official_first: @data.delete('firstname'),
+                       official_last: @data.delete('lastname'),
+                     })
   end
 
   def self.find(sciper_or_email)
@@ -61,18 +69,6 @@ class Person
     @admin_data ||= OpenStruct.new(
       @account.merge(@automap).merge(@camipro).merge({ sciper: sciper })
     )
-  end
-
-  def display_firstname
-    firstnameusual || firstname
-  end
-
-  def display_lastname
-    lastnameusual || lastname
-  end
-
-  def display_name
-    @display_name ||= "#{firstnameusual || firstname} #{lastnameusual || lastname}"
   end
 
   # TODO: check if this is always the case as there might be issues with people
@@ -128,6 +124,10 @@ class Person
 
   def positions
     @positions ||= accreds.map(&:position)
+  end
+
+  def main_position
+    @main_position ||= accreds.min.position
   end
 
   def student?

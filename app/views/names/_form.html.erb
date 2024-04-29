@@ -1,0 +1,39 @@
+<%= turbo_frame_tag "profile_form" do %>
+<%= form_with(model: name) do |form| %>
+  <div class="form-group row">
+    <%= form.label Name.human_attribute_name(:official_first), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9 inform">
+      <%= name.official_first %>
+    </div>
+    <%= form.label Name.human_attribute_name(:usual_first), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-7">
+      <%= form.text_field :usual_first, class: "form-control", placeholder: name.suggested_first %>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-secondary btn-sm">
+        <svg aria-hidden="true" class="icon">
+          <use xlink:href="#refresh-cw"></use>
+        </svg>
+      </button>
+    </div>
+
+    <%= form.label Name.human_attribute_name(:official_last), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9 inform">
+      <%= name.official_last %>
+    </div>
+    <%= form.label Name.human_attribute_name(:usual_last), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-7">
+      <%= form.text_field :usual_last, class: "form-control", placeholder: name.suggested_last %>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-secondary btn-sm">
+        <svg aria-hidden="true" class="icon">
+          <use xlink:href="#refresh-cw"></use>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+  <%= form.submit t("action.submit") %>
+<% end %>
+<% end %>

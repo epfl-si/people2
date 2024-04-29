@@ -12,6 +12,7 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.boolean :show_phone
       t.boolean :show_photo
       t.boolean :show_title
+      t.boolean :show_weburl
 
       t.string :force_lang
       t.string :personal_web_url

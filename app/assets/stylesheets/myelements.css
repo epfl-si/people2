@@ -22,3 +22,10 @@ h2.section_title {
   padding-right: 1em;
 }
 
+div.inform {
+  padding-top: 1ex;
+}
+
+.custom-radio {
+  padding-top: 20px;
+}

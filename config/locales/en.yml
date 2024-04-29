@@ -30,6 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  ciccio: this is ciccio
   action:
     accred_full_list: "Full list of positions and address"
     admin_data: "Administrative data"
@@ -40,6 +41,13 @@ en:
     search_people: "Search for a person"
     show_hide_search_form: "Show / hide the search form"
     validate: "Submit"
+    submit_personal_data: "Update personal data"
+    submit: "Submit"
+  error:
+    profile:
+      zero: "Something prevented your profile to be updated (should now happen)"
+      one: "An error prevented your profile to be updated"
+      other: "#{count} errors prevented your profile to be updated"
   admin_data:
     title: "Admin data"
     sciper: "SCIPER Number"
@@ -62,6 +70,19 @@ en:
     teaching: "Teaching & PhD"
     research: "Research"
   office: "Office"
+  person:
+    firstname: firstname
+    function: function
+    lastname: lastname
+    phone: main phone number
+    email: email address
+    nationality: nationality
+    official_firstname: official firstname
+    official_lastname: official lastname
+    title: title
+    usual_firstname: usual firstname
+    usual_lastname: usual firstname
+    website: personal web site url
   phone_type:
     FIXE_CONF: conf room
     FAX: fax
@@ -94,6 +115,7 @@ en:
     courses: "Courses"
     doctoral_teaching: "Teaching & PhD"
     education: "Education"
+    experiences: "Work experiences"
     expertise: "Fields of expertise"
     of: "of"
     past_phd_students: "Past EPFL PhD Students"
@@ -120,8 +142,30 @@ en:
   work_experience: "Work Experience"
 
 
-
-
-
-
-
+  activerecord:
+    models:
+      award: "award"
+      box: "box"
+      education: "education"
+      experience: "work experience"
+      profile: "profile"
+      social: "social address"
+    attributes:
+      person:
+        function: main function
+        
+      experience:
+        location: "copany or location or institution"
+        period: "period (years)"
+        title_en: "title (en)"
+        title_fr: "title (fr)"
+        year_begin: "first year"
+        year_end: "last year"
+    errors: 
+      models: 
+        name: 
+          attributes: 
+            usual_firstname: 
+              not_in_official: "Should be composed of names included in the official first name."
+            usual_lastname: 
+              not_in_official: "Should be composed of names included in the official family name."

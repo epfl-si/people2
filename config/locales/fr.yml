@@ -1,4 +1,5 @@
 fr:
+  ciccio: this is ciccio
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
     admin_data: "Données administratives"
@@ -9,6 +10,13 @@ fr:
     search_people: "Rechercher sur le site"
     show_hide_search_form: "Afficher / masquer le formulaire de recherche"
     validate: "Valider"
+    submit_personal_data: "Mettre à jour le profil de base"
+    submit: "Envoie"
+  error:
+    profile:
+      zero: "Something prevented your profile to be updated (should now happen)"
+      one: "An error prevented your profile to be updated"
+      other: "#{count} errors prevented your profile to be updated"
   admin_data:
     title: "Données administratives"
     sciper: "Numéro SCIPER"
@@ -31,6 +39,19 @@ fr:
     teaching: "Enseignement"
     research: "Recherche"
   office: "Local"
+  person:
+    firstname: prenom
+    function: fonction
+    lastname: nom
+    phone: numero de téléphone
+    email: addresse email
+    nationality: nationalité
+    official_firstname: prenom officiel
+    official_lastname: nom officiel
+    title: titre
+    usual_firstname: prenom usuel
+    usual_lastname: nom usuel
+    website: address page web personnelle
   phone_type:
     FIXE_CONF: fixe conf
     FAX: fax
@@ -63,6 +84,7 @@ fr:
     current_phd_students: "Doctorant·es"
     doctoral_teaching: "Enseignement & Phd"
     education: "Formation"
+    experiences: "Experiences de travail"
     expertise: "Champs de compétences"
     of: "de"
     past_phd_students: "Ancien·nes doctorant·es"
@@ -87,3 +109,14 @@ fr:
     back_to_the_top: "Retour en haut de la page"
 
   work_experience: "Parcours professionnel"
+
+  activerecord:
+    errors: 
+      models: 
+        name: 
+          attributes: 
+            usual_firstname: 
+              not_in_official: "Should be composed of names included in the official name."
+            usual_lastname: 
+              not_in_official: "Should be composed of names included in the official name."
+

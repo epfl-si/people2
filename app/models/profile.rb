@@ -22,6 +22,8 @@ class Profile < ApplicationRecord
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
 
+  accepts_nested_attributes_for :boxes, :socials, :awards, :educations, :experiences
+
   # TIP: avoid N+1 using with_attached_attachment helper:
   # @cv.with_attached_images.each do |cv|
   has_many :pictures, class_name: 'Picture', dependent: :destroy
@@ -40,6 +42,8 @@ class Profile < ApplicationRecord
   has_many :teacherships, class_name: "Teachership", dependent: :destroy
   has_many :courses, through: :teacherships
 
+  # TODO: add all presence validations. Translated properties should be present
+  #       in at leat one of the languages when property is visible
   validates :sciper, uniqueness: { message: "must be unique" }
 
   def self.create_with_defaults(sciper)

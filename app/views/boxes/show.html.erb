@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @box %>
+
+<div>
+  <%= link_to "Edit this box", edit_box_path(@box) %> |
+  <%= link_to "Back to boxes", boxes_path %>
+
+  <%= button_to "Destroy this box", @box, method: :delete %>
+</div>

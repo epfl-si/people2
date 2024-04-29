@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Boxes</h1>
+
+<div id="boxes">
+  <% @boxes.each do |box| %>
+    <%= render box %>
+    <p>
+      <%= link_to "Show this box", box %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New box", new_box_path %>

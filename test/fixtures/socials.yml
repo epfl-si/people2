@@ -12,3 +12,10 @@ gio_social_github:
   value: multiscan
   visible: false
   audience: 0
+
+domq_social_linkedin:
+  profile: domq
+  tag: linkedin
+  value: domq
+  visible: true
+  audience: 0

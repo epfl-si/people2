@@ -28,6 +28,15 @@ module ApplicationHelper
     end
   end
 
+  def icon_text(txt, icon)
+    tag.span do
+      concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon")
+      concat txt
+    end
+  end
+
+  # <svg class="icon feather" aria-hidden="true"><use xlink:href="#activity"></use></svg>
+
   # Return the full url for static stuff coming from EPFL elements cdn
   def belurl(path)
     "https://web2018.epfl.ch/6.5.1/#{path}"

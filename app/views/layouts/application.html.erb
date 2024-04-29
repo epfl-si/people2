@@ -9,8 +9,10 @@
 
   <body>
     <%= render "layouts/elements/header_minimal" %>
-    <% console if Rails.env.development? %>
-
+    <% 
+      # make con / make coff to turn on/on web console
+      console if Rails.env.development? && Rails.root.join('tmp/console-dev.txt').exist?
+    %>
     <div class="main-container">
 
       <%= yield :breadcrumbs %>

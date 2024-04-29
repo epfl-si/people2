@@ -18,7 +18,7 @@
   <h3><%= t "title.current_phd" %></h3>
   <p>
     <%= @current_phds.map{|t| 
-      link_to(t.full_name, profile_url(sciper_or_name: t.sciper))}.join(", ").html_safe 
+      link_to(t.full_name, profiles_url(sciper_or_name: t.sciper))}.join(", ").html_safe 
     %>
   </p>
 </div>

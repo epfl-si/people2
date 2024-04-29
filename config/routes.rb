@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :experiences
+  resources :boxes
+  get 'names/update'
   namespace :oidc do
     # URL prefix for controllers in this section is `/oidc/`, and
     # controllers live in module `OIDC` (not "Oidc"), thanks to
@@ -12,14 +15,16 @@ Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute'
 
   resources :profiles, only: %i[edit create update] do
-    resources :boxes
-    resources :socials
-    resources :awards
-    resources :educations
-    resources :experiences
+    resources :boxes, shallow: true
+    resources :socials, shallow: true
+    resources :awards, shallow: true
+    resources :educations, shallow: true
+    resources :experiences, shallow: true
     resources :profile_pictures
-    resources :accred_prefs
+    resources :accred_prefs, shallow: true
   end
+
+  resources :names, only: %i[index show update]
 
   namespace :api do
     # namespace /api/v0 is actually /cgi-bin via traefik rewrite

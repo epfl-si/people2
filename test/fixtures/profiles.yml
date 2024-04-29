@@ -1,5 +1,15 @@
 ---
 
+domq:
+  sciper: "https://www.linkedin.com/in/domq"
+  show_birthday: false
+  show_nationality: false
+  show_phone: true
+  show_photo: true
+  show_title: false
+  nationality_fr: Suisse
+  nationality_en: Swiss
+
 edouard:
   sciper: "229105"
   show_birthday: false
@@ -36,7 +46,7 @@ giovanni:
   show_photo: true
   show_title: false
   nationality_en: italian, swiss
-  nationality_fr: italien
+  nationality_fr: italienne, suisse
   # title_en: His Majesty
   # title_fr: Sa majesté
   # personal_web_url: https://slideshot.epfl.ch/

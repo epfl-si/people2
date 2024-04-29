@@ -1,0 +1,53 @@
+<%= turbo_frame_tag "profile_form" do %>
+
+<% if profile.errors.any? %>
+  <div style="color: red">
+    <h2><%= t("error.profile", count: profile.errors.count) %></h2>
+    <ul>
+      <% experience.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: profile) do |form| %>
+
+	<div class="form-group row">
+		<%= form.label t('person.function'), class: "col-sm-3  col-form-label" %>
+		<div class="col-sm-9 inform">
+			<%= @person.main_position.t_label(@person.gender) %>
+		</div>
+		<%= show_attribute_switch(form, :show_function) %>
+	</div>
+
+	<div class="form-group row">
+		<%= form.label t('person.phone'), class: "col-sm-3  col-form-label" %>
+		<div class="col-sm-9 inform">
+			<%= @person.default_phone.number %>
+		</div>
+		<%= show_attribute_switch(form, :show_phone) %>
+	</div>
+
+	<div class="form-group row">
+		<%= profile_text_field(form, :nationality_fr, "suisse, français") %>
+		<%= profile_text_field(form, :nationality_en, "suiss, french") %>
+		<%= show_attribute_switch(form, :show_nationality) %>
+	</div>
+
+	<hr>
+	<div class="form-group row">
+		<%= profile_text_field(form, :title_fr, "professeur") %>
+		<%= profile_text_field(form, :title_en, "software wizard") %>
+		<%= show_attribute_switch(form, :show_title) %>
+	</div>
+
+	<hr>
+	<div class="form-group row">
+		<%= profile_text_field(form, :personal_web_url, "https://www.epfl.ch/labs/MYLAB/") %>
+		<%= show_attribute_switch(form, :show_weburl) %>
+	</div>
+  <hr>  
+	<%= form.submit t('action.submit_personal_data') %>
+<% end %>
+<% end %>

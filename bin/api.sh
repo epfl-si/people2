@@ -6,17 +6,21 @@
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
 BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 
+
+
 apiget() {
-  if [ -n "$2" ] ; then
-    curl --basic --user "people:${EPFLAPI_PASSWORD}" \
-         -X GET "$1" 2>/dev/null | jq -r "$2"
-  else
-    curl --basic --user "people:${EPFLAPI_PASSWORD}" -X GET "$1"
-  fi
+  curl --basic --user "people:${EPFLAPI_PASSWORD}" \
+       -X GET "$1" 2>/dev/null
 }
 
 if [[ "$1" == ${BASE}* ]] ; then
-  apiget "$1" "$2"
+  url="$1"
 else
-  apiget "${BASE}/$1" "$2"
+  url="${BASE}/$1"
+fi
+echo "url=$url"
+if [ -n "$2" ] ; then
+  apiget "$url" | jq -r "$2"
+else
+  apiget "$url"
 fi
