@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
 
   # INTRANET_RE = Regexp.new(ENV.fetch("INTRANET_RE", '^128\.17[89]'))
 
-  def homepage; end
-
   def devindex; end
 
   def self.unique_counter_value

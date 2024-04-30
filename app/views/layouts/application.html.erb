@@ -1,9 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
-    <%= render "layouts/elements/head" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%= render "layouts/elements/head" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
     <%= yield :head %>
   </head>
 
@@ -30,5 +35,3 @@
     </script>
   </body>
 </html>
-
-

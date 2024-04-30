@@ -13,6 +13,6 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.acronym('API')
-  inflect.acronym('OIDC')
+  inflect.acronym 'API'
+  inflect.acronym 'OIDC'
 end

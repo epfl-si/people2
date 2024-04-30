@@ -3,11 +3,11 @@
 class Box < ApplicationRecord
   include AudienceLimitable
   include Translatable
-  serialize  :data
+  serialize  :data, coder: YAML
   belongs_to :section, class_name: 'Section'
   belongs_to :profile, class_name: 'Profile'
   # before_create :ensure_sciper
-  positioned on: %i[profile section frozen]
+  positioned on: %i[profile section locked]
 
   translates :title
 
@@ -17,7 +17,7 @@ class Box < ApplicationRecord
       title_en: mb.title_en,
       title_fr: mb.title_fr,
       show_title: mb.show_title,
-      frozen: true,
+      locked: true,
       position: mb.position
     )
   end

@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     get 'config', to: 'frontend_config#get' # i.e. OIDC::FrontendConfigController#get
   end
 
-  mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
-  post '/graphql', to: 'graphql#execute'
+  # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
+  # post '/graphql', to: 'graphql#execute'
 
   resources :profiles, only: %i[edit create update] do
     resources :boxes, shallow: true

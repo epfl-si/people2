@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <%= render "layouts/elements/head" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= yield :head %>
+
+    <%= render "layouts/elements/head" %>
     <%= render "layouts/elements/google" if Rails.env.production? %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <%= yield :head %>
   </head>
 
   <body>

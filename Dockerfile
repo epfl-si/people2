@@ -26,45 +26,45 @@ WORKDIR $APP_HOME
 # Oracle shit copied from 
 # https://github.com/chumaky/docker-images/blob/master/postgres_oracle.docker
 # Oracle connector is needed for ISA courses and for changing usual name
-ARG ORACLE_CLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip
-ARG ORACLE_SQLPLUS_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
-ARG ORACLE_SDK_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-sdk-linuxx64.zip
-ENV ORACLE_HOME=/usr/lib/oracle/client
-WORKDIR /tmp
-RUN apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates wget unzip; \
-    # instant client
-    wget -O instant_client.zip ${ORACLE_CLIENT_URL}; \
-    unzip instant_client.zip; \
-    # sqlplus
-    wget -O sqlplus.zip ${ORACLE_SQLPLUS_URL}; \
-    unzip sqlplus.zip; \
-    # sdk
-    wget -O sdk.zip ${ORACLE_SDK_URL}; \
-    unzip sdk.zip; \
-    # install
-    mkdir -p ${ORACLE_HOME}; \
-    mv instantclient*/* ${ORACLE_HOME}; \
-    rm -r instantclient*; \
-    rm instant_client.zip sqlplus.zip sdk.zip; \
-    # required runtime libs: libaio
-    apt-get install -y --no-install-recommends libaio1; \
-    apt-get purge -y --auto-remove
+# ARG ORACLE_CLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip
+# ARG ORACLE_SQLPLUS_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
+# ARG ORACLE_SDK_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-sdk-linuxx64.zip
+# ENV ORACLE_HOME=/usr/lib/oracle/client
+# WORKDIR /tmp
+# RUN apt-get update; \
+#     apt-get install -y --no-install-recommends ca-certificates wget unzip; \
+#     # instant client
+#     wget -O instant_client.zip ${ORACLE_CLIENT_URL}; \
+#     unzip instant_client.zip; \
+#     # sqlplus
+#     wget -O sqlplus.zip ${ORACLE_SQLPLUS_URL}; \
+#     unzip sqlplus.zip; \
+#     # sdk
+#     wget -O sdk.zip ${ORACLE_SDK_URL}; \
+#     unzip sdk.zip; \
+#     # install
+#     mkdir -p ${ORACLE_HOME}; \
+#     mv instantclient*/* ${ORACLE_HOME}; \
+#     rm -r instantclient*; \
+#     rm instant_client.zip sqlplus.zip sdk.zip; \
+#     # required runtime libs: libaio
+#     apt-get install -y --no-install-recommends libaio1; \
+#     apt-get purge -y --auto-remove
 # --------------------------------------------------------------------------
 
 
 RUN apt-get update && apt-get install -y \
 	build-essential \
 	mariadb-client \
-	nodejs \
+	# nodejs \
 	# yarnpkg \
 	--no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 # RUN ln -s /usr/bin/yarnpkg /usr/bin/yarn
 # RUN npm install --global yarn
 
-RUN echo "${ORACLE_HOME}" > /etc/ld.so.conf.d/oracle.conf ; /sbin/ldconfig
-RUN gem install bundler:2.3.7
+# RUN echo "${ORACLE_HOME}" > /etc/ld.so.conf.d/oracle.conf ; /sbin/ldconfig
+RUN gem install bundler -v '~> 2.4'
 
 WORKDIR $APP_HOME
 

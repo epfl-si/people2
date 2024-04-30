@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_11_105644) do
   create_table "accred_prefs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -89,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_105644) do
     t.string "title_en"
     t.string "title_fr"
     t.boolean "show_title", default: true
-    t.boolean "frozen", default: false
+    t.boolean "locked", default: false
     t.integer "audience", default: 0
     t.boolean "visible", default: false
     t.integer "position", null: false

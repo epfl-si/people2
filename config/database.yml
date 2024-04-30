@@ -34,54 +34,12 @@ production:
 
 # ---------------------------------------------------------- External/Legacy DBs
 
-isa:
-  adapter: oracle_enhanced
-  host: host.docker.internal
-  port: 50315
-  database: AGAP
-  username: people
-  password: <%= ENV['ORACOURS_PWD'] %> 
-
-# isa:
-#   adapter: oracle_enhanced
-#   database: "(DESCRIPTION=
-#     (FAILOVER=true)
-#     (ADDRESS=(PROTOCOL=TCP)(HOST=host.docker.internal)(PORT=50315))
-#     (CONNECT_DATA=
-#       (FAILOVER_MODE=
-#         (TYPE=select)
-#         (METHOD=basic)
-#         (RETRIES=600)
-#         (DELAY=1)
-#       )
-#       (SERVICE_NAME=AGAP)
-#     )
-#   )"
-#   username: people
-#   password: <%= ENV['ORACOURS_PWD'] %> 
-
 legacy_dev_default: &legacy_dev 
   adapter: mysql2
   host: mariadb
   username: people
   password: mariadb
 
-legacy_dev_accred:
-  <<: *legacy_dev
-  database: accred
-
-legacy_dev_cadi:
-  <<: *legacy_dev
-  database: cadi
-
 legacy_dev_cv:
   <<: *legacy_dev
   database: cv
-
-legacy_dev_dinfo:
-  <<: *legacy_dev
-  database: dinfo
-
-legacy_dev_bottin:
-  <<: *legacy_dev
-  database: bottin

@@ -1,4 +1,4 @@
-<% fake_breadcrumbs [t("edit_profile"), @person.name.display] %>
+<% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
 
 <% if @name.customizable? %>
 	<%= render "names/form", name: @name %>

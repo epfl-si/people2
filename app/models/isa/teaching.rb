@@ -197,21 +197,17 @@ module Isa
     private
 
     def load_lectures(sciper)
-      if Rails.application.config_for(:epflapi).isa_use_oracle
-        Legacy::IsaCours.for_sciper(sciper)
-      else
-        # TODO: this is for the tmp version coming from the old people
-        data = IsaCourseGetter.call(sciper)
-        return nil if data.nil?
-        return nil unless data.key?('bycours')
-        return nil unless data['bycours']
+      # TODO: this is for the tmp version coming from the old people
+      data = IsaCourseGetter.call(sciper)
+      return nil if data.nil?
+      return nil unless data.key?('bycours')
+      return nil unless data['bycours']
 
-        res = []
-        data['bycours'].each do |s|
-          res.concat s['coursLoop'] if s.key?('coursLoop')
-        end
-        res.map { |c| Isa::Lecture.new(c) }
+      res = []
+      data['bycours'].each do |s|
+        res.concat s['coursLoop'] if s.key?('coursLoop')
       end
+      res.map { |c| Isa::Lecture.new(c) }
     end
 
     def load_ta(sciper)
@@ -235,114 +231,3 @@ module Isa
     end
   end
 end
-
-# {
-#   "person": {
-#   ...
-#   },
-#   "role": "Enseignant",
-#   "commentaire": "PATT au 01.10.2006",
-#   "enseignement": {
-#     "coDirectorThese": null,
-#     "dateGenContract": null,
-#     "enseignementFC": null,
-#     "dateContractDebut": null,
-#     "dateContractFin": null,
-#     "dateContractRetour": null,
-#     "dateEnseignementDebut": "2002-05-09",
-#     "dateEnseignementFin": null,
-#     "dispositionsParticulieres": null,
-#     "domainesRechercheEDIC": null,
-#     "domainesRechercheEDMA": null,
-#     "directorThese": [
-#       {
-#         "programme": {
-#           "name": {
-#             "fr": "Physique (edoc)",
-#             "en": "Physics (edoc)"
-#           },
-#           "code": {
-#             "fr": "EDPY"
-#           }
-#         },
-#         "dateFinValidite": null
-#       },
-#       {
-#         "programme": {
-#           "name": {
-#             "fr": "Photonique (edoc)",
-#             "en": "Photonics (edoc)"
-#           },
-#           "code": {
-#             "fr": "EDPO"
-#           }
-#         },
-#         "dateFinValidite": null
-#       }
-#     ],
-#     "directorTheseOptions": [
-#       {
-#         "programme": {
-#           "name": {
-#             "fr": "Physique (edoc)",
-#             "en": "Physics (edoc)"
-#           },
-#           "code": {
-#             "fr": "EDPY"
-#           }
-#         },
-#         "mailExclude": null,
-#         "progExclude": null
-#       },
-#       {
-#         "programme": {
-#           "name": {
-#             "fr": "Photonique (edoc)",
-#             "en": "Photonics (edoc)"
-#           },
-#           "code": {
-#             "fr": "EDPO"
-#           }
-#         },
-#         "mailExclude": null,
-#         "progExclude": null
-#       }
-#     ],
-#     "enseignementEDOC": [
-#       {
-#         "programme": {
-#           "name": {
-#             "fr": "Physique (edoc)",
-#             "en": "Physics (edoc)"
-#           },
-#           "code": {
-#             "fr": "EDPY"
-#           }
-#         },
-#         "dateFinValidite": null
-#       }
-#     ],
-#     "ensignementSecPrimaire": [
-#       {
-#         "programme": {
-#           "name": {
-#             "fr": "Physique",
-#             "en": "Physics"
-#           },
-#           "code": {
-#             "fr": "PH"
-#           }
-#         },
-#         "dateFinValidite": null
-#       }
-#     ],
-#     "enseignementSecSecondondaire": [],
-#     "enseignementFonction": [
-#       {
-#         "code": "PASC",
-#         "name": "CODE1177251",
-#         "label": "Professeur associé"
-#       }
-#     ]
-#   }
-# }
