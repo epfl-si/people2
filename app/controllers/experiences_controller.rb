@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class ExperiencesController < ApplicationController
-  before_action :set_profile
+  before_action :set_profile, only: %i[index create new]
   before_action :set_experience, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/experiences or /profile/profile_id/experiences.json
   def index
+    # sleep 2
     @experiences = @profile.experiences
   end
 
@@ -22,7 +23,6 @@ class ExperiencesController < ApplicationController
 
   # POST /profile/profile_id/experiences or /experiences.json
   def create
-    @profile = Profile.find(params[:profile_id])
     @experience = @profile.experiences.new(experience_params)
 
     respond_to do |format|
@@ -45,6 +45,7 @@ class ExperiencesController < ApplicationController
     respond_to do |format|
       if @experience.update(experience_params)
         format.html { redirect_to experience_url(@experience), notice: "Experience was successfully updated." }
+        format.turbo_stream { render :update }
         format.json { render :show, status: :ok, location: @experience }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,6 +60,7 @@ class ExperiencesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to experiences_url, notice: "Experience was successfully destroyed." }
+      format.turbo_stream { render :destroy }
       format.json { head :no_content }
     end
   end
@@ -82,6 +84,6 @@ class ExperiencesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def experience_params
-    params.require(:experience).permit(:title, :years, :position)
+    params.require(:experience).permit(:location, :title_fr, :title_en, :year_begin, :year_end, :audience, :visible)
   end
 end

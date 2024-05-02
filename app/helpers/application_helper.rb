@@ -30,7 +30,7 @@ module ApplicationHelper
 
   def icon_text(txt, icon)
     tag.span do
-      concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon")
+      concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
       concat txt
     end
   end

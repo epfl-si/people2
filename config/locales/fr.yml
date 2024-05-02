@@ -12,6 +12,8 @@ fr:
     validate: "Valider"
     submit_personal_data: "Mettre à jour le profil de base"
     submit: "Envoie"
+    create_experience: "Create new work experience"
+    update_experience: "Udate work experience"
   error:
     profile:
       zero: "Something prevented your profile to be updated (should now happen)"
@@ -121,3 +123,13 @@ fr:
             usual_lastname: 
               not_in_official: "Should be composed of names included in the official name."
 
+        experience:
+          attributes:
+            base:
+              missing_year: "Either beginning or end of work experience should be present"
+            location:
+              blank: "Location should be provided"
+            year_end:
+              blank: "End year should be present"
+            year_start:
+              blank: "Start year should be present"

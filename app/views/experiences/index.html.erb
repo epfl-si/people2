@@ -1,14 +1,16 @@
-<p style="color: green"><%= notice %></p>
+<%= turbo_frame_tag :experiences_index do %>
 
-<h1>Experiences</h1>
+<%= tag.h2(t('title.experiences')) %>
 
-<div id="experiences">
-  <% @experiences.each do |experience| %>
-    <%= render experience %>
-    <p>
-      <%= link_to "Show this experience", experience %>
-    </p>
-  <% end %>
+<%= turbo_frame_tag "experiences" do %>
+	<% @experiences.each do |experience| %>
+		<%= render 'editable_experience', experience: experience %>
+	<% end %>
+<% end %>
+
+<%= turbo_frame_tag "new_experience_form" do %>
+<div class="row justify-content-center">
+<%= link_to icon_text('add', 'plus-circle'), new_profile_experience_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+<% end %>
 </div>
-
-<%= link_to "New experience", new_experience_path %>
+<% end %>

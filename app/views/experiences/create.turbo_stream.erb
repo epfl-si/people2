@@ -1,0 +1,9 @@
+<%= turbo_stream.append "experiences" do %>
+<%= render "editable_experience", experience: @experience %> 
+<% end %>
+
+<%= turbo_stream.replace "new_experience_form" do %>
+<%= turbo_frame_tag "new_experience_form" do %>
+<%= link_to icon_text('add', 'plus'), new_profile_experience_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+<% end %>
+<% end %>

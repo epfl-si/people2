@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'net/http'
 require 'digest'
 
 # Remember to touch tmp/caching-dev.txt for caching to work in dev

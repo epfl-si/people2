@@ -47,7 +47,10 @@
 		<%= profile_text_field(form, :personal_web_url, "https://www.epfl.ch/labs/MYLAB/") %>
 		<%= show_attribute_switch(form, :show_weburl) %>
 	</div>
-  <hr>  
-	<%= form.submit t('action.submit_personal_data') %>
+
+  <div class="row justify-content-center">
+		<%= form.submit t('action.submit_personal_data'), class: "btn btn-secondary btn-sm" %>
+	</div>
+
 <% end %>
 <% end %>

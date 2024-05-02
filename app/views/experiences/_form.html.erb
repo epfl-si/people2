@@ -1,4 +1,3 @@
-<%= turbo_fram_tag "experience_form" %>
 <%= form_with(model: [profile, experience], local: false) do |expform| %>
   <% if experience.errors.any? %>
     <div style="color: red">
@@ -43,7 +42,9 @@
     <%= visibility_switch expform %>
 
   </div>
-  <hr>  
-  <%= expform.submit %>
-<% end %>
+
+  <div class="row justify-content-center">
+    <%= expform.submit t(experience.new_record? ? 'action.create_experience' :  'action.update_experience'), class: "btn btn-secondary btn-sm" %>
+  </div>
+
 <% end %>

@@ -6,14 +6,15 @@
 	<h2><%= @name.display %></h2>
 <% end %>
 
-<hr>
-
 <%= render "form", profile: @profile %>
 
-<%= turbo_frame_tag "experiences_index", src: profile_experiences_path(@profile), loading: :lazy do %>
-Loading experiences...
-<% end %>
+<hr>
 
+<section id="experiences_section">
+<%= turbo_frame_tag "experiences_index", src: profile_experiences_path(@profile), loading: :lazy do %>
+Loading experiences... (for demoing purpose, an artificial delay is added)
+<% end %>
+</section>
 
 
 
