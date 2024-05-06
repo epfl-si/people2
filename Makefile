@@ -2,7 +2,7 @@
 KBPATH ?= /keybase/team/epfl_people.prod
 -include $(KBPATH)/$(SECRETS)
 
-COMPOSE ?= docker-compose.yml
+COMPOSE_FILE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
 SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
@@ -18,45 +18,45 @@ export
 
 ## build the web app and atela container
 build: envcheck #codecheck
-	docker-compose -f $(COMPOSE) build
+	docker compose build
 
 kup: envcheck
-	KILLPID=1 docker-compose -f $(COMPOSE) up -d
+	KILLPID=1 docker compose up -d
 
 ## start the dev tunnel and start all the servers
 up: tunnel_up dcup
 
 dcup: envcheck
-	docker-compose -f $(COMPOSE) up --no-recreate -d 
+	docker compose up --no-recreate -d 
 
 kc: envcheck
-	docker-compose --profile kc -f $(COMPOSE) up -d keycloak
+	docker compose --profile kc up -d keycloak
 
 # atela:
-# 	docker-compose --profile atela -f $(COMPOSE) up -d atela
+# 	docker compose --profile atela up -d atela
 
 ## stop everything including keycloak and the test server
 fulldown:
-	docker-compose --profile test -f $(COMPOSE) down
-	docker-compose --profile kc   -f $(COMPOSE) down
-	docker-compose -f $(COMPOSE) down
+	docker compose --profile test down
+	docker compose --profile kc   down
+	docker compose down
 
 ## stop the basic servers (all except keycloak and test)
 down: tunnel_down
-	docker-compose -f $(COMPOSE) down
+	docker compose down
 
 ## restart the webapp container
 reload: envcheck
-	docker-compose -f $(COMPOSE) stop webapp
-	KILLPID=1 docker-compose -f $(COMPOSE) up -d
+	docker compose stop webapp
+	KILLPID=1 docker compose up -d
 
 ## tail -f the logs
 logs:
-	docker-compose -f $(COMPOSE) logs -f
+	docker compose logs -f
 
 ## show the status of running containers
 ps:
-	docker-compose -f $(COMPOSE) ps
+	docker compose ps
 
 ## show memory and cpu usage off all containers
 top:
@@ -64,22 +64,22 @@ top:
 
 ## start a rails console on the webapp container
 console: dcup
-	docker-compose -f $(COMPOSE) exec webapp ./bin/rails console
+	docker compose exec webapp ./bin/rails console
 
 ## start a shell on the webapp container
 shell: dcup
-	docker-compose -f $(COMPOSE) exec webapp /bin/bash
+	docker compose exec webapp /bin/bash
 
 ## start an sql console con the database container
 dbconsole: dcup
-	docker-compose -f $(COMPOSE) exec mariadb mariadb -u root --password=mariadb  
+	docker compose exec mariadb mariadb -u root --password=mariadb  
 
 dconfig:
-	docker-compose -f $(COMPOSE) config
+	docker compose config
 
 ## generate an entity relation diagram with mermaid_erd
 erd:
-	docker-compose -f $(COMPOSE) exec webapp ./bin/rails mermaid_erd
+	docker compose exec webapp ./bin/rails mermaid_erd
 
 ## check the dev environment
 envcheck: .env .git/hooks/pre-commit
@@ -102,30 +102,36 @@ codecheck: cop
 # enable/disable web console
 .PHONY: coff con
 con:
-	docker-compose -f $(COMPOSE) exec webapp touch tmp/console-dev.txt
+	docker compose exec webapp touch tmp/console-dev.txt
 coff:
-	docker-compose -f $(COMPOSE) exec webapp rm -f tmp/console-dev.txt
+	docker compose exec webapp rm -f tmp/console-dev.txt
+
+
+.PHONY: redis
+## run valkey-cli 
+redis:
+	docker compose exec cache valkey-cli
 
 # ---------------------------------------------------------------------- testing
 .PHONY: test testup test-system
 ## prepare and run the test server 
 testup:
-	docker-compose --profile test -f $(COMPOSE) up --no-recreate -d
+	docker compose --profile test up --no-recreate -d
 	# TODO: find a way to fix this by selecting the good deps (stopped working 
 	# after an upgrade don't know if due to ruby or packages version.
-	docker-compose -f $(COMPOSE) exec webapp sed -i '0,/end/{s/initialize(\*)/initialize(*args)/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
-	docker-compose -f $(COMPOSE) exec webapp sed -i '0,/end/{s/super/super args/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
+	docker compose exec webapp sed -i '0,/end/{s/initialize(\*)/initialize(*args)/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
+	docker compose exec webapp sed -i '0,/end/{s/super/super args/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
 
 # testprepare:
-# 	docker-compose -f $(COMPOSE) exec webapp ./bin/rails db:test:prepare
-# 	docker-compose -f $(COMPOSE) exec -e RAILS_ENV=test webapp ./bin/rails db:migrate
+# 	docker compose exec webapp ./bin/rails db:test:prepare
+# 	docker compose exec -e RAILS_ENV=test webapp ./bin/rails db:migrate
 
 test-system: testup
-	docker-compose -f $(COMPOSE) exec webapp ./bin/rails test:system
+	docker compose exec webapp ./bin/rails test:system
 
 ## run automated tests
 test:
-	docker-compose -f $(COMPOSE) exec -e RAILS_ENV=test webapp ./bin/rails test
+	docker compose exec -e RAILS_ENV=test webapp ./bin/rails test
 
 ## run rubocop linter to check code copliance with style and syntax rules
 cop:
@@ -142,11 +148,11 @@ dodocop:
 # ------------------------------------------------------------------------ cache
 ## toggle dev cache
 devcache:
-	docker-compose -f $(COMPOSE) exec webapp bin/rails dev:cache
+	docker compose exec webapp bin/rails dev:cache
 
 ## flush cache from redis db
 flush:
-	docker-compose -f $(COMPOSE) exec cache redis-cli FLUSHALL 
+	docker compose exec cache redis-cli FLUSHALL 
 # ------------------------------------------------------------------- ssh tunnel
 .PHONY: tunnel_up tunnel_down
 
@@ -158,7 +164,7 @@ tunnel_down:
 
 # setup_kc: dcup
 # 	sleep 10
-# 	docker-compose -f $(COMPOSE) stop keycloak
+# 	docker compose stop keycloak
 # 	sleep 2
 # 	echo "DROP DATABASE IF EXISTS keycloak;" | $(MYSQL)
 # 	sleep 2
@@ -170,25 +176,25 @@ tunnel_down:
 
 ## run rails migration
 migrate: dcup
-	docker-compose -f $(COMPOSE) exec webapp ./bin/rails db:migrate
+	docker compose exec webapp ./bin/rails db:migrate
 
 ## run rails migration and seed with initial data
 seed: migrate
-	docker-compose -f $(COMPOSE) exec webapp bin/rails db:seed
+	docker compose exec webapp bin/rails db:seed
 	make courses
 
 ## prefetch dev data from api.epfl.ch for the fake (local) api server 
 fakeapi: dcup
-	docker-compose -f $(COMPOSE) exec webapp bin/rails devel:fakeapi
+	docker compose exec webapp bin/rails devel:fakeapi
 
 ## reload the list of all courses from ISA
 courses: dcup
-	docker-compose -f $(COMPOSE) exec webapp bin/rails data:courses
+	docker compose exec webapp bin/rails data:courses
 
 # --------------------------------------------------- destroy and reload mock db
 .PHONY: reseed
 
-SQL=docker-compose -f $(COMPOSE) exec -T mariadb mariadb -u root --password=mariadb
+SQL=docker-compose exec -T mariadb mariadb -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb

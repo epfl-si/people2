@@ -68,8 +68,10 @@ services:
     networks:
       - default
 
+  # valkey opensource replacement of redis 
+  # https://hub.docker.com/r/valkey/valkey/
   cache:
-    image: redis:latest
+    image: valkey/valkey:7.2
     command:
       - --maxmemory 32mb
     networks:
