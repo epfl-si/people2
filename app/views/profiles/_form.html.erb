@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<%= form_with(model: profile) do |form| %>
+<%= form_with(model: profile, local: false) do |form| %>
 
 	<div class="form-group row">
 		<%= form.label t('person.function'), class: "col-sm-3  col-form-label" %>

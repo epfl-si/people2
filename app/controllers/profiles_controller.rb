@@ -3,15 +3,27 @@
 class ProfilesController < ApplicationController
   protect_from_forgery
   before_action :ensure_auth
+  before_action :set_profile
 
   def edit
-    @profile = Profile.find(params[:id])
-    # @profile.experiences.build
-    @person = Person.find(@profile.sciper)
-    @name = @person.name
     respond_to do |format|
       format.html do
         render
+      end
+    end
+  end
+
+  # PATCH/PUT /profile/:id
+  def update
+    respond_to do |format|
+      if @profile.update(profile_params)
+        # format.html { redirect_to edit_profile_path(@profile), notice: "Profile was successfully updated." }
+        format.turbo_stream { render :update }
+        # format.json { render :show, status: :ok, location: @profile }
+      else
+        # format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream { render :update, status: :unprocessable_entity }
+        # format.json { render json: @experience.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -21,6 +33,12 @@ class ProfilesController < ApplicationController
   # TODO: implement this!
   def ensure_auth
     true
+  end
+
+  def set_profile
+    @profile = Profile.find(params[:id])
+    @person = Person.find(@profile.sciper)
+    @name = @person.name
   end
 
   def profile_params

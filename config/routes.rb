@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
   # post '/graphql', to: 'graphql#execute'
 
-  resources :profiles, only: %i[edit create update] do
+  resources :profiles, only: %i[edit update] do
     resources :boxes, shallow: true
     resources :socials, shallow: true
     resources :awards, shallow: true
