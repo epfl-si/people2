@@ -64,7 +64,7 @@ RUN apt-get update && apt-get install -y \
 # RUN npm install --global yarn
 
 # RUN echo "${ORACLE_HOME}" > /etc/ld.so.conf.d/oracle.conf ; /sbin/ldconfig
-RUN gem install bundler -v '~> 2.4'
+RUN gem install bundler -v '~> 2.5'
 
 WORKDIR $APP_HOME
 
@@ -77,6 +77,8 @@ WORKDIR $APP_HOME
 # RUN yarn cache clean && yarn install --verbose --modules-folder $MODULES_PATH
 
 ADD Gemfile* $APP_HOME/
+ADD ./.gems $APP_HOME/.gems
+RUN ls -l 
 ADD bin/bundle $APP_HOME/bin/bundle
 RUN ./bin/bundle
 RUN if [ "$RAILS_ENV" == "development" ] ; then RAILS_ENV='test' ./bin/bundle ; fi

@@ -25,16 +25,17 @@ module ProfilesHelper
 
   def audience_selector(form)
     id0 = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
-    content = %w[public intranet authenticated].each_with_index.map do |v, i|
+    content = %w[public intranet authenticated me hidden].each_with_index.map do |v, i|
       id = "#{id0}_#{i}"
-      tag.div(class: "col-sm-3") do
-        tag.div(class: "custom-control custom-radio") do
-          concat form.radio_button(:audience, 0, id: id, class: "custom-control-input")
-          concat form.label(v, class: "custom-control-label", for: id)
-        end
+      label = "visibility.#{v}"
+      tag.div(class: "custom-control custom-radio audience-selector") do
+        concat form.radio_button(:audience, i, id: id, class: "custom-control-input")
+        concat form.label(label, class: "custom-control-label", for: id)
       end
     end
-    safe_join(content)
+    tag.div(class: "col-sm-9") do
+      safe_join(content)
+    end
   end
 
   def show_attribute_switch(form, attr)

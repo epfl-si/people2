@@ -84,7 +84,9 @@ gem 'paper_trail', '~> 14'
 
 # Positioning replaces acts_as_list by the same author
 # https://github.com/brendon/positioning
-gem 'positioning'
+# gem 'positioning'
+# TODO: temporary workaround, check https://github.com/brendon/positioning/pulls
+gem 'positioning', path: ".gems/positioning"
 
 # Avoid a warning message from rubyzip about broken compatibility of >=3.0
 # TODO: recheck if this is still the case
@@ -106,8 +108,6 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-
-  gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 
   # ----------------------- added
   # security tools

@@ -20,6 +20,9 @@ export
 build: envcheck #codecheck
 	docker compose build
 
+rebuild: envcheck
+	docker compose build --no-cache
+
 kup: envcheck
 	KILLPID=1 docker compose up -d
 

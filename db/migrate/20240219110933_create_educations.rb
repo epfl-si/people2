@@ -12,10 +12,12 @@ class CreateEducations < ActiveRecord::Migration[7.0]
       t.string  :school, null: false
       t.integer :year_begin, null: true
       t.integer :year, null: false
-      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user
+      t.integer :position, null: false
+      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me, 4=nobody
       t.boolean :visible, default: false
 
       t.timestamps
     end
+    add_index :educations, %i[profile_id position], unique: true
   end
 end

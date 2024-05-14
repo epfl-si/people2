@@ -9,6 +9,7 @@ gio_edu_uni:
   year:     1997
   visible: true
   audience: 0
+  position: 0
 gio_edu_phd:
   profile: giova
   title_en: "PhD"
@@ -20,4 +21,5 @@ gio_edu_phd:
   year:     2002
   visible: true
   audience: 0
+  position: 1
 
