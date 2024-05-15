@@ -1,5 +1,7 @@
 <% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
 
+<p data-controller="hello">ciccio</p>
+
 <% if @name.customizable? %>
 	<%= render "names/form", name: @name %>
 <% else %>

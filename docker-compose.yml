@@ -126,6 +126,7 @@ services:
       - ./public:/srv/app/public
       - ./db:/srv/app/db
       - ./test:/srv/app/test
+      - ./vendor:/srv/app/vendor
       - storage:/srv/app/storage
       - filecache:/srv/filecache
     labels:
