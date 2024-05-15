@@ -7,7 +7,7 @@ giova_exp_algo:
   year_end: 2015
   visible: true
   audience: 0
-  position: 0
+  position: 1
 
 giova_exp_kandou:
   profile: giova
@@ -18,7 +18,7 @@ giova_exp_kandou:
   year_end: 2017
   visible: true
   audience: 0
-  position: 1
+  position: 2
 
 giova_exp_vpsi:
   profile: giova
@@ -28,4 +28,4 @@ giova_exp_vpsi:
   year_begin: 2017
   visible: true
   audience: 0
-  position: 2
+  position: 3

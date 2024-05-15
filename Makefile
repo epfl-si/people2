@@ -77,6 +77,11 @@ shell: dcup
 dbconsole: dcup
 	docker compose exec mariadb mariadb -u root --password=mariadb  
 
+## attach the console of the rails app for debugging
+.PHONY: debug
+debug:
+	docker-compose attach webapp
+
 dconfig:
 	docker compose config
 

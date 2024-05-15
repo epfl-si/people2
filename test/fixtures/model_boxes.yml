@@ -15,19 +15,19 @@ biography:
   title_en: "Biography"
   title_fr: "Biographie"
   show_title: false
-  position: 2
+  position: 1
 curriculum:
   section: bio
   title_en: "Curriculum vitae"
   title_fr: "Curriculum vitae"
   show_title: false
-  position: 3
+  position: 2
 education:
   section: bio
   title_en: "Education"
   title_fr: "Education"
   show_title: true
-  position: 4
+  position: 3
 publications:
   section: pub
   title_en: "Selected Publications"

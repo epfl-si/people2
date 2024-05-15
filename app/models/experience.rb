@@ -5,8 +5,9 @@ class Experience < ApplicationRecord
   include Translatable
 
   belongs_to :profile
-
   # broadcasts_to :profile
+
+  positioned on: :profile
 
   translates :title, :field
   translates_rich_text :description

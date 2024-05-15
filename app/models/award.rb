@@ -5,6 +5,7 @@ class Award < ApplicationRecord
   include AudienceLimitable
   include Translatable
   translates :title
+  positioned on: :profile
 
   validates :issuer, presence: true
   validates :year, presence: true

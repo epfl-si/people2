@@ -86,7 +86,7 @@ gem 'paper_trail', '~> 14'
 # https://github.com/brendon/positioning
 # gem 'positioning'
 # TODO: temporary workaround, check https://github.com/brendon/positioning/pulls
-gem 'positioning', path: ".gems/positioning"
+gem 'positioning'
 
 # Avoid a warning message from rubyzip about broken compatibility of >=3.0
 # TODO: recheck if this is still the case

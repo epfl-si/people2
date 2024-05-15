@@ -5,6 +5,7 @@ class Education < ApplicationRecord
   include Translatable
 
   belongs_to :profile
+  positioned on: :profile
 
   translates :title, :field
 

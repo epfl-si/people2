@@ -128,7 +128,6 @@ services:
       - ./test:/srv/app/test
       - storage:/srv/app/storage
       - filecache:/srv/filecache
-      - ./.gems:/srv/app/.gems
     labels:
       - traefik.http.middlewares.cgibin.replacepathregex.regex=^/cgi-bin/(.*)
       - traefik.http.middlewares.cgibin.replacepathregex.replacement=/api/v0/$$1

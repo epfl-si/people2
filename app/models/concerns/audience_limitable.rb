@@ -9,7 +9,7 @@ module AudienceLimitable
     scope :intranet_visible, -> { where(visible: true, audience: 0...1) }
     scope :auth_visible, -> { where(visible: true) }
     scope :for_audience, ->(audience) { where(visible: true, audience: 0...audience) }
-    validates :audience, numericality: { in: 0...2 }
+    validates :audience, numericality: { in: 0...5 }
   end
 
   def world_visible?

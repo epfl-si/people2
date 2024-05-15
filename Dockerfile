@@ -77,7 +77,6 @@ WORKDIR $APP_HOME
 # RUN yarn cache clean && yarn install --verbose --modules-folder $MODULES_PATH
 
 ADD Gemfile* $APP_HOME/
-ADD ./.gems $APP_HOME/.gems
 RUN ls -l 
 ADD bin/bundle $APP_HOME/bin/bundle
 RUN ./bin/bundle

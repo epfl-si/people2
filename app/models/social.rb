@@ -65,6 +65,7 @@ class Social < ApplicationRecord
   }.freeze
 
   belongs_to :profile, class_name: "Profile", inverse_of: :socials
+  positioned on: :profile
 
   validates :value, presence: true
   validates :tag, presence: true
