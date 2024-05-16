@@ -7,7 +7,7 @@ class ExperiencesController < ApplicationController
   # GET /profile/profile_id/experiences or /profile/profile_id/experiences.json
   def index
     # sleep 2
-    @experiences = @profile.experiences
+    @experiences = @profile.experiences.order(:position)
   end
 
   # GET /profile/profile_id/experiences/1 or /profile/profile_id/experiences/1.json
@@ -27,10 +27,12 @@ class ExperiencesController < ApplicationController
 
     respond_to do |format|
       if @experience.save
+        flash.now[:success] = "Updated succesfully!"
         format.html { append_experience }
         format.turbo_stream { render :create, locals: { profile: @profile, experience: @experience } }
         format.json { render :show, status: :created, location: @experience }
       else
+        flash.now[:success] = "Failed to update :("
         format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
           render :new, status: :unprocessable_entity, locals: { profile: @profile, experience: @experience }
@@ -40,7 +42,7 @@ class ExperiencesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /profile/profile_id/experiences/1 or /profile/profile_id/experiences/1.json
+  # PATCH/PUT /experiences/1 or /experiences/1.json
   def update
     respond_to do |format|
       if @experience.update(experience_params)
@@ -84,6 +86,7 @@ class ExperiencesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def experience_params
-    params.require(:experience).permit(:location, :title_fr, :title_en, :year_begin, :year_end, :audience, :visible)
+    params.require(:experience).permit(:location, :title_fr, :title_en, :year_begin, :year_end, :audience, :visible,
+                                       :position)
   end
 end

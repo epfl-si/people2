@@ -2,23 +2,13 @@
 
 <p data-controller="hello">ciccio</p>
 
-<% if @name.customizable? %>
-	<%= render "names/form", name: @name %>
-<% else %>
-	<h2><%= @name.display %></h2>
-<% end %>
-
 <%= render "form", profile: @profile %>
 
 <hr>
+
 
 <section id="experiences_section">
 <%= turbo_frame_tag "experiences_index", src: profile_experiences_path(@profile), loading: :lazy do %>
 Loading experiences... (for demoing purpose, an artificial delay is added)
 <% end %>
 </section>
-
-
-
-
-

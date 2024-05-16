@@ -3,11 +3,13 @@
 <%= tag.h2(t('title.experiences')) %>
 
 <%= turbo_frame_tag "experiences" do %>
-	<% @experiences.each do |experience| %>
-		<div class="list-group-item list-group-item-borderless" %>
-			<%= render 'editable_experience', experience: experience %>
-		</div>
-	<% end %>
+	<div data-controller="sortable">
+		<% @experiences.each do |experience| %>
+			<div class="list-group-item list-group-item-borderless" data-sortable-url="<%= experience_path(experience, format: 'json')%>" data-sortable-handle>
+				<%= render 'editable_experience', experience: experience %>
+			</div>
+		<% end %>
+	</div>
 <% end %>
 
 <div class="list-group-item list-group-item-borderless" %>
@@ -19,3 +21,12 @@
 </div>
 
 <% end %>
+
+
+
+
+
+
+
+
+
