@@ -18,3 +18,9 @@
   display: inline-block;
   margin-right: 2em;
 }
+
+#flash-messages {
+  position: fixed;
+  z-index: 99;
+  top: 1ex;
+}

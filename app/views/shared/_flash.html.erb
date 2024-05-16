@@ -1,0 +1,10 @@
+ <div id="flash-messages">
+  <% flash.each do |type, message| %>
+    <div class="alert alert-<%= type %>" data-controller="flash" role="alert">
+      <%= t message %>
+      <button type="button" class="close" data-action="flash#dismiss" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+</div>

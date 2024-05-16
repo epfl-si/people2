@@ -1,3 +1,4 @@
 <%= turbo_stream.replace dom_id(@experience) do %>
   <%= render "editable_experience", experience: @experience %>
 <% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

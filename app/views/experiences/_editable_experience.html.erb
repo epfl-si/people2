@@ -1,19 +1,21 @@
 <%= turbo_frame_tag dom_id(experience) do %>
-  <div class="row">
-    <div class="col-md-8">
-      <h4 class="h5 mb-0"><%= experience.t_title %></h4>
-      <p class="text-muted small mb-0">
-        <%= truncate(experience.t_description, length: 80) %>
-        <br>
-        <%= [experience.year_begin, experience.year_end].compact.join("–") %>
-        <%= experience.location %>
-      </p>
-    </div>
-    <div class="col-md-3 offset-md-1 text-right">
-      <p>
-        <%= link_to icon_text('edit', 'edit'), edit_experience_path(experience), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-        <%= link_to icon_text('delete', 'trash'), experience_path(experience), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete'} %>
-      </p>
+  <div class="list-group-item list-group-item-borderless" data-sortable-url="<%= experience_path(experience, format: 'json')%>" data-sortable-handle>
+    <div class="row">
+      <div class="col-md-8">
+        <h4 class="h5 mb-0"><%= experience.t_title %></h4>
+        <p class="text-muted small mb-0">
+          <%= truncate(experience.t_description, length: 80) %>
+          <br>
+          <%= [experience.year_begin, experience.year_end].compact.join("–") %>
+          <%= experience.location %>
+        </p>
+      </div>
+      <div class="col-md-3 offset-md-1 text-right">
+        <p>
+          <%= link_to icon_text('edit', 'edit'), edit_experience_path(experience), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+          <%= link_to icon_text('delete', 'trash'), experience_path(experience), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete'} %>
+        </p>
+      </div>
     </div>
   </div>
 <% end %>

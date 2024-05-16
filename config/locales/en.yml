@@ -51,6 +51,17 @@ en:
       zero: "Something prevented your profile to be updated (should now happen)"
       one: "An error prevented your profile to be updated"
       other: "#{count} errors prevented your profile to be updated"
+  flash:
+    generic:
+      success:
+        create: "Record created succesfully"
+        update: "Record updated succesfully"
+        remove: "Deleted"
+      error:
+        create: "Error creating record"
+        update: "Error updating record"
+        remove: "Error deleting"
+
   admin_data:
     title: "Admin data"
     sciper: "SCIPER Number"

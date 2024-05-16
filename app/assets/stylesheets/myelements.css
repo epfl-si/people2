@@ -33,3 +33,8 @@ div.inform {
 .text-icon {
   margin-right: 0.2em;
 }
+
+button.close {
+  margin-left: 0.5em;
+  margin-top: -0.2ex;
+}

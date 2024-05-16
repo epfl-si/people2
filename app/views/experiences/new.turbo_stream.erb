@@ -3,3 +3,4 @@
   <%= render "experiences/form", profile: @profile, experience: @experience %>
 <% end %>
 <% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
