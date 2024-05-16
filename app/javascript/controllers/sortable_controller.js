@@ -19,7 +19,6 @@ export default class extends Controller {
       animation: 350,
       ghostClass: "bg-gray-200",
       onEnd: this.onEnd.bind(this),
-      handle: "[data-sortable-handle]",
     });
   }
 

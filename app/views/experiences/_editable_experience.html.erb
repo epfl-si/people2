@@ -1,5 +1,5 @@
-<%= turbo_frame_tag dom_id(experience) do %>
-  <div class="list-group-item list-group-item-borderless" data-sortable-url="<%= experience_path(experience, format: 'json')%>" data-sortable-handle>
+<%= turbo_frame_tag dom_id(experience), "data-sortable-url" => experience_path(experience, format: 'json') do %>
+  <div class="list-group-item list-group-item-borderless">
     <div class="row">
       <div class="col-md-8">
         <h4 class="h5 mb-0"><%= experience.t_title %></h4>
