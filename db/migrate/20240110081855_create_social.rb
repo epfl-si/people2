@@ -9,7 +9,7 @@ class CreateSocial < ActiveRecord::Migration[7.0]
       t.string :value
       t.integer :order, default: 1
       t.boolean :visible, default: true
-      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me, 4=nobody
+      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me (draft)
       t.timestamps
     end
   end

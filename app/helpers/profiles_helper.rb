@@ -25,7 +25,7 @@ module ProfilesHelper
 
   def audience_selector(form)
     id0 = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
-    content = %w[public intranet authenticated me hidden].each_with_index.map do |v, i|
+    content = %w[public intranet authenticated me].each_with_index.map do |v, i|
       id = "#{id0}_#{i}"
       label = "visibility.#{v}"
       tag.div(class: "custom-control custom-radio audience-selector") do
