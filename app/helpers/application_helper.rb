@@ -24,14 +24,14 @@ module ApplicationHelper
     if url.present?
       link_to(txt, url, opts)
     else
-      txt
+      t(txt)
     end
   end
 
   def icon_text(txt, icon)
     tag.span do
       concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
-      concat txt
+      concat t(txt)
     end
   end
 

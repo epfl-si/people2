@@ -5,6 +5,8 @@ fr:
     admin_data: "Données administratives"
     edit_profile: "Edit profile"
     hide_search_form: "Masquer le formulaire de recherche"
+    make_hidden: "Hide"
+    make_visible: "Show"
     of: "de"
     search: "Rechercher sur le site"
     search_people: "Rechercher sur le site"

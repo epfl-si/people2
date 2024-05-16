@@ -10,7 +10,7 @@ class ExperiencesController < ApplicationController
     @experiences = @profile.experiences.order(:position)
   end
 
-  # GET /profile/profile_id/experiences/1 or /profile/profile_id/experiences/1.json
+  # GET /experiences/1 or /experiences/1.json
   def show; end
 
   # GET /profile/profile_id/experiences/new
@@ -18,10 +18,10 @@ class ExperiencesController < ApplicationController
     @experience = Experience.new
   end
 
-  # GET /profile/profile_id/experiences/1/edit
+  # GET /experiences/1/edit
   def edit; end
 
-  # POST /profile/profile_id/experiences or /experiences.json
+  # POST /profile/profile_id/experiences or /profile/profile_id/experiences.json
   def create
     @experience = @profile.experiences.new(experience_params)
 
@@ -65,7 +65,7 @@ class ExperiencesController < ApplicationController
     end
   end
 
-  # DELETE /profile/profile_id/experiences/1 or /profile/profile_id/experiences/1.json
+  # DELETE /experiences/1 or /experiences/1.json
   def destroy
     @experience.destroy!
 

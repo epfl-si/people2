@@ -12,10 +12,11 @@
       </div>
       <div class="col-md-3 offset-md-1 text-right">
         <p>
-          <%= link_to icon_text('edit', 'edit'), edit_experience_path(experience), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-          <%= link_to icon_text('delete', 'trash'), experience_path(experience), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete'} %>
+          <%= render "shared/item_actions", item: experience %>
         </p>
       </div>
     </div>
   </div>
 <% end %>
+
+
