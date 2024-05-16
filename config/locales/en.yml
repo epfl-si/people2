@@ -61,6 +61,11 @@ en:
         create: "Error creating record"
         update: "Error updating record"
         remove: "Error deleting"
+    profile:
+      success:
+        update: "Base profile succesfully updated"
+      error:
+        update: "Error while updating the base profile"
 
   admin_data:
     title: "Admin data"
