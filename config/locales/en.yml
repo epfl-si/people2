@@ -34,6 +34,7 @@ en:
   action:
     accred_full_list: "Full list of positions and address"
     admin_data: "Administrative data"
+    confirm: "Are you sure?"
     edit_profile: "Edit profile"
     hide_search_form: "Hide the search form"
     hide: "Hide"
@@ -148,6 +149,13 @@ en:
     current_phd: "PhD Students"
     past_phd: "Past EPFL PhD Students"
     teaching_domain: "Teaching"
+  visibility:
+    visible: "visible"
+    hidden: "hidden"
+    public: "public"
+    intranet: "intranet only"
+    authenticated: "EPFL users only"
+    editor: "Draft (editor only)"
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"

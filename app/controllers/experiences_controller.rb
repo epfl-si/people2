@@ -2,7 +2,7 @@
 
 class ExperiencesController < ApplicationController
   before_action :set_profile, only: %i[index create new]
-  before_action :set_experience, only: %i[show edit update destroy]
+  before_action :set_experience, only: %i[show edit update destroy toggle]
 
   # GET /profile/profile_id/experiences or /profile/profile_id/experiences.json
   def index
@@ -61,6 +61,21 @@ class ExperiencesController < ApplicationController
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, experience: @experience }
         end
         format.json { render json: @experience.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def toggle
+    respond_to do |format|
+      if @experience.update(visible: !@experience.visible?)
+        format.turbo_stream do
+          render :update
+        end
+      else
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          render :update, status: :unprocessable_entity
+        end
       end
     end
   end

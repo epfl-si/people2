@@ -44,8 +44,8 @@
   </div>
 
   <div class="row justify-content-center">
-    <%= expform.submit t(experience.new_record? ? 'action.create_experience' :  'action.update_experience'), class: "btn btn-secondary btn-sm" %>
     <%= link_to(t('cancel'), experience_path(experience), class: "btn btn-secondary btn-sm", method: :get, data: {turbo_stream: true, turbo_method:'get'}) unless experience.new_record? %>
+    <%= expform.submit t(experience.new_record? ? 'action.create_experience' :  'action.update_experience'), class: "btn btn-primary btn-sm" %>
   </div>
 
 <% end %>

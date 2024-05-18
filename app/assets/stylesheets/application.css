@@ -26,14 +26,13 @@
   left: 300px;
 }
 
-
 // turbo replacement animation
 .turbo-replace-enter {
-  animation: fade-in 0.4s ease-out;
+  animation: fade-in 0.2s ease-out;
 }
 
 .turbo-replace-exit {
-  animation: fade-out 0.4s ease-out;
+  animation: fade-out 0.2s ease-out;
 }
 
 @keyframes fade-in {
@@ -45,3 +44,6 @@
   from { opacity: 1; }
   to { opacity: 0; }
 }
+
+
+

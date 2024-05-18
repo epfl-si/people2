@@ -3,6 +3,7 @@ fr:
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
     admin_data: "Données administratives"
+    confirm: "Are you sure?"
     edit_profile: "Edit profile"
     hide_search_form: "Masquer le formulaire de recherche"
     make_hidden: "Hide"
@@ -116,6 +117,13 @@ fr:
     current_phd: "Doctorants"
     past_phd: "A dirigé les thèses EPFL de"
     teaching_domain: "Enseignement"
+  visibility:
+    visible: "visible"
+    hidden: "hidden"
+    public: "public"
+    intranet: "intranet only"
+    authenticated: "EPFL users only"
+    editor: "Draft (editor only)"
   footer:
     follow:
       us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"

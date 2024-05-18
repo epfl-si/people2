@@ -35,6 +35,10 @@ module ApplicationHelper
     end
   end
 
+  def icon(icon)
+    content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
+  end
+
   # <svg class="icon feather" aria-hidden="true"><use xlink:href="#activity"></use></svg>
 
   # Return the full url for static stuff coming from EPFL elements cdn

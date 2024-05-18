@@ -1,0 +1,20 @@
+<span class='tag tag-sm tag-plain'>
+<%=
+  case item.audience
+  when 0
+    icon_text("visibility.public", 'circle')
+  when 1
+    icon_text("visibility.intranet", 'stop-circle')
+  when 2
+    icon_text("visibility.authenticated", 'user-check')
+  when 3
+    icon_text("visibility.editor", 'edit-3')
+  end  
+%>
+</span>
+<span class='tag tag-sm tag-plain'>
+<%= item.visible? ? 
+  icon_text("visibility.visible", 'eye') :
+  icon_text("visibility.hidden", 'eye-off') 
+%>
+</span>
