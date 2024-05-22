@@ -2,11 +2,17 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-// animate turbo frame replacements (https://edforshaw.co.uk/hotwire-turbo-stream-animations)
+
+// Animate turbo frame replacements (https://edforshaw.co.uk/hotwire-turbo-stream-animations)
+// TODO: I think this induces some strange behaviour to the turbo-replacement
+// thing preventing edit of a newly created record.
 document.addEventListener("turbo:before-stream-render", function(event) {
   // Add "turbo-replace-enter" class to an element we are about to add to the page
   if (event.target.firstElementChild instanceof HTMLTemplateElement) {
-    event.target.templateElement.content.firstElementChild.classList.add("turbo-replace-enter")
+    elementToAdd = event.target.templateElement.content.firstElementChild
+    elementToAdd.classList.add("turbo-replace-enter")
+  } else {
+    elementToAdd = false
   }
 
   // Add "turbo-replace-enter" class to the element we are about to remove from the page
@@ -17,6 +23,9 @@ document.addEventListener("turbo:before-stream-render", function(event) {
       // Wait for its animation to end before removing the element
     elementToRemove.addEventListener("animationend", function() {
       event.target.performAction()
+      if (elementToAdd) {
+        elementToAdd.classList.remove("turbo-replace-enter")
+      }
     })
   }
 })
