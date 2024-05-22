@@ -1,4 +1,4 @@
-<%= form_with(model: [profile, experience], local: false) do |expform| %>
+<%= form_with(model: [profile, experience], local: false) do |form| %>
   <% if experience.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(experience.errors.count, "error") %> prohibited this experience from being saved:</h2>
@@ -13,39 +13,39 @@
 
   <div class="form-group row">
 
-    <%= expform.label Experience.human_attribute_name(:title_fr), class: "col-sm-3  col-form-label" %>
+    <%= form.label Experience.human_attribute_name(:title_fr), class: "col-sm-3  col-form-label" %>
     <div class="col-sm-9">
-      <%= expform.text_field :title_fr, class: "form-control", placeholder: "developeur d'applications" %>
+      <%= form.text_field :title_fr, class: "form-control", placeholder: "developeur d'applications" %>
     </div>
-    <%= expform.label Experience.human_attribute_name(:title_en), class: "col-sm-3  col-form-label" %>
+    <%= form.label Experience.human_attribute_name(:title_en), class: "col-sm-3  col-form-label" %>
     <div class="col-sm-9">
-      <%= expform.text_field :title_en, class: "form-control", placeholder: "software developer" %>
-    </div>
-
-    <%= expform.label Experience.human_attribute_name(:location), class: "col-sm-3  col-form-label" %>
-    <div class="col-sm-9">
-      <%= expform.text_field :location, class: "form-control", placeholder: "Apple corporation" %>
+      <%= form.text_field :title_en, class: "form-control", placeholder: "software developer" %>
     </div>
 
-    <%= expform.label Experience.human_attribute_name(:period), class: "col-sm-3  col-form-label" %>
+    <%= form.label Experience.human_attribute_name(:location), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= form.text_field :location, class: "form-control", placeholder: "Apple corporation" %>
+    </div>
+
+    <%= form.label Experience.human_attribute_name(:period), class: "col-sm-3  col-form-label" %>
     <div class="col-sm-4">
       <% # TODO: here it would be nice to have the birthday for a more specific date range %>
-      <%= expform.number_field :year_begin, in: 1950..Date.today.year, class: "form-control" %>
+      <%= form.number_field :year_begin, in: 1950..Date.today.year, class: "form-control" %>
     </div>  
     <div class="col-sm-4">
-      <%= expform.number_field :year_end, in: 1950..Date.today.year, class: "form-control" %>
+      <%= form.number_field :year_end, in: 1950..Date.today.year, class: "form-control" %>
     </div>
 
-    <%= expform.label Experience.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
-    <%= audience_selector(expform) %>
+    <%= form.label Experience.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
+    <%= audience_selector(form) %>
     
-    <%= visibility_switch expform %>
+    <%= visibility_switch form %>
 
   </div>
 
   <div class="row justify-content-center">
     <%= link_to(t('cancel'), experience_path(experience), class: "btn btn-secondary btn-sm", method: :get, data: {turbo_stream: true, turbo_method:'get'}) unless experience.new_record? %>
-    <%= expform.submit t(experience.new_record? ? 'action.create_experience' :  'action.update_experience'), class: "btn btn-primary btn-sm" %>
+    <%= form.submit t(experience.new_record? ? 'action.create_experience' :  'action.update_experience'), class: "btn btn-primary btn-sm" %>
   </div>
 
 <% end %>

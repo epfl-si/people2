@@ -27,14 +27,14 @@ class ExperiencesController < ApplicationController
 
     respond_to do |format|
       if @experience.save
-        format.html { append_experience }
+        # format.html { append_experience }
         format.turbo_stream do
           flash.now[:success] = "flash.generic.success.create"
           render :create, locals: { profile: @profile, experience: @experience }
         end
         format.json { render :show, status: :created, location: @experience }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        # format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
           flash.now[:success] = "flash.generic.error.create"
           render :new, status: :unprocessable_entity, locals: { profile: @profile, experience: @experience }
@@ -48,14 +48,12 @@ class ExperiencesController < ApplicationController
   def update
     respond_to do |format|
       if @experience.update(experience_params)
-        format.html { redirect_to experience_url(@experience), notice: "Experience was successfully updated." }
         format.turbo_stream do
           flash.now[:success] = "flash.generic.success.update"
           render :update
         end
         format.json { render :show, status: :ok, location: @experience }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.turbo_stream do
           flash.now[:error] = "flash.generic.error.update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, experience: @experience }
@@ -65,32 +63,33 @@ class ExperiencesController < ApplicationController
     end
   end
 
+  # DELETE /experiences/1 or /experiences/1.json
+  def destroy
+    @experience.destroy!
+
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:success] = "flash.generic.success.remove"
+        render :destroy
+      end
+      format.json { head :no_content }
+    end
+  end
+
   def toggle
     respond_to do |format|
       if @experience.update(visible: !@experience.visible?)
         format.turbo_stream do
           render :update
         end
+        format.json { render :show, status: :ok, location: @experience }
       else
         format.turbo_stream do
           flash.now[:error] = "flash.generic.error.update"
           render :update, status: :unprocessable_entity
         end
+        format.json { render json: @experience.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /experiences/1 or /experiences/1.json
-  def destroy
-    @experience.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to experiences_url, notice: "Experience was successfully destroyed." }
-      format.turbo_stream do
-        flash.now[:success] = "flash.generic.success.remove"
-        render :destroy
-      end
-      format.json { head :no_content }
     end
   end
 
