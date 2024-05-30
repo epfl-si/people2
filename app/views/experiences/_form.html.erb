@@ -37,9 +37,19 @@
     </div>
 
     <%= form.label Experience.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
-    <%= audience_selector(form) %>
+    <%= audience_selector0 form %>
     
-    <%= visibility_switch form %>
+    <%= visibility_switch0 form %>
+
+    <%= form.label Experience.human_attribute_name(:description_fr), class: "col-md-3 mt-4 col-form-label" %>
+    <div class="col-md-9 mt-4">
+      <%= form.rich_text_area :description_fr %>
+    </div>
+
+    <%= form.label Experience.human_attribute_name(:description_en), class: "col-md-3 mt-4 col-form-label" %>
+    <div class="col-md-9 mt-4">
+      <%= form.rich_text_area :description_en %>
+    </div>
 
   </div>
 

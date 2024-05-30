@@ -1,4 +1,4 @@
-<span class='tag tag-sm tag-plain'>
+<span class='tag tag-sm tag-primary'>
 <%=
   case item.audience
   when 0
@@ -12,7 +12,7 @@
   end  
 %>
 </span>
-<span class='tag tag-sm tag-plain'>
+<span class='tag tag-sm tag-primary'>
 <%= item.visible? ? 
   icon_text("visibility.visible", 'eye') :
   icon_text("visibility.hidden", 'eye-off') 

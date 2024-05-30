@@ -4,7 +4,7 @@
       <div class="col-md-8">
         <h4 class="h5 mb-0"><%= experience.t_title %></h4>
         <p class="text-muted small mb-0">
-          <%= truncate(experience.t_description, length: 80) %>
+          <%= experience.t_description.present? ? truncate(experience.t_description.to_plain_text, length: 160) : "no description" %>
           <br>
           <%= [experience.year_begin, experience.year_end].compact.join("–") %>
           <%= experience.location %>

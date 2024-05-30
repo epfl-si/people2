@@ -14,6 +14,11 @@
  *= require_self
  */
 
+:root {
+  --color-error: #FF0000;
+}
+
+
 .audience-selector {
   display: inline-block;
   margin-right: 2em;
@@ -45,5 +50,63 @@
   to { opacity: 0; }
 }
 
+
+
+
+
+
+
+
+.instaform .custom-radio {
+  padding-top: 0.5ex;
+}
+
+/* these are the properties copied from elements .form-control */
+.instaform input {
+  height: auto;
+  -webkit-transition: color .3s,border-color .3s,outline .3s,-webkit-box-shadow .3s;
+  transition: color .3s,border-color .3s,outline .3s,-webkit-box-shadow .3s;
+  transition: color .3s,border-color .3s,outline .3s,box-shadow .3s;
+  transition: color .3s,border-color .3s,outline .3s,box-shadow .3s,-webkit-box-shadow .3s;
+  display: block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212121;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #8e8e8e;
+  border-radius: 2px;
+  -webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+}
+
+.instaform input::placeholder {
+  color: #707070;
+}
+
+.instaform .form-errors li {
+  color: var(--color-error);
+}
+
+.instaform .form-group {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.instaform .form-actions {
+  display: flex;
+  justify-content: flex-center;
+}
+
+.instaform .form-group > label {
+  min-width: 15em;
+  margin-bottom: 0;
+}
 
 

@@ -1,0 +1,2 @@
+<%= turbo_stream.remove "award_#{@award.id}" %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

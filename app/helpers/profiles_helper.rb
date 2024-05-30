@@ -9,7 +9,7 @@ module ProfilesHelper
     lb + fd
   end
 
-  def visibility_switch(form)
+  def visibility_switch0(form)
     id = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
     tag.div(class: 'col-sm-9 offset-sm-3') do
       tag.div(class: 'custom-control custom-checkbox') do
@@ -23,7 +23,7 @@ module ProfilesHelper
     end
   end
 
-  def audience_selector(form)
+  def audience_selector0(form)
     id0 = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
     content = %w[public intranet authenticated me].each_with_index.map do |v, i|
       id = "#{id0}_#{i}"
@@ -36,6 +36,31 @@ module ProfilesHelper
     tag.div(class: "col-sm-9") do
       safe_join(content)
     end
+  end
+
+  def visibility_switch(form)
+    id = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
+    tag.div(class: 'custom-control custom-checkbox') do
+      concat form.check_box(:visible, class: 'custom-control-input', id: id)
+      concat form.label(
+        form.object.class.send(:human_attribute_name, "visible"),
+        class: "custom-control-label",
+        for: id
+      )
+    end
+  end
+
+  def audience_selector(form)
+    id0 = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
+    content = %w[public intranet authenticated me].each_with_index.map do |v, i|
+      id = "#{id0}_#{i}"
+      label = "visibility.#{v}"
+      tag.div(class: "custom-control custom-radio audience-selector") do
+        concat form.radio_button(:audience, i, id: id, class: "custom-control-input")
+        concat form.label(label, class: "custom-control-label", for: id)
+      end
+    end
+    safe_join(content)
   end
 
   def show_attribute_switch(form, attr)

@@ -1,0 +1,9 @@
+<div class="form-errors">
+  <h2><%= t "error", count: item.errors.count %></h2>
+  <p><%= t "error.record", count: item.errors.count %>:</p>
+  <ul>
+    <% item.errors.each do |error| %>
+      <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>

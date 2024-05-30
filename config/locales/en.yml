@@ -47,14 +47,26 @@ en:
     validate: "Submit"
     submit_personal_data: "Update personal data"
     submit: "Submit"
+    create_award: "Create new award"
+    update_award: "Udate award"
     create_experience: "Create new work experience"
     update_experience: "Udate work experience"
 
   error:
+    one: "Error"
+    other: "Errors"
+    award:
+      zero: "Something prevented this award to be updated (should now happen)"
+      one: "An error prevented this award to be updated"
+      other: "%{count} errors prevented this award to be updated"
     profile:
       zero: "Something prevented your profile to be updated (should now happen)"
       one: "An error prevented your profile to be updated"
       other: "#{count} errors prevented your profile to be updated"
+    record:
+      zero: "Something prevented this record to be updated (should now happen)"
+      one: "An error prevented this record to be updated"
+      other: "%{count} errors prevented this record to be updated"
   flash:
     generic:
       success:

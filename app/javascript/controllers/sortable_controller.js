@@ -26,6 +26,7 @@ export default class extends Controller {
     this.sortable.destroy();
   }
 
+  // TODO: add flash message with put result
   onEnd(event) {
     const { newIndex, item } = event;
     const url = item.dataset["sortableUrl"]

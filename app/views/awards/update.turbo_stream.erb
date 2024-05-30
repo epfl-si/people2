@@ -1,0 +1,4 @@
+<%= turbo_stream.replace dom_id(@award) do %>
+  <%= render "editable_award", award: @award %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

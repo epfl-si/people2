@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "new_award_form" do %>
+<%= turbo_frame_tag "new_award_form" do %>
+  <%= render "awards/form", profile: @profile, award: @award %>
+<% end %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

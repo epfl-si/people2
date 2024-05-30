@@ -1,0 +1,54 @@
+<%= form_with(model: [profile, award], local: false) do |form| %>
+  <% if award.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(award.errors.count, "error") %> prohibited this award from being saved:</h2>
+
+      <ul>
+        <% award.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+
+    <%= form.label Award.human_attribute_name(:title_fr), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= form.text_field :title_fr, class: "form-control", placeholder: "Prix Nobel" %>
+    </div>
+    <%= form.label Award.human_attribute_name(:title_en), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= form.text_field :title_en, class: "form-control", placeholder: "Nobel prize" %>
+    </div>
+
+    <%= form.label Award.human_attribute_name(:issuer), class: "col-sm-3  col-form-label" %>
+    <div class="col-sm-9">
+      <%= form.text_field :issuer, class: "form-control", placeholder: "The Swedish Academy" %>
+    </div>
+
+    <%= form.label Award.human_attribute_name(:year), class: "col-sm-auto  col-form-label" %>
+    <div class="col-sm-4">
+      <% # TODO: here it would be nice to have the birthday for a more specific date range %>
+      <%= form.number_field :year, in: 1950..Date.today.year, class: "form-control" %>
+    </div>  
+
+    <%= form.label Award.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
+    <%= audience_selector form %>
+    
+    <%= visibility_switch form %>
+
+  </div>
+
+  <div class="row justify-content-center">
+    <%= link_to(t('cancel'), award_path(award), class: "btn btn-secondary btn-sm", method: :get, data: {turbo_stream: true, turbo_method:'get'}) unless award.new_record? %>
+    <%= form.submit t(award.new_record? ? 'action.create_award' :  'action.update_award'), class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>
+
+
+
+
+
+
+

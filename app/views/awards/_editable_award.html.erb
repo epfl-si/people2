@@ -1,0 +1,20 @@
+<%= turbo_frame_tag dom_id(award), "data-sortable-url" => award_path(award, format: 'json') do %>
+  <div class="list-group-item list-group-item-borderless">
+    <div class="row">
+      <div class="col-md-8">
+        <h4 class="h5 mb-0"><%= award.t_title %></h4>
+        <p class="text-muted small mb-0">
+          <%= award.year %> – <%= award.issuer %>
+        </p>
+      </div>
+      <div class="col-md-4 text-right">
+        <p class="muted">
+          <%= render "shared/item_visibility", item: award %>
+        </p>
+        <p>
+          <%= render "shared/item_actions", item: award %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
