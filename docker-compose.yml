@@ -86,17 +86,8 @@ services:
         - APP_HOME=/srv/app
         - LIB_HOME=/srv/lib
     env_file: .env
-    # entrypoint: ${APPENTRY:-/srv/app/bin/dev}
-    # entrypoint: ${APPENTRY:-/srv/app/bin/docker-entrypoint}
-    entrypoint: /srv/app/bin/docker-entrypoint
     command:
-      - ./bin/rails
-      - server
-      - -p 
-      - ${PORT:-3000}
-      - -b 
-      - ${ADDR:-127.0.0.1}
-
+      - ./bin/dev
     environment:
       # PORT: ${PORT:-3000}
       # ADDR: ${ADDR:-127.0.0.1}
@@ -119,14 +110,7 @@ services:
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       OFFLINE_CACHEDIR: "/srv/filecache"
     volumes:
-      - ./app:/srv/app/app
-      - ./config:/srv/app/config
-      - ./lib:/srv/app/lib
-      - ./bin:/srv/app/bin
-      - ./public:/srv/app/public
-      - ./db:/srv/app/db
-      - ./test:/srv/app/test
-      - ./vendor:/srv/app/vendor
+      - ./:/srv/app
       - storage:/srv/app/storage
       - filecache:/srv/filecache
     labels:

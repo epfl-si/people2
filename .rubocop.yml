@@ -7,6 +7,8 @@ require:
 AllCops:
   SuggestExtensions: false
 
+Bundler/DuplicatedGroup:
+  Enabled: false
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false
 Lint/MissingSuper:

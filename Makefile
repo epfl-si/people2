@@ -6,6 +6,8 @@ COMPOSE_FILE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
 SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
+REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
+
 # Figure out the ip address of the host machine so that we can use "public" 
 # dns names served by traefik from within the containers when the name is
 # resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs. 
@@ -18,7 +20,9 @@ export
 
 ## build the web app and atela container
 build: envcheck #codecheck
+	if [ "$(REBUNDLE)" == "yes" ] ; then rm -f Gemfile.lock ; else cp Gemfile.lock.docker Gemfile.lock ; fi
 	docker compose build
+	if [ "$(REBUNDLE)" == "yes" ] ; then docker compose run webapp cat /rails/Gemfile.lock > Gemfile.lock.docker ; fi
 
 rebuild: envcheck
 	docker compose build --no-cache
@@ -29,7 +33,10 @@ kup: envcheck
 ## start the dev tunnel and start all the servers
 up: tunnel_up dcup
 
-dcup: envcheck
+Gemfile.lock: Gemfile.lock.docker
+	cp $< $@
+
+dcup: envcheck Gemfile.lock
 	docker compose up --no-recreate -d 
 
 kc: envcheck
@@ -143,15 +150,15 @@ test:
 
 ## run rubocop linter to check code copliance with style and syntax rules
 cop:
-	bundle exec rubocop --extra-details # 2>/dev/null
+	./bin/bundle exec rubocop --extra-details # 2>/dev/null
 
 ## run rubocop linter in autocorrect mode
 docop:
-	bundle exec rubocop --autocorrect
+	./bin/bundle exec rubocop --autocorrect
 
 ## run rubocop linter in autocorrect-all mode
 dodocop:
-	bundle exec rubocop --autocorrect-all
+	./bin/bundle exec rubocop --autocorrect-all
 
 # ------------------------------------------------------------------------ cache
 ## toggle dev cache

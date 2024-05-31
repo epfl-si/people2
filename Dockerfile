@@ -1,26 +1,19 @@
-# TODO multistage build
-FROM ruby:3.1-bullseye
-ARG RAILS_ENV=production
-ENV RAILS_ENV $RAILS_ENV
+FROM registry.docker.com/library/ruby:3.2.3-bullseye
 
-ARG APP_HOME=/srv/app
+ARG RAILS_ENV=development
 ARG LIB_HOME=/srv/lib
-ENV APP_HOME $APP_HOME
-ENV LIB_HOME $LIB_HOME
 
-ENV BUNDLE_PATH $LIB_HOME/bundle
-ENV MODULES_PATH $LIB_HOME/node_modules
-ENV OFFLINE_CACHEDIR $LIB_HOME/filecache
+ENV RAILS_ENV="$RAILS_ENV" \
+	LIB_HOME="$LIB_HOME" \
+	OFFLINE_CACHEDIR="$LIB_HOME/filecache" \
+	BUNDLE_PATH="/usr/local/bundle"
 
-RUN mkdir -p $APP_HOME
-RUN mkdir -p $BUNDLE_PATH
-RUN mkdir -p $MODULES_PATH
-RUN mkdir -p $OFFLINE_CACHEDIR
+RUN mkdir -p /srv/app $OFFLINE_CACHEDIR
 
-WORKDIR $APP_HOME
+# Throw-away build stage to reduce size of final image
+# FROM base as build
 
-# RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-# RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+# Install packages needed to build gems
 
 # --------------------------------------------------------------------------
 # Oracle shit copied from 
@@ -51,44 +44,37 @@ WORKDIR $APP_HOME
 #     apt-get install -y --no-install-recommends libaio1; \
 #     apt-get purge -y --auto-remove
 # --------------------------------------------------------------------------
-
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
 	build-essential \
+	git \
 	mariadb-client \
-	# nodejs \
-	# yarnpkg \
-	--no-install-recommends && rm -rf /var/lib/apt/lists/*
+	curl \
+	libvips \
+	pkg-config \
+	&& rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# RUN ln -s /usr/bin/yarnpkg /usr/bin/yarn
-# RUN npm install --global yarn
+# Install application gems
+WORKDIR /rails
+# Note that Gemfile.lock does not need to exist
+COPY Gemfile Gemfile.lock ./
+RUN gem update --system 3.5.11 && bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
-# RUN echo "${ORACLE_HOME}" > /etc/ld.so.conf.d/oracle.conf ; /sbin/ldconfig
-RUN gem install bundler -v '~> 2.5'
+# Dev only
+RUN gem install foreman
 
-WORKDIR $APP_HOME
+WORKDIR /srv/app
+COPY . .
 
-# ADD package.json* $APP_HOME
-# RUN npm add @babel/runtime
-# RUN npm add @babel/runtime-corejs2
-# RUN NODE_PATH=/usr/lib/nodejs:/usr/share/nodejs yarn cache clean && yarn
-# RUN npm install --loglevel verbose
+# Precompile bootsnap code for faster boot times
+# RUN bundle exec bootsnap precompile app/ lib/
 
-# RUN yarn cache clean && yarn install --verbose --modules-folder $MODULES_PATH
-
-ADD Gemfile* $APP_HOME/
-RUN ls -l 
-ADD bin/bundle $APP_HOME/bin/bundle
-RUN ./bin/bundle
-RUN if [ "$RAILS_ENV" == "development" ] ; then RAILS_ENV='test' ./bin/bundle ; fi
-# RUN if [ "$RAILS_ENV" == "development" ] ; then yarn install --verbose --modules-folder $MODULES_PATH ; fi
-
-ADD . $APP_HOME/
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+# RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Entrypoint prepares the database.
-# ENTRYPOINT ["$APP_HOME/bin/docker-entrypoint"]
-ENTRYPOINT ["/bin/bash", "$APP_HOME/bin/docker-entrypoint"]
-EXPOSE 3000
+ENTRYPOINT ["/bin/bash", "/srv/app/bin/docker-entrypoint"]
 
-# CMD [./bin/dev"]
-CMD ["./bin/rails", "server"]
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/dev"]

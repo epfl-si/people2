@@ -1,0 +1,145 @@
+# NOT TESTED !!!!!!!!!!!!!!!!!!
+ARG RUBY_VERSION=3.1.2
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+
+ARG RAILS_ENV=production
+ARG APP_HOME=/srv/app
+ARG LIB_HOME=/srv/lib
+
+
+ENV RAILS_ENV="$RAILS_ENV" \
+	APP_HOME="$APP_HOME" \
+	LIB_HOME="$LIB_HOME" \
+	OFFLINE_CACHEDIR="$LIB_HOME/filecache" \
+	BUNDLE_PATH="/usr/local/bundle"
+
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+# Throw-away build stage to reduce size of final image
+# FROM base as build
+
+# Install packages needed to build gems
+
+# --------------------------------------------------------------------------
+# Oracle shit copied from 
+# https://github.com/chumaky/docker-images/blob/master/postgres_oracle.docker
+# Oracle connector is needed for ISA courses and for changing usual name
+# ARG ORACLE_CLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip
+# ARG ORACLE_SQLPLUS_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
+# ARG ORACLE_SDK_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-sdk-linuxx64.zip
+# ENV ORACLE_HOME=/usr/lib/oracle/client
+# WORKDIR /tmp
+# RUN apt-get update; \
+#     apt-get install -y --no-install-recommends ca-certificates wget unzip; \
+#     # instant client
+#     wget -O instant_client.zip ${ORACLE_CLIENT_URL}; \
+#     unzip instant_client.zip; \
+#     # sqlplus
+#     wget -O sqlplus.zip ${ORACLE_SQLPLUS_URL}; \
+#     unzip sqlplus.zip; \
+#     # sdk
+#     wget -O sdk.zip ${ORACLE_SDK_URL}; \
+#     unzip sdk.zip; \
+#     # install
+#     mkdir -p ${ORACLE_HOME}; \
+#     mv instantclient*/* ${ORACLE_HOME}; \
+#     rm -r instantclient*; \
+#     rm instant_client.zip sqlplus.zip sdk.zip; \
+#     # required runtime libs: libaio
+#     apt-get install -y --no-install-recommends libaio1; \
+#     apt-get purge -y --auto-remove
+# --------------------------------------------------------------------------
+RUN apt-get update && apt-get install --no-install-recommends -y \
+	build-essential \
+	git \
+	mariadb-client \
+	curl \
+	libvips \
+	pkg-config \
+	# nodejs \
+	# yarnpkg \
+
+# Install application gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    bundle exec bootsnap precompile --gemfile
+
+# Copy application code
+COPY . .
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+# Final stage for app image
+FROM base
+
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl mariadb-client libvips && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Copy built artifacts: gems, application
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build $APP_HOME $APP_HOME
+
+# Run and own only the runtime files as a non-root user for security
+RUN useradd rails --create-home --shell /bin/bash && \
+    chown -R rails:rails db log storage tmp
+USER rails:rails
+
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/rails", "server"]
+
+
+
+
+
+
+# RUN mkdir -p $BUNDLE_PATH
+# RUN mkdir -p $MODULES_PATH
+RUN mkdir -p $OFFLINE_CACHEDIR
+
+
+# RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+# RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+
+
+# RUN ln -s /usr/bin/yarnpkg /usr/bin/yarn
+# RUN npm install --global yarn
+
+# RUN echo "${ORACLE_HOME}" > /etc/ld.so.conf.d/oracle.conf ; /sbin/ldconfig
+RUN gem install bundler -v '~> 2.5'
+
+WORKDIR $APP_HOME
+
+# ADD package.json* $APP_HOME
+# RUN npm add @babel/runtime
+# RUN npm add @babel/runtime-corejs2
+# RUN NODE_PATH=/usr/lib/nodejs:/usr/share/nodejs yarn cache clean && yarn
+# RUN npm install --loglevel verbose
+
+# RUN yarn cache clean && yarn install --verbose --modules-folder $MODULES_PATH
+
+ADD . $APP_HOME/
+ADD bin/bundle $APP_HOME/bin/bundle
+RUN ./bin/bundle
+RUN if [ "$RAILS_ENV" == "development" ] ; then RAILS_ENV='test' ./bin/bundle ; fi
+# RUN if [ "$RAILS_ENV" == "development" ] ; then yarn install --verbose --modules-folder $MODULES_PATH ; fi
+
+
+# Entrypoint prepares the database.
+# ENTRYPOINT ["$APP_HOME/bin/docker-entrypoint"]
+ENTRYPOINT ["/bin/bash", "$APP_HOME/bin/docker-entrypoint"]
+EXPOSE 3000
+
+# CMD [./bin/dev"]
+CMD ["./bin/rails", "server"]
