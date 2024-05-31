@@ -150,7 +150,7 @@ test:
 
 ## run rubocop linter to check code copliance with style and syntax rules
 cop:
-	./bin/bundle exec rubocop --extra-details # 2>/dev/null
+	bundle exec rubocop --extra-details 2>/dev/null
 
 ## run rubocop linter in autocorrect mode
 docop:
