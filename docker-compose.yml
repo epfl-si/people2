@@ -86,8 +86,9 @@ services:
         - APP_HOME=/srv/app
         - LIB_HOME=/srv/lib
     env_file: .env
-    command:
-      - ./bin/dev
+    # command:
+    #   - ./bin/dev
+    command: bin/rails server -p 3000 -b 0.0.0.0
     environment:
       # PORT: ${PORT:-3000}
       # ADDR: ${ADDR:-127.0.0.1}

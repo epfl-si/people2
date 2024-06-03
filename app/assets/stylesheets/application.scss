@@ -1,11 +1,21 @@
 // Sassy
 
-@import 'elements.min';
+@use "sass:map";
 
-:root {
-  --color-error: #FF0000;
+
+@import 'elements/elements';
+@import 'elements/vendors';
+
+// helper function used in bootstrap-variables (but undefined therein)
+@function theme-color($name) {
+  @return map.get($theme-colors, $name);
 }
+@import 'elements/bootstrap-variables';
 
+@import 'fonts';
+@import 'actiontext';
+
+// -----------------------------------------------------------------------------
 
 .audience-selector {
   display: inline-block;
@@ -21,11 +31,11 @@
 
 // turbo replacement animation
 .turbo-replace-enter {
-  animation: fade-in 0.2s ease-out;
+  animation: fade-in 0.25s ease-out;
 }
 
 .turbo-replace-exit {
-  animation: fade-out 0.2s ease-out;
+  animation: fade-out 0.25s ease-out;
 }
 
 @keyframes fade-in {

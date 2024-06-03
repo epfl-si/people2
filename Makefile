@@ -6,6 +6,15 @@ COMPOSE_FILE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
 SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
+ELE_SRCDIR ?= ../elements
+ELE_DSTDIR = ./app/assets/stylesheets/elements
+ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variables.scss)
+
+ciccio:
+	@echo "ELE_SRCDIR: $(ELE_SRCDIR)"
+	@echo "ELE_DSTDIR: $(ELE_DSTDIR)"
+	@echo "ELE_FILES: $(ELE_FILES)"
+
 REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
 
 # Figure out the ip address of the host machine so that we can use "public" 
@@ -19,7 +28,7 @@ export
 .PHONY: build codecheck up kup dcup down fulldown logs ps top console dbconsole shell
 
 ## build the web app and atela container
-build: envcheck #codecheck
+build: envcheck elements $(ELE_FILES) #codecheck
 	if [ "$(REBUNDLE)" == "yes" ] ; then rm -f Gemfile.lock ; else cp Gemfile.lock.docker Gemfile.lock ; fi
 	docker compose build
 	if [ "$(REBUNDLE)" == "yes" ] ; then docker compose run webapp cat /rails/Gemfile.lock > Gemfile.lock.docker ; fi
@@ -36,7 +45,7 @@ up: tunnel_up dcup
 Gemfile.lock: Gemfile.lock.docker
 	cp $< $@
 
-dcup: envcheck Gemfile.lock
+dcup: envcheck Gemfile.lock $(ELE_FILES)
 	docker compose up --no-recreate -d 
 
 kc: envcheck
@@ -113,6 +122,21 @@ codecheck: cop
 .env:
 	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
 	exit 1
+
+$(ELE_DSTDIR)/bootstrap-variables.scss: $(ELE_SRCDIR)/assets/config/bootstrap-variables.scss
+	grep -E -v "^@include" $< > $@
+# 	grep -E -v "^@include" $< | \
+# 	gsed 's/theme-color(/map.get($$theme-colors, /g' | \
+# 	gsed '/^@use /a @use "sass:map";' > $@
+
+$(ELE_DSTDIR)/elements.css: $(ELE_SRCDIR)/dist/css/elements.css
+	cp $< $@
+
+$(ELE_DSTDIR)/vendors.css: $(ELE_SRCDIR)/dist/css/vendors.css
+	cp $< $@
+
+$(ELE_SRCDIR)/dist/css/*.css:
+	cd $(ELEMENTS_DIR) && yarn build	
 
 # enable/disable web console
 .PHONY: coff con
