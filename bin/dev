@@ -1,8 +1,24 @@
 #!/usr/bin/env sh
 
+PROCFILE=Procfile.dev
+
+declare -a devargs
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+  -f) PROCFILE=$2
+      shift
+      ;;
+  *)
+      devargs+=("$1")
+      ;;
+  esac
+  shift
+done
+
 if ! gem list foreman -i --silent; then
   echo "Installing foreman..."
   gem install foreman
 fi
 
-exec foreman start -f Procfile.dev "$@"
+echo exec foreman start -f $PROCFILE "${devargs[@]}"
+exec foreman start -f $PROCFILE "${devargs[@]}"

@@ -1,0 +1,2 @@
+logs: make logs
+css: bin/rails dartsass:watch

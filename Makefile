@@ -39,6 +39,11 @@ rebuild: envcheck
 kup: envcheck
 	KILLPID=1 docker compose up -d
 
+## start the dev env with sass builder and app server (try to emulate ./bin/dev)
+dev: up
+	./bin/dev -f Procfile.docker
+	make down
+
 ## start the dev tunnel and start all the servers
 up: tunnel_up dcup
 
@@ -196,10 +201,10 @@ flush:
 .PHONY: tunnel_up tunnel_down
 
 tunnel_up:
-	./bin/tunnel.sh -m local start
+	./bin/tunneld.sh -m local start
 
 tunnel_down:
-	./bin/tunnel.sh -m local stop
+	./bin/tunneld.sh -m local stop
 
 # setup_kc: dcup
 # 	sleep 10
