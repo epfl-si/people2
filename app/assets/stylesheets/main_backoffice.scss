@@ -5,7 +5,7 @@
 // version compiled from source and embeds it here.
 // This enables generating child configurations by extending element's. E.g.
 // input {
-//   @extend .form-control
+//   @extend .form-control;
 // }
 // where the class form-control is defined in elements.
 // We also import (a slightly patched version of) bootstrap-variables so we can
@@ -29,12 +29,14 @@
 @import 'trix';
 @import 'actiontext';
 
-// -----------------------------------------------------------------------------
+// ------------------------------------------------------------------ extra vars
+$font-size-xxs: 0.6rem;
 
-.audience-selector {
-  display: inline-block;
-  margin-right: 2em;
+@function spacer($name) {
+  @return map.get($spacers, $name);
 }
+
+// ---------------------------------------------------------------------- styles
 
 #flash-messages {
   position: fixed;
@@ -43,7 +45,8 @@
   left: 300px;
 }
 
-// turbo replacement animation
+
+// ---- turbo replacement animation
 .turbo-replace-enter {
   animation: fade-in 0.25s ease-out;
 }
@@ -61,17 +64,43 @@
   from { opacity: 1; }
   to { opacity: 0; }
 }
+// ----
 
+span.visibility {
+  @extend .tag;
+  @extend .tag-sm;
+  @extend .tag-primary;
+  font-size: $font-size-xxs;
+  margin-top: .1em;
+  svg {
+    margin-right: spacer(1);
+  }
+}
 
+.audience-selector {
+  display: inline-block;
+  margin-right: spacer(4);
+}
 
+.btn-cancel {
+  @extend .btn;
+  @extend .btn-secondary;
+  @extend .btn-sm;
+}
 
+// TODO: this does not fully work: button takes transparent instead of red bg 
+.btn-submit {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-sm;
+}
 
-
-
-
+// ---- Forms for editing instances of the models depending on profile
 .instaform {
+  padding: spacer(2);
+
   input {
-    @extend .form-control
+    @extend .form-control;
   }
 
   .custom-radio {
@@ -95,7 +124,11 @@
 
   .form-actions {
     display: flex;
-    justify-content: flex-center;
+    justify-content: center;
+    gap: 2em;
+    .btn-confirm {
+      width: auto;
+    }
   }
 
   .form-group > label {
@@ -103,5 +136,4 @@
     margin-bottom: 0;
   }
 }
-
-
+// ----

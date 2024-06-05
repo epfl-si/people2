@@ -1,61 +1,47 @@
-<%= form_with(model: [profile, experience], local: false) do |form| %>
-  <% if experience.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(experience.errors.count, "error") %> prohibited this experience from being saved:</h2>
+<%= form_with(model: [profile, experience], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: experience if experience.errors.any? %>
 
-      <ul>
-        <% experience.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="form-group row">
-
-    <%= form.label Experience.human_attribute_name(:title_fr), class: "col-sm-3  col-form-label" %>
-    <div class="col-sm-9">
-      <%= form.text_field :title_fr, class: "form-control", placeholder: "developeur d'applications" %>
-    </div>
-    <%= form.label Experience.human_attribute_name(:title_en), class: "col-sm-3  col-form-label" %>
-    <div class="col-sm-9">
-      <%= form.text_field :title_en, class: "form-control", placeholder: "software developer" %>
-    </div>
-
-    <%= form.label Experience.human_attribute_name(:location), class: "col-sm-3  col-form-label" %>
-    <div class="col-sm-9">
-      <%= form.text_field :location, class: "form-control", placeholder: "Apple corporation" %>
-    </div>
-
-    <%= form.label Experience.human_attribute_name(:period), class: "col-sm-3  col-form-label" %>
-    <div class="col-sm-4">
-      <% # TODO: here it would be nice to have the birthday for a more specific date range %>
-      <%= form.number_field :year_begin, in: 1950..Date.today.year, class: "form-control" %>
-    </div>  
-    <div class="col-sm-4">
-      <%= form.number_field :year_end, in: 1950..Date.today.year, class: "form-control" %>
-    </div>
-
-    <%= form.label Experience.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
-    <%= audience_selector0 form %>
-    
-    <%= visibility_switch0 form %>
-
-    <%= form.label Experience.human_attribute_name(:description_fr), class: "col-md-3 mt-4 col-form-label" %>
-    <div class="col-md-9 mt-4">
-      <%= form.rich_text_area :description_fr %>
-    </div>
-
-    <%= form.label Experience.human_attribute_name(:description_en), class: "col-md-3 mt-4 col-form-label" %>
-    <div class="col-md-9 mt-4">
-      <%= form.rich_text_area :description_en %>
-    </div>
-
+  <div class="form-group">
+    <%= form.label Experience.human_attribute_name(:title_fr) %>
+    <%= form.text_field :title_fr, placeholder: "developeur d'applications" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Experience.human_attribute_name(:title_en) %>
+    <%= form.text_field :title_en, placeholder: "software developer" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Experience.human_attribute_name(:location) %>
+    <%= form.text_field :location, placeholder: "Apple corporation" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Experience.human_attribute_name(:period) %>
+    <% # TODO: here it would be nice to have the birthday for a more specific date range %>
+    <%= form.number_field :year_begin, in: 1950..Date.today.year %>
+    <%= form.number_field :year_end, in: 1950..Date.today.year %>
   </div>
 
-  <div class="row justify-content-center">
-    <%= link_to(t('cancel'), experience_path(experience), class: "btn btn-secondary btn-sm", method: :get, data: {turbo_stream: true, turbo_method:'get'}) unless experience.new_record? %>
-    <%= form.submit t(experience.new_record? ? 'action.create_experience' :  'action.update_experience'), class: "btn btn-primary btn-sm" %>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:audience) %>
+    <%= audience_selector form %>
   </div>
+  <div class="form-group">
+    <%= form.label Experience.human_attribute_name(:description_fr) %>
+    <div><%= form.rich_text_area :description_fr %></div>
+  </div>
+  <div class="form-group">
+    <%= form.label Experience.human_attribute_name(:description_en) %>
+    <div><%= form.rich_text_area :description_en %></div>
+  </div>
+
+  <%= render "shared/form_actions", form: form, item: experience %>
 
 <% end %>
+
+
+
+
+
+
+
+
+
