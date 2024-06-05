@@ -11,7 +11,9 @@ document.addEventListener("turbo:before-stream-render", function(event) {
   // Add "turbo-replace-enter" class to an element we are about to add to the page
   if (event.target.firstElementChild instanceof HTMLTemplateElement) {
     elementToAdd = event.target.templateElement.content.firstElementChild
-    elementToAdd.classList.add("turbo-replace-enter")
+    if (elementToAdd) {
+      elementToAdd.classList.add("turbo-replace-enter")
+    }
   } else {
     elementToAdd = false
   }
