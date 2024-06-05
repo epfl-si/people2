@@ -7,7 +7,7 @@
     <%= render "layouts/elements/head" %>
     <%= render "layouts/elements/google" if Rails.env.production? %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "people", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
     <%= yield :head %>

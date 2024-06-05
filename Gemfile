@@ -49,7 +49,7 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -79,9 +79,6 @@ end
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
 # gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
 gem 'mysql2'
-
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
 
 # # To enable CORS from keycloak
 # gem 'rack-cors'

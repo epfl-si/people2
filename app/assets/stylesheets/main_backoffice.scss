@@ -1,5 +1,16 @@
 // Sassy
 
+// This is the main stylesheet for the backoffice applications (profile edit page)
+// It tries to inherit definitions from elements. Therefore, it uses the elements
+// version compiled from source and embeds it here.
+// This enables generating child configurations by extending element's. E.g.
+// input {
+//   @extend .form-control
+// }
+// where the class form-control is defined in elements.
+// We also import (a slightly patched version of) bootstrap-variables so we can
+// recycle definitions.
+
 @use "sass:map";
 
 
@@ -13,6 +24,9 @@
 @import 'elements/bootstrap-variables';
 
 @import 'fonts';
+// note that normally trix is included in actiontext but not when imported
+// into a scss. Therefore, we have to declare it explicitly.
+@import 'trix';
 @import 'actiontext';
 
 // -----------------------------------------------------------------------------
