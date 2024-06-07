@@ -92,4 +92,11 @@ module ApplicationHelper
       end
     end
   end
+
+  # TODO: loader does not display
+  def loader
+    tag.span(clase: "loader", role: "status") do
+      concat tag.span("Loading...", class: "sr-only")
+    end
+  end
 end

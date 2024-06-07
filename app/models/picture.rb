@@ -6,6 +6,8 @@ require 'open-uri'
 class Picture < ApplicationRecord
   MAX_ATTEMPTS = 3
 
+  before_destroy :refuse_destroy_if_camipro
+
   belongs_to :profile
   has_one_attached :image
 
@@ -23,17 +25,39 @@ class Picture < ApplicationRecord
     baseurl + "&hash=#{digest}"
   end
 
+  def selected?
+    id == profile.selected_picture_id
+  end
+
   def fetch!
+    return unless camipro?
+
     sciper = profile.sciper
     url = URI.parse(Picture.camipro_url(sciper))
     image.attach(io: url.open, filename: "#{sciper}.jpg")
   end
 
   def fetch
+    return unless camipro?
+
     CamiproPictureCacheJob.perform_later(id) if failed_attempts < MAX_ATTEMPTS
   end
 
   def check_attachment
     fetch if camipro? && image.blank?
+  end
+
+  def force_destroy
+    self.camipro = false
+    destroy
+  end
+
+  private
+
+  def refuse_destroy_if_camipro
+    return unless camipro?
+
+    errors.add :base, "activerecord.errors.picture.attributes.base.undeletable"
+    throw :abort
   end
 end

@@ -1,14 +1,14 @@
 giova1:
   name: image
-  record: giova1 (ProfilePicture)
+  record: giova1 (Picture)
   blob: profile1
 
 giova2:
   name: image
-  record: giova2 (ProfilePicture)
+  record: giova2 (Picture)
   blob: profile2
 
 natalie:
   name: image
-  record: natalie (ProfilePicture)
+  record: natalie (Picture)
   blob: profile3

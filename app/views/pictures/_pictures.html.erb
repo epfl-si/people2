@@ -1,0 +1,20 @@
+<turbo-frame id="profile_picture">
+<div class="row">
+	<div class='col-sm-3'>
+		<div class="card">
+		  <picture class="card-img-top">
+				<%= image_tag(profile.selected_picture.image.representation(resize_to_limit: [400, 400]), alt: 'Avatar image', class: 'img-fluid') %>
+		  </picture>
+		</div>
+	</div>
+	<div class='col-sm-9'>
+		<div id="available-pictures" class="row row-cols-xm-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6">
+			<% pictures.select{|p| !p.selected?}.each do |picture| %>
+			<%= render 'pictures/picture', picture: picture %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<%= render 'pictures/form', profile: profile %>
+</turbo-frame>

@@ -1,0 +1,5 @@
+<%= turbo_stream.remove dom_id(@picture) %>
+<%= turbo_stream.replace "new-picture-form" do %>
+<%= render 'form', profile: @picture.profile %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

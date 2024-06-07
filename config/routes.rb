@@ -20,15 +20,17 @@ Rails.application.routes.draw do
     resources :awards, shallow: true
     resources :educations, shallow: true
     resources :experiences, shallow: true
-    resources :profile_pictures
+    resources :pictures, shallow: true, only: %i[index create destroy]
     resources :accred_prefs, shallow: true
+    member do
+      patch :set_favorite_picture
+    end
   end
   put 'boxes/:id/toggle', to: 'boxes#toggle', as: 'toggle_box'
   put 'socials/:id/toggle', to: 'socials#toggle', as: 'toggle_social'
   put 'awards/:id/toggle', to: 'awards#toggle', as: 'toggle_award'
   put 'educations/:id/toggle', to: 'educations#toggle', as: 'toggle_education'
   put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
-  put 'profile_pictures/:id/toggle', to: 'profile_pictures#toggle', as: 'toggle_profile_picture'
   put 'accred_prefs/:id/toggle', to: 'accred_prefs#toggle', as: 'toggle_accred_pref'
 
   resources :names, only: %i[index show update]

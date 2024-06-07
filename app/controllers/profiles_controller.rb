@@ -3,7 +3,7 @@
 class ProfilesController < ApplicationController
   protect_from_forgery
   before_action :ensure_auth
-  before_action :set_profile
+  before_action :set_profile, except: [:set_favorite_picture]
 
   def edit
     respond_to do |format|
@@ -30,6 +30,28 @@ class ProfilesController < ApplicationController
           render :update, status: :unprocessable_entity
         end
         # format.json { render json: @experience.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH /profile/:id/set_favorite_picture/picture_id
+  def set_favorite_picture
+    @profile = Profile.find(params[:id])
+    @picture = @profile.pictures.find(params[:picture_id])
+    respond_to do |format|
+      if @profile.update(selected_picture: @picture)
+        @pictures = @profile.pictures
+        format.turbo_stream do
+          flash.now[:success] = "flash.generic.success.update"
+          render :set_favorite_picture
+        end
+        format.json { render :show, status: :ok, location: @profile }
+      else
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          redirect_to :edit
+        end
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
   end

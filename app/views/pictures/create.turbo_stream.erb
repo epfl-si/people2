@@ -1,0 +1,9 @@
+<%= turbo_stream.append "available-pictures" do %>
+<%= render "picture", picture: @picture %> 
+<% end %>
+
+<%= turbo_stream.replace "new-picture-form" do %>
+<%= render 'form', profile: @profile %>
+<% end %>
+
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

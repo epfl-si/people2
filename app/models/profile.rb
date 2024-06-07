@@ -46,6 +46,8 @@ class Profile < ApplicationRecord
   #       in at leat one of the languages when property is visible
   validates :sciper, uniqueness: { message: "must be unique" }
 
+  after_create :cache_camipro_picture!
+
   def self.create_with_defaults(sciper)
     create(
       sciper: sciper,
@@ -101,9 +103,12 @@ class Profile < ApplicationRecord
   end
 
   def cache_camipro_picture!
+    return if camipro_picture_id.present?
+
     cpp = pictures.create!(camipro: true)
-    self.selected_picture_id = cpp.id
+    cpp.fetch
     self.camipro_picture_id = cpp.id
+    self.selected_picture_id ||= cpp.id
     save!
     cpp
   end

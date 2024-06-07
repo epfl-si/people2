@@ -1,9 +1,10 @@
+---
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-# giova1:
-#   profile: giova
+giova1:
+  profile: giova
 
-# giova2:
-#   profile: giova
+giova2:
+  profile: giova
 
-# natalie:
-#   profile: natalie
+natalie:
+  profile: natalie

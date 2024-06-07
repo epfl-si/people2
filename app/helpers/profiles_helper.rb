@@ -65,11 +65,9 @@ module ProfilesHelper
 
   def show_attribute_switch(form, attr)
     id = "ck_#{form.object_name.gsub(/[^a-z0-9]+/, '_').gsub(/_$/, '')}_#{attr}"
-    tag.div(class: 'col-sm-9 offset-sm-3') do
-      tag.div(class: 'custom-control custom-checkbox') do
-        concat form.check_box(attr, class: 'custom-control-input', id: id)
-        concat form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
-      end
+    tag.div(class: 'custom-control custom-checkbox') do
+      concat form.check_box(attr, class: 'custom-control-input', id: id)
+      concat form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
     end
   end
 end

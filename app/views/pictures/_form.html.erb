@@ -1,0 +1,17 @@
+<div id='new-picture-form'>
+<% if profile.pictures.count < Rails.application.config_for(:limits).max_profile_pictures %>
+  <%= form_with(model: [profile, Picture.new], local: false) do |form| %>
+    <div class="upload">
+      <%= form.label :image, class: "btn btn-secondary btn-sm icon-right" do %>
+        <%= t 'action.browse_image_file' %><%= icon("upload") %>
+      <% end %>
+      <%= form.file_field :image, class: "upload-input", onchange: "this.nextElementSibling.nextElementSibling.textContent = this.previousElementSibling.title = this.files[0].name; this.nextElementSibling.removeAttribute('disabled');" %>
+      <%= form.submit t("action.upload_image"), disabled: true, class: "btn btn-primary btn-sm btn-upload" %>
+      <div class="upload-preview"><%= t 'msg.no_photofile_selected' %></div>
+    </div>
+  <% end %>
+<% else %>
+<div class="upload"><p><%= t 'msg.max_photos_reached' %></p></div>
+<% end %>
+
+</div>

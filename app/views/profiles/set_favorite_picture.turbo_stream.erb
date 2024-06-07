@@ -1,0 +1,5 @@
+<%= turbo_stream.replace 'pictures_section' do %>
+<section id="pictures_section">
+<%= render "pictures/pictures", profile: @profile, pictures: @pictures %>
+</section>
+<% end %>

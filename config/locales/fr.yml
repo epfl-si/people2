@@ -3,22 +3,27 @@ fr:
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
     admin_data: "Données administratives"
+    browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
+    delete: "delete"
     edit_profile: "Edit profile"
+    edit_pictures: "Edit / Change photo"
     hide_search_form: "Masquer le formulaire de recherche"
     make_hidden: "Hide"
     make_visible: "Show"
     of: "de"
     search: "Rechercher sur le site"
     search_people: "Rechercher sur le site"
+    select: "Select"
     show_hide_search_form: "Afficher / masquer le formulaire de recherche"
-    validate: "Valider"
     submit_personal_data: "Mettre à jour le profil de base"
     submit: "Envoie"
     create_award: "Create new award"
     update_award: "Udate award"
     create_experience: "Create new work experience"
     update_experience: "Udate work experience"
+    upload_image: "Upload the image"
+    validate: "Valider"
 
   error:
     one: "Error"
@@ -27,6 +32,10 @@ fr:
       zero: "Something prevented this award to be updated (should now happen)"
       one: "An error prevented this award to be updated"
       other: "%{count} errors prevented this award to be updated"
+    picture:
+      zero: "Something prevented your picture to be updated (should now happen)"
+      one: "An error prevented your picture to be updated"
+      other: "#{count} errors prevented your picture to be updated"      
     profile:
       zero: "Something prevented your profile to be updated (should now happen)"
       one: "An error prevented your profile to be updated"
@@ -50,6 +59,9 @@ fr:
         update: "Base profile succesfully updated"
       error:
         update: "Error while updating the base profile"
+  msg:
+    max_photos_reached: "You have reached the maximum number of allowed photos."
+    no_photofile_selected: "No photo selected. Please select one if you want to add a photo to your profile"
 
   admin_data:
     title: "Données administratives"
@@ -77,11 +89,12 @@ fr:
     firstname: prenom
     function: fonction
     lastname: nom
-    phone: numero de téléphone
     email: addresse email
     nationality: nationalité
     official_firstname: prenom officiel
     official_lastname: nom officiel
+    phone: numero de téléphone
+    photo: profile picture
     title: titre
     usual_firstname: prenom usuel
     usual_lastname: nom usuel
@@ -97,6 +110,8 @@ fr:
     FIXE_ANALOG: fixe analog
     VIDEO_CONF: video conf
     SIP_OTHER: sip other
+  picture:
+    selected: selected
   publication:
     title:
       free: Notes on publications
@@ -128,6 +143,7 @@ fr:
     work_experience: "Parcours professionnel"
     current_phd: "Doctorants"
     past_phd: "A dirigé les thèses EPFL de"
+    pictures: "Profile pictures"
     teaching_domain: "Enseignement"
   visibility:
     visible: "visible"
@@ -172,3 +188,7 @@ fr:
               blank: "End year should be present"
             year_start:
               blank: "Start year should be present"
+        picture:
+          attributes:
+            base:
+              undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"

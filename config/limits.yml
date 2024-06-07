@@ -1,0 +1,15 @@
+# OpenID Connect (OIDC) configuration for the app
+# Available as `Rails.application.config_for(:limits)`
+
+limits_config: &limits_config
+  max_profile_pictures: 5
+development:
+  <<: *limits_config
+test:
+  <<: *limits_config
+production:
+  <<: *limits_config
+
+
+
+

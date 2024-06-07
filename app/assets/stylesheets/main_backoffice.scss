@@ -82,6 +82,14 @@ span.visibility {
   margin-right: spacer(4);
 }
 
+.custom-checkbox {
+  padding-top: 1.0ex;
+}
+
+#pictures_section {
+  min-height: 400px;
+}
+
 .btn-cancel {
   @extend .btn;
   @extend .btn-secondary;
@@ -106,6 +114,7 @@ span.visibility {
   .custom-radio {
     padding-top: 0.5ex;
   }
+
 
   input::placeholder {
     color: #707070;
@@ -137,3 +146,7 @@ span.visibility {
   }
 }
 // ----
+
+.upload .btn {
+  margin-bottom: 0.5rem;
+}

@@ -34,8 +34,11 @@ en:
   action:
     accred_full_list: "Full list of positions and address"
     admin_data: "Administrative data"
+    browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
+    delete: "delete"
     edit_profile: "Edit profile"
+    edit_pictures: "Edit / Change photo"
     hide_search_form: "Hide the search form"
     hide: "Hide"
     make_hidden: "Hide"
@@ -43,14 +46,16 @@ en:
     of: "of"
     search: "Search"
     search_people: "Search for a person"
+    select: "Select"
     show_hide_search_form: "Show / hide the search form"
-    validate: "Submit"
     submit_personal_data: "Update personal data"
     submit: "Submit"
     create_award: "Create new award"
     update_award: "Udate award"
     create_experience: "Create new work experience"
     update_experience: "Udate work experience"
+    upload_image: "Upload the image"
+    validate: "Submit"
 
   error:
     one: "Error"
@@ -59,6 +64,10 @@ en:
       zero: "Something prevented this award to be updated (should now happen)"
       one: "An error prevented this award to be updated"
       other: "%{count} errors prevented this award to be updated"
+    picture:
+      zero: "Something prevented your picture to be updated (should now happen)"
+      one: "An error prevented your picture to be updated"
+      other: "#{count} errors prevented your picture to be updated"      
     profile:
       zero: "Something prevented your profile to be updated (should now happen)"
       one: "An error prevented your profile to be updated"
@@ -82,7 +91,9 @@ en:
         update: "Base profile succesfully updated"
       error:
         update: "Error while updating the base profile"
-
+  msg:
+    max_photos_reached: "You have reached the maximum number of allowed photos."
+    no_photofile_selected: "No photo selected. Please select one if you want to add a photo to your profile"
   admin_data:
     title: "Admin data"
     sciper: "SCIPER Number"
@@ -109,11 +120,12 @@ en:
     firstname: firstname
     function: function
     lastname: lastname
-    phone: main phone number
     email: email address
     nationality: nationality
     official_firstname: official firstname
     official_lastname: official lastname
+    phone: main phone number
+    photo: profile picture
     title: title
     usual_firstname: usual firstname
     usual_lastname: usual firstname
@@ -129,6 +141,8 @@ en:
     FIXE_ANALOG: analog
     VIDEO_CONF: video conf
     SIP_OTHER: sip
+  picture:
+    selected: selected
   publication:
     title:
       free: Notes on publications
@@ -160,6 +174,7 @@ en:
     work_experience: "Work Experience"
     current_phd: "PhD Students"
     past_phd: "Past EPFL PhD Students"
+    pictures: "Profile pictures"
     teaching_domain: "Teaching"
   visibility:
     visible: "visible"
@@ -223,3 +238,7 @@ en:
               blank: "End year should be present"
             year_start:
               blank: "Start year should be present"
+        picture:
+          attributes:
+            base:
+              undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"

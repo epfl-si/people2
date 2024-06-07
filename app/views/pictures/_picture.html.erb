@@ -1,0 +1,17 @@
+<%= tag.div(class: 'col', id: dom_id(picture)) do %>
+  <div class="card">
+    <picture class="card-img-top">
+      <%= image_tag(picture.image.representation(resize_and_pad: [300, 300]), class: 'img-fluid', title: "", alt: "") %>
+    </picture>
+    <div class="card-body">
+      <%= link_to icon('heart'), set_favorite_picture_profile_path(@profile, picture_id: picture.id), class: "btn btn-primary btn-sm btn-block", method: :patch, data: {turbo_stream: true, turbo_method:'patch'} %>
+      <% if picture.camipro? %>
+        <span class='visibility'>
+          camipro
+        </span>
+      <% else %>
+        <%= link_to icon('trash-2'), picture_path(picture), class: "btn btn-secondary btn-sm btn-block", method: :delete, data: {turbo_stream: true, turbo_method:'delete', turbo_confirm: t('action.confirm')} unless picture.camipro? %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

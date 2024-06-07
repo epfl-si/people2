@@ -1,6 +1,13 @@
 <% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
 
-<p data-controller="hello">ciccio</p>
+<section id="pictures_section">
+<%# turbo_frame_tag "profile_picture", src: profile_pictures_path(@profile), loading: :lazy do %>
+<%# loader %>
+<%# end %>
+<%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
+</section>
+
+<hr>
 
 <%= render "form", profile: @profile %>
 
