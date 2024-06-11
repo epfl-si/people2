@@ -130,4 +130,6 @@ group :development do
   # (a sentimental matter because I was involved in its early development)
   # https://github.com/guard/guard
   # gem 'guard', require: false
+
+  gem "webmock"
 end

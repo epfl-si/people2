@@ -24,8 +24,12 @@ namespace :data do
 
       cc = cdata['subject']
       tt = cdata['professors']
+
       # In dev we only keep the course for profile we have in the DB
-      next if Rails.env.development? && tt.none? { |t| profiles_by_sciper.key?(t['sciper']) }
+      if Rails.env.development?
+        tt = tt.select { |t| profiles_by_sciper.key?(t['sciper']) }
+        next if tt.empty?
+      end
 
       # TODO: the titles are sometime provided in a single language
       course = Course.new
@@ -42,8 +46,7 @@ namespace :data do
         if profiles_by_sciper.key?(sciper)
           profile = profiles_by_sciper[sciper]
         else
-          puts "Profile for sciper #{sciper} not found: creating a new default one"
-          # next if Rails.env.development?
+          puts "Profile for sciper #{sciper} not found: creating a new default one (should not happen in DEV)"
           profile = Profile.create_with_defaults(sciper)
           profiles_by_sciper[sciper] = profile
         end

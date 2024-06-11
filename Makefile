@@ -28,7 +28,7 @@ export
 .PHONY: build codecheck up kup dcup down fulldown logs ps top console dbconsole shell
 
 ## build the web app and atela container
-build: envcheck elements $(ELE_FILES) #codecheck
+build: envcheck $(ELE_FILES) #codecheck
 	if [ "$(REBUNDLE)" == "yes" ] ; then rm -f Gemfile.lock ; else cp Gemfile.lock.docker Gemfile.lock ; fi
 	docker compose build
 	if [ "$(REBUNDLE)" == "yes" ] ; then docker compose run webapp cat /rails/Gemfile.lock > Gemfile.lock.docker ; fi
@@ -253,7 +253,7 @@ nukedb:
 # -------------------------------------------------- restore legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder
 
-.PHONY: restore restore_cv restore_cadi restore_dinfo restore_accred restore_bottin
+.PHONY: restore restore_cv restore_cadi restore_dinfo restore_accred restore_bottin restore_webmocks
 
 ## restore the legacy databases (copy from the on-line DB server to local ones) 
 restore:
@@ -273,6 +273,9 @@ restore_cv:
 
 restore_dinfo:
 	./bin/restoredb.sh dinfo
+
+restore_webmocks:
+	rsync -av $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
 # ------------------------------------------------------------------------------
 .PHONY: clean

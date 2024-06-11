@@ -45,6 +45,8 @@
 /db/*.sqlite3-*
 /dbdata
 
+/test/fixtures/webmocks
+
 # Downloaded / generated JavaScript stuff:
 /node_modules
 
