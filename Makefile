@@ -277,6 +277,9 @@ restore_dinfo:
 restore_webmocks:
 	rsync -av $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
+generate_webmocks:
+	@ENABLE_WEBMOCK=false WEBMOCKS=$(KBPATH)/webmocks URLS=$(KBPATH)/webmock_urls.txt APIPASS=$(EPFLAPI_PASSWORD) RAILS_ENV=development ./bin/rails data:webmocks
+
 # ------------------------------------------------------------------------------
 .PHONY: clean
 clean:
