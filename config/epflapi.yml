@@ -6,8 +6,8 @@ epflapi_config: &epflapi_config
   # api services cache have to be enabled explicitly so that api calls will be
   # cached only if both general AND specific caching is enabled
   perform_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
-  webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
-  offline_dev_caching: <%= Rails.env.development? && ENV.fetch("ENABLE_API_CACHE", false) %>
+  webmock: false
+  offline_dev_caching: false
   offline_cachedir: <%= ENV.fetch("OFFLINE_CACHEDIR", "/srv/filecache") %>
 
   # ATELA (will be replaced by api)
@@ -34,11 +34,11 @@ epflapi_config: &epflapi_config
 # 💡 You want all three aliases, even in dev, otherwise `./bin/rake` won't work!
 development:
   <<: *epflapi_config
+  webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
+  offline_dev_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
 test:
   <<: *epflapi_config
+  webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
+  offline_dev_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
 production:
   <<: *epflapi_config
-
-
-
-

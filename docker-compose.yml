@@ -96,7 +96,8 @@ services:
       RAILS_ENV: development
       RAILS_DEVELOPMENT_HOSTS: "people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}"
       DEFAULT_URL: "https://people.${DOMAIN:-dev.jkldsa.com}"
-      ENABLE_API_CACHE: true
+      ENABLE_API_CACHE: "${ENABLE_API_CACHE:-false}"
+      ENABLE_WEBMOCK: "${ENABLE_WEBMOCK:-false}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
       # if REDIS_CACHE is defined then redis is used otherwise default to memory
       REDIS_CACHE: redis://cache:6379/0
@@ -110,7 +111,6 @@ services:
       EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       OFFLINE_CACHEDIR: "/srv/filecache"
-      ENABLE_WEBMOCK: "${ENABLE_WEBMOCK:-false}"
     volumes:
       - ./:/srv/app
       - storage:/srv/app/storage
