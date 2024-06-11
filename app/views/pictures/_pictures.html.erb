@@ -3,7 +3,7 @@
 	<div class='col-sm-3'>
 		<div class="card">
 		  <picture class="card-img-top">
-				<%= image_tag(profile.selected_picture.image.representation(resize_to_limit: [400, 400]), alt: 'Avatar image', class: 'img-fluid') %>
+				<%= profile_photo(profile.photo, resize_to_limit: [400, 400], alt: 'Avatar image', class: 'img-fluid') %>
 		  </picture>
 		</div>
 	</div>

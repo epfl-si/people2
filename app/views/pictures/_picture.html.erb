@@ -1,7 +1,7 @@
 <%= tag.div(class: 'col', id: dom_id(picture)) do %>
   <div class="card">
     <picture class="card-img-top">
-      <%= image_tag(picture.image.representation(resize_and_pad: [300, 300]), class: 'img-fluid', title: "", alt: "") %>
+      <%= profile_photo(picture, resize_to_limit: [300, 300], alt: 'Avatar image', class: 'img-fluid') %>
     </picture>
     <div class="card-body">
       <%= link_to icon('heart'), set_favorite_picture_profile_path(@profile, picture_id: picture.id), class: "btn btn-primary btn-sm btn-block", method: :patch, data: {turbo_stream: true, turbo_method:'patch'} %>

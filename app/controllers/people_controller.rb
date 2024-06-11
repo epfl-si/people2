@@ -40,6 +40,13 @@ class PeopleController < ApplicationController
       @accreds = @person.accreds.select(&:visible?).sort
     end
 
+    # TODO: would a sort of "PublicSection" class make things easier here ?
+    #       keep in mind that here we only manage boxes but we will have
+    #       more content like awards, work experiences, infoscience pubs etc.
+    #       that is not just a simple free text box with a title.
+    return unless @editable
+
+    # teachers are supposed to be @editable
     ActiveSupport::Notifications.instrument('set_show_data_part_2_teaching') do
       @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
       if @ta.present?
@@ -54,13 +61,7 @@ class PeopleController < ApplicationController
       @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
     end
 
-    # TODO: would a sort of "PublicSection" class make things easier here ?
-    #       keep in mind that here we only manage boxes but we will have
-    #       more content like awards, work experiences, infoscience pubs etc.
-    #       that is not just a simple free text box with a title.
-    return unless @editable
-
-    @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
+    # @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
     @visible_socials = @profile.socials.for_audience(@audience)
 
     # TODO: should we simply redirect to the page with selected locale ? May
