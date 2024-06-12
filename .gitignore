@@ -63,3 +63,5 @@
 /.gems
 
 Gemfile.lock
+
+/kb

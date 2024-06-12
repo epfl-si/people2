@@ -6,14 +6,6 @@
 		</a>
     <h1 class="site-title">
       <a href="/">ONLINE PEOPLE DIRECTORY</a>
-      <% if Rails.env.development? %>
-        <span class='d-block d-sm-none'>[xs]</span>
-        <span class='d-none d-sm-block d-md-none'>[sm]</span>
-        <span class='d-none d-md-block d-lg-none'>[md]</span>
-        <span class='d-none d-lg-block d-xl-none'>[lg]</span>
-        <span class='d-none d-xl-block d-xxl-none'>[xl]</span>
-        <span class='d-none d-xxl-block'>[xxl]</span>
-      <% end %>
     </h1>
 		<!-- SEARCH -->		
     <%= form_with url: "https://search.epfl.ch", method: :get, html: {class: "d-xl-none"} do |form| %>
