@@ -85,10 +85,9 @@ class ApplicationService
     res = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
       http.request(req)
     end
-    case res
-    when Net::HTTPOK
-      res.body.force_encoding('UTF-8')
-    end
+    return unless res.is_a?(Net::HTTPSuccess)
+
+    res.body.force_encoding('UTF-8')
   end
 
   def genreq

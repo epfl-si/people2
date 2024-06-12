@@ -274,11 +274,14 @@ restore_cv:
 restore_dinfo:
 	./bin/restoredb.sh dinfo
 
+## copy webmocks from keybase. This will enable the off-line use (set ENABLE_WEBMOCK=true in .env)
 restore_webmocks:
 	rsync -av $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
-generate_webmocks:
+## generate and restore webmocks (can only be used from computer with access to remote servers)
+webmocks:
 	@ENABLE_WEBMOCK=false WEBMOCKS=$(KBPATH)/webmocks URLS=$(KBPATH)/webmock_urls.txt APIPASS=$(EPFLAPI_PASSWORD) RAILS_ENV=development ./bin/rails data:webmocks
+	rsync -av --delete $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
 # ------------------------------------------------------------------------------
 .PHONY: clean

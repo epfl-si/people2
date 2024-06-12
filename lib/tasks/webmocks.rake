@@ -14,19 +14,54 @@ namespace :data do
     urls = ENV.fetch('URLS') { raise '!! Please provide path to txt file containing urls to fetch as URLS env' }
     opts = { use_ssl: true, read_timeout: 100 }
     index = {}
-    File.readlines(urls, chomp: true).each do |url|
+    # input file format is just an url per line
+    # line starting with # are skept (comment)
+    # line starting with D will trigger deletion of the corresponding json file
+    File.readlines(urls, chomp: true).each do |line|
+      next if line =~ /^\s*#|^\s*$/
+
+      puts "-- #{line}"
+
+      if line =~ /^D /
+        url = line.gsub(/^D\s+/, '').strip
+        del = true
+      else
+        url = line.strip
+        del = false
+      end
+
       dd = Digest::SHA256.hexdigest(url)
       fn = "#{dd}.json"
       fp = "#{hd}/#{fn}"
-      index[url] = fn
-      next if File.exist?(fp)
+
+      if del
+        if File.exist?(fp)
+          puts "   -> deleting #{fp}"
+          File.delete(fp)
+        else
+          puts "   -> already absent #{fp}"
+        end
+        next
+      end
+
+      if File.exist?(fp)
+        puts "   -> already present #{fp}"
+        index[url] = fn
+        next
+      end
 
       uri = URI(url)
+      puts "   -> #{fp}"
       req = Net::HTTP::Get.new(uri)
       req.basic_auth "people", apipass if uri.hostname == 'api.epfl.ch'
 
       res = Net::HTTP.start(uri.hostname, uri.port, opts) { |http| http.request(req) }
-      File.open(fp, 'w') { |file| file.write(res.body) }
+      puts "   -> #{res}"
+      next unless res.is_a?(Net::HTTPSuccess)
+
+      puts "   -> OK. Saving it."
+      File.open(fp, 'w') { |file| file.write(res.body.force_encoding('UTF-8')) }
+      index[url] = fn
     end
     # File.open("#{hd}/index.yaml", 'w') { |f| f.write index.to_yaml }
     File.open("#{hd}/index.json", 'w') { |f| f.write index.to_json } # Store

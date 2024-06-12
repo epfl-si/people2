@@ -20,9 +20,10 @@ class APIPersonGetter < EpflAPIService
 
   # TODO: check if this works for everybody
   def self.for_email(email, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    firstname, lastname = email.gsub(/@.*$/, '').split('.')
+    # TODO: api now search also on the e-mail field. Therefore we could leave the domain part...
+    user = email.gsub(/@.*$/, '')
     url = URI.join(baseurl, "v1/persons")
-    url.query = URI.encode_www_form(firstname: firstname, lastname: lastname)
+    url.query = URI.encode_www_form(query: user)
     new(url)
   end
 

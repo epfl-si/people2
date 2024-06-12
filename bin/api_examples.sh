@@ -12,16 +12,27 @@ FRA=363674
 OLI=107931
 
 apiget() {
-	echo "# $1 | jq -r '$2'"
-  curl --basic --user "people:${EPFLAPI_PASSWORD}" \
-       -X GET "$1" 2>/dev/null | jq -r "$2"
+  if [ -n "$2" ] ; then
+     rawapiget "$1" | jq -r "$2"
+  else
+     rawapiget "$1" | jq
+  fi
 }
 
 rawapiget() {
-     echo "# $1"
   curl --basic --user "people:${EPFLAPI_PASSWORD}" \
        -X GET "$1" 2>/dev/null
 }
+
+echo "#---------------------------------------- fuzzy search on first/last name"
+apiget "$BASE/persons?query=giova%20cangi" '.persons[] | [.id, .display] | @tsv'
+apiget "$BASE/persons?query=leonardo%20surdez" '.persons[] | [.id, .display] | @tsv'
+echo "# -- query=francesco dal peraro"
+apiget "$BASE/persons?query=francesco%20dal%20peraro" '.persons[] | [.id, .display] | @tsv'
+echo "# -- query=francesco dalperaro"
+apiget "$BASE/persons?query=francesco%20dalperaro" '.persons[] | [.id, .display] | @tsv'
+echo "# -- query=francesco.dalperaro"
+apiget "$BASE/persons?query=francesco.dalperaro" '.persons[] | [.id, .display] | @tsv'
 
 echo "#----------------------------------------------- Similarly (array result)"
 apiget "$BASE/persons?persid=${GIO}"

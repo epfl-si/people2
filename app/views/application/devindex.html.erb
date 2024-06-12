@@ -4,41 +4,49 @@ data=[
   {
     name: "Natalie",
     sciper: "116080",
+    email: "natalie.meystre",
     desc: "profile with forced french language and some bio box",
   },
   {
     name: "Dominique",
     sciper: "243371",
+    email: "dominique.quatravaux",
     desc: "very little data but usual name different from official one",
   },
   {
-    name: "Me",
+    name: "Giova",
     sciper: "121769",
+    email: "giovanni.cangiani",
     desc: "nothing special but its me ;)",
   },
   {
     name: "Edouard",
     sciper: "229105",
+    email: "edouard.bugnon",
     desc: "a professor with a lot of affiliations",
   },
   {
-    name: "Giovanni",
+    name: "Omonimo",
     sciper: "110635",
+    email: "giovanni.boero",
     desc: "a standard prof",
   },
   {
     name: "Martin",
     sciper: "126003",
+    email: "martin.odersky",
     desc: "a prof with various affiliations and links",
   },
   {
     name: "Olivier",
     sciper: "107931",
+    email: "olivier.leveque",
     desc: "a teacher",
   },
   {
     name: "Francesco",
     sciper: "363674",
+    email: "francesco.dalperaro",
     desc: "a student",
   },
 ] 
@@ -48,6 +56,8 @@ data=[
   <% data.map{|d| OpenStruct.new(d)}.each do |d| %>
   <li>
     <%= link_to d.name, person_path(d.sciper) %>
+    |
+    <%= link_to d.name, person_path(d.email) %>
     <%= d.desc %>
     <%= link_to "(reference)", "https://people.epfl.ch/#{d.sciper}" %>
   </li>
