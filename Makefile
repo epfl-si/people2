@@ -1,3 +1,6 @@
+# People dev Makefile
+# `make help` to get the list of available rules
+
 -include .env
 KBPATH ?= /keybase/team/epfl_people.prod
 -include $(KBPATH)/$(SECRETS)
@@ -10,10 +13,6 @@ ELE_SRCDIR ?= ../elements
 ELE_DSTDIR = ./app/assets/stylesheets/elements
 ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variables.scss)
 
-ciccio:
-	@echo "ELE_SRCDIR: $(ELE_SRCDIR)"
-	@echo "ELE_DSTDIR: $(ELE_DSTDIR)"
-	@echo "ELE_FILES: $(ELE_FILES)"
 
 REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
 
@@ -24,20 +23,8 @@ DOCKER_IP ?= $(shell docker run -it --rm nicolaka/netshoot dig +short host.docke
 
 export
 
-# ---------------------------------------------------------------- run local app
-.PHONY: build codecheck up kup dcup down fulldown logs ps top console dbconsole shell
-
-## build the web app and atela container
-build: envcheck $(ELE_FILES) #codecheck
-	if [ "$(REBUNDLE)" == "yes" ] ; then rm -f Gemfile.lock ; else cp Gemfile.lock.docker Gemfile.lock ; fi
-	docker compose build
-	if [ "$(REBUNDLE)" == "yes" ] ; then docker compose run webapp cat /rails/Gemfile.lock > Gemfile.lock.docker ; fi
-
-rebuild: envcheck
-	docker compose build --no-cache
-
-kup: envcheck
-	KILLPID=1 docker compose up -d
+# ----------------------------------------------------------- Run/stop local app
+.PHONY: dev up reload kc down fulldown tunnel_up tunnel_down
 
 ## start the dev env with sass builder and app server (try to emulate ./bin/dev)
 dev: up
@@ -47,17 +34,21 @@ dev: up
 ## start the dev tunnel and start all the servers
 up: tunnel_up dcup
 
-Gemfile.lock: Gemfile.lock.docker
-	cp $< $@
+## restart the webapp container
+reload: envcheck
+	docker compose stop webapp
+	KILLPID=1 docker compose up -d
 
-dcup: envcheck Gemfile.lock $(ELE_FILES)
-	docker compose up --no-recreate -d 
-
+## start keycloack
 kc: envcheck
 	docker compose --profile kc up -d keycloak
 
 # atela:
 # 	docker compose --profile atela up -d atela
+
+## stop the basic servers (all except keycloak and test)
+down: tunnel_down
+	docker compose down
 
 ## stop everything including keycloak and the test server
 fulldown:
@@ -65,14 +56,20 @@ fulldown:
 	docker compose --profile kc   down
 	docker compose down
 
-## stop the basic servers (all except keycloak and test)
-down: tunnel_down
-	docker compose down
+tunnel_up:
+	./bin/tunneld.sh -m local start
 
-## restart the webapp container
-reload: envcheck
-	docker compose stop webapp
-	KILLPID=1 docker compose up -d
+tunnel_down:
+	./bin/tunneld.sh -m local stop
+
+dcup: envcheck Gemfile.lock $(ELE_FILES)
+	docker compose up --no-recreate -d 
+
+Gemfile.lock: Gemfile.lock.docker
+	cp $< $@
+
+# --------------------------------------------------- Interaction with local app
+.PHONY: logs ps top console shell dbconsole debug redis
 
 ## tail -f the logs
 logs:
@@ -99,19 +96,41 @@ dbconsole: dcup
 	docker compose exec mariadb mariadb -u root --password=mariadb  
 
 ## attach the console of the rails app for debugging
-.PHONY: debug
 debug:
 	docker-compose attach webapp
 
-dconfig:
-	docker compose config
+## start console for interacting with redis db
+redis:
+	docker compose exec cache valkey-cli
+
+## toggle Rails caching in dev (will persist reloads as it is just a file in tmp) 
+devcache:
+	docker compose exec webapp bin/rails dev:cache
+
+# -------------------------------------------------------------- Container image
+.PHONY: build rebuild
+
+## build the web app and atela container
+build: envcheck $(ELE_FILES) #codecheck
+	if [ "$(REBUNDLE)" == "yes" ] ; then rm -f Gemfile.lock ; else cp Gemfile.lock.docker Gemfile.lock ; fi
+	docker compose build
+	if [ "$(REBUNDLE)" == "yes" ] ; then docker compose run webapp cat /rails/Gemfile.lock > Gemfile.lock.docker ; fi
+
+## build image discarding all cached layers
+rebuild: envcheck
+	docker compose build --no-cache
+
+
+
+envcheck: .env .git/hooks/pre-commit
+
+# ------------------------------------------ Source code and dev env maintenance
+.PHONY: erd codecheck cop docop dodocop minor patch
 
 ## generate an entity relation diagram with mermaid_erd
 erd:
 	docker compose exec webapp ./bin/rails mermaid_erd
 
-## check the dev environment
-envcheck: .env .git/hooks/pre-commit
 
 ## check the code with linter and run all automated tests (TODO)
 codecheck: cop
@@ -120,6 +139,28 @@ codecheck: cop
 	# nicer gui available at https://audit.fastruby.io
 	#	bundle exec bundle-audit check --update
 	#	bundle exec brakeman
+
+## run rubocop linter to check code copliance with style and syntax rules
+cop:
+	bundle exec rubocop --extra-details 2>/dev/null
+
+## run rubocop linter in autocorrect mode
+docop:
+	./bin/bundle exec rubocop --autocorrect
+
+## run rubocop linter in autocorrect-all mode
+dodocop:
+	./bin/bundle exec rubocop --autocorrect-all
+
+## increase minor version
+minor:
+	./bin/rails version:minor
+
+## increase patch version
+patch:
+	./bin/rails version:patch
+
+
 
 .git/hooks/pre-commit:
 	if [ ! -l .git/hooks ] ; then mv .git/hooks .git/hooks.trashme && ln -s ../.git_hooks .git/hooks ; fi
@@ -134,30 +175,19 @@ $(ELE_DSTDIR)/bootstrap-variables.scss: $(ELE_SRCDIR)/assets/config/bootstrap-va
 # 	gsed 's/theme-color(/map.get($$theme-colors, /g' | \
 # 	gsed '/^@use /a @use "sass:map";' > $@
 
-$(ELE_DSTDIR)/elements.css: $(ELE_SRCDIR)/dist/css/elements.css
-	cp $< $@
-
-$(ELE_DSTDIR)/vendors.css: $(ELE_SRCDIR)/dist/css/vendors.css
+$(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 	cp $< $@
 
 $(ELE_SRCDIR)/dist/css/*.css:
 	cd $(ELEMENTS_DIR) && yarn build	
 
-# enable/disable web console
-.PHONY: coff con
-con:
-	docker compose exec webapp touch tmp/console-dev.txt
-coff:
-	docker compose exec webapp rm -f tmp/console-dev.txt
-
-
-.PHONY: redis
-## run valkey-cli 
-redis:
-	docker compose exec cache valkey-cli
-
-# ---------------------------------------------------------------------- testing
+# ---------------------------------------------------------------------- Testing
 .PHONY: test testup test-system
+
+## run automated tests
+test:
+	docker compose exec -e RAILS_ENV=test webapp ./bin/rails test
+
 ## prepare and run the test server 
 testup:
 	docker compose --profile test up --no-recreate -d
@@ -173,70 +203,37 @@ testup:
 test-system: testup
 	docker compose exec webapp ./bin/rails test:system
 
-## run automated tests
-test:
-	docker compose exec -e RAILS_ENV=test webapp ./bin/rails test
 
-## run rubocop linter to check code copliance with style and syntax rules
-cop:
-	bundle exec rubocop --extra-details 2>/dev/null
-
-## run rubocop linter in autocorrect mode
-docop:
-	./bin/bundle exec rubocop --autocorrect
-
-## run rubocop linter in autocorrect-all mode
-dodocop:
-	./bin/bundle exec rubocop --autocorrect-all
-
-# ------------------------------------------------------------------------ cache
-## toggle dev cache
-devcache:
-	docker compose exec webapp bin/rails dev:cache
+# -------------------------------------------------- Cache and off-line webmocks
 
 ## flush cache from redis db
 flush:
 	docker compose exec cache redis-cli FLUSHALL 
-# ------------------------------------------------------------------- ssh tunnel
-.PHONY: tunnel_up tunnel_down
 
-tunnel_up:
-	./bin/tunneld.sh -m local start
+## copy webmocks from keybase. This will enable the off-line use (set ENABLE_WEBMOCK=true in .env)
+webmocks:
+	rsync -av --delete $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
-tunnel_down:
-	./bin/tunneld.sh -m local stop
+## generate and restore webmocks (can only be used from computer with access to remote servers)
+refresh_webmocks:
+	@ENABLE_WEBMOCK=false WEBMOCKS=$(KBPATH)/webmocks URLS=$(KBPATH)/webmock_urls.txt APIPASS=$(EPFLAPI_PASSWORD) RAILS_ENV=development ./bin/rails data:webmocks
+	rsync -av --delete $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
-# setup_kc: dcup
-# 	sleep 10
-# 	docker compose stop keycloak
-# 	sleep 2
-# 	echo "DROP DATABASE IF EXISTS keycloak;" | $(MYSQL)
-# 	sleep 2
-# 	echo "CREATE DATABASE keycloak;" | $(MYSQL)
-# 	make up
-
-# -------------------------------------------------------------------- migration
-.PHONY: migrate seed
+# ------------------------------------------------ migration data/db maintenance
+.PHONY: migrate seed reseed nukedb restore_webmocks webmocks
 
 ## run rails migration
 migrate: dcup
 	docker compose exec webapp ./bin/rails db:migrate
 
 ## run rails migration and seed with initial data
-seed: migrate
+seed: migrate restore_webmocks
 	docker compose exec webapp bin/rails db:seed
 	make courses
-
-## prefetch dev data from api.epfl.ch for the fake (local) api server 
-fakeapi: dcup
-	docker compose exec webapp bin/rails devel:fakeapi
 
 ## reload the list of all courses from ISA
 courses: dcup
 	docker compose exec webapp bin/rails data:courses
-
-# --------------------------------------------------- destroy and reload mock db
-.PHONY: reseed
 
 SQL=docker-compose exec -T mariadb mariadb -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
@@ -250,10 +247,10 @@ nukedb:
 	echo "DROP DATABASE people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
 
-# -------------------------------------------------- restore legacy DB from prod
+# ---------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder
 
-.PHONY: restore restore_cv restore_cadi restore_dinfo restore_accred restore_bottin restore_webmocks
+.PHONY: restore restore_cv restore_cadi restore_dinfo restore_accred restore_bottin
 
 ## restore the legacy databases (copy from the on-line DB server to local ones) 
 restore:
@@ -274,24 +271,15 @@ restore_cv:
 restore_dinfo:
 	./bin/restoredb.sh dinfo
 
-## copy webmocks from keybase. This will enable the off-line use (set ENABLE_WEBMOCK=true in .env)
-restore_webmocks:
-	rsync -av $(KBPATH)/webmocks/ test/fixtures/webmocks/
-
-## generate and restore webmocks (can only be used from computer with access to remote servers)
-webmocks:
-	@ENABLE_WEBMOCK=false WEBMOCKS=$(KBPATH)/webmocks URLS=$(KBPATH)/webmock_urls.txt APIPASS=$(EPFLAPI_PASSWORD) RAILS_ENV=development ./bin/rails data:webmocks
-	rsync -av --delete $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
 # ------------------------------------------------------------------------------
 .PHONY: clean
 clean:
 	rm -f api_examples.txt
-
+	rm -rf test/fixtures/webmocks
+	rm -f $(ELE_FILES)
 
 # ------------------------------------------------------------------------------
 .PHONY: help
-# see <https://gist.github.com/klmr/575726c7e05d8780505a> for explanation
-## Print this help 
 help:
-	@echo "$$(tput bold)Available rules:$$(tput sgr0)";sed -ne"/^## /{h;s/.*//;:d" -e"H;n;s/^## //;td" -e"s/:.*//;G;s/\\n## /---/;s/\\n/ /g;p;}" ${MAKEFILE_LIST} | awk -F --- -v n=$$(tput cols) -v i=20 -v a="$$(tput setaf 6)" -v z="$$(tput sgr0)" '{printf"%s%*s%s ",a,-i,$$1,z;m=split($$2,w," ");l=n-i;for(j=1;j<=m;j++){l-=length(w[j])+1;if(l<= 0){l=n-i-length(w[j])-1;printf"\n%*s ",-i," ";}printf"%s ",w[j];}printf"\n";}'
+	@cat Makefile | gawk 'BEGIN{print "Available rules:";} /^# ---+ /{gsub(/ -+/,"", $$0); printf("\n%s:\n", $$0);} /^##/{gsub("^##", "", $$0); i=$$0; getline; gsub(/:.*$$/, "", $$0); printf("%-16s  %s\n", $$0, i);}'
