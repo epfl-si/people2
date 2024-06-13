@@ -22,6 +22,13 @@ You need the following installed on your system to run this application in devel
 
 In development mode, you may create a `.env` file to configure rendezvous points and secrets. Copy and modify the provided `.env.sample` file.
 
+In order to run `./bin/rails` commands directly from the console instead of docker,
+secrets must be loaded into env variables with the following command:
+
+```bash
+. ./.env ; cat .env $KBPATH/$SECRETS | awk '/^[A-Z]/{print "export ", $0;}' | source /dev/stdin 
+```
+
 ## GraphiQL console
 
 Navigate to https://localhost:3000/graphiql to see the GraphiQL console (not just GraphQL — emphasis on the “i”). Its is provided by the [`graphiql-rails` gem](https://rubygems.org/gems/graphql-rails); its purpose is to let you try out GraphQL queries and mutations (no “i” here) while you develop your app.

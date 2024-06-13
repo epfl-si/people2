@@ -35,10 +35,8 @@ epflapi_config: &epflapi_config
 development:
   <<: *epflapi_config
   webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
-  offline_dev_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
 test:
   <<: *epflapi_config
   webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
-  offline_dev_caching: <%= ENV.fetch("ENABLE_API_CACHE", false) %>
 production:
   <<: *epflapi_config
