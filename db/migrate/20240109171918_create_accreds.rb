@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class CreateAccredPrefs < ActiveRecord::Migration[7.0]
+class CreateAccreds < ActiveRecord::Migration[7.0]
   def change
-    create_table :accred_prefs do |t|
+    create_table :accreds do |t|
       t.references :profile
       t.integer :unit_id
-      t.integer :order
+      t.integer :position, null: false
       t.string  :sciper
       t.boolean :hidden
       t.boolean :hidden_addr
@@ -16,5 +16,6 @@ class CreateAccredPrefs < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :accreds, %i[profile_id position], unique: true
   end
 end

@@ -11,16 +11,17 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_03_11_105644) do
-  create_table "accred_prefs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
-    t.integer "order"
+    t.integer "position", null: false
     t.string "sciper"
     t.boolean "hidden"
     t.boolean "hidden_addr"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_accred_prefs_on_profile_id"
+    t.index ["profile_id", "position"], name: "index_accreds_on_profile_id_and_position", unique: true
+    t.index ["profile_id"], name: "index_accreds_on_profile_id"
   end
 
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|

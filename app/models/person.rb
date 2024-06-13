@@ -110,34 +110,34 @@ class Person
   end
 
   # TODO: check errors on api calls and decide how to recover
-  def accreds
-    @accreds ||= if profile.present?
-                   Accreditation.for_profile(profile)
-                 else
-                   Accreditation.for_sciper(sciper)
-                 end
+  def accreditations
+    @accreditations ||= if profile.present?
+                          Accreditation.for_profile(profile)
+                        else
+                          Accreditation.for_sciper(sciper)
+                        end
   end
 
   def units
-    @units ||= accreds.map(&:unit)
+    @units ||= accreditations.map(&:unit)
   end
 
   def positions
-    @positions ||= accreds.map(&:position)
+    @positions ||= accreditations.map(&:position)
   end
 
   def main_position
-    @main_position ||= accreds.min.position
+    @main_position ||= accreditations.min.position
   end
 
   def student?
-    accreds.any?(&:student?)
+    accreditations.any?(&:student?)
   end
 
   # TODO: see if it is possible to guess if person could be a teacher in order
   # to avoid useless requests to ISA.
   def possibly_teacher?
-    accreds.any?(&:possibly_teacher?)
+    accreditations.any?(&:possibly_teacher?)
   end
 
   # ----------------------------------------------------------------------------

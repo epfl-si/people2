@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# Accreditation is the real accred coming from official EPFL accred data
 class Accreditation
-  attr_reader :sciper, :unit_id, :unit_name, :position
+  attr_accessor :prefs
+  attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order
   attr_writer :unit, :botweb
 
   include Translatable
@@ -26,27 +28,53 @@ class Accreditation
     posdata = data.delete('position') || {
       'labelen' => @status_label_en,
       'labelfr' => @status_label_fr,
-
     }
     @position = Position.new(posdata)
+    @prefs = nil
   end
 
+  # TODO: this is still suboptimal but presently I don't know how to improve it.
+  # The problem we are trying to solve is that accreds are changing frequently.
+  # Therefore, the two sets (local accred refs and actual accreds) are not
+  # guaranteed to be always identical. When an accred is removed we just have
+  # to garbage collect the corresponding accre preferency. On the other hand,
+  # when an accred is added, we have to decide what is its position.
+  # The current implementation assumes the existence of an external ordering
+  # from that will be overridden by the local sorting preferences. New accreds
+  # will just be appended respecting the external ordering after those with prefs.
   def self.for_profile(profile)
     sciper = profile.sciper
     accreds = for_sciper(sciper)
-    ap = profile.accred_prefs.index_by(&:unit_id)
-    accreds.each do |a|
-      a.prefs = if ap.key?(a.unit_id)
-                  ap[a.unit_id]
-                else
-                  profile.accred_prefs.new(
-                    {
-                      unit_id: a.unit_id,
-                      sciper: sciper,
-                    }.merge(AccredPref::DEFAULTS)
-                  )
-                end
+    prefs = profile.accreds
+    unless prefs.empty?
+      pbu = prefs.index_by(&:unit_id)
+      positions = []
+      accreds.each do |a|
+        if pbu.key?(a.unit_id)
+          a.prefs = pbu[a.unit_id]
+          positions << a.prefs.position
+        end
+      end
+      last_position = positions.max
     end
+    next_position = (last_position || 0) + 1
+    accreds.select { |a| a.prefs.nil? }.sort { |a, b| a.accred_order <=> b.accred_order }.each do |a|
+      a.prefs = profile.accreds.new(
+        {
+          unit_id: a.unit_id,
+          sciper: sciper,
+          position: next_position,
+        }.merge(Accred::DEFAULTS)
+      )
+      next_position += 1
+    end
+    # TODO: cleanup unused accred_prefs if profile.accred_prefs.size > accreds.size
+    accreds
+  end
+
+  def self.for_profile!(profile)
+    accreds = for_profile(profile)
+    accreds.each { |a| a.prefs.save if a.prefs.new_record? }
     accreds
   end
 
@@ -75,17 +103,6 @@ class Accreditation
     end
   end
 
-  def prefs=(p)
-    raise 'Unexpected class' unless p.is_a?(AccredPref)
-
-    @prefs = p
-  end
-
-  def prefs
-    # this is not a valid record
-    @prefs ||= AccredPrefs.new(AccredPrefs::DEFAULTS)
-  end
-
   def botweb?
     unless defined?(@botweb)
       aa = Authorisation.botweb_for_sciper(sciper)
@@ -98,22 +115,22 @@ class Accreditation
     # There are actually 3 level of visibility check fir accreditations.
     # 1. must have the 'botweb' property (self.for_sciper)
     # 2. (done here) purely teaching position can be hidden
-    # 3. (done in prefs) user can decide ti hide certains accreds
+    # 3. (done in prefs) user can decide to hide certains accreds
     unless defined?(@visible)
       @visible =
         botweb? &&
-        prefs.visible? &&
+        (prefs.present? ? prefs.visible? : true) &&
         !(Rails.configuration.hide_teacher_accreds && @position.enseignant?)
     end
     @visible
   end
 
   def hidden_address?
-    prefs.hidden_addr
+    prefs.present? && prefs.hidden_addr
   end
 
   def order
-    [prefs.order, @accred_order]
+    prefs.present? ? [prefs.position, @accred_order] : [@accred_order, @accred_order]
   end
 
   def <=>(other)

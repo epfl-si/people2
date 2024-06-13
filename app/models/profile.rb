@@ -32,7 +32,7 @@ class Profile < ApplicationRecord
   belongs_to :camipro_picture, class_name: 'Picture',
                                optional: true, inverse_of: false
 
-  has_many :accred_prefs, class_name: 'AccredPref', dependent: :destroy
+  has_many :accreds, class_name: 'Accred', dependent: :destroy
   # TODO: switch to new model
   has_many :publications, class_name: 'Legacy::Publication',
                           primary_key: 'sciper', foreign_key: 'sciper',

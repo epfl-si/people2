@@ -1,0 +1,31 @@
+<% # award.errors.add :base, "This is a very severe error" %>
+<% # award.errors.add :base, "This is a less severe error" %>
+
+<%= form_with(model: [profile, award], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: award if award.errors.any? %>
+
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:title_fr) %>
+    <%= form.text_field :title_fr, placeholder: "Prix Nobel" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:title_en) %>
+    <%= form.text_field :title_en, placeholder: "Nobel prize" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:issuer) %>
+    <%= form.text_field :issuer, placeholder: "The Swedish Academy" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:year) %>
+    <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:audience) %>
+    <%= audience_selector form %>
+  </div>
+  <%= render "shared/form_actions", form: form, item: award %>
+<% end %>
+
+
+

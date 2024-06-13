@@ -1,0 +1,75 @@
+# frozen_string_literal: true
+
+class AccredsController < ApplicationController
+  before_action :set_profile, only: %i[index]
+  before_action :set_accred, only: %i[show edit update toggle]
+
+  # GET /profile/profile_id/accreds or /profile/profile_id/accreds.json
+  def index
+    # sleep 2
+    @person = Person.find(@profile.sciper)
+    @accreds = Accreditation.for_profile!(@profile).sort
+  end
+
+  # GET /accreds/1 or /accreds/1.json
+  def show; end
+
+  # GET /accreds/1/edit
+  def edit; end
+
+  # PATCH/PUT /accreds/1 or /accreds/1.json
+  def update
+    respond_to do |format|
+      if @accred.update(accred_params)
+        format.turbo_stream do
+          flash.now[:success] = "flash.generic.success.update"
+          render :update
+        end
+        format.json { render :show, status: :ok, location: accred_path(@accred) }
+      else
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          render :edit, status: :unprocessable_entity, locals: { profile: @profile, accreds: @accred }
+        end
+        format.json { render json: @accred.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def toggle
+    respond_to do |format|
+      if @accred.update(visible: !@accred.visible?)
+        format.turbo_stream do
+          render :update
+        end
+        format.json { render :show, status: :ok, location: @accred }
+      else
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          render :update, status: :unprocessable_entity
+        end
+        format.json { render json: @accred.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  private
+
+  def set_profile
+    @profile = Profile.find(params[:profile_id])
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_accred
+    @accred = Accred.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def accred_params
+    params.require(:accred).permit(
+      :position,
+      :hidden,
+      :hidden_addr
+    )
+  end
+end

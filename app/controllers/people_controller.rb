@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
     ActiveSupport::Notifications.instrument('set_show_data_part_1_admin_accreds') do
       @admin_data = @audience > 1 ? @person.admin_data : nil
       @editable = @person.can_edit_profile? && @profile.present?
-      @accreds = @person.accreds.select(&:visible?).sort
+      @accreds = @person.accreditations.select(&:visible?).sort
     end
 
     # TODO: would a sort of "PublicSection" class make things easier here ?
