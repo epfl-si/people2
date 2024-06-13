@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <%= render 'layouts/devbanner' if Rails.env.development? %>
+    <%= render 'layouts/envbanner' if !Rails.env.production? %>
     <%= render "layouts/elements/header" %>
 
     <div class="main-container pt-5 pb-5">

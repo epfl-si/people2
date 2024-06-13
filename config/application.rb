@@ -43,6 +43,9 @@ module People
     config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', true)
     routes.default_url_options[:host] = ENV.fetch('DEFAULT_URL', config.official_url)
 
+    vf = Rails.root.join("VERSION")
+    config.version = File.exist?(vf) ? File.read(vf) : "0.0.0"
+
     # This is a cookie-free Web app!
     # config.middleware.delete ActionDispatch::Cookies
     # config.middleware.delete ActionDispatch::Session::CookieStore

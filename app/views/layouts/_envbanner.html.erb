@@ -1,0 +1,57 @@
+<style type="text/css">
+  #envbanner {
+    font-size: 12px;
+    position: static;
+    top: 0;
+    width: 100%;
+    padding: 2px 1em;
+    background-color: #274C03;
+    color: #fff;
+    font: fixed;
+    margin-bottom: 4px;
+    height: 32px;
+  }
+</style>
+<% if Rails.env.development? %> 
+<style type="text/css">
+  #envbanner button {
+    background: #FFF;
+    color: #000;
+    border-color: #274C03;
+    padding: .375rem .75rem;
+    font-size: .875rem;
+    line-height: 0.4;
+    border-radius: 5px;
+    margin-right: 4em;
+    margin-right: 4em;
+  }
+  #envbanner button:hover {
+    background: #DDD;
+  }
+</style>
+<script type="text/javascript">
+function toggle_console() {
+  console.log("toggling console");
+  $('#console').toggle();
+}  
+</script>
+<% console # if Rails.env.development? && Rails.root.join('tmp/console-dev.txt').exist? %>
+<% end %>
+
+<div id="envbanner">
+  <% if Rails.env.development? %>
+    <button onclick="toggle_console()">console</button>
+    <span class='d-inline d-sm-none'>[XS]</span>
+    <span class='d-none d-sm-inline d-md-none'>[SM]</span>
+    <span class='d-none d-md-inline d-lg-none'>[MD]</span>
+    <span class='d-none d-lg-inline d-xl-none'>[LG]</span>
+    <span class='d-none d-xl-inline d-xxl-none'>[XL]</span>
+    <span class='d-none d-xxl-inline'>[XXL]</span>  
+    &#9679;
+    <%= I18n.locale.upcase %>
+    &#9679;
+  <% end %>
+
+  <%= Rails.env.to_s.upcase %>
+  &#9679; version <%= Rails.configuration.version %>
+</div>
