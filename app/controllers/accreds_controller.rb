@@ -8,7 +8,8 @@ class AccredsController < ApplicationController
   def index
     # sleep 2
     @person = Person.find(@profile.sciper)
-    @accreds = Accreditation.for_profile!(@profile).sort
+    @accreds = @profile.accreds
+    @accreds = Accred.for_profile!(@profile).sort if @accreds.empty?
   end
 
   # GET /accreds/1 or /accreds/1.json

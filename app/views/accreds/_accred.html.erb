@@ -1,8 +1,13 @@
-<%= turbo_frame_tag dom_id(accred.prefs), "data-sortable-url" => accred_path(accred.prefs, format: 'json') do %>
+<%= turbo_frame_tag dom_id(accred), "data-sortable-url" => accred_path(accred, format: 'json') do %>
   <div class="list-group-item list-group-item-borderless">
     <div class="row">
       <div class="col-md-8">
-        <h4 class="h5 mb-0"><%= position_with_class_delegate(accred,@person.class_delegate?,@person.gender) %></h4>
+        <h4 class="h5 mb-0">
+          <%= accred.t_unit %>
+        </h4>
+        <p>
+          <%= accred.role.t_label(@person.gender) %>
+        </p>
       </div>
     </div>
   </div>

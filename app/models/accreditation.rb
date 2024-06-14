@@ -3,7 +3,7 @@
 # Accreditation is the real accred coming from official EPFL accred data
 class Accreditation
   attr_accessor :prefs
-  attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order
+  attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order, :unit_label_fr, :unit_label_en
   attr_writer :unit, :botweb
 
   include Translatable
@@ -48,25 +48,28 @@ class Accreditation
     prefs = profile.accreds
     unless prefs.empty?
       pbu = prefs.index_by(&:unit_id)
-      positions = []
+      orders = []
       accreds.each do |a|
         if pbu.key?(a.unit_id)
           a.prefs = pbu[a.unit_id]
-          positions << a.prefs.position
+          orders << a.prefs.position
         end
       end
-      last_position = positions.max
+      last_order = orders.max
     end
-    next_position = (last_position || 0) + 1
+    next_order = (last_order || 0) + 1
     accreds.select { |a| a.prefs.nil? }.sort { |a, b| a.accred_order <=> b.accred_order }.each do |a|
       a.prefs = profile.accreds.new(
         {
-          unit_id: a.unit_id,
           sciper: sciper,
-          position: next_position,
+          unit_id: a.unit_id,
+          unit_en: a.unit_label_en,
+          unit_fr: a.unit_label_fr,
+          role: a.position,
+          position: next_order,
         }.merge(Accred::DEFAULTS)
       )
-      next_position += 1
+      next_order += 1
     end
     # TODO: cleanup unused accred_prefs if profile.accred_prefs.size > accreds.size
     accreds

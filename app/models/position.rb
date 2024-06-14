@@ -14,6 +14,23 @@ class Position
     @label_frf = h.key?('labelxx') ? h['labelxx'] : h['labelfr']
   end
 
+  def self.load(payload)
+    return nil if payload.nil?
+
+    data = YAML.safe_load(payload)
+    new(data)
+  end
+
+  def self.dump(position)
+    YAML.safe_dump(
+      "id" => position.id,
+      "labelen" => position.label_en,
+      "labelfr" => position.label_frm,
+      "labelinclusive" => position.label_fri,
+      "labelxx" => position.label_frf
+    )
+  end
+
   # In the original People, prof were determined by the followint regex
   # /ordinaire|tenure|assoc|bours|enseignement|titulaire|professeur invit/
   # TODO: there must be a better way using accred properties or similar
