@@ -2,12 +2,11 @@
 
 class AccredsController < ApplicationController
   before_action :set_profile, only: %i[index]
-  before_action :set_accred, only: %i[show edit update toggle]
+  before_action :set_accred, only: %i[show edit update toggle toggle_addr]
 
   # GET /profile/profile_id/accreds or /profile/profile_id/accreds.json
   def index
     # sleep 2
-    @person = Person.find(@profile.sciper)
     @accreds = @profile.accreds
     @accreds = Accred.for_profile!(@profile).sort if @accreds.empty?
   end
@@ -37,9 +36,30 @@ class AccredsController < ApplicationController
     end
   end
 
+  # PATCH/PUT /accreds/1/toggle or /accreds/1/toggle.json
   def toggle
     respond_to do |format|
       if @accred.update(visible: !@accred.visible?)
+        format.turbo_stream do
+          render :update
+        end
+        format.json { render :show, status: :ok, location: @accred }
+      else
+        # revert
+        @accred.visible = !@accred.visible?
+        format.turbo_stream do
+          flash.now[:error] = "flash.accred.cannot_hide_all"
+          render :update, status: :unprocessable_entity
+        end
+        format.json { render json: @accred.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /accreds/1/toggle_address or /accreds/1/toggle_address.json
+  def toggle_addr
+    respond_to do |format|
+      if @accred.update(visible_addr: !@accred.visible_addr?)
         format.turbo_stream do
           render :update
         end
@@ -69,8 +89,8 @@ class AccredsController < ApplicationController
   def accred_params
     params.require(:accred).permit(
       :position,
-      :hidden,
-      :hidden_addr
+      :visible,
+      :visible_addr
     )
   end
 end

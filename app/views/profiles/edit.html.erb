@@ -14,7 +14,7 @@
 <hr>
 
 <section id="accreds_section">
-<%= turbo_frame_tag "accreds", src: profile_accreds_path(@profile), loading: :lazy do %>
+<%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
 Loading awards... (for demoing purpose, an artificial delay is added)
 <% end %>
 </section>
@@ -25,13 +25,8 @@ Loading experiences... (for demoing purpose, an artificial delay is added)
 <% end %>
 </section>
 
-
-<% if false %>
-
 <section id="awards_section">
 <%= turbo_frame_tag "awards_index", src: profile_awards_path(@profile), loading: :lazy do %>
 Loading awards... (for demoing purpose, an artificial delay is added)
 <% end %>
 </section>
-
-<% end %>

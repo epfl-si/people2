@@ -9,7 +9,6 @@ class Person
   # has one profile
 
   def initialize(person)
-    Rails.logger.debug person
     @data = person
     @position = @data.delete('position')
     @position = Position.new(@position) unless @position.nil?

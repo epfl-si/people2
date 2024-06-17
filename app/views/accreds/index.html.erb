@@ -1,12 +1,11 @@
 <%= turbo_frame_tag :accreds_index do %>
+	<% if @accreds.size > 1 %>
+		<%= tag.h2(t('title.accreds')) %>
 
-<%= tag.h2(t('title.accreds')) %>
-
-<%= turbo_frame_tag "accreds", src: nil, target: nil, data: {controller: "sortable"} do %>
-	<% @accreds.each do |accred| %>
-		<%= render 'accred', accred: accred %>
+		<%= turbo_frame_tag "accreds", src: nil, target: nil, data: {controller: "sortable"} do %>
+			<% @accreds.each do |accred| %>
+				<%= render 'accred', accred: accred %>
+			<% end %>
+		<% end %>
 	<% end %>
-<% end %>
-
-
 <% end %>

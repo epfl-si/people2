@@ -227,7 +227,7 @@ migrate: dcup
 	docker compose exec webapp ./bin/rails db:migrate
 
 ## run rails migration and seed with initial data
-seed: migrate restore_webmocks
+seed: migrate webmocks
 	docker compose exec webapp bin/rails db:seed
 	make courses
 

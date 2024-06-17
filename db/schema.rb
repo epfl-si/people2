@@ -16,11 +16,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_105644) do
     t.integer "unit_id"
     t.integer "position", null: false
     t.string "sciper"
-    t.boolean "hidden"
-    t.boolean "hidden_addr"
+    t.boolean "visible", default: true
+    t.boolean "visible_addr", default: true
     t.string "unit_fr"
     t.string "unit_en"
     t.text "role", null: false
+    t.string "gender"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_accreds_on_profile_id_and_position", unique: true

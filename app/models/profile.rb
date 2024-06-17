@@ -71,6 +71,10 @@ class Profile < ApplicationRecord
     where(sciper: sciper).first
   end
 
+  def person
+    @person ||= Person.find(sciper)
+  end
+
   def photo
     show_photo ? photo! : nil
   end

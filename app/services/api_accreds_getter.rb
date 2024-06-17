@@ -18,6 +18,12 @@ class APIAccredsGetter < EpflAPIService
     new(url)
   end
 
+  def self.for_sciper_and_unit(sciper, unit_id, baseurl = Rails.application.config_for(:epflapi).backend_url)
+    url = URI.join(baseurl, "v1/accreds")
+    url.query = URI.encode_www_form(persid: sciper, unitid: unit_id)
+    new(url)
+  end
+
   def self.for_status(status_id, baseurl = Rails.application.config_for(:epflapi).backend_url)
     url = URI.join(baseurl, "v1/accreds")
     url.query = URI.encode_www_form(statusid: status_id)

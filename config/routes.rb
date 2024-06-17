@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :educations, shallow: true
     resources :experiences, shallow: true
     resources :pictures, shallow: true, only: %i[index create destroy]
-    resources :accreds, shallow: true, only: %i[index show update toggle]
+    resources :accreds, shallow: true, only: %i[index show update]
     member do
       patch :set_favorite_picture
     end
@@ -31,7 +31,8 @@ Rails.application.routes.draw do
   put 'awards/:id/toggle', to: 'awards#toggle', as: 'toggle_award'
   put 'educations/:id/toggle', to: 'educations#toggle', as: 'toggle_education'
   put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
-  put 'accred_prefs/:id/toggle', to: 'accred_prefs#toggle', as: 'toggle_accred'
+  put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
+  put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
 
   resources :names, only: %i[index show update]
 

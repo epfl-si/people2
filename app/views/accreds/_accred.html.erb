@@ -1,13 +1,29 @@
 <%= turbo_frame_tag dom_id(accred), "data-sortable-url" => accred_path(accred, format: 'json') do %>
   <div class="list-group-item list-group-item-borderless">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col">
         <h4 class="h5 mb-0">
           <%= accred.t_unit %>
         </h4>
         <p>
-          <%= accred.role.t_label(@person.gender) %>
+          <span class='visibility'>
+          <%= accred.visible? ?
+            icon_text("visibility.visible", 'eye') :
+            icon_text("visibility.hidden", 'eye-off') 
+          %>
+          </span>
+          <span class='visibility'>
+            <%= accred.visible_addr? ?
+              icon_text("visibility.visible_address", 'map-pin') :
+              icon_text("visibility.hidden_address", 'map-pin') 
+            %>
+          </span>
+          <%= accred.role.t_label(accred.gender) %>
         </p>
+      </div>
+      <div class="col text-right">
+        <%= link_to accred.visible? ? icon_text('action.make_hidden', 'eye-off') : icon_text('action.make_visible', 'eye'), toggle_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
+        <%= link_to accred.visible_addr? ? icon_text('action.make_address_hidden', 'map-pin') : icon_text('action.make_address_visible', 'map-pin'), toggle_addr_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
       </div>
     </div>
   </div>

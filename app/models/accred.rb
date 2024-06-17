@@ -14,8 +14,8 @@ class Accred < ApplicationRecord
   validate :at_least_one_visible, on: :update
 
   DEFAULTS = {
-    hidden: false,
-    hidden_addr: false,
+    visible: true,
+    visible_addr: true,
   }.freeze
 
   def self.for_sciper(sciper)
@@ -30,21 +30,19 @@ class Accred < ApplicationRecord
     accreditations.map(&:prefs)
   end
 
-  def visible?
-    !hidden
+  def hidden?
+    !visible?
   end
 
-  def data=(accreditation)
-    raise 'Unexpected class' unless p.is_a?(Accreditation)
-
-    @data = accreditation
+  def hidden_addr?
+    !visible_addr?
   end
 
   def at_least_one_visible
-    return true unless hidden_changed? && hidden
+    return true unless visible_changed? && !visible?
+    return true unless profile.accreds.where(visible: true).count < 2
 
-    return unless profile.accreds.where(hidden: false).count < 2
-
-    errors.add(:hidden, "cannot_hide_all_accreds")
+    errors.add(:visible, "cannot_hide_all_accreds")
+    false
   end
 end

@@ -41,6 +41,8 @@ en:
     edit_pictures: "Edit / Change photo"
     hide_search_form: "Hide the search form"
     hide: "Hide"
+    make_address_hidden: "Hide address"
+    make_address_visible: "Show address"
     make_hidden: "Hide"
     make_visible: "Show"
     of: "of"
@@ -77,6 +79,8 @@ en:
       one: "An error prevented this record to be updated"
       other: "%{count} errors prevented this record to be updated"
   flash:
+    accred:
+      cannot_hide_all: "Cannot hide all accreditations"
     generic:
       success:
         create: "Record created succesfully"
@@ -183,6 +187,8 @@ en:
     intranet: "intranet only"
     authenticated: "EPFL users only"
     editor: "Draft (editor only)"
+    visible_address: "address"
+    hidden_address: "NO address"
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"
