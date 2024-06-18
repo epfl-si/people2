@@ -1,6 +1,8 @@
 <div class="list-group-item list-group-item-borderless education-list">
-  <p><strong><%= education.t_title %></strong></p>
-  <p><%= education.t_field %></p>
-  <p><%= education.school %></p>
-  <p><%= education.year %></p>
+  <p><strong><%= education.title_en %> - <%= education.school %></strong></p>
+  <p><%= education.field_en %></p>
+  <div class="item-metadata">
+    <p class="item-date"><%= [education.year_begin, education.year_end].compact.join("–") %></p>
+  </div>
+    <p class="small"><%= education.director %></p>
 </div>
