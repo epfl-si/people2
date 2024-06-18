@@ -6,7 +6,8 @@ gio_edu_uni:
   field_fr: "Physique"
   director: "Maria Peressi"
   school:   "Università di Trieste"
-  year:     1997
+  year_begin: 1990
+  year_end:  1997
   visible: true
   audience: 0
   position: 1
@@ -18,7 +19,8 @@ gio_edu_phd:
   field_fr: "Physique de la matiere condensée"
   director: "Alfonso Baldereschi"
   school:   "EPFL"
-  year:     2002
+  year_begin: 2002
+  year_end:  2024
   visible: true
   audience: 0
   position: 2
