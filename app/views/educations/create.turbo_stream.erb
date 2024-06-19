@@ -1,0 +1,5 @@
+<%= turbo_stream.append "educations", partial: "educations/education", locals: { education: @education } %>
+  <%= turbo_stream.append "education" do %>
+    <%= render "editable_education", education: @education %> 
+  <% end %>
+<% end %>
