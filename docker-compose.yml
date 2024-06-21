@@ -140,6 +140,16 @@ services:
     tty: true
     stdin_open: true
 
+  noc:
+    image: jonlabelle/network-tools
+    stdin_open: true
+    tty: true
+    profiles:
+      - noc
+    networks:
+      - traefik
+      - default
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:

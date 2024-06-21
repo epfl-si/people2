@@ -107,6 +107,10 @@ redis:
 devcache:
 	docker compose exec webapp bin/rails dev:cache
 
+## start a shell within a container including all usefull network tools
+noc:
+	docker compose --profile noc run --rm noc 
+
 # -------------------------------------------------------------- Container image
 .PHONY: build rebuild
 
