@@ -129,8 +129,8 @@ class Accreditation
     @visible
   end
 
-  def hidden_address?
-    prefs.present? && prefs.hidden_addr
+  def hidden_addr?
+    prefs.present? && prefs.hidden_addr?
   end
 
   def order

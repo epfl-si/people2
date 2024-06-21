@@ -3,7 +3,7 @@
     <div class="row pt-2 pb-2">
       <div class="col-md-5">
         <p itemprop="location" itemscope="" itemtype="http://schema.org/Place">
-          <% unless accred.hidden_address? || (a=@person.address(accred.unit_id)).nil? %>
+          <% unless accred.hidden_addr? || (a=@person.address(accred.unit_id)).nil? %>
             <strong itemprop="name"><%= a.hierarchy %></strong>
             <br>
             <span itemprop="address">
@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="col-md-7">
-        <% unless accred.hidden_address? || (phones=@person.visible_phones(accred.unit_id)).nil? %>
+        <% unless accred.hidden_addr? || (phones=@person.visible_phones(accred.unit_id)).nil? %>
           <p>
             <% phones.each_with_index do |phone, phindx| %>
               <span class="people-btn">
