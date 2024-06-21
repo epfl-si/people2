@@ -42,6 +42,12 @@ reload: envcheck
 ## start keycloack
 kc: envcheck
 	docker compose --profile kc up -d keycloak
+	docker compose --profile kc logs -f keycloak
+	curl https://keycloak.dev.jkldsa.com/realms/rails/.well-known/openid-configuration
+
+## stop keycloack
+kcdown: envcheck
+	docker compose --profile kc stop keycloak
 
 # atela:
 # 	docker compose --profile atela up -d atela
@@ -250,6 +256,13 @@ reseed:
 nukedb:
 	echo "DROP DATABASE people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
+
+## delete keycloak database and recreate it
+rekc:
+	docker compose --profile kc stop keycloak
+	echo "DROP DATABASE keycloak" | $(SQL)
+	cat keycloak/initdb.d/keycloak-database-and-user.sql | $(SQL)
+	@echo "Keycloak db reset. `make kc` to start it."
 
 # ---------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder

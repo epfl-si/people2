@@ -75,6 +75,8 @@ end
 
 # ------------------------------------------------------------------------ Added
 
+gem "devise", "~> 4.9"
+
 # Database adapters
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
 # gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
@@ -82,6 +84,11 @@ gem 'mysql2'
 
 # # To enable CORS from keycloak
 # gem 'rack-cors'
+
+gem 'omniauth-cas'
+gem 'omniauth_openid_connect'
+gem 'omniauth-rails_csrf_protection'
+# gem 'omniauth-tequila'
 
 # https://github.com/paper-trail-gem/paper_trail
 #

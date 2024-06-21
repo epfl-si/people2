@@ -23,7 +23,7 @@
   "clients" : [
     {
       "clientId" : "graphiql/LoginButton",
-      "baseUrl" : "http://localhost:3000/",
+      "baseUrl" : "https://people.dev.jkldsa.com/",
       "enabled" : true,
       "redirectUris" : [ "*" ],
       "webOrigins" : [ "*" ],
@@ -36,7 +36,7 @@
     },
     {
       "clientId" : "hello_rails",
-      "baseUrl" : "http://localhost:3000/",
+      "baseUrl" : "https://people.dev.jkldsa.com/",
       "enabled" : true,
       "redirectUris" : [ "*" ],
       "webOrigins" : [ "*" ],

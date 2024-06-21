@@ -26,27 +26,29 @@ services:
       - start-dev
       - --import-realm
     environment:
+      KC_HOSTNAME: "https://keycloak.docker.jkldsa.com"
+      # KC_HOSTNAME_PORT: 443
+      KC_HTTP_ENABLED: false
       KC_DB: mariadb
       KC_DB_URL: jdbc:mariadb://mariadb:3306/keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: mariadb
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      # KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost}
-      # KC_HOSTNAME: keycloak.epfl.cz
-      # KC_HOSTNAME_PORT: 443
-      # KC_HTTP_ENABLED: true
-    ports:
-      # Since the Keycloak password is easy to guess, opening up this
-      # port further than localhost is *not* recommended.
-      - "${KCPORTEXT:-127.0.0.1:8080:}8080"
+    # ports:
+    #   # Since the Keycloak password is easy to guess, opening up this
+    #   # port further than localhost is *not* recommended.
+    #   - "${KCPORTEXT:-127.0.0.1:8080:}8080"
     labels:
       - traefik.docker.network=traefik
-      - traefik.http.services.keycloak.loadbalancer.server.port=${KCPORT:-8080}
+      - traefik.http.services.keycloak.loadbalancer.server.port=8080
       - traefik.http.routers.keycloak.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
       - traefik.http.routers.keycloak.tls=true
+      - traefik.http.services.keycloak2.loadbalancer.server.port=${KCPORT:-8080}
+      - traefik.http.routers.keycloak2.rule=Host("keycloak.${DOCKERDOMAIN:-docker.jkldsa.com}")
+      - traefik.http.routers.keycloak2.tls=true
     volumes:
-      - ./keycloak/import_${KCREALM:-default}:/opt/keycloak/data/import
+      - ./keycloak/import:/opt/keycloak/data/import
     networks:
       - traefik
       - default

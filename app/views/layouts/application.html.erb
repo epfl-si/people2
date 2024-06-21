@@ -14,6 +14,7 @@
 
   <body>
     <%= render 'layouts/envbanner' if !Rails.env.production? %>
+    <%= button_to "Sign in with Keycloak", user_oidc_omniauth_authorize_path, method: :post, data: { turbo: false } %>
     <%= render "layouts/elements/header_minimal" %>
     <div class="main-container">
 

@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :experiences
-  resources :boxes
-  get 'names/update'
-  namespace :oidc do
-    # URL prefix for controllers in this section is `/oidc/`, and
-    # controllers live in module `OIDC` (not "Oidc"), thanks to
-    # the `inflect.acronym("OIDC")` stanza in ./initializers/inflections.rb
-    get 'config', to: 'frontend_config#get' # i.e. OIDC::FrontendConfigController#get
-  end
+  # namespace :oidc do
+  #   # URL prefix for controllers in this section is `/oidc/`, and
+  #   # controllers live in module `OIDC` (not "Oidc"), thanks to
+  #   # the `inflect.acronym("OIDC")` stanza in ./initializers/inflections.rb
+  #   get 'config', to: 'frontend_config#get' # i.e. OIDC::FrontendConfigController#get
+  # end
 
   # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
   # post '/graphql', to: 'graphql#execute'
+
+  devise_for :users
 
   resources :profiles, only: %i[edit update] do
     resources :boxes, shallow: true
