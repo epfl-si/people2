@@ -34,6 +34,9 @@ function toggle_console() {
   console.log("toggling console");
   $('#console').toggle();
 }
+$('#console').ready(function() {
+  toggle_console();
+});
 </script>
 <% console # if Rails.env.development? && Rails.root.join('tmp/console-dev.txt').exist? %>
 <% end %>
