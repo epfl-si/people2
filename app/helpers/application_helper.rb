@@ -28,11 +28,19 @@ module ApplicationHelper
     end
   end
 
+  # span with icon and text
   def icon_text(txt, icon)
     tag.span do
       concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
       concat t(txt)
     end
+  end
+
+  # icon + span with text
+  def icon_label(txt, icon)
+    res = content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
+    res << tag.span(t(txt), class: "label")
+    res
   end
 
   def icon(icon)

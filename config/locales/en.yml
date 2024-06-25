@@ -56,6 +56,8 @@ en:
     update_award: "Udate award"
     create_experience: "Create new work experience"
     update_experience: "Udate work experience"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
     upload_image: "Upload the image"
     validate: "Submit"
 
@@ -69,7 +71,7 @@ en:
     picture:
       zero: "Something prevented your picture to be updated (should now happen)"
       one: "An error prevented your picture to be updated"
-      other: "#{count} errors prevented your picture to be updated"      
+      other: "#{count} errors prevented your picture to be updated"
     profile:
       zero: "Something prevented your profile to be updated (should now happen)"
       one: "An error prevented your profile to be updated"
@@ -205,7 +207,6 @@ en:
 
   work_experience: "Work Experience"
 
-
   activerecord:
     models:
       award: "award"
@@ -217,7 +218,7 @@ en:
     attributes:
       person:
         function: main function
-        
+
       experience:
         location: "copany or location or institution"
         period: "period (years)"
@@ -225,13 +226,13 @@ en:
         title_fr: "title (fr)"
         year_begin: "first year"
         year_end: "last year"
-    errors: 
-      models: 
-        name: 
-          attributes: 
-            usual_firstname: 
+    errors:
+      models:
+        name:
+          attributes:
+            usual_firstname:
               not_in_official: "Should be composed of names included in the official first name."
-            usual_lastname: 
+            usual_lastname:
               not_in_official: "Should be composed of names included in the official family name."
 
         experience:

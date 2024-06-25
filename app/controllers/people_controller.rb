@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PeopleController < ApplicationController
-  protect_from_forgery
+  # protect_from_forgery
   layout 'public'
 
   def show

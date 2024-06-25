@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PicturesController < ApplicationController
+class PicturesController < BackendController
   before_action :set_profile, only: %i[index create]
   before_action :set_picture, only: %i[destroy]
 

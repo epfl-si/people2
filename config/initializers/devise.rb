@@ -36,7 +36,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  # require 'devise/orm/active_record'
+  require 'devise/orm/active_record'
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -314,8 +314,8 @@ Devise.setup do |config|
   config.omniauth :openid_connect, {
     name: :oidc,
     discovery: true,
-    issuer: "https://keycloak.docker.jkldsa.com/realms/rails/.well-known/openid-configuration",
-    scope: %i[openid email sciper],
+    issuer: "https://keycloak.dev.jkldsa.com/realms/rails",
+    scope: %i[openid email], # scope: %i[openid profile email],
     response_type: :code,
     uid_field: "sciper",
     client_options: {
@@ -323,9 +323,13 @@ Devise.setup do |config|
       scheme: "http",
       host: "keycloak.dev.jkldsa.com",
       authorization_endpoint: "/realms/rails/protocol/openid-connect/auth",
-      identifier: "rails",
+      identifier: "hello_rails",
       # secret: ENV["OP_SECRET_KEY"],
-      redirect_uri: "https://people.dev.jkldsa.com/users/auth/openid_connect/callback",
+      # redirect_uri: "https://people.dev.jkldsa.com/users/auth/oidc/callback",
+      redirect_uri: "https://people.dev.jkldsa.com/users/auth/oidc/callback",
+      authorize_params: {
+        realm: "rails",
+      }
     },
   }
 end

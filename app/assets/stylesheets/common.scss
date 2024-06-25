@@ -9,3 +9,9 @@
   right: 0.5rem;
   bottom: 0.5rem;
 }
+.btn-link {
+    padding: 0;
+    span.label {
+        padding: 0 0.4rem 0.4rem 0;
+    }
+}

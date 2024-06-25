@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ExperiencesController < ApplicationController
+class ExperiencesController < BackendController
   before_action :set_profile, only: %i[index create new]
   before_action :set_experience, only: %i[show edit update destroy toggle]
 

@@ -2,7 +2,7 @@
 # is *not* meant for production.
 # https://www.keycloak.org/server/reverseproxy
 
-version: '3.9'
+version: "3.9"
 name: people2023
 
 services:
@@ -26,7 +26,7 @@ services:
       - start-dev
       - --import-realm
     environment:
-      KC_HOSTNAME: "https://keycloak.docker.jkldsa.com"
+      KC_HOSTNAME: "https://keycloak.dev.jkldsa.com"
       # KC_HOSTNAME_PORT: 443
       KC_HTTP_ENABLED: false
       KC_DB: mariadb
@@ -40,13 +40,15 @@ services:
     #   # port further than localhost is *not* recommended.
     #   - "${KCPORTEXT:-127.0.0.1:8080:}8080"
     labels:
+      # keycloak
       - traefik.docker.network=traefik
-      - traefik.http.services.keycloak.loadbalancer.server.port=8080
-      - traefik.http.routers.keycloak.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
-      - traefik.http.routers.keycloak.tls=true
-      - traefik.http.services.keycloak2.loadbalancer.server.port=${KCPORT:-8080}
-      - traefik.http.routers.keycloak2.rule=Host("keycloak.${DOCKERDOMAIN:-docker.jkldsa.com}")
-      - traefik.http.routers.keycloak2.tls=true
+      - traefik.http.services.kc.loadbalancer.server.port=8080
+      - traefik.http.routers.kc.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.kc.tls=true
+      # # keycloak management interface
+      # - traefik.http.services.kcm.loadbalancer.server.port=9000
+      # - traefik.http.routers.kcm.rule=Host("kcm.${DOMAIN:-dev.jkldsa.com}")
+      # - traefik.http.routers.kcm.tls=true
     volumes:
       - ./keycloak/import:/opt/keycloak/data/import
     networks:
@@ -70,7 +72,7 @@ services:
     networks:
       - default
 
-  # valkey opensource replacement of redis 
+  # valkey opensource replacement of redis
   # https://hub.docker.com/r/valkey/valkey/
   cache:
     image: valkey/valkey:7.2
@@ -113,6 +115,9 @@ services:
       EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       OFFLINE_CACHEDIR: "/srv/filecache"
+    extra_hosts:
+      - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
+      - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
     volumes:
       - ./:/srv/app
       - storage:/srv/app/storage
@@ -134,8 +139,6 @@ services:
 
       # - traefik.http.routers.peoplengrok.rule=Host("2.tcp.eu.ngrok.io")
       # - traefik.http.routers.peoplengrok.tls=true
-    extra_hosts:
-      - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
     networks:
       - traefik
       - default
@@ -143,7 +146,7 @@ services:
     stdin_open: true
 
   noc:
-    image: jonlabelle/network-tools
+    image: ${NOCIMAGE:-jonlabelle/network-tools}
     stdin_open: true
     tty: true
     profiles:
@@ -173,7 +176,7 @@ services:
   # https://github.com/SeleniumHQ/docker-selenium
   selenium:
     image: selenium/standalone-chrome:112.0
-    shm_size: '2gb'
+    shm_size: "2gb"
     profiles:
       - test
     labels:

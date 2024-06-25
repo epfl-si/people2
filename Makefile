@@ -16,10 +16,12 @@ ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variab
 
 REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
 
+# NOCIMAGE ?= nicolaka/netshoot
+NOCIMAGE ?= jonlabelle/network-tools
 # Figure out the ip address of the host machine so that we can use "public" 
 # dns names served by traefik from within the containers when the name is
 # resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs. 
-DOCKER_IP ?= $(shell docker run -it --rm nicolaka/netshoot dig +short host.docker.internal)
+DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.internal)
 
 export
 
@@ -69,7 +71,7 @@ tunnel_down:
 	./bin/tunneld.sh -m local stop
 
 dcup: envcheck Gemfile.lock $(ELE_FILES)
-	docker compose up --no-recreate -d 
+	docker compose up --no-recreate -d
 
 Gemfile.lock: Gemfile.lock.docker
 	cp $< $@
@@ -260,9 +262,11 @@ nukedb:
 ## delete keycloak database and recreate it
 rekc:
 	docker compose --profile kc stop keycloak
-	echo "DROP DATABASE keycloak" | $(SQL)
-	cat keycloak/initdb.d/keycloak-database-and-user.sql | $(SQL)
-	@echo "Keycloak db reset. `make kc` to start it."
+	echo "DROP DATABASE IF EXISTS keycloak;" | $(SQL)
+	echo "CREATE DATABASE keycloak;" | $(SQL)
+	# cat keycloak/initdb.d/keycloak-database-and-user.sql | $(SQL)
+	echo "GRANT ALL PRIVILEGES ON keycloak.* TO 'keycloak'@'%';" | $(SQL)
+	@echo "Keycloak db reset."
 
 # ---------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder

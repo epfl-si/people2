@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class ProfilesController < ApplicationController
-  protect_from_forgery
-  before_action :ensure_auth
+class ProfilesController < BackendController
   before_action :set_profile, except: [:set_favorite_picture]
 
   def edit
@@ -57,11 +55,6 @@ class ProfilesController < ApplicationController
   end
 
   private
-
-  # TODO: implement this!
-  def ensure_auth
-    true
-  end
 
   def set_profile
     @profile = Profile.find(params[:id])

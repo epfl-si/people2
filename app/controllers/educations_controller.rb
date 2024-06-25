@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class EducationsController < ApplicationController
+class EducationsController < BackendController
 end

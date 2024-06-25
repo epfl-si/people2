@@ -1,13 +1,13 @@
 <header role="banner" class="header header-light">
 	<div class="header-light-content">
-		<!-- LOGO -->		
+		<!-- LOGO -->
 		<a class="logo" href="https://www.epfl.ch">
 			<img src="<%= belurl 'icons/epfl-logo.svg' %>" alt="Logo EPFL, Ecole polytechnique fédérale de Lausanne" class="img-fluid">
 		</a>
     <h1 class="site-title">
       <a href="/">ONLINE PEOPLE DIRECTORY</a>
     </h1>
-		<!-- SEARCH -->		
+		<!-- SEARCH -->
     <%= form_with url: "https://search.epfl.ch", method: :get, html: {class: "d-xl-none"} do |form| %>
       <%= form.hidden_field :filter, value: "people" %>
       <a id="search-mobile-toggle" class="search-mobile-toggle searchform-controller" href="#">
@@ -47,6 +47,7 @@
 		<nav class="nav-lang nav-lang-short ml-auto pr-lg-5">
       <ul>
         <%= yield :menu %>
+        <%= render 'layouts/elements/user' %>
         <%= language_switcher %>
       </ul>
 		</nav>
