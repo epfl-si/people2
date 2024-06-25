@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :register_client_origin
 
-  # INTRANET_RE = Regexp.new(ENV.fetch("INTRANET_RE", '^128\.17[89]'))
-
   def devindex; end
 
   def self.unique_counter_value
@@ -16,6 +14,27 @@ class ApplicationController < ActionController::Base
 
   def default_url_options
     { lang: I18n.locale }
+  end
+
+  def compute_audience(sciper)
+    @audience = if user_signed_in?
+                  if current_user.sciper == sciper
+                    3
+                  else
+                    2
+                  end
+                elsif @is_intranet_client
+                  1
+                else
+                  0
+                end
+    return unless Rails.env.development?
+
+    fe = ENV.fetch('FORCE_AUDIENCE', false)
+    return unless fe
+
+    @original_audience = @audience
+    @audience = [[0, fe.to_i].max, 3].min
   end
 
   private

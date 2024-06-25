@@ -191,6 +191,11 @@ en:
     editor: "Draft (editor only)"
     visible_address: "address"
     hidden_address: "NO address"
+    public_access: "public"
+    intranet_access: "intranet"
+    authenticated_access: "user"
+    editor_access: "full"
+
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"

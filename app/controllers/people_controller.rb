@@ -5,7 +5,6 @@ class PeopleController < ApplicationController
   layout 'public'
 
   def show
-    set_audience
     set_show_data
     @page_title = "EPFL - #{@person.name.display}"
 
@@ -21,18 +20,13 @@ class PeopleController < ApplicationController
 
   private
 
-  # TODO
-  def set_audience
-    # @audience = rand(0..3)
-    @audience = 3
-  end
-
   def set_show_data
     ActiveSupport::Notifications.instrument('set_base_data') do
       @person = Person.find(params[:sciper_or_name])
       @sciper = @person.sciper
       @profile = @person.profile
     end
+    compute_audience(@sciper)
 
     ActiveSupport::Notifications.instrument('set_show_data_part_1_admin_accreds') do
       @admin_data = @audience > 1 ? @person.admin_data : nil

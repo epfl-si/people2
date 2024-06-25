@@ -115,6 +115,7 @@ services:
       EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       OFFLINE_CACHEDIR: "/srv/filecache"
+      FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"

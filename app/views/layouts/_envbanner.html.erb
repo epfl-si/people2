@@ -52,6 +52,13 @@ function toggle_console() {
     &#9679;
     <%= user_signed_in? ? "signed in as #{current_user.name}" : "NOT signed-in" %>
     &#9679;
+    <% if @audience.present? %>
+      <%= @original_audience.present? ?
+        "Access: #{visibility_access(@original_audience)} -> #{visibility_access(@audience)}" :
+        "Access: #{visibility_access(@audience)}"
+      %>
+      &#9679;
+    <% end %>
   <% end %>
 
   <%= Rails.env.to_s.upcase %>
