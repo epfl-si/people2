@@ -9,8 +9,8 @@ class ProfilePolicy < ApplicationPolicy
   def update?
     Rails.logger.debug(user.inspect)
     # `user` is a performing subject,
-    # `record` is a target object (post we want to update)
-    # user.admin? || (user.id == record.user_id)
-    user.sciper == record.sciper
+    # `record` is a target object (the profile in this case)
+    # in order fastest -> slowest
+    (user.sciper == record.sciper) || user.admin? || user.admin_for_profile?(record)
   end
 end

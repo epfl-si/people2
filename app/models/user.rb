@@ -18,9 +18,23 @@ class User < ApplicationRecord
     end
   end
 
-  def can_edit_profile?(profile)
-    true if sciper == profile.sciper
-    # TODO: it might be someone with write access to the profile
+  def admin_for_profile?(_profile)
+    # TODO: translate from original perl implementation
+    # my $units_admin = $self->{Accreds}->getAllUnitsWhereHasRight ($login_sciper, $RIGHT_GESPROFILE);
+    # if ($units_admin) {
+    #   foreach my $unit ($self->{Accreds}->getAllUnitsOfPerson($sciper)) {
+    #     next unless $unit;
+    #     return 1 if defined $units_admin->{$unit};
+    #   }
+    #   return 0;
+    # } else {
+    #   return 0
+    # }
+    false
+  end
+
+  def admin?
+    Rails.configuration.admin_scipers.include?(sciper)
   end
 end
 

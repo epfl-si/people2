@@ -115,6 +115,7 @@ services:
       OFFLINE_CACHEDIR: "/srv/filecache"
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
+      ADMIN_SCIPERS: ${ADMIN_SCIPERS}
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
