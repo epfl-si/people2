@@ -41,20 +41,7 @@ reload: envcheck
 	docker compose stop webapp
 	KILLPID=1 docker compose up -d
 
-## start keycloack
-kc: envcheck
-	docker compose --profile kc up -d keycloak
-	docker compose --profile kc logs -f keycloak
-	curl https://keycloak.dev.jkldsa.com/realms/rails/.well-known/openid-configuration
-
-## stop keycloack
-kcdown: envcheck
-	docker compose --profile kc stop keycloak
-
-# atela:
-# 	docker compose --profile atela up -d atela
-
-## stop the basic servers (all except keycloak and test)
+## stop the basic servers (all except test)
 down: tunnel_down
 	docker compose down
 

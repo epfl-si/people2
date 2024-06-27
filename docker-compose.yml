@@ -54,8 +54,6 @@ services:
     networks:
       - traefik
       - default
-    profiles:
-      - kc
 
   # MariaDB is used by Keycloak for persistence. The Rails application
   # itself uses sqlite in development (which unfortunately, is not an
