@@ -75,6 +75,7 @@ end
 
 # ------------------------------------------------------------------------ Added
 
+gem "action_policy"
 gem "devise", "~> 4.9"
 
 # Database adapters

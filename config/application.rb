@@ -54,5 +54,7 @@ module People
     # config.assets.configure do |env|
     #   SprocketsRequireInGemExtension.inject_for_javascript(env)
     # end
+
+    config.exceptions_app = routes
   end
 end

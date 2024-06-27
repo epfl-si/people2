@@ -24,13 +24,13 @@ class PeopleController < ApplicationController
     ActiveSupport::Notifications.instrument('set_base_data') do
       @person = Person.find(params[:sciper_or_name])
       @sciper = @person.sciper
-      @profile = @person.profile
+      # @profile will be null if @person is not allowed to have a profile
+      @profile = @person.profile!
     end
     compute_audience(@sciper)
 
     ActiveSupport::Notifications.instrument('set_show_data_part_1_admin_accreds') do
       @admin_data = @audience > 1 ? @person.admin_data : nil
-      @editable = @person.can_edit_profile? && @profile.present?
       @accreds = @person.accreditations.select(&:visible?).sort
     end
 
@@ -38,9 +38,9 @@ class PeopleController < ApplicationController
     #       keep in mind that here we only manage boxes but we will have
     #       more content like awards, work experiences, infoscience pubs etc.
     #       that is not just a simple free text box with a title.
-    return unless @editable
+    return unless @profile
 
-    # teachers are supposed to be @editable
+    # teachers are supposed to all have a profile
     ActiveSupport::Notifications.instrument('set_show_data_part_2_teaching') do
       @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
       if @ta.present?

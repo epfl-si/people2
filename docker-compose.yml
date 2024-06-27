@@ -116,6 +116,7 @@ services:
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       OFFLINE_CACHEDIR: "/srv/filecache"
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
+      SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"

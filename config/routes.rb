@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Custom Error Pages
+  match '/500', via: :all, to: 'errors#internal_server_error'
+  match '/401', via: :all, to: 'errors#unauthorized'
+  match '/403', via: :all, to: 'errors#forbidden'
+  match '/404', via: :all, to: 'errors#not_found'
+  match '/422', via: :all, to: 'errors#unprocessable_content'
+
   # namespace :oidc do
   #   # URL prefix for controllers in this section is `/oidc/`, and
   #   # controllers live in module `OIDC` (not "Oidc"), thanks to

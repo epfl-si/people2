@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
 class ProfilesController < BackendController
-  before_action :set_profile, except: [:set_favorite_picture]
+  before_action :load_and_authorize_profile
+  before_action :load_person, except: [:set_favorite_picture]
 
-  def edit
-    respond_to do |format|
-      format.html do
-        render
-      end
-    end
-  end
+  def edit; end
 
   # PATCH/PUT /profile/:id
   def update
@@ -56,8 +51,14 @@ class ProfilesController < BackendController
 
   private
 
-  def set_profile
-    @profile = Profile.find(params[:id])
+  def load_and_authorize_profile
+    @profile ||= Profile.find(params[:id])
+    Rails.logger.debug("======= authorized? #{allowed_to?(:update?, @profile) ? 'yes' : 'no'}")
+    authorize! @profile, to: :update?
+  end
+
+  def load_person
+    load_and_authorize_profile
     @person = Person.find(@profile.sciper)
     @name = @person.name
   end

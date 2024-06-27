@@ -23,8 +23,8 @@
   <% end %>
 <% end %>
 <% content_for :menu do %>
-  <!-- TODO: implement auth control -->
-  <% if @editable %>
+  <!-- TODO: decide if we show the edit profile link always or only to logged in users -->
+  <% if @profile.present? %>
   <li>
     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
     <%= link_to edit_profile_path(@profile) do %>
@@ -59,11 +59,11 @@
     <ul class="nav nav-tabs mt-5" role="tablist">
       <% active="active" %>
       <% @main_zone_bbs.each do |section, boxes| %>
-        <% id="section_#{section.label}" %> 
+        <% id="section_#{section.label}" %>
         <li class="nav-item">
           <%= link_to(
                 section.t_title, "#"+id,
-                id: "#{id}-tab", role: "tab", class: "nav-link #{active}", 
+                id: "#{id}-tab", role: "tab", class: "nav-link #{active}",
                 data: {toggle: "tab"},
                 aria: {controls: id, selected: active ? "true" : "false"}
               )
@@ -77,7 +77,7 @@
         <li class="nav-item">
           <%= link_to(
                 t("teaching"), "#"+id,
-                id: "#{id}-tab", role: "tab", class: "nav-link", 
+                id: "#{id}-tab", role: "tab", class: "nav-link",
                 data: {toggle: "tab"},
                 aria: {controls: id, selected: active ? "true" : "false"}
               )
@@ -88,18 +88,18 @@
     <div class="tab-content p-3">
       <% active="active" %>
       <% @main_zone_bbs.each do |section, boxes| %>
-        <% id="section_#{section.label}" %> 
+        <% id="section_#{section.label}" %>
         <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
           <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
         </div>
         <% active = nil %>
       <% end %>
       <% if @ta.present? %>
-        <% id="section_teaching" %> 
+        <% id="section_teaching" %>
         <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
         <%= render "teaching" %>
         </div>
-      <% end %>  
+      <% end %>
     </div>
   <% end # if main_zone_bbs.present? %>
 </div>

@@ -40,20 +40,20 @@ class Person
     new(p)
   end
 
-  def profile
+  def profile!
     @profile = Profile.for_sciper(sciper) unless defined?(@profile)
-    @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_edit_profile?
+    @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_have_profile?
     @profile
   end
 
-  def can_edit_profile?
+  def can_have_profile?
     unless defined?(@can_edit_profile)
-      @can_edit_profile = begin
+      @can_have_profile = begin
         a = APIAuthGetter.new(sciper).fetch
         a.any? { |d| d['status'] == 'active' }
       end
     end
-    @can_edit_profile
+    @can_have_profile
   end
 
   def achieving_professor?
@@ -110,6 +110,7 @@ class Person
 
   # TODO: check errors on api calls and decide how to recover
   def accreditations
+    profile = profile!
     @accreditations ||= if profile.present?
                           Accreditation.for_profile(profile)
                         else

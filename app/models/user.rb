@@ -17,6 +17,11 @@ class User < ApplicationRecord
       user.sciper = person.sciper
     end
   end
+
+  def can_edit_profile?(profile)
+    true if sciper == profile.sciper
+    # TODO: it might be someone with write access to the profile
+  end
 end
 
 # class User
