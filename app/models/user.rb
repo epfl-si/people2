@@ -18,8 +18,10 @@ class User < ApplicationRecord
     end
   end
 
-  def admin_for_profile?(_profile)
+  def admin_for_profile?(profile)
     # TODO: translate from original perl implementation
+    # my $RIGHT_GESPROFILE = 12;
+    # my $PROP_BOTWEB      = 1 ;
     # my $units_admin = $self->{Accreds}->getAllUnitsWhereHasRight ($login_sciper, $RIGHT_GESPROFILE);
     # if ($units_admin) {
     #   foreach my $unit ($self->{Accreds}->getAllUnitsOfPerson($sciper)) {
@@ -30,7 +32,47 @@ class User < ApplicationRecord
     # } else {
     #   return 0
     # }
-    false
+    # ./bin/api.sh 'authorizations?persid=356328&status=active&type=right&authid=gestionprofils&onpersid=121157'" | jq
+    # {
+    #   "authorizations": [
+    #     {
+    #       "type": "right",
+    #       "attribution": "inherited",
+    #       "authid": 12,
+    #       "persid": 106534,
+    #       "resourceid": "11007",
+    #       "accredunitid": 0,
+    #       "value": "y:R:5:10077",
+    #       "enddate": null,
+    #       "status": "active",
+    #       "workflowid": 0,
+    #       "labelfr": "People - gérer les profils personnels",
+    #       "labelen": "People - manage personal profiles",
+    #       "name": "gestionprofils"
+    #     },
+    #     {
+    #       "type": "right",
+    #       "attribution": "inherited",
+    #       "authid": 12,
+    #       "persid": 106534,
+    #       "resourceid": "13680",
+    #       "accredunitid": 0,
+    #       "value": "y:R:5:10077",
+    #       "enddate": null,
+    #       "status": "active",
+    #       "workflowid": 0,
+    #       "labelfr": "People - gérer les profils personnels",
+    #       "labelen": "People - manage personal profiles",
+    #       "name": "gestionprofils"
+    #     },
+    #     {
+    #       "type": "right",
+    #       "attribution": "inherited",
+    #       "authid": 12,
+    #     ...
+    #
+    aa = APIAuthGetter.new(sciper, authid: 'gestionprofils', type: 'right', onpersid: profile.sciper).fetch
+    !aa.empty?
   end
 
   def admin?

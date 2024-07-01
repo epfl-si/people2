@@ -9,15 +9,19 @@ class APIAuthGetter < EpflAPIService
     sciper,
     authid: 'gestprofil', # 'botweb',
     type: 'property',
+    onpersid: nil,
     baseurl: Rails.application.config_for(:epflapi).backend_url
   )
-    @url = URI.join(baseurl, "v1/authorizations")
-    @url.query = URI.encode_www_form(
+    args = {
       persid: sciper,
       type: type,
       authid: authid,
-      status: 'active'
-    )
+      status: 'active',
+    }
+    args[:onpersid] = onpersid unless onpersid.nil?
+
+    @url = URI.join(baseurl, "v1/authorizations")
+    @url.query = URI.encode_www_form(args)
   end
 
   def dofetch
