@@ -25,8 +25,11 @@ development:
 #   username: people
 #   password: mariadb
 test:
-  adapter: sqlite3
-  database: db/test.sqlite3
+  <<: *default
+  database: testpeople
+  host: mariadb
+  username: people
+  password: mariadb
 
 production:
   <<: *default
