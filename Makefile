@@ -25,6 +25,8 @@ DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.inte
 
 export
 
+SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
+
 # ----------------------------------------------------------- Run/stop local app
 .PHONY: dev up reload kc down fulldown tunnel_up tunnel_down
 
@@ -64,7 +66,7 @@ Gemfile.lock: Gemfile.lock.docker
 	cp $< $@
 
 # --------------------------------------------------- Interaction with local app
-.PHONY: logs ps top console shell dbconsole debug redis
+.PHONY: logs ps top console shell dbconsole debug redis dbstatus
 
 ## tail -f the logs
 logs:
@@ -89,6 +91,7 @@ shell: dcup
 ## start an sql console con the database container
 dbconsole: dcup
 	docker compose exec mariadb mariadb -u root --password=mariadb  
+	# docker compose exec webapp ./bin/rails dbconsole
 
 ## attach the console of the rails app for debugging
 debug:
@@ -105,6 +108,10 @@ devcache:
 ## start a shell within a container including all usefull network tools
 noc:
 	docker compose --profile noc run --rm noc 
+
+## show mariadb/INNODB status
+dbstatus:
+	echo $$(echo "SHOW ENGINE INNODB STATUS" | $(SQL))
 
 # -------------------------------------------------------------- Container image
 .PHONY: build rebuild
@@ -202,6 +209,11 @@ testup:
 test-system: testup
 	docker compose exec webapp ./bin/rails test:system
 
+# test-models:
+# 	docker compose exec webapp ./bin/rails test:models
+
+test-models:
+	./bin/rails test:models
 
 # -------------------------------------------------- Cache and off-line webmocks
 
@@ -234,7 +246,6 @@ seed: migrate webmocks
 courses: dcup
 	docker compose exec webapp bin/rails data:courses
 
-SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb
