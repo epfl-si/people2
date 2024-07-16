@@ -55,6 +55,7 @@ class PeopleController < ApplicationController
       @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
     end
 
+    @profile_picture = @profile.photo.image if @profile.photo&.image&.attached?
     # @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
     @visible_socials = @profile.socials.for_audience(@audience)
 
