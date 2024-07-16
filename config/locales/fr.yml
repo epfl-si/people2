@@ -181,25 +181,54 @@ fr:
   work_experience: "Parcours professionnel"
 
   activerecord:
+    models:
+      award: "award"
+      box: "box"
+      education: "education"
+      experience: "work experience"
+      profile: "profile"
+      social: "social address"
+    attributes:
+      award:
+        title_en: title (en)
+        title_fr: title (fr)
+        issuer: Granted by
+        origin: Origin
+        year: Year
+        url: Url
+      experience:
+        location: "copany or location or institution"
+        period: "period (years)"
+        title_en: "title (en)"
+        title_fr: "title (fr)"
+        year_begin: "first year"
+        year_end: "last year"
+      person:
+        function: main function
     errors:
       models:
+        award:
+          attributes:
+            issuer:
+              blank: "must be present"
+            year:
+              blank: "must be present"
+        experience:
+          attributes:
+            base:
+              missing_year: "Either beginning or end of work experience should be present"
+            location:
+              blank: "should be provided"
+            year_end:
+              blank: "should be present"
+            year_start:
+              blank: "should be present"
         name:
           attributes:
             usual_firstname:
               not_in_official: "Should be composed of names included in the official name."
             usual_lastname:
               not_in_official: "Should be composed of names included in the official name."
-
-        experience:
-          attributes:
-            base:
-              missing_year: "Either beginning or end of work experience should be present"
-            location:
-              blank: "Location should be provided"
-            year_end:
-              blank: "End year should be present"
-            year_start:
-              blank: "Start year should be present"
         picture:
           attributes:
             base:

@@ -21,6 +21,18 @@
     <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
   </div>
   <div class="form-group">
+    <%= form.label Award.human_attribute_name(:url) %>
+    <%= form.url_field :url %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:category) %>
+    <%= form.collection_select :category_id, Award.categories, :id, :t_name %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:origin) %>
+    <%= form.collection_select :origin, Award.origins, :id, :t_name %>
+  </div>
+  <div class="form-group">
     <%= form.label Award.human_attribute_name(:audience) %>
     <%= audience_selector form %>
   </div>

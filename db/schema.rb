@@ -76,15 +76,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_082040) do
 
   create_table "awards", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "origin_id", null: false
     t.string "title_en"
     t.string "title_fr"
     t.string "issuer"
     t.integer "year"
+    t.string "url"
     t.integer "position", null: false
     t.integer "audience", default: 0
     t.boolean "visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_awards_on_category_id"
+    t.index ["origin_id"], name: "index_awards_on_origin_id"
     t.index ["profile_id", "position"], name: "index_awards_on_profile_id_and_position", unique: true
     t.index ["profile_id"], name: "index_awards_on_profile_id"
   end
@@ -219,6 +224,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_082040) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name_en"
+    t.string "name_fr"
+    t.string "property", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "socials", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.string "sciper"
@@ -268,6 +281,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_082040) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "awards", "profiles"
+  add_foreign_key "awards", "selectable_properties", column: "category_id"
+  add_foreign_key "awards", "selectable_properties", column: "origin_id"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
   add_foreign_key "educations", "profiles"

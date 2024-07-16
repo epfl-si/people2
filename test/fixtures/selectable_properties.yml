@@ -1,0 +1,41 @@
+---
+ac_majour:
+  name_en: Major award, medal or prize
+  name_fr: Prix important, medaille
+  property: award_category
+ac_discipline:
+  name_en: Discipline specific award
+  name_fr: Prix specifique à la discipline
+  property: award_category
+ac_best:
+  name_en: Best publication, poster or thesis
+  name_fr: Meilleur publication, poster ou these
+  property: award_category
+ac_honorary:
+  name_en: Honorary doctorate
+  name_fr: Honorary doctorate
+  property: award_category
+ac_fellowship:
+  name_en: Fellowship or nomination
+  name_fr: Nomination ou Fellowship
+  property: award_category
+ac_teaching:
+  name_en: Teaching award
+  name_fr: Prix pour l'enseignement
+  property: award_category
+ac_other:
+  name_en: Other
+  name_fr: Autre
+  property: award_category
+ao_epfl:
+  name_en: EPFL
+  name_fr: EPFL
+  property: award_origin
+ao_suisse:
+  name_en: Switzerland 
+  name_fr: Suisse
+  property: award_origin
+ao_international:
+  name_en: International
+  name_fr: International
+  property: award_origin
