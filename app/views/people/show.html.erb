@@ -40,15 +40,15 @@
 <div class="container">
   <div class="row people-basic-info">
     <div class="col-md-6 col-lg-4">
-      <%= profile_photo(@profile.photo, resize_to_limit: [400, 400], alt: 'Avatar image', class: 'mx-auto img-fluid bg-gray-100') %>
+      <%= profile_photo(@profile&.photo, resize_to_limit: [400, 400], alt: 'Avatar image', class: 'mx-auto img-fluid bg-gray-100') %>
       <%= render "admin_data" if @admin_data %>
-      <%= render "socials" unless @visible_socials.empty? %>
+      <%= render "socials" if @visible_socials.present? %>
     </div>
     <div class="people-contacts col-md-6 col-lg-8">
       <%= render "name" %>
       <%= render "contact" %>
       <%= render "accreds" %>
-      <% @contact_zone_bbs.each do |section, boxes| %>
+      <% @contact_zone_bbs&.each do |section, boxes| %>
         <%= render partial: "section", locals: {section: section, boxes: boxes} %>
       <% end %>
     </div>
