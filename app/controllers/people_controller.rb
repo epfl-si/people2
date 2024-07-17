@@ -5,6 +5,9 @@ class PeopleController < ApplicationController
   layout 'public'
 
   def show
+    r = Redirect.for_sciper_or_name(params[:sciper_or_name])
+    redirect_to(r.url, allow_other_host: true) and return if r.present?
+
     set_show_data
 
     @page_title = "EPFL - #{@person.name.display}"

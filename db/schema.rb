@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_25_082040) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -210,6 +210,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_082040) do
     t.index ["camipro_picture_id"], name: "index_profiles_on_camipro_picture_id"
     t.index ["sciper"], name: "unique_scipers", unique: true
     t.index ["selected_picture_id"], name: "index_profiles_on_selected_picture_id"
+  end
+
+  create_table "redirects", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "ns"
+    t.integer "sciper"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
