@@ -41,8 +41,10 @@ class Person
   end
 
   def profile!
-    @profile = Profile.for_sciper(sciper) unless defined?(@profile)
-    @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_have_profile?
+    unless defined?(@profile)
+      @profile = Profile.for_sciper(sciper)
+      @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_have_profile?
+    end
     @profile
   end
 

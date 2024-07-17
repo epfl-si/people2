@@ -101,10 +101,7 @@ class Accreditation
   end
 
   def unit
-    @unit ||= begin
-      unit_data = APIUnitGetter.fetch_units(@unit_id)
-      Unit.new(unit_data)
-    end
+    @unit ||= Unit.find(@unit_id)
   end
 
   def botweb?
