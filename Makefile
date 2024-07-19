@@ -23,9 +23,12 @@ NOCIMAGE ?= jonlabelle/network-tools
 # resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs. 
 DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.internal)
 
+KCDUMPFILE ?= tmp/dbdumps/keycloak.sql
+
 export
 
 SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
+SQLDUMP=docker compose exec -T mariadb mariadb-dump --password=mariadb
 
 # ----------------------------------------------------------- Run/stop local app
 .PHONY: dev up reload kc down fulldown tunnel_up tunnel_down
@@ -256,6 +259,14 @@ reseed:
 nukedb:
 	echo "DROP DATABASE people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
+
+## dump keycloak database for restoring later. CAUTION: if KCDUMPFILE is set it will be overwritten.
+kcdump:
+	$(SQLDUMP) keycloak > $(KCDUMPFILE)
+
+## restore keycloak database from dump. Set KCDUMPFILE en var for custom (saved) dumpfile path.
+kcrestore: $(KCDUMPFILE)
+	cat $< | $(SQL)
 
 ## delete keycloak database and recreate it
 rekc:
