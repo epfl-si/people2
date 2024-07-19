@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :register_client_origin
 
-  rescue_from ActionPolicy::Unauthorized do |_exception|
-    redirect_to "/401"
-  end
+  # rescue_from ActionPolicy::Unauthorized do |_exception|
+  #   redirect_to "/401"
+  # end
 
   def devindex; end
 

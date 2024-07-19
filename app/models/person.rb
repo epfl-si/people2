@@ -37,13 +37,37 @@ class Person
           APIPersonGetter.for_email(sciper_or_email)
         end
     p = g.fetch!
+    raise ActiveRecord::RecordNotFound if p.blank?
+
     new(p)
+  end
+
+  def self.for_scipers(scipers)
+    return [] if scipers.empty?
+
+    # sort.uniq is to minimize cache miss
+    g = APIPersonGetter.for_scipers(scipers.sort.uniq)
+    g.fetch!.map { |p| new(p) }
+  end
+
+  def self.for_group(name_or_id)
+    g = APIPersonGetter.for_group(name_or_id)
+    scipers = g.fetch!['persons'].map(&:id)
+    for_scipers(scipers)
+  end
+
+  def self.for_groups(names_or_ids)
+    scipers = names_or_ids.map do |name_or_id|
+      g = APIPersonGetter.for_group(name_or_id)
+      g.fetch!.map { |p| p['id'] }
+    end.flatten.uniq
+    for_scipers(scipers)
   end
 
   def profile!
     unless defined?(@profile)
       @profile = Profile.for_sciper(sciper)
-      @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_have_profile?
+      @profile = Profile.new_with_defaults(sciper) if @profile.nil? && can_have_profile?
     end
     @profile
   end

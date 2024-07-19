@@ -18,6 +18,7 @@ class User < ApplicationRecord
     end
   end
 
+  # profile argument only needs to respond_to? sciper => can also be a Person
   def admin_for_profile?(profile)
     # TODO: translate from original perl implementation
     # my $RIGHT_GESPROFILE = 12;

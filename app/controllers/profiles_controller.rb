@@ -1,8 +1,18 @@
 # frozen_string_literal: true
 
 class ProfilesController < BackendController
-  before_action :load_and_authorize_profile
-  before_action :load_person, except: [:set_favorite_picture]
+  before_action :load_and_authorize_profile, except: [:new]
+  before_action :load_person, except: %i[set_favorite_picture new]
+
+  # GET /person/:sciper/profile/new
+  # Profiles will be saved to DB only if an authorised person click on the edit link
+  def new
+    @person = Person.find(params[:sciper])
+    authorize!(@person, to: :update?)
+    @profile = @person.profile!
+    @profile.save unless @profile.persisted?
+    redirect_to edit_profile_path(@profile)
+  end
 
   def edit; end
 
@@ -29,7 +39,6 @@ class ProfilesController < BackendController
 
   # PATCH /profile/:id/set_favorite_picture/picture_id
   def set_favorite_picture
-    @profile = Profile.find(params[:id])
     @picture = @profile.pictures.find(params[:picture_id])
     respond_to do |format|
       if @profile.update(selected_picture: @picture)

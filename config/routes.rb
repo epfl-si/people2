@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
   put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
   put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
+  get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
 
   resources :names, only: %i[index show update]
 

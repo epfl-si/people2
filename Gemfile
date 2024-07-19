@@ -75,6 +75,7 @@ end
 
 # ------------------------------------------------------------------------ Added
 
+# https://github.com/palkan/action_policy
 gem "action_policy"
 gem "devise", "~> 4.9"
 

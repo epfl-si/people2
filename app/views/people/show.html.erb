@@ -27,7 +27,7 @@
   <% if @profile.present? %>
   <li>
     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
-    <%= link_to edit_profile_path(@profile) do %>
+    <%= link_to @profile.persisted? ? edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper) do %>
       <%= t('action.edit_profile') %>
       <span class="sr-only">
         <%= t 'action.of' %> <%= @person.name.display %>
