@@ -1,6 +1,6 @@
 <%= turbo_frame_tag :experiences_index do %>
-
-<%= tag.h2(t('title.experiences')) %>
+<details>
+<summary><%= tag.h2(t('title.experiences')) %></summary>
 
 <%= turbo_frame_tag "experiences", src: nil, target: nil, data: {controller: "sortable"} do %>
 	<% @experiences.each do |experience| %>
@@ -15,7 +15,7 @@
 		</div>
 	<% end %>
 </div>
-
+</details>
 <% end %>
 
 
