@@ -5,9 +5,10 @@
     "username" : "demo",
     "enabled" : true,
     "totp" : false,
-    "emailVerified" : false,
-    "firstName" : "",
-    "lastName" : "",
+    "emailVerified" : true,
+    "firstName" : "Demo",
+    "lastName" : "Demo",
+    "email" : "demo@epfl.ch",
     "credentials" : [ {
       "type" : "password",
       "userLabel" : "The password is “demo”",
@@ -19,7 +20,45 @@
     "realmRoles" : [ "default-roles-rails" ],
     "notBefore" : 0,
     "groups" : [ ]
-  } ],
+  }, {
+    "username" : "giova",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Giovanni",
+    "lastName" : "Cangiani",
+    "email" : "giovanni.cangiani@epfl.ch",
+    "credentials" : [ {
+      "type" : "password",
+      "userLabel" : "The password is “demo”",
+      "secretData" : "{\"value\":\"IDrfcbpAjHWY4WmcITVgmtzRhQMMmukTRIZf5lKYG8i0R1e6A0uHY/IAGRfytS46Dg9rcJGvNpJqia7Jaw/hoA==\",\"salt\":\"F4uH0S09WnCLXPhzv0dhng==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-rails" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "username" : "natalie",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Natalie",
+    "lastName" : "Meystre",
+    "email" : "natalie.meystre@epfl.ch",
+    "credentials" : [ {
+      "type" : "password",
+      "userLabel" : "The password is “demo”",
+      "secretData" : "{\"value\":\"IDrfcbpAjHWY4WmcITVgmtzRhQMMmukTRIZf5lKYG8i0R1e6A0uHY/IAGRfytS46Dg9rcJGvNpJqia7Jaw/hoA==\",\"salt\":\"F4uH0S09WnCLXPhzv0dhng==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-rails" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }  ],
   "clients" : [
     {
       "clientId" : "graphiql/LoginButton",
