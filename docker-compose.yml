@@ -143,6 +143,34 @@ services:
     tty: true
     stdin_open: true
 
+  # directus:
+  #   image: directus/directus:11.0.0
+  #   volumes:
+  #     - directus_uploads:/directus/uploads
+  #     - directus_extensions:/directus/extensions
+  #   environment:
+  #     PUBLIC_URL: "https://directus.${DOMAIN:-dev.jkldsa.com}"
+  #     SECRET: "whatever"
+  #     ADMIN_EMAIL: "giovanni.cangiani@epfl.ch"
+  #     ADMIN_PASSWORD: "1234"
+  #     DB_CLIENT: "mysql"
+  #     DB_HOST: mariadb
+  #     DB_PORT: 3306
+  #     DB_DATABASE: people
+  #     DB_USER: people
+  #     DB_PASSWORD: mariadb
+  #     WEBSOCKETS_ENABLED: "true"
+  #     LOG_LEVEL: debug
+  #     LOG_STYLE: pretty
+  #   labels:
+  #     - traefik.docker.network=traefik
+  #     - traefik.http.services.directus.loadbalancer.server.port=8055
+  #     - traefik.http.routers.directus.rule=Host("directus.${DOMAIN:-dev.jkldsa.com}")
+  #     - traefik.http.routers.directus.tls=true
+  #   networks:
+  #     - traefik
+  #     - default
+
   noc:
     image: ${NOCIMAGE:-jonlabelle/network-tools}
     stdin_open: true
@@ -190,6 +218,8 @@ volumes:
   mariadb: {}
   filecache: {}
   storage: {}
+  # directus_uploads: {}
+  # directus_extensions: {}
 networks:
   traefik:
     external: true

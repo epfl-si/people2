@@ -15,6 +15,8 @@ class PicturesController < BackendController
   # # GET /pictures/1/edit
   # def edit; end
 
+  # for an alternative solution, have a look to
+  # https://medium.com/@fabriciobonjorno/upload-profile-image-in-real-time-1c74313a1116
   # POST /profile/profile_id/pictures or /profile/profile_id/pictures.json
   def create
     if @profile.pictures.count + 1 > Rails.application.config_for(:limits).max_profile_pictures

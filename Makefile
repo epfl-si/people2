@@ -116,6 +116,10 @@ noc:
 dbstatus:
 	echo $$(echo "SHOW ENGINE INNODB STATUS" | $(SQL))
 
+## show code stats and versions
+about:
+	./bin/rails about && ./bin/rails stats
+
 # -------------------------------------------------------------- Container image
 .PHONY: build rebuild
 
