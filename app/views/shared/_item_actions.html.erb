@@ -1,4 +1,4 @@
 <%= link_to item.visible? ? icon_text('action.make_hidden', 'eye-off') : icon_text('action.make_visible', 'eye'), send("toggle_#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} 
 %>
-<%= link_to icon_text('edit', 'edit'), send("edit_#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-<%= link_to icon_text('delete', 'trash-2'), send("#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete', turbo_confirm: t('action.confirm')} %>
+<%= link_to icon_text('action.edit', 'edit'), send("edit_#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+<%= link_to icon_text('action.delete', 'trash-2'), send("#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete', turbo_confirm: t('action.confirm')} %>

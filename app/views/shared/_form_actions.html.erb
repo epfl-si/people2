@@ -3,7 +3,7 @@
   <% if item.new_record? %>
     <%= form.submit t("action.create_#{klass}"), class: "btn-confirm" %>
   <% else %>
-    <%= link_to(t('cancel'), send("#{klass}_path", item), class: "btn-cancel", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
+    <%= link_to(t('action.cancel'), send("#{klass}_path", item), class: "btn-cancel", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
     <%= form.submit t("action.update_#{klass}"), class: "btn-confirm" %>
   <% end %>
 </div>

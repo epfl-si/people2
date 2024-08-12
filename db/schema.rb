@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_accreds_on_profile_id"
   end
 
-  create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
     t.string "record_type", null: false
@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -60,13 +60,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "artists", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "artists", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "awards", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "awards", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.bigint "category_id", null: false
     t.bigint "origin_id", null: false
@@ -94,7 +94,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_awards_on_profile_id"
   end
 
-  create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "type", null: false
     t.bigint "profile_id", null: false
     t.bigint "section_id", null: false
@@ -112,7 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["section_id"], name: "index_boxes_on_section_id"
   end
 
-  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "code"
     t.string "title_en"
     t.string "title_fr"
@@ -122,7 +122,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "educations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "educations", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.string "title_en"
     t.string "title_fr"
@@ -130,8 +130,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.string "field_fr"
     t.string "director"
     t.string "school", null: false
-    t.integer "year_begin"
-    t.integer "year", null: false
+    t.integer "year_begin", null: false
+    t.integer "year_end"
     t.integer "position", null: false
     t.integer "audience", default: 0
     t.boolean "visible", default: false
@@ -141,7 +141,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_educations_on_profile_id"
   end
 
-  create_table "experiences", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "experiences", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.string "title_en"
     t.string "title_fr"
@@ -157,7 +157,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_experiences_on_profile_id"
   end
 
-  create_table "items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "items", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "image_url"
@@ -167,7 +167,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["artist_id"], name: "index_items_on_artist_id"
   end
 
-  create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "kind", default: "RichTextBox"
     t.bigint "section_id", null: false
     t.string "title_en", null: false
@@ -179,7 +179,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
   end
 
-  create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.boolean "camipro", default: false
     t.integer "failed_attempts", default: 0
@@ -188,7 +188,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_pictures_on_profile_id"
   end
 
-  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "sciper"
     t.boolean "show_birthday"
     t.boolean "show_function"
@@ -220,7 +220,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sections", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "sections", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "title_en"
     t.string "title_fr"
     t.string "label"
@@ -240,7 +240,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "socials", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "socials", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.string "sciper"
     t.string "tag"
@@ -253,7 +253,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_socials_on_profile_id"
   end
 
-  create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "profile_id"
     t.string "sciper"

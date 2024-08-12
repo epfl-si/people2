@@ -1,18 +1,19 @@
 fr:
   ciccio: this is ciccio
   action:
+    edit: "Éditer"
+    delete: "Supprimer"
     accred_full_list: "Liste complète des adresses et fonctions"
     admin_data: "Données administratives"
     browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
-    delete: "delete"
     edit_profile: "Edit profile"
     edit_pictures: "Edit / Change photo"
     hide_search_form: "Masquer le formulaire de recherche"
     make_address_hidden: "Hide address"
     make_address_visible: "Show address"
-    make_hidden: "Hide"
-    make_visible: "Show"
+    make_hidden: "Cacher"
+    make_visible: "Visible"
     of: "de"
     search: "Rechercher sur le site"
     search_people: "Rechercher sur le site"
@@ -21,14 +22,28 @@ fr:
     submit_personal_data: "Mettre à jour le profil de base"
     submit: "Envoie"
     create_award: "Create new award"
-    update_award: "Udate award"
-    create_experience: "Create new work experience"
+    update_award: "Update award"
+    create_education: "Create an educations"
+    update_education: "Mettre à jour votre formation"
+    create_experience: "Crée un parcours professionnel"
     update_experience: "Udate work experience"
     sign_in: "Connexion"
     sign_out: "Deconnexion"
     upload_image: "Upload the image"
     validate: "Valider"
-
+    cancel: "Annuler"
+  visibility:
+    visible: "Visible"
+    hidden: "Cacher"
+    public: "Publique"
+    intranet: "Uniquement sur l'intranet"
+    authenticated: "Uniquement par les utilisateurs de l'EPFL"
+    draft: "Brouillon (éditeur uniquement)"
+    labels:
+      public: "Publique"
+      intranet: "Intranet"
+      authenticated: "Utilisateurs de l'EPFL"
+      draft: "Brouillon (éditeur uniquement)"
   error:
     one: "Error"
     other: "Errors"
@@ -78,7 +93,7 @@ fr:
     uid: "UID"
     home: "Home directory"
     shell: "Shell"
-  awards: "Awards"
+  awards: "Récompenses"
   birthday: "Date de naissance"
   biography: "Biographie"
   class_delegate: "D&eacute;l&eacute;gu&eacute; de classe"
@@ -105,6 +120,16 @@ fr:
     usual_firstname: prenom usuel
     usual_lastname: nom usuel
     website: address page web personnelle
+  education:
+    title_fr: "titre en français"
+    title_en: "titre en anglais"
+    field_fr: "Sujet étudié en français"
+    field_en: "Sujet étudié en anglais"
+    director: "Directeur de thèse"
+    school: "École"
+    period: "Période d'étude"
+    period_status: "Présent"
+    audience: "Visibilité"
   phone_type:
     FIXE_CONF: fixe conf
     FAX: fax
@@ -138,7 +163,7 @@ fr:
     courses: "Cours"
     current_phd_students: "Doctorant·es"
     doctoral_teaching: "Enseignement & Phd"
-    education: "Formation"
+    educations: "Formation"
     experiences: "Experiences de travail"
     expertise: "Champs de compétences"
     of: "de"
@@ -151,13 +176,6 @@ fr:
     past_phd: "A dirigé les thèses EPFL de"
     pictures: "Profile pictures"
     teaching_domain: "Enseignement"
-  visibility:
-    visible: "visible"
-    hidden: "hidden"
-    public: "public"
-    intranet: "intranet only"
-    authenticated: "EPFL users only"
-    editor: "Draft (editor only)"
     visible_address: "address"
     hidden_address: "NO address"
     public_access: "public"

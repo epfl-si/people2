@@ -1,6 +1,6 @@
 # People dev Makefile
 # `make help` to get the list of available rules
-
+SHELL=/bin/bash
 -include .env
 KBPATH ?= /keybase/team/epfl_people.prod
 -include $(KBPATH)/$(SECRETS)
@@ -253,6 +253,7 @@ seed: migrate webmocks
 courses: dcup
 	docker compose exec webapp bin/rails data:courses
 
+SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb
