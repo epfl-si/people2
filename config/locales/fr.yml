@@ -27,6 +27,8 @@ fr:
     update_education: "Mettre à jour votre formation"
     create_experience: "Crée un parcours professionnel"
     update_experience: "Udate work experience"
+    create_social: "Ajouté un réseau social"
+    update_social: "Modifié le réseau social"
     sign_in: "Connexion"
     sign_out: "Deconnexion"
     upload_image: "Upload the image"
@@ -176,12 +178,13 @@ fr:
     past_phd: "A dirigé les thèses EPFL de"
     pictures: "Profile pictures"
     teaching_domain: "Enseignement"
-    visible_address: "address"
-    hidden_address: "NO address"
-    public_access: "public"
-    intranet_access: "intranet"
-    authenticated_access: "user"
-    editor_access: "full"
+  visibility:
+    visible: "visible"
+    hidden: "hidden"
+    public: "public"
+    intranet: "intranet only"
+    authenticated: "EPFL users only"
+    editor: "Draft (editor only)"
   footer:
     follow:
       us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"
@@ -199,38 +202,15 @@ fr:
   work_experience: "Parcours professionnel"
 
   activerecord:
-    models:
-      award: "award"
-      box: "box"
-      education: "education"
-      experience: "work experience"
-      profile: "profile"
-      social: "social address"
-    attributes:
-      award:
-        title_en: title (en)
-        title_fr: title (fr)
-        issuer: Granted by
-        origin: Origin
-        year: Year
-        url: Url
-      experience:
-        location: "copany or location or institution"
-        period: "period (years)"
-        title_en: "title (en)"
-        title_fr: "title (fr)"
-        year_begin: "first year"
-        year_end: "last year"
-      person:
-        function: main function
-    errors:
-      models:
-        award:
-          attributes:
-            issuer:
-              blank: "must be present"
-            year:
-              blank: "must be present"
+    errors: 
+      models: 
+        name: 
+          attributes: 
+            usual_firstname: 
+              not_in_official: "Should be composed of names included in the official name."
+            usual_lastname: 
+              not_in_official: "Should be composed of names included in the official name."
+
         experience:
           attributes:
             base:
