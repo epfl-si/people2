@@ -1,4 +1,4 @@
-<% if @editable && @profile.show_title? %>
+<% if @profile.present? && @profile.show_title? %>
 <h2 class="people-title mb-3"><%= @profile.t_title %></h2>
 <% end %>
 <p>
@@ -10,11 +10,11 @@
   <%= phone_link(@person.default_phone.number, class: "btn btn-sm btn-secondary") %>
   <% end %>
 
-  <% if @editable && @profile.personal_web_url? %>
+  <% if @profile.present? && @profile.personal_web_url? %>
     <%= link_to(@profile.personal_web_url, @profile.personal_web_url, class: "btn btn-sm btn-secondary") %>
   <% end %>
 </p>
-<% if @editable %>
+<% if @profile.present? %>
 <% if @profile.show_nationality? and @profile.t_nationality.present? %>
 <p>
   <%= t 'nationality' %> : <%= @profile.t_nationality %>

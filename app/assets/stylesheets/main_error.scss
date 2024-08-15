@@ -1,0 +1,27 @@
+@import "fonts";
+
+body {
+  text-align: center;
+  color: #000;
+}
+
+h1 {
+  font-size: 12vw;
+  color: #ff0000;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.75rem;
+  line-height: 1.2em;
+  font-weight: 700;
+}
+
+hr {
+  background-color: #f00;
+  border: 0;
+  height: 1px;
+  width: 25%;
+}

@@ -1,18 +1,28 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :experiences
-  resources :boxes
-  get 'names/update'
-  namespace :oidc do
-    # URL prefix for controllers in this section is `/oidc/`, and
-    # controllers live in module `OIDC` (not "Oidc"), thanks to
-    # the `inflect.acronym("OIDC")` stanza in ./initializers/inflections.rb
-    get 'config', to: 'frontend_config#get' # i.e. OIDC::FrontendConfigController#get
-  end
+  # Custom Error Pages
+  match '/500', via: :all, to: 'errors#internal_server_error'
+  match '/401', via: :all, to: 'errors#unauthorized'
+  match '/403', via: :all, to: 'errors#forbidden'
+  match '/404', via: :all, to: 'errors#not_found'
+  match '/422', via: :all, to: 'errors#unprocessable_content'
+
+  # namespace :oidc do
+  #   # URL prefix for controllers in this section is `/oidc/`, and
+  #   # controllers live in module `OIDC` (not "Oidc"), thanks to
+  #   # the `inflect.acronym("OIDC")` stanza in ./initializers/inflections.rb
+  #   get 'config', to: 'frontend_config#get' # i.e. OIDC::FrontendConfigController#get
+  # end
 
   # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
   # post '/graphql', to: 'graphql#execute'
+
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_scope :user do
+    get 'sign_in', to: 'devise/sessions#new', as: :new_user_session
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
 
   resources :profiles, only: %i[edit update] do
     resources :boxes, shallow: true
@@ -33,6 +43,7 @@ Rails.application.routes.draw do
   put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
   put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
   put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
+  get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
 
   resources :names, only: %i[index show update]
 

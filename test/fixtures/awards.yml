@@ -1,7 +1,12 @@
 edo_awa:
   profile: edouard
+  category: ac_discipline
+  origin: ao_international
+  issuer: ACM
+  year: 2022
   title_en: ACM Software System Award
   title_fr: ACM Software System Award
+  url: https://awards.acm.org/software-system
   visible: true
   audience: 0
   position: 1

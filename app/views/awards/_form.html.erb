@@ -6,7 +6,8 @@
 
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:title_fr) %>
-    <%= form.text_field :title_fr, placeholder: "Prix Nobel" %>
+    <%= form.text_field :title_fr, placeholder: "Prix Nobel", class: input_class_for(form, :title_fr) %>
+    <%#= errors_for(form, :title_fr) %>
   </div>
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:title_en) %>
@@ -19,6 +20,18 @@
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:year) %>
     <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:url) %>
+    <%= form.url_field :url %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:category) %>
+    <%= form.collection_select :category_id, Award.categories, :id, :t_name %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:origin) %>
+    <%= form.collection_select :origin, Award.origins, :id, :t_name %>
   </div>
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:audience) %>

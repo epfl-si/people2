@@ -1,45 +1,35 @@
- # SQLite. Versions 3.8.0 and up are supported.
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem "sqlite3"
-#
 default: &default
   adapter: mysql2
+  host: mariadb
+  username: people
+  password: mariadb
 
 development:
   <<: *default
   database: people
-  host: mariadb
-  username: people
-  password: mariadb
 
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-# test:
-#   <<: *default
-#   database: testpeople
-#   host: mariadb
-#   username: people
-#   password: mariadb
 test:
-  adapter: sqlite3
-  database: db/test.sqlite3
-
-production:
   <<: *default
-  database: people
+  database: testpeople
+
+# 12 factor in production
+production:
+  adapter: mysql2
+  database: <%= ENV.fetch('DATABASE_NAME', 'please_do_not_die') %>
+  host:     <%= ENV.fetch('DATABASE_HOST', 'please_do_not_die') %>
+  username: <%= ENV.fetch('DATABASE_USER', 'please_do_not_die') %>
+  password: <%= ENV.fetch('DATABASE_PASSWORD', 'please_do_not_die') %>
 
 # ---------------------------------------------------------- External/Legacy DBs
 
-legacy_dev_default: &legacy_dev 
-  adapter: mysql2
-  host: mariadb
-  username: people
-  password: mariadb
-
 legacy_dev_cv:
-  <<: *legacy_dev
+  <<: *default
   database: cv
+
+legacy_prod_cv:
+  adapter: mysql2
+  host:     <%= ENV.fetch('CV_DATABASE_HOST', 'please_do_not_die') %>
+  username: <%= ENV.fetch('CV_DATABASE_USER', 'please_do_not_die') %>
+  password: <%= ENV.fetch('CV_DATABASE_PASSWORD', 'please_do_not_die') %>
+  database: cv
+

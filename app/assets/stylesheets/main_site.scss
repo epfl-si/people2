@@ -1,5 +1,13 @@
 // Sassy
 
+@use "sass:map";
+
+// helper function used in bootstrap-variables (but undefined therein)
+@function theme-color($name) {
+  @return map.get($theme-colors, $name);
+}
+@import 'elements/bootstrap-variables';
+
 @import 'common';
 
 // This is the main stylesheet for the public part of people

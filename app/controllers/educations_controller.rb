@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EducationsController < ApplicationController
+class EducationsController < BackendController
   before_action :set_profile, only: %i[index create new]
   before_action :set_education, only: %i[show edit update destroy toggle]
 

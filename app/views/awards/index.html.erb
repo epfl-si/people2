@@ -1,6 +1,6 @@
 <%= turbo_frame_tag :awards_index do %>
-
-<%= tag.h2(t('title.awards')) %>
+<details>
+<summary><%= tag.h2(t('title.awards')) %></summary>
 
 <%= turbo_frame_tag "awards", src: nil, target: nil, data: {controller: "sortable"} do %>
 	<% @awards.each do |award| %>
@@ -8,14 +8,14 @@
 	<% end %>
 <% end %>
 
-<div class="list-group-item list-group-item-borderless" %>
+<div class="list-group-item" %>
 	<%= turbo_frame_tag "new_award_form" do %>
 		<div class="row justify-content-center">
 			<%= link_to icon_text('add', 'plus-circle'), new_profile_award_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
 		</div>
 	<% end %>
 </div>
-
+</details>
 <% end %>
 
 

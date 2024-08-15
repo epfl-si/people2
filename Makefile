@@ -16,12 +16,19 @@ ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variab
 
 REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
 
+# NOCIMAGE ?= nicolaka/netshoot
+NOCIMAGE ?= jonlabelle/network-tools
 # Figure out the ip address of the host machine so that we can use "public" 
 # dns names served by traefik from within the containers when the name is
 # resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs. 
-DOCKER_IP ?= $(shell docker run -it --rm nicolaka/netshoot dig +short host.docker.internal)
+DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.internal)
+
+KCDUMPFILE ?= tmp/dbdumps/keycloak.sql
 
 export
+
+SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
+SQLDUMP=docker compose exec -T mariadb mariadb-dump --password=mariadb
 
 # ----------------------------------------------------------- Run/stop local app
 .PHONY: dev up reload kc down fulldown tunnel_up tunnel_down
@@ -39,14 +46,7 @@ reload: envcheck
 	docker compose stop webapp
 	KILLPID=1 docker compose up -d
 
-## start keycloack
-kc: envcheck
-	docker compose --profile kc up -d keycloak
-
-# atela:
-# 	docker compose --profile atela up -d atela
-
-## stop the basic servers (all except keycloak and test)
+## stop the basic servers (all except test)
 down: tunnel_down
 	docker compose down
 
@@ -63,13 +63,13 @@ tunnel_down:
 	./bin/tunneld.sh -m local stop
 
 dcup: envcheck Gemfile.lock $(ELE_FILES)
-	docker compose up --no-recreate -d 
+	docker compose up --no-recreate -d
 
 Gemfile.lock: Gemfile.lock.docker
 	cp $< $@
 
 # --------------------------------------------------- Interaction with local app
-.PHONY: logs ps top console shell dbconsole debug redis
+.PHONY: logs ps top console shell dbconsole debug redis dbstatus
 
 ## tail -f the logs
 logs:
@@ -94,6 +94,7 @@ shell: dcup
 ## start an sql console con the database container
 dbconsole: dcup
 	docker compose exec mariadb mariadb -u root --password=mariadb  
+	# docker compose exec webapp ./bin/rails dbconsole
 
 ## attach the console of the rails app for debugging
 debug:
@@ -106,6 +107,18 @@ redis:
 ## toggle Rails caching in dev (will persist reloads as it is just a file in tmp) 
 devcache:
 	docker compose exec webapp bin/rails dev:cache
+
+## start a shell within a container including all usefull network tools
+noc:
+	docker compose --profile noc run --rm noc 
+
+## show mariadb/INNODB status
+dbstatus:
+	echo $$(echo "SHOW ENGINE INNODB STATUS" | $(SQL))
+
+## show code stats and versions
+about:
+	./bin/rails about && ./bin/rails stats
 
 # -------------------------------------------------------------- Container image
 .PHONY: build rebuild
@@ -203,6 +216,11 @@ testup:
 test-system: testup
 	docker compose exec webapp ./bin/rails test:system
 
+# test-models:
+# 	docker compose exec webapp ./bin/rails test:models
+
+test-models:
+	./bin/rails test:models
 
 # -------------------------------------------------- Cache and off-line webmocks
 
@@ -235,7 +253,6 @@ seed: migrate webmocks
 courses: dcup
 	docker compose exec webapp bin/rails data:courses
 
-SQL=docker-compose exec -T mariadb mariadb -u root --password=mariadb
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb
@@ -246,6 +263,23 @@ reseed:
 nukedb:
 	echo "DROP DATABASE people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
+
+## dump keycloak database for restoring later. CAUTION: if KCDUMPFILE is set it will be overwritten.
+kcdump:
+	$(SQLDUMP) keycloak > $(KCDUMPFILE)
+
+## restore keycloak database from dump. Set KCDUMPFILE en var for custom (saved) dumpfile path.
+kcrestore: $(KCDUMPFILE)
+	cat $< | $(SQL)
+
+## delete keycloak database and recreate it
+rekc:
+	docker compose --profile kc stop keycloak
+	echo "DROP DATABASE IF EXISTS keycloak;" | $(SQL)
+	echo "CREATE DATABASE keycloak;" | $(SQL)
+	# cat keycloak/initdb.d/keycloak-database-and-user.sql | $(SQL)
+	echo "GRANT ALL PRIVILEGES ON keycloak.* TO 'keycloak'@'%';" | $(SQL)
+	@echo "Keycloak db reset."
 
 # ---------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder

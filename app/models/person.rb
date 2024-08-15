@@ -37,23 +37,49 @@ class Person
           APIPersonGetter.for_email(sciper_or_email)
         end
     p = g.fetch!
+    raise ActiveRecord::RecordNotFound if p.blank?
+
     new(p)
   end
 
-  def profile
-    @profile = Profile.for_sciper(sciper) unless defined?(@profile)
-    @profile = Profile.create_with_defaults(sciper) if @profile.nil? && can_edit_profile?
+  def self.for_scipers(scipers)
+    return [] if scipers.empty?
+
+    # sort.uniq is to minimize cache miss
+    g = APIPersonGetter.for_scipers(scipers.sort.uniq)
+    g.fetch!.map { |p| new(p) }
+  end
+
+  def self.for_group(name_or_id)
+    g = APIPersonGetter.for_group(name_or_id)
+    scipers = g.fetch!['persons'].map(&:id)
+    for_scipers(scipers)
+  end
+
+  def self.for_groups(names_or_ids)
+    scipers = names_or_ids.map do |name_or_id|
+      g = APIPersonGetter.for_group(name_or_id)
+      g.fetch!.map { |p| p['id'] }
+    end.flatten.uniq
+    for_scipers(scipers)
+  end
+
+  def profile!
+    unless defined?(@profile)
+      @profile = Profile.for_sciper(sciper)
+      @profile = Profile.new_with_defaults(sciper) if @profile.nil? && can_have_profile?
+    end
     @profile
   end
 
-  def can_edit_profile?
+  def can_have_profile?
     unless defined?(@can_edit_profile)
-      @can_edit_profile = begin
+      @can_have_profile = begin
         a = APIAuthGetter.new(sciper).fetch
         a.any? { |d| d['status'] == 'active' }
       end
     end
-    @can_edit_profile
+    @can_have_profile
   end
 
   def achieving_professor?
@@ -110,6 +136,7 @@ class Person
 
   # TODO: check errors on api calls and decide how to recover
   def accreditations
+    profile = profile!
     @accreditations ||= if profile.present?
                           Accreditation.for_profile(profile)
                         else

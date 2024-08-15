@@ -8,7 +8,7 @@
   <%= phone_link(@person.default_phone.number, class: "btn btn-sm btn-secondary") %>
   <% end %>
 
-  <% if @editable && @profile.personal_web_url? %>
+  <% if @profile.present? && @profile.personal_web_url? %>
     <%= link_to(@profile.personal_web_url, @profile.personal_web_url, class: "btn btn-sm btn-secondary") %>
   <% end %>
 </p>

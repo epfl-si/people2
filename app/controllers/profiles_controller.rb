@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
-class ProfilesController < ApplicationController
-  protect_from_forgery
-  before_action :ensure_auth
-  before_action :set_profile, except: [:set_favorite_picture]
+class ProfilesController < BackendController
+  before_action :load_and_authorize_profile, except: [:new]
+  before_action :load_person, except: %i[set_favorite_picture new]
 
-  def edit
-    respond_to do |format|
-      format.html do
-        render
-      end
-    end
+  # GET /person/:sciper/profile/new
+  # Profiles will be saved to DB only if an authorised person click on the edit link
+  def new
+    @person = Person.find(params[:sciper])
+    authorize!(@person, to: :update?)
+    @profile = @person.profile!
+    @profile.save unless @profile.persisted?
+    redirect_to edit_profile_path(@profile)
   end
+
+  def edit; end
 
   # PATCH/PUT /profile/:id
   def update
@@ -36,7 +39,6 @@ class ProfilesController < ApplicationController
 
   # PATCH /profile/:id/set_favorite_picture/picture_id
   def set_favorite_picture
-    @profile = Profile.find(params[:id])
     @picture = @profile.pictures.find(params[:picture_id])
     respond_to do |format|
       if @profile.update(selected_picture: @picture)
@@ -58,13 +60,14 @@ class ProfilesController < ApplicationController
 
   private
 
-  # TODO: implement this!
-  def ensure_auth
-    true
+  def load_and_authorize_profile
+    @profile ||= Profile.find(params[:id])
+    Rails.logger.debug("======= authorized? #{allowed_to?(:update?, @profile) ? 'yes' : 'no'}")
+    authorize! @profile, to: :update?
   end
 
-  def set_profile
-    @profile = Profile.find(params[:id])
+  def load_person
+    load_and_authorize_profile
     @person = Person.find(@profile.sciper)
     @name = @person.name
   end

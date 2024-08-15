@@ -101,10 +101,7 @@ class Accreditation
   end
 
   def unit
-    @unit ||= begin
-      unit_data = APIUnitGetter.fetch_units(@unit_id)
-      Unit.new(unit_data)
-    end
+    @unit ||= Unit.find(@unit_id)
   end
 
   def botweb?
@@ -129,8 +126,8 @@ class Accreditation
     @visible
   end
 
-  def hidden_address?
-    prefs.present? && prefs.hidden_addr
+  def hidden_addr?
+    prefs.present? && prefs.hidden_addr?
   end
 
   def order

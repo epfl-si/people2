@@ -12,7 +12,7 @@
     height: 32px;
   }
 </style>
-<% if Rails.env.development? %> 
+<% if Rails.env.development? %>
 <style type="text/css">
   #envbanner button {
     background: #FFF;
@@ -33,7 +33,10 @@
 function toggle_console() {
   console.log("toggling console");
   $('#console').toggle();
-}  
+}
+$('#console').ready(function() {
+  toggle_console();
+});
 </script>
 <% console # if Rails.env.development? && Rails.root.join('tmp/console-dev.txt').exist? %>
 <% end %>
@@ -46,10 +49,19 @@ function toggle_console() {
     <span class='d-none d-md-inline d-lg-none'>[MD]</span>
     <span class='d-none d-lg-inline d-xl-none'>[LG]</span>
     <span class='d-none d-xl-inline d-xxl-none'>[XL]</span>
-    <span class='d-none d-xxl-inline'>[XXL]</span>  
+    <span class='d-none d-xxl-inline'>[XXL]</span>
     &#9679;
     <%= I18n.locale.upcase %>
     &#9679;
+    <%= user_signed_in? ? "signed in as #{current_user.name}" : "NOT signed-in" %>
+    &#9679;
+    <% if @audience.present? %>
+      <%= @original_audience.present? ?
+        "Access: #{visibility_access(@original_audience)} -> #{visibility_access(@audience)}" :
+        "Access: #{visibility_access(@audience)}"
+      %>
+      &#9679;
+    <% end %>
   <% end %>
 
   <%= Rails.env.to_s.upcase %>
