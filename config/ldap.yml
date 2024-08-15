@@ -1,0 +1,14 @@
+# LDAP server configuration
+# Available as `Rails.application.config_for(:ldap)`
+
+ldap_config: &ldap_config
+  host: <%= ENV.fetch("LDAP_HOST", "ldap.epfl.ch") %>
+  base: o=epfl,c=ch
+
+development:
+  <<: *ldap_config
+
+test:
+  <<: *ldap_config
+production:
+  <<: *ldap_config

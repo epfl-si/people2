@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BoxesController < ApplicationController
+class BoxesController < BackendController
   before_action :set_box, only: %i[show edit update destroy]
 
   # GET /boxes or /boxes.json

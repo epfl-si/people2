@@ -2,7 +2,7 @@
 # is *not* meant for production.
 # https://www.keycloak.org/server/reverseproxy
 
-version: '3.9'
+version: "3.9"
 name: people2023
 
 services:
@@ -26,36 +26,35 @@ services:
       - start-dev
       - --import-realm
     environment:
+      KC_HOSTNAME: "https://keycloak.dev.jkldsa.com"
+      # KC_HOSTNAME_PORT: 443
+      KC_HTTP_ENABLED: false
       KC_DB: mariadb
       KC_DB_URL: jdbc:mariadb://mariadb:3306/keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: mariadb
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      # KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost}
-      # KC_HOSTNAME: keycloak.epfl.cz
-      # KC_HOSTNAME_PORT: 443
-      # KC_HTTP_ENABLED: true
-    ports:
-      # Since the Keycloak password is easy to guess, opening up this
-      # port further than localhost is *not* recommended.
-      - "${KCPORTEXT:-127.0.0.1:8080:}8080"
+    # ports:
+    #   # Since the Keycloak password is easy to guess, opening up this
+    #   # port further than localhost is *not* recommended.
+    #   - "${KCPORTEXT:-127.0.0.1:8080:}8080"
     labels:
+      # keycloak
       - traefik.docker.network=traefik
-      - traefik.http.services.keycloak.loadbalancer.server.port=${KCPORT:-8080}
-      - traefik.http.routers.keycloak.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
-      - traefik.http.routers.keycloak.tls=true
+      - traefik.http.services.kc.loadbalancer.server.port=8080
+      - traefik.http.routers.kc.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.kc.tls=true
+      # # keycloak management interface
+      # - traefik.http.services.kcm.loadbalancer.server.port=9000
+      # - traefik.http.routers.kcm.rule=Host("kcm.${DOMAIN:-dev.jkldsa.com}")
+      # - traefik.http.routers.kcm.tls=true
     volumes:
-      - ./keycloak/import_${KCREALM:-default}:/opt/keycloak/data/import
+      - ./keycloak/import:/opt/keycloak/data/import
     networks:
       - traefik
       - default
-    profiles:
-      - kc
 
-  # MariaDB is used by Keycloak for persistence. The Rails application
-  # itself uses sqlite in development (which unfortunately, is not an
-  # option for Keycloak at the moment).
   mariadb:
     image: mariadb:latest
     environment:
@@ -68,7 +67,7 @@ services:
     networks:
       - default
 
-  # valkey opensource replacement of redis 
+  # valkey opensource replacement of redis
   # https://hub.docker.com/r/valkey/valkey/
   cache:
     image: valkey/valkey:7.2
@@ -111,6 +110,12 @@ services:
       EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       OFFLINE_CACHEDIR: "/srv/filecache"
+      FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
+      SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
+      ADMIN_SCIPERS: ${ADMIN_SCIPERS}
+    extra_hosts:
+      - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
+      - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
     volumes:
       - ./:/srv/app
       - storage:/srv/app/storage
@@ -132,13 +137,49 @@ services:
 
       # - traefik.http.routers.peoplengrok.rule=Host("2.tcp.eu.ngrok.io")
       # - traefik.http.routers.peoplengrok.tls=true
-    extra_hosts:
-      - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
     networks:
       - traefik
       - default
     tty: true
     stdin_open: true
+
+  # directus:
+  #   image: directus/directus:11.0.0
+  #   volumes:
+  #     - directus_uploads:/directus/uploads
+  #     - directus_extensions:/directus/extensions
+  #   environment:
+  #     PUBLIC_URL: "https://directus.${DOMAIN:-dev.jkldsa.com}"
+  #     SECRET: "whatever"
+  #     ADMIN_EMAIL: "giovanni.cangiani@epfl.ch"
+  #     ADMIN_PASSWORD: "1234"
+  #     DB_CLIENT: "mysql"
+  #     DB_HOST: mariadb
+  #     DB_PORT: 3306
+  #     DB_DATABASE: people
+  #     DB_USER: people
+  #     DB_PASSWORD: mariadb
+  #     WEBSOCKETS_ENABLED: "true"
+  #     LOG_LEVEL: debug
+  #     LOG_STYLE: pretty
+  #   labels:
+  #     - traefik.docker.network=traefik
+  #     - traefik.http.services.directus.loadbalancer.server.port=8055
+  #     - traefik.http.routers.directus.rule=Host("directus.${DOMAIN:-dev.jkldsa.com}")
+  #     - traefik.http.routers.directus.tls=true
+  #   networks:
+  #     - traefik
+  #     - default
+
+  noc:
+    image: ${NOCIMAGE:-jonlabelle/network-tools}
+    stdin_open: true
+    tty: true
+    profiles:
+      - noc
+    networks:
+      - traefik
+      - default
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -161,7 +202,7 @@ services:
   # https://github.com/SeleniumHQ/docker-selenium
   selenium:
     image: selenium/standalone-chrome:112.0
-    shm_size: '2gb'
+    shm_size: "2gb"
     profiles:
       - test
     labels:
@@ -177,6 +218,8 @@ volumes:
   mariadb: {}
   filecache: {}
   storage: {}
+  # directus_uploads: {}
+  # directus_extensions: {}
 networks:
   traefik:
     external: true

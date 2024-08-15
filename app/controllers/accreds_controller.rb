@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AccredsController < ApplicationController
+class AccredsController < BackendController
   before_action :set_profile, only: %i[index]
   before_action :set_accred, only: %i[show edit update toggle toggle_addr]
 

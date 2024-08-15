@@ -12,8 +12,7 @@ if !Rails.env.production? && Rails.application.config_for(:epflapi).webmock
   # rubocop:enable Style/MixinUsage
 
   WebMock.enable!
-  WebMock.disable_net_connect!(allow: 'camipro-photos.epfl.ch')
-
+  WebMock.disable_net_connect!(allow: /.*.dev.jkldsa.com|camipro-photos.epfl.ch/)
   jf = Rails.root.join("test/fixtures/webmocks/index.json")
   JSON.parse(File.read(jf)).each do |url, fn|
     fp = Rails.root.join("test/fixtures/webmocks/#{fn}")

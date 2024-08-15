@@ -49,6 +49,30 @@ data=[
     email: "francesco.dalperaro",
     desc: "a student",
   },
+  {
+    name: "Damir",
+    sciper: "173563",
+    email: "damir.laurenzi",
+    desc: "A person that does not have its profile seeded (should be created the first time himself or natalie click on edit profile",
+  },
+  {
+    name: "Loïc",
+    sciper: "185853",
+    email: "loic.gardiol",
+    desc: "an external for which there should be no people page",
+  },
+  {
+    name: "Herve",
+    sciper: "195348",
+    email: "195348",
+    desc: "Another external for which there should be no people page",
+  },
+  {
+    name: "Ciccio",
+    sciper: "123456",
+    email: "ciccio.pasticcio",
+    desc: "a (fake) existing person that does not have to appear and must be redirected",
+  }
 ] 
 %>
 
@@ -58,6 +82,7 @@ data=[
     <%= link_to d.name, person_path(d.sciper) %>
     |
     <%= link_to d.name, person_path(d.email) %>
+    ->
     <%= d.desc %>
     <%= link_to "(reference)", "https://people.epfl.ch/#{d.sciper}" %>
   </li>

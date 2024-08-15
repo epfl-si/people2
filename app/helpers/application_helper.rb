@@ -28,11 +28,19 @@ module ApplicationHelper
     end
   end
 
+  # span with icon and text
   def icon_text(txt, icon)
     tag.span do
       concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
       concat t(txt)
     end
+  end
+
+  # icon + span with text
+  def icon_label(txt, icon)
+    res = content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
+    res << tag.span(t(txt), class: "label")
+    res
   end
 
   def icon(icon)
@@ -95,6 +103,19 @@ module ApplicationHelper
           end
         end
       end
+    end
+  end
+
+  # https://medium.com/@fabriciobonjorno/toast-with-stimulus-and-customized-error-messages-easily-and-quickly-0ff5e455ec80
+  def errors_for(form, field)
+    tag.p(form.object.errors[field].try(:first), class: 'text-danger ms-2 fw-medium')
+  end
+
+  def input_class_for(form, field)
+    if form.object.errors[field].present?
+      'form-control is-invalid'
+    else
+      'form-control'
     end
   end
 

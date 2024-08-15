@@ -56,6 +56,8 @@ en:
     update_award: "Udate award"
     create_experience: "Create new work experience"
     update_experience: "Udate work experience"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
     upload_image: "Upload the image"
     validate: "Submit"
 
@@ -69,7 +71,7 @@ en:
     picture:
       zero: "Something prevented your picture to be updated (should now happen)"
       one: "An error prevented your picture to be updated"
-      other: "#{count} errors prevented your picture to be updated"      
+      other: "#{count} errors prevented your picture to be updated"
     profile:
       zero: "Something prevented your profile to be updated (should now happen)"
       one: "An error prevented your profile to be updated"
@@ -189,6 +191,11 @@ en:
     editor: "Draft (editor only)"
     visible_address: "address"
     hidden_address: "NO address"
+    public_access: "public"
+    intranet_access: "intranet"
+    authenticated_access: "user"
+    editor_access: "full"
+
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"
@@ -205,7 +212,6 @@ en:
 
   work_experience: "Work Experience"
 
-
   activerecord:
     models:
       award: "award"
@@ -215,9 +221,13 @@ en:
       profile: "profile"
       social: "social address"
     attributes:
-      person:
-        function: main function
-        
+      award:
+        title_en: title (en)
+        title_fr: title (fr)
+        issuer: Granted by
+        origin: Origin
+        year: Year
+        url: Url
       experience:
         location: "copany or location or institution"
         period: "period (years)"
@@ -225,25 +235,32 @@ en:
         title_fr: "title (fr)"
         year_begin: "first year"
         year_end: "last year"
-    errors: 
-      models: 
-        name: 
-          attributes: 
-            usual_firstname: 
-              not_in_official: "Should be composed of names included in the official first name."
-            usual_lastname: 
-              not_in_official: "Should be composed of names included in the official family name."
-
+      person:
+        function: main function
+    errors:
+      models:
+        award:
+          attributes:
+            issuer:
+              blank: "must be present"
+            year:
+              blank: "must be present"
         experience:
           attributes:
             base:
               missing_year: "Either beginning or end of work experience should be present"
             location:
-              blank: "Location should be provided"
+              blank: "should be provided"
             year_end:
-              blank: "End year should be present"
+              blank: "should be present"
             year_start:
-              blank: "Start year should be present"
+              blank: "should be present"
+        name:
+          attributes:
+            usual_firstname:
+              not_in_official: "Should be composed of names included in the official first name."
+            usual_lastname:
+              not_in_official: "Should be composed of names included in the official family name."
         picture:
           attributes:
             base:

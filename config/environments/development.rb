@@ -20,7 +20,7 @@ Rails.application.configure do
   config.eager_load = false
 
   # Show full error reports.
-  config.consider_all_requests_local = true
+  config.consider_all_requests_local = ENV.fetch('SHOW_ERROR_PAGES', 'no') == 'no'
 
   # Enable server timing
   config.server_timing = true

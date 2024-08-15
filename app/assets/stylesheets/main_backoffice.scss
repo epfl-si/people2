@@ -122,6 +122,7 @@ span.visibility {
   }
 
   .form-errors {
+    font-size: var(--font-size-sm);
     li {
       color: var(--color-error);
     }

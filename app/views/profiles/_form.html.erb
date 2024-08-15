@@ -32,6 +32,7 @@
 		</div>
 	</div>
 
+	<% if @person.default_phone.present? %>
 	<div class="form-group row">
 		<%= form.label t('person.phone'), class: "col-sm-3  col-form-label" %>
 		<div class="col-sm-9 inform">
@@ -41,6 +42,7 @@
 			<%= show_attribute_switch(form, :show_phone) %>
 		</div>
 	</div>
+	<% end %>
 
 	<div class="form-group row">
 		<%= profile_text_field(form, :nationality_fr, "suisse, français") %>

@@ -48,22 +48,27 @@ class Profile < ApplicationRecord
 
   after_create :cache_camipro_picture!
 
+  DEFAULTS = {
+    show_birthday: false,
+    show_function: true,
+    show_nationality: false,
+    show_phone: true,
+    show_photo: false,
+    show_title: false,
+    force_lang: nil,
+    personal_web_url: nil,
+    nationality_en: nil,
+    nationality_fr: nil,
+    title_en: nil,
+    title_fr: nil
+  }.freeze
+
+  def self.new_with_defaults(sciper)
+    new(DEFAULTS.merge(sciper: sciper))
+  end
+
   def self.create_with_defaults(sciper)
-    create(
-      sciper: sciper,
-      show_birthday: false,
-      show_function: true,
-      show_nationality: false,
-      show_phone: true,
-      show_photo: false,
-      show_title: false,
-      force_lang: nil,
-      personal_web_url: nil,
-      nationality_en: nil,
-      nationality_fr: nil,
-      title_en: nil,
-      title_fr: nil
-    )
+    create(DEFAULTS.merge(sciper: sciper))
   end
 
   def self.for_sciper(sciper)

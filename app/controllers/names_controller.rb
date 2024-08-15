@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class NamesController < ApplicationController
+class NamesController < BackendController
   def update; end
 end
