@@ -1,0 +1,17 @@
+<%= form_with(model: [@profile, @social], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: @social if @social.errors.any? %>
+
+  <div class="form-group">
+    <%= form.label Social.human_attribute_name(:tag) %>
+    <%= research_ids_dropdown(form) %>
+  </div>
+  <div class="form-group">
+    <%= form.label Social.human_attribute_name(:value) %>
+    <%= form.text_field :value, placeholder: "URL or Value", class: "form-control", id: "social_value" %> <!-- Assurez-vous que l'id est ici -->
+  </div>
+  <div class="form-group">
+    <%= form.label Social.human_attribute_name(:audience) %>
+    <%= audience_selector form %>
+  </div>
+  <%= render "shared/form_actions", form: form, item: @social %>
+<% end %>
