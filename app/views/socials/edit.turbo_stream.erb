@@ -1,0 +1,5 @@
+<%= turbo_stream.replace dom_id(@social) do %>
+    <%= turbo_frame_tag dom_id(@social) do %>
+      <%= render "socials/form", profile: nil, social: @social, cancel: social_url(@social, format: 'turbo_stream') %>
+    <% end %>
+<% end %>
