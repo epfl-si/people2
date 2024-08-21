@@ -7,6 +7,7 @@
 <%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
 </section>
 
+<p data-controller="social"></p>
 <hr>
 
 <%= render "form", profile: @profile %>
@@ -29,10 +30,11 @@ Loading experiences... (for demoing purpose, an artificial delay is added)
 <%= turbo_frame_tag "awards_index", src: profile_awards_path(@profile), loading: :lazy do %>
 Loading awards... (for demoing purpose, an artificial delay is added)
 <% end %>
-    
+</section>
+
 <section id="socials_section">
   <%= turbo_frame_tag "socials_index", src: profile_socials_path(@profile), loading: :lazy do %>
     Loading socials... (for demoing purpose, an artificial delay is added)
   <% end %>
 </section>
-</section>
+

@@ -1,6 +1,7 @@
 <%= turbo_frame_tag :socials_index do %>
-	<%= tag.h2(t('title.socials')) %>
-  
+	<details>
+	<summary><%= tag.h2(t('title.socials')) %></summary>
+	
 	<%= turbo_frame_tag "socials", src: nil, target: nil, data: {controller: "sortable"} do %>
 	  <% @socials.each do |social| %>
 		<%= render 'editable_social', social: social %>
@@ -14,4 +15,5 @@
 		</div>
 	  <% end %>
 	</div>
+	</details>
   <% end %>	
