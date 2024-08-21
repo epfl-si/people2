@@ -93,6 +93,10 @@ class SocialsController < ApplicationController
 
   private
 
+  def social_params
+    params.require(:social).permit(:tag, :value, :audience)
+  end
+
   def set_profile
     @profile = Profile.find(params[:profile_id])
   end
@@ -100,10 +104,5 @@ class SocialsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_social
     @social = Social.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def social_params
-    params.require(:social).permit(:sciper, :tag, :value, :order, :visible, :audience)
   end
 end
