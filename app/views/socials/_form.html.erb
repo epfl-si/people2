@@ -1,17 +1,33 @@
-<%= form_with(model: [@profile, @social], local: false, class: "instaform") do |form| %>
-  <%= render "shared/form_errors", item: @social if @social.errors.any? %>
+<%= turbo_frame_tag dom_id(social) do %>
+  <%= form_with(model: [@profile, @social], local: false, class: "instaform", data: { controller: "social" }) do |form| %>
+    <%= render "shared/form_errors", item: @social if @social.errors.any? %>
 
-  <div class="form-group">
-    <%= form.label Social.human_attribute_name(:tag) %>
-    <%= research_ids_dropdown(form) %>
-  </div>
-  <div class="form-group">
-    <%= form.label Social.human_attribute_name(:value) %>
-    <%= form.text_field :value, placeholder: "URL or Value", class: "form-control", id: "social_value" %> <!-- Assurez-vous que l'id est ici -->
-  </div>
-  <div class="form-group">
-    <%= form.label Social.human_attribute_name(:audience) %>
-    <%= audience_selector form %>
-  </div>
-  <%= render "shared/form_actions", form: form, item: @social %>
+    <div class="form-group">
+      <%= form.label Social.human_attribute_name(:tag) %>
+      <%= form.select :tag, 
+          options_for_select(research_ids_options.map { |label, key| [label, key, { "data-url-prefix": Social::RESEARCH_IDS.dig(key, "url").gsub("XXX", "") }] }, selected: form.object.tag),
+          {}, { class: 'form-control social-tag-select', id: 'social_tag_select', data: { target: "social.tagSelect", action: "social#tagChanged", tag: form.object.tag }} %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label Social.human_attribute_name(:url) %>
+      <div class="container">
+        <div class="row">
+          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { target: "social.valueField", action: "blur->social#sanitizeValue" } %>
+          <button type="button" class="btn btn-sm btn-primary ml-2" data-action="click->social#checkLink">Check Link</button>
+        </div>
+        <div class="row">
+          <span class="text-muted" id="social_url_prefix" data-social-target="urlPrefix"></span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <%= form.label Social.human_attribute_name(:audience) %>
+      <%= audience_selector form %>
+    </div>
+
+    <%= render "shared/form_actions", form: form, item: @social %>
+  <% end %>
 <% end %>

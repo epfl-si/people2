@@ -33,25 +33,4 @@ document.addEventListener("turbo:before-stream-render", function(event) {
   }
 })
 
-document.addEventListener('turbo:load', function() {
-  const dropdownItems = document.querySelectorAll('.dropdown-item');
-  const hiddenField = document.getElementById('hidden_tag_field');
-  const valueField = document.getElementById('social_value'); 
 
-  dropdownItems.forEach(function(item) {
-    item.addEventListener('click', function(e) {
-      // Mettre à jour le champ caché avec la valeur sélectionnée
-      console.log(e)
-      hiddenField.value = e.target.dataset.value;
-
-      // Mettre à jour le placeholder du champ value
-      if (valueField) {
-        valueField.placeholder = e.target.dataset.placeholder;
-      }
-
-      // Gérer l'état actif des éléments du menu déroulant
-      dropdownItems.forEach(i => i.classList.remove('active'));
-      e.target.classList.add('active');
-    });
-  });
-});

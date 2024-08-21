@@ -4,45 +4,41 @@ class Social < ApplicationRecord
   include AudienceLimitable
 
   RESEARCH_IDS = {
-    # https://orcid.org/0000-0002-1825-0097
     'orcid' => {
       'img' => 'ORCIDiD_icon16x16.png',
       'url' => 'https://orcid.org/XXX',
       'label' => 'ORCID',
       'position' => 0,
-      'icon' => nil,
+      'icon' => "orcidid",
       're' => /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
       'help' => {
         'en' => 'https://orcid-integration.epfl.ch/',
         'fr' => 'https://orcid-integration.epfl.ch/'
       }
     },
-    # https://www.webofscience.com/wos/author/rid/AAX-5119-2020
     'wos' => {
       'img' => 'publons.png',
       'url' => 'https://www.webofscience.com/wos/author/rid/XXX',
       'label' => 'Publons - Web of Science ID',
       'position' => 1,
-      'icon' => nil,
+      'icon' => "publons",
       're' => /^([A-Z]+-[0-9]{4}-[0-9]{4}|[0-9])+$/
     },
-    # https://www.scopus.com/authid/detail.uri?authorId=57192201516
     'scopus' => {
       'img' => 'scopus.png',
       'url' => 'https://www.scopus.com/authid/detail.uri?authorId=XXX',
       'label' => 'Scopus ID',
       'position' => 2,
-      'icon' => nil,
+      'icon' => "scopus",
       're' => /^[0-9]+$/
     },
     'googlescholar' => {
       'img' => 'google_scholar.png',
-      'url' => 'https://scholar.google.com/citations?user=XXX&hl=en&oi=ao',
-      # 'url' => "https://scholar.google.com/citations?user=XXX"
+      'url' => 'https://scholar.google.com/citations?user=XXX',
       'label' => 'Google Scholar ID',
       'position' => 3,
       'icon' => 'google',
-      're' => /^[0-9a-zA-Z.-]+$/ # TODO: check this!
+      're' => /^[0-9a-zA-Z.-]+$/
     },
     'linkedin' => {
       'img' => 'linkedin.jpg',
@@ -50,16 +46,15 @@ class Social < ApplicationRecord
       'label' => 'Linkedin ID',
       'position' => 4,
       'icon' => 'linkedin',
-      're' => %r{^[a-z][a-z0-9-]+/?$} # TODO: check this!
+      're' => %r{^[a-z][a-z0-9-]+/?$}
     },
-    # https://github.com/XXX
     'github' => {
       'img' => 'github.png',
       'url' => 'https://github.com/XXX',
       'label' => 'GitHub',
       'position' => 5,
       'icon' => 'github',
-      're' => /^[A-Za-z0-9_.-]+$/,
+      're' => /^[A-Za-z0-9_.-]+$/
     },
     'stack_overflow' => {
       'img' => 'stackoverflow.png',
@@ -75,7 +70,7 @@ class Social < ApplicationRecord
       'label' => 'Mastodon',
       'position' => 7,
       'icon' => 'mastodon',
-      're' => /^[A-Za-z0-9_]+$/,
+      're' => /^[A-Za-z0-9_]+$/
     },
     'facebook' => {
       'img' => 'facebook.png',
@@ -143,6 +138,10 @@ class Social < ApplicationRecord
     @s['label']
   end
 
+  def url_prefix
+    RESEARCH_IDS.dig(tag, 'url').gsub('XXX', '') if tag.present?
+  end
+
   def default_position
     @s ||= RESEARCH_IDS[tag]
     @s['position']
@@ -150,7 +149,6 @@ class Social < ApplicationRecord
 
   private
 
-  # we call this before save so that profile is present due to passed validation
   def ensure_sciper
     sciper || profile.sciper
   end
