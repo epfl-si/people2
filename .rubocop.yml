@@ -48,6 +48,13 @@ Style/Documentation:
 Style/HashSyntax:
   # this can be re-enabled when we switch to ruby >= 3.1
   EnforcedShorthandSyntax: never
+
+# Layout/IndentationStyle:
+#   EnforcedStyle: spaces
+#   Enabled: true
+# Layout/IndentationWidth:
+#   Enabled: true
+
 Style/StringLiterals:
   Enabled: false
 Style/TrailingCommaInHashLiteral:
