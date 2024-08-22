@@ -1,0 +1,38 @@
+http:
+  routers:
+    debugonly-api:
+      priority: 100
+      entrypoints:
+        - https
+        - http
+      rule: Host(`{{ TRAEFIK_CONSOLE_HOSTNAME | default(inventory_hostname) }}`) && PathPrefix(`/api`)
+      service: api@internal
+    debugonly-dashboard:
+      priority: 100
+      entrypoints:
+        - https
+        - http
+      rule: Host(`{{ TRAEFIK_CONSOLE_HOSTNAME | default(inventory_hostname) }}`) && PathPrefix(`/dashboard`)
+      service: dashboard@internal
+      middlewares:
+        - debugonly-dashboard-redirect
+        - debugonly-dashboard-stripprefix
+  middlewares:
+    debugonly-dashboard-redirect:
+      redirectRegex:
+        regex: "(.*)/dashboard($|[?])"
+        replacement: "${1}/dashboard/${2}"
+        permanent: true
+    debugonly-dashboard-stripprefix:
+      stripPrefix:
+        prefixes:
+          - /dashboard/
+          - /dashboard
+      # middlewares:
+      #   - auth
+  # middlewares:
+  #   auth:
+  #     basicAuth:
+  #       users:
+  #         - "test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/"
+  #         - "test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0"

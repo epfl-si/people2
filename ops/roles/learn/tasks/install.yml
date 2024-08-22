@@ -1,0 +1,10 @@
+---
+- name: Check tag learn.install
+  ansible.builtin.debug:
+    msg: "doing learn.install"
+
+- name: Check tag learn.install.ciccio
+  ansible.builtin.debug:
+    msg: "doing learn.install.ciccio"
+  tags:
+    - learn.install.ciccio

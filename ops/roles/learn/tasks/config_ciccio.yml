@@ -1,0 +1,9 @@
+- name: Check tag learn.config.ciccio
+  ansible.builtin.debug:
+    msg: "doing learn.config.ciccio"
+
+- name: Check tag learn.config.ciccio.pasticcio
+  ansible.builtin.debug:
+    msg: "doing learn.config.ciccio.pasticcio"
+  tags:
+    - learn.config.ciccio.pasticcio

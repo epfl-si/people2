@@ -1,0 +1,21 @@
+---
+- name: Debug SSH_KEYS
+  ansible.builtin.debug:
+    msg: "{{ item.github }}"
+  with_items: "{{ SSH_KEYS }}"
+
+- name: Ensure ssh keys for admins
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    state: "{{ item.state | default(present) }}"
+    key: "https://github.com/{{ item.github }}.keys"
+  with_items: "{{ SSH_KEYS }}"
+
+- name: Ensure ssh keys for admins
+  ansible.posix.authorized_key:
+    user: root
+    state: "{{ item.state | default(present) }}"
+    key: "https://github.com/{{ item.github }}.keys"
+  with_items: "{{ SSH_KEYS }}"
+  become: true
+  when: ansible_user != "root"

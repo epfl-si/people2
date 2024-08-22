@@ -1,0 +1,4 @@
+traefik:
+  basedir: "{{ TRAEFIK_BASEDIR | default('/srv/traefik') }}"
+  email: "{{ CERTBOT_EMAIL | default('isas-fsd@groupes.epfl.ch') }}"
+  certs_src: "{{ CERTS_SRC | default('/keybase/team/epfl_idevfsd/certs') }}"

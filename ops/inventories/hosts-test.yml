@@ -1,0 +1,25 @@
+---
+all:
+  hosts:
+    peonext:
+      ansible_host: itspeopl0003.xaas.epfl.ch
+      ansible_port: 22
+      ansible_user: root
+  vars:
+    RUNENV: test
+    DOMAINS:
+      - fsd.team
+    CERTS_SRC: /keybase/team/epfl_idevfsd/certs/
+    RH_SECRETS:
+      path: /keybase/team/epfl_idevfsd/RedHat.yml
+      key: rhcp_fsd 
+    SSH_KEYS:
+      -
+        github: multiscan
+        state: present
+      -
+        github: d4rkheart
+        state: present
+      -
+        github: crazylady2004
+        state: absent
