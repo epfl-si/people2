@@ -116,6 +116,7 @@ services:
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
+      - "ldap.epfl.ch:128.178.222.15"
     volumes:
       - ./:/srv/app
       - storage:/srv/app/storage
