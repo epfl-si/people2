@@ -3,14 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 import Sortable from "sortablejs";
 import { put } from "@rails/request.js";
 
-// example use:
-//
-//    <ul data-controller="sortable">
-//      <li data-sortable-url="/entries/211/positions"><i data-sortable-handle>(H)</i> one</li>
-//      <li data-sortable-url="/entries/222/positions"><i data-sortable-handle>(H)</i> two</li>
-//      <li data-sortable-url="/entries/233/positions"><i data-sortable-handle>(H)</i> three</li>
-//    </ul>
-
 export default class extends Controller {
   static values = { url: String };
 
