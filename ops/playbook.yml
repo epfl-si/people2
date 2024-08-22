@@ -1,0 +1,21 @@
+
+- name: Common
+  hosts: all
+  gather_facts: False
+  # tasks:
+  #   - name: Debug rh_credentials
+  #     ansible.builtin.debug:
+  #       var: rh_credentials
+  roles:
+    - name: Import Learn Role
+      role: roles/learn
+      tags:
+        - learn
+    - name: setup common system requirements
+      role: roles/system
+      tags:
+        - system
+    - name: setup and run traefik
+      role: roles/traefik
+      tags:
+        - traefik

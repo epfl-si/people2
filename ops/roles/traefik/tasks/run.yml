@@ -1,0 +1,25 @@
+---
+- name: traefik docker network
+  containers.podman.podman_network:
+    name: traefik
+
+- name: Ensure traefik image
+  containers.podman.podman_image:
+    name: "docker.io/library/traefik:{{ traefik_version }}"
+
+- name: Ensure traefik containers is running
+  containers.podman.podman_container:
+    name: traefik
+    image: "traefik:{{ traefik_version }}"
+    network: bridge
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: 
+      - "{{ traefik.basedir }}:/etc/traefik"
+      - "/run/podman/podman.sock:/var/run/docker.sock"
+    restart_policy: unless-stopped
+    force_restart: "{{ traefik_static_config.changed | default(false) or 'traefik.reload' in ansible_run_tags  }}"
+    state: started
+  tags:
+    - questo

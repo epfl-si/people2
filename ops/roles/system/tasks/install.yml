@@ -1,0 +1,17 @@
+---
+
+- name: Ensure system subscription to RHEL shit
+  community.general.redhat_subscription:
+    state: present
+    username: "{{ rh_credentials.login }}"
+    password: "{{ rh_credentials.password }}"
+    auto_attach: true
+  tags:
+    - rhelshit
+
+- name: Ensure podman related packages are present
+  ansible.builtin.package:
+    name: container-tools
+    state: present
+  tags:
+    - system.install.podman

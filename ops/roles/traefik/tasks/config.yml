@@ -1,0 +1,27 @@
+- name: Traefik static configuration file
+  template:
+    src: "traefik.yml"
+    dest: "{{ traefik.basedir }}/traefik.yml"
+  register: traefik_static_config
+
+- name: Dynamic traefik config for the api console
+  template:
+    src: "api.yml"
+    dest: "{{ traefik.basedir }}/config/traefik-api-console.yml"
+
+- name: SSL certificates for DOMAINS (glob certificates)
+  copy:
+    src: '{{ traefik.certs_src }}/{{ item }}'
+    dest: "{{ traefik.basedir }}/certs/"
+  with_items: "{{ DOMAINS }}"
+
+- name: SSL certificates for DOMAINS configuration
+  copy:
+    content: |
+      tls:
+        certificates:
+          {% for item in DOMAINS %}
+      - certFile: /etc/traefik/certs/{{ item }}/fullchain.pem
+            keyFile: /etc/traefik/certs/{{ item }}/privkey.pem
+          {% endfor %}
+    dest: "{{ traefik.basedir }}/config/certfiles.yml"

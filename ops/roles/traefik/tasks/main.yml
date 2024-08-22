@@ -1,0 +1,21 @@
+---
+- include_vars: traefik_vars.yml
+  tags: always
+
+- name: Setup requirements for Traefik
+  tags:
+    - traefik.setup
+  import_tasks:
+    file: setup.yml
+
+- name: Traefik Configuration
+  tags:
+    - traefik.config
+  import_tasks:
+    file: config.yml
+
+- name: Traefik Run
+  tags:
+    - traefik.run
+  import_tasks:
+    file: run.yml

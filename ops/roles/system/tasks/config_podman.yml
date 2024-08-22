@@ -1,0 +1,24 @@
+
+- name: enable NTP service
+  service: 
+    name: chronyd
+    enabled: yes
+    state: started
+
+- name: Ensure firewalld is not running
+  service:
+    name: firewalld
+    state: "{{ firewall_state | default('stopped') }}"
+    enabled: "{{ firewall_enabled | default('no') }}"
+
+- name: Ensure SELinux is enabled
+  ansible.posix.selinux:
+    policy: "{{ selinux_policy | default('targeted') }}"
+    state: "{{ selinux_state | default('disabled') }}"
+
+
+- name: Ensure podman socket
+  ansible.builtin.service:
+    name: podman.socket
+    state: started
+    enabled: true
