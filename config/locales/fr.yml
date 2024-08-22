@@ -1,226 +1,202 @@
 fr:
-  ciccio: this is ciccio
-  add: "Ajouter"
   action:
-    edit: "Éditer"
-    delete: "Supprimer"
     accred_full_list: "Liste complète des adresses et fonctions"
     admin_data: "Données administratives"
-    browse_image_file: "Select a new photo file"
-    confirm: "Are you sure?"
-    edit_profile: "Edit profile"
-    edit_pictures: "Edit / Change photo"
+    browse_image_file: "Sélectionner un nouveau fichier photo"
+    cancel: "Annuler"
+    confirm: "Êtes-vous sûr ?"
+    create_award: "Créer une nouvelle récompense"
+    create_education: "Créer une formation"
+    create_experience: "Créer un parcours professionnel"
+    create_social: "Ajouter un réseau social"
+    delete: "Supprimer"
+    edit: "Éditer"
+    edit_pictures: "Modifier / Changer la photo"
+    edit_profile: "Modifier le profil"
     hide_search_form: "Masquer le formulaire de recherche"
-    make_address_hidden: "Hide address"
-    make_address_visible: "Show address"
+    make_address_hidden: "Cacher l'adresse"
+    make_address_visible: "Afficher l'adresse"
     make_hidden: "Cacher"
     make_visible: "Visible"
     of: "de"
     search: "Rechercher sur le site"
     search_people: "Rechercher sur le site"
-    select: "Select"
+    select: "Sélectionner"
     show_hide_search_form: "Afficher / masquer le formulaire de recherche"
-    submit_personal_data: "Mettre à jour le profil de base"
-    submit: "Envoie"
-    create_award: "Create new award"
-    update_award: "Update award"
-    create_education: "Create an educations"
-    update_education: "Mettre à jour votre formation"
-    create_experience: "Crée un parcours professionnel"
-    update_experience: "Udate work experience"
-    create_social: "Ajouté un réseau social"
-    update_social: "Modifié le réseau social"
     sign_in: "Connexion"
-    sign_out: "Deconnexion"
-    upload_image: "Upload the image"
+    sign_out: "Déconnexion"
+    submit: "Envoyer"
+    submit_personal_data: "Mettre à jour le profil de base"
+    update_award: "Mettre à jour la récompense"
+    update_education: "Mettre à jour la formation"
+    update_experience: "Mettre à jour le parcours professionnel"
+    update_social: "Modifier le réseau social"
+    upload_image: "Télécharger l'image"
     validate: "Valider"
-    cancel: "Annuler"
-  visibility:
-    visible: "Visible"
-    hidden: "Cacher"
-    public: "Publique"
-    intranet: "Uniquement sur l'intranet"
-    authenticated: "Uniquement par les utilisateurs de l'EPFL"
-    draft: "Brouillon (éditeur uniquement)"
-    labels:
-      public: "Publique"
-      intranet: "Intranet"
-      authenticated: "Utilisateurs de l'EPFL"
-      draft: "Brouillon (éditeur uniquement)"
-  error:
-    one: "Error"
-    other: "Errors"
-    award:
-      zero: "Something prevented this award to be updated (should now happen)"
-      one: "An error prevented this award to be updated"
-      other: "%{count} errors prevented this award to be updated"
-    picture:
-      zero: "Something prevented your picture to be updated (should now happen)"
-      one: "An error prevented your picture to be updated"
-      other: "#{count} errors prevented your picture to be updated"
-    profile:
-      zero: "Something prevented your profile to be updated (should now happen)"
-      one: "An error prevented your profile to be updated"
-      other: "#{count} errors prevented your profile to be updated"
-    record:
-      zero: "Something prevented this record to be updated (should now happen)"
-      one: "An error prevented this record to be updated"
-      other: "%{count} errors prevented this record to be updated"
-  flash:
-    accred:
-      cannot_hide_all: "Cannot hide all accreditations"
-    generic:
-      success:
-        create: "Record created succesfully"
-        update: "Record updated succesfully"
-        remove: "Deleted"
-      error:
-        create: "Error creating record"
-        update: "Error updating record"
-        remove: "Error deleting"
-    profile:
-      success:
-        update: "Base profile succesfully updated"
-      error:
-        update: "Error while updating the base profile"
-  msg:
-    max_photos_reached: "You have reached the maximum number of allowed photos."
-    no_photofile_selected: "No photo selected. Please select one if you want to add a photo to your profile"
-
   admin_data:
-    title: "Données administratives"
-    sciper: "Numéro SCIPER"
-    sap: "Matricule SAP"
-    username: "Username"
     gid: "GID"
-    uid: "UID"
-    home: "Home directory"
+    home: "Répertoire personnel"
+    sap: "Matricule SAP"
+    sciper: "Numéro SCIPER"
     shell: "Shell"
+    title: "Données administratives"
+    uid: "UID"
+    username: "Nom d'utilisateur"
   awards: "Récompenses"
   birthday: "Date de naissance"
   biography: "Biographie"
-  class_delegate: "D&eacute;l&eacute;gu&eacute; de classe"
+  ciccio: "C'est Ciccio"
+  class_delegate: "Délégué de classe"
+  error:
+    award:
+      one: "Une erreur a empêché cette récompense d'être mise à jour"
+      other: "%{count} erreurs ont empêché cette récompense d'être mise à jour"
+      zero: "Quelque chose a empêché cette récompense d'être mise à jour (ne devrait pas se produire)"
+    one: "Erreur"
+    other: "Erreurs"
+    picture:
+      one: "Une erreur a empêché votre photo d'être mise à jour"
+      other: "#{count} erreurs ont empêché votre photo d'être mise à jour"
+      zero: "Quelque chose a empêché votre photo d'être mise à jour (ne devrait pas se produire)"
+    profile:
+      one: "Une erreur a empêché votre profil d'être mis à jour"
+      other: "#{count} erreurs ont empêché votre profil d'être mis à jour"
+      zero: "Quelque chose a empêché votre profil d'être mis à jour (ne devrait pas se produire)"
+    record:
+      one: "Une erreur a empêché cet enregistrement d'être mis à jour"
+      other: "%{count} erreurs ont empêché cet enregistrement d'être mis à jour"
+      zero: "Quelque chose a empêché cet enregistrement d'être mis à jour (ne devrait pas se produire)"
+  flash:
+    accred:
+      cannot_hide_all: "Impossible de masquer toutes les accréditations"
+    generic:
+      error:
+        create: "Erreur lors de la création de l'enregistrement"
+        remove: "Erreur lors de la suppression"
+        update: "Erreur lors de la mise à jour de l'enregistrement"
+      success:
+        create: "Enregistrement créé avec succès"
+        remove: "Supprimé"
+        update: "Enregistrement mis à jour avec succès"
+    profile:
+      error:
+        update: "Erreur lors de la mise à jour du profil de base"
+      success:
+        update: "Profil de base mis à jour avec succès"
+  footer:
+    accessibility: "Accessibilité"
+    back_to_the_top: "Retour en haut de la page"
+    copy: "EPFL, tous droits réservés"
+    data_protection: "Protection des données"
+    follow:
+      facebook: "Suivez l'EPFL sur Facebook"
+      instagram: "Suivez l'EPFL sur Instagram"
+      linkedin: "Suivez l'EPFL sur LinkedIn"
+      twitter: "Suivez l'EPFL sur X"
+      us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"
+      youtube: "Suivez l'EPFL sur Youtube"
+    legal: "Mentions légales"
   hello: "Bonjour"
   infoscience_publications: "Publications Infoscience"
   nationality: "Nationalité"
   nav:
     biography: "Biographie"
     publications: "Publications"
-    teaching: "Enseignement"
     research: "Recherche"
+    teaching: "Enseignement"
   office: "Local"
   person:
-    firstname: prenom
-    function: fonction
-    lastname: nom
-    email: addresse email
-    nationality: nationalité
-    official_firstname: prenom officiel
-    official_lastname: nom officiel
-    phone: numero de téléphone
-    photo: profile picture
-    title: titre
-    usual_firstname: prenom usuel
-    usual_lastname: nom usuel
-    website: address page web personnelle
-  education:
-    title_fr: "titre en français"
-    title_en: "titre en anglais"
-    field_fr: "Sujet étudié en français"
-    field_en: "Sujet étudié en anglais"
-    director: "Directeur de thèse"
-    school: "École"
-    period: "Période d'étude"
-    period_status: "Présent"
-    audience: "Visibilité"
+    email: "Adresse email"
+    firstname: "Prénom"
+    function: "Fonction"
+    lastname: "Nom"
+    nationality: "Nationalité"
+    official_firstname: "Prénom officiel"
+    official_lastname: "Nom officiel"
+    phone: "Numéro de téléphone"
+    photo: "Photo de profil"
+    title: "Titre"
+    usual_firstname: "Prénom usuel"
+    usual_lastname: "Nom usuel"
+    website: "Adresse de la page web personnelle"
   phone_type:
-    FIXE_CONF: fixe conf
-    FAX: fax
-    FIXE_OFFICE: fixe office
-    SOFT: soft
-    FIXE_LABO: fixe labo
-    OTHER: other
-    FIXE_WALL: fixe wall
-    FIXE_ANALOG: fixe analog
-    VIDEO_CONF: video conf
-    SIP_OTHER: sip other
+    FAX: "Fax"
+    FIXE_ANALOG: "Fixe analogique"
+    FIXE_CONF: "Fixe conférence"
+    FIXE_LABO: "Fixe labo"
+    FIXE_OFFICE: "Fixe bureau"
+    FIXE_WALL: "Fixe mural"
+    OTHER: "Autre"
+    SIP_OTHER: "SIP autre"
+    SOFT: "Soft"
+    VIDEO_CONF: "Visio conférence"
   picture:
-    selected: selected
+    selected: "Sélectionné"
   publication:
     title:
-      free: Notes on publications
-      infoscience: EPFL Infoscience
-      people: Other Publications
+      free: "Notes sur les publications"
+      infoscience: "EPFL Infoscience"
+      people: "Autres Publications"
   semester:
-    ete: été
-    hiver: hiver
-    undef: indéfini
+    ete: "Été"
+    hiver: "Hiver"
+    undef: "Indéfini"
   student:
-    female: Etudiante
-    male: Etudiant
+    female: "Étudiante"
+    male: "Étudiant"
   teaching: "Enseignement"
   title:
     awards: "Récompenses"
     bachelor_teaching: "Enseignement"
     biography: "Biographie"
     courses: "Cours"
+    current_phd: "Doctorants"
     current_phd_students: "Doctorant·es"
-    doctoral_teaching: "Enseignement & Phd"
+    doctoral_teaching: "Enseignement & PhD"
     educations: "Formation"
     experiences: "Expériences de travail"
     expertise: "Champs de compétences"
     of: "de"
+    past_phd: "A dirigé les thèses EPFL de"
     past_phd_students: "Ancien·nes doctorant·es"
+    pictures: "Photos de profil"
     publications: "Publications"
     research: "Recherche"
     teaching: "Enseignement"
+    teaching_domain: "Domaine d'enseignement"
     work_experience: "Parcours professionnel"
-    current_phd: "Doctorants"
-    past_phd: "A dirigé les thèses EPFL de"
-    pictures: "Profile pictures"
-    teaching_domain: "Enseignement"
-  footer:
-    follow:
-      us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"
-      facebook: "Suivez l'EPFL sur Facebook"
-      instagram: "Suivez l'EPFL sur Instagram"
-      linkedin: "Suivez l'EPFL sur LinkedIn"
-      twitter: "Suivez l'EPFL sur X"
-      youtube: "Suivez l'EPFL sur Youtube"
-    accessibility: "Accessibilité"
-    legal: "Mentions légales"
-    data_protection: "Protection des données"
-    copy: "EPFL, tous droits réservés"
-    back_to_the_top: "Retour en haut de la page"
-
+  visibility:
+    authenticated: "Uniquement par les utilisateurs de l'EPFL"
+    draft: "Brouillon (éditeur uniquement)"
+    hidden: "Caché"
+    intranet: "Uniquement sur l'intranet"
+    labels:
+      authenticated: "Utilisateurs de l'EPFL"
+      draft: "Brouillon (éditeur uniquement)"
+      intranet: "Intranet"
+      public: "Publique"
+    public: "Publique"
   work_experience: "Parcours professionnel"
-
   activerecord:
-    errors: 
-      models: 
-        name: 
-          attributes: 
-            usual_firstname: 
-              not_in_official: "Should be composed of names included in the official name."
-            usual_lastname: 
-              not_in_official: "Should be composed of names included in the official name."
+    errors:
+      models:
         experience:
           attributes:
             base:
-              missing_year: "Either beginning or end of work experience should be present"
+              missing_year: "Le début ou la fin de l'expérience de travail doit être renseigné"
             location:
-              blank: "should be provided"
+              blank: "doit être fourni"
             year_end:
-              blank: "should be present"
+              blank: "doit être renseigné"
             year_start:
-              blank: "should be present"
-          name:
-            attributes:
-              usual_firstname:
-                not_in_official: "Should be composed of names included in the official name."
-              usual_lastname:
-                not_in_official: "Should be composed of names included in the official name."
+              blank: "doit être renseigné"
+        name:
+          attributes:
+            usual_firstname:
+              not_in_official: "Doit être composé de prénoms inclus dans le nom officiel."
+            usual_lastname:
+              not_in_official: "Doit être composé de noms inclus dans le nom officiel."
         picture:
           attributes:
             base:
-              undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
+              undeletable: "La photo Camipro ne peut pas être supprimée, mais vous pouvez toujours masquer votre photo de profil"
