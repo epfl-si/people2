@@ -26,4 +26,11 @@ class APIUnitGetter < APIBaseGetter
     @alias = { name: "query" }
     super(data)
   end
+
+  # Units change very rarely. I expect many requests to arrive at the same time
+  # therefore, I give to each one a different lifetime so that,
+  # after the first time, they don't expire all together.
+  def expire_in
+    rand(600..700).hours
+  end
 end
