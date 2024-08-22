@@ -253,7 +253,7 @@ seed: migrate webmocks
 courses: dcup
 	docker compose exec webapp bin/rails data:courses
 
-SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
+
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb
