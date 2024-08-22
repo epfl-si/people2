@@ -56,7 +56,8 @@ Rails.application.routes.draw do
   namespace :api do
     # namespace /api/v0 is actually /cgi-bin via traefik rewrite
     namespace :v0 do
-      get '/wsgetPhoto', to: 'legacy#photo'
+      get '/wsgetPhoto', to: 'legacy_webservices#photo'
+      get '/wsgetpeople', to: 'legacy_webservices#people'
     end
   end
 

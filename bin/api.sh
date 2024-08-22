@@ -3,7 +3,7 @@
 # ./bin/api_epfl.sh > api_examples.txt
 # ./bin/api.sh -r ".firstname" persons/121769   
 
-. .env
+. ./.env
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
 BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 
