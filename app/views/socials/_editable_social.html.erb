@@ -1,0 +1,22 @@
+<%= turbo_frame_tag dom_id(social) do %>
+  <div class="list-group-item">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="d-flex align-items-center">
+          <h4 class="h5 mb-0 mr-2"><%= social.tag.capitalize %> | </h4>
+          <div><%= link_to(social.value, social.url)%></div>
+        </div>
+        <p class="text-muted small mb-0">
+        </p>
+        <p class="muted">
+          <%= render "shared/item_visibility", item: social %>
+        </p>
+      </div>
+      <div class="col-md-4 text-right">
+        <p>
+          <%= render "shared/item_actions", item: social %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
