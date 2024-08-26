@@ -1,0 +1,5 @@
+<%= turbo_stream.replace dom_id(@education) do %>
+  <%= turbo_frame_tag dom_id(@education) do %>
+    <%= render "educations/form", profile: nil, education: @education, cancel: education_url(@education, format: 'turbo_stream') %>
+  <% end %>
+<% end %>

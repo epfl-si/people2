@@ -1,0 +1,39 @@
+<%= form_with(model: [profile, education], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: education if education.errors.any? %>
+    <div class="form-group">
+      <%= form.label t('education.title_fr') %>
+      <%= form.text_field :title_fr, placeholder: "Ingénieur en informatique" %>
+    </div>
+    <div class="form-group">
+      <%= form.label t('education.title_en') %>
+      <%= form.text_field :title_en, placeholder: "Computer Engineer" %>
+    </div>
+    <div class="form-group">
+      <%= form.label t('education.field_fr') %>
+      <%= form.text_field :field_fr, placeholder: "Informatique" %>
+    </div>
+    <div class="form-group">
+      <%= form.label t('education.field_en') %>
+      <%= form.text_field :field_en, placeholder: "Computer Science" %>
+    </div>
+    <div class="form-group">
+      <%= form.label t('education.director') %>
+      <%= form.text_field :director, placeholder: "John Doe" %>
+    </div>
+    <div class="form-group">
+      <%= form.label t('education.school') %>
+      <%= form.text_field :school, placeholder: "MIT" %>
+    </div>
+    <div class="form-group">
+      <%= form.label t('education.period') %>
+      <%= form.number_field :year_begin, in: 1950..Date.today.year %>
+      <%= form.number_field :year_end, in: 1950..Date.today.year %>
+    </div>  
+      <div class="form-group">
+      <%= form.label t('education.audience') %>
+      <%= audience_selector form %>
+    </div>
+    <%= render "shared/form_actions", form: form, item: education %>
+  
+  <% end %>
+  
