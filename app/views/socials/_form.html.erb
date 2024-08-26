@@ -5,16 +5,34 @@
     <div class="form-group">
       <%= form.label Social.human_attribute_name(:tag) %>
       <%= form.select :tag, 
-          options_for_select(research_ids_options.map { |label, key| [label, key, { "data-url-prefix": Social::RESEARCH_IDS.dig(key, "url").gsub("XXX", ""), "data-placeholder": Social::RESEARCH_IDS.dig(key, "placeholder") }] }, selected: form.object.tag),
-          {}, { class: 'form-control social-tag-select', id: 'social_tag_select', data: { "socials-target" => "tagSelect" , action: "socials#tagChanged", tag: form.object.tag }} %>
+          options_for_select(
+            research_ids_options.map do |label, key|
+              [
+                label,
+                key,
+                {
+                  "data-url-prefix": Social::RESEARCH_IDS.dig(key, "url").gsub("XXX", ""),
+                  "data-placeholder": Social::RESEARCH_IDS.dig(key, "placeholder") || 'Enter ID or Username'
+                }
+              ]
+            end,
+            selected: form.object.tag
+          ),
+          {},
+          {
+            class: 'form-control social-tag-select',
+            id: 'social_tag_select',
+            data: { "socials-target" => "tagSelect", action: "socials#tagChanged" }
+          } 
+      %>
     </div>
 
     <div class="form-group">
       <%= form.label Social.human_attribute_name(:url) %>
       <div class="container">
         <div class="row">
-          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { "socials-target" => "valueField" , action: "blur->socials#sanitizeValue" } %>
-          <button type="button" class="btn btn-sm btn-primary ml-2" data-action="click->social#checkLink">Check Link</button>
+          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { "socials-target" => "valueField", action: "blur->socials#sanitizeValue" } %>
+          <button type="button" class="btn btn-sm btn-primary ml-2" data-action="click->socials#checkLink">Check Link</button>
         </div>
         <div class="row">
           <span class="text-muted" id="social_url_prefix" data-socials-target="urlPrefix"></span>

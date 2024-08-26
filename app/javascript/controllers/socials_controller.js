@@ -8,34 +8,29 @@ export default class extends Controller {
   }
 
   updateUrlPrefix() {
-    const selectedTag = this.tagSelectTarget.value;
-    const baseUrl = this.getBaseUrl(selectedTag);
+    const selectedTagOption = this.tagSelectTarget.selectedOptions[0];
+    const baseUrl = selectedTagOption.getAttribute('data-url-prefix');
     const id = this.valueFieldTarget.value.trim();
 
     if (baseUrl) {
       this.urlPrefixTarget.textContent = id ? `${baseUrl}${id}` : baseUrl;
-      this.valueFieldTarget.placeholder = this.getPlaceholder(selectedTag);
+      this.valueFieldTarget.placeholder = selectedTagOption.getAttribute('data-placeholder');
     }
   }
 
   sanitizeValue() {
     const inputValue = this.valueFieldTarget.value.trim();
 
-    // Vérifie si l'entrée correspond à un réseau social connu
-    for (const [key, value] of Object.entries(window.RESEARCH_IDS)) {
-      const url = value.url.replace('XXX', '');
+    for (const option of this.tagSelectTarget.options) {
+      const url = option.getAttribute('data-url-prefix');
       if (inputValue.startsWith(url)) {
-        // Raccourcit l'URL pour ne montrer que l'ID
         this.valueFieldTarget.value = inputValue.replace(url, '');
 
-        // Met à jour le label du préfixe d'URL pour afficher l'URL complète avec l'ID
         this.urlPrefixTarget.textContent = `${url}${this.valueFieldTarget.value}`;
 
-        // Change le tag sélectionné dans le menu déroulant
-        this.tagSelectTarget.value = key;
+        this.tagSelectTarget.value = option.value;
 
-        // Met à jour le placeholder avec l'exemple d'ID
-        this.valueFieldTarget.placeholder = this.getPlaceholder(key);
+        this.valueFieldTarget.placeholder = option.getAttribute('data-placeholder');
         break;
       }
     }
@@ -50,28 +45,5 @@ export default class extends Controller {
     if (baseUrl) {
       window.open(baseUrl, '_blank');
     }
-  }
-
-  getBaseUrl(tag) {
-    // RESEARCH_IDS global defined in views/layouts/application.html.erb to be removed
-    return window.RESEARCH_IDS[tag]?.url.replace('XXX', '') || '';
-  }
-
-  // This has to go away and be replaced by data taken from the option tags of the selector
-  getPlaceholder(tag) {
-    const placeholders = {
-      'orcid': '0000-0002-1825-0097',
-      'wos': 'AAX-5119-2020',
-      'scopus': '57192201516',
-      'googlescholar': 'abcdEFGhiJKLMno',
-      'linkedin': 'john-doe-12345',
-      'github': 'username',
-      'stack_overflow': '12345678',
-      'mastodon': 'username',
-      'facebook': 'john.doe',
-      'twitter': 'username',
-      'instagram': '@username'
-    };
-    return placeholders[tag] || 'Enter ID or Username';
   }
 }
