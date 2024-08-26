@@ -131,7 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.string "director"
     t.string "school", null: false
     t.integer "year_begin"
-    t.integer "year", null: false
+    t.integer "year_end"
     t.integer "position", null: false
     t.integer "audience", default: 0
     t.boolean "visible", default: false
