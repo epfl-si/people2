@@ -28,6 +28,8 @@ fr:
     sign_out: "Deconnexion"
     upload_image: "Upload the image"
     validate: "Valider"
+  common:
+    not_available: non disponible
 
   error:
     one: "Error"
