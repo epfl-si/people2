@@ -7,10 +7,9 @@
           <div><%= education.t_field %></div>
         </div>
         <p class="text-muted small mb-0">
-          <%= period_text(education.year_begin, education.year_end) %>
-        </p>
-        <p class="text-muted small mb-0">
-          <%= education.school %>
+          <%= period_text(education.year_begin, education.year_end) %> <%= education.school %>
+          <br> 
+          <%= t("education.directedby")%> <%= education.director %>
         </p>
         <p class="muted">
           <%= render "shared/item_visibility", item: education %>

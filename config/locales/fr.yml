@@ -179,7 +179,8 @@ fr:
     back_to_the_top: "Retour en haut de la page"
 
   work_experience: "Parcours professionnel"
-
+  education: 
+    directedby: "Dirigé par : "
   activerecord:
     models:
       award: "award"
