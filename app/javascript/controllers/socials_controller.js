@@ -28,6 +28,9 @@ export default class extends Controller {
 
         this.urlPrefixTarget.textContent = `${url}${this.valueFieldTarget.value}`;
 
+        // WARNING: This works thanks to elements.js which makes select easier
+        // to work with. Normally one should remove/add the "selected" property
+        // on the options tags.
         this.tagSelectTarget.value = option.value;
 
         this.valueFieldTarget.placeholder = option.getAttribute('data-placeholder');

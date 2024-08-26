@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO: this class mimics the logic of the equivalent in people legacy.
+#       May be there is a nicer way of doing this.
+
 class Social < ApplicationRecord
   include AudienceLimitable
 
@@ -116,6 +119,8 @@ class Social < ApplicationRecord
   validates :tag, inclusion: { in: RESEARCH_IDS.keys }
   validate :validate_format_of_value
 
+  validate :url_actually_exists
+
   before_save :ensure_sciper
 
   def self.for_sciper(sciper)
@@ -174,6 +179,11 @@ class Social < ApplicationRecord
       errors.add(:value, "incorrect format")
       return false
     end
+    true
+  end
+
+  # TODO: fire a request to the url and check if it actually exist
+  def url_actually_exists
     true
   end
 
