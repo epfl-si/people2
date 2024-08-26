@@ -6,7 +6,21 @@ require:
   # - rubocop-graphql
 AllCops:
   SuggestExtensions: false
-
+  # I just wanted to exclude ops dir because it sends rubocop into infinite loop
+  # but it looks like Exclude is not merged with the default. Therefore I copied
+  # here the default config obtained with `bundle exec rubocop:dump`
+  Exclude:
+    - 'ops/**/*'
+    - "node_modules/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - ".git/**/*"
+    - "app/assets/**/*"
+    - "bin/*"
+    - "db/*schema.rb"
+    - "log/**/*"
+    - "public/**/*"
+    - "storage/**/*"
 Bundler/DuplicatedGroup:
   Enabled: false
 Lint/AmbiguousOperatorPrecedence:
