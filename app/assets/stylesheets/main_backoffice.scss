@@ -116,7 +116,6 @@ span.visibility {
     padding-top: 0.5ex;
   }
 
-
   input::placeholder {
     color: #707070;
   }
@@ -142,10 +141,25 @@ span.visibility {
     }
   }
 
+  .form-control,
   .form-group > label {
     min-width: 15em;
     margin-bottom: 0;
   }
+  
+  #social_value {
+    width: 20em;
+  }
+
+  #social_url_prefix {
+    flex-shrink: 0;
+    color: #6c757d;
+  }
+
+  .social-tag-select {
+    width: 20em;
+  }
+  
 }
 // ----
 
