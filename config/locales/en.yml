@@ -30,6 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+
   ciccio: this is ciccio
   action:
     accred_full_list: "Full list of positions and address"
@@ -60,7 +61,8 @@ en:
     sign_out: "Sign out"
     upload_image: "Upload the image"
     validate: "Submit"
-
+  common:
+    not_available: NA
   error:
     one: "Error"
     other: "Errors"
@@ -195,7 +197,8 @@ en:
     intranet_access: "intranet"
     authenticated_access: "user"
     editor_access: "full"
-
+  education: 
+    directedby: "Directed by: "
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"
