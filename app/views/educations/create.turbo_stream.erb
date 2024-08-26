@@ -1,5 +1,12 @@
-<%= turbo_stream.append "educations", partial: "educations/education", locals: { education: @education } %>
-  <%= turbo_stream.append "education" do %>
-    <%= render "editable_education", education: @education %> 
+<%= turbo_stream.append "educations" do %>
+<%= render "editable_education", education: @education %> 
+<% end %>
+
+<%= turbo_stream.replace "new_education_form" do %>
+  <%= turbo_frame_tag "new_education_form" do %>
+    <div class="row justify-content-center">
+      <%= link_to icon_text('add', 'plus-circle') ,new_profile_education_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+    </div>
   <% end %>
 <% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
