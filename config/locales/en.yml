@@ -61,7 +61,8 @@ en:
     sign_out: "Sign out"
     upload_image: "Upload the image"
     validate: "Submit"
-
+  common:
+    not_available: NA
   error:
     one: "Error"
     other: "Errors"

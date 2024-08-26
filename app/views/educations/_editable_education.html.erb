@@ -9,7 +9,7 @@
         <p class="text-muted small mb-0">
           <%= period_text(education.year_begin, education.year_end) %> <%= education.school %>
           <br> 
-          <%= t("education.directedby")%> <%= education.director %>
+          <%= t("education.directedby")%> <%= education.director.presence || t("general.not_available") %>
         </p>
         <p class="muted">
           <%= render "shared/item_visibility", item: education %>

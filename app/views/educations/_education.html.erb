@@ -9,9 +9,11 @@
     <p class="text-muted small mb-0">
       <%= period_text(education.year_begin, education.year_end) %>
       <%= education.school %>
-      <br>
-      <%= t("education.directedby")%>
-      <%= education.director %>
+      <% if education.director.present? %>
+        <br>
+        <%= t("education.directedby")%>
+        <%= education.director %>
+      <% end %>
     </p>
   </div>
 </div>
