@@ -1,23 +1,23 @@
 <%= turbo_frame_tag dom_id(social) do %>
-  <%= form_with(model: [@profile, @social], local: false, class: "instaform", data: { controller: "social" }) do |form| %>
+  <%= form_with(model: [@profile, @social], local: false, class: "instaform", data: { controller: "socials" }) do |form| %>
     <%= render "shared/form_errors", item: @social if @social.errors.any? %>
 
     <div class="form-group">
       <%= form.label Social.human_attribute_name(:tag) %>
       <%= form.select :tag, 
-          options_for_select(research_ids_options.map { |label, key| [label, key, { "data-url-prefix": Social::RESEARCH_IDS.dig(key, "url").gsub("XXX", "") }] }, selected: form.object.tag),
-          {}, { class: 'form-control social-tag-select', id: 'social_tag_select', data: { target: "social.tagSelect", action: "social#tagChanged", tag: form.object.tag }} %>
+          options_for_select(research_ids_options.map { |label, key| [label, key, { "data-url-prefix": Social::RESEARCH_IDS.dig(key, "url").gsub("XXX", ""), "data-placeholder": Social::RESEARCH_IDS.dig(key, "placeholder") }] }, selected: form.object.tag),
+          {}, { class: 'form-control social-tag-select', id: 'social_tag_select', data: { "socials-target" => "tagSelect" , action: "socials#tagChanged", tag: form.object.tag }} %>
     </div>
 
     <div class="form-group">
       <%= form.label Social.human_attribute_name(:url) %>
       <div class="container">
         <div class="row">
-          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { target: "social.valueField", action: "blur->social#sanitizeValue" } %>
+          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { "socials-target" => "valueField" , action: "blur->socials#sanitizeValue" } %>
           <button type="button" class="btn btn-sm btn-primary ml-2" data-action="click->social#checkLink">Check Link</button>
         </div>
         <div class="row">
-          <span class="text-muted" id="social_url_prefix" data-social-target="urlPrefix"></span>
+          <span class="text-muted" id="social_url_prefix" data-socials-target="urlPrefix"></span>
         </div>
       </div>
     </div>

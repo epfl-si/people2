@@ -53,9 +53,11 @@ export default class extends Controller {
   }
 
   getBaseUrl(tag) {
+    // RESEARCH_IDS global defined in views/layouts/application.html.erb to be removed
     return window.RESEARCH_IDS[tag]?.url.replace('XXX', '') || '';
   }
 
+  // This has to go away and be replaced by data taken from the option tags of the selector
   getPlaceholder(tag) {
     const placeholders = {
       'orcid': '0000-0002-1825-0097',

@@ -7,6 +7,7 @@ class Social < ApplicationRecord
     'orcid' => {
       'img' => 'ORCIDiD_icon16x16.png',
       'url' => 'https://orcid.org/XXX',
+      'placeholder' => '0000-0002-1825-0097',
       'label' => 'ORCID',
       'position' => 0,
       'icon' => "orcidid",
@@ -19,6 +20,7 @@ class Social < ApplicationRecord
     'wos' => {
       'img' => 'publons.png',
       'url' => 'https://www.webofscience.com/wos/author/rid/XXX',
+      'placeholder' => 'AAX-5119-2020',
       'label' => 'Publons - Web of Science ID',
       'position' => 1,
       'icon' => "publons",
@@ -27,6 +29,7 @@ class Social < ApplicationRecord
     'scopus' => {
       'img' => 'scopus.png',
       'url' => 'https://www.scopus.com/authid/detail.uri?authorId=XXX',
+      'placeholder' => '57192201516',
       'label' => 'Scopus ID',
       'position' => 2,
       'icon' => "scopus",
@@ -35,6 +38,7 @@ class Social < ApplicationRecord
     'googlescholar' => {
       'img' => 'google_scholar.png',
       'url' => 'https://scholar.google.com/citations?user=XXX',
+      'placeholder' => 'abcdEFGhiJKLMno',
       'label' => 'Google Scholar ID',
       'position' => 3,
       'icon' => 'google',
@@ -43,6 +47,7 @@ class Social < ApplicationRecord
     'linkedin' => {
       'img' => 'linkedin.jpg',
       'url' => 'https://www.linkedin.com/in/XXX',
+      'placeholder' => 'john-doe-12345',
       'label' => 'Linkedin ID',
       'position' => 4,
       'icon' => 'linkedin',
@@ -51,6 +56,7 @@ class Social < ApplicationRecord
     'github' => {
       'img' => 'github.png',
       'url' => 'https://github.com/XXX',
+      'placeholder' => 'username',
       'label' => 'GitHub',
       'position' => 5,
       'icon' => 'github',
@@ -59,6 +65,7 @@ class Social < ApplicationRecord
     'stack_overflow' => {
       'img' => 'stackoverflow.png',
       'url' => 'https://stackoverflow.com/users/XXX',
+      'placeholder' => '12345678',
       'label' => 'Stack Overflow',
       'position' => 6,
       'icon' => 'stack-overflow',
@@ -67,6 +74,7 @@ class Social < ApplicationRecord
     'mastodon' => {
       'img' => 'mastodon.png',
       'url' => 'https://mastodon.social/@XXX',
+      'placeholder' => 'username',
       'label' => 'Mastodon',
       'position' => 7,
       'icon' => 'mastodon',
@@ -75,6 +83,7 @@ class Social < ApplicationRecord
     'facebook' => {
       'img' => 'facebook.png',
       'url' => 'https://www.facebook.com/XXX',
+      'placeholder' => 'john.doe',
       'label' => 'Facebook',
       'position' => 8,
       'icon' => 'facebook',
@@ -83,6 +92,7 @@ class Social < ApplicationRecord
     'twitter' => {
       'img' => 'twitter.png',
       'url' => 'https://twitter.com/XXX',
+      'placeholder' => 'username',
       'label' => 'Twitter',
       'position' => 9,
       'icon' => 'twitter',
@@ -91,6 +101,7 @@ class Social < ApplicationRecord
     'instagram' => {
       'img' => 'instagram.png',
       'url' => 'https://www.instagram.com/XXX',
+      'placeholder' => '@username',
       'label' => 'Instagram',
       'position' => 10,
       'icon' => 'instagram',
