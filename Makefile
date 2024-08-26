@@ -31,13 +31,15 @@ SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
 SQLDUMP=docker compose exec -T mariadb mariadb-dump --password=mariadb
 
 # ----------------------------------------------------------- Run/stop local app
-.PHONY: dev up reload kc down fulldown tunnel_up tunnel_down
+.PHONY: css dev up reload kc down fulldown tunnel_up tunnel_down
 
 ## start the dev env with sass builder and app server (try to emulate ./bin/dev)
 dev: up
 	./bin/dev -f Procfile.docker
 	make down
 
+css: 
+	bin/rails dartsass:watch
 ## start the dev tunnel and start all the servers
 up: tunnel_up dcup
 

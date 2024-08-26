@@ -1,0 +1,25 @@
+<%= turbo_frame_tag dom_id(education) do %>
+  <div class="list-group-item">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="d-flex align-items-center">
+          <h4 class="h5 mb-0 mr-2"><%= education.t_title %> | </h4>
+          <div><%= education.t_field %></div>
+        </div>
+        <p class="text-muted small mb-0">
+          <%= period_text(education.year_begin, education.year_end) %> <%= education.school %>
+          <br> 
+          <%= t("education.directedby")%> <%= education.director.presence || t("general.not_available") %>
+        </p>
+        <p class="muted">
+          <%= render "shared/item_visibility", item: education %>
+        </p>
+      </div>
+      <div class="col-md-4 text-right">
+        <p>
+          <%= render "shared/item_actions", item: education %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -47,6 +47,10 @@ fr:
   biography: "Biographie"
   ciccio: "C'est Ciccio"
   class_delegate: "Délégué de classe"
+  common:
+    not_available: non disponible
+  education: 
+    directedby: "Dirigé par : "
   error:
     award:
       one: "Une erreur a empêché cette récompense d'être mise à jour"
