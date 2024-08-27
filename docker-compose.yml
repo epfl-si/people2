@@ -21,7 +21,7 @@ services:
   # details on the startup sequence of Keycloak (and the
   # --import-realm flag) in ./keycloak/README.md
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: quay.io/keycloak/keycloak:25.0.0
     command:
       - start-dev
       - --import-realm
@@ -56,7 +56,7 @@ services:
       - default
 
   mariadb:
-    image: mariadb:latest
+    image: mariadb:11.4.3
     environment:
       MARIADB_USER: keycloak
       MARIADB_PASSWORD: mariadb
