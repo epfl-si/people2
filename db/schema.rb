@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
-  create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
     t.integer "position", null: false
@@ -130,7 +130,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.string "field_fr"
     t.string "director"
     t.string "school", null: false
-    t.integer "year_begin", null: false
+    t.integer "year_begin"
     t.integer "year_end"
     t.integer "position", null: false
     t.integer "audience", default: 0
@@ -212,7 +212,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["selected_picture_id"], name: "index_profiles_on_selected_picture_id"
   end
 
-  create_table "redirects", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "redirects", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "ns"
     t.integer "sciper"
     t.string "url"
@@ -232,7 +232,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name_en"
     t.string "name_fr"
     t.string "property", null: false
@@ -245,7 +245,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.string "sciper"
     t.string "tag"
     t.string "value"
-    t.integer "order", default: 1
+    t.integer "position", default: 0
     t.boolean "visible", default: true
     t.integer "audience", default: 0
     t.datetime "created_at", null: false
@@ -265,7 +265,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["profile_id"], name: "index_teacherships_on_profile_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "email"
     t.string "name"
     t.string "password"
