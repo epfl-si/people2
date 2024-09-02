@@ -10,7 +10,7 @@
           <%= render "shared/item_visibility", item: publication %>
           <br>
           <% if publication.url.present? %>
-          <%= link_to 'View Publication', publication.url, class: "btn btn-primary btn-sm mt-2", target: "_blank", rel: "noopener noreferrer" %>
+          <%= link_to t('publication.link'), publication.url, class: "btn btn-primary btn-sm mt-2", target: "_blank", rel: "noopener noreferrer" %>
         <% end %>
         </p>
 

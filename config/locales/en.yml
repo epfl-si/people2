@@ -57,6 +57,7 @@ en:
     update_award: "Update award"
     update_education: "Update education"
     create_experience: "Create new work experience"
+    create_publication: "Create new publication"
     update_experience: "Udate work experience"
     sign_in: "Sign in"
     sign_out: "Sign out"
@@ -153,6 +154,8 @@ en:
   picture:
     selected: selected
   publication:
+    link: "View the publication"
+    authors: "Autors(s)"
     title:
       free: Notes on publications
       infoscience: EPFL Infoscience
