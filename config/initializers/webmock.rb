@@ -2,9 +2,6 @@
 
 if !Rails.env.production? && Rails.application.config_for(:epflapi).webmock
   # Rails.logger not yet available in initializers
-  # rubocop:disable Rails/Output
-  puts "Webmock ENABLED"
-  # rubocop:enable Rails/Output
   require 'webmock'
   # TODO: find a clean way of doing this!!!
   # rubocop:disable Style/MixinUsage
