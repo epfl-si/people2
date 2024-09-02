@@ -13,15 +13,15 @@ epflapi_config: &epflapi_config
   # ATELA (will be replaced by api)
   prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>
   atela_backend_url: <%= ENV.fetch("ATELA_BACKEND_URL", 'https://atela.epfl.ch/cgi-bin/atela-backend') %>
-  atela_key: <%= ENV.fetch("ATELA_KEY") %>
+  atela_key: <%= ENV.fetch("ATELA_KEY", nil) %>
 
   # API
   backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/') %>
   username: <%= ENV.fetch("EPFLAPI_USERNAME", 'people') %>
-  password: <%= ENV.fetch("EPFLAPI_PASSWORD") %>
+  password: <%= ENV.fetch("EPFLAPI_PASSWORD", nil) %>
 
   # CAMIPRO
-  camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY") %>
+  camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY", nil) %>
   camipro_host: <%= ENV.fetch("CAMIPRO_PHOTO_HOST", "camipro-photos.epfl.ch") %>
 
   # ISA

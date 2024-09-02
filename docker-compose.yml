@@ -198,6 +198,19 @@ services:
       - traefik
       - default
 
+  # redis-commander:
+  #   container_name: redis-commander
+  #   hostname: redis-commander
+  #   image: rediscommander/redis-commander:latest
+  #   restart: always
+  #   environment:
+  #     - REDIS_HOSTS=cache:6379/0
+  #   labels:
+  #     - traefik.docker.network=traefik
+  #     - traefik.http.routers.peodis.rule=Host("peopledis.${DOMAIN:-dev.jkldsa.com}")
+  #     - traefik.http.routers.peodis.tls=true
+  #     - traefik.http.services.peodis.loadbalancer.server.port=8081
+
   # TODO: add also firefox as an option (see https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/)
   # https://github.com/SeleniumHQ/docker-selenium
   selenium:
