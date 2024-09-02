@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "new_publication_form" do %>
+  <%= turbo_frame_tag "new_publication_form" do %>
+    <%= render "publications/form", profile: @profile, publication: @publication %>
+  <% end %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
