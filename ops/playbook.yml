@@ -1,6 +1,5 @@
-
 - name: Common
-  hosts: all
+  hosts: common
   gather_facts: False
   # tasks:
   #   - name: Debug rh_credentials
@@ -15,7 +14,15 @@
       role: roles/system
       tags:
         - system
+
+- name: traefik
+  hosts: web
+  roles:
     - name: setup and run traefik
       role: roles/traefik
       tags:
         - traefik
+    - name: setup people app
+      role: roles/people
+      tags:
+        - people

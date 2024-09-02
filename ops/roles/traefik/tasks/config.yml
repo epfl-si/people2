@@ -1,3 +1,4 @@
+
 - name: Traefik static configuration file
   template:
     src: "traefik.yml"

@@ -1,0 +1,57 @@
+---
+
+- name: Ensure traefik config file for people web app (untill we find out how to with labels...)
+  ansible.builtin.copy:
+    dest: "{{ traefik.config }}/keycloak.yml"
+    content: |
+      http:
+        routers:
+          people:
+            tls: true
+            service: people
+            rule: Host(`peonext.fsd.team`)
+        services:
+          people:
+            loadBalancer:
+              servers:
+                - 
+                  url: http://peoapp:3000
+
+- name: Ensure people app server containers is running
+  containers.podman.podman_container:
+    name: peoapp
+    image: "people"
+    env:
+      RAILS_ENV: "{{ people.env }}"
+      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(people.hostname, '') }}"
+      DEFAULT_URL: "https://people.${DOMAIN:-dev.jkldsa.com}"
+      ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
+      ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
+      # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
+      # if REDIS_CACHE is defined then redis is used otherwise default to memory
+      REDIS_CACHE: "{{ people.redis }}"
+      # I set this to get rid of an warning msg but it does not work.
+      # https://www.oracle.com/database/technologies/faq-nls-lang.html
+      # NLS_LANG: "en_US.UTF-8"
+
+      CAMIPRO_PHOTO_KEY: "{{ _secrets.people.camipro_photo_key }}"
+      CAMIPRO_PHOTO_HOST: "{{ CAMIPRO_PHOTO_HOST | default('camipro-photos.epfl.ch') }}"
+      ORACOURS_PWD: "{{ _secrets.people.oracle_cours_password }}"
+      ATELA_KEY: "{{ _secrets.people.atela_key }}"
+      EPFLAPI_BACKEND_URL: "{{ EPFLAPI_BACKEND_URL | default('https://api.epfl.ch/v1') }}"
+      EPFLAPI_PASSWORD: "{{ _secrets.people.epflapi_password }}"
+      OFFLINE_CACHEDIR: "/srv/filecache"
+      FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
+      SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
+    volumes:
+      - "{{ people.srcdir }}:/srv/app"
+      - "{{ people.storage }}:/srv/app/storage"
+      - "{{ people.filecache }}:/srv/filecache"
+    restart_policy: unless-stopped
+    state: started
+    network: 
+      - traefik
+      - people
+    # generate_systemd: false
+      # restart_sec: 10
+

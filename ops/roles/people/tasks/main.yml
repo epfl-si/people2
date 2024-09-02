@@ -1,0 +1,56 @@
+---
+- include_vars: app_vars.yml
+  tags: always
+
+- include_vars: ../traefik/vars/traefik_vars.yml
+  tags: always
+
+- name: Setup base for people
+  tags:
+    - people.setup
+  import_tasks:
+    file: setup.yml
+
+- name: Whoami server for debugging
+  tags:
+    - never
+    - people.run.whoami
+  import_tasks:
+    file: run_whoami.yml
+
+- name: Source Code to Docker Image
+  tags:
+    - people.src
+  import_tasks:
+    file: src.yml
+
+- name: Mariadb
+  tags:
+    - people.run
+    - people.run.db
+  import_tasks:
+    file: run_mariadb.yml
+  when: SELECT_DB == 'local_mariadb'
+
+- name: Redis Cache Server
+  tags:
+    - people.run
+    - people.run.redis
+  import_tasks:
+    file: run_redis.yml
+  when: SELECT_CACHE == 'local_redis'
+
+- name: Keycloak
+  tags:
+    - people.run
+    - people.run.kc
+  import_tasks:
+    file: run_keycloak.yml
+  when: SELECT_OIDC == 'local_keycloak'
+
+- name: People
+  tags:
+    - people.run
+    - people.run.app
+  import_tasks:
+    file: run.yml
