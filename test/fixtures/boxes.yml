@@ -39,6 +39,20 @@ gio_box_experience:
   audience: 0
   position: 3
 
+gio_box_publication:
+  type: "StandardBox"
+  data:
+    variant: 'publication'
+  profile: giova
+  section: bio
+  title_en: other publication
+  title_fr: autre publication
+  show_title: true
+  locked: true
+  visible: true
+  audience: 0
+  position: 4
+
 # ---------------------------------------------------------------------- Edouard
 edo_box_awards:
   type: "StandardBox"
