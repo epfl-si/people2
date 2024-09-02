@@ -8,6 +8,7 @@ fr:
     create_award: "Créer une nouvelle récompense"
     create_education: "Créer une formation"
     create_experience: "Créer un parcours professionnel"
+    create_publication: "Ajouter une nouvelle publication"
     create_social: "Ajouter un réseau social"
     delete: "Supprimer"
     edit: "Éditer"
@@ -137,10 +138,9 @@ fr:
   picture:
     selected: "Sélectionné"
   publication:
-    title:
-      free: "Notes sur les publications"
-      infoscience: "EPFL Infoscience"
-      people: "Autres Publications"
+    link: "Voir la publication"
+    authors: "Auteur(s)"
+    title: "titre"
   semester:
     ete: "Été"
     hiver: "Hiver"
