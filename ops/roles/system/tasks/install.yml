@@ -15,3 +15,24 @@
     state: present
   tags:
     - system.install.podman
+
+- name: Ensure essential packages for administration
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - system.install.admin
+  when: RUNENV != 'prod'
+  with_items:
+    - bind-utils
+    - net-tools
+    - telnet
+
+- name: Ensure essential packages for deployment
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - system.install.app
+  with_items:
+    - git

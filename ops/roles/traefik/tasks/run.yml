@@ -1,4 +1,21 @@
 ---
+- name: Register ansible_user uid
+  ansible.builtin.command: id -u
+  register: ansible_user_uid
+  tags:
+    - questo
+
+- name: Debug ansible_user_uid
+  ansible.builtin.debug:
+    var: ansible_user_uid.stdout 
+
+- name: Ensure podman socket
+  ansible.builtin.systemd_service:
+    name: podman.socket
+    state: started
+    scope: user
+    enabled: yes
+
 - name: traefik docker network
   containers.podman.podman_network:
     name: traefik
@@ -11,15 +28,17 @@
   containers.podman.podman_container:
     name: traefik
     image: "traefik:{{ traefik_version }}"
-    network: bridge
     ports:
-      - "80:80"
-      - "443:443"
+      - "0.0.0.0:{{ traefik.port_http }}:{{ traefik.port_http }}"
+      - "0.0.0.0:{{ traefik.port_https }}:{{ traefik.port_https }}"
     volumes: 
-      - "{{ traefik.basedir }}:/etc/traefik"
-      - "/run/podman/podman.sock:/var/run/docker.sock"
-    restart_policy: unless-stopped
-    force_restart: "{{ traefik_static_config.changed | default(false) or 'traefik.reload' in ansible_run_tags  }}"
+      - "{{ traefik.basedir }}:/etc/traefik"      
+      - "/run{{ (ansible_user == 'root') | ternary('', '/user/') }}{{(ansible_user == 'root') | ternary('', ansible_user_uid.stdout )}}/podman/podman.sock:/var/run/docker.sock"
+    # restart_policy: unless-stopped
+    # force_restart: "{{ traefik_static_config.changed | default(false) or 'traefik.reload' in ansible_run_tags  }}"
     state: started
-  tags:
-    - questo
+    # generate_systemd: false
+      # restart_sec: 10
+    network:
+      traefik
+

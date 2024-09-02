@@ -1,0 +1,21 @@
+- name: get rid of annoying redhat message
+  ansible.builtin.file:
+    path: /etc/motd.d/insights-client
+    state: absent
+
+- name: Ensure NTP service is running and enabled
+  service:
+    name: chronyd
+    enabled: yes
+    state: started
+
+- name: "Ensure firewalld is {{ firewall_state | default('started') }}"
+  service:
+    name: firewalld
+    state: "{{ firewall_state | default('stopped') }}"
+    enabled: "{{ firewall_enabled | default('yes') }}"
+
+- name: "Ensure SELinux is {{ selinux_state | default('disabled') }}"
+  ansible.posix.selinux:
+    policy: "{{ selinux_policy | default('targeted') }}"
+    state: "{{ selinux_state | default('disabled') }}"

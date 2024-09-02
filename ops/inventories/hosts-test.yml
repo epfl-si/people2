@@ -1,12 +1,16 @@
 ---
 all:
   hosts:
-    peonext:
+    common:
       ansible_host: itspeopl0003.xaas.epfl.ch
       ansible_port: 22
       ansible_user: root
+    web:
+      ansible_host: itspeopl0003.xaas.epfl.ch
+      ansible_port: 22
+      ansible_user: fsd
   vars:
-    RUNENV: test
+    RUNENV: testnext
     DOMAINS:
       - fsd.team
     CERTS_SRC: /keybase/team/epfl_idevfsd/certs/
@@ -20,6 +24,32 @@ all:
       -
         github: d4rkheart
         state: present
-      -
+      - # example of revoked key
         github: crazylady2004
         state: absent
+    # --------------------------------------------------------------------- vars
+    # ---                                                            system
+    SELINUX: no
+    FIREWALL: yes
+    USERS:
+      -
+        username: fsd
+        comment: non root user for running applications
+        uid: 1000
+
+    # ---                                                           traefik
+    TRAEFIK_CONSOLE_HOSTNAME: peofik.fsd.team
+    TRAEFIK_HTTPS_PORT: 4433
+    TRAEFIK_HTTP_PORT: 8033
+    TRAEFIK_BASEDIR: /home/fsd/traefik
+
+    # ---                                                            people
+    DATA_BASEDIR: /home/fsd/data
+    OIDC_HOSTNAME: peoak.fsd.team
+    PEOPLE_BRANCH: master
+    PEOPLE_HOSTNAME: people.fsd.team
+    PEOPLE_SRCDIR: /home/fsd/people
+    # REDIS_URL: redis://cache:6379/0
+    SELECT_CACHE: local_redis
+    SELECT_DB: local_mariadb
+    SELECT_OIDC: local_keycloak

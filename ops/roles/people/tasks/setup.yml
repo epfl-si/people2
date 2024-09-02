@@ -1,0 +1,15 @@
+---
+- name: ensure directories for people app and dependencies
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ people.storage }}"
+    - "{{ people.filecache }}"
+    - "{{ people.mariadb.data }}"
+    - "{{ people.mariadb.init }}"
+
+- name: people docker network
+  containers.podman.podman_network:
+    name: people
+

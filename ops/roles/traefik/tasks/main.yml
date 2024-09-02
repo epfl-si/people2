@@ -1,7 +1,6 @@
 ---
 - include_vars: traefik_vars.yml
   tags: always
-
 - name: Setup requirements for Traefik
   tags:
     - traefik.setup
