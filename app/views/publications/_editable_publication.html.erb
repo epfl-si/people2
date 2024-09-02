@@ -1,0 +1,25 @@
+<%= turbo_frame_tag dom_id(publication) do %>
+  <div class="list-group-item">
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="h5 mb-0"><%= publication.title %></h3>
+        <p class="text-muted small mb-0">
+          <%= publication.journal %> - <%= publication.year %>
+        </p>
+        <p class="muted">
+          <%= render "shared/item_visibility", item: publication %>
+          <br>
+          <% if publication.url.present? %>
+          <%= link_to 'View Publication', publication.url, class: "btn btn-primary btn-sm mt-2", target: "_blank", rel: "noopener noreferrer" %>
+        <% end %>
+        </p>
+
+      </div>
+      <div class="col-md-4 text-right">
+        <p>
+          <%= render "shared/item_actions", item: publication %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
