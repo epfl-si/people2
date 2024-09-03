@@ -45,8 +45,8 @@ gio_box_publication:
     variant: 'publication'
   profile: giova
   section: bio
-  title_en: other publication
-  title_fr: autre publication
+  title_en: other publications
+  title_fr: autre publications
   show_title: true
   locked: true
   visible: true
