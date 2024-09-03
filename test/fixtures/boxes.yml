@@ -166,6 +166,7 @@ nat_box_availability:
   locked: false
   visible: true
   audience: 1
+  position: 1
 
 nat_box_work:
   type: "RichTextBox"
