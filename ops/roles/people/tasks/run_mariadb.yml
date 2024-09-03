@@ -15,7 +15,7 @@
 
       {% if SELECT_OIDC == 'local_keycloak' %}
       -- Keycloak
-      CREATE USER '{{ _secrets.keycloak.db_user }}'@'*' IDENTIFIED BY '{{ _secrets.keycloak.db_password }}';
+      CREATE USER '{{ _secrets.keycloak.db_user }}'@'%' IDENTIFIED BY '{{ _secrets.keycloak.db_password }}';
       CREATE DATABASE keycloak;
       GRANT ALL PRIVILEGES ON keycloak.* TO '{{ _secrets.keycloak.db_user }}'@'%';
       {% endif %}

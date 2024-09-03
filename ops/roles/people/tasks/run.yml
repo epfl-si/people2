@@ -43,13 +43,14 @@
       OFFLINE_CACHEDIR: "/srv/filecache"
       FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
       SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
+      SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
     volumes:
-      - "{{ people.srcdir }}:/srv/app"
+      # - "{{ people.srcdir }}:/srv/app"
       - "{{ people.storage }}:/srv/app/storage"
       - "{{ people.filecache }}:/srv/filecache"
     restart_policy: unless-stopped
     state: started
-    network: 
+    network:
       - traefik
       - people
     # generate_systemd: false

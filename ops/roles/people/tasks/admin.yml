@@ -1,0 +1,15 @@
+- name: Run Migration
+  containers.podman.podman_container_exec:
+    name: peoapp
+    command: ./bin/rails db:migrate
+  tags:
+    - people.init
+    - people.admin.migrate
+
+- name: Seed database
+  containers.podman.podman_container_exec:
+    name: peoapp
+    command: ./bin/rails db:seed
+  tags:
+    - people.init
+    - people.admin.seed

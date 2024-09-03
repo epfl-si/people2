@@ -15,3 +15,6 @@ people:
     init: "{{ DATA_BASEDIR }}/people/mariadb/init"
   keycloak:
     port: 9091
+    host: "{{ OIDC_HOSTNAME }}"
+  whoami:
+    port: 9092

@@ -54,3 +54,9 @@
     - people.run.app
   import_tasks:
     file: run.yml
+
+- name: People admin
+  tags:
+    - never
+  import_tasks:
+    file: admin.yml
