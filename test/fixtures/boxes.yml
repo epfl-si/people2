@@ -157,7 +157,7 @@ nat_box_expertise:
   position: 1
 
 # Disponibilité only visible from intranet
-nat_box_work0:
+nat_box_availability:
   type: "RichTextBox"
   profile: natalie
   section: contact
@@ -167,7 +167,7 @@ nat_box_work0:
   visible: true
   audience: 1
 
-nat_box_work1:
+nat_box_work:
   type: "RichTextBox"
   profile: natalie
   section: bio
