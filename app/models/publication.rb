@@ -3,7 +3,6 @@
 class Publication < ApplicationRecord
   include AudienceLimitable
   include Translatable
-  translates :title
   belongs_to :profile
   positioned on: :profile
 
