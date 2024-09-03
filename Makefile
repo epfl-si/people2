@@ -222,11 +222,8 @@ testup:
 test-system: testup
 	docker compose exec webapp ./bin/rails test:system
 
-# test-models:
-# 	docker compose exec webapp ./bin/rails test:models
-
 test-models:
-	./bin/rails test:models
+	docker compose exec webapp ./bin/rails test:models
 
 # -------------------------------------------------- Cache and off-line webmocks
 
