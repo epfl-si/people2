@@ -1,0 +1,36 @@
+nat_accred:
+  id: 1
+  profile: natalie
+  unit_id: 14214
+  position: 1
+  sciper: 116080
+  visible: 1
+  visible_addr: 1
+  unit_fr: "SI Services Académiques Gestion"
+  unit_en: "SI Academic Services Management"
+  role: | 
+    --- 
+    id: 1070
+    labelen: IT Service Manager
+    labelfr: Gestionnaire de services IT
+    labelinclusive: Gestionnaire de services IT
+    labelxx: Gestionnaire de services IT
+
+gio_accred:
+  id: 2
+  profile: giova
+  unit_id: 13030
+  position: 1
+  sciper: 121769
+  visible: 1
+  visible_addr: 1
+  unit_fr: "SI Développement Full-Stack"
+  unit_en: "SI Full-Stack development"
+  role: | 
+    --- 
+    id: 113
+    labelen: Computer Scientist
+    labelfr: Informaticien
+    labelinclusive: Informaticienne/Informaticien
+    labelxx: Informaticienne
+
