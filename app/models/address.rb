@@ -8,8 +8,8 @@ class Address
     @unit_id = data['unitid'].to_i
     @type = data['type']
     @country = data['country']
-    @hierarchy = data["part1"]
-    @lines = (2..4).map { |n| data["part#{n}"] }
+    @hierarchy = data['part1']
+    @lines = (2..4).map { |n| data["part#{n}"] }.compact.reject(&:empty?)
     @from_default = data['fromdefault'].to_i != 0
   end
 
