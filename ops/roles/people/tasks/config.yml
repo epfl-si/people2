@@ -1,4 +1,1 @@
 ---
-- name: people app docker network
-  containers.podman.podman_network:
-    name: people

@@ -36,6 +36,7 @@ all:
         username: fsd
         comment: non root user for running applications
         uid: 1000
+        linger: true
 
     # ---                                                           traefik
     TRAEFIK_CONSOLE_HOSTNAME: peofik.fsd.team
@@ -47,9 +48,10 @@ all:
     DATA_BASEDIR: /home/fsd/data
     OIDC_HOSTNAME: peoak.fsd.team
     PEOPLE_BRANCH: master
-    PEOPLE_HOSTNAME: people.fsd.team
+    PEOPLE_HOSTNAME: peonext.fsd.team
     PEOPLE_SRCDIR: /home/fsd/people
     # REDIS_URL: redis://cache:6379/0
     SELECT_CACHE: local_redis
     SELECT_DB: local_mariadb
     SELECT_OIDC: local_keycloak
+    SILENT_TRANSLATION_ERR: "yes"

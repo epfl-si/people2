@@ -1,0 +1,22 @@
+---
+
+- name: Ensure users
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    comment: " {{ item.comment }} "
+    create_home: true
+    shell: /bin/bash
+    home: "/home/{{ item.username }}"
+    uid: "{{ item.uid }}"
+
+- name: Check if user is lingering
+  stat:
+    path: "/var/lib/systemd/linger/{{ item.username }}"
+  register: user_lingering
+
+- name: Enable lingering is needed
+  command: "loginctl enable-linger {{ item.username }}"
+  when:
+    - item.linger
+    - not user_lingering.stat.exists
+

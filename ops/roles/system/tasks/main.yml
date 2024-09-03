@@ -13,8 +13,13 @@
   tags:
     - system.config
     - system.config.users
-  import_tasks:
-    file: config_users.yml
+  include_tasks:
+    file: user.yml
+    apply:
+      tags:
+        - system.config
+        - system.config.users
+  with_items: "{{ USERS }}"
 
 - name: Config ssh
   tags:

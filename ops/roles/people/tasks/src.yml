@@ -5,6 +5,7 @@
     repo: "{{ people.repo }}"
     dest: "{{ people.srcdir }}"
     version: "{{ people.branch }}"
+    force: true
 
 - name: Select the correct Gemfile.lock file
   ansible.builtin.file:
@@ -16,4 +17,5 @@
   containers.podman.podman_image:
     name: people
     path: "{{ people.srcdir }}"
+    force: true
 
