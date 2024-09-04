@@ -70,6 +70,7 @@ class AddressTest < ActiveSupport::TestCase
   test "full should not have consecutive '$' symbols if some lines are missing" do
     expected_full_incomplete = "Suite 5"
 
-    assert_equal expected_full_incomplete, @incomplete_address.full, "Full address for incomplete address should not have consecutive '$'"
+    assert_equal expected_full_incomplete, @incomplete_address.full,
+                 "Full address for incomplete address should not have consecutive '$'"
   end
 end

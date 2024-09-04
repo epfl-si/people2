@@ -66,7 +66,7 @@ class AuthorisationTest < ActiveSupport::TestCase
     mock.verify
   end
 
-  # is used to simulate calls to APIAuthGetter.new.fetch, 
+  # is used to simulate calls to APIAuthGetter.new.fetch,
   # we'll use Minitest::Mock to stub the fetch method to return controlled data during the test.
   test "right_for_sciper should return authorisations for a specific right" do
     mock = Minitest::Mock.new
@@ -74,7 +74,8 @@ class AuthorisationTest < ActiveSupport::TestCase
 
     APIAuthGetter.stub :new, mock do
       auths = Authorisation.right_for_sciper('67890', 'AAR.report.control')
-      assert_not_empty auths, "Expected non-empty authorisations list for sciper '67890' with right 'AAR.report.control'"
+      assert_not_empty auths,
+                       "Expected non-empty authorisations list for sciper '67890' with right 'AAR.report.control'"
       assert_equal '67890', auths.first.sciper
       assert_equal '102', auths.first.unit_id
       assert_equal 'n456', auths.first.instance_variable_get(:@value)
