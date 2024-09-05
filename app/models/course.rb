@@ -19,8 +19,11 @@ class Course < ApplicationRecord
   end
 
   def edu_url(locale)
-    t = t_title(locale).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
-    c = code.upcase.sub('(', "-").sub(')', '')
+    title_translated = send("title_#{locale}")
+    return nil if code.blank? || title_translated.blank? || title_translated == "nil"
+
+    t = I18n.transliterate(title_translated).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
+    c = code.upcase.gsub(/[()]/, '-').gsub('--', '-').gsub(/-$/, '')
     "https://edu.epfl.ch/coursebook/#{locale}/#{t}-#{c}"
   end
 end
