@@ -1,0 +1,5 @@
+  keycloak:
+    host: "{{ OIDC_HOSTNAME }}"
+    port: 9091
+    identifier: hello_rails
+    realm: rails

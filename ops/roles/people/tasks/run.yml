@@ -1,31 +1,31 @@
 ---
 
-- name: Ensure traefik config file for people web app (untill we find out how to with labels...)
-  ansible.builtin.copy:
-    dest: "{{ traefik.config }}/keycloak.yml"
-    content: |
-      http:
-        routers:
-          people:
-            tls: true
-            service: people
-            rule: Host(`{{ PEOPLE_HOSTNAME }}`)
-        services:
-          people:
-            loadBalancer:
-              servers:
-                - 
-                  url: http://peoapp:3000
+# - name: Ensure traefik config file for people web app (untill we find out how to with labels...)
+#   ansible.builtin.copy:
+#     dest: "{{ traefik.config }}/people.yml"
+#     content: |
+#       http:
+#         routers:
+#           people:
+#             tls: true
+#             service: people
+#             rule: Host(`{{ people.host }}`)
+#         services:
+#           people:
+#             loadBalancer:
+#               servers:
+#                 - 
+#                   url: http://peoapp:3000
 
 - name: Ensure people app server containers is running
   containers.podman.podman_container:
     name: peoapp
     image: "people"
     env:
-      APP_HOSTNAME: "{{ people.hostname }}"
+      APP_HOSTNAME: "{{ people.host }}"
       RAILS_ENV: "{{ people.env }}"
-      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(people.hostname, '') }}"
-      DEFAULT_URL: "https://{{ PEOPLE_HOSTNAME }}"
+      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(people.host, '') }}"
+      DEFAULT_URL: "https://{{ people.host }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
@@ -46,13 +46,15 @@
       SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
       SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
 
-      OIDC_HOSTNAME: "{{ people.oidc.hostname }}"
-      OIDC_REALM: "{{ people.oidc.realm }}"
-      OIDC_IDENTIFIER: "{{ people.oidc.identifier }}"
-      OIDC_PATH: "{{ people.oidc.path }}"
-      OIDC_ENDPOINT: "{{ people.oidc.endpoint }}"
-      OIDC_URL: "{{ people.oidc.url }}"
-
+      OIDC_HOSTNAME: "{{ keycloak.host }}"
+      OIDC_REALM: "{{ keycloak.realm }}"
+      OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
+      # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
+      # OIDC_ISSUER:
+      # OIDC_AUTH_ENDPOINT:
+      # OIDC_TOKEN_ENDPOINT:
+      # OIDC_USERINFO_ENDPOINT:
+      # OIDC_LOGOUT_ENDPOINT:
     volumes:
       # - "{{ (RUNENV == 'testnext') | ternary( people.srcdir ~ ':/srv/app:', '') }}"
       - "{{ people.srcdir }}:/srv/app"
@@ -65,4 +67,9 @@
       - people
     # generate_systemd: false
       # restart_sec: 10
+    labels:
+      traefik.http.routers.people.rule: "Host(`{{ people.host }}`)"
+      traefik.http.routers.people.tls: "true"
+      traefik.http.routers.people.service: "people"
+      traefik.http.services.people.loadbalancer.server.port: "{{ people.port }}"
 

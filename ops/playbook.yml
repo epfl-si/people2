@@ -22,6 +22,11 @@
       role: roles/traefik
       tags:
         - traefik
+    - name: setup and run keycloak
+      role: roles/keycloak
+      tags:
+        - keycloak
+      when: SELECT_OIDC == 'local_keycloak'
     - name: setup people app
       role: roles/people
       tags:

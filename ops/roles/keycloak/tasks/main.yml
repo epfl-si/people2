@@ -1,0 +1,15 @@
+---
+- include_vars: keycloak_vars.yml
+  tags: always
+
+- name: Keycloak
+  tags:
+    - keycloak.run
+  import_tasks:
+    file: run.yml
+
+- name: Keycloak Configuration
+  tags:
+    - keycloak.config
+  import_tasks:
+    file: config.yml

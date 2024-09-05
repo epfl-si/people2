@@ -28,7 +28,7 @@ all:
         github: crazylady2004
         state: absent
     # --------------------------------------------------------------------- vars
-    # ---                                                            system
+    # ---                                                                 system
     SELINUX: no
     FIREWALL: yes
     USERS:
@@ -38,13 +38,13 @@ all:
         uid: 1000
         linger: true
 
-    # ---                                                           traefik
+    # ---                                                                traefik
     TRAEFIK_CONSOLE_HOSTNAME: peofik.fsd.team
     TRAEFIK_HTTPS_PORT: 4433
     TRAEFIK_HTTP_PORT: 8033
     TRAEFIK_BASEDIR: /home/fsd/traefik
 
-    # ---                                                            people
+    # ---                                                                 people
     DATA_BASEDIR: /home/fsd/data
 
     OIDC_HOSTNAME: peoak.fsd.team
@@ -62,3 +62,6 @@ all:
     SELECT_DB: local_mariadb
     SELECT_OIDC: local_keycloak
     SILENT_TRANSLATION_ERR: "yes"
+
+    # ---                                                                 whoami
+    WHOAMI_HOSTNAME: peoami.fsd.team
