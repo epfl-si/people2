@@ -9,7 +9,7 @@
           people:
             tls: true
             service: people
-            rule: Host(`peonext.fsd.team`)
+            rule: Host(`{{ PEOPLE_HOSTNAME }}`)
         services:
           people:
             loadBalancer:
@@ -22,9 +22,10 @@
     name: peoapp
     image: "people"
     env:
+      APP_HOSTNAME: "{{ people.hostname }}"
       RAILS_ENV: "{{ people.env }}"
       RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(people.hostname, '') }}"
-      DEFAULT_URL: "https://people.${DOMAIN:-dev.jkldsa.com}"
+      DEFAULT_URL: "https://{{ PEOPLE_HOSTNAME }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
@@ -44,6 +45,14 @@
       FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
       SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
       SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
+
+      OIDC_HOSTNAME: "{{ people.oidc.hostname }}"
+      OIDC_REALM: "{{ people.oidc.realm }}"
+      OIDC_IDENTIFIER: "{{ people.oidc.identifier }}"
+      OIDC_PATH: "{{ people.oidc.path }}"
+      OIDC_ENDPOINT: "{{ people.oidc.endpoint }}"
+      OIDC_URL: "{{ people.oidc.url }}"
+
     volumes:
       # - "{{ people.srcdir }}:/srv/app"
       - "{{ people.storage }}:/srv/app/storage"
