@@ -80,7 +80,8 @@ COPY . .
 
 # COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/vendors.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
 
-RUN ./bin/rails dartsass:build
+# move this to docker entry point so that all env vars are defined
+# RUN ./bin/rails dartsass:build
 
 # Precompile bootsnap code for faster boot times
 # RUN bundle exec bootsnap precompile app/ lib/
