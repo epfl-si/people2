@@ -193,7 +193,7 @@ fr:
               blank: "doit être fourni"
             year_end:
               blank: "doit être renseigné"
-            year_start:
+            year_begin:
               blank: "doit être renseigné"
         name:
           attributes:
