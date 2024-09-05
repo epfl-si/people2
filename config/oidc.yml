@@ -7,13 +7,14 @@ oidc_config: &oidc_config
     # this structure is available to anyone who issues an
     # unauthenticated GET to `/oidc/config` (see
     # app/controllers/OIDC/frontend_config_controller.rb)
-    auth_server: <%= ENV.fetch("OIDC_SERVER_URL") { "http://localhost:8080/realms/rails/" } %>
+    auth_server: <%= ENV.fetch("OIDC_URL", nil) %>
 
 # 12-factor trumps Rails dogma, see
 # https://nebulab.com/blog/12-factor-rails-settings
 # 💡 You want all three aliases, even in dev, otherwise `./bin/rake` won't work!
 development:
   <<: *oidc_config
+
 test:
   <<: *oidc_config
 production:

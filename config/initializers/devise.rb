@@ -311,22 +311,28 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
 
+  oidc_hostname = ENV.fetch('OIDC_HOSTNAME')
+  oidc_realm = ENV.fetch('OIDC_REALM', 'rails')
+  oidc_path = ENV.fetch('OIDC_PATH', "/realms/#{oidc_realm}")
+  oidc_endpoint = ENV.fetch('OIDC_ENDPOINT', "#{oidc_path}/protocol/openid-connect/auth")
+  oidc_identifier = ENV.fetch('OIDC_IDENTIFIER', 'hello_rails')
+  oidc_url = ENV.fetch('OIDC_URL', "https://#{oidc_hostname}/#{oidc_path}")
+  oidc_redirect = "https://#{Rails.configuration.app_hostname}/users/auth/oidc/callback"
   config.omniauth :openid_connect, {
     name: :oidc,
     discovery: true,
-    issuer: "https://keycloak.dev.jkldsa.com/realms/rails",
+    issuer: oidc_url,
     scope: %i[openid email], # scope: %i[openid profile email],
     response_type: :code,
     uid_field: "sciper",
     client_options: {
-      port: 8080,
-      scheme: "http",
-      host: "keycloak.dev.jkldsa.com",
-      authorization_endpoint: "/realms/rails/protocol/openid-connect/auth",
-      identifier: "hello_rails",
+      # port: 8080,
+      # scheme: "http",
+      host: oidc_hostname,
+      authorization_endpoint: oidc_endpoint,
+      identifier: oidc_identifier,
       # secret: ENV["OP_SECRET_KEY"],
-      # redirect_uri: "https://people.dev.jkldsa.com/users/auth/oidc/callback",
-      redirect_uri: "https://people.dev.jkldsa.com/users/auth/oidc/callback",
+      redirect_uri: oidc_redirect,
       authorize_params: {
         realm: "rails",
       }

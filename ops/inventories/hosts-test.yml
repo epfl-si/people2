@@ -46,8 +46,15 @@ all:
 
     # ---                                                            people
     DATA_BASEDIR: /home/fsd/data
+
     OIDC_HOSTNAME: peoak.fsd.team
-    PEOPLE_BRANCH: master
+    # OIDC_REALM: rails
+    # OIDC_IDENTIFIER: hello_rails
+    # OIDC_PATH: /realms/rails
+    # OIDC_ENDPOINT: /realms/rails/protocol/openid-connect/auth
+    # OIDC_URL: https://peoak.fsd.team/realms/rails
+
+    PEOPLE_BRANCH: ops
     PEOPLE_HOSTNAME: peonext.fsd.team
     PEOPLE_SRCDIR: /home/fsd/people
     # REDIS_URL: redis://cache:6379/0

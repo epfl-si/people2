@@ -5,6 +5,11 @@
 - include_vars: ../traefik/vars/traefik_vars.yml
   tags: always
 
+# - name: debug vars
+#   ansible.builtin.debug:
+#     var: people
+#   tags: debug
+
 - name: Setup base for people
   tags:
     - people.setup

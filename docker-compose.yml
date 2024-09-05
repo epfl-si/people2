@@ -91,10 +91,10 @@ services:
     environment:
       # PORT: ${PORT:-3000}
       # ADDR: ${ADDR:-127.0.0.1}
+      APP_HOSTNAME: "people.${DOMAIN:-dev.jkldsa.com}"
       KILLPID: ${KILLPID:-no}
       RAILS_ENV: development
       RAILS_DEVELOPMENT_HOSTS: "people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}"
-      DEFAULT_URL: "https://people.${DOMAIN:-dev.jkldsa.com}"
       ENABLE_API_CACHE: "${ENABLE_API_CACHE:-false}"
       ENABLE_WEBMOCK: "${ENABLE_WEBMOCK:-false}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
@@ -113,6 +113,14 @@ services:
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
       ADMIN_SCIPERS: ${ADMIN_SCIPERS}
+
+      OIDC_HOSTNAME: keycloak.${DOMAIN:-dev.jkldsa.com}
+      OIDC_REALM: rails
+      OIDC_IDENTIFIER: hello_rails
+      OIDC_PATH: realms/rails
+      OIDC_ENDPOINT: realms/rails/protocol/openid-connect/auth
+      OIDC_URL: https://keycloak.${DOMAIN:-dev.jkldsa.com}/realms/rails
+
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
