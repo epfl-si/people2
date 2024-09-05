@@ -311,31 +311,32 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
 
+  # curl https://keycloak.dev.jkldsa.com/realms/rails/.well-known/openid-configuration | jq
+  # TODO: The defaults seams to work with keycloak. To be tested with other oidc proviers
+
   oidc_hostname = ENV.fetch('OIDC_HOSTNAME', Rails.configuration.app_hostname)
   oidc_realm = ENV.fetch('OIDC_REALM', 'rails')
-  oidc_path = ENV.fetch('OIDC_PATH', "/realms/#{oidc_realm}")
-  oidc_endpoint = ENV.fetch('OIDC_ENDPOINT', "#{oidc_path}/protocol/openid-connect/auth")
   oidc_identifier = ENV.fetch('OIDC_IDENTIFIER', 'hello_rails')
-  oidc_url = ENV.fetch('OIDC_URL', "https://#{oidc_hostname}/#{oidc_path}")
+  oidc_issuer = ENV.fetch('OIDC_ISSUER', "https://#{oidc_hostname}/realms/#{oidc_realm}")
+  baseurl = "#{oidc_issuer}/protocol/openid-connect"
+
   oidc_redirect = "https://#{Rails.configuration.app_hostname}/users/auth/oidc/callback"
-  config.omniauth :openid_connect, {
+
+  oidc_config = {
     name: :oidc,
-    discovery: true,
-    issuer: oidc_url,
+    issuer: oidc_issuer,
     scope: %i[openid email], # scope: %i[openid profile email],
     response_type: :code,
     uid_field: "sciper",
     client_options: {
-      # port: 8080,
-      # scheme: "http",
-      host: oidc_hostname,
-      authorization_endpoint: oidc_endpoint,
       identifier: oidc_identifier,
+      authorization_endpoint: ENV.fetch('OIDC_AUTH_ENDPOINT', "#{baseurl}/auth"),
+      token_endpoint: ENV.fetch('OIDC_TOKEN_ENDPOINT', "#{baseurl}/token"),
+      userinfo_endpoint: ENV.fetch('OIDC_USERINFO_ENDPOINT', "#{baseurl}/userinfo"),
+      end_session_endpoint: ENV.fetch('OIDC_LOGOUT_ENDPOINT', "#{baseurl}/logout"),
       # secret: ENV["OP_SECRET_KEY"],
       redirect_uri: oidc_redirect,
-      authorize_params: {
-        realm: "rails",
-      }
-    },
+    }
   }
+  config.omniauth :openid_connect, oidc_config
 end

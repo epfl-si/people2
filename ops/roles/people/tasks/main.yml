@@ -5,6 +5,10 @@
 - include_vars: ../traefik/vars/traefik_vars.yml
   tags: always
 
+- include_vars: ../keycloak/vars/keycloak_vars.yml
+  tags: always
+
+
 # - name: debug vars
 #   ansible.builtin.debug:
 #     var: people
@@ -45,20 +49,19 @@
     file: run_redis.yml
   when: SELECT_CACHE == 'local_redis'
 
-- name: Keycloak
-  tags:
-    - people.run
-    - people.run.kc
-  import_tasks:
-    file: run_keycloak.yml
-  when: SELECT_OIDC == 'local_keycloak'
-
 - name: People
   tags:
     - people.run
     - people.run.app
   import_tasks:
     file: run.yml
+
+- name: Configuration
+  tags:
+    - people.config
+  import_tasks:
+    file: config.yml
+
 
 - name: People admin
   tags:

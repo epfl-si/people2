@@ -1,0 +1,14 @@
+---
+
+- name: Create or update Keycloak realm
+  community.general.keycloak_realm:
+    auth_client_id: admin-cli
+    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_realm: master
+    auth_username: "{{ _secrets.keycloak.admin_user }}"
+    auth_password: "{{ _secrets.keycloak.admin_password }}"
+    id: rails
+    realm: rails
+    state: present
+  delegate_to: localhost
+

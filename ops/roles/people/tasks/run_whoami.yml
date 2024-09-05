@@ -7,38 +7,18 @@
 
 - name: Ensure whoami service for testing
   containers.podman.podman_container:
-    command: --port 9090
+    command: "--port {{ people.whoami.port }}"
     name: whoami
     image: "containous/whoami"
-    ports:
-      - "0.0.0.0:9090:9090"
     state: started
     network:
       - traefik
       - people
     # I am not able to make labels work. Are they sent to the correct socket ?
-    # labels:
-    #   traefik.enable: "true"
-    #   traefik.docker.network: "traefik"
-    #   traefik.http.routers.whoami.rule: "Host(`peoami.fsd.team`)"
-    #   traefik.http.routers.whoami.tls: "true"
-    #   traefik.http.routers.whoami.service: "whoami"
-    #   # traefik.http.services.whoami.loadbalancer.server.url: "http://whoami:9090"
-    #   traefik.http.services.whoami.loadbalancer.server.port: "9090"
-
-- name: Ensure traefik config file for service whoami (untill we find out how to with labels...)
-  ansible.builtin.copy:
-    dest: "{{ traefik.config }}/whoami.yml"
-    content: |
-      http:
-        routers:
-          whoami:
-            tls: true
-            service: whoami
-            rule: Host(`peoami.fsd.team`)
-        services:
-          whoami:
-            loadBalancer:
-              servers:
-                - 
-                  url: http://whoami:9090
+    labels:
+      # traefik.enable: "true"
+      # traefik.docker.network: "traefik"
+      traefik.http.routers.whoami.rule: "Host(`{{ people.whoami.host }}`)"
+      traefik.http.routers.whoami.tls: "true"
+      traefik.http.routers.whoami.service: "whoami"
+      traefik.http.services.whoami.loadbalancer.server.port: "{{ people.whoami.port }}"
