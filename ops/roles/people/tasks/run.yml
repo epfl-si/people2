@@ -54,7 +54,8 @@
       OIDC_URL: "{{ people.oidc.url }}"
 
     volumes:
-      # - "{{ people.srcdir }}:/srv/app"
+      # - "{{ (RUNENV == 'testnext') | ternary( people.srcdir ~ ':/srv/app:', '') }}"
+      - "{{ people.srcdir }}:/srv/app"
       - "{{ people.storage }}:/srv/app/storage"
       - "{{ people.filecache }}:/srv/filecache"
     restart_policy: unless-stopped
