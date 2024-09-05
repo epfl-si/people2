@@ -311,7 +311,7 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
 
-  oidc_hostname = ENV.fetch('OIDC_HOSTNAME')
+  oidc_hostname = ENV.fetch('OIDC_HOSTNAME', Rails.configuration.app_hostname)
   oidc_realm = ENV.fetch('OIDC_REALM', 'rails')
   oidc_path = ENV.fetch('OIDC_PATH', "/realms/#{oidc_realm}")
   oidc_endpoint = ENV.fetch('OIDC_ENDPOINT', "#{oidc_path}/protocol/openid-connect/auth")
