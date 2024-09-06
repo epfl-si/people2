@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :awards, shallow: true
     resources :educations, shallow: true
     resources :experiences, shallow: true
+    resources :publications, shallow: true
     resources :pictures, shallow: true, only: %i[index create destroy]
     resources :accreds, shallow: true, only: %i[index show update]
     member do
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
   put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
   put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
   put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
+  put 'publications/:id/toggle', to: 'publications#toggle', as: 'toggle_publication'
   get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
 
   resources :names, only: %i[index show update]

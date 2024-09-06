@@ -39,6 +39,20 @@ gio_box_experience:
   audience: 0
   position: 3
 
+gio_box_publication:
+  type: "StandardBox"
+  data:
+    variant: 'publication'
+  profile: giova
+  section: bio
+  title_en: other publications
+  title_fr: autre publications
+  show_title: true
+  locked: true
+  visible: true
+  audience: 0
+  position: 4
+
 # ---------------------------------------------------------------------- Edouard
 edo_box_awards:
   type: "StandardBox"
@@ -143,7 +157,7 @@ nat_box_expertise:
   position: 1
 
 # Disponibilité only visible from intranet
-nat_box_work:
+nat_box_availability:
   type: "RichTextBox"
   profile: natalie
   section: contact
@@ -152,7 +166,7 @@ nat_box_work:
   locked: false
   visible: true
   audience: 1
-  position: 2
+  position: 1
 
 nat_box_work:
   type: "RichTextBox"
@@ -214,18 +228,6 @@ nat_box_edu_en:
   visible: false
   audience: 0
   position: 3
-
-nat_box_mission:
-  type: "RichTextBox"
-  profile: natalie
-  section: bio
-  title_en: Mission
-  title_fr: Mission
-  show_title: true
-  locked: true
-  visible: false
-  audience: 0
-  position: 4
 
 nat_box_pubs:
   type: "RichTextBox"

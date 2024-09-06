@@ -1,16 +1,11 @@
+<% unless box.visible_items(@audience).empty? %>
 <div class="mt-5">
 <% if box.show_title? %>
   <h3><%= box.t_title %></h3>
 <% end %>
   <%=
     render partial: "#{box.plural_variant}/#{box.plural_variant}", 
-           locals: {"#{box.plural_variant}".to_sym => box.items}.merge(local_assigns) 
+           locals: {"#{box.plural_variant}".to_sym => box.visible_items(@audience)}.merge(local_assigns) 
   %>
 </div>
-
-
-
-
-
-
-  
+<% end %>

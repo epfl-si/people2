@@ -1,0 +1,18 @@
+<%= turbo_frame_tag dom_id(publication) do %>
+  <div class="list-group-item list-group-item-borderless" data-controller="publication" data-action="click->publication#checkShiftClick">
+    <div class="list-group-item">
+      <h3 class="h5 mb-0">
+        <% if publication.url.present? %>
+          <a href="<%= publication.url %>" target="_blank" rel="noopener noreferrer" class="text-decoration-none"><%= publication.title %></a>
+        <% else %>
+          <%= publication.title %>
+        <% end %>
+      </h3>
+      <p class="text-muted small mb-0">
+        <%= publication.authors %>
+        <br>
+        <span> Published in </span> <%= publication.journal %> in <%= publication.year %>
+      </p>
+    </div>
+  </div>
+<% end %>

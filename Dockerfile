@@ -78,7 +78,7 @@ WORKDIR /srv/app
 COPY . .
 
 
-COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/elements.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
+COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/vendors.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
 
 RUN ./bin/rails dartsass:build
 
