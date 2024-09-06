@@ -77,6 +77,9 @@ Gemfile.lock: Gemfile.lock.docker
 logs:
 	docker compose logs -f
 
+llogs:
+	docker compose logs --since 10s -f
+
 ## show the status of running containers
 ps:
 	docker compose ps
@@ -276,7 +279,7 @@ rekc:
 	echo "GRANT ALL PRIVILEGES ON keycloak.* TO 'keycloak'@'%';" | $(SQL)
 	@echo "Keycloak db reset."
 
-loadkc: up
+kconfig: up
 	@/bin/bash -c 'while curl -I https://keycloak.dev.jkldsa.com/admin/master/console 2>/dev/null | grep -q "HTTP/2 502" ; do echo "waiting for kc to be alive (interrupt if it continues for more than ~40 secs)"; sleep 5; done'
 	cd ops && ./possible.sh --dev -t keycloak.config
 
