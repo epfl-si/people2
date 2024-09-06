@@ -59,6 +59,7 @@ en:
     create_experience: "Create new work experience"
     create_publication: "Create new publication"
     update_experience: "Udate work experience"
+    update_publication: "Update publication"
     sign_in: "Sign in"
     sign_out: "Sign out"
     upload_image: "Upload the image"
