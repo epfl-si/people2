@@ -45,3 +45,8 @@ Loading awards... (for demoing purpose, an artificial delay is added)
   <% end %>
 </section>
 
+<section id="publications_section">
+  <%= turbo_frame_tag "publications_index", src: profile_publications_path(@profile), loading: :lazy do %>
+    Loading publications... (for demoing purpose, an artificial delay is added)
+  <% end %>
+</section>
