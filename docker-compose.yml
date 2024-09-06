@@ -24,7 +24,6 @@ services:
     image: quay.io/keycloak/keycloak:25.0.0
     command:
       - start-dev
-      - --import-realm
     environment:
       KC_HOSTNAME: "https://keycloak.dev.jkldsa.com"
       # KC_HOSTNAME_PORT: 443
@@ -35,22 +34,12 @@ services:
       KC_DB_PASSWORD: mariadb
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-    # ports:
-    #   # Since the Keycloak password is easy to guess, opening up this
-    #   # port further than localhost is *not* recommended.
-    #   - "${KCPORTEXT:-127.0.0.1:8080:}8080"
     labels:
       # keycloak
       - traefik.docker.network=traefik
       - traefik.http.services.kc.loadbalancer.server.port=8080
       - traefik.http.routers.kc.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
       - traefik.http.routers.kc.tls=true
-      # # keycloak management interface
-      # - traefik.http.services.kcm.loadbalancer.server.port=9000
-      # - traefik.http.routers.kcm.rule=Host("kcm.${DOMAIN:-dev.jkldsa.com}")
-      # - traefik.http.routers.kcm.tls=true
-    volumes:
-      - ./keycloak/import:/opt/keycloak/data/import
     networks:
       - traefik
       - default
