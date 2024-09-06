@@ -21,6 +21,7 @@ class Profile < ApplicationRecord
   has_many :awards, dependent: :destroy
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
+  has_many :publications, dependent: :destroy
 
   accepts_nested_attributes_for :boxes, :socials, :awards, :educations, :experiences
 
@@ -34,9 +35,6 @@ class Profile < ApplicationRecord
 
   has_many :accreds, class_name: 'Accred', dependent: :destroy
   # TODO: switch to new model
-  has_many :publications, class_name: 'Legacy::Publication',
-                          primary_key: 'sciper', foreign_key: 'sciper',
-                          dependent: :destroy, inverse_of: :cv
 
   # has_and_belongs_to_many :courses, join_table: "teacherships"
   has_many :teacherships, class_name: "Teachership", dependent: :destroy

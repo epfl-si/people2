@@ -26,7 +26,7 @@ class StandardBox < Box
     variant.pluralize
   end
 
-  def items(_audience = 0)
-    profile.send(plural_variant.to_s)
+  def visible_items(_audience = 0)
+    profile.send(plural_variant.to_s).where(visible: true)
   end
 end
