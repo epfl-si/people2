@@ -31,6 +31,7 @@ fr:
     update_award: "Mettre à jour la récompense"
     update_education: "Mettre à jour la formation"
     update_experience: "Mettre à jour le parcours professionnel"
+    update_publication: "Mettre à jour la publication"
     update_social: "Modifier le réseau social"
     upload_image: "Télécharger l'image"
     validate: "Valider"
