@@ -2,11 +2,13 @@
 all:
   hosts:
     common:
-      ansible_host: itspeopl0003.xaas.epfl.ch
+      # itspeopl0003.xaas.epfl.ch
+      ansible_host: 10.95.96.153
       ansible_port: 22
       ansible_user: root
     web:
-      ansible_host: itspeopl0003.xaas.epfl.ch
+      # itspeopl0003.xaas.epfl.ch
+      ansible_host: 10.95.96.153
       ansible_port: 22
       ansible_user: fsd
   vars:
@@ -44,10 +46,11 @@ all:
     TRAEFIK_HTTP_PORT: 8033
     TRAEFIK_BASEDIR: /home/fsd/traefik
 
-
     # ---                                                                 people
     DATA_BASEDIR: /home/fsd/data
 
+    OIDC_REALM: rails
+    OIDC_IDENTIFIER: hello_rails
     OIDC_HOSTNAME: peoak.fsd.team
     # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
     # OIDC_REALM: rails

@@ -7,10 +7,10 @@ all:
   vars:
     RUNENV: dev
     SELECT_OIDC: local_keycloak
+    OIDC_REALM: rails
+    OIDC_IDENTIFIER: hello_rails
     OIDC_HOSTNAME: keycloak.dev.jkldsa.com
     # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
-    # OIDC_REALM: rails
-    # OIDC_IDENTIFIER: hello_rails
     # OIDC_REALM_DISPLAYNAME: SBB CFF FFS Realm
     # OIDC_ISSUER: https://keycloak.dev.jkldsa.com/realms/rails
     # OIDC_AUTH_ENDPOINT: https://keycloak.dev.jkldsa.com/realms/rails/protocol/openid-connect/auth
