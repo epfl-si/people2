@@ -8,7 +8,7 @@
   containers.podman.podman_container:
     command:
       - start-dev
-      - --import-realm
+      # - --import-realm
     name: keycloak
     image: "quay.io/keycloak/keycloak:{{ keycloak_version }}"
     env:

@@ -15,7 +15,7 @@
       tags:
         - system
 
-- name: traefik
+- name: traefik / keycloak / people web app
   hosts: web
   roles:
     - name: setup and run traefik

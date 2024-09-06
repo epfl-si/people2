@@ -1,3 +1,15 @@
+
+# - name: Simple A record (IPV4 address) lookup for example.com
+#   ansible.builtin.debug:
+#     msg: "{{ ansible_host }}"
+#     # msg: "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+#     # msg: "{{ lookup('community.general.dig', ansible_host ~ '.', qtype='A') }}"
+#     # var: hostvars #hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2]
+#     # msg: "{{ lookup('ansible.builtin.pipe', 'host ' ~ ansible_host ) }}"
+#   tags:
+#     - debug
+
+
 - name: Ensure firewall allows traffic directed to traefik
   ansible.posix.firewalld:
     permanent: true
@@ -18,6 +30,40 @@
         toport: "{{ item.to }}"
     state: enabled
     zone: public
+  with_items:
+    -
+      from: 443
+      to:  "{{ TRAEFIK_HTTPS_PORT }}"
+    -
+      from: 80
+      to: "{{ TRAEFIK_HTTP_PORT }}"
+
+# For some reason this one which should be equivalent to the next one does not work
+# - name: Ensure forward of standard http/https ports
+#   ansible.posix.firewalld:
+#     permanent: false
+#     rich_rule: 'rule family="ipv4" destination address={{ ansible_host }} forward-port port={{ item.from }} protocol=tcp to-port={{ item.to }}'
+#     state: enabled
+#     zone: public
+#   with_items:
+#     -
+#       from: 443
+#       to:  "{{ TRAEFIK_HTTPS_PORT }}"
+#     -
+#       from: 80
+#       to: "{{ TRAEFIK_HTTP_PORT }}"
+
+- name: Ensure forward of standard http/https ports
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    table: nat
+    protocol: tcp
+    # TODO: ansible_host is not necessarily an ip address...
+    destination: "{{ ansible_host }}"
+    destination_port: "{{ item.from }}"
+    jump: REDIRECT
+    to_ports: "{{ item.to }}"
+    comment: forward traefik to web ports to traefik even when src is localhost
   with_items:
     -
       from: 443
