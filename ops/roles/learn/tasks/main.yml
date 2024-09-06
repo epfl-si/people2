@@ -1,0 +1,32 @@
+---
+# All the tasks here will be executed if no tag is provided or if tag learn
+# (`-t learn`) is provided.
+# In addition single files or group of files can be selected using the
+# corresponding tag. Example `-t learn.config` will run both 
+# `config_ciccio.yml` and `config_pasticcio.yml`
+# Specific file can be executed with its particular tag:
+# `-t learn.config.pasticcio` will only run `config_pasticcio.yml`
+# Even more specific selection can be done using the 4th level tags defined
+# withing the files. For example in `config_ciccio.yml` there is a task
+# tagged as `learn.config.ciccio.pasticcio`. 
+# Therefore,  `-t learn.config.ciccio.pasticcio` will run only that task.
+
+- name: Learn Install
+  tags:
+    - learn.install
+  import_tasks:
+    file: install.yml
+
+- name: Learn Config Ciccio
+  tags:
+    - learn.config
+    - learn.config.ciccio
+  import_tasks:
+    file: config_ciccio.yml
+
+- name: Learn Config Pasticcio
+  tags:
+    - learn.config
+    - learn.config.pasticcio
+  import_tasks:
+    file: config_pasticcio.yml

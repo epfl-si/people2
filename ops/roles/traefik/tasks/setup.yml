@@ -1,0 +1,25 @@
+- name: Create base directory for traefik
+  file:
+    path: '{{ traefik.basedir }}'
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+
+- name: Config directories for traefik
+  file:
+    path: '{{ traefik.basedir }}/{{ item }}'
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+  with_items:
+    - config
+    - certs
+
+- name: Create acme directory for traefik
+  file:
+    path: '{{ traefik.basedir }}/acme'
+    state: directory
+    mode: '0777'
+    owner: "{{ ansible_user }}"
+
+

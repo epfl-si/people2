@@ -1,0 +1,33 @@
+- name: Common
+  hosts: common
+  gather_facts: False
+  # tasks:
+  #   - name: Debug rh_credentials
+  #     ansible.builtin.debug:
+  #       var: rh_credentials
+  roles:
+    - name: Import Learn Role
+      role: roles/learn
+      tags:
+        - learn
+    - name: setup common system requirements
+      role: roles/system
+      tags:
+        - system
+
+- name: traefik
+  hosts: web
+  roles:
+    - name: setup and run traefik
+      role: roles/traefik
+      tags:
+        - traefik
+    - name: setup and run keycloak
+      role: roles/keycloak
+      tags:
+        - keycloak
+      when: SELECT_OIDC == 'local_keycloak'
+    - name: setup people app
+      role: roles/people
+      tags:
+        - people

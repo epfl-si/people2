@@ -77,6 +77,9 @@ Gemfile.lock: Gemfile.lock.docker
 logs:
 	docker compose logs -f
 
+llogs:
+	docker compose logs --since 10s -f
+
 ## show the status of running containers
 ps:
 	docker compose ps
@@ -267,22 +270,18 @@ nukedb:
 	echo "DROP DATABASE people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
 
-## dump keycloak database for restoring later. CAUTION: if KCDUMPFILE is set it will be overwritten.
-kcdump:
-	$(SQLDUMP) keycloak > $(KCDUMPFILE)
-
-## restore keycloak database from dump. Set KCDUMPFILE en var for custom (saved) dumpfile path.
-kcrestore: $(KCDUMPFILE)
-	cat $< | $(SQL)
-
 ## delete keycloak database and recreate it
 rekc:
-	docker compose --profile kc stop keycloak
+	docker compose stop keycloak
 	echo "DROP DATABASE IF EXISTS keycloak;" | $(SQL)
 	echo "CREATE DATABASE keycloak;" | $(SQL)
 	# cat keycloak/initdb.d/keycloak-database-and-user.sql | $(SQL)
 	echo "GRANT ALL PRIVILEGES ON keycloak.* TO 'keycloak'@'%';" | $(SQL)
 	@echo "Keycloak db reset."
+
+kconfig: up
+	@/bin/bash -c 'while curl -I https://keycloak.dev.jkldsa.com/admin/master/console 2>/dev/null | grep -q "HTTP/2 502" ; do echo "waiting for kc to be alive (interrupt if it continues for more than ~40 secs)"; sleep 5; done'
+	cd ops && ./possible.sh --dev -t keycloak.config
 
 # ---------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder

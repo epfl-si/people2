@@ -1,0 +1,30 @@
+---
+
+- name: Ensure keycloak image
+  containers.podman.podman_image:
+    name: "quay.io/keycloak/keycloak:{{ keycloak_version }}"
+
+- name: Ensure keycloak service
+  containers.podman.podman_container:
+    command:
+      - start-dev
+      - --import-realm
+    name: keycloak
+    image: "quay.io/keycloak/keycloak:{{ keycloak_version }}"
+    env:
+      # https://www.keycloak.org/server/all-config
+      KC_HOSTNAME: "https://{{ keycloak.host }}"
+      KC_HTTP_ENABLED: "false"
+      KC_HTTP_PORT: "{{ keycloak.port }}"
+      KC_DB: mariadb
+      KC_DB_URL: "jdbc:mariadb://mariadb:3306/keycloak"
+      KC_DB_USERNAME: "{{ _secrets.keycloak.db_user }}"
+      KC_DB_PASSWORD: "{{ _secrets.keycloak.db_password }}"
+      KEYCLOAK_ADMIN: "{{ _secrets.keycloak.admin_user }}"
+      KEYCLOAK_ADMIN_PASSWORD: "{{ _secrets.keycloak.admin_password }}"
+    # ports:
+    #   - "0.0.0.0:{{ people.keycloak.port }}:{{ people.keycloak.port }}"
+    state: started
+    network: 
+      - traefik
+      - people

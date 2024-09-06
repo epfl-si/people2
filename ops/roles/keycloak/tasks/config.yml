@@ -1,0 +1,76 @@
+---
+
+- name: Create or update Keycloak realm
+  community.general.keycloak_realm:
+    auth_client_id: admin-cli
+    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_realm: master
+    auth_username: "{{ _secrets.keycloak.admin_user }}"
+    auth_password: "{{ _secrets.keycloak.admin_password }}"
+    id: "{{ keycloak.realm }}"
+    realm: "{{ keycloak.realm }}"
+    state: present
+    enabled: true
+    display_name: "{{ keycloak.display_name }}"
+  delegate_to: localhost
+
+- name: Users in Keycloak
+  community.general.keycloak_user:
+    auth_client_id: admin-cli
+    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_realm: master
+    auth_username: "{{ _secrets.keycloak.admin_user }}"
+    auth_password: "{{ _secrets.keycloak.admin_password }}"
+
+    email: "{{ item.email }}"
+    email_verified: true
+    enabled: true
+    first_name: "{{ item.first_name }}"
+    last_name: "{{ item.last_name }}"
+    realm: "{{ keycloak.realm }}"
+    state: present
+    username: "{{ item.user }}"
+    credentials:
+      - type: password
+        value: "{{ item.pass }}"
+        temporary: false
+    attributes:
+      - name: sciper
+        values:
+          - "{{ item.sciper }}"
+        state: present
+
+  delegate_to: localhost
+  with_items: "{{ _secrets.keycloak.users }}"
+
+# TODO a really general KC install should have a client for each application
+# where the root_url is defined so that one needs just the path as redirect_url
+# and the acceptable redirect_uris list would be more specific and secure
+# As an alternative we could also collect from all the apps their respective
+# redirect_urls as facts and add them all to the list.
+# For now I just keep he peace & love one fits all approach.
+- name: Client for auth with Keycloak
+  community.general.keycloak_client:
+    auth_client_id: admin-cli
+    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_realm: master
+    auth_username: "{{ _secrets.keycloak.admin_user }}"
+    auth_password: "{{ _secrets.keycloak.admin_password }}"
+
+    realm: "{{ keycloak.realm }}"
+    client_id: "{{ keycloak.identifier }}"
+    state: present
+    enabled: true
+    # root_url: https://people.epfl.ch
+    redirect_uris:
+      - "https://*"
+    # failed attempt to avoid false changed positive just for an ordering issue
+    # default_client_scopes:
+      # - web-origins
+      # - acr
+      # - roles
+      # - profile
+      # - basic
+      # - email
+
+  delegate_to: localhost

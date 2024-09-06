@@ -1,0 +1,21 @@
+---
+
+- name: People source code
+  ansible.builtin.git:
+    repo: "{{ people.repo }}"
+    dest: "{{ people.srcdir }}"
+    version: "{{ people.branch }}"
+    force: true
+
+- name: Select the correct Gemfile.lock file
+  ansible.builtin.file:
+    path: "{{ people.srcdir }}/Gemfile.lock"
+    state: link
+    src: "Gemfile.lock.docker"
+
+- name: Build people app image
+  containers.podman.podman_image:
+    name: people
+    path: "{{ people.srcdir }}"
+    force: true
+

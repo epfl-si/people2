@@ -1,0 +1,4 @@
+---
+- name: Check tag learn.config.pasticcio
+  ansible.builtin.debug:
+    msg: "doing learn.config.pasticcio"

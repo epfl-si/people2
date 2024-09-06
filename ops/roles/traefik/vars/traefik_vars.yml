@@ -1,0 +1,7 @@
+traefik:
+  basedir: "{{ TRAEFIK_BASEDIR | default('/srv/traefik') }}"
+  config: "{{ TRAEFIK_BASEDIR | default('/srv/traefik') }}/config"
+  email: "{{ CERTBOT_EMAIL | default('isas-fsd@groupes.epfl.ch') }}"
+  certs_src: "{{ CERTS_SRC | default('/keybase/team/epfl_idevfsd/certs') }}"
+  port_https: "{{ TRAEFIK_HTTPS_PORT | default(4433) }}"
+  port_http: "{{ TRAEFIK_HTTP_PORT | default(8033) }}"

@@ -1,0 +1,14 @@
+---
+
+- name: Ensure redis image
+  containers.podman.podman_image:
+    name: "docker.io/valkey/valkey:{{ valkey_version }}"
+
+- name: Ensure redis service
+  containers.podman.podman_container:
+    command:
+      - --maxmemory 64mb
+    name: cache
+    image: "valkey:{{ valkey_version }}"
+    network:
+      - people

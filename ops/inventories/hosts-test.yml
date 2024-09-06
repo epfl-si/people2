@@ -1,0 +1,72 @@
+---
+all:
+  hosts:
+    common:
+      ansible_host: itspeopl0003.xaas.epfl.ch
+      ansible_port: 22
+      ansible_user: root
+    web:
+      ansible_host: itspeopl0003.xaas.epfl.ch
+      ansible_port: 22
+      ansible_user: fsd
+  vars:
+    RUNENV: testnext
+    DOMAINS:
+      - fsd.team
+    CERTS_SRC: /keybase/team/epfl_idevfsd/certs/
+    RH_SECRETS:
+      path: /keybase/team/epfl_idevfsd/RedHat.yml
+      key: rhcp_fsd 
+    SSH_KEYS:
+      -
+        github: multiscan
+        state: present
+      -
+        github: d4rkheart
+        state: present
+      - # example of revoked key
+        github: crazylady2004
+        state: absent
+    # --------------------------------------------------------------------- vars
+    # ---                                                                 system
+    SELINUX: no
+    FIREWALL: yes
+    USERS:
+      -
+        username: fsd
+        comment: non root user for running applications
+        uid: 1000
+        linger: true
+
+    # ---                                                                traefik
+    TRAEFIK_CONSOLE_HOSTNAME: peofik.fsd.team
+    TRAEFIK_HTTPS_PORT: 4433
+    TRAEFIK_HTTP_PORT: 8033
+    TRAEFIK_BASEDIR: /home/fsd/traefik
+
+
+    # ---                                                                 people
+    DATA_BASEDIR: /home/fsd/data
+
+    OIDC_HOSTNAME: peoak.fsd.team
+    # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
+    # OIDC_REALM: rails
+    # OIDC_IDENTIFIER: hello_rails
+    # OIDC_REALM_DISPLAYNAME: SBB CFF FFS Realm
+    # OIDC_ISSUER: https://peoak.fsd.team/realms/rails
+    # OIDC_AUTH_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/auth
+    # OIDC_TOKEN_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/token
+    # OIDC_USERINFO_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/userinfo
+    # OIDC_LOGOUT_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/logout
+
+    PEOPLE_BRANCH: ops
+    PEOPLE_HOSTNAME: peonext.fsd.team
+    PEOPLE_SRCDIR: /home/fsd/people
+    # REDIS_URL: redis://cache:6379/0
+    SELECT_CACHE: local_redis
+    SELECT_DB: local_mariadb
+    SELECT_OIDC: local_keycloak
+    SILENT_TRANSLATION_ERR: "yes"
+
+    # ---                                                                 whoami
+    WHOAMI_HOSTNAME: peoami.fsd.team
