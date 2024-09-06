@@ -1,0 +1,24 @@
+---
+# whoami container for testing networking setup
+
+- name: Ensure whoami image
+  containers.podman.podman_image:
+    name: "docker.io/containous/whoami:latest"
+
+- name: Ensure whoami service for testing
+  containers.podman.podman_container:
+    command: "--port {{ people.whoami.port }}"
+    name: whoami
+    image: "containous/whoami"
+    state: started
+    network:
+      - traefik
+      - people
+    # I am not able to make labels work. Are they sent to the correct socket ?
+    labels:
+      # traefik.enable: "true"
+      # traefik.docker.network: "traefik"
+      traefik.http.routers.whoami.rule: "Host(`{{ people.whoami.host }}`)"
+      traefik.http.routers.whoami.tls: "true"
+      traefik.http.routers.whoami.service: "whoami"
+      traefik.http.services.whoami.loadbalancer.server.port: "{{ people.whoami.port }}"

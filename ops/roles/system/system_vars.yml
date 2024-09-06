@@ -1,0 +1,5 @@
+firewall_state: "{{ FIREWALL | default(False) | ternary('started', 'stopped') }}"
+firewall_enabled: "{{ FIREWALL | default(False) | ternary('yes', 'no') }}"
+
+selinux_policy: targeted
+selinux_state: "{{ SELINUX | default(False) | ternary('enforcing', 'disabled') }}"

@@ -1,0 +1,59 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: DEBUG
+
+accessLog: {}
+
+api:
+  dashboard: true
+
+providers:
+  file:
+    directory: /etc/traefik/config
+    watch: true
+  docker:
+    # endpoint: "unix:///var/run/docker.sock"
+    watch: true
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: /etc/traefik/acme/acme.json
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      email: "{{ traefik.email }}" 
+      tlsChallenge: true
+      httpChallenge:
+        entryPoint: http
+
+entryPoints:
+  http:
+    address: ":{{ traefik.port_http }}"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+  https:
+    address: ":{{ traefik.port_https }}"
+    http:
+      tls: {}
+      
+
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /etc/traefik/certs/default.crt
+        keyFile: /etc/traefik/certs/default.key

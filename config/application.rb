@@ -40,9 +40,9 @@ module People
     # Use as Rails.configuration.key
     config.admin_scipers = ENV.fetch('ADMIN_SCIPERS', '').split(/\s*,\s*/).select { |v| v =~ /[0-9]{6}/ }
     config.intranet_re = Regexp.new(ENV.fetch('INTRANET_RE', '^128\.17[89]'))
-    config.official_url = ENV.fetch('OFFICIAL_URL', 'https://people.epfl.ch')
     config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', true)
-    routes.default_url_options[:host] = ENV.fetch('DEFAULT_URL', config.official_url)
+    config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
+    routes.default_url_options[:host] = config.app_hostname
 
     vf = Rails.root.join("VERSION")
     config.version = File.exist?(vf) ? File.read(vf) : "0.0.0"

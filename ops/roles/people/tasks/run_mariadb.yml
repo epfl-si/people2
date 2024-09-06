@@ -1,0 +1,52 @@
+---
+
+- name: Ensure db initalisation files
+  ansible.builtin.copy:
+    dest: "{{ people.mariadb.init }}/dbs_and_users.sql"
+    content: |
+      -- New people database
+      CREATE USER '{{ _secrets.people.db_user }}'@'%' IDENTIFIED BY '{{ _secrets.people.db_password }}';
+      CREATE DATABASE people;
+      GRANT ALL PRIVILEGES ON people.* TO '{{ _secrets.people.db_user }}'@'%';
+
+      -- Legacy people cv database
+      CREATE DATABASE cv;
+      GRANT ALL PRIVILEGES ON cv.* TO '{{ _secrets.people.db_user }}'@'%';
+
+      {% if SELECT_OIDC == 'local_keycloak' %}
+      -- Keycloak
+      CREATE USER '{{ _secrets.keycloak.db_user }}'@'%' IDENTIFIED BY '{{ _secrets.keycloak.db_password }}';
+      CREATE DATABASE keycloak;
+      GRANT ALL PRIVILEGES ON keycloak.* TO '{{ _secrets.keycloak.db_user }}'@'%';
+      {% endif %}
+
+      -- Legacy cadidb databases (not used anymore but we keep them for now)
+      CREATE DATABASE accred;
+      CREATE DATABASE bottin;
+      CREATE DATABASE cadi;
+      CREATE DATABASE dinfo;
+
+      GRANT ALL PRIVILEGES ON accred.* TO '{{ _secrets.people.db_user }}'@'%';
+      GRANT ALL PRIVILEGES ON bottin.* TO '{{ _secrets.people.db_user }}'@'%';
+      GRANT ALL PRIVILEGES ON cadi.* TO '{{ _secrets.people.db_user }}'@'%';
+      GRANT ALL PRIVILEGES ON dinfo.* TO '{{ _secrets.people.db_user }}'@'%';
+
+- name: Ensure mariadb image
+  containers.podman.podman_image:
+    name: "docker.io/mariadb:{{ mariadb_version }}"
+
+- name: Ensure MariaDB containers is running
+  containers.podman.podman_container:
+    name: mariadb
+    image: "mariadb:{{ mariadb_version }}"
+    env:
+      MARIADB_ROOT_PASSWORD: "{{ _secrets.mariadb.root_password }}"
+    volumes:
+      - "{{ people.mariadb.data }}:/var/lib/mysql"
+      - "{{ people.mariadb.init }}:/docker-entrypoint-initdb.d"
+    restart_policy: unless-stopped
+    state: started
+    network: 
+      - people
+    # generate_systemd: false
+      # restart_sec: 10

@@ -311,25 +311,48 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
 
-  config.omniauth :openid_connect, {
+  # curl https://keycloak.dev.jkldsa.com/realms/rails/.well-known/openid-configuration | jq
+  # TODO: The defaults seams to work with keycloak. To be tested with other oidc proviers
+
+  oidc_redirect = "https://#{Rails.configuration.app_hostname}/users/auth/oidc/callback"
+
+  # identifier is the client in KC terminology
+  oidc_identifier = ENV.fetch('OIDC_IDENTIFIER', 'hello_rails')
+  oidc_realm = ENV.fetch('OIDC_REALM', 'rails')
+  # if no OIDC_ISSUER is provided, then build the url from the OIDC_HOSTNAME
+  # so either OIDC_ISSUER or OIDC_HOSTNAME must be provided
+  oidc_issuer = ENV.fetch('OIDC_ISSUER') do
+    oidc_hostname = ENV.fetch('OIDC_HOSTNAME')
+    "https://#{oidc_hostname}/realms/#{oidc_realm}"
+  end
+  oidc_config = {
     name: :oidc,
     discovery: true,
-    issuer: "https://keycloak.dev.jkldsa.com/realms/rails",
+    issuer: oidc_issuer,
     scope: %i[openid email], # scope: %i[openid profile email],
     response_type: :code,
-    uid_field: "sciper",
     client_options: {
-      port: 8080,
-      scheme: "http",
-      host: "keycloak.dev.jkldsa.com",
-      authorization_endpoint: "/realms/rails/protocol/openid-connect/auth",
-      identifier: "hello_rails",
       # secret: ENV["OP_SECRET_KEY"],
-      # redirect_uri: "https://people.dev.jkldsa.com/users/auth/oidc/callback",
-      redirect_uri: "https://people.dev.jkldsa.com/users/auth/oidc/callback",
+      identifier: oidc_identifier,
+      redirect_uri: oidc_redirect,
       authorize_params: {
-        realm: "rails",
+        realm: oidc_realm,
       }
-    },
+    }
   }
+
+  # if all endpoints are provided, we turn off discovery and use them instead
+  ep_auth = ENV.fetch('OIDC_AUTH_ENDPOINT', nil)
+  ep_token = ENV.fetch('OIDC_TOKEN_ENDPOINT', nil)
+  ep_userinfo = ENV.fetch('OIDC_USERINFO_ENDPOINT', nil)
+  ep_logout = ENV.fetch('OIDC_LOGOUT_ENDPOINT', nil)
+  if [ep_auth, ep_token, ep_userinfo, ep_logout].all?(&:present?)
+    oidc_config[:discovery] = false
+    oidc_config[:authorization_endpoint] = ep_auth
+    oidc_config[:token_endpoint] = ep_token
+    oidc_config[:userinfo_endpoint] = p_userinfo
+    oidc_config[:end_session_endpoint] = ep_logout
+  end
+
+  config.omniauth :openid_connect, oidc_config
 end

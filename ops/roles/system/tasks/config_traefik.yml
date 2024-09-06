@@ -1,0 +1,27 @@
+- name: Ensure firewall allows traffic directed to traefik
+  ansible.posix.firewalld:
+    permanent: true
+    port: "{{ item }}/tcp"
+    state: enabled
+    zone: public
+  with_items:
+    - "{{ TRAEFIK_HTTPS_PORT }}"
+    - "{{ TRAEFIK_HTTP_PORT }}"
+
+- name: Ensure forward of standard http/https ports
+  ansible.posix.firewalld:
+    permanent: true
+    port_forward:
+      -
+        proto: tcp
+        port: "{{ item.from }}"
+        toport: "{{ item.to }}"
+    state: enabled
+    zone: public
+  with_items:
+    -
+      from: 443
+      to:  "{{ TRAEFIK_HTTPS_PORT }}"
+    -
+      from: 80
+      to: "{{ TRAEFIK_HTTP_PORT }}"

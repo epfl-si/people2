@@ -1,0 +1,7 @@
+
+- name: Ensure podman socket
+  ansible.builtin.service:
+    name: podman.socket
+    state: started
+    enabled: yes
+

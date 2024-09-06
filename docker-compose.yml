@@ -24,7 +24,6 @@ services:
     image: quay.io/keycloak/keycloak:25.0.0
     command:
       - start-dev
-      - --import-realm
     environment:
       KC_HOSTNAME: "https://keycloak.dev.jkldsa.com"
       # KC_HOSTNAME_PORT: 443
@@ -35,22 +34,13 @@ services:
       KC_DB_PASSWORD: mariadb
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-    # ports:
-    #   # Since the Keycloak password is easy to guess, opening up this
-    #   # port further than localhost is *not* recommended.
-    #   - "${KCPORTEXT:-127.0.0.1:8080:}8080"
+      KC_LOG_LEVEL: INFO #DEBUG
     labels:
       # keycloak
       - traefik.docker.network=traefik
       - traefik.http.services.kc.loadbalancer.server.port=8080
       - traefik.http.routers.kc.rule=Host("keycloak.${DOMAIN:-dev.jkldsa.com}")
       - traefik.http.routers.kc.tls=true
-      # # keycloak management interface
-      # - traefik.http.services.kcm.loadbalancer.server.port=9000
-      # - traefik.http.routers.kcm.rule=Host("kcm.${DOMAIN:-dev.jkldsa.com}")
-      # - traefik.http.routers.kcm.tls=true
-    volumes:
-      - ./keycloak/import:/opt/keycloak/data/import
     networks:
       - traefik
       - default
@@ -91,10 +81,10 @@ services:
     environment:
       # PORT: ${PORT:-3000}
       # ADDR: ${ADDR:-127.0.0.1}
+      APP_HOSTNAME: "people.${DOMAIN:-dev.jkldsa.com}"
       KILLPID: ${KILLPID:-no}
       RAILS_ENV: development
       RAILS_DEVELOPMENT_HOSTS: "people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}"
-      DEFAULT_URL: "https://people.${DOMAIN:-dev.jkldsa.com}"
       ENABLE_API_CACHE: "${ENABLE_API_CACHE:-false}"
       ENABLE_WEBMOCK: "${ENABLE_WEBMOCK:-false}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
@@ -113,6 +103,11 @@ services:
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
       ADMIN_SCIPERS: ${ADMIN_SCIPERS}
+
+      OIDC_HOSTNAME: keycloak.${DOMAIN:-dev.jkldsa.com}
+      OIDC_REALM: rails
+      OIDC_IDENTIFIER: hello_rails
+
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"

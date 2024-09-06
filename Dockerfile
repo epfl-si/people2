@@ -1,12 +1,13 @@
-FROM node:20 AS elements
-RUN git clone https://github.com/epfl-si/elements.git
-WORKDIR /elements
-# Strip includes from bootstrap-variables.scss. We are only interested in the base vars, not functions.
-RUN yarn
-RUN rm -f bootstrap-variables.scss && yarn dist
-RUN grep -E -v "^@include" assets/config/bootstrap-variables.scss > bootstrap-variables.scss
-
-
+# Opted for including compiled css files from elements directly into the repo to:
+#   1. speed-up image built;
+#   2. enable updates for test deployment via mounted source code
+# FROM node:20 AS elements
+# RUN git clone https://github.com/epfl-si/elements.git
+# WORKDIR /elements
+# # Strip includes from bootstrap-variables.scss. We are only interested in the base vars, not functions.
+# RUN yarn
+# RUN rm -f bootstrap-variables.scss && yarn dist
+# RUN grep -E -v "^@include" assets/config/bootstrap-variables.scss > bootstrap-variables.scss
 
 FROM registry.docker.com/library/ruby:3.2.3-bullseye
 
@@ -77,10 +78,10 @@ RUN gem install foreman
 WORKDIR /srv/app
 COPY . .
 
+# COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/vendors.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
 
-COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/vendors.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
-
-RUN ./bin/rails dartsass:build
+# move this to docker entry point so that all env vars are defined
+# RUN ./bin/rails dartsass:build
 
 # Precompile bootsnap code for faster boot times
 # RUN bundle exec bootsnap precompile app/ lib/
