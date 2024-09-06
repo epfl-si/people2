@@ -34,6 +34,7 @@ services:
       KC_DB_PASSWORD: mariadb
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_LOG_LEVEL: INFO #DEBUG
     labels:
       # keycloak
       - traefik.docker.network=traefik
@@ -106,9 +107,6 @@ services:
       OIDC_HOSTNAME: keycloak.${DOMAIN:-dev.jkldsa.com}
       OIDC_REALM: rails
       OIDC_IDENTIFIER: hello_rails
-      OIDC_PATH: realms/rails
-      OIDC_ENDPOINT: realms/rails/protocol/openid-connect/auth
-      OIDC_URL: https://keycloak.${DOMAIN:-dev.jkldsa.com}/realms/rails
 
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"

@@ -49,7 +49,8 @@
       OIDC_HOSTNAME: "{{ keycloak.host }}"
       OIDC_REALM: "{{ keycloak.realm }}"
       OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
-      # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
+      # TODO: The above OIDC_ are enough for keycloak. Might need the following 
+      # on other providers.
       # OIDC_ISSUER:
       # OIDC_AUTH_ENDPOINT:
       # OIDC_TOKEN_ENDPOINT:
