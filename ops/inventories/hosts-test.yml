@@ -44,15 +44,20 @@ all:
     TRAEFIK_HTTP_PORT: 8033
     TRAEFIK_BASEDIR: /home/fsd/traefik
 
+
     # ---                                                                 people
     DATA_BASEDIR: /home/fsd/data
 
     OIDC_HOSTNAME: peoak.fsd.team
+    # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
     # OIDC_REALM: rails
     # OIDC_IDENTIFIER: hello_rails
-    # OIDC_PATH: /realms/rails
-    # OIDC_ENDPOINT: /realms/rails/protocol/openid-connect/auth
-    # OIDC_URL: https://peoak.fsd.team/realms/rails
+    # OIDC_REALM_DISPLAYNAME: SBB CFF FFS Realm
+    # OIDC_ISSUER: https://peoak.fsd.team/realms/rails
+    # OIDC_AUTH_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/auth
+    # OIDC_TOKEN_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/token
+    # OIDC_USERINFO_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/userinfo
+    # OIDC_LOGOUT_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/logout
 
     PEOPLE_BRANCH: ops
     PEOPLE_HOSTNAME: peonext.fsd.team

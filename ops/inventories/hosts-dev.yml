@@ -1,0 +1,19 @@
+---
+all:
+  hosts:
+    web:
+      ansible_host: localhost
+      ansible_connection: local
+  vars:
+    RUNENV: dev
+    SELECT_OIDC: local_keycloak
+    OIDC_HOSTNAME: keycloak.dev.jkldsa.com
+    # TODO: The above OIDC_ are enough for keycloak. Might need the following on other providers
+    # OIDC_REALM: rails
+    # OIDC_IDENTIFIER: hello_rails
+    # OIDC_REALM_DISPLAYNAME: SBB CFF FFS Realm
+    # OIDC_ISSUER: https://keycloak.dev.jkldsa.com/realms/rails
+    # OIDC_AUTH_ENDPOINT: https://keycloak.dev.jkldsa.com/realms/rails/protocol/openid-connect/auth
+    # OIDC_TOKEN_ENDPOINT: https://keycloak.dev.jkldsa.com/realms/rails/protocol/openid-connect/token
+    # OIDC_USERINFO_ENDPOINT: https://keycloak.dev.jkldsa.com/realms/rails/protocol/openid-connect/userinfo
+    # OIDC_LOGOUT_ENDPOINT: https://keycloak.dev.jkldsa.com/realms/rails/protocol/openid-connect/logout
