@@ -5,3 +5,5 @@ traefik:
   certs_src: "{{ CERTS_SRC | default('/keybase/team/epfl_idevfsd/certs') }}"
   port_https: "{{ TRAEFIK_HTTPS_PORT | default(4433) }}"
   port_http: "{{ TRAEFIK_HTTP_PORT | default(8033) }}"
+  console_hostname: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
+  domains: "{{ DOMAINS | default([]) }}"

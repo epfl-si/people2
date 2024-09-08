@@ -58,8 +58,7 @@
     chain: OUTPUT
     table: nat
     protocol: tcp
-    # TODO: ansible_host is not necessarily an ip address...
-    destination: "{{ ansible_host }}"
+    destination: "{{ ansible_ip }}"
     destination_port: "{{ item.from }}"
     jump: REDIRECT
     to_ports: "{{ item.to }}"

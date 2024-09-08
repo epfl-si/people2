@@ -73,4 +73,6 @@
       traefik.http.routers.people.tls: "true"
       traefik.http.routers.people.service: "people"
       traefik.http.services.people.loadbalancer.server.port: "{{ people.port }}"
+      traefik.http.routers.people.middlewares: peoblock
+      traefik.http.middlewares.peoblock.basicauth.users: "{{ _secrets.people.auth.user }}:{{ _secrets.people.auth.pass | password_hash('md5') }}"
 
