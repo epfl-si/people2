@@ -2,13 +2,14 @@
 all:
   hosts:
     common:
-      # itspeopl0003.xaas.epfl.ch
-      ansible_host: 10.95.96.153
+      ansible_host: itspeopl0003.xaas.epfl.ch
+      ansible_ip: 10.95.96.153
       ansible_port: 22
       ansible_user: root
     web:
       # itspeopl0003.xaas.epfl.ch
-      ansible_host: 10.95.96.153
+      ansible_host: itspeopl0003.xaas.epfl.ch
+      ansible_ip: 10.95.96.153
       ansible_port: 22
       ansible_user: fsd
   vars:
