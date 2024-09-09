@@ -8,8 +8,7 @@ class Course < ApplicationRecord
   has_many :teacherships, class_name: "Teachership", dependent: :destroy
   has_many :teachers, through: :teacherships
 
-  def self.current_academic_year
-    d = Time.zone.today
+  def self.current_academic_year(d = Time.zone.today)
     y = d.year
     if d.month < 8
       "#{y - 1}-#{y}"
