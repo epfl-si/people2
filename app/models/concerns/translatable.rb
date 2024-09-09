@@ -10,6 +10,9 @@ module Translatable
         define_method("t_#{attribute}") do |locale = I18n.locale|
           translation_for(attribute, locale)
         end
+        define_method("t_#{attribute}!") do |locale = I18n.locale|
+          translation_for!(attribute, locale)
+        end
       end
     end
 
@@ -30,9 +33,12 @@ module Translatable
       end
     end
 
+    # actual code for translatability validator is in concerns/translatability_validator.rb
     def self.validates_translatability(*attributes); end
   end
 
+  # return translation of a translated attribute in the required locale
+  # if available otherwise return the translation in the default locale
   def translation_for(attribute, locale = I18n.locale)
     a = "#{attribute}_#{locale}"
     d = "#{attribute}_#{I18n.default_locale}"
@@ -40,6 +46,16 @@ module Translatable
       send(a) || send(d)
     else
       instance_variable_get("@#{a}") || instance_variable_get("@#{d}")
+    end
+  end
+
+  # like the above but nil is returned if translation for locale is not avail.
+  def translation_for!(attribute, locale = I18n.locale)
+    a = "#{attribute}_#{locale}"
+    if respond_to?(a)
+      send(a)
+    else
+      instance_variable_get("@#{a}")
     end
   end
 

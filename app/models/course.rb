@@ -19,11 +19,17 @@ class Course < ApplicationRecord
   end
 
   def edu_url(locale)
-    title_translated = send("title_#{locale}")
-    return nil if code.blank? || title_translated.blank? || title_translated == "nil"
+    # TODO: check with William in order to have exactly the same algorithm
+    #       to build the url from title+code. In particular, when
+    #       1. code or title is absent
+    #       2. the title is not present in the selected locale
+    #       Iteally, William should include the url in the data so we don't
+    #       have to play the cat and mouse game
+    translated_title = t_title!(locale)
+    return nil unless code.present? && translated_title.present?
 
-    t = I18n.transliterate(title_translated).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
-    c = code.upcase.gsub(/[()]/, '-').gsub('--', '-').gsub(/-$/, '')
+    t = I18n.transliterate(translated_title).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
+    c = code.upcase.sub('(', "-").sub(')', '')
     "https://edu.epfl.ch/coursebook/#{locale}/#{t}-#{c}"
   end
 end
