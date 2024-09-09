@@ -1,10 +1,10 @@
-FROM node:20 AS elements
-RUN git clone https://github.com/epfl-si/elements.git
-WORKDIR /elements
-# Strip includes from bootstrap-variables.scss. We are only interested in the base vars, not functions.
-RUN yarn
-RUN rm -f bootstrap-variables.scss && yarn dist
-RUN grep -E -v "^@include" assets/config/bootstrap-variables.scss > bootstrap-variables.scss
+# FROM node:20 AS elements
+# RUN git clone https://github.com/epfl-si/elements.git
+# WORKDIR /elements
+# # Strip includes from bootstrap-variables.scss. We are only interested in the base vars, not functions.
+# RUN yarn
+# RUN rm -f bootstrap-variables.scss && yarn dist
+# RUN grep -E -v "^@include" assets/config/bootstrap-variables.scss > bootstrap-variables.scss
 
 
 
@@ -78,7 +78,7 @@ WORKDIR /srv/app
 COPY . .
 
 
-COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/elements.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
+# COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/vendors.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
 
 RUN ./bin/rails dartsass:build
 
