@@ -63,4 +63,12 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Try to avoid issues with fiber during tests
+  # TODO: this might avoid the issue in test but does not prevent the same issue
+  # to appear in production under heavy load!
+  # config.active_record.async_query_executor = nil
+  # The problem is that async jobs (e.g. fetching camipro pictures) will
+  # come back and access the db while the tests might have emptied the DB.
+  config.active_job.queue_adapter = :inline
 end
