@@ -51,6 +51,8 @@ services:
       MARIADB_USER: keycloak
       MARIADB_PASSWORD: mariadb
       MARIADB_ROOT_PASSWORD: mariadb
+    # ports:
+    #   - "3306:3306"
     volumes:
       - mariadb:/var/lib/mysql
       - ./db/initdb_dev.d:/docker-entrypoint-initdb.d
