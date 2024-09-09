@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -212,6 +212,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
     t.index ["selected_picture_id"], name: "index_profiles_on_selected_picture_id"
   end
 
+  create_table "publications", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "title", null: false
+    t.string "url", null: false
+    t.string "authors", null: false
+    t.integer "year", null: false
+    t.integer "position", null: false
+    t.string "journal", null: false
+    t.integer "audience", default: 0
+    t.boolean "visible"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_publications_on_profile_id"
+  end
+
   create_table "redirects", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "ns"
     t.integer "sciper"
@@ -298,6 +313,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_153910) do
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
   add_foreign_key "pictures", "profiles"
+  add_foreign_key "publications", "profiles"
   add_foreign_key "teacherships", "courses"
   add_foreign_key "teacherships", "profiles"
 end
