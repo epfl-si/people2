@@ -80,7 +80,7 @@ COPY . .
 
 COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/elements.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
 
-RUN ./bin/rails dartsass:build
+# RUN ./bin/rails dartsass:build
 
 # Precompile bootsnap code for faster boot times
 # RUN bundle exec bootsnap precompile app/ lib/
