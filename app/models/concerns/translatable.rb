@@ -40,6 +40,7 @@ module Translatable
   # return translation of a translated attribute in the required locale
   # if available otherwise return the translation in the default locale
   def translation_for(attribute, locale = I18n.locale)
+    locale ||= I18n.default_locale
     a = "#{attribute}_#{locale}"
     d = "#{attribute}_#{I18n.default_locale}"
     if respond_to?(a) && respond_to?(d)
@@ -51,6 +52,7 @@ module Translatable
 
   # like the above but nil is returned if translation for locale is not avail.
   def translation_for!(attribute, locale = I18n.locale)
+    locale ||= I18n.default_locale
     a = "#{attribute}_#{locale}"
     if respond_to?(a)
       send(a)
@@ -60,6 +62,7 @@ module Translatable
   end
 
   def translated_body_for(attribute, locale = I18n.locale)
+    locale ||= I18n.default_locale
     t = send("#{attribute}_#{locale}")
     t = send("#{attribute}_#{I18n.default_locale}") if t.id.nil? || t.body.empty? && locale != I18n.default_locale
     t.body
