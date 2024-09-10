@@ -25,7 +25,7 @@ class Course < ApplicationRecord
     #       Iteally, William should include the url in the data so we don't
     #       have to play the cat and mouse game
     translated_title = t_title!(locale)
-    return nil unless code.present? && translated_title.present?
+    return nil if code.blank? || translated_title.blank?
 
     t = I18n.transliterate(translated_title).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
     c = code.upcase.sub('(', "-").sub(')', '')
