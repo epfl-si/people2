@@ -37,7 +37,7 @@ class Name
   end
 
   def customizable_last?
-    official_first.split(/\W+/).count > 1
+    official_last.split(/\W+/).count > 1
   end
 
   def usual_names_are_taken_from_official
