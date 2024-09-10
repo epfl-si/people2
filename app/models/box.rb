@@ -27,11 +27,7 @@ class Box < ApplicationRecord
     true
   end
 
-  delegate :sciper, to: :cv
-
-  # def ensure_sciper
-  #   self.sciper ||= self.cv.sciper
-  # end
+  delegate :sciper, to: :profile
 end
 
 # Subclasses in STI need to be on their own file because otherwise
