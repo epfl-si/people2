@@ -197,11 +197,14 @@ fr:
               blank: "doit être renseigné"
         name:
           attributes:
-            usual_firstname:
-              not_in_official: "Doit être composé de prénoms inclus dans le nom officiel."
-            usual_lastname:
-              not_in_official: "Doit être composé de noms inclus dans le nom officiel."
+            usual_first:
+              not_in_official: "N'est pas inclus dans le nom officiel"
+            usual_last:
+              not_in_official: "N'est pas inclus dans le nom officiel"
         picture:
           attributes:
             base:
               undeletable: "La photo Camipro ne peut pas être supprimée, mais vous pouvez toujours masquer votre photo de profil"
+  errors:
+      messages:
+        not_in_official: "N'est pas inclus dans le nom officiel"
