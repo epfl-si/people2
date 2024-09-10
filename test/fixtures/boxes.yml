@@ -141,7 +141,7 @@ oli_box_pubs:
   locked: true
   visible: true
   audience: 0
-  position: 1
+  position: 6
 
 # ---------------------------------------------------------------------- Natalie
 nat_box_expertise:
@@ -165,8 +165,8 @@ nat_box_availability:
   show_title: true
   locked: false
   visible: true
-  audience: 1
-  position: 1
+  audience: 2
+  position: 2
 
 nat_box_work:
   type: "RichTextBox"
@@ -176,8 +176,8 @@ nat_box_work:
   show_title: true
   locked: false
   visible: true
-  audience: 0
-  position: 1
+  audience: 1
+  position: 3
 
 nat_box_mission:
   type: "RichTextBox"
@@ -189,7 +189,7 @@ nat_box_mission:
   locked: true
   visible: false
   audience: 0
-  position: 1
+  position: 4
 
 nat_box_bio:
   type: "RichTextBox"
@@ -201,7 +201,7 @@ nat_box_bio:
   locked: true
   visible: false
   audience: 0
-  position: 1
+  position: 5
 
 nat_box_cv:
   type: "RichTextBox"
@@ -213,7 +213,7 @@ nat_box_cv:
   locked: true
   visible: true
   audience: 0
-  position: 2
+  position: 6
 
 nat_box_edu_en:
   type: "StandardBox"
@@ -227,7 +227,19 @@ nat_box_edu_en:
   locked: true
   visible: false
   audience: 0
-  position: 3
+  position: 7
+
+nat_box_missions:
+  type: "RichTextBox"
+  profile: natalie
+  section: bio
+  title_en: Mission
+  title_fr: Mission
+  show_title: true
+  locked: true
+  visible: false
+  audience: 0
+  position: 8
 
 nat_box_pubs:
   type: "RichTextBox"
@@ -239,5 +251,5 @@ nat_box_pubs:
   locked: true
   visible: false
   audience: 0
-  position: 1
+  position: 9
 
