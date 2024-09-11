@@ -1,0 +1,7 @@
+---
+# - include_vars: traefik_vars.yml
+#   tags: always
+
+- name: Firewall configuration for Ingress
+  import_tasks:
+    file: config_fwrules.yml

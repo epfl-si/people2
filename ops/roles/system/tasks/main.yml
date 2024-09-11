@@ -41,14 +41,6 @@
   import_tasks:
     file: config_podman.yml
 
-- name: Traefik
-  tags:
-    - system.config
-    - system.config.traefik
-  import_tasks:
-    file: config_traefik.yml
-
-
 # - name: Reset system
 #   tags:
 #     - never
