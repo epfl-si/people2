@@ -10,3 +10,16 @@ traefik_version: "v2.11"
 mariadb_version: "11.4.3"
 valkey_version: "7.2"
 keycloak_version: "25.0.0"
+
+ports:
+  keycloak: 9091
+  people: 3000
+  whoami: 9092
+  traefik_https: "{{ TRAEFIK_HTTPS_PORT | default(4433) }}"
+  traefik_http: "{{ TRAEFIK_HTTP_PORT | default(8033) }}"
+
+hosts:
+  people: "{{ PEOPLE_HOSTNAME | default('people.epfl.ch') }}"
+  traefik_console: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
+  whoami: "{{ WHOAMI_HOSTNAME }}"
+  keycloak: "{{ OIDC_HOSTNAME }}"

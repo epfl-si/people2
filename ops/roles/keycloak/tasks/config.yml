@@ -3,7 +3,7 @@
 - name: Create or update Keycloak realm
   community.general.keycloak_realm:
     auth_client_id: admin-cli
-    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_keycloak_url: "https://{{ hosts.keycloak }}/"
     auth_realm: master
     auth_username: "{{ _secrets.keycloak.admin_user }}"
     auth_password: "{{ _secrets.keycloak.admin_password }}"
@@ -17,7 +17,7 @@
 - name: Users in Keycloak
   community.general.keycloak_user:
     auth_client_id: admin-cli
-    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_keycloak_url: "https://{{ hosts.keycloak }}/"
     auth_realm: master
     auth_username: "{{ _secrets.keycloak.admin_user }}"
     auth_password: "{{ _secrets.keycloak.admin_password }}"
@@ -52,7 +52,7 @@
 - name: Client for auth with Keycloak
   community.general.keycloak_client:
     auth_client_id: admin-cli
-    auth_keycloak_url: "https://{{ keycloak.host }}/"
+    auth_keycloak_url: "https://{{ hosts.keycloak }}/"
     auth_realm: master
     auth_username: "{{ _secrets.keycloak.admin_user }}"
     auth_password: "{{ _secrets.keycloak.admin_password }}"

@@ -1,3 +1,19 @@
+## Server architecture
+Server runs on RHEL VM that provides podman containers. By default podman
+runs _rootless_ and the idea is to follow the standard. Therefore, all the pods are running under a standard user (`fsd`).
+This and the fact of using podman/docker for applications, introduces two issues:
+
+ - _rootless_ processes cannot bind to privileged ports like standard http ports 80 and 443.
+ - podman actually does NAT when exposing ports of a container. Therefore, the traefik process that runs in a container have no way to know what was the original IP address of the browser.
+
+The solution currently implemented but which does not fix the second issue is the following:
+
+ - traefik running on podman will bind on non-privileged ports (_e.g._ 8033, 4433);
+ - we use firewall rules to forward traefik directed to http ports to the ports where podman is listening;
+
+An alternative, is to add a second proxy which would replace the firewall rules. It would run as root, apply the ssl certificates and forward to the internal traefik (which only needs to [trust](https://doc.traefik.io/traefik/routing/entrypoints/#forwarded-headers) the `x-forwarded-for` that arrives from the edge proxy) that will dispatch to the correct application pod. The problem is that this will not allow for dynamically configuring how we select the certificates.
+
+
 ### Variables
   * variables that are supposed to be defined in inventories are in *CAPITAL_LETTERS*
   * modules should provide default value only when this is very safe. It is better for ansible to crash because a variable is not defined rather then configuring something incorrectly.

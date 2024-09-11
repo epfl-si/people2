@@ -9,49 +9,60 @@
 #   tags:
 #     - debug
 
-
-- name: Ensure firewall allows traffic directed to traefik
+- name: Ensure firewall allows traffic directed to http/https
   ansible.posix.firewalld:
     permanent: true
     port: "{{ item }}/tcp"
     state: enabled
     zone: public
   with_items:
-    - "{{ TRAEFIK_HTTPS_PORT }}"
-    - "{{ TRAEFIK_HTTP_PORT }}"
+    - 443
+    - 80
 
-- name: Ensure forward of standard http/https ports
+- name: Ensure forward of standard https ports when necessary
   ansible.posix.firewalld:
     permanent: true
     port_forward:
       -
         proto: tcp
-        port: "{{ item.from }}"
-        toport: "{{ item.to }}"
+        port: 443
+        toport: "{{ ports.traefik_https }}"
     state: enabled
     zone: public
-  with_items:
-    -
-      from: 443
-      to:  "{{ TRAEFIK_HTTPS_PORT }}"
-    -
-      from: 80
-      to: "{{ TRAEFIK_HTTP_PORT }}"
+  when:
+    - ports.traefik_https != 443
+
+- name: Ensure forward of standard http ports when necessary
+  ansible.posix.firewalld:
+    permanent: true
+    port_forward:
+      -
+        proto: tcp
+        port: 80
+        toport: "{{ ports.traefik_http }}"
+    state: enabled
+    zone: public
+  when:
+    - ports.traefik_https != 80
 
 # For some reason this one which should be equivalent to the next one does not work
 # - name: Ensure forward of standard http/https ports
 #   ansible.posix.firewalld:
 #     permanent: false
-#     rich_rule: 'rule family="ipv4" destination address={{ ansible_host }} forward-port port={{ item.from }} protocol=tcp to-port={{ item.to }}'
+#     rich_rule: 'rule family="ipv4" destination address={{ ansible_ip }} forward-port port={{ 80 }} protocol=tcp to-port={{ ports.traefik_http }}'
 #     state: enabled
 #     zone: public
-#   with_items:
-#     -
-#       from: 443
-#       to:  "{{ TRAEFIK_HTTPS_PORT }}"
-#     -
-#       from: 80
-#       to: "{{ TRAEFIK_HTTP_PORT }}"
+#   when:
+#     - ports.traefik_https != 80
+
+# - name: Ensure forward of standard http/https ports
+#   ansible.posix.firewalld:
+#     permanent: false
+#     rich_rule: 'rule family="ipv4" destination address={{ ansible_ip }} forward-port port={{ 443 }} protocol=tcp to-port={{ ports.traefik_https }}'
+#     state: enabled
+#     zone: public
+#   when:
+#     - ports.traefik_https != 443
 
 - name: Ensure forward of standard http/https ports
   ansible.builtin.iptables:
@@ -59,14 +70,22 @@
     table: nat
     protocol: tcp
     destination: "{{ ansible_ip }}"
-    destination_port: "{{ item.from }}"
+    destination_port: 443
     jump: REDIRECT
-    to_ports: "{{ item.to }}"
+    to_ports: "{{ ports.traefik_https }}"
     comment: forward traefik to web ports to traefik even when src is localhost
-  with_items:
-    -
-      from: 443
-      to:  "{{ TRAEFIK_HTTPS_PORT }}"
-    -
-      from: 80
-      to: "{{ TRAEFIK_HTTP_PORT }}"
+  when:
+    - ports.traefik_https != 443
+
+- name: Ensure forward of standard http/https ports
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    table: nat
+    protocol: tcp
+    destination: "{{ ansible_ip }}"
+    destination_port: 80
+    jump: REDIRECT
+    to_ports: "{{ ports.traefik_http }}"
+    comment: forward traefik to web ports to traefik even when src is localhost
+  when:
+    - ports.traefik_https != 80
