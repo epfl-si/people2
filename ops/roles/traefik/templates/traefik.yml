@@ -30,13 +30,13 @@ certificatesResolvers:
 
 entryPoints:
   http:
-    address: ":{{ traefik.port_http }}"
+    address: ":{{ ports.traefik_http }}"
     http:
       redirections:
         entryPoint:
           to: https
   https:
-    address: ":{{ traefik.port_https }}"
+    address: ":{{ ports.traefik_https }}"
     http:
       tls: {}
       

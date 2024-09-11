@@ -7,10 +7,11 @@
 
 - name: Ensure whoami service for testing
   containers.podman.podman_container:
-    command: "--port {{ people.whoami.port }}"
+    command: "--port {{ ports.whoami }}"
     name: whoami
     image: "containous/whoami"
     state: started
+    # ports: "{{ ports.whoami }}:{{ ports.whoami }}"
     network:
       - traefik
       - people
@@ -18,7 +19,7 @@
     labels:
       # traefik.enable: "true"
       # traefik.docker.network: "traefik"
-      traefik.http.routers.whoami.rule: "Host(`{{ people.whoami.host }}`)"
+      traefik.http.routers.whoami.rule: "Host(`{{ hosts.whoami }}`)"
       traefik.http.routers.whoami.tls: "true"
       traefik.http.routers.whoami.service: "whoami"
-      traefik.http.services.whoami.loadbalancer.server.port: "{{ people.whoami.port }}"
+      traefik.http.services.whoami.loadbalancer.server.port: "{{ ports.whoami }}"

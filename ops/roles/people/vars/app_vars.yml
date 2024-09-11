@@ -4,8 +4,6 @@ people:
   enable_webmock: "{{ ENABLE_WEBMOCK | default(false) }}"
   env: "{{ RAILS_ENV | default('development') }}"
   filecache: "{{ DATA_BASEDIR }}/people/filecache"
-  host: "{{ PEOPLE_HOSTNAME | default('people.epfl.ch') }}"
-  port: 3000
   redis: "{{ (SELECT_CACHE == 'local_redis') | ternary('redis://cache:6379/0', REDIS_URL) }}"
   repo: "https://github.com/epfl-si/people2023.git"
   srcdir: "{{ PEOPLE_SRCDIR }}"
@@ -13,6 +11,3 @@ people:
   mariadb:
     data: "{{ DATA_BASEDIR }}/people/mariadb/data"
     init: "{{ DATA_BASEDIR }}/people/mariadb/init"
-  whoami:
-    host: "{{ WHOAMI_HOSTNAME }}"
-    port: 9092

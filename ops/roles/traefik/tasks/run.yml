@@ -2,8 +2,6 @@
 - name: Register ansible_user uid
   ansible.builtin.command: id -u
   register: ansible_user_uid
-  tags:
-    - questo
 
 - name: Debug ansible_user_uid
   ansible.builtin.debug:
@@ -29,8 +27,8 @@
     name: traefik
     image: "traefik:{{ traefik_version }}"
     ports:
-      - "0.0.0.0:{{ traefik.port_http }}:{{ traefik.port_http }}"
-      - "0.0.0.0:{{ traefik.port_https }}:{{ traefik.port_https }}"
+      - "0.0.0.0:{{ ports.traefik_http }}:{{ ports.traefik_http }}"
+      - "0.0.0.0:{{ ports.traefik_https }}:{{ ports.traefik_https }}"
     volumes: 
       - "{{ traefik.basedir }}:/etc/traefik"      
       - "/run{{ (ansible_user == 'root') | ternary('', '/user/') }}{{(ansible_user == 'root') | ternary('', ansible_user_uid.stdout )}}/podman/podman.sock:/var/run/docker.sock"

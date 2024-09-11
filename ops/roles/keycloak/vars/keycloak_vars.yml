@@ -1,6 +1,4 @@
   keycloak:
-    host: "{{ OIDC_HOSTNAME }}"
-    port: 9091
     identifier: "{{ OIDC_IDENTIFIER | default('hello_rails') }}"
     realm: "{{ OIDC_REALM | default('rails') }}"
     display_name: "{{ OIDC_REALM_DISPLAYNAME | default('SBB CFF FFS Realm') }}"

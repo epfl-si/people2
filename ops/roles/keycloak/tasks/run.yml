@@ -13,9 +13,9 @@
     image: "quay.io/keycloak/keycloak:{{ keycloak_version }}"
     env:
       # https://www.keycloak.org/server/all-config
-      KC_HOSTNAME: "https://{{ keycloak.host }}"
+      KC_HOSTNAME: "https://{{ hosts.keycloak }}"
       KC_HTTP_ENABLED: "false"
-      KC_HTTP_PORT: "{{ keycloak.port }}"
+      KC_HTTP_PORT: "{{ ports.keycloak }}"
       KC_DB: mariadb
       KC_DB_URL: "jdbc:mariadb://mariadb:3306/keycloak"
       KC_DB_USERNAME: "{{ _secrets.keycloak.db_user }}"
@@ -23,7 +23,7 @@
       KEYCLOAK_ADMIN: "{{ _secrets.keycloak.admin_user }}"
       KEYCLOAK_ADMIN_PASSWORD: "{{ _secrets.keycloak.admin_password }}"
     # ports:
-    #   - "0.0.0.0:{{ people.keycloak.port }}:{{ people.keycloak.port }}"
+    #   - "0.0.0.0:{{ ports.keycloak }}:{{ ports.keycloak }}"
     state: started
     network: 
       - traefik

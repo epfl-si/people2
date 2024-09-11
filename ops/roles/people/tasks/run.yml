@@ -9,7 +9,7 @@
 #           people:
 #             tls: true
 #             service: people
-#             rule: Host(`{{ people.host }}`)
+#             rule: Host(`{{ hosts.people }}`)
 #         services:
 #           people:
 #             loadBalancer:
@@ -22,10 +22,10 @@
     name: peoapp
     image: "people"
     env:
-      APP_HOSTNAME: "{{ people.host }}"
+      APP_HOSTNAME: "{{ hosts.people }}"
       RAILS_ENV: "{{ people.env }}"
-      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(people.host, '') }}"
-      DEFAULT_URL: "https://{{ people.host }}"
+      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(hosts.people, '') }}"
+      DEFAULT_URL: "https://{{ hosts.people }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
@@ -46,7 +46,7 @@
       SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
       SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
 
-      OIDC_HOSTNAME: "{{ keycloak.host }}"
+      OIDC_HOSTNAME: "{{ hosts.keycloak }}"
       OIDC_REALM: "{{ keycloak.realm }}"
       OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
       # TODO: The above OIDC_ are enough for keycloak. Might need the following 
@@ -69,10 +69,10 @@
     # generate_systemd: false
       # restart_sec: 10
     labels:
-      traefik.http.routers.people.rule: "Host(`{{ people.host }}`)"
+      traefik.http.routers.people.rule: "Host(`{{ hosts.people }}`)"
       traefik.http.routers.people.tls: "true"
       traefik.http.routers.people.service: "people"
-      traefik.http.services.people.loadbalancer.server.port: "{{ people.port }}"
+      traefik.http.services.people.loadbalancer.server.port: "{{ ports.people }}"
       traefik.http.routers.people.middlewares: peoblock
       traefik.http.middlewares.peoblock.basicauth.users: "{{ _secrets.people.auth.user }}:{{ _secrets.people.auth.pass | password_hash('md5') }}"
 
