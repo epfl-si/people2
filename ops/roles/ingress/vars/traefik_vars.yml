@@ -1,0 +1,11 @@
+traefik:
+  basedir: "{{ INGRESS_BASEDIR | default('/srv/ingress') }}"
+  certs_src: "{{ CERTS_SRC | default('/keybase/team/epfl_idevfsd/certs') }}"
+  config: "{{ INGRESS_BASEDIR | default('/srv/ingress') }}/config"
+  domains: "{{ DOMAINS | default([]) }}"
+  email: "{{ CERTBOT_EMAIL | default('isas-fsd@groupes.epfl.ch') }}"
+  http_port: 80
+  https_port: 443
+  with_https: true
+  with_console: false
+  with_docker: false

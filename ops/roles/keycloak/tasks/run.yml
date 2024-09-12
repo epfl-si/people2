@@ -24,7 +24,12 @@
       KEYCLOAK_ADMIN_PASSWORD: "{{ _secrets.keycloak.admin_password }}"
     # ports:
     #   - "0.0.0.0:{{ ports.keycloak }}:{{ ports.keycloak }}"
+    labels:
+      traefik.http.routers.keycloak.rule: "Host(`{{ hosts.keycloak }}`)"
+      traefik.http.routers.keycloak.tls: "{{ tls_in_labels }}"
+      traefik.http.routers.keycloak.service: "keycloak"
+      traefik.http.services.keycloak.loadbalancer.server.port: "{{ ports.keycloak }}"
     state: started
     network: 
+      # - mariadb
       - traefik
-      - people

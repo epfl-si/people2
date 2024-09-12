@@ -1,7 +1,42 @@
 ---
-# - include_vars: traefik_vars.yml
-#   tags: always
+- include_vars: ingress_vars.yml
+  tags: always
+- include_vars: traefik_vars.yml
+  tags: always
+
+- name: Traefik Setup
+  import_tasks:
+    file: setup_traefik.yml
+  tags:
+      - ingress.setup
+  when: ingress.with_traefik
 
 - name: Firewall configuration for Ingress
   import_tasks:
     file: config_fwrules.yml
+  tags:
+      - ingress.config
+      - ingress.config.firewall
+
+- name: Traefik Base Configuration
+  tags:
+    - ingress.config
+    - ingress.config.traefik
+  import_tasks:
+    file: config_traefik.yml
+  when: ingress.with_traefik
+
+- name: Traefik Certs
+  tags:
+    - ingress.config
+    - ingress.config.certs
+  import_tasks:
+    file: config_certs.yml
+  when: ingress.with_traefik
+
+- name: Run Traefik as ingress proxy
+  tags:
+    - ingress.run
+  import_tasks:
+    file: run_traefik.yml
+  when: ingress.with_traefik

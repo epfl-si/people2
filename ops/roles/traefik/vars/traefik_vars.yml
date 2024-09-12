@@ -1,7 +1,12 @@
 traefik:
   basedir: "{{ TRAEFIK_BASEDIR | default('/srv/traefik') }}"
-  config: "{{ TRAEFIK_BASEDIR | default('/srv/traefik') }}/config"
-  email: "{{ CERTBOT_EMAIL | default('isas-fsd@groupes.epfl.ch') }}"
   certs_src: "{{ CERTS_SRC | default('/keybase/team/epfl_idevfsd/certs') }}"
+  config: "{{ TRAEFIK_BASEDIR | default('/srv/traefik') }}/config"
   console_hostname: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
   domains: "{{ DOMAINS | default([]) }}"
+  email: "{{ CERTBOT_EMAIL | default('isas-fsd@groupes.epfl.ch') }}"
+  http_port: "{{ ports.traefik_http }}"
+  https_port: "{{ ports.traefik_https }}"
+  with_console: true
+  with_docker: true
+  with_https: "{{ config.ingress_type == 'firewall' }}"

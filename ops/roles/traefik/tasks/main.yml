@@ -1,6 +1,11 @@
 ---
 - include_vars: traefik_vars.yml
   tags: always
+
+- name: Traefik vars 
+  debug:
+    var: traefik
+
 - name: Setup requirements for Traefik
   tags:
     - traefik.setup
@@ -12,6 +17,14 @@
     - traefik.config
   import_tasks:
     file: config.yml
+
+- name: Traefik Certificates
+  tags:
+    - traefik.config
+    - traefik.config.certs
+  import_tasks:
+    file: config_certs.yml
+  when: traefik.with_https
 
 - name: Traefik Run
   tags:

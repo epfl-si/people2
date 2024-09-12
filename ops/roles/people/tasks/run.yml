@@ -65,12 +65,13 @@
     state: started
     network:
       - traefik
-      - people
+      # - redis
+      # - mariadb
     # generate_systemd: false
       # restart_sec: 10
     labels:
       traefik.http.routers.people.rule: "Host(`{{ hosts.people }}`)"
-      traefik.http.routers.people.tls: "true"
+      traefik.http.routers.people.tls: "{{ tls_in_labels }}"
       traefik.http.routers.people.service: "people"
       traefik.http.services.people.loadbalancer.server.port: "{{ ports.people }}"
       traefik.http.routers.people.middlewares: peoblock

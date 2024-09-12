@@ -1,0 +1,11 @@
+http:
+  routers:
+    anything:
+      rule: "PathPrefix(`/`)"
+      service: realtraefik
+      tls: true
+  services:
+    realtraefik:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:{{ ports.traefik_http }}"

@@ -6,10 +6,8 @@
     dest: "{{ traefik.basedir }}/traefik.yml"
   register: traefik_static_config
 
-
-- name: Dynamic traefik config for the api console
+- name: Dynamic traefik config
   template:
-    src: "api.yml"
-    dest: "{{ traefik.basedir }}/config/traefik-api-console.yml"
-  tags:
-    - traefik.config.api
+    src: "traefik_ingress.yml"
+    dest: "{{ traefik.config }}/ingress.yml"
+
