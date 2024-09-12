@@ -8,3 +8,10 @@ giova2:
 
 natalie:
   profile: natalie
+
+camipro_picture:
+  profile: giova
+  camipro: true
+  failed_attempts: 0
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
