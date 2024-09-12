@@ -1,0 +1,4 @@
+---
+ingress:
+  with_ipforward: "{{ config.ingress_type == 'firewall' }}"
+  with_traefik: "{{ config.ingress_type == 'traefik' }}"

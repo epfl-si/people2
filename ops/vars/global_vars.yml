@@ -11,6 +11,9 @@ mariadb_version: "11.4.3"
 valkey_version: "7.2"
 keycloak_version: "25.0.0"
 
+config:
+  ingress_type: "{{ INGRESS_TYPE | default('traefik') }}"
+
 ports:
   keycloak: 9091
   people: 3000
@@ -23,3 +26,5 @@ hosts:
   traefik_console: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
   whoami: "{{ WHOAMI_HOSTNAME }}"
   keycloak: "{{ OIDC_HOSTNAME }}"
+
+tls_in_labels: "{{ (config.ingress_type == 'firewall') }}"

@@ -17,18 +17,31 @@
 - name: traefik docker network
   containers.podman.podman_network:
     name: traefik
+    driver: bridge
 
 - name: Ensure traefik image
   containers.podman.podman_image:
     name: "docker.io/library/traefik:{{ traefik_version }}"
 
+- name: Prepare traefik port definitions (http only version)
+  set_fact:
+    traefik_ports:
+      - "0.0.0.0:{{ ports.traefik_http }}:{{ ports.traefik_http }}"
+  when: not traefik.with_https
+
+- name: Prepare traefik port definitions (http+https only version)
+  set_fact:
+    traefik_ports:
+      - "0.0.0.0:{{ ports.traefik_http }}:{{ ports.traefik_http }}"
+      - "0.0.0.0:{{ ports.traefik_https }}:{{ ports.traefik_https }}"
+  when: traefik.with_https
+
+
 - name: Ensure traefik containers is running
   containers.podman.podman_container:
     name: traefik
     image: "traefik:{{ traefik_version }}"
-    ports:
-      - "0.0.0.0:{{ ports.traefik_http }}:{{ ports.traefik_http }}"
-      - "0.0.0.0:{{ ports.traefik_https }}:{{ ports.traefik_https }}"
+    ports: "{{ traefik_ports }}"
     volumes: 
       - "{{ traefik.basedir }}:/etc/traefik"      
       - "/run{{ (ansible_user == 'root') | ternary('', '/user/') }}{{(ansible_user == 'root') | ternary('', ansible_user_uid.stdout )}}/podman/podman.sock:/var/run/docker.sock"
@@ -37,6 +50,5 @@
     state: started
     # generate_systemd: false
       # restart_sec: 10
-    network:
-      traefik
+    network: traefik
 

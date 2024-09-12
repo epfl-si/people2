@@ -35,6 +35,11 @@
   containers.podman.podman_image:
     name: "docker.io/mariadb:{{ mariadb_version }}"
 
+- name: Ensure mariadb docker network
+  containers.podman.podman_network:
+    name: mariadb
+    driver: bridge
+
 - name: Ensure MariaDB containers is running
   containers.podman.podman_container:
     name: mariadb
@@ -47,6 +52,7 @@
     restart_policy: unless-stopped
     state: started
     network: 
-      - people
+      # - mariadb
+      - traefik
     # generate_systemd: false
       # restart_sec: 10

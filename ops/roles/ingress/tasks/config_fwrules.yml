@@ -11,7 +11,7 @@
 
 - name: Ensure firewall allows traffic directed to http/https
   ansible.posix.firewalld:
-    permanent: true
+    permanent: false
     port: "{{ item }}/tcp"
     state: enabled
     zone: public
@@ -21,26 +21,26 @@
 
 - name: Ensure forward of standard https ports when necessary
   ansible.posix.firewalld:
-    permanent: true
+    permanent: false
     port_forward:
       -
         proto: tcp
         port: 443
         toport: "{{ ports.traefik_https }}"
-    state: enabled
+    state: "{{ ingress.with_ipforward | ternary('enabled', 'disabled') }}"
     zone: public
   when:
     - ports.traefik_https != 443
 
 - name: Ensure forward of standard http ports when necessary
   ansible.posix.firewalld:
-    permanent: true
+    permanent: false
     port_forward:
       -
         proto: tcp
         port: 80
         toport: "{{ ports.traefik_http }}"
-    state: enabled
+    state: "{{ ingress.with_ipforward | ternary('enabled', 'disabled') }}"
     zone: public
   when:
     - ports.traefik_https != 80
@@ -73,6 +73,7 @@
     destination_port: 443
     jump: REDIRECT
     to_ports: "{{ ports.traefik_https }}"
+    state: "{{ ingress.with_ipforward | ternary('present', 'absent') }}"
     comment: forward traefik to web ports to traefik even when src is localhost
   when:
     - ports.traefik_https != 443
@@ -86,6 +87,7 @@
     destination_port: 80
     jump: REDIRECT
     to_ports: "{{ ports.traefik_http }}"
+    state: "{{ ingress.with_ipforward | ternary('present', 'absent') }}"
     comment: forward traefik to web ports to traefik even when src is localhost
   when:
     - ports.traefik_https != 80

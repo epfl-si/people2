@@ -4,6 +4,11 @@
   containers.podman.podman_image:
     name: "docker.io/valkey/valkey:{{ valkey_version }}"
 
+- name: Ensure redis docker network
+  containers.podman.podman_network:
+    name: redis
+    driver: bridge
+
 - name: Ensure redis service
   containers.podman.podman_container:
     command:
@@ -11,4 +16,5 @@
     name: cache
     image: "valkey:{{ valkey_version }}"
     network:
-      - people
+      - traefik
+      # - redis

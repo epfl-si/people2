@@ -5,41 +5,23 @@ global:
 log:
   level: DEBUG
 
-accessLog: {}
+accessLog:
+  format: json
 
+{% if traefik.with_console %}
 api:
   dashboard: true
+{% endif %}
 
 providers:
   file:
     directory: /etc/traefik/config
     watch: true
+{% if traefik.with_docker %}
   docker:
     # endpoint: "unix:///var/run/docker.sock"
     watch: true
-
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      storage: /etc/traefik/acme/acme.json
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
-      email: "{{ traefik.email }}" 
-      tlsChallenge: true
-      httpChallenge:
-        entryPoint: http
-
-entryPoints:
-  http:
-    address: ":{{ ports.traefik_http }}"
-    http:
-      redirections:
-        entryPoint:
-          to: https
-  https:
-    address: ":{{ ports.traefik_https }}"
-    http:
-      tls: {}
-      
+{% endif %}
 
 metrics:
   prometheus:
@@ -51,9 +33,37 @@ metrics:
       - 1.2
       - 5
 
+entryPoints:
+  web:
+    address: "0.0.0.0:{{ traefik.http_port }}"
+{% if traefik.with_docker %}
+    forwardedHeaders:
+      insecure: true
+{% endif %}
+{% if traefik.with_https %}
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+  websecure:
+    address: ":{{ traefik.https_port }}"
+    http:
+      tls: {}
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: /etc/traefik/acme/acme.json
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      email: "{{ traefik.email }}" 
+      tlsChallenge: true
+      httpChallenge:
+        entryPoint: http
+
 tls:
   stores:
     default:
       defaultCertificate:
         certFile: /etc/traefik/certs/default.crt
         keyFile: /etc/traefik/certs/default.key
+{% endif %}

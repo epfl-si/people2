@@ -1,0 +1,22 @@
+---
+- name: Ensure traefik image
+  containers.podman.podman_image:
+    name: "docker.io/library/traefik:{{ traefik_version }}"
+
+- name: Ensure traefik containers is running
+  containers.podman.podman_container:
+    name: ingress
+    image: "traefik:{{ traefik_version }}"
+    privileged: true
+    ports: 
+      - 443
+      - 80
+    volumes: 
+      - "{{ traefik.basedir }}:/etc/traefik"
+    # restart_policy: unless-stopped
+    # force_restart: "{{ traefik_static_config.changed | default(false) or 'traefik.reload' in ansible_run_tags  }}"
+    state: started
+    # generate_systemd: false
+      # restart_sec: 10
+    network: host
+
