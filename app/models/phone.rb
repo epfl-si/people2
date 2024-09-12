@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Phone
+  include Comparable
   attr_reader :unit_id, :order, :number
 
   def initialize(data)
