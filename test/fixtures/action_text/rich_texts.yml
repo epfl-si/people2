@@ -10,8 +10,7 @@ gio_box_expertise_fr:
   record: gio_box_expertise (Box)
   name: content_fr
   body: >
-    HPC, Algorithms, Networking, Programming, IT, DBA, Unix, Computational 
-    Solid State Physics
+    HPC, Algorithmes, Réseaux, Programmation, IT, DBA, Unix, Physique des solides computationnelle
 
 giova_exp_text_algo: 
   record: giova_exp_algo (Experience) 
@@ -216,7 +215,7 @@ nat_box_pubs_fr:
     </a>
 
 nat_box_work_fr:
-  record: nat_box_work (Box)
+  record: nat_box_work0 (Box)
   name: content_fr
   body: >
     Absente tous les vendredis.
