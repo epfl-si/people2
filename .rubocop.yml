@@ -61,3 +61,6 @@ Style/TrailingCommaInHashLiteral:
   Enabled: false
 Security/MarshalLoad:
   Enabled: false
+
+Rails/RefuteMethods:
+  Enabled: false
