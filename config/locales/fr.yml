@@ -210,7 +210,7 @@ fr:
             title:
               blank: "ne peut pas être vide"
             url:
-              invalid: "est invalide"
+              invalid: "l'url est invalide"
             year:
               not_a_number: "n'est pas un nombre"
   errors:
