@@ -269,6 +269,14 @@ en:
               not_in_official: "Should be composed of names included in the official first name."
             usual_lastname:
               not_in_official: "Should be composed of names included in the official family name."
+        publication:
+          attributes:
+            title:
+              blank: "can't be blank"
+            url:
+              invalid: "is invalid"
+            year:
+              not_a_number: "is not a number"  
         picture:
           attributes:
             base:

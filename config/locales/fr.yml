@@ -205,6 +205,14 @@ fr:
           attributes:
             base:
               undeletable: "La photo Camipro ne peut pas être supprimée, mais vous pouvez toujours masquer votre photo de profil"
+        publication:
+          attributes:
+            title:
+              blank: "ne peut pas être vide"
+            url:
+              invalid: "est invalide"
+            year:
+              not_a_number: "n'est pas un nombre"
   errors:
       messages:
         not_in_official: "N'est pas inclus dans le nom officiel"
