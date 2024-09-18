@@ -176,7 +176,7 @@ class Social < ApplicationRecord
     end
     re = RESEARCH_IDS[tag]['re']
     unless re.match?(value)
-      errors.add(:value, "incorrect format")
+      errors.add(:value, "has an incorrect format")
       return false
     end
     true
