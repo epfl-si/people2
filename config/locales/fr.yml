@@ -213,6 +213,14 @@ fr:
               invalid: "l'url est invalide"
             year:
               not_a_number: "n'est pas un nombre"
+        social:
+          attributes:
+            value:
+              blank: "ne peut pas être vide"
+              incorrect_format: "a un format incorrect"
+            tag:
+              blank: "ne peut pas être vide"
+              inclusion: "n'est pas inclus dans la liste"
   errors:
       messages:
         not_in_official: "N'est pas inclus dans le nom officiel"

@@ -281,3 +281,11 @@ en:
           attributes:
             base:
               undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
+        social:
+          attributes:
+            value:
+              blank: "can't be blank"
+              incorrect_format: "has an incorrect format"
+            tag:
+              blank: "can't be blank"
+              inclusion: "is not included in the list"
