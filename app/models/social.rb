@@ -171,15 +171,15 @@ class Social < ApplicationRecord
 
   def validate_format_of_value
     unless RESEARCH_IDS.key?(tag)
-      errors.add(:tag, "Invalid social network name/tag")
+      errors.add(:tag, I18n.t('activerecord.errors.models.social.attributes.tag.invalid'))
       return false
     end
+
     re = RESEARCH_IDS[tag]['re']
-    unless re.match?(value)
-      errors.add(:value, "has an incorrect format")
-      return false
-    end
-    true
+    return if re.match?(value)
+
+    errors.add(:value, I18n.t('activerecord.errors.models.social.attributes.value.incorrect_format'))
+    false
   end
 
   # TODO: fire a request to the url and check if it actually exist
