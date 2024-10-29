@@ -70,7 +70,9 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem 'mocha'
   gem "selenium-webdriver"
+  gem 'simplecov'
 end
 
 # ------------------------------------------------------------------------ Added
@@ -116,6 +118,8 @@ gem 'rubyzip', '< 3.0'
 # gem 'rails_warden', '~> 0.6.0'
 # gem 'warden_openid_bearer', '~> 0.1.3'
 # ----
+gem 'connection_pool'
+gem 'database_cleaner-active_record'
 
 group :development do
   # security tools

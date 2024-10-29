@@ -3,7 +3,22 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'simplecov'
 
+# Start SimpleCov with additional configuration
+SimpleCov.start do
+  add_filter '/test/' # Exclude test files from coverage
+
+  add_group 'Models', 'app/models'
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Helpers', 'app/helpers'
+  add_group 'Services', 'app/services'
+  add_group 'Jobs', 'app/jobs'
+
+  SimpleCov.minimum_coverage 90
+end
+
+# Capybara configuration
 # https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/
 Capybara.server_host = '0.0.0.0'
 Capybara.app_host = "http://webapp:#{Capybara.server_port}"
@@ -15,7 +30,5 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
-
-    # Add more helper methods to be used by all tests here...
   end
 end
