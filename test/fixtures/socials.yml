@@ -2,6 +2,7 @@
 gio_social_linkedin:
   profile: giova
   tag: linkedin
+  sciper: 121769
   value: giovannicangiani
   visible: true
   audience: 0
@@ -9,6 +10,7 @@ gio_social_linkedin:
 gio_social_github:
   profile: giova
   tag: github
+  sciper: 123456
   value: multiscan
   visible: false
   audience: 0
@@ -16,6 +18,7 @@ gio_social_github:
 domq_social_linkedin:
   profile: domq
   tag: linkedin
+  sciper: 123456
   value: domq
   visible: true
   audience: 0
