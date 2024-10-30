@@ -1,17 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-
 # edouard
 e1:
   course: cs311
   teacher: edouard
-  sciper: "229105"
+  sciper: "2291051"
   role: "Professeur ordinaire"
   kind: "Enseignant"
 e2:
   course: cs202
   teacher: edouard
-  sciper: "229105"
+  sciper: "2291052"
   role: "Professeur ordinaire"
   kind: "Enseignant"
 
@@ -19,22 +16,21 @@ e2:
 g1:
   course: phys201
   teacher: giovanni
-  sciper: "110635"
+  sciper: "1106351"
   role: "Professeur titulaire"
   kind: "Enseignant"
 g2:
   course: micro530
   teacher: giovanni
-  sciper: "110635"
+  sciper: "1106352"
   role: "Professeur titulaire"
   kind: "Enseignant"
-
 
 # martin
 m1:
   course: cs214
-  teacher: martin                                            
-  sciper: "126003"
+  teacher: martin
+  sciper: "1260031"
   role: "Professeur ordinaire"
   kind: "Enseignant"
 
@@ -42,13 +38,12 @@ m1:
 o1:
   course: cs308
   teacher: olivier
-  sciper: "107931"
+  sciper: "1079311"
   role: "Maître d'enseignement et de recherche"
   kind: "Enseignant"
 o2:
-  course: com516,
+  course: com516
   teacher: olivier
-  sciper: "107931"
+  sciper: "1079312"
   role: "Maître d'enseignement et de recherche"
   kind: "Enseignant"
-# 
