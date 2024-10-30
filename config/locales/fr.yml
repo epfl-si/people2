@@ -198,9 +198,9 @@ fr:
         name:
           attributes:
             usual_first:
-              not_in_official: "N'est pas inclus dans le nom officiel"
+              not_in_official: "Doit être composé de(s) prénom(s) inclus dans le prénom officiel."
             usual_last:
-              not_in_official: "N'est pas inclus dans le nom officiel"
+              not_in_official: "Doit être composé de(s) nom(s) inclus dans le nom de famille officiel."
         picture:
           attributes:
             base:
