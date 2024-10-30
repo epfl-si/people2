@@ -265,10 +265,10 @@ en:
               blank: "should be present"
         name:
           attributes:
-            usual_firstname:
+            usual_first:
               not_in_official: "Should be composed of names included in the official first name."
-            usual_lastname:
-              not_in_official: "Should be composed of names included in the official family name."
+            usual_last:
+              not_in_official: "Should be composed of names included in the official last name."
         publication:
           attributes:
             title:
@@ -289,3 +289,12 @@ en:
             tag:
               blank: "can't be blank"
               inclusion: "is not included in the list"
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first:
+              not_in_official: "Should be composed of names included in the official first name."
+            usual_last:
+              not_in_official: "Should be composed of names included in the official last name."
