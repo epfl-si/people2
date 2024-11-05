@@ -62,7 +62,6 @@ class Accreditation
       a.prefs = profile.accreds.new(
         {
           sciper: sciper,
-          gender: profile.person.gender,
           unit_id: a.unit_id,
           unit_en: a.unit_label_en,
           unit_fr: a.unit_label_fr,
