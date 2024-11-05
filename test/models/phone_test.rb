@@ -48,7 +48,7 @@ class PhoneTest < Minitest::Test
 
   def test_default
     assert @phone_visible.default?, "Phone should be marked as default"
-    refute @phone_hidden.default?, "Phone should not be marked as default" 
+    refute @phone_hidden.default?, "Phone should not be marked as default"
   end
 
   def test_comparison_operator

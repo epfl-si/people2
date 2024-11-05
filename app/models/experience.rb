@@ -24,7 +24,7 @@ class Experience < ApplicationRecord
 
   def complete_period
     self.year_begin ||= year_end
-    self.year_end ||= self.year_begin
+    self.year_end ||= year_begin
   end
 
   # def has_at_least_one_year
