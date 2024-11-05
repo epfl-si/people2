@@ -247,6 +247,14 @@ en:
         function: main function
     errors:
       models:
+        education:
+          attributes:
+            school:
+              blank: "should be provided"
+            year_begin:
+              blank: "can't be blank"
+            year_end:
+              blank: "can't be blank"
         award:
           attributes:
             issuer:
@@ -261,7 +269,7 @@ en:
               blank: "should be provided"
             year_end:
               blank: "should be present"
-            year_start:
+            year_begin:
               blank: "should be present"
         name:
           attributes:
@@ -289,6 +297,8 @@ en:
             tag:
               blank: "can't be blank"
               inclusion: "is not included in the list"
+        messages:
+            record_invalid : "Sciper must unique"
   activemodel:
     errors:
       models:
