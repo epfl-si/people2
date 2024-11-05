@@ -42,7 +42,6 @@ cs308:
 
 com516:
   code: "COM-516"
-  title_en: nil
   title_fr: "Markov chains and algorithmic applications"
   language_en: "english"
   language_fr: "anglais"
