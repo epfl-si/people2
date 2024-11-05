@@ -184,7 +184,17 @@ fr:
   work_experience: "Parcours professionnel"
   activerecord:
     errors:
+      messages:
+        record_invalid : "Sciper must unique"
       models:
+        education:
+          attributes:
+            school:
+              blank: "ne peut pas être vide"
+            year_begin:
+              blank: "ne peut pas être vide"
+            year_end:
+              blank: "ne peut pas être vide"
         experience:
           attributes:
             base:
@@ -222,8 +232,8 @@ fr:
               blank: "ne peut pas être vide"
               inclusion: "n'est pas inclus dans la liste"
   errors:
-      messages:
-        not_in_official: "N'est pas inclus dans le nom officiel"
+    messages:
+      not_in_official: "Doit être composé de(s) prénom(s) inclus dans le prénom officiel."
 
   activemodel:
     errors:
