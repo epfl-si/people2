@@ -106,8 +106,9 @@ class Person
     id
   end
 
+  # Updated visible_phones method
   def visible_phones(unit)
-    @phones.present? ? @phones[unit].select(&:visible?) : []
+    @phones[unit]&.select(&:visible?) || []
   end
 
   def phones(unit)
@@ -159,6 +160,10 @@ class Person
   def student?
     accreditations.any?(&:student?)
   end
+
+  # def gender
+  #   @data['gender'] || 'unknown'
+  # end
 
   # TODO: see if it is possible to guess if person could be a teacher in order
   # to avoid useless requests to ISA.
