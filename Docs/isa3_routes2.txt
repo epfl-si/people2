@@ -1,0 +1,206 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                                                   ch.epfl.isa.Application.alive
+GET     /index                                                              ch.epfl.isa.Application.index
+GET     /status                                                             ch.epfl.isa.Application.status
+GET     /check                                                              ch.epfl.isa.Application.checkStatus
+# GET     /definitions/docs/:service                                          ch.epfl.isa.Application.docs(service)
+GET     /authenticate                                                       ch.epfl.isa.Application.authenticate
+
+GET     /unites/sections                                                    ch.epfl.isa.controllers.unite.UniteController.sections
+GET     /unites/programmes                                                  ch.epfl.isa.controllers.unite.UniteController.programmes
+GET     /unites/structure/:code                                             ch.epfl.isa.controllers.unite.UniteController.unitesByStructure(code)
+GET     /unites/:code                                                       ch.epfl.isa.controllers.unite.UniteController.uniteByCode(code)
+GET     /unites                                                             ch.epfl.isa.controllers.unite.UniteController.unites
+
+GET     /enterprises/search                                                 ch.epfl.isa.controllers.enterprise.EnterpriseController.enterpriseSearch
+GET     /enterprises/:code                                                  ch.epfl.isa.controllers.enterprise.EnterpriseController.enterprise(code)
+GET     /enterprises                                                        ch.epfl.isa.controllers.enterprise.EnterpriseController.enterprises
+
+GET     /people/search                                                      ch.epfl.isa.controllers.person.PersonController.personSearch
+GET     /people/:sciper/photo                                               ch.epfl.isa.controllers.person.PersonController.photo(sciper)
+GET     /people/:sciper                                                     ch.epfl.isa.controllers.person.PersonController.person(sciper)
+
+GET     /periods/category/:category                                         ch.epfl.isa.controllers.period.PeriodController.periodsByCategory(category)
+GET     /periods/categories                                                 ch.epfl.isa.controllers.period.PeriodController.categories
+GET     /periods                                                            ch.epfl.isa.controllers.period.PeriodController.periods
+
+GET     /gps/models/:model                                                  ch.epfl.isa.controllers.gps.GPSController.gpsByModel(model)
+GET     /gps/models                                                         ch.epfl.isa.controllers.gps.GPSController.models
+
+GET     /academic-sessions/:years                                           ch.epfl.isa.controllers.gps.GPSController.gpsByYear(years)
+GET     /academic-sessions/:years/term/:term                                ch.epfl.isa.controllers.gps.GPSController.gpsByTerm(years, term)
+GET     /academic-sessions/:years/semester/:semester                        ch.epfl.isa.controllers.gps.GPSController.gpsBySemester(years, semester)
+GET     /academic-sessions/:years/section/:section                          ch.epfl.isa.controllers.gps.GPSController.gpsByYearSection(years, section)
+GET     /academic-sessions/:years/semester/:semester/section/:section       ch.epfl.isa.controllers.gps.GPSController.gpsBySemesterSection(years, semester, section)
+GET     /academic-sessions/:years/term/:term/section/:section               ch.epfl.isa.controllers.gps.GPSController.gpsByTermSection(years, term, section)
+
+GET     /candidature/search                                                 ch.epfl.isa.controllers.cand.CandidatureController.candidateSearch
+GET     /candidature/:id                                                    ch.epfl.isa.controllers.cand.CandidatureController.candidateById(id)
+GET     /candidature/bachelor/:years/evaluation/:evaluation                 ch.epfl.isa.controllers.cand.CandidatureController.candidatureBachelor(years, evaluation)
+GET     /candidature/master/:years/evaluation/:evaluation/section/:section  ch.epfl.isa.controllers.cand.CandidatureController.candidatureMaster(years, evaluation, section)
+GET     /candidature/edoc/:years/programme/:programme                       ch.epfl.isa.controllers.cand.CandidatureController.candidatureDoctorant(years, programme)
+GET     /candidature/edoc/:sciper                                           ch.epfl.isa.controllers.cand.CandidatureController.candidatureDoctorantBySciper(sciper)
+
+GET     /enrolments/bama/:years                                             ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsByYear(years, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /enrolments/bama/:years/term/:term                                  ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsByTerm(years, term, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /enrolments/bama/:years/semester/:semester                          ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsBySemester(years, semester, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /enrolments/bama/:years/section/:section                            ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsByYearSection(years, section, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /enrolments/bama/:years/semester/:semester/section/:section         ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsBySemesterSection(years, semester, section, delegue: DelegueClasse ?= DelegueClasse(false))
+
+GET     /enrolments/edoc/:year                                              ch.epfl.isa.controllers.etu.DoctorantController.doctorantsByYear(year)
+GET     /enrolments/edoc/:year/programme/:programme                         ch.epfl.isa.controllers.etu.DoctorantController.doctorantsByYearProgramme(year, programme)
+
+GET     /course/inscriptions/bama/:years/semester/:semester                 ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscriptionsBySemester(years, semester)
+GET     /course/inscriptions/bama/:years/semester/:semester/section/:section ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscriptionsBySemesterSection(years, semester, section)
+GET     /course/inscriptions/bama/:years/term/:term                         ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscriptionsByTerm(years, term)
+GET     /course/inscriptions/bama/:years/term/:term/course/:course          ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscriptionsByCode(years, term, course)
+GET     /course/inscriptions/cdl/:years/semester/:semester                  ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.cdlInscriptionsBySemester(years, semester)
+GET     /course/reservations/:years/term/:term/course/:course               ch.epfl.isa.controllers.seance.ReservationsController.reservationsBySelectorCourse(years, term, course)
+GET     /v1/course/inscriptions/:years/term/:term/course/:course            ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscriptionsForMoodle(years, term, course)
+
+# for moodle
+GET     /courses/:years/:term                                               ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscrPlansByTerm(years, term)
+
+GET     /cdl/modules                                                        ch.epfl.isa.controllers.cdl.CdlController.modules
+GET     /enrolments/cdl/:years                                              ch.epfl.isa.controllers.cdl.CdlController.enrolmentsByYear(years)
+GET     /enrolments/cdl/:years/semester/:semester                           ch.epfl.isa.controllers.cdl.CdlController.enrolmentsBySemester(years, semester)
+GET     /enrolments/cdl/:years/module/:module                               ch.epfl.isa.controllers.cdl.CdlController.enrolmentsByYearModule(years, module)
+GET     /enrolments/cdl/:years/semester/:semester/module/:module            ch.epfl.isa.controllers.cdl.CdlController.enrolmentsBySemesterModule(years, semester, module)
+
+# deprecated
+#GET     /plans/bama/:years                                                  ch.epfl.isa.controllers.plan.PlansController.plansByYear(years)
+#GET     /plans/bama/:years/section/:section                                 ch.epfl.isa.controllers.plan.PlansController.plansByYearSection(years, section)
+#GET     /plans/bama/:years/term/:term                                       ch.epfl.isa.controllers.plan.PlansController.plansByTerm(years, term)
+#GET     /plans/bama/:years/term/:term/section/:section                      ch.epfl.isa.controllers.plan.PlansController.plansByTermSection(years, term, section)
+#GET     /plans/bama/:years/semester/:semester                               ch.epfl.isa.controllers.plan.PlansController.plansBySemester(years, semester)
+#GET     /plans/bama/:years/semester/:semester/section/:section              ch.epfl.isa.controllers.plan.PlansController.plansBySemesterSection(years, semester, section)
+
+
+#new version
+GET     /v1/plans/:years                                                       ch.epfl.isa.controllers.plan.PlansController.plansByYear(years, typeplan: TypesPlans ?= TypesPlans("ALL"))
+GET     /v1/plans/:years/section/:section                                      ch.epfl.isa.controllers.plan.PlansController.plansByYearSection(years, section, typeplan: TypesPlans ?= TypesPlans("ALL"))
+GET     /v1/plans/:years/term/:term                                            ch.epfl.isa.controllers.plan.PlansController.plansByTerm(years, term, typeplan: TypesPlans ?= TypesPlans("ALL"))
+GET     /v1/plans/:years/term/:term/section/:section                           ch.epfl.isa.controllers.plan.PlansController.plansByTermSection(years, term, section, typeplan: TypesPlans ?= TypesPlans("ALL"))
+GET     /v1/plans/:years/semester/:semester                                    ch.epfl.isa.controllers.plan.PlansController.plansBySemester(years, semester, typeplan: TypesPlans ?= TypesPlans("ALL"))
+GET     /v1/plans/:years/semester/:semester/section/:section                   ch.epfl.isa.controllers.plan.PlansController.plansBySemesterSection(years, semester, section, typeplan: TypesPlans ?= TypesPlans("ALL"))
+
+#GET     /v1/plans/:years/term/:term                                         ch.epfl.isa.controllers.plan.PlansController.plansByYearTerm(years, term)
+#GET     /v1/plans/edoc/:years                                               ch.epfl.isa.controllers.plan.PlansController.edocPlansByYear(years)
+
+GET     /plans/cdl/:years                                                   ch.epfl.isa.controllers.plan.PlansController.cdlPlansByYear(years)
+GET     /plans/cdl/:years/module/:module                                    ch.epfl.isa.controllers.plan.PlansController.cdlPlansByYearModule(years, module)
+GET     /plans/cdl/:years/semester/:semester                                ch.epfl.isa.controllers.plan.PlansController.cdlPlansBySemester(years, semester)
+GET     /plans/cdl/:years/semester/:semester/module/:module                 ch.epfl.isa.controllers.plan.PlansController.cdlPlansBySemesterModule(years, semester, module)
+
+GET     /catalog/:years                                                     ch.epfl.isa.controllers.catalog.CatalogController.catalogByYears(years)
+GET     /catalog/:years/term/:term                                          ch.epfl.isa.controllers.catalog.CatalogController.catalogByYearsTerm(years, term)
+
+GET     /books/biblio/:years                                                ch.epfl.isa.controllers.catalog.CourseBooksController.biblioByYear(years)
+GET     /books/:years/section/:section                                      ch.epfl.isa.controllers.catalog.CourseBooksController.booksByYearSection(years, section)
+GET     /books/:years/term/:term                                            ch.epfl.isa.controllers.catalog.CourseBooksController.booksByTerm(years, term)
+GET     /books/:years/term/:term/section/:section                           ch.epfl.isa.controllers.catalog.CourseBooksController.booksByTermSection(years, term, section)
+GET     /books/:years/semester/:semester                                    ch.epfl.isa.controllers.catalog.CourseBooksController.booksBySemester(years, semester)
+GET     /books/:years/semester/:semester/section/:section                   ch.epfl.isa.controllers.catalog.CourseBooksController.booksBySemesterSection(years, semester, section)
+GET     /books/:years/course/:course                                        ch.epfl.isa.controllers.catalog.CourseBooksController.booksByYearCode(years, course)
+
+
+#### Instructors
+GET     /teachers                                                           ch.epfl.isa.controllers.ens.EnseignantController.enseignants
+GET     /teachers/search                                                    ch.epfl.isa.controllers.ens.EnseignantController.enseignantSearch
+GET     /teachers/:sciper                                                   ch.epfl.isa.controllers.ens.EnseignantController.enseignantBySciper(sciper)
+GET     /teachers/section/:section                                          ch.epfl.isa.controllers.ens.EnseignantController.enseignantsByUnite(section)
+GET     /teachers/:programme/thesis/directors                               ch.epfl.isa.controllers.ens.TeachingController.thesisDirectorsByProgramme(programme)
+GET     /teachers/:sciper/engagements                                       ch.epfl.isa.controllers.plan.StudyPlanController.engagementsBySciper(sciper)
+GET     /teachers/:sciper/thesis/directors/doctorants                       ch.epfl.isa.controllers.ens.TeachingController.doctorsByDirector(sciper)
+GET     /teachers/:sciper/students/:period/term/:term                       ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.courseInscriptionsByInstructor(sciper, period, term)
+GET     /teachers/:sciper/exams/:period/term/:term                          ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.examInscriptionsByInstructor(sciper, period, term)
+
+#### Students
+GET     /student/authenticated/timetable/:date                              ch.epfl.isa.controllers.timetable.TimetableController.timetableAuthenticatedByDate(date)
+GET     /student/authenticated/notes                                        ch.epfl.isa.controllers.note.NotesController.notesAuthenticated
+
+# Stage
+GET     /secretariats                                                       ch.epfl.isa.controllers.stage.StageController.secretariats
+GET     /projects/:secretariat                                              ch.epfl.isa.controllers.stage.StageController.projects(secretariat)
+
+# GET     /cache/stats                                                        ch.epfl.isa.controllers.commons.CacheController.statistics
+# GET     /users/current                                                      ch.epfl.isa.controllers.commons.UserController.currentUsers
+
+GET     /classrooms                                                         ch.epfl.isa.controllers.espace.ClassRoomController.classrooms
+
+# Reservations
+GET     /reservations/:start                                                ch.epfl.isa.controllers.seance.ReservationsController.reservationsByDate(start, end="")
+GET     /reservations/:start/to/:end                                        ch.epfl.isa.controllers.seance.ReservationsController.reservationsByDate(start, end)
+GET     /reservations/classrooms/:start                                     ch.epfl.isa.controllers.seance.ReservationsController.classroomReservations(start, end="")
+GET     /reservations/classrooms/:start/to/:end                             ch.epfl.isa.controllers.seance.ReservationsController.classroomReservations(start, end)
+GET     /reservations/classrooms/:code/from/:start/to/:end                  ch.epfl.isa.controllers.seance.ReservationsController.reservationsByClassroom(start, end, code)
+
+# Mobility
+GET     /mobilite/search                                                    ch.epfl.isa.controllers.mobility.MobilityController.findAccords
+GET     /mobilite/enterprise/datasheet/:id                                  ch.epfl.isa.controllers.mobility.MobilityController.findDatasheet(id)
+GET     /mobilite/partners                                                  ch.epfl.isa.controllers.mobility.MobilityController.partners
+GET     /mobilite/places                                                    ch.epfl.isa.controllers.mobility.MobilityController.places
+GET     /mobilite/sections                                                  ch.epfl.isa.controllers.mobility.MobilityController.sections
+
+#GET     /diplome/:diplome/validate                                          ch.epfl.isa.controllers.equinoxe.EquinoxeController.validate(diplome)
+GET     /diplome/:diplome/validate                                          ch.epfl.isa.controllers.diplome.DiplomeController.validate(diplome)
+
+GET     /soap/getTeachingActivity/:sciper                                   ch.epfl.isa.controllers.soap.SoapController.thesisDirector(sciper)
+GET     /soap/inscriptionsCdl/:years/semester/:semester                     ch.epfl.isa.controllers.soap.SoapController.cdlInscriptionsBySemester(years, semester)
+
+# Versioned resources
+GET     /v1/candidature/arrivals/populations                                ch.epfl.isa.controllers.cand.CandidatureController.candidatureArrivals
+
+GET     /v1/students/authenticated/blocnotes                                ch.epfl.isa.controllers.note.NotesController.blocNotesAuthenticated
+
+GET     /v1/students/bama/year/:years                                       ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsByYear(years, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /v1/students/bama/year/:years/term/:term                            ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsByTerm(years, term, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /v1/students/bama/year/:years/semester/:semester                    ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsBySemester(years, semester, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /v1/students/bama/year/:years/section/:section                      ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsByYearSection(years, section, delegue: DelegueClasse ?= DelegueClasse(false))
+GET     /v1/students/bama/year/:years/semester/:semester/section/:section   ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsBySemesterSection(years, semester, section, delegue: DelegueClasse ?= DelegueClasse(false))
+
+GET     /v1/doctorants/current/programme/:programme                         ch.epfl.isa.controllers.etu.DoctorantController.currentDoctorantsByProgramme(programme, admission: AdmissionEdoc ?= AdmissionEdoc(true))
+GET     /v1/doctorants/:sciper                                              ch.epfl.isa.controllers.etu.DoctorantController.doctorantsBySciper(sciper)
+
+GET     /v1/students/master/magistrale                                      ch.epfl.isa.controllers.note.NotesController.magistrale
+
+GET     /v1/students/phd/diplome/forecast                                   ch.epfl.isa.controllers.etu.DoctorantController.doctorantsDiplomePredicted(next: NumberDays ?= NumberDays(180))
+GET     /v1/students/phd/diplome/registered                                 ch.epfl.isa.controllers.etu.DoctorantController.doctorantsDiplomeRegistered(previous: NumberDays ?= NumberDays(180))
+
+GET     /v1/availability/classrooms/:start                                  ch.epfl.isa.controllers.seance.ReservationsController.availableClassRooms(start, end="")
+GET     /v1/availability/classrooms/:start/to/:end                          ch.epfl.isa.controllers.seance.ReservationsController.availableClassRooms(start, end)
+
+GET     /v1/projects/domains                                                ch.epfl.isa.controllers.stage.StageController.domaines
+GET     /v1/projects/:secretariat                                           ch.epfl.isa.controllers.stage.StageController.projectsBySecretariat(secretariat)
+GET     /v1/projects/:secretariat/search                                    ch.epfl.isa.controllers.stage.StageController.searchProjects(secretariat, query: ProjectSearch ?= ProjectSearch())
+GET     /v1/projects/:id/document/:code                                     ch.epfl.isa.controllers.stage.StageController.findDocument(id, code)
+
+GET     /v1/wordpress/asset/:type                                           ch.epfl.isa.controllers.commons.WordPressController.wordPressAsset(type)
+
+POST    /v1/dmn/model/:key                                                  ch.epfl.isa.controllers.commons.CamundaController.evaluate(key)
+
+# Formulaire
+GET     /v1/form/:formCode/programme/IC                                     ch.epfl.isa.controllers.form.FormController.formulaireIC(formCode)
+GET     /v1/form/user/:id                                                   ch.epfl.isa.controllers.form.FormController.userFormulaire(id)
+GET     /v1/form/document/:id                                               ch.epfl.isa.controllers.form.FormController.getDocument(id)
+
+# Mobility
+GET     /v1/students/mobilite/debutants/forecast                            ch.epfl.isa.controllers.mobility.MobilityController.mobiliteForecast
+
+# NOT for production
+GET     /v1/students/:sciper/enrolments                                      ch.epfl.isa.controllers.etu.EnrolmentsController.enrolmentsBySciper(sciper)
+GET     /v1/students/:sciper/timetable/:date                                 ch.epfl.isa.controllers.timetable.TimetableController.timetableBySciper(sciper, date)
+GET     /v1/students/:sciper/courses                                         ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.studentCoursesBySciper(sciper)
+GET     /v1/students/:sciper/exams                                           ch.epfl.isa.controllers.inscrmatiere.InscriptionsController.studentExamsBySciper(sciper)
+GET     /v1/students/:sciper/notes                                           ch.epfl.isa.controllers.note.NotesController.notesBySciper(sciper)
+GET     /v1/students/:sciper/blocnotes                                       ch.epfl.isa.controllers.note.NotesController.blocNotesBySciper(sciper)
+
+GET     /v1/students/presence/groups                                          ch.epfl.isa.controllers.timetable.TimetableController.presenceGroups()
+GET     /v1/students/presence/:date                                           ch.epfl.isa.controllers.timetable.TimetableController.presenceByDate(date)
+GET     /v1/students/:sciper/presence                                         ch.epfl.isa.controllers.timetable.TimetableController.presenceBySciper(sciper, date= "")
+GET     /v1/students/:sciper/presence/:date                                   ch.epfl.isa.controllers.timetable.TimetableController.presenceBySciper(sciper, date)
+###
