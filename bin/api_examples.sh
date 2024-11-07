@@ -3,7 +3,7 @@
 # ./bin/api_epfl.sh > api_examples.txt
 
 . .env
-. ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
+. "${KBPATH:-${KEYBASE:-/keybase}/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}"
 BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 GIO=121769
 NAT=116080

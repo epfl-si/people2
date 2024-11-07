@@ -39,7 +39,7 @@ mode=ansible-playbook
 playbook_flags="-e @vars/global_vars.yml"
 ansible_flags="-e @vars/global_vars.yml"
 inventory_mode="test"
-keybase_path="/keybase/team/epfl_people.prod"
+keybase_path="${KEYBASE:-/keybase}/team/epfl_people.prod"
 
 declare -a ansible_args
 while [ "$#" -gt 0 ]; do

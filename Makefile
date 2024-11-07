@@ -2,7 +2,8 @@
 # `make help` to get the list of available rules
 SHELL=/bin/bash
 -include .env
-KBPATH ?= /keybase/team/epfl_people.prod
+KEYBASE ?= /keybase
+KBPATH ?= $(KEYBASE)/team/epfl_people.prod
 -include $(KBPATH)/$(SECRETS)
 
 COMPOSE_FILE ?= docker-compose.yml
