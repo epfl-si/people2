@@ -21,7 +21,7 @@ ensure_ansible () {
   if ! test -f ansible-deps-cache/.versions 2>/dev/null; then
     curl https://raw.githubusercontent.com/epfl-si/ansible.suitcase/master/install.sh | \
     SUITCASE_DIR=$PWD/ansible-deps-cache \
-    SUITCASE_PIP_EXTRA="dnspython" \
+    SUITCASE_PIP_EXTRA="dnspython passlib" \
     SUITCASE_ANSIBLE_VERSION=9.3.0 \
     bash -x
   fi
