@@ -16,7 +16,8 @@ ARG LIB_HOME=/srv/lib
 ENV RAILS_ENV="$RAILS_ENV" \
 	LIB_HOME="$LIB_HOME" \
 	OFFLINE_CACHEDIR="$LIB_HOME/filecache" \
-	BUNDLE_PATH="/usr/local/bundle"
+	BUNDLE_PATH="/usr/local/bundle" \
+	OIDC_HOSTNAME=""
 
 RUN mkdir -p /srv/app $OFFLINE_CACHEDIR
 
@@ -65,9 +66,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install application gems
 WORKDIR /rails
-# Note that Gemfile.lock does not need to exist
-COPY Gemfile ./
-COPY Gemfile.lock.docker ./Gemfile.lock
+# Note that Gemfile.lock does not necessarily exist
+COPY Gemfile Gemfile.lock.docker* ./
 RUN gem update --system 3.5.11 && bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
