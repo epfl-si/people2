@@ -67,7 +67,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # Install application gems
 WORKDIR /rails
 # Note that Gemfile.lock does not necessarily exist
-COPY Gemfile Gemfile.lock.docker* ./
+COPY Gemfile Gemfile.lock* ./
 RUN gem update --system 3.5.11 && bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
