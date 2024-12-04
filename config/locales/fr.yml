@@ -172,15 +172,23 @@ fr:
     work_experience: "Parcours professionnel"
   visibility:
     authenticated: "Uniquement par les utilisateurs de l'EPFL"
+    authenticated_access: "Utilisateurs"
     draft: "Brouillon (éditeur uniquement)"
+    editor: "Draft (editor only)"
+    editor_access: "full"
     hidden: "Caché"
+    hidden_address: "NO address"
     intranet: "Uniquement sur l'intranet"
+    intranet_access: "intranet"
     labels:
       authenticated: "Utilisateurs de l'EPFL"
       draft: "Brouillon (éditeur uniquement)"
       intranet: "Intranet"
       public: "Publique"
     public: "Publique"
+    public_access: "public"
+    visible: "visible"
+    visible_address: "address"
   work_experience: "Parcours professionnel"
   activerecord:
     errors:

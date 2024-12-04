@@ -64,7 +64,7 @@ all:
     # OIDC_USERINFO_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/userinfo
     # OIDC_LOGOUT_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/logout
 
-    PEOPLE_BRANCH: ops
+    PEOPLE_BRANCH: master
     PEOPLE_HOSTNAME: peonext.fsd.team
     PEOPLE_SRCDIR: /home/fsd/people
     # REDIS_URL: redis://cache:6379/0
