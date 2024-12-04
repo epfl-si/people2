@@ -2,6 +2,7 @@
 
 require 'test_helper'
 require 'webmock/minitest'
+require 'ostruct'
 
 class PersonTest < ActiveSupport::TestCase
   def setup

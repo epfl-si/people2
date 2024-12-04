@@ -36,9 +36,9 @@ class NameTest < ActiveSupport::TestCase
   test "should not be valid if usual names are not derived from official names" do
     assert_not @invalid_name.valid?, "Name should not be valid when usual names are not derived from official names"
     assert_includes @invalid_name.errors[:usual_first],
-                    I18n.t('activerecord.errors.models.name.attributes.usual_first.not_in_official')
+                    I18n.t('activemodel.errors.models.name.attributes.usual_first.not_in_official')
     assert_includes @invalid_name.errors[:usual_last],
-                    I18n.t('activerecord.errors.models.name.attributes.usual_last.not_in_official')
+                    I18n.t('activemodel.errors.models.name.attributes.usual_last.not_in_official')
   end
 
   test "display_first should return usual_first if present, otherwise first word of official_first" do
