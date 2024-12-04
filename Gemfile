@@ -94,6 +94,8 @@ gem 'omniauth_openid_connect'
 gem 'omniauth-rails_csrf_protection'
 # gem 'omniauth-tequila'
 
+gem 'ostruct'
+
 # https://github.com/paper-trail-gem/paper_trail
 #
 gem 'paper_trail', '~> 15'
