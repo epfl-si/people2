@@ -45,6 +45,7 @@
       FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
       SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
       SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
+      ISA_URL: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
 
       OIDC_HOSTNAME: "{{ hosts.keycloak }}"
       OIDC_REALM: "{{ keycloak.realm }}"

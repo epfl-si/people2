@@ -64,6 +64,8 @@ all:
     # OIDC_USERINFO_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/userinfo
     # OIDC_LOGOUT_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/logout
 
+    ISA_URL: https://isa-test.epfl.ch/services
+
     PEOPLE_BRANCH: master
     PEOPLE_HOSTNAME: peonext.fsd.team
     PEOPLE_SRCDIR: /home/fsd/people
