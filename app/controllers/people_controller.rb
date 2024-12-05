@@ -48,8 +48,8 @@ class PeopleController < ApplicationController
     # teachers are supposed to all have a profile
     @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
     if @ta.present?
-      @current_phds = @ta.phd.select(&:current?)
-      @past_phds = @ta.phd.select(&:past?)
+      @current_phds = @ta.phd&.select(&:current?)
+      @past_phds = @ta.phd&.select(&:past?)
       @teachings = @ta.primary_teaching + @ta.secondary_teaching + @ta.doctoral_teaching
     else
       @current_phds = nil
