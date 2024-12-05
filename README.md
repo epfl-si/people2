@@ -144,6 +144,13 @@ Common secrets:
 Development only variables:
  - `RAILS_DEVELOPMENT_HOSTS`: normally only localhost is considered a dev host. Using traefik we need to add the hosts that are actually used for Rails not to complain about security.
 
+## Troubleshooting
+##### Authentication fails in dev
+If you get the following error message in the app console: `ERROR -- omniauth: (oidc) Authentication failure! Not Found: OpenIDConnect::Discovery::DiscoveryFailed, Not Found` 
+then you probably nuked the keycloak server and forgot to provision it with 
+authentication data. In this case, `make kconfig` should do the job.
+
+ 
 ## Opinions
 
 ### GraphQL and OpenID _only_, or: Web 1.0 CRUD (and REST) Considered Obsolete
