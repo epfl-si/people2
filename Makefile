@@ -49,6 +49,10 @@ reload: envcheck
 	docker compose stop webapp
 	KILLPID=1 docker compose up -d
 
+## restart puma withoud taking down the running container (in case of changes in gem's code within the container)
+pumareload:
+	docker compose exec webapp kill -SIGUSR2 1
+
 ## stop the basic servers (all except test)
 down: tunnel_down
 	docker compose down
