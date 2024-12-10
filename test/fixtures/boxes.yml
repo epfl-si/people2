@@ -1,8 +1,10 @@
 # --------------------------------------------------------------------------- Me
 gio_box_expertise:
   type: "RichTextBox"
+  model: mbox_expertise
   profile: giova
   section: bio
+  model: mbox_expertise
   title_en: Expertise
   title_fr: Domaines de compétences
   show_title: true
@@ -12,11 +14,12 @@ gio_box_expertise:
   position: 1
 
 gio_box_education:
-  type: "StandardBox"
-  data:
-    variant: 'education'
+  type: "IndexBox"
+  subkind: "Education"
+  model: mbox_education
   profile: giova
   section: bio
+  model: mbox_education
   title_en: Education
   title_fr: Formation
   show_title: true
@@ -26,9 +29,9 @@ gio_box_education:
   position: 2
 
 gio_box_experience:
-  type: "StandardBox"
-  data:
-    variant: 'experience'
+  type: "IndexBox"
+  subkind: "Experience"
+  model: mbox_experience
   profile: giova
   section: bio
   title_en: Professional experience
@@ -40,13 +43,13 @@ gio_box_experience:
   position: 3
 
 gio_box_publication:
-  type: "StandardBox"
-  data:
-    variant: 'publication'
+  type: "IndexBox"
+  subkind: "Publication"
+  model: mbox_publication
   profile: giova
   section: bio
-  title_en: other publications
-  title_fr: autre publications
+  title_en: "Selected Publications"
+  title_fr: "Publications Representatives"
   show_title: true
   locked: true
   visible: true
@@ -55,9 +58,9 @@ gio_box_publication:
 
 # ---------------------------------------------------------------------- Edouard
 edo_box_awards:
-  type: "StandardBox"
-  data:
-    variant: 'award'
+  type: "IndexBox"
+  subkind: "Award"
+  model: mbox_award
   profile: edouard
   section: bio
   title_en: Awards
@@ -71,6 +74,7 @@ edo_box_awards:
 # ---------------------------------------------------------------------- Olivier
 oli_box_expertise:
   type: "RichTextBox"
+  model: mbox_expertise
   profile: olivier
   section: bio
   title_en: Expertise
@@ -83,6 +87,7 @@ oli_box_expertise:
 
 oli_box_bio:
   type: "RichTextBox"
+  model: mbox_biography
   profile: olivier
   section: bio
   title_en: Biography
@@ -95,6 +100,7 @@ oli_box_bio:
 
 oli_box_cv:
   type: "RichTextBox"
+  model: mbox_curriculum
   profile: olivier
   section: bio
   title_en: Curriculum vitae
@@ -106,11 +112,11 @@ oli_box_cv:
   position: 3
 
 oli_box_edu:
-  type: "StandardBox"
+  type: "IndexBox"
+  subkind: "Education"
+  model: mbox_education
   profile: olivier
   section: bio
-  data:
-    variant: 'education'
   title_en: Education
   title_fr: Education
   show_title: true
@@ -121,6 +127,7 @@ oli_box_edu:
 
 oli_box_mission:
   type: "RichTextBox"
+  model: mbox_mission
   profile: olivier
   section: bio
   title_en: Mission
@@ -133,6 +140,7 @@ oli_box_mission:
 
 oli_box_pubs:
   type: "RichTextBox"
+  model: mbox_publication
   profile: olivier
   section: pub
   title_en: Selected Publications
@@ -146,6 +154,7 @@ oli_box_pubs:
 # ---------------------------------------------------------------------- Natalie
 nat_box_expertise:
   type: "RichTextBox"
+  model: mbox_expertise
   profile: natalie
   section: bio
   title_en: Expertise
@@ -181,6 +190,7 @@ nat_box_work:
 
 nat_box_mission:
   type: "RichTextBox"
+  model: mbox_mission
   profile: natalie
   section: bio
   title_en: Mission
@@ -193,6 +203,7 @@ nat_box_mission:
 
 nat_box_bio:
   type: "RichTextBox"
+  model: mbox_biography
   profile: natalie
   section: bio
   title_en: Biography
@@ -205,6 +216,7 @@ nat_box_bio:
 
 nat_box_cv:
   type: "RichTextBox"
+  model: mbox_curriculum
   profile: natalie
   section: bio
   title_en: Curriculum vitae
@@ -216,11 +228,11 @@ nat_box_cv:
   position: 6
 
 nat_box_edu_en:
-  type: "StandardBox"
+  type: "IndexBox"
+  subkind: "Education"
+  model: mbox_education
   profile: natalie
   section: bio
-  data:
-    variant: 'education'
   title_en: Education
   title_fr: Education
   show_title: true
@@ -231,6 +243,7 @@ nat_box_edu_en:
 
 nat_box_missions:
   type: "RichTextBox"
+  model: mbox_mission
   profile: natalie
   section: bio
   title_en: Mission
@@ -240,16 +253,3 @@ nat_box_missions:
   visible: false
   audience: 0
   position: 8
-
-nat_box_pubs:
-  type: "RichTextBox"
-  profile: natalie
-  section: pub
-  title_en: Selected Publications
-  title_fr: Publications Representatives
-  show_title: true
-  locked: true
-  visible: false
-  audience: 0
-  position: 9
-

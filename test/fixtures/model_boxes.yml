@@ -1,36 +1,79 @@
-expertise:
+mbox_social:
   section: contact
+  kind: IndexBox
+  subkind: Social
+  title_en: "Social Networks"
+  title_fr: "Resaux Socials"
+  show_title: false
+  position: 1
+mbox_expertise:
+  section: contact
+  kind: RichTextBox
   title_en: "Expertise"
   title_fr: "Expertise"
   show_title: true
-  position: 1
-mission:
+  position: 2
+mbox_mission:
   section: contact
+  kind: RichTextBox
   title_en: "Mission"
   title_fr: "Mission"
   show_title: true
-  position: 2
-biography:
+  position: 3
+mbox_biography:
   section: bio
+  kind: RichTextBox
   title_en: "Biography"
   title_fr: "Biographie"
   show_title: false
   position: 1
-curriculum:
+mbox_curriculum:
   section: bio
+  kind: RichTextBox
   title_en: "Curriculum vitae"
   title_fr: "Curriculum vitae"
   show_title: false
   position: 2
-education:
+mbox_education:
   section: bio
+  kind: IndexBox
+  subkind: Education
   title_en: "Education"
   title_fr: "Education"
   show_title: true
   position: 3
-publications:
-  section: pub
+mbox_experience:
+  section: bio
+  kind: IndexBox
+  subkind: Experience
+  title_en: "Professional experience"
+  title_fr: "Parcours professionnel"
+  show_title: true
+  position: 4
+mbox_award:
+  section: bio
+  kind: IndexBox
+  subkind: Award
+  title_en: "Awards"
+  title_fr: "Recompenses"
+  show_title: true
+  position: 4
+
+mbox_publication:
+  section: bio
+  kind: IndexBox
+  subkind: Publication
   title_en: "Selected Publications"
   title_fr: "Publications Representatives"
+  show_title: true
+  position: 1
+
+# ------------------------------------------------------------- research section
+
+mbox_expertise:
+  section: research
+  kind: RichTextBox
+  title_en: "Current Research Field"
+  title_fr: "Domaine de recherche actuel"
   show_title: true
   position: 1

@@ -2,17 +2,17 @@
 
 require 'test_helper'
 
-class StandardBoxTest < ActiveSupport::TestCase
+class IndexBoxTest < ActiveSupport::TestCase
   def setup
     # Initialize the profile without needing persistence
     @profile = Profile.new(sciper: "123456")
 
-    # Create instances of StandardBox for each variant
-    @award_box = StandardBox.new(data: { "variant" => "award" }, profile: @profile, title_en: "Awards", visible: true)
-    @education_box = StandardBox.new(data: { "variant" => "education" }, profile: @profile, title_en: "Education",
-                                     visible: true)
-    @experience_box = StandardBox.new(data: { "variant" => "experience" }, profile: @profile,
-                                      title_en: "Professional Experience", visible: true)
+    # Create instances of IndexBox for each variant
+    @award_box = IndexBox.new(data: { "variant" => "award" }, profile: @profile, title_en: "Awards", visible: true)
+    @education_box = IndexBox.new(data: { "variant" => "education" }, profile: @profile, title_en: "Education",
+                                  visible: true)
+    @experience_box = IndexBox.new(data: { "variant" => "experience" }, profile: @profile,
+                                   title_en: "Professional Experience", visible: true)
 
     # Mock visible experiences for the profile without database persistence
     @visible_experiences = [Experience.new(visible: true), Experience.new(visible: true)]

@@ -1,4 +1,4 @@
-<% klass=item.class.name.downcase %>
+<% klass=item.class.name.underscore %>
 <div class="form-actions">
   <% if item.new_record? %>
     <%= form.submit t("action.create_#{klass}"), class: "btn-confirm" %>

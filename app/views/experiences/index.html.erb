@@ -1,21 +1,17 @@
 <%= turbo_frame_tag :experiences_index do %>
-<details>
-<summary><%= tag.h2(t('title.experiences')) %></summary>
-
-<%= turbo_frame_tag "experiences", src: nil, target: nil, data: {controller: "sortable"} do %>
-	<% @experiences.each do |experience| %>
-		<%= render 'editable_experience', experience: experience %>
+	<%= turbo_frame_tag "experiences", src: nil, target: nil, data: {controller: "sortable"} do %>
+		<% @experiences.each do |experience| %>
+			<%= render 'editable_experience', experience: experience %>
+		<% end %>
 	<% end %>
-<% end %>
 
-<div class="list-group-item list-group-item-borderless" %>
-	<%= turbo_frame_tag "new_experience_form" do %>
-		<div class="row justify-content-center">
-			<%= link_to icon_text('add', 'plus-circle'), new_profile_experience_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-		</div>
-	<% end %>
-</div>
-</details>
+	<div class="list-group-item list-group-item-borderless" %>
+		<%= turbo_frame_tag "new_experience_form" do %>
+			<div class="row justify-content-center">
+				<%= link_to icon_text('add', 'plus-circle'), new_profile_experience_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+			</div>
+		<% end %>
+	</div>
 <% end %>
 
 

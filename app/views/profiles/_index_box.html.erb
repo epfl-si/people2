@@ -1,0 +1,9 @@
+<% variants = box.plural_variant %>
+
+<details>
+<summary><%= render "boxes/editable_box", box: box %></summary>
+<section id="#{variants}_section">
+<%= turbo_frame_tag "#{variants}_index", src: send("profile_#{variants}_path", @profile), loading: :lazy do %>
+<% end %>
+</section>
+</details>

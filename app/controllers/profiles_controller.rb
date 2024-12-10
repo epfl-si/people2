@@ -14,7 +14,15 @@ class ProfilesController < BackendController
     redirect_to edit_profile_path(@profile)
   end
 
-  def edit; end
+  def edit
+    @sections = Section.order(:position)
+    @profile.complete_standard_boxes!
+
+    boxes = @profile.boxes.includes(:section).sort do |a, b|
+      [a.section.position, a.position] <=> [b.section.position, b.position]
+    end
+    @boxes_by_section = boxes.group_by(&:section)
+  end
 
   # PATCH/PUT /profile/:id
   def update

@@ -267,6 +267,11 @@ reseed:
 	sleep 2
 	make seed
 
+fastreseed:
+	make nukedb
+	sleep 2
+	docker compose exec webapp bin/rails db:seed
+
 ## delete the people database
 nukedb:
 	echo "DROP DATABASE people" | $(SQL)
@@ -309,6 +314,14 @@ restore_cv:
 restore_dinfo:
 	./bin/restoredb.sh dinfo
 
+# --------------------------------------------------- Test (dev-like) deployment
+.PHONY: test_patch test_reseed
+test_patch:
+	
+	cd ops && ./possible.sh --test -t people.src.patch
+
+test_reseed: test_patch
+	cd ops && ./possible.sh --test -t people.db.reseed
 
 # ------------------------------------------------------------------------------
 .PHONY: clean

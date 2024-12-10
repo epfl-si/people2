@@ -159,10 +159,120 @@ span.visibility {
   .social-tag-select {
     width: 20em;
   }
-  
-}
-// ----
 
+  ul > li::before, ol > li::before {
+    right: calc(100% + 0.5rem);
+  }
+  
+  // ----------------------------------------------------------- fix trix editor
+
+  .rich_text_input {
+    padding: 0.5rem;
+    background-color: white;
+  }
+}
+
+// ----
 .upload .btn {
   margin-bottom: 0.5rem;
 }
+
+// ------------------------------------------------ animated visibility switch
+// example taken from https://freefrontend.com/css-toggle-switches/
+
+.onoff {
+  font-size: 70%;
+  // margin-left: -3em;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  position: relative;
+  cursor: pointer;
+  width: 4.2em;
+  height: 1.1lh;
+  line-height: 3.1ex;
+}
+.onoff label {
+  font-size: 80%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: var(--grey200); //#cd3c3c;
+  border-radius: 2px;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background 0.3s, text-indent 0.3s;
+  -moz-transition: background 0.3s, text-indent 0.3s;
+  -o-transition: background 0.3s, text-indent 0.3s;
+  transition: background 0.3s, text-indent 0.3s;
+  text-indent: calc(1em + 6px);
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+  -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4) inset;
+}
+.onoff label:after {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  color: #000; // #fff; //#591717;
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+.onoff label:before {
+  content: '';
+  width: 1em;
+  height: calc(4ex - 4px);
+  border-radius: 3px;
+  background: #FFF;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  left: 3px;
+  display: block;
+  -webkit-transition: left 0.3s;
+  -moz-transition: left 0.3s;
+  -o-transition: left 0.3s;
+  transition: left 0.3s;
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+.onoff input:checked + label {
+  // background: #378b2c;
+  background: var(--red); //#cd3c3c;
+  text-indent: 3px;
+}
+.onoff input:checked + label:after {
+  color: #fff; // #091707;
+  text-shadow: 0px 1px 0px rgba(128, 128, 128, 0.35);
+
+}
+.onoff input:checked + label:before {
+  left: calc(4.2em - 3px);
+}
+
+.onoff.en label:after {
+  content: 'Hidden';
+}
+
+.onoff.en input:checked + label:after {
+  content: 'Visible';
+}
+
+.onoff.fr label:after {
+  content: 'Caché';
+}
+
+.onoff.fr input:checked + label:after {
+  content: 'Visible';
+}
+
+

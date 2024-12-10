@@ -14,14 +14,14 @@ bio:
   show_title: false
   create_allowed: true
   position: 2
-pub:
-  title_en: "Publications"
-  title_fr: "Publications"
-  zone: "main"
-  label: "pub"
-  show_title: true
-  create_allowed: true
-  position: 3
+# pub:
+#   title_en: "Publications"
+#   title_fr: "Publications"
+#   zone: "main"
+#   label: "pub"
+#   show_title: true
+#   create_allowed: true
+#   position: 3
 research:
   title_en: "Research"
   title_fr: "Recherche"

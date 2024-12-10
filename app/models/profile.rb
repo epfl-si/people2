@@ -17,6 +17,8 @@ class Profile < ApplicationRecord
   translates :nationality, :title
 
   has_many :boxes, dependent: :destroy
+  has_many :index_boxes, class_name: 'IndexBox', dependent: :destroy
+  has_many :text_boxes, class_name: 'RichTextBox', dependent: :destroy
   has_many :socials, dependent: :destroy
   has_many :awards, dependent: :destroy
   has_many :educations, dependent: :destroy
@@ -44,6 +46,8 @@ class Profile < ApplicationRecord
   #       in at leat one of the languages when property is visible
   validates :sciper, uniqueness: { message: "must be unique" }
 
+  # We have to call complete_standard_boxes! upon each edit anyway
+  # after_create :create_standard_boxes
   after_create :cache_camipro_picture!
 
   DEFAULTS = {
@@ -107,6 +111,32 @@ class Profile < ApplicationRecord
 
   def birthday
     nil
+  end
+
+  # TODO: this whole idea of enforcing boxes everywhere is not great. Here we
+  # will end up filling the DB with empty box records just to make the views
+  # reasonably simple. Also, if we decide to change the title of a model box
+  # the change will not be propagated automatically to existing records.
+  # I think we should introduce two type different tables in the DB
+  #  1. like now but only for optional / user-added boxes;
+  #  2. a join table linking Profile and ModelBox that we also use for storing
+  #     visibility informations.
+  # Still to figure out how we manage the box type. Will we duplicate what we
+  # now have for the models derived from Box ?
+  # def create_standard_boxes
+  #   ModelBox.all.includes(:section).each do |mb|
+  #     mb.new_box_for_profile(self).save!
+  #   end
+  # end
+
+  # Check that all standard (ModelBox) boxes are present for this profile
+  def complete_standard_boxes!
+    model_box_ids = boxes.map(&:model_box_id).uniq.compact
+    ModelBox.where.not(id: model_box_ids).includes(:section).find_each do |mb|
+      b = mb.new_box_for_profile(self)
+      b.save!
+      boxes << b
+    end
   end
 
   def cache_camipro_picture!
