@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   end
 
   resources :profiles, only: %i[edit update] do
-    resources :boxes, shallow: true
+    resources :rich_text_boxes, shallow: true
+    resources :index_boxes, shallow: true
     resources :socials, shallow: true
     resources :awards, shallow: true
     resources :educations, shallow: true

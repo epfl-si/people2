@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class BoxesController < BackendController
-  before_action :set_box, only: %i[show edit update destroy]
+  before_action :set_profile, only: %i[index create new]
+  before_action :set_box, only: %i[show edit update destroy toggle]
 
   # GET /boxes or /boxes.json
   def index
@@ -38,10 +39,16 @@ class BoxesController < BackendController
   def update
     respond_to do |format|
       if @box.update(box_params)
-        format.html { redirect_to box_url(@box), notice: "Box was successfully updated." }
+        format.turbo_stream do
+          flash.now[:success] = "flash.generic.success.update"
+          render :update
+        end
         format.json { render :show, status: :ok, location: @box }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
+        end
         format.json { render json: @box.errors, status: :unprocessable_entity }
       end
     end
@@ -54,6 +61,23 @@ class BoxesController < BackendController
     respond_to do |format|
       format.html { redirect_to boxes_url, notice: "Box was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle
+    respond_to do |format|
+      if @box.update(visible: !@box.visible?)
+        format.turbo_stream do
+          render :update
+        end
+        format.json { render :show, status: :ok, location: @box }
+      else
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          render :update, status: :unprocessable_entity
+        end
+        format.json { render json: @box.errors, status: :unprocessable_entity }
+      end
     end
   end
 

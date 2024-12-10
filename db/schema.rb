@@ -96,8 +96,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
 
   create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "type", null: false
+    t.string "subkind"
     t.bigint "profile_id", null: false
     t.bigint "section_id", null: false
+    t.bigint "model_box_id"
     t.string "title_en"
     t.string "title_fr"
     t.boolean "show_title", default: true
@@ -108,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["model_box_id"], name: "index_boxes_on_model_box_id"
     t.index ["profile_id"], name: "index_boxes_on_profile_id"
     t.index ["section_id"], name: "index_boxes_on_section_id"
   end
@@ -169,11 +172,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
 
   create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "kind", default: "RichTextBox"
+    t.string "subkind"
     t.bigint "section_id", null: false
     t.string "title_en", null: false
     t.string "title_fr", null: false
     t.boolean "show_title", default: true
     t.integer "position", null: false
+    t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
@@ -306,6 +311,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
   add_foreign_key "awards", "profiles"
   add_foreign_key "awards", "selectable_properties", column: "category_id"
   add_foreign_key "awards", "selectable_properties", column: "origin_id"
+  add_foreign_key "boxes", "model_boxes"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
   add_foreign_key "educations", "profiles"

@@ -1,0 +1,26 @@
+<%= form_with(model: [profile, box], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: box if box.errors.any? %>
+  <% unless box.locked? %>
+  <div class="form-group">
+    <%= form.label Box.human_attribute_name(:title_fr) %>
+    <%= form.text_field :title_fr, placeholder: "Titre pour cet boite de text" %>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <%= form.label Box.human_attribute_name(:content_fr) %>
+    <div class="rich_text_input"><%= form.rich_text_area :content_fr %></div>
+  </div>
+
+  <% unless box.locked? %>
+  <div class="form-group">
+    <%= form.label Box.human_attribute_name(:title_en) %>
+    <%= form.text_field :title_en, placeholder: "Title for this text box" %>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <%= form.label Box.human_attribute_name(:content_en) %>
+    <div class="rich_text_input"><%= form.rich_text_area :content_en %></div>
+  </div>
+
+  <%= render "shared/form_actions", form: form, item: box %>
+<% end %>

@@ -1,0 +1,5 @@
+<%= tag.h2(box.t_title) %>
+<span class="onoff en" data-controller="boxvis" data-boxvis-url-value="<%= toggle_box_path(box, format: 'json') %>">
+  <input type="checkbox" value="1" id="onoff_box_<%= box.id %>" data-boxvis-target="checkbox" data-action="input->boxvis#onChange" >
+  <label for="onoff_box_<%= box.id %>"></label>
+</span>

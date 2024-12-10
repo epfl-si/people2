@@ -1,6 +1,4 @@
 <%= turbo_frame_tag :educations_index do %>
-<details>
-  <summary><%= tag.h2(t('title.educations')) %></summary>
   <%= turbo_frame_tag "educations", src: nil, target: nil, data: {controller: "sortable"} do %>
     <% @educations.each do |education| %>
       <%= render 'editable_education', education: education%>
@@ -14,5 +12,4 @@
       </div>
     <% end %>
   </div>
-</details>
 <% end %>

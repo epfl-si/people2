@@ -60,6 +60,7 @@ en:
     create_publication: "Create new publication"
     update_experience: "Udate work experience"
     update_publication: "Update publication"
+    update_rich_text_box: "Update box"
     sign_in: "Sign in"
     sign_out: "Sign out"
     upload_image: "Upload the image"

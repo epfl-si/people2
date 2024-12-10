@@ -5,6 +5,7 @@ class Award < ApplicationRecord
   include AudienceLimitable
   include Translatable
   include WithSelectableProperties
+  include IndexBoxable
   with_selectable_properties :category, :origin
   translates :title
   positioned on: :profile

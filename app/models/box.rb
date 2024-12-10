@@ -6,6 +6,10 @@ class Box < ApplicationRecord
   serialize  :data, coder: YAML
   belongs_to :section, class_name: 'Section'
   belongs_to :profile, class_name: 'Profile'
+  belongs_to :model, class_name: "ModelBox", foreign_key: "model_box_id", inverse_of: :boxes
+  scope :index_type, -> { where(type: IndexBox) }
+  scope :text_type, -> { where(type: RichTextBox) }
+
   # before_create :ensure_sciper
   positioned on: %i[profile section locked]
 
@@ -13,12 +17,15 @@ class Box < ApplicationRecord
 
   def self.from_model(mb)
     new(
-      section_id: mb.section_id,
+      section: mb.section,
+      model: mb,
+      subkind: mb.subkind,
       title_en: mb.title_en,
       title_fr: mb.title_fr,
       show_title: mb.show_title,
       locked: true,
-      position: mb.position
+      position: mb.position,
+      data: mb.data
     )
   end
 

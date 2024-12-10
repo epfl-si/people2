@@ -71,6 +71,6 @@ class BoxTest < ActiveSupport::TestCase
   # Single Table Inheritance (STI) → TODO, uncomment when using this method
   # test "should correctly identify STI subclasses" do
   # assert @gio_box_expertise.is_a?(RichTextBox), "Expected @gio_box_expertise to be a RichTextBox"
-  # assert @gio_box_education.is_a?(StandardBox), "Expected @gio_box_education to be a StandardBox"
+  # assert @gio_box_education.is_a?(IndexBox), "Expected @gio_box_education to be a IndexBox"
   # end
 end
