@@ -4,7 +4,7 @@ import { put } from "@rails/request.js";
     
 export default class extends Controller {
   static values = { url: String };
-  static targets = [ "checkbox" ];
+  static targets = [ "checkbox", "label" ];
 
   connect() {
     console.log("box_vixibility_controller connect");
@@ -17,8 +17,14 @@ export default class extends Controller {
     const value = element.checked;
     const url = this.urlValue;
     console.log(`changed to ${value} => ${url}`);
-    put(url);
-
+    put(url).then((response) => {
+      console.log(response);
+      const label = this.labelTarget;
+      console.log(label);
+      if (label) {
+        label.innerHTML = value ? "visible" : "hidden";
+      }
+    });
   }
 
   // disconnect() {
