@@ -50,7 +50,7 @@ module ProfilesHelper
     end
   end
 
-  def audience_selector(form)
+  def audience_selector2(form)
     id0 = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
     content = %w[public intranet authenticated draft].each_with_index.map do |v, i|
       id = "#{id0}_#{i}"
@@ -61,6 +61,32 @@ module ProfilesHelper
       end
     end
     safe_join(content)
+  end
+
+  AUDIENCE_OPTIONS = [
+    { label: 'public', icon: 'globe' },
+    { label: 'intranet', icon: 'home' },
+    # {label: 'authenticated', icon: 'key'},
+    # {label: 'owner', icon: 'user-check'},
+    { label: 'authenticated', icon: 'user-check' },
+    { label: 'owner', icon: 'edit-3' },
+    { label: 'hidden', icon: 'eye-off' }
+  ].freeze
+
+  def audience_selector(form, with_stimulus: false, with_wrapper: true)
+    form.object_name.underscore
+    content = []
+    AUDIENCE_OPTIONS.each_with_index do |o, i|
+      title = t "visibility.labels.#{o[:label]}"
+      content << if with_stimulus
+                   form.radio_button(:audience, i, "data-action" => "input->visibility#onChange")
+                 else
+                   form.radio_button(:audience, i)
+                 end
+      content << form.label("audience_#{i}".to_sym, tag.span(icon(o[:icon])), title: title)
+    end
+    content = safe_join(content)
+    with_wrapper ? tag.div(content, class: "visibility-radios") : content
   end
 
   def show_attribute_switch(form, attr)

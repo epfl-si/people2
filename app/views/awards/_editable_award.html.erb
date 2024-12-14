@@ -6,14 +6,9 @@
         <p class="text-muted small mb-0">
           <%= award.year %> – <%= award.issuer %>
         </p>
-        <p class="muted">
-          <%= render "shared/item_visibility", item: award %>
-        </p>
       </div>
       <div class="col-md-4 text-right">
-        <p>
-          <%= render "shared/item_actions", item: award %>
-        </p>
+        <%= render "shared/item_actions", item: award %>
       </div>
     </div>
   </div>

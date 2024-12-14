@@ -203,6 +203,8 @@ en:
     labels:
       authenticated: "Authenticated users only"
       draft: "Editor only"
+      owner: "Editor only"
+      hidden: "Hidden"
       intranet: "Intranet only"
       public: "Public"
     public: "public"
