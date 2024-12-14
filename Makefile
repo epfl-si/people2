@@ -299,28 +299,35 @@ kconfig: up
 restore:
 	./bin/restoredb.sh all
 
+## restore the legacy `accred` database only
 restore_accred:
 	./bin/restoredb.sh accred
 
+## restore the legacy `bottin` database only
 restore_bottin:
 	./bin/restoredb.sh bottin	
 
+## restore the legacy `cadi` database only
 restore_cadi:
 	./bin/restoredb.sh cadi
 
+## restore the legacy `cv` database only
 restore_cv:
 	./bin/restoredb.sh cv
 
+## restore the legacy `dinfo` database only
 restore_dinfo:
 	./bin/restoredb.sh dinfo
 
 # --------------------------------------------------- Test (dev-like) deployment
-.PHONY: test_patch test_reseed
-test_patch:
-	
+.PHONY: nata_patch nata_reseed
+
+## patch the source code of the app mounted on the test server for Natalie
+nata_patch:	
 	cd ops && ./possible.sh --test -t people.src.patch
 
-test_reseed: test_patch
+## reseed the database on the test server for Natalie
+nata_reseed: test_patch
 	cd ops && ./possible.sh --test -t people.db.reseed
 
 # ------------------------------------------------------------------------------

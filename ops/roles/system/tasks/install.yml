@@ -26,6 +26,7 @@
   with_items:
     - bind-utils
     - net-tools
+    - rsync
     - telnet
 
 - name: Ensure essential packages for deployment
