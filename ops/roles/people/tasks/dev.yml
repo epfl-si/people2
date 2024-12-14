@@ -1,0 +1,22 @@
+---
+
+- name: Patch app src code
+  tags:
+    - people.src.patch
+  ansible.posix.synchronize:
+    src: '../{{ item }}/'
+    dest: '{{ people.srcdir }}/{{ item }}/'
+  with_items:
+    - app
+    - config
+    - db
+    - lib
+
+- name: Nuke dev database for the app
+  tags:
+    - people.db.reseed
+  ansible.builtin.shell: |
+    echo "DROP DATABASE people" | podman exec -i mariadb mariadb -u root --password={{ _secrets.mariadb.root_password }}
+    echo "CREATE DATABASE people" | podman exec -i mariadb mariadb -u root --password={{ _secrets.mariadb.root_password }}
+    podman exec peoapp ./bin/rails db:migrate
+    podman exec peoapp ./bin/rails db:seed

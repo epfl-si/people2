@@ -18,6 +18,13 @@
 #                   url: http://peoapp:3000
 
 - name: Ensure people app server containers is running
+  vars:
+    dev_volumes:
+      - "{{ people.srcdir }}:/srv/app"
+    mandatory_volumes:
+      - "{{ people.storage }}:/srv/app/storage"
+      - "{{ people.filecache }}:/srv/filecache"
+    all_volumes: '{{ mandatory_volumes + dev_volumes if people.env == "development" else mandatory_volumes }}'
   containers.podman.podman_container:
     name: peoapp
     image: "people"
@@ -57,11 +64,8 @@
       # OIDC_TOKEN_ENDPOINT:
       # OIDC_USERINFO_ENDPOINT:
       # OIDC_LOGOUT_ENDPOINT:
-    volumes:
-      # - "{{ (RUNENV == 'testnext') | ternary( people.srcdir ~ ':/srv/app:', '') }}"
-      - "{{ people.srcdir }}:/srv/app"
-      - "{{ people.storage }}:/srv/app/storage"
-      - "{{ people.filecache }}:/srv/filecache"
+
+    volumes: '{{ all_volumes }}'
     restart_policy: unless-stopped
     state: started
     network:
