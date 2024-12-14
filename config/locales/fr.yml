@@ -184,6 +184,8 @@ fr:
     labels:
       authenticated: "Utilisateurs de l'EPFL"
       draft: "Brouillon (éditeur uniquement)"
+      owner: "Éditeur uniquement"
+      hidden: "Invisible"
       intranet: "Intranet"
       public: "Publique"
     public: "Publique"

@@ -1,0 +1,54 @@
+<%= form_with(
+  model: item, 
+  remote: true, 
+  format: 'json', 
+  class: "visibility-radios", 
+  data: {
+    controller: "visibility" 
+  }) do |form| %>
+
+  <%= form.radio_button(:audience, 0, id: "vis_#{item.id}_hidden", "data-action" => "input->visibility#onChange") %>
+  <label for="vis_<%= item.id %>_hidden" title="Disabled / Hidden">
+    <span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#eye-off"></use>
+      </svg>
+    </span>
+  </label>
+
+  <%= form.radio_button(:audience, 1, id: "vis_#{item.id}_user", "data-action" => "input->visibility#onChange") %>
+  <label for="vis_<%= item.id %>_user" title="Owner/Editor Only">
+    <span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#user-check"></use>
+      </svg>
+    </span>
+  </label>
+
+  <%= form.radio_button(:audience, 2, id: "vis_#{item.id}_auth", "data-action" => "input->visibility#onChange") %>
+  <label for="vis_<%= item.id %>_auth" title="Authenticated users only">
+    <span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#key"></use>
+      </svg>    
+    </span>
+  </label>
+
+  <%= form.radio_button(:audience, 3, id: "vis_#{item.id}_intra", "data-action" => "input->visibility#onChange") %>
+  <label for="vis_<%= item.id %>_intra" title="EPFL intranet only">
+    <span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#home"></use>
+      </svg>    
+    </span>
+  </label>
+
+  <%= form.radio_button(:audience, 4, id: "vis_#{item.id}_public", "data-action" => "input->visibility#onChange") %>
+  <label for="vis_<%= item.id %>_public" title="Public">
+    <span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#globe"></use>
+      </svg>
+    </span>
+  </label>
+<% end %>
