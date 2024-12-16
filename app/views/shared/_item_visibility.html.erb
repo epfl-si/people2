@@ -1,20 +1,11 @@
-<span class='visibility'>
-<%=
-  case item.audience
-  when 0
-    icon_text("visibility.public", 'circle')
-  when 1
-    icon_text("visibility.intranet", 'stop-circle')
-  when 2
-    icon_text("visibility.authenticated", 'user-check')
-  when 3
-    icon_text("visibility.draft", 'edit-3')
-  end  
-%>
-</span>
-<span class='visibility'>
-<%= item.visible? ? 
-  icon_text("visibility.visible", 'eye') :
-  icon_text("visibility.hidden", 'eye-off') 
-%>
-</span>
+<%= form_with(
+  model: item, 
+  remote: true, 
+  format: 'json',
+  class: defined?(extra_class) ? ["visibility-radios"] + extra_class : ["visibility-radios"],
+  data: {
+    controller: "visibility",
+    "visibility-model-value": item.class.name.underscore,
+  }) do |form| %>
+  <%= audience_selector(form, with_stimulus: true) %>
+<% end %>

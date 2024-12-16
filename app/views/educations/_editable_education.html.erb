@@ -11,9 +11,6 @@
           <br> 
           <%= t("education.directedby")%> <%= education.director.presence || t("general.not_available") %>
         </p>
-        <p class="muted">
-          <%= render "shared/item_visibility", item: education %>
-        </p>
       </div>
       <div class="col-md-4 text-right">
         <p>

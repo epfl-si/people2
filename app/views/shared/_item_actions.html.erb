@@ -5,4 +5,4 @@
 <%= link_to icon_text('action.edit', 'edit'), send("edit_#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
 </p>
 <span class="muted"><%= Award.human_attribute_name(:audience) %>: </span>
-<%= render "shared/item_visibility3", item: item %>
+<%= render "shared/item_visibility", item: item %>

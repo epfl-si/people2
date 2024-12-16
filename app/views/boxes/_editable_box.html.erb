@@ -1,8 +1,2 @@
-
 <%= tag.h2(box.t_title) %>
-
-
-<div class="custom-control custom-switch float-right" data-controller="boxvis" data-boxvis-url-value="<%= toggle_box_path(box, format: 'json') %>" data-boxvis-yes="<>">
-  <input type="checkbox" class="custom-control-input" id="switch_box_vis_<%= box.id %>" data-boxvis-target="checkbox" data-action="input->boxvis#onChange">
-  <label class="custom-control-label" for="switch_box_vis_<%= box.id %>" data-boxvis-target="label">Visibility</label>
-</div>
+<%= render "shared/item_visibility", item: box, extra_class: ["float-right"] %>
