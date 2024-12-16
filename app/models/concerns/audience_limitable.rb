@@ -2,6 +2,9 @@
 
 # This could be nicely implemented as enum but it is not yet implemented for mysql
 # TODO: write unit tests
+# TODO: when importing legacy data:
+#       - visible => audience=0
+#       - hidden  => audience=4
 module AudienceLimitable
   extend ActiveSupport::Concern
 
@@ -11,26 +14,26 @@ module AudienceLimitable
     scope :auth_visible, -> { where(visible: true, audience: 0...3) }
     scope :owner_visible, -> { where(visible: true, audience: 0...4) }
     scope :for_audience, ->(audience) { where(visible: true, audience: 0...(audience + 1)) }
-    validates :audience, numericality: { in: 0...4 }
+    validates :audience, numericality: { in: 0...5 }
   end
 
   def world_visible?
-    (!has_attribute?(:visible) || visible?) && audience.zero?
+    audience.zero?
   end
 
   def intranet_visible?
-    (!has_attribute?(:visible) || visible?) && audience < 2
+    audience < 2
   end
 
   def auth_visible?
-    (!has_attribute?(:visible) || visible?) && audience < 3
+    audience < 3
   end
 
   def owner_visible?
-    (!has_attribute?(:visible) || visible?) && audience < 4
+    audience < 4
   end
 
   def hidden?
-    has_attribute?(:visible) && !visible?
+    audience > 3
   end
 end

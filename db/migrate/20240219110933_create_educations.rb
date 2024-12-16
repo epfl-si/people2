@@ -13,7 +13,7 @@ class CreateEducations < ActiveRecord::Migration[7.0]
       t.integer :year_begin, null: true
       t.integer :year_end, null: true
       t.integer :position, null: false
-      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me (draft)
+      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me (draft), 4=hidden/disabled
       t.boolean :visible, default: false
 
       t.timestamps

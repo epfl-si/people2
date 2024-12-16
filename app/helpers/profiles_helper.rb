@@ -9,6 +9,23 @@ module ProfilesHelper
     lb + fd
   end
 
+  def form_actions(form, item, without_cancel: false)
+    klass = item.class.name.underscore
+    tag.div(class: "form-actions") do
+      if item.new_record?
+        concat form.submit t("action.create_#{klass}"), class: "btn-confirm"
+      else
+        unless without_cancel
+          concat link_to(t('action.cancel'),
+                         send("#{klass}_path", item),
+                         class: "btn-cancel", method: :get,
+                         data: { turbo_stream: true, turbo_method: 'get' })
+        end
+        concat form.submit t("action.update_#{klass}"), class: "btn-confirm"
+      end
+    end
+  end
+
   def visibility_switch0(form)
     id = form.object_name.gsub(/[^a-z0-9]+/, "_").gsub(/_$/, '')
     tag.div(class: 'col-sm-9 offset-sm-3') do
@@ -73,20 +90,22 @@ module ProfilesHelper
     { label: 'hidden', icon: 'eye-off' }
   ].freeze
 
-  def audience_selector(form, with_stimulus: false, with_wrapper: true)
-    form.object_name.underscore
+  def audience_selector(form, with_stimulus: false)
+    id0 = "#{form.object_name.underscore}_#{form.object.id}"
+    stim_data = { action: "input->visibility#onChange", "visibility-target": "radio" }
     content = []
     AUDIENCE_OPTIONS.each_with_index do |o, i|
+      id = "#{id0}_#{i}"
       title = t "visibility.labels.#{o[:label]}"
       content << if with_stimulus
-                   form.radio_button(:audience, i, "data-action" => "input->visibility#onChange")
+                   form.radio_button(:audience, i, id: id, data: stim_data)
                  else
-                   form.radio_button(:audience, i)
+                   form.radio_button(:audience, i, id: id)
                  end
-      content << form.label("audience_#{i}".to_sym, tag.span(icon(o[:icon])), title: title)
+      content << form.label("audience_#{i}".to_sym, tag.span(icon(o[:icon])), for: id, title: title)
     end
     content = safe_join(content)
-    with_wrapper ? tag.div(content, class: "visibility-radios") : content
+    tag.div(content, class: "visibility-radios")
   end
 
   def show_attribute_switch(form, attr)

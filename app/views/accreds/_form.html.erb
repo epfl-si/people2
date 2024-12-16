@@ -24,7 +24,7 @@
     <%= form.label Award.human_attribute_name(:audience) %>
     <%= audience_selector form %>
   </div>
-  <%= render "shared/form_actions", form: form, item: award %>
+  <%= form_actions form, award %>
 <% end %>
 
 

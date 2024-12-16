@@ -22,5 +22,5 @@
     <div class="rich_text_input"><%= form.rich_text_area :content_en %></div>
   </div>
 
-  <%= render "shared/form_actions", form: form, item: box %>
+  <%= form_actions form, box, without_cancel: true %>
 <% end %>

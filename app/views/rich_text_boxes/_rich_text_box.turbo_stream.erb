@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@publication) do %>
+  <%= render "editable_publication", publication: @publication %>
+<% end %>
