@@ -24,8 +24,10 @@ Loading awards... (for demoing purpose, an artificial delay is added)
 <% @sections.each do |section| %>
   <% if @boxes_by_section[section].present? %>
   <h2><%= section.t_title %></h2>
-  <% @boxes_by_section[section].each do |box| %>
-    <%= render box.class.to_s.underscore, box: box %>
-  <% end %>
+  <section data-controller="sortable">
+    <% @boxes_by_section[section].each do |box| %>
+      <%= render box.class.to_s.underscore, box: box %>
+    <% end %>
+  </section>
   <% end %>
 <% end %>
