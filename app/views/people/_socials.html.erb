@@ -3,17 +3,17 @@
   <% @visible_socials.each do |s| %>
     <li>
       <% if s.icon.present? %>
-        <a href="<%= s.url %>" class="social-icon social-icon-details social-icon-<%= s.icon %> social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
+        <a href="<%= s.url %>" target="_blank" class="social-icon social-icon-details social-icon-<%= s.icon %> social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-<%= s.icon %>"></use>
           </svg>
         </a>
       <% elsif s.img.present? %>
-        <a href="<%= s.url %>" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
+        <a href="<%= s.url %>" target="_blank" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
           <%= image_tag(s.img) %>
         </a>
       <% else %>
-        <a href="<%= s.url %>" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
+        <a href="<%= s.url %>" target="_blank" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
           <span class="user"><%= s.value %></span>
         </a>
       <% end %>
