@@ -1,4 +1,4 @@
 <%= turbo_stream.replace dom_id(@accred) do %>
-  <%= render "accred", accred: @accred %>
+  <%= render "accred", accred: @accred, count: @accreds_count %>
 <% end %>
 <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
