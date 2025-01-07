@@ -8,6 +8,8 @@ class CreateAwards < ActiveRecord::Migration[7.0]
       t.references :origin, null: false
       t.string  :title_en
       t.string  :title_fr
+      t.string  :title_it
+      t.string  :title_de
       t.string  :issuer
       t.integer :year
       t.string  :url

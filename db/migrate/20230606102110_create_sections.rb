@@ -5,6 +5,8 @@ class CreateSections < ActiveRecord::Migration[7.0]
     create_table :sections do |t|
       t.string :title_en
       t.string :title_fr
+      t.string :title_it
+      t.string :title_de
       t.string :label
       t.string :zone
       t.integer :position, null: false

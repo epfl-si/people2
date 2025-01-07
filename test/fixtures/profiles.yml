@@ -6,7 +6,6 @@ domq:
   show_nationality: false
   show_phone: true
   show_photo: true
-  show_title: false
   nationality_fr: Suisse
   nationality_en: Swiss
 
@@ -16,11 +15,8 @@ edouard:
   show_nationality: false
   show_phone: false
   show_photo: false
-  show_title: false
   nationality_fr: Suisse
   nationality_en: Swiss
-  title_en: Professor
-  title_fr: Professeur
   personal_web_url: "http://dcsl.epfl.ch"
   # expertise_fr: "Computer Systems, Data center networks, Virtualization"
   # expertise_en: "Computer Systems, Data center infrastructure and networking, Operating systems, Virtualization"
@@ -31,11 +27,8 @@ francesco:
   show_nationality: false
   show_phone: false
   show_photo: false
-  show_title: false
   nationality_fr: Italienne
   nationality_en: Italian
-  # title_en:
-  # title_fr:
   # personal_web_url:
 
 giovanni:
@@ -44,11 +37,8 @@ giovanni:
   show_nationality: false
   show_phone: true
   show_photo: true
-  show_title: false
   nationality_en: italian, swiss
   nationality_fr: italienne, suisse
-  # title_en: His Majesty
-  # title_fr: Sa majesté
   # personal_web_url: https://slideshot.epfl.ch/
 
 martin:
@@ -57,11 +47,8 @@ martin:
   show_nationality: true
   show_phone: true
   show_photo: true
-  show_title: false
   nationality_fr: Allemande
   nationality_en: German
-  title_en: Professor
-  title_fr: Professeur
   personal_web_url: "http://lampwww.epfl.ch/~odersky/"
 
 giova: 
@@ -70,11 +57,8 @@ giova:
   show_nationality: true
   show_phone: true
   show_photo: true
-  show_title: true
   nationality_en: italian, swiss
   nationality_fr: italien
-  title_en: His Majesty
-  title_fr: Sa majesté
   personal_web_url: https://slideshot.epfl.ch/
 
 natalie:
@@ -83,7 +67,6 @@ natalie:
   show_nationality: true
   show_phone: true
   show_photo: true
-  show_title: false
   force_lang: fr
   nationality_fr: Suisse
   nationality_en: Swiss
@@ -98,7 +81,6 @@ olivier:
   show_nationality: true
   show_phone: true
   show_photo: true
-  show_title: true
   nationality_fr: CH
   nationality_en: CH
   personal_web_url: "https://ipgold.epfl.ch/"

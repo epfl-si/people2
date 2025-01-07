@@ -22,6 +22,8 @@ class Box < ApplicationRecord
       subkind: mb.subkind,
       title_en: mb.title_en,
       title_fr: mb.title_fr,
+      title_it: mb.title_it,
+      title_de: mb.title_de,
       show_title: mb.show_title,
       locked: true,
       position: mb.position,
@@ -29,9 +31,14 @@ class Box < ApplicationRecord
     )
   end
 
-  # TODO: implement this
-  def content?(_locale = I18n.default_locale)
-    true
+  # primary_locale = nil, fallback_locale = nil
+
+  def content?(_primary_locale = nil, _fallback_locale = nil)
+    raise "The (abstract) 'content?' method needs to be implemented in the class"
+  end
+
+  def content_for?(audience_level = 0, _primary_locale = nil, _fallback_locale = nil)
+    visible_by?(audience_level)
   end
 
   delegate :sciper, to: :profile

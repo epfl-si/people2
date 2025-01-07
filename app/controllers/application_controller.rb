@@ -45,6 +45,9 @@ class ApplicationController < ActionController::Base
 
   def switch_locale(&action)
     locale = params[:lang] || I18n.default_locale
+    Thread.current[:primary_lang] = locale
+    Thread.current[:fallback_lang] = I18n.default_locale
+    Thread.current[:gender] = nil
     I18n.with_locale(locale, &action)
   end
 

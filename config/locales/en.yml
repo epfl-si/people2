@@ -30,6 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  # Each language is read in its own language by the screen reader
+  fr: Français
+  en: English
+  it: Italiano
+  de: Deutch
 
   ciccio: this is ciccio
   action:

@@ -78,6 +78,8 @@ class Profile < ApplicationRecord
     where(sciper: sciper).first
   end
 
+  delegate :gender, to: :person
+
   def person
     @person ||= Person.find(sciper)
   end

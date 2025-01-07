@@ -31,8 +31,9 @@ module ApplicationHelper
   # span with icon and text
   def icon_text(txt, icon)
     tag.span do
-      concat content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
-      concat t(txt)
+      content_tag(:svg,
+                  content_tag(:use, "", { "xlink:href" => "##{icon}" }),
+                  class: "icon text-icon") + t(txt)
     end
   end
 
@@ -71,22 +72,16 @@ module ApplicationHelper
   end
 
   def language_switcher
-    res = String.new
-    {
-      fr: "Français",
-      en: "English",
-    }.each do |loc, language|
-      res << content_tag(:li) do
-        if I18n.locale == loc
-          content_tag(:span, loc.to_s.upcase, class: "active", aria: { label: language })
+    res = Rails.configuration.available_languages.map do |loc|
+      content_tag(:li) do
+        if I18n.locale.to_s == loc
+          content_tag(:span, loc.to_s.upcase, class: "active", aria: { label: t(loc) })
         else
-          link_to loc.to_s.upcase, { lang: loc.to_s }, aria: { label: language }
+          link_to loc.to_s.upcase, { lang: loc.to_s }, aria: { label: t(loc) }
         end
       end
     end
-    # rubocop:disable Rails/OutputSafety
-    res.html_safe
-    # rubocop:enable Rails/OutputSafety
+    safe_join(res)
   end
 
   def fake_breadcrumbs(list = [])

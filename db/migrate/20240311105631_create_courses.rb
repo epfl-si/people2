@@ -6,8 +6,12 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.string :code
       t.string :title_en
       t.string :title_fr
+      t.string :title_it
+      t.string :title_de
       t.string :language_en
       t.string :language_fr
+      t.string :language_it
+      t.string :language_de
 
       t.timestamps
     end

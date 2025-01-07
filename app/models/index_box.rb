@@ -27,7 +27,19 @@ class IndexBox < Box
     subkind&.downcase&.pluralize
   end
 
-  def visible_items(_audience = 0)
-    profile.send(plural_variant.to_s).where(visible: true)
+  def items
+    profile.send(plural_variant.to_s)
+  end
+
+  def visible_items(audience_level = 0)
+    profile.send(plural_variant.to_s).for_audience(audience_level)
+  end
+
+  def content?(_primary_locale = nil, _fallback_locale = nil)
+    items.count.positive?
+  end
+
+  def content_for?(audience_level = 0, _primary_locale = nil, _fallback_locale = nil)
+    visible_items(audience_level).count.positive?
   end
 end

@@ -25,6 +25,20 @@ giova_exp_text_algo:
     system and HPC cluster. I also work as a scientific advisor and developer in a
     web2.0 project.
 
+giova_exp_text_algo: 
+  record: giova_exp_algo (Experience) 
+  name: description_fr
+  body: >
+    En tant que chercheur et développeur, je travaille principalement sur la mise en œuvre d'applications démonstratives, didactiques et réelles (ipTV, fichier, etc.).
+    démonstratives, didactiques ainsi que des applications réelles (ipTV, transfert de fichiers et
+    transfert de fichiers et réseaux sociaux) des algorithmes inventés dans notre laboratoire.
+
+    En tant que responsable informatique, je m'occupe d'un réseau informatique desservant environ 50 utilisateurs. Nous gérons
+    Nous gérons nos propres serveurs de fichiers/web/mail et de sauvegarde, un système d'authentification unique, un système d'impression et un cluster HPC.
+    d'impression et un cluster HPC. Je travaille également comme conseiller scientifique et développeur dans un projet web2.0.
+    projet web2.0.
+
+
 giova_exp_text_kandou: 
   record: giova_exp_kandou (Experience) 
   name: description_en
@@ -32,6 +46,17 @@ giova_exp_text_kandou:
     In charge of everything related to IT for the company: hardware acquisition,
     deployment, software installation and maintenance, security, networking,
     HPC, web developer.
+
+
+giova_exp_text_kandou: 
+  record: giova_exp_kandou (Experience) 
+  name: description_en
+  body: >
+    Responsable de tout ce qui concerne les technologies de l'information 
+    pour l'entreprise : acquisition de matériel, déploiement, installation 
+    et maintenance de logiciels, sécurité, réseaux, déploiement, 
+    installation et maintenance des logiciels, HPC, développement d'applications 
+    pour le web.
 
 # ---------------------------------------------------------------------- Olivier
 oli_box_expertise_en:

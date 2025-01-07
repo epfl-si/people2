@@ -7,6 +7,8 @@ class CreateExperiences < ActiveRecord::Migration[7.0]
 
       t.string  :title_en
       t.string  :title_fr
+      t.string  :title_it
+      t.string  :title_de
       t.string  :location
       t.integer :year_begin, null: false
       t.integer :year_end, null: true

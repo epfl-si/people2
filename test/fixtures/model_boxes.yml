@@ -4,6 +4,8 @@ mbox_social:
   subkind: Social
   title_en: "Social Networks"
   title_fr: "Resaux Socials"
+  title_it: "Reti Sociali"
+  title_de: "Soziale Netzwerke"
   show_title: false
   position: 1
 mbox_expertise:
@@ -11,6 +13,8 @@ mbox_expertise:
   kind: RichTextBox
   title_en: "Expertise"
   title_fr: "Expertise"
+  title_it: "Specializzazione"
+  title_de: "Fachkenntnisse"
   show_title: true
   position: 2
 mbox_mission:
@@ -18,6 +22,8 @@ mbox_mission:
   kind: RichTextBox
   title_en: "Mission"
   title_fr: "Mission"
+  title_it: "Missione"
+  title_de: "Aufgabe"
   show_title: true
   position: 3
 mbox_biography:
@@ -25,6 +31,8 @@ mbox_biography:
   kind: RichTextBox
   title_en: "Biography"
   title_fr: "Biographie"
+  title_it: "Biografia"
+  title_de: "Biographie"
   show_title: false
   position: 1
 mbox_curriculum:
@@ -32,6 +40,8 @@ mbox_curriculum:
   kind: RichTextBox
   title_en: "Curriculum vitae"
   title_fr: "Curriculum vitae"
+  title_it: "Curriculum vitae"
+  title_de: "Lebenslauf"
   show_title: false
   position: 2
 mbox_education:
@@ -40,6 +50,8 @@ mbox_education:
   subkind: Education
   title_en: "Education"
   title_fr: "Education"
+  title_it: "Percorso Educativo"
+  title_de: "Ausbildung"
   show_title: true
   position: 3
 mbox_experience:
@@ -48,6 +60,8 @@ mbox_experience:
   subkind: Experience
   title_en: "Professional experience"
   title_fr: "Parcours professionnel"
+  title_it: "Esperienza lavorativa"
+  title_de: "Berufserfahrung"
   show_title: true
   position: 4
 mbox_award:
@@ -56,6 +70,8 @@ mbox_award:
   subkind: Award
   title_en: "Awards"
   title_fr: "Recompenses"
+  title_it: "Riconoscimenti"
+  title_de: "Auszeichnungen"
   show_title: true
   position: 4
 
@@ -65,6 +81,8 @@ mbox_publication:
   subkind: Publication
   title_en: "Selected Publications"
   title_fr: "Publications Representatives"
+  title_it: "Pubblicazioni rappresentative"
+  title_de: "Ausgewählte Publikationen"
   show_title: true
   position: 1
 
@@ -75,5 +93,7 @@ mbox_expertise:
   kind: RichTextBox
   title_en: "Current Research Field"
   title_fr: "Domaine de recherche actuel"
+  title_it: "Dominio di ricerca"
+  title_de: "Aktuelles Forschungsfeld"
   show_title: true
   position: 1
