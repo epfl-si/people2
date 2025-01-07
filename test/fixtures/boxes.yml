@@ -47,7 +47,7 @@ gio_box_publication:
   subkind: "Publication"
   model: mbox_publication
   profile: giova
-  section: bio
+  section: research
   title_en: "Selected Publications"
   title_fr: "Publications Representatives"
   show_title: true
@@ -89,7 +89,7 @@ oli_box_bio:
   type: "RichTextBox"
   model: mbox_biography
   profile: olivier
-  section: bio
+  section: research
   title_en: Biography
   title_fr: Biographie
   show_title: false
@@ -142,7 +142,7 @@ oli_box_pubs:
   type: "RichTextBox"
   model: mbox_publication
   profile: olivier
-  section: pub
+  section: research
   title_en: Selected Publications
   title_fr: Publications Representatives
   show_title: true
