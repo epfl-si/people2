@@ -180,6 +180,14 @@ The GUI for selecting the image must be composed of three parts:
  2. toggle if camipro picture is to be used (currently camipro photo is used if common.photo_ext is not 1);
  3. list selector for the uploaded images (currently this is decided by common.photo_ts)
 
+### Multilanguage support
+Current version only support two languages: french and english. We start by doing the same with the idea of adding more languages in the future. The problem is how to make the UI usable.
+
+For two languages we decided to have each field repeated (e.g. instead of `title`, we have `title_en`, and `title_fr`) and statically visible in editing forms. Forms grow fat but the user gets immediate feedback about missing translations. This approach could be extended to 3, possibly 4 languages but for sure not more than 4. 
+More details in `Docs/multilanguage.md`.
+
+In any case, a backoffice translation service should be deployed with a validation/scoring system similar to the one we did for jilion.
+
 ### Useful links
  * EPFL api doc for [person](https://api-test.epfl.ch/docs/persons-api/index.html), [accred](https://api-test.epfl.ch/docs/accred-api/index.html)
 

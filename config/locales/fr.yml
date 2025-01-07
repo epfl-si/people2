@@ -1,4 +1,10 @@
 fr:
+  # Each language is read in its own language by the screen reader
+  fr: Français
+  en: English
+  it: Italiano
+  de: Deutch
+
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
     admin_data: "Données administratives"

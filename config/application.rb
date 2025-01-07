@@ -44,6 +44,8 @@ module People
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
     routes.default_url_options[:host] = config.app_hostname
 
+    config.available_languages = %w[en fr]
+
     vf = Rails.root.join("VERSION")
     config.version = File.exist?(vf) ? File.read(vf) : "0.0.0"
 

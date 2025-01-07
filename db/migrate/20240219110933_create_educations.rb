@@ -6,8 +6,12 @@ class CreateEducations < ActiveRecord::Migration[7.0]
       t.references :profile, null: false, foreign_key: true
       t.string  :title_en
       t.string  :title_fr
+      t.string  :title_it
+      t.string  :title_de
       t.string  :field_en
       t.string  :field_fr
+      t.string  :field_it
+      t.string  :field_de
       t.string  :director
       t.string  :school, null: false
       t.integer :year_begin, null: true

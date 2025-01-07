@@ -39,11 +39,24 @@ class PeopleController < ApplicationController
     compute_audience(@sciper)
     @admin_data = @audience > 1 ? @person.admin_data : nil
 
+    Thread.current[:gender] = @person.gender
+
     # TODO: would a sort of "PublicSection" class make things easier here ?
     #       keep in mind that here we only manage boxes but we will have
     #       more content like awards, work experiences, infoscience pubs etc.
     #       that is not just a simple free text box with a title.
     return unless @profile
+
+    # take into account profile's language preferences overriding default
+    # Thread.current[:primary_lang] = I18n.locale
+    # Thread.current[:fallback_lang] = I18n.default_locale
+    if @profile.force_lang.present?
+      # TODO: should we simply redirect to the forced locale instead ?
+      Thread.current[:primary_lang] = @profile.force_lang
+      Thread.current[:fallback_lang] = @profile.force_lang
+    elsif @profile.default_lang.present?
+      Thread.current[:fallback_lang] = @profile.default_lang
+    end
 
     # teachers are supposed to all have a profile
     @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
@@ -62,16 +75,9 @@ class PeopleController < ApplicationController
     # @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
     @visible_socials = @profile.socials.for_audience(@audience)
 
-    # TODO: should we simply redirect to the page with selected locale ? May
-    #       be not because this is just for user provided content and not for
-    #       automatic adata like accreds etc.
-    # User's provided data (boxes) is coerced to @profile.force_lang locale
-    @cvlocale = @profile.force_lang || I18n.locale
-    logger.debug("sciper: #{@sciper} locale=#{I18n.locale} cvlocale=#{@cvlocale}")
-
     # get sections that contain at least one box in the chosen locale
     unsorted_boxes = @profile.boxes.for_audience(@audience).includes(:section).select do |b|
-      b.content?(@cvlocale)
+      b.content_for?(@audience)
     end
     @boxes = unsorted_boxes.sort do |a, b|
       [a.section.position, a.position] <=> [b.section.position, b.position]
@@ -80,6 +86,7 @@ class PeopleController < ApplicationController
 
     @contact_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "contact" }
     @main_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "main" }
+    @side_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "side" }
 
     # @contact_sections = []
     # @main_sections = []

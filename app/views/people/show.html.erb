@@ -47,12 +47,10 @@
         <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
       <% end %>
 
-
-
-
     </div>
     <div class="people-contacts col-md-6 col-lg-8">
-      <%= render "name" %>
+      <h1 class="mb-2"><%= @person.name.display %></h1>
+      <h3 class="mb-4"><%= @accreds.first.position.t_label %></h3>
       <%= render "contact" %>
       <%= render "accreds" %>
       <% @contact_zone_bbs&.each do |section, boxes| %>

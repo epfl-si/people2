@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.boolean "visible_addr", default: true
     t.string "unit_fr"
     t.string "unit_en"
+    t.string "unit_it"
+    t.string "unit_de"
     t.text "role", null: false
     t.string "gender"
     t.datetime "created_at", null: false
@@ -80,6 +82,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.bigint "origin_id", null: false
     t.string "title_en"
     t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
     t.string "issuer"
     t.integer "year"
     t.string "url"
@@ -102,6 +106,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.bigint "model_box_id"
     t.string "title_en"
     t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
     t.boolean "show_title", default: true
     t.boolean "locked", default: false
     t.integer "audience", default: 0
@@ -119,8 +125,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.string "code"
     t.string "title_en"
     t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
     t.string "language_en"
     t.string "language_fr"
+    t.string "language_it"
+    t.string "language_de"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -129,8 +139,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.bigint "profile_id", null: false
     t.string "title_en"
     t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
     t.string "field_en"
     t.string "field_fr"
+    t.string "field_it"
+    t.string "field_de"
     t.string "director"
     t.string "school", null: false
     t.integer "year_begin"
@@ -148,6 +162,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.bigint "profile_id", null: false
     t.string "title_en"
     t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
     t.string "location"
     t.integer "year_begin", null: false
     t.integer "year_end"
@@ -176,6 +192,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.bigint "section_id", null: false
     t.string "title_en", null: false
     t.string "title_fr", null: false
+    t.string "title_it", null: false
+    t.string "title_de", null: false
     t.boolean "show_title", default: true
     t.integer "position", null: false
     t.text "data"
@@ -200,14 +218,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.boolean "show_nationality"
     t.boolean "show_phone"
     t.boolean "show_photo"
-    t.boolean "show_title"
     t.boolean "show_weburl"
     t.string "force_lang"
+    t.string "default_lang"
     t.string "personal_web_url"
     t.string "nationality_en"
     t.string "nationality_fr"
-    t.string "title_en"
-    t.string "title_fr"
+    t.string "nationality_it"
+    t.string "nationality_de"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "selected_picture_id"
@@ -243,6 +261,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "title_en"
     t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
     t.string "label"
     t.string "zone"
     t.integer "position", null: false
@@ -255,6 +275,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
   create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name_en"
     t.string "name_fr"
+    t.string "name_it"
+    t.string "name_de"
     t.string "property", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

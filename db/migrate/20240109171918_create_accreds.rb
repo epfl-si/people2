@@ -11,6 +11,8 @@ class CreateAccreds < ActiveRecord::Migration[7.0]
       t.boolean :visible_addr, default: true
       t.string  :unit_fr
       t.string  :unit_en
+      t.string  :unit_it
+      t.string  :unit_de
       t.text    :role, null: false
       t.string  :gender
       # legacy office_hide was a string listing location names for <300 profiles
