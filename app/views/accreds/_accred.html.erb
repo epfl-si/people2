@@ -22,7 +22,9 @@
         </p>
       </div>
       <div class="col text-right">
+        <% if count > 1 %>
         <%= link_to accred.visible? ? icon_text('action.make_hidden', 'eye-off') : icon_text('action.make_visible', 'eye'), toggle_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
+        <% end %>
         <%= link_to accred.visible_addr? ? icon_text('action.make_address_hidden', 'map-pin') : icon_text('action.make_address_visible', 'map-pin'), toggle_addr_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
       </div>
     </div>

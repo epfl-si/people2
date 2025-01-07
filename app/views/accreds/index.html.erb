@@ -1,7 +1,7 @@
 <%= turbo_frame_tag :accreds_index do %>
 	<%= turbo_frame_tag "accreds", src: nil, target: nil, data: {controller: "sortable"} do %>
 		<% @accreds.each do |accred| %>
-			<%= render 'accred', accred: accred %>
+			<%= render 'accred', accred: accred, count: @accreds.count %>
 		<% end %>
 	<% end %>
 <% end %>
