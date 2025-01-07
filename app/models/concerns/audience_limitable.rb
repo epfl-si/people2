@@ -9,12 +9,16 @@ module AudienceLimitable
   extend ActiveSupport::Concern
 
   included do
-    scope :world_visible, -> { where(visible: true, audience: 0) }
-    scope :intranet_visible, -> { where(visible: true, audience: 0...2) }
-    scope :auth_visible, -> { where(visible: true, audience: 0...3) }
-    scope :owner_visible, -> { where(visible: true, audience: 0...4) }
-    scope :for_audience, ->(audience) { where(visible: true, audience: 0...(audience + 1)) }
+    scope :world_visible, -> { where(audience: 0) }
+    scope :intranet_visible, -> { where(audience: 0...2) }
+    scope :auth_visible, -> { where(audience: 0...3) }
+    scope :owner_visible, -> { where(audience: 0...4) }
+    scope :for_audience, ->(audience) { where(audience: 0...(audience + 1)) }
     validates :audience, numericality: { in: 0...5 }
+  end
+
+  def visible_by?(level = 0)
+    audience <= level
   end
 
   def world_visible?

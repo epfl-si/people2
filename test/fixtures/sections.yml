@@ -14,6 +14,14 @@ bio:
   show_title: false
   create_allowed: true
   position: 2
+side:
+  title_en: "Side"
+  title_fr: "Sous la photo"
+  zone: "side"
+  label: "side"
+  show_title: false
+  create_allowed: true
+  position: 3
 # pub:
 #   title_en: "Publications"
 #   title_fr: "Publications"

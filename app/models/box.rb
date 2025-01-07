@@ -3,17 +3,17 @@
 class Box < ApplicationRecord
   include AudienceLimitable
   include Translatable
+  translates :title
   serialize  :data, coder: YAML
   belongs_to :section, class_name: 'Section'
   belongs_to :profile, class_name: 'Profile'
   belongs_to :model, class_name: "ModelBox", foreign_key: "model_box_id", inverse_of: :boxes
   scope :index_type, -> { where(type: IndexBox) }
   scope :text_type, -> { where(type: RichTextBox) }
+  validates :t_title, translatability: true
 
   # before_create :ensure_sciper
   positioned on: %i[profile section locked]
-
-  translates :title
 
   def self.from_model(mb)
     new(
