@@ -6,18 +6,18 @@ class APIAuthGetter < EpflAPIService
   attr_reader :url
 
   def initialize(
-    sciper,
+    sciper: nil,
     authid: 'gestprofil', # 'botweb',
     type: 'property',
     onpersid: nil,
     baseurl: Rails.application.config_for(:epflapi).backend_url
   )
     args = {
-      persid: sciper,
-      type: type,
       authid: authid,
+      type: type,
       status: 'active',
     }
+    args[:persid] = sciper unless sciper.nil?
     args[:onpersid] = onpersid unless onpersid.nil?
 
     @url = URI.join(baseurl, "v1/authorizations")

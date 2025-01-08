@@ -35,6 +35,9 @@ $api "persons?unitid=13030"
 echo "#------------- To much informations. Let's get just the scipers and names"
 $api "persons?unitid=13030" -r '.persons[] | [.id, .display] | @tsv'
 
+echo "#------------------------------------- Get infos about unit with id 14214"
+$api "units/14214"
+
 echo "#---------------------------------- The accreditations for a given sciper"
 $api "accreds?persid=${GIO}"
 
@@ -69,6 +72,6 @@ echo "#- Check if person is prof that needs annual report (has AAR.report.contro
 $api "authorizations?persid=${EDO}&authid=AAR.report.control&type=right&status=active" \
      -r '.authorizations[] | .value'
 
-echo "#------------------------------------- Get infos about unit with id 14214"
-$api "units/14214"
-
+echo "#---------------------------- List the sciper of who can edit my profile"
+$api "authorizations?type=right&authid=12&state=active&onpersid=${GIO}" \
+     -r '.authorizations[] | .persid' 

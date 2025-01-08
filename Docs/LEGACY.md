@@ -149,5 +149,42 @@ Cons:
  - not very general wrt the fact of having different types of boxes (e.g. education, awards, etc)
  - the fact of creating the boxes from model boxes for each profile will introduce a lot of useless lines in the database and complicates testing. It is probably better to only create the used boxes and allow to chose the template upon creation.
 
+### Who has the right to edit a given profile?
+Official doc [here]( https://www.epfl.ch/campus/services/website/fr/publier-sur-le-web-epfl/people/informations/droits/)
+ 0. the superadmin
+ 1. the profile owner provided he has the `botweb` property
+ 2. someone with the `gestionprofils` right on one of the units of the profile
+The legacy code for this is the following:
+```perl
+sub canManage {
+  my ($self, $sciper) = @_;
+
+  return 0 unless $sciper;
+
+  if ($self->{tequila}) {
+    my $login_sciper = $self->{tequila}->{attrs}->{uniqueid};
+    return 1 if $sciper eq $login_sciper;   # - self
+    return 1 if $admins =~ /\b$login_sciper\b/; # - superadmins
+    my $units_admin = $self->{Accreds}->getAllUnitsWhereHasRight ($login_sciper, 12);
+    if ($units_admin) {
+      foreach my $unit ($self->{Accreds}->getAllUnitsOfPerson($sciper)) {
+        next unless $unit;
+        return 1 if defined $units_admin->{$unit};
+      }
+      return 0;
+    } else {
+      return 0
+    }
+  } else {
+    return 1;
+  }
+  return 0;
+
+}
+```
+
+where `12` is the `authid` of the authorization of type `right` named `gestionprofils`. As far as I understand, this right is inherited by all people with the `respcomm` role.
+
+
 
  
