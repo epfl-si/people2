@@ -22,7 +22,7 @@ class Authorisation
   end
 
   def self.botweb_for_sciper(sciper)
-    service = APIAuthGetter.new(sciper, authid: 'botweb')
+    service = APIAuthGetter.new(sciper: sciper, authid: 'botweb')
     auth_data = service.fetch
     return [] if auth_data.empty?
 
@@ -30,7 +30,7 @@ class Authorisation
   end
 
   def self.right_for_sciper(sciper, right = 'AAR.report.control')
-    service = APIAuthGetter.new(sciper, type: 'right', authid: right)
+    service = APIAuthGetter.new(sciper: sciper, type: 'right', authid: right)
     auth_data = service.fetch
     return [] if auth_data.empty?
 

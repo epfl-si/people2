@@ -75,7 +75,7 @@ class Person
   def can_have_profile?
     unless defined?(@can_edit_profile)
       @can_have_profile = begin
-        a = APIAuthGetter.new(sciper).fetch
+        a = APIAuthGetter.new(sciper: sciper).fetch
         a.any? { |d| d['status'] == 'active' }
       end
     end
