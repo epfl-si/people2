@@ -82,8 +82,7 @@ class Accreditation
   end
 
   def self.for_sciper(sciper)
-    service = APIAccredsGetter.for_sciper(sciper)
-    accreds_data = service.fetch
+    accreds_data = APIAccredsGetter.call(persid: sciper)
     return [] if accreds_data.empty?
 
     accreds = accreds_data.map { |data| new(data) }

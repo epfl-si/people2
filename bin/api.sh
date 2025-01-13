@@ -9,6 +9,8 @@ BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 
 apiget() {
   url="$1"
+  echo curl --basic --user "people:${EPFLAPI_PASSWORD}" \
+    -X GET "$url" >&2
   curl --basic --user "people:${EPFLAPI_PASSWORD}" \
     -X GET "$url" 2>/dev/null
 }

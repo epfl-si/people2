@@ -2,55 +2,35 @@
 
 # TODO: ask IAM for missing field Matricule SAP (numsap)
 # curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
-class APIPersonGetter < EpflAPIService
-  attr_accessor :url
-
-  private_class_method :new
-
-  def initialize(url, single: true)
-    @url = url
-    @single = single
-    Rails.logger.debug "url=#{@url}"
+class APIPersonGetter < APIBaseGetter
+  def initialize(data = {})
+    @resource = "persons"
+    @idname = :sciper
+    @params = [
+      # firstname(str): firstname of the person
+      :firstname,
+      # lastname(str): lastname of the person
+      :lastname,
+      # query(str): for generic search on any field
+      # (firstname, lastname, usual firstname, usual lastname, sciper, email, username)
+      :query, :email,
+      # persid(str list): id of one or many persons
+      :persid,
+      # unitid(int list): id of one or many units where persons are accredited
+      :unitid,
+      # isaccredited(int): to show only accredited persons, only usefull when not providing any unitid
+      # example: 1
+      :isaccredited,
+      :pageindex,
+      :pagesize,
+      :sortcolumn,
+      :sortdirection
+    ]
+    @alias = { email: "query" }
+    super(data)
   end
 
-  def self.for_sciper(sciper, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    url = URI.join(baseurl, "v1/persons/#{sciper}")
-    new(url)
-  end
-
-  # TODO: check if this works for everybody
-  def self.for_email(email, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    # TODO: api now search also on the e-mail field. Therefore we could leave the domain part...
-    user = email.gsub(/@.*$/, '')
-    url = URI.join(baseurl, "v1/persons")
-    url.query = URI.encode_www_form(query: user)
-    new(url)
-  end
-
-  def self.for_unitid(unitid, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    url = URI.join(baseurl, "v1/persons")
-    url.query = URI.encode_www_form(unitid: unitid)
-    new(url, single: false)
-  end
-
-  def dofetch
-    body = fetch_http
-    return nil unless body
-
-    data = JSON.parse(body)
-    return data unless data.key?('persons')
-
-    data = data ['persons']
-    return data unless @single
-
-    case data.count
-    when 0
-      nil
-    when 1
-      data.first
-    else
-      Rails.logger.warn "data for single APIPersonGetter returs multiple items: url=#{@url}"
-      data.first
-    end
+  def fix_email(email)
+    email.gsub(/@.*$/, '')
   end
 end

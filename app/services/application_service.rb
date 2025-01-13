@@ -6,12 +6,39 @@ require 'digest'
 # Remember to touch tmp/caching-dev.txt for caching to work in dev
 # Fetch json from remove HTTP services
 class ApplicationService
-  def self.call(*args, &block)
-    new(*args, &block).fetch
+  attr_accessor :url
+
+  def initialize(args = {}) end
+
+  def self.call(args = {})
+    # debugger
+    ttl = args.delete(:ttl)
+    force = args.delete(:force) || false
+    if ttl.present?
+      new(args).fetch(ttl: ttl, force: force)
+    else
+      new(args).fetch(force: force)
+    end
   end
 
-  def self.uncached_call(*args, &block)
-    new(*args, &block).dofetch
+  def self.call!(args = {})
+    # debugger
+    ttl = args.delete(:ttl)
+    force = args.delete(:force) || false
+    if ttl.present?
+      new(args).fetch!(ttl: ttl, force: force)
+    else
+      new(args).fetch!(force: force)
+    end
+  end
+
+  def self.uncached_call(args = {})
+    new(*args).dofetch
+  end
+
+  def self.clear_cache(*args)
+    m = new(*args)
+    Rails.cache.delete(m.cache_key)
   end
 
   # override to decide when to cache on a model base
@@ -19,12 +46,16 @@ class ApplicationService
     true
   end
 
-  def fetch
-    Rails.logger.debug("app_service: fetch for url=#{@url}")
+  # fetch calls dofetch which returns nil in case of no result
+  def fetch(ttl: expire_in, force: false)
     # api services cache have to be enabled explicitly
     if do_cache && Rails.application.config_for(:epflapi).perform_caching
+      if force
+        Rails.logger.debug("Expiring cache for key: #{cache_key}")
+        Rails.cache.delete(cache_key)
+      end
       Rails.logger.debug("Fetching cache for key: #{cache_key}")
-      Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+      Rails.cache.fetch(cache_key, expires_in: ttl) do
         Rails.logger.debug("Cache miss for key: #{cache_key}")
         dofetch
       end
@@ -33,10 +64,14 @@ class ApplicationService
     end
   end
 
-  def fetch!
-    Rails.logger.debug("app_service: fetch! for url=#{@url}")
-    if Rails.application.config_for(:epflapi).perform_caching
-      Rails.cache.fetch(cache_key, expires_in: expire_in || 24.hours) do
+  # fetch calls dofetch! which raise an exception in case of no result
+  def fetch!(ttl: expire_in, force: false)
+    if do_cache && Rails.application.config_for(:epflapi).perform_caching
+      if force
+        Rails.logger.debug("Expiring cache for key: #{cache_key}")
+        Rails.cache.delete(cache_key)
+      end
+      Rails.cache.fetch(cache_key, expires_in: ttl) do
         dofetch!
       end
     else

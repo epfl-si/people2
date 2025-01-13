@@ -34,7 +34,8 @@ class User < ApplicationRecord
     # } else {
     #   return 0
     # }
-    all_admins = APIAuthGetter.new(authid: 'gestionprofils', type: 'right', onpersid: profile.sciper).fetch
+    # if `onpersid` is provided then `persid` is ignored. Therefore I have to do the filtering here
+    all_admins = APIAuthGetter.call(authid: 'gestionprofils', type: 'right', onpersid: profile.sciper)
     !all_admins.find { |r| r['persid'].to_i == sciper.to_i }.nil?
   end
 

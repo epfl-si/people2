@@ -38,6 +38,9 @@ $api "persons?unitid=13030" -r '.persons[] | [.id, .display] | @tsv'
 echo "#------------------------------------- Get infos about unit with id 14214"
 $api "units/14214"
 
+echo "#------------------------------------- Get infos about unit ISAS-FSD unit"
+$api "units?query=ISAS-FSD"
+
 echo "#---------------------------------- The accreditations for a given sciper"
 $api "accreds?persid=${GIO}"
 
