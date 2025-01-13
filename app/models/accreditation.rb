@@ -89,8 +89,7 @@ class Accreditation
 
     # prefetch botweb and unit properties for all accreds at once for optimization
     botwebs = Authorisation.botweb_for_sciper(sciper).select(&:ok?).index_by(&:unit_id)
-    units = APIUnitGetter.fetch_units(accreds.map(&:unit_id)).map { |d| Unit.new(d) }.index_by(&:id)
-
+    units = APIUnitGetter.call(ids: accreds.map(&:unit_id)).map { |d| Unit.new(d) }.index_by(&:id)
     accreds.each do |a|
       a.unit = units[a.unit_id]
       a.botweb = botwebs.key?(a.unit_id.to_s) ? true : false
