@@ -32,9 +32,9 @@ class Person
 
   def self.find(sciper_or_email)
     data = if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
-             APIPersonGetter.call!(sciper: sciper_or_email)
+             APIPersonGetter.call!(persid: sciper_or_email, single: true)
            else
-             APIPersonGetter.call!(email: sciper_or_email)
+             APIPersonGetter.call!(email: sciper_or_email, single: true)
            end
     new(data)
   end
