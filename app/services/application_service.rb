@@ -22,7 +22,6 @@ class ApplicationService
   end
 
   def self.call!(args = {})
-    # debugger
     ttl = args.delete(:ttl)
     force = args.delete(:force) || false
     if ttl.present?

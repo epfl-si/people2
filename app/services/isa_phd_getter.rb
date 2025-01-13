@@ -5,7 +5,10 @@
 class IsaPhdGetter < IsaService
   attr_reader :url
 
-  def initialize(sciper)
+  def initialize(args = {})
+    sciper = args.delete(:sciper)
+    raise "sciper not present in IsaTaGetter" if sciper.blank?
+
     @url = URI.join(Rails.application.config_for(:epflapi).isa_url,
                     "/services/teachers/#{sciper}/thesis/directors/doctorants")
   end

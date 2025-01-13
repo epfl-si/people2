@@ -198,7 +198,7 @@ module Isa
 
     def load_lectures(sciper)
       # TODO: this is for the tmp version coming from the old people
-      data = IsaCourseGetter.call(sciper)
+      data = IsaCourseGetter.call(sciper: sciper)
       return nil if data.nil?
       return nil unless data.key?('bycours')
       return nil unless data['bycours']
@@ -211,7 +211,7 @@ module Isa
     end
 
     def load_ta(sciper)
-      data = IsaTaGetter.call(sciper)
+      data = IsaTaGetter.call(sciper: sciper)
       return nil if data.nil?
       return nil unless data.key?('enseignement')
 
@@ -224,7 +224,7 @@ module Isa
     end
 
     def load_phd(sciper)
-      data = IsaPhdGetter.call(sciper)
+      data = IsaPhdGetter.call(sciper: sciper)
       return nil if data.nil?
 
       data.map { |t| Isa::Thesis.new(t) }
