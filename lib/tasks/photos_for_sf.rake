@@ -32,8 +32,7 @@ namespace :chore do
     if File.exist?("data.json")
       json = File.read('./data.json')
     else
-      g = APIAccredsGetter.for_status(1)
-      json = g.fetch
+      json = APIAccredsGetter.call(status: 'active')
       File.write('data.json', json)
     end
     scipers = JSON.parse(json).map { |r| r['persid'] }.sort.uniq

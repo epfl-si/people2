@@ -1,27 +1,29 @@
 # frozen_string_literal: true
 
+# frozen_string_literal: true
+
+# TODO: ask IAM for missing field Matricule SAP (numsap)
 # curl -H 'Authorization: People.key ATELA_KEY' https://atela.epfl.ch/cgi-bin/atela-backend/getPerson/121769
-class APIUnitGetter < EpflAPIService
+class APIUnitGetter < APIBaseGetter
   attr_accessor :url
 
-  private_class_method :new
-
-  def initialize(url)
-    @url = url
-  end
-
-  def self.find(unitid, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    url = URI.join(baseurl, "v1/units/#{unitid}")
-    new(url)
-  end
-
-  def self.find!(unitid, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    find(unitid, baseurl).fetch
-  end
-
-  # TODO: ask IAM if there is a way to send a single request for multiple units
-  # there is https://api.epfl.ch/v1/units?query=... but I cannot guess how it works
-  def self.fetch_units(unit_ids, baseurl = Rails.application.config_for(:epflapi).backend_url)
-    unit_ids.uniq.map { |uid| find!(uid, baseurl) }
+  def initialize(data = {})
+    @resource = "units"
+    @params = [
+      # format(str): format of the response, empty or 'legacy'
+      :format,
+      # ids(int list): list of units id
+      :ids,
+      # persid(str): sciper of person to get units where the person is accredited
+      :persid,
+      # query(str): search string on unit name or label
+      :query, :name,
+      :pageindex,
+      :pagesize,
+      :sortcolumn,
+      :sortdirection
+    ]
+    @alias = { name: "query" }
+    super(data)
   end
 end

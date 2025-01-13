@@ -7,11 +7,18 @@ class Unit
   translates :name, :label
 
   def self.find(id)
-    unit_data = APIUnitGetter.find!(id)
+    unit_data = APIUnitGetter.call(id: id)
+    new(unit_data)
+  end
+
+  def self.find_by_name(name, force: false)
+    unit_data = APIUnitGetter.call(name: name, single: true, force: force)
     new(unit_data)
   end
 
   def initialize(data)
+    Rails.logger.debug("Unit::init: data=#{data.inspect}")
+
     @id = data['id']
     @name_fr = data['name']
     @name_en = data['nameen']

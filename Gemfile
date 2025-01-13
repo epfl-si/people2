@@ -79,6 +79,8 @@ end
 
 # https://github.com/palkan/action_policy
 gem "action_policy"
+# gem 'activeresource'
+# gem 'cached_resource'
 gem "devise", "~> 4.9"
 
 # Database adapters

@@ -31,38 +31,47 @@ class Person
   end
 
   def self.find(sciper_or_email)
-    g = if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
-          APIPersonGetter.for_sciper(sciper_or_email)
-        else
-          APIPersonGetter.for_email(sciper_or_email)
-        end
-    p = g.fetch!
-    raise ActiveRecord::RecordNotFound if p.blank?
-
-    new(p)
+    data = if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
+             APIPersonGetter.call!(sciper: sciper_or_email)
+           else
+             APIPersonGetter.call!(email: sciper_or_email)
+           end
+    new(data)
   end
 
   def self.for_scipers(scipers)
     return [] if scipers.empty?
 
     # sort.uniq is to minimize cache miss
-    g = APIPersonGetter.for_scipers(scipers.sort.uniq)
-    g.fetch!.map { |p| new(p) }
+    APIPersonGetter.call!(persid: scipers.sort.uniq).map { |p| new(p) }
   end
 
-  def self.for_group(name_or_id)
-    g = APIPersonGetter.for_group(name_or_id)
-    scipers = g.fetch!['persons'].map(&:id)
-    for_scipers(scipers)
+  def self.for_units(units)
+    ids = if units.is_a?(Array)
+            if units.first.respond_to?(:id)
+              units.map(&id).sort.uniq
+            else
+              units.sort.uniq
+            end
+          else
+            units.respond_to?(:id) ? units.id : units
+          end
+    APIPersonGetter.call(unitid: ids).map { |p| new(p) }
   end
 
-  def self.for_groups(names_or_ids)
-    scipers = names_or_ids.map do |name_or_id|
-      g = APIPersonGetter.for_group(name_or_id)
-      g.fetch!.map { |p| p['id'] }
-    end.flatten.uniq
-    for_scipers(scipers)
-  end
+  # def self.for_group(name_or_id)
+  #   g = APIPersonGetter.for_group(name_or_id)
+  #   scipers = g.fetch!['persons'].map(&:id)
+  #   for_scipers(scipers)
+  # end
+
+  # def self.for_groups(names_or_ids)
+  #   scipers = names_or_ids.map do |name_or_id|
+  #     g = APIPersonGetter.for_group(name_or_id)
+  #     g.fetch!.map { |p| p['id'] }
+  #   end.flatten.uniq
+  #   for_scipers(scipers)
+  # end
 
   def profile!
     unless defined?(@profile)
@@ -73,10 +82,10 @@ class Person
   end
 
   def can_have_profile?
-    unless defined?(@can_edit_profile)
+    unless defined?(@can_have_profile)
       @can_have_profile = begin
-        a = APIAuthGetter.new(sciper: sciper).fetch
-        a.any? { |d| d['status'] == 'active' }
+        a = Authorisation.botweb_for_sciper(sciper)
+        a.any? { |d| d.active? && d.ok? }
       end
     end
     @can_have_profile
