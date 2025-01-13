@@ -2,7 +2,7 @@
 
 require 'net/http'
 require Rails.root.join('app/services/application_service').to_s
-require Rails.root.join('app/services/epfl_api_service').to_s
+require Rails.root.join('app/services/api_base_getter').to_s
 require Rails.root.join('app/services/api_accreds_getter').to_s
 
 namespace :data do
