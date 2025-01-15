@@ -5,8 +5,8 @@ giova_exp_algo:
   location: "EPFL – Lausanne"
   year_begin: 2002
   year_end: 2015
-  visible: true
   audience: 0
+  visibility: 0
   position: 1
 
 giova_exp_kandou:
@@ -16,8 +16,8 @@ giova_exp_kandou:
   location: "Kandou"
   year_begin: 2011
   year_end: 2017
-  visible: true
   audience: 0
+  visibility: 0
   position: 2
 
 giova_exp_vpsi:
@@ -26,6 +26,6 @@ giova_exp_vpsi:
   title_fr: "DevOps / FullStack dev"
   location: "EPFL"
   year_begin: 2017
-  visible: true
   audience: 0
+  visibility: 0
   position: 3
