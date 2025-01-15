@@ -114,7 +114,7 @@ class EducationsController < BackendController
   def education_params
     params.require(:education).permit(
       :title_en, :title_fr, :field_en, :field_fr, :director, :school,
-      :year_begin, :year_end, :position, :audience, :visible, :description_fr, :description_en
+      :year_begin, :year_end, :position, :audience, :visibility, :description_fr, :description_en
     )
   end
 end

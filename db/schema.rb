@@ -89,7 +89,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.string "url"
     t.integer "position", null: false
     t.integer "audience", default: 0
-    t.boolean "visible", default: false
+    t.integer "visibility", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_awards_on_category_id"
@@ -111,7 +111,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.boolean "show_title", default: true
     t.boolean "locked", default: false
     t.integer "audience", default: 0
-    t.boolean "visible", default: false
+    t.integer "visibility", default: 1
     t.integer "position", null: false
     t.text "data"
     t.datetime "created_at", null: false
@@ -151,7 +151,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.integer "year_end"
     t.integer "position", null: false
     t.integer "audience", default: 0
-    t.boolean "visible", default: false
+    t.integer "visibility", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_educations_on_profile_id_and_position", unique: true
@@ -169,7 +169,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.integer "year_end"
     t.integer "position", null: false
     t.integer "audience", default: 0
-    t.boolean "visible", default: false
+    t.integer "visibility", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_experiences_on_profile_id_and_position", unique: true
@@ -244,7 +244,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.integer "position", null: false
     t.string "journal", null: false
     t.integer "audience", default: 0
-    t.boolean "visible"
+    t.integer "visibility", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_publications_on_profile_id"
@@ -288,8 +288,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.string "tag"
     t.string "value"
     t.integer "position", default: 0
-    t.boolean "visible", default: true
     t.integer "audience", default: 0
+    t.integer "visibility", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_socials_on_profile_id"

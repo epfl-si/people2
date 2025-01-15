@@ -10,8 +10,8 @@ class CreatePublications < ActiveRecord::Migration[7.1]
       t.integer :year, null: false
       t.integer :position, null: false
       t.string :journal, null: false
-      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me (draft)
-      t.boolean :visible
+      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated
+      t.integer :visibility, default: 1 # 0=published, 1=draft, 2=hidden
 
       t.timestamps
     end

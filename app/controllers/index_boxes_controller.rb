@@ -8,6 +8,6 @@ class IndexBoxesController < BoxesController
 
   # Only allow a list of trusted parameters through.
   def box_params
-    params.require(:index_box).permit(:audience)
+    params.require(:index_box).permit(:audience, :visibility)
   end
 end

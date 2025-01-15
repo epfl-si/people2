@@ -80,29 +80,39 @@ module ProfilesHelper
     safe_join(content)
   end
 
-  AUDIENCE_OPTIONS = [
-    { label: 'public', icon: 'globe' },
-    { label: 'intranet', icon: 'home' },
-    # {label: 'authenticated', icon: 'key'},
-    # {label: 'owner', icon: 'user-check'},
-    { label: 'authenticated', icon: 'user-check' },
-    { label: 'owner', icon: 'edit-3' },
-    { label: 'hidden', icon: 'eye-off' }
-  ].freeze
-
   def audience_selector(form, with_stimulus: false)
-    id0 = "#{form.object_name.underscore}_#{form.object.id}"
+    id0 = "#{form.object_name.underscore}_audience_#{form.object.id}"
     stim_data = { action: "input->visibility#onChange", "visibility-target": "radio" }
     content = []
-    AUDIENCE_OPTIONS.each_with_index do |o, i|
+    AudienceLimitable::AUDIENCE_OPTIONS.each_with_index do |o, i|
       id = "#{id0}_#{i}"
+      label_data = { label: form.object.audience_label(i) }
       title = t "visibility.labels.#{o[:label]}"
       content << if with_stimulus
-                   form.radio_button(:audience, i, id: id, data: stim_data)
+                   form.radio_button(:audience, i, id: id, data: stim_data.merge(label_data))
                  else
-                   form.radio_button(:audience, i, id: id)
+                   form.radio_button(:audience, i, id: id, data: label_data)
                  end
       content << form.label("audience_#{i}".to_sym, tag.span(icon(o[:icon])), for: id, title: title)
+    end
+    content = safe_join(content)
+    tag.div(content, class: "visibility-radios")
+  end
+
+  def visibility_selector(form, with_stimulus: false)
+    id0 = "#{form.object_name.underscore}_visibility_#{form.object.id}"
+    stim_data = { action: "input->visibility#onChange", "visibility-target": "radio" }
+    content = []
+    AudienceLimitable::VISIBILITY_OPTIONS.each_with_index do |o, i|
+      id = "#{id0}_#{i}"
+      label_data = { label: form.object.visibility_label(i) }
+      title = t "visibility.labels.#{o[:label]}"
+      content << if with_stimulus
+                   form.radio_button(:visibility, i, id: id, data: stim_data.merge(label_data))
+                 else
+                   form.radio_button(:visibility, i, id: id, data: label_data)
+                 end
+      content << form.label("visibility_#{i}".to_sym, tag.span(icon(o[:icon])), for: id, title: title)
     end
     content = safe_join(content)
     tag.div(content, class: "visibility-radios")

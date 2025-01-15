@@ -56,13 +56,10 @@ class Profile < ApplicationRecord
     show_nationality: false,
     show_phone: true,
     show_photo: false,
-    show_title: false,
     force_lang: nil,
     personal_web_url: nil,
     nationality_en: nil,
     nationality_fr: nil,
-    title_en: nil,
-    title_fr: nil
   }.freeze
 
   def self.new_with_defaults(sciper)
