@@ -94,7 +94,7 @@ class SocialsController < ApplicationController
   private
 
   def social_params
-    params.require(:social).permit(:tag, :value, :audience)
+    params.require(:social).permit(:tag, :value, :audience, :visibility)
   end
 
   def set_profile

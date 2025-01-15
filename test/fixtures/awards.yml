@@ -7,8 +7,8 @@ edo_awa:
   title_en: ACM Software System Award
   title_fr: ACM Software System Award
   url: https://awards.acm.org/software-system
-  visible: true
   audience: 0
+  visibility: 0
   position: 1
 
 gio_awa:
@@ -20,6 +20,6 @@ gio_awa:
   title_en: ACM Software System Award
   title_fr: ACM Software System Award
   url: https://awards.acm.org/software-system
-  visible: true
   audience: 0
+  visibility: 0
   position: 1

@@ -9,7 +9,7 @@ class RichTextBoxesController < BoxesController
   # Only allow a list of trusted parameters through.
   def box_params
     params.require(:rich_text_box).permit(
-      :audience,
+      :audience, :visibility,
       :title_fr, :title_en, :content_fr, :content_en
     )
   end
