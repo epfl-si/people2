@@ -20,3 +20,4 @@
     echo "CREATE DATABASE people" | podman exec -i mariadb mariadb -u root --password={{ _secrets.mariadb.root_password }}
     podman exec peoapp ./bin/rails db:migrate
     podman exec peoapp ./bin/rails db:seed
+    podman exec peoapp bin/rails data:courses
