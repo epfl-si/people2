@@ -82,8 +82,9 @@ class AccredsController < BackendController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_accred
-    @accred = Accred.find(params[:id])
+    @accred = Accred.includes(:profile).find(params[:id])
     @accreds_count = Accred.where(profile_id: @accred.profile_id).count
+    @profile = @accred.profile
   end
 
   # Only allow a list of trusted parameters through.
