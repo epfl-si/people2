@@ -250,6 +250,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_06_06_141719) do
     t.string "nationality_fr"
     t.string "nationality_it"
     t.string "nationality_de"
+    t.boolean "en_enabled", default: true
+    t.boolean "fr_enabled", default: true
+    t.boolean "it_enabled", default: false
+    t.boolean "de_enabled", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sciper"], name: "unique_scipers", unique: true

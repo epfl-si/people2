@@ -1,29 +1,13 @@
 <%= form_with(model: [profile, education], local: false, class: "instaform") do |form| %>
+  <% translations = (profile ||= education.profile).translations %>
   <%= render "shared/form_errors", item: education if education.errors.any? %>
-    <div class="form-group">
-      <%= form.label t('education.title_fr') %>
-      <%= form.text_field :title_fr, placeholder: "Ingénieur en informatique" %>
-    </div>
-    <div class="form-group">
-      <%= form.label t('education.title_en') %>
-      <%= form.text_field :title_en, placeholder: "Computer Engineer" %>
-    </div>
-    <div class="form-group">
-      <%= form.label t('education.field_fr') %>
-      <%= form.text_field :field_fr, placeholder: "Informatique" %>
-    </div>
-    <div class="form-group">
-      <%= form.label t('education.field_en') %>
-      <%= form.text_field :field_en, placeholder: "Computer Science" %>
-    </div>
-    <div class="form-group">
-      <%= form.label t('education.director') %>
-      <%= form.text_field :director, placeholder: "John Doe" %>
-    </div>
-    <div class="form-group">
-      <%= form.label t('education.school') %>
-      <%= form.text_field :school, placeholder: "MIT" %>
-    </div>
+
+    <%= translated_text_fields(form, :title, translations) %>
+    <%= translated_text_fields(form, :field, translations) %>
+
+    <%= single_text_field(form, :director) %>
+    <%= single_text_field(form, :school) %>
+
     <div class="form-group">
       <%= form.label t('education.period') %>
       <%= form.number_field :year_begin, in: 1950..Date.today.year %>
