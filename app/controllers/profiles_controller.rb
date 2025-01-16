@@ -82,14 +82,10 @@ class ProfilesController < BackendController
 
   def profile_params
     params.require(:profile).permit(
-      :nationality_fr, :nationality_en,
-      :title_fr, :title_en,
+      :nationality_fr, :nationality_en, :nationality_it, :nationality_de,
       :personal_web_url,
-      :show_function, :show_phone, :show_nationality, :show_title, :show_weburl,
-      :experiences, experiences_attributes: %i[
-        title_en title_fr location
-        year_begin year_end audience visible
-      ]
+      :en_enabled, :fr_enabled, :it_enabled, :de_enabled,
+      :show_phone, :show_nationality, :show_weburl
     )
   end
 end

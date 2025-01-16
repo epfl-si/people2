@@ -9,6 +9,36 @@ module ProfilesHelper
     lb + fd
   end
 
+  def single_text_field(form, field, extracls = "")
+    a = field.to_sym
+    oc = form.object.class
+    tag.div(class: "form-group #{extracls}") do
+      form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
+    end
+  end
+
+  def translated_text_fields(form, field, translations = %w[en fr])
+    content = translations.map do |l|
+      single_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
+    end
+    # oc = form.object.class
+    # content = translations.map do |l|
+    #   a = "#{field}_#{l}".to_sym
+    #   tag.div(class: "form-group") do
+    #     form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
+    #   end
+    # end
+    safe_join(content)
+  end
+
+  def translation_list(profile)
+    profile.translations.join(" ")
+  end
+
+  def translation_classlist(profile)
+    profile.translations.map { |t| "tr_enable_#{t}" }.join(" ")
+  end
+
   def form_actions(form, item, without_cancel: false)
     klass = item.class.name.underscore
     tag.div(class: "form-actions") do
@@ -111,8 +141,8 @@ module ProfilesHelper
   def show_attribute_switch(form, attr)
     id = "ck_#{form.object_name.gsub(/[^a-z0-9]+/, '_').gsub(/_$/, '')}_#{attr}"
     tag.div(class: 'custom-control custom-checkbox') do
-      concat form.check_box(attr, class: 'custom-control-input', id: id)
-      concat form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
+      form.check_box(attr, class: 'custom-control-input', id: id) +
+        form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
     end
   end
 end

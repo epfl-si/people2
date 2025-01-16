@@ -165,6 +165,7 @@ fr:
     current_phd: "Doctorants"
     current_phd_students: "Doctorant·es"
     doctoral_teaching: "Enseignement & PhD"
+    editing_languages: "Edit Languages"
     educations: "Formation"
     experiences: "Expériences de travail"
     expertise: "Champs de compétences"
@@ -200,6 +201,39 @@ fr:
     visible_address: "address"
   work_experience: "Parcours professionnel"
   activerecord:
+    models:
+      award: "award"
+      box: "box"
+      education: "education"
+      experience: "work experience"
+      profile: "profile"
+      social: "social address"
+    attributes:
+      award:
+        title_en: titre (en)
+        title_fr: title (fr)
+        issuer: Granted by
+        origin: Origin
+        year: Year
+        url: Url
+      education:
+        title_en: "titre (en)"
+        title_fr: "titre (fr)"
+        title_it: "titre (it)"
+        title_de: "titre (de)"
+        field_en: "domain (en)"
+        field_fr: "domain (fr)"
+        field_it: "domain (it)"
+        field_de: "domain (de)"
+      experience:
+        location: "copany or location or institution"
+        period: "period (years)"
+        title_en: "titre (en)"
+        title_fr: "titre (fr)"
+        year_begin: "first year"
+        year_end: "last year"
+      person:
+        function: main function
     errors:
       messages:
         record_invalid : "Sciper must unique"

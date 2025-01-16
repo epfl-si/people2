@@ -10,24 +10,56 @@
 <p data-controller="social"></p>
 <hr>
 
-<%= render "form", profile: @profile %>
-
-<hr>
-<section id="accreds_section">
-<%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
-Loading awards... (for demoing purpose, an artificial delay is added)
-<% end %>
-</section>
-
-<hr>
-
-<% @sections.each do |section| %>
-  <% if @boxes_by_section[section].present? %>
-  <h2><%= section.t_title %></h2>
-  <section data-controller="sortable">
-    <% @boxes_by_section[section].each do |box| %>
-      <%= render box.class.to_s.underscore, box: box %>
+<div
+  id="tr_switchable"
+  data-controller="language"
+  data-language-full-value="<%= translation_classlist(@profile) %>"
+  data-language-active-value="btn btn-sm btn-primary"
+  data-language-inactive-value="btn btn-sm btn-secondary"
+  class="<%= translation_classlist(@profile) %>" 
+>
+  <nav id="edit_lang_switchers">
+    <h5><%= t "editing_languages" %></h5>
+    <% @profile.translations.each do |l| %>
+      <%= button_tag(l,
+        class: "btn btn-sm btn-secondary", 
+        data: {
+          "action": "language#setEnabledLanguage",
+          "language-target": "button",
+          "langcls": "tr_enable_#{l}",
+        }
+      ) %>
     <% end %>
-  </section>
+    <%= button_tag("All",
+      class: "btn btn-sm btn-primary", 
+      data: {
+        "action": "language#setEnabledLanguage",
+        "language-target": "button",
+        "langcls": translation_classlist(@profile),
+      }
+    ) %>    
+  </nav>
+
+  <%= render "form", profile: @profile %>
+
+  <hr>
+  <section id="accreds_section">
+  <%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
+  Loading awards... (for demoing purpose, an artificial delay is added)
   <% end %>
-<% end %>
+  </section>
+
+  <hr>
+
+  <% @sections.each do |section| %>
+    <% if @boxes_by_section[section].present? %>
+    <h2><%= section.t_title %></h2>
+    <section data-controller="sortable">
+      <% @boxes_by_section[section].each do |box| %>
+        <%= render box.class.to_s.underscore, box: box %>
+      <% end %>
+    </section>
+    <% end %>
+  <% end %>
+
+</div>
