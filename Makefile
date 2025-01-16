@@ -272,6 +272,12 @@ fastreseed:
 	sleep 2
 	docker compose exec webapp bin/rails db:seed
 
+# ## load changed schema and seed
+# reschema:
+# 	docker compose exec webapp bin/rails db:schema:load
+# 	docker compose exec webapp bin/rails db:seed
+# 	make courses
+
 ## delete the people database
 nukedb:
 	echo "DROP DATABASE people" | $(SQL)
