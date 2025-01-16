@@ -78,6 +78,18 @@ class Profile < ApplicationRecord
 
   delegate :gender, to: :person
 
+  # I have tried to put all these flags into a single
+  def translations
+    [
+      [:en, en_enabled], [:fr, fr_enabled],
+      [:it, it_enabled], [:de, de_enabled]
+    ].to_h.select { |_k, v| v }.keys
+  end
+
+  def fallback_translation
+    translations.first || "fr"
+  end
+
   def person
     @person ||= Person.find(sciper)
   end

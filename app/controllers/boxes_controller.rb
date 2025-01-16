@@ -85,7 +85,7 @@ class BoxesController < BackendController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_box
-    @box = Box.find(params[:id])
+    @box = Box.includes(:profile).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

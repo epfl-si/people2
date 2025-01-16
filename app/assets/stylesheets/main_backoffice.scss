@@ -177,7 +177,50 @@ span.visibility {
   margin-bottom: 0.5rem;
 }
 
-// ---------------------------------------------------------------- new visibility
+// ------------------------------------------------- translation switching magic
+#tr_switchable {
+  .tr_target_en, .tr_target_fr, .tr_target_it, .tr_target_fr {
+    // visibility: hidden;
+    display: none;
+  }
+}
+
+#tr_switchable.tr_enable_en {
+  .tr_target_en {
+    display: flex;
+  }
+}
+
+#tr_switchable.tr_enable_fr {
+  .tr_target_fr {
+    display: flex;
+  }
+}
+
+#tr_switchable.tr_enable_it {
+  .tr_target_it {
+    display: flex;
+  }
+}
+
+#tr_switchable.tr_enable_de {
+  .tr_target_de {
+    display: flex;
+  }
+}
+
+#edit_lang_switchers {
+  position: fixed;
+  top: 75px;
+  right: 40px;
+  padding: 1em;
+  border-radius: 0.5em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  z-index: 100;
+}
+
+// -------------------------------------------------------------- new visibility
 .visibility-radios {
   background-color: #fff;
   padding: 4px 4px 0 4px;
