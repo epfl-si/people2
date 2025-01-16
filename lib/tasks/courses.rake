@@ -8,8 +8,17 @@ require Rails.root.join('app/services/api_accreds_getter').to_s
 namespace :data do
   desc 'Download the list of ISA courses and fill the local DB as cache'
   task courses: :environment do
-    service = IsaCatalogGetter.new
-    courses = service.fetch!
+    courses_file = Rails.root.join("tmp/courses.json")
+
+    if File.exist?(courses_file)
+      puts "Found cached courses file at #{courses_file}, skipping fetch."
+      courses = JSON.parse(File.read(courses_file))
+    else
+      puts "No cached courses file found, fetching data from ISA service."
+      service = IsaCatalogGetter.new
+      courses = service.fetch!
+      File.write(courses_file, courses.to_json)
+    end
 
     Teachership.destroy_all
     Course.destroy_all
