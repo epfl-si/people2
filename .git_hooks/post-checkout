@@ -1,0 +1,7 @@
+#!/bin/bash
+a=$(git diff $1 $2 db/schema.rb)
+if [ -n "$a" ] ; then
+  echo "----------------------------------------------"
+  echo "Schema changed. You may want to    make reseed"
+  echo "----------------------------------------------"
+fi
