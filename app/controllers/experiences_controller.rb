@@ -107,7 +107,7 @@ class ExperiencesController < BackendController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_experience
-    @experience = Experience.find(params[:id])
+    @experience = Experience.includes(:profile).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

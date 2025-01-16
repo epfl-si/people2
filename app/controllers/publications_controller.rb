@@ -98,7 +98,7 @@ class PublicationsController < ApplicationController
   end
 
   def set_publication
-    @publication = Publication.find(params[:id])
+    @publication = Publication.includes(:profile).find(params[:id])
   end
 
   def publication_params

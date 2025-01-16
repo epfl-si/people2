@@ -183,6 +183,7 @@ en:
     courses: "Courses"
     doctoral_teaching: "Teaching & PhD"
     education: "Education"
+    editing_languages: "Edit Languages"
     experiences: "Work experiences"
     expertise: "Fields of expertise"
     of: "of"
@@ -234,6 +235,19 @@ en:
 
   work_experience: "Work Experience"
 
+  helpers:
+    placeholder:
+      education:
+        title_en: "PhD."
+        title_fr: "Doctorat"
+        title_it: "Dottorato"
+        title_de: "Doktortitel"
+        field_en: "Solid state physics"
+        field_fr: "Physique du solide"
+        field_it: "Fisica dello stato solido"
+        field_de: "Festkörperphysik"
+        director: "John Doe"
+        school: "Princeton University"
   activerecord:
     models:
       award: "award"
@@ -250,6 +264,15 @@ en:
         origin: Origin
         year: Year
         url: Url
+      education:
+        title_en: "title (en)"
+        title_fr: "title (fr)"
+        title_it: "title (it)"
+        title_de: "title (de)"
+        field_en: "field (en)"
+        field_fr: "field (fr)"
+        field_it: "field (it)"
+        field_de: "field (de)"
       experience:
         location: "copany or location or institution"
         period: "period (years)"
@@ -257,6 +280,22 @@ en:
         title_fr: "title (fr)"
         year_begin: "first year"
         year_end: "last year"
+      profile:
+        show_birthday: visible birthday
+        show_nationality: visible nationality
+        show_phone: visible main phone
+        show_photo: show photo
+        show_weburl: show personal web address
+        personal_web_url: personal web address
+        nationality_en: nationality (en)
+        nationality_fr: nationality (fr)
+        nationality_it: nationality (it)
+        nationality_de: nationality (de)
+        en_enabled: english
+        fr_enabled: french
+        it_enabled: italian
+        de_enabled: german
+        translations: Translations that will be available on my public profile
       person:
         function: main function
     errors:

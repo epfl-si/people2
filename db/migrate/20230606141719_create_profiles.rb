@@ -13,8 +13,6 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.boolean :show_photo
       t.boolean :show_weburl
 
-      t.string :force_lang, default: nil
-      t.string :default_lang, default: nil
       t.string :personal_web_url
 
       # Translatable attributes
@@ -23,11 +21,10 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string :nationality_it
       t.string :nationality_de
 
-      # this is now delegated to accred and requires approval
-      # t.string :title_en
-      # t.string :title_fr
-      # t.string :title_it
-      # t.string :title_de
+      t.boolean :en_enabled, default: true
+      t.boolean :fr_enabled, default: true
+      t.boolean :it_enabled, default: false
+      t.boolean :de_enabled, default: false
 
       t.timestamps
     end

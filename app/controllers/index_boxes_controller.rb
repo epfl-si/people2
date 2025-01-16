@@ -3,7 +3,7 @@
 class IndexBoxesController < BoxesController
   # Use callbacks to share common setup or constraints between actions.
   def set_box
-    @box = IndexBox.find(params[:id])
+    @box = IndexBox.includes(:profile).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
