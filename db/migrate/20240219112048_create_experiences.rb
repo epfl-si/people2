@@ -13,8 +13,8 @@ class CreateExperiences < ActiveRecord::Migration[7.0]
       t.integer :year_begin, null: false
       t.integer :year_end, null: true
       t.integer :position, null: false
-      t.integer :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me (draft)
-      t.boolean :visible, default: false
+      t.integer    :audience, default: 0 # 0=public, 1=intranet, 2=authenticated
+      t.integer    :visibility, default: 1 # 0=published, 1=draft, 2=hidden
       t.timestamps
     end
     add_index :experiences, %i[profile_id position], unique: true

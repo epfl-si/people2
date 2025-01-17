@@ -114,7 +114,7 @@ class ExperiencesController < BackendController
   def experience_params
     params.require(:experience).permit(
       :location, :title_fr, :title_en, :year_begin, :year_end,
-      :audience, :visible, :position, :description_fr, :description_en
+      :audience, :visibility, :position, :description_fr, :description_en
     )
   end
 end

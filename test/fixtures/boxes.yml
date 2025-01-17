@@ -9,8 +9,8 @@ gio_box_expertise:
   title_fr: Domaines de compétences
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 1
 
 gio_box_education:
@@ -24,8 +24,8 @@ gio_box_education:
   title_fr: Formation
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 2
 
 gio_box_experience:
@@ -38,8 +38,8 @@ gio_box_experience:
   title_fr: Parcours professionnel
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 3
 
 gio_box_publication:
@@ -52,8 +52,8 @@ gio_box_publication:
   title_fr: "Publications Representatives"
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 4
 
 # ---------------------------------------------------------------------- Edouard
@@ -67,8 +67,8 @@ edo_box_awards:
   title_fr: Récompenses
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 4
 
 # ---------------------------------------------------------------------- Olivier
@@ -81,8 +81,8 @@ oli_box_expertise:
   title_fr: Expertise
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 1
 
 oli_box_bio:
@@ -94,8 +94,8 @@ oli_box_bio:
   title_fr: Biographie
   show_title: false
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 2
 
 oli_box_cv:
@@ -107,8 +107,8 @@ oli_box_cv:
   title_fr: Curriculum vitae
   show_title: false
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 3
 
 oli_box_edu:
@@ -121,8 +121,8 @@ oli_box_edu:
   title_fr: Education
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 4
 
 oli_box_mission:
@@ -134,8 +134,8 @@ oli_box_mission:
   title_fr: Mission
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 5
 
 oli_box_pubs:
@@ -147,8 +147,8 @@ oli_box_pubs:
   title_fr: Publications Representatives
   show_title: true
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 6
 
 # ---------------------------------------------------------------------- Natalie
@@ -161,8 +161,8 @@ nat_box_expertise:
   title_fr: Expertise
   show_title: true
   locked: true
-  visible: false
   audience: 0
+  visibility: 1
   position: 1
 
 # Disponibilité only visible from intranet
@@ -173,8 +173,8 @@ nat_box_availability:
   title_fr: Disponibilité
   show_title: true
   locked: false
-  visible: true
   audience: 2
+  visibility: 0
   position: 2
 
 nat_box_work:
@@ -184,7 +184,7 @@ nat_box_work:
   title_fr: Travail en Cours
   show_title: true
   locked: false
-  visible: true
+  visibility: 0
   audience: 1
   position: 3
 
@@ -197,8 +197,8 @@ nat_box_mission:
   title_fr: Mission
   show_title: true
   locked: true
-  visible: false
   audience: 0
+  visibility: 2
   position: 4
 
 nat_box_bio:
@@ -210,8 +210,8 @@ nat_box_bio:
   title_fr: Biographie
   show_title: false
   locked: true
-  visible: false
   audience: 0
+  visibility: 1
   position: 5
 
 nat_box_cv:
@@ -223,8 +223,8 @@ nat_box_cv:
   title_fr: Curriculum vitae
   show_title: false
   locked: true
-  visible: true
   audience: 0
+  visibility: 0
   position: 6
 
 nat_box_edu_en:
@@ -237,8 +237,8 @@ nat_box_edu_en:
   title_fr: Education
   show_title: true
   locked: true
-  visible: false
   audience: 0
+  visibility: 0
   position: 7
 
 nat_box_missions:
@@ -250,6 +250,6 @@ nat_box_missions:
   title_fr: Mission
   show_title: true
   locked: true
-  visible: false
   audience: 0
+  visibility: 0
   position: 8

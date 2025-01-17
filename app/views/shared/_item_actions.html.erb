@@ -4,5 +4,7 @@
 <%= link_to icon_text('action.delete', 'trash-2'), send("#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete', turbo_confirm: t('action.confirm')} %>
 <%= link_to icon_text('action.edit', 'edit'), send("edit_#{item.class.name.downcase}_path", item), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
 </p>
+<!--
 <span class="muted"><%= Award.human_attribute_name(:audience) %>: </span>
-<%= render "shared/item_visibility", item: item %>
+-->
+<%= render "shared/item_visibility", item: item, extra_class: nil %>

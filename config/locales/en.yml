@@ -188,6 +188,8 @@ en:
     of: "of"
     past_phd_students: "Past EPFL PhD Students"
     publications: "Publications"
+    selector_audience: "Access"
+    selector_visibility: "Status"
     research: "Research"
     teaching: "Teaching & PhD"
     work_experience: "Work Experience"
@@ -206,12 +208,22 @@ en:
     intranet: "intranet only"
     intranet_access: "intranet"
     labels:
-      authenticated: "Authenticated users only"
-      draft: "Editor only"
-      owner: "Editor only"
+      published: "Published"
+      draft: "Draft"
       hidden: "Hidden"
+
+      public: "World visible"
       intranet: "Intranet only"
-      public: "Public"
+      authenticated: "Authenticated users only"
+    short_labels:
+      published: "Published"
+      draft: "Draft"
+      hidden: "Hidden"
+
+      public: "World"
+      intranet: "Intranet"
+      authenticated: "Users"
+
     public: "public"
     public_access: "public"
     visible: "visible"

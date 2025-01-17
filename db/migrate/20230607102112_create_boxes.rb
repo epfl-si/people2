@@ -27,8 +27,8 @@ class CreateBoxes < ActiveRecord::Migration[7.0]
       t.string     :title_de
       t.boolean    :show_title, default: true
       t.boolean    :locked, default: false
-      t.integer    :audience, default: 0 # 0=public, 1=intranet, 2=authenticated user, 3=me (draft)
-      t.boolean    :visible, default: false
+      t.integer    :audience, default: 0 # 0=public, 1=intranet, 2=authenticated
+      t.integer    :visibility, default: 1 # 0=published, 1=draft, 2=hidden
       t.integer    :position, null: false
       t.text       :data, null: true
       t.timestamps

@@ -90,6 +90,6 @@ class BoxesController < BackendController
 
   # Only allow a list of trusted parameters through.
   def box_params
-    params.require(:box).permit(:audience, :position)
+    params.require(:box).permit(:audience, :visibility, :position)
   end
 end

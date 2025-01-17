@@ -1,11 +1,49 @@
-<%= form_with(
-  model: item, 
-  remote: true, 
-  format: 'json',
-  class: defined?(extra_class) ? ["visibility-radios"] + extra_class : ["visibility-radios"],
-  data: {
-    controller: "visibility",
-    "visibility-model-value": item.class.name.underscore,
-  }) do |form| %>
-  <%= audience_selector(form, with_stimulus: true) %>
+<%= tag.div(
+    class: "visibility-container #{extra_class&.join(' ')}",
+    data: {
+      "controller": "visibility",
+      "visibility-model-value": item.class.name.underscore,
+      "visibility-field-value": "visibility"
+    }
+  ) do %>
+  <!-- 
+  <span class="text"><%= t 'title.selector_visibility' %></span> 
+  -->
+  <%= form_with(
+      model: item, 
+      remote: true, 
+      format: 'json',
+      class: ["visibility-radios"],
+      data: {"visibility-target": "form"},
+    ) do |form| %>
+    <%= visibility_selector(form, with_stimulus: true) %>
+  <% end %>
+  <span class="text" data-visibility-target="label">
+    <%= t "visibility.short_labels.#{item.visibility_label}" %>
+  </span>
+<% end %>
+
+<%= tag.div(
+    class: "visibility-container #{extra_class&.join(' ')}",
+    data: {
+      "controller": "visibility",
+      "visibility-model-value": item.class.name.underscore,
+      "visibility-field-value": "audience"
+    }
+  ) do %>
+  <!-- 
+  <span class="text"><%= t 'title.selector_audience' %></span>
+  -->
+  <%= form_with(
+      model: item, 
+      remote: true, 
+      format: 'json',
+      class: ["visibility-radios"],
+      data: {"visibility-target": "form"},
+    ) do |form| %>
+    <%= audience_selector(form, with_stimulus: true) %>
+  <% end %>
+  <span class="text" data-visibility-target="label">
+    <%= t "visibility.short_labels.#{item.audience_label}" %>
+  </span>
 <% end %>

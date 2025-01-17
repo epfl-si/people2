@@ -6,6 +6,6 @@ gio_publication0:
   year: 2003
   journal: "American Physical Society"
   profile: giova
-  visible: true
   audience: 0
+  visibility: 0
   position: 1
