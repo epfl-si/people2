@@ -67,7 +67,8 @@ natalie:
   show_nationality: true
   show_phone: true
   show_photo: true
-  force_lang: fr
+  en_enabled: false
+  fr_enabled: true
   nationality_fr: Suisse
   nationality_en: Swiss
   personal_web_url: "https://go.epfl.ch/web-EPFL"
