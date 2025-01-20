@@ -47,16 +47,8 @@ class PeopleController < ApplicationController
     #       that is not just a simple free text box with a title.
     return unless @profile
 
-    # take into account profile's language preferences overriding default
-    # Thread.current[:primary_lang] = I18n.locale
-    # Thread.current[:fallback_lang] = I18n.default_locale
-    if @profile.force_lang.present?
-      # TODO: should we simply redirect to the forced locale instead ?
-      Thread.current[:primary_lang] = @profile.force_lang
-      Thread.current[:fallback_lang] = @profile.force_lang
-    elsif @profile.default_lang.present?
-      Thread.current[:fallback_lang] = @profile.default_lang
-    end
+    # take into account profile's enaled languages
+    Thread.current[:translations] = @profile.translations
 
     # teachers are supposed to all have a profile
     @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?

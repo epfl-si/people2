@@ -58,15 +58,16 @@ module Translatable
   # return translation of a translated attribute in the required locale
   # if available otherwise return the translation in the default locale
   def translation_for(attribute, primary_lang = nil, fallback_lang = nil)
-    primary_lang ||= Thread.current[:primary_lang] || I18n.locale
-    fallback_lang ||= Thread.current[:fallback_lang] || I18n.default_locale
+    # primary_lang ||= Thread.current[:primary_lang] || I18n.locale
+    # fallback_lang ||= Thread.current[:fallback_lang] || I18n.default_locale
+    primary_lang ||= I18n.locale
+    fallback_lang ||= Thread.current[:translations] || %w[en fr it de]
+    langs = [primary_lang] + fallback_lang
 
-    a = "#{attribute}_#{primary_lang}"
-    d = "#{attribute}_#{fallback_lang}"
-    if respond_to?(a) && respond_to?(d)
-      send(a) || send(d)
+    if respond_to?("#{attribute}_en")
+      langs.map { |l| send "#{attribute}_#{l}" }.compact.first
     else
-      instance_variable_get("@#{a}") || instance_variable_get("@#{d}")
+      langs.map { |l| instance_variable_get "@#{attribute}_#{l}" }.compact.first
     end
   end
 
