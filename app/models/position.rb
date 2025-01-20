@@ -1,17 +1,22 @@
 # frozen_string_literal: true
 
 class Position
-  attr_reader :id, :label_en, :label_frm, :label_fri, :label_frf
+  attr_reader :id, :label_en, :label_frm, :label_fri, :label_frf, :label_it, :label_de
 
   include Translatable
   inclusively_translates :label
 
   def initialize(h)
     @id = h.key?('id') ? h['id'] : 0
-    @label_en = h['labelen']
+
     @label_frm = h['labelfr']
     @label_fri = h.key?('labelinclusive') ? h['labelinclusive'] : h['labelfr']
     @label_frf = h.key?('labelxx') ? h['labelxx'] : h['labelfr']
+    @label_en = h['labelen']
+
+    # api.epfl.ch does not provide status labels in IT and DE locale
+    @label_it = @label_en
+    @label_de = @label_en
   end
 
   def self.load(payload)

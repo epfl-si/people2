@@ -3,7 +3,8 @@
 # Accreditation is the real accred coming from official EPFL accred data
 class Accreditation
   attr_accessor :prefs
-  attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order, :unit_label_fr, :unit_label_en
+  attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order,
+              :unit_label_fr, :unit_label_en, :unit_label_it, :unit_label_de
   attr_writer :unit, :botweb
 
   include Translatable
@@ -17,10 +18,16 @@ class Accreditation
     @unit_id = ud["id"].to_i
     @unit_name = ud["name"]
     @unit_label_fr = ud["labelfr"]
-    @unit_label_en = ud["labelfr"]
+    @unit_label_en = ud["labelen"]
+    # api.epfl.ch does not provide unit labels in it and de
+    @unit_label_it = ud["labelen"]
+    @unit_label_de = ud["labelen"]
     @status_id = sd['id'].to_i
+    # api.epfl.ch does not provide status labels in it and de
     @status_label_fr = sd['labelfr']
-    @status_label_en = sd['labelfr']
+    @status_label_en = sd['labelen']
+    @status_label_it = sd['labelen']
+    @status_label_de = sd['labelen']
     @accred_order = data['order'].to_i
 
     # TODO: check if using status where position is not provided makes sense
