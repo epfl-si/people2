@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class PicturesController < BackendController
-  before_action :set_profile, only: %i[index create]
-  before_action :set_picture, only: %i[destroy]
+  before_action :set_picture, only: %i[crop update destroy]
+  before_action :set_profile, only: %i[crop update]
 
   # GET /profile/profile_id/pictures or /profile/profile_id/pictures.json
   def index
-    @pictures = @profile.pictures.order(:camipro)
+    @profile = Profile.find(params[:profile_id])
+    @pictures = Picture.order(:camipro)
   end
 
   # # GET /pictures/1 or /pictures/1.json
@@ -23,22 +24,14 @@ class PicturesController < BackendController
       raise "Max number of profile pictures reached"
     end
 
-    @picture = @profile.pictures.new(picture_params)
+  def crop
     respond_to do |format|
-      if @picture.save
-        # format.html { append_picture }
-        format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.create"
-          render :create, locals: { profile: @profile, picture: @picture }
-        end
-        format.json { render :show, status: :created, location: @picture }
-      else
-        # format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.create"
-          render :new, status: :unprocessable_entity, locals: { profile: @profile, picture: @picture }
-        end
-        format.json { render json: @picture.errors, status: :unprocessable_entity }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "profile_picture",
+          partial: "pictures/crop",
+          locals: { picture: @picture }
+        )
       end
     end
   end
