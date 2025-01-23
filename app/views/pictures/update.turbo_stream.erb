@@ -1,0 +1,4 @@
+<%= turbo_stream.replace "profile_picture" do %>
+  <%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
