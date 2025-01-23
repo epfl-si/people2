@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  resources :profiles, only: %i[edit update] do
+  resources :profiles, only: %i[edit update show] do
     resources :rich_text_boxes, shallow: true
     resources :index_boxes, shallow: true
     resources :boxes, shallow: true, only: %i[update]
@@ -34,7 +34,13 @@ Rails.application.routes.draw do
     resources :educations, shallow: true
     resources :experiences, shallow: true
     resources :publications, shallow: true
-    resources :pictures, shallow: true, only: %i[index create destroy]
+
+    resources :pictures, shallow: true, only: %i[index create destroy update] do
+      member do
+        get :crop
+      end
+    end
+
     resources :accreds, shallow: true, only: %i[index show update]
     member do
       patch :set_favorite_picture
