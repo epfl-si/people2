@@ -11,3 +11,4 @@ pin "@rails/request.js", to: "@rails--request.js.js" # @0.0.9
 pin "sortablejs" # @1.15.2
 pin "trix"
 pin "@rails/actiontext", to: "actiontext.esm.js"
+pin "cropperjs" # @1.6.2
