@@ -1,5 +1,5 @@
-<div id='new-picture-form'>
-<% if profile.pictures.count < Rails.application.config_for(:limits).max_profile_pictures %>
+<div id="new-picture-form" data-controller="image-cropper">
+  <% if profile.pictures.count < Rails.application.config_for(:limits).max_profile_pictures %>
   <%= form_with(model: [profile, Picture.new], local: false) do |form| %>
     <div class="upload">
       <%= form.label :image, class: "btn btn-secondary btn-sm icon-right" do %>
@@ -13,5 +13,4 @@
 <% else %>
 <div class="upload"><p><%= t 'msg.max_photos_reached' %></p></div>
 <% end %>
-
 </div>
