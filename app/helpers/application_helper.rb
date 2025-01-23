@@ -51,7 +51,9 @@ module ApplicationHelper
   def profile_photo(picture, options = {})
     options = options.symbolize_keys
     tag_options = options.slice(:alt, :class, :id, :size)
-    if picture.present? && (img = picture.image).present? && img.attached?
+    if picture.present? && picture.cropped_image&.attached?
+      image_tag(picture.cropped_image, alt: 'Cropped Image', class: 'img-fluid')
+    elsif picture.present? && (img = picture.image).present? && img.attached?
       rep_options = options.slice(:resize_to_limit, :resize_to_fit, :resize_to_fill, :resize_and_pad, :crop, :rotate)
       if rep_options.empty?
         image_tag(img, tag_options)
