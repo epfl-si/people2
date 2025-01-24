@@ -18,13 +18,14 @@
   import_tasks:
     file: config.yml
 
-- name: Traefik Certificates
-  tags:
-    - traefik.config
-    - traefik.config.certs
-  import_tasks:
-    file: config_certs.yml
-  when: traefik.with_https
+# The certificates are served by the ingress traefik.
+# - name: Traefik Certificates
+#   tags:
+#     - traefik.config
+#     - traefik.config.certs
+#   import_tasks:
+#     file: config_certs.yml
+#   when: traefik.with_https
 
 - name: Traefik Run
   tags:

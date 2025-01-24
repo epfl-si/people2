@@ -43,3 +43,8 @@ Check all available tags with the following command
    4. _run_
    5. _admin_
 
+### Common tasks
+#### Renew the certificate on the test server:
+```
+./possible.sh --test -t ingress.config.certs
+```
