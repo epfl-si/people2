@@ -51,6 +51,8 @@ class ApplicationController < ActionController::Base
     I18n.with_locale(locale, &action)
   end
 
+  # TODO: This is not the correct way of finding internal clients. The reliable
+  # way is to check if X-EPFL-Internal header is set in the request.
   def register_client_origin
     @is_intranet_client = Rails.configuration.intranet_re.match?(request.remote_ip)
   end
