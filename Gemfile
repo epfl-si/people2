@@ -96,10 +96,14 @@ gem 'omniauth_openid_connect'
 gem 'omniauth-rails_csrf_protection'
 # gem 'omniauth-tequila'
 
+# Ollama LLM AI for translation and language detection
+# https://github.com/gbaptista/ollama-ai
+gem 'ollama-ai'
+
 gem 'ostruct'
 
+# PaperTrail for tracking changes to models
 # https://github.com/paper-trail-gem/paper_trail
-#
 gem 'paper_trail', '~> 15'
 
 # Positioning replaces acts_as_list by the same author

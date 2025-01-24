@@ -106,6 +106,7 @@ services:
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
       ADMIN_SCIPERS: ${ADMIN_SCIPERS}
 
+      OLLAMA_URL: http://${DOCKER_IP}:11434
       OIDC_HOSTNAME: keycloak.${DOMAIN:-dev.jkldsa.com}
       OIDC_REALM: rails
       OIDC_IDENTIFIER: hello_rails
