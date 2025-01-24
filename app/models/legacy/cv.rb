@@ -14,6 +14,7 @@ module Legacy
     has_many :boxes, class_name: 'Box', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv
 
     has_many :achievements,   class_name: 'Achievement', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv
+    has_many :awards,         class_name: 'Award', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv
     has_many :educations,     class_name: 'Education', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv
     has_many :experiences,    class_name: 'Experience', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv
     has_many :publications,   class_name: 'Publication', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv

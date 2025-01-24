@@ -3,6 +3,10 @@
 module Legacy
   class Award < Legacy::BaseCv
     self.table_name = 'awards'
-    belongs_to :person, class_name: 'Person', foreign_key: 'sciper', inverse_of: :awards
+
+    include Ollamable
+    ollamizes :title
+
+    belongs_to :cv, class_name: 'Cv', foreign_key: 'sciper', inverse_of: :awards
   end
 end
