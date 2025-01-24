@@ -7,8 +7,33 @@ class ApplicationController < ActionController::Base
   # rescue_from ActionPolicy::Unauthorized do |_exception|
   #   redirect_to "/401"
   # end
-
-  def devindex; end
+  DESCS = {
+    "116080" => "profile with forced french language and some bio box",
+    "243371" => "very little data but usual name different from official one",
+    "121769" => "nothing special but its me ;)",
+    "229105" => "a professor with a lot of affiliations",
+    "110635" => "a standard prof",
+    "126003" => "a prof with various affiliations and links",
+    "107931" => "a teacher",
+    "363674" => "a student",
+    "173563" => "A person whose profile should be created the first edit",
+    "185853" => "an external for which there should be no people page",
+    "195348" => "Another external for which there should be no people page",
+    "123456" => "a (fake) existing person with redirect applied",
+  }.freeze
+  def devindex
+    @data = []
+    Profile.all.find_each do |profile|
+      person = profile.person
+      d = {
+        name: person.name.display.to_s,
+        sciper: profile.sciper.to_s,
+        email: person.email_user.to_s,
+        desc: DESCS[profile.sciper] || "Automatic Import",
+      }
+      @data << OpenStruct.new(d)
+    end
+  end
 
   def self.unique_counter_value
     @indx ||= 0
