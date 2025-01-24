@@ -88,7 +88,7 @@ module Translatable
 
     t = send("#{attribute}_#{primary_lang}")
     t = send("#{attribute}_#{fallback_lang}") if primary_lang != fallback_lang && (t.id.nil? || t.body.empty?)
-    t.id.nil? || t.body.empty? ? nil : t.body
+    t.id.nil? || t.body.nil? || t.body.empty? ? nil : t.body
   end
 
   def inclusive_translation_for(attribute, gender = nil, primary_lang = nil, fallback_lang = nil)
