@@ -1,41 +1,107 @@
 ---
+# TODO translations!!
 ac_majour:
+  label: majour
   name_en: Major award, medal or prize
   name_fr: Prix important, medaille
+  name_it: Major award, medal or prize
+  name_de: Major award, medal or prize
   property: award_category
 ac_discipline:
+  label: discipline
   name_en: Discipline specific award
   name_fr: Prix specifique à la discipline
+  name_it: Discipline specific award
+  name_de: Discipline specific award
   property: award_category
 ac_best:
+  label: best
   name_en: Best publication, poster or thesis
   name_fr: Meilleur publication, poster ou these
+  name_it: Best publication, poster or thesis
+  name_de: Best publication, poster or thesis
   property: award_category
 ac_honorary:
+  label: honorary
   name_en: Honorary doctorate
   name_fr: Honorary doctorate
+  name_it: Honorary doctorate
+  name_de: Honorary doctorate
   property: award_category
 ac_fellowship:
+  label: fellowship
   name_en: Fellowship or nomination
   name_fr: Nomination ou Fellowship
+  name_it: Fellowship or nomination
+  name_de: Fellowship or nomination
   property: award_category
 ac_teaching:
+  label: teaching
   name_en: Teaching award
   name_fr: Prix pour l'enseignement
+  name_it: Teaching award
+  name_de: Teaching award
   property: award_category
 ac_other:
+  label: other
   name_en: Other
   name_fr: Autre
+  name_it: Other
+  name_de: Other
   property: award_category
 ao_epfl:
+  label: epfl
   name_en: EPFL
   name_fr: EPFL
+  name_it: EPFL
+  name_de: EPFL
   property: award_origin
 ao_suisse:
+  label: suisse
   name_en: Switzerland 
   name_fr: Suisse
+  name_it: Switzerland 
+  name_de: Switzerland 
   property: award_origin
 ao_international:
+  label: international
   name_en: International
   name_fr: International
+  name_it: International
+  name_de: International
   property: award_origin
+aa_awards:
+  label: awards
+  name_en: Award
+  name_fr: Award
+  name_it: Premio
+  name_de: Award
+  property: achievement_category
+aa_education:
+  label: education
+  name_en: Education
+  name_fr: Education
+  name_it: Insegnamento
+  name_de: Education
+  property: achievement_category
+aa_innovation:
+  label: innovation
+  name_en: Innovation
+  name_fr: Innovation
+  name_it: Innovazione
+  name_de: Innovation
+  property: achievement_category
+aa_research:
+  label: research
+  name_en: Research
+  name_fr: Recherche
+  name_it: Ricerca
+  name_de: Research
+  property: achievement_category
+aa_other:
+  label: other
+  name_en: Other
+  name_fr: Autre
+  name_it: Altro
+  name_de: Other
+  property: achievement_category
