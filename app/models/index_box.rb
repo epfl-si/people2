@@ -9,7 +9,7 @@
 #  - experience
 
 class IndexBox < Box
-  ALLOWED_SUBKINDS = %w[Award Education Experience Publication Social].freeze
+  ALLOWED_SUBKINDS = %w[Achievement Award Education Experience Publication Social].freeze
 
   translates_rich_text :content
 
