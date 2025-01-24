@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
 
   create_table "achievements", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.integer "audience", default: 0
+    t.integer "visibility", default: 1
     t.integer "position", null: false
     t.bigint "profile_id", null: false
     t.bigint "category_id", null: false

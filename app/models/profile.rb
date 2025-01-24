@@ -57,7 +57,6 @@ class Profile < ApplicationRecord
     show_nationality: false,
     show_phone: true,
     show_photo: false,
-    force_lang: nil,
     personal_web_url: nil,
     nationality_en: nil,
     nationality_fr: nil,
