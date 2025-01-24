@@ -1,4 +1,6 @@
+# ------------------------------------------------- Side section
 mbox_social:
+  label: social
   section: side
   kind: IndexBox
   subkind: Social
@@ -6,45 +8,90 @@ mbox_social:
   title_fr: "Resaux Socials"
   title_it: "Reti Sociali"
   title_de: "Soziale Netzwerke"
+  standard: true
+  locked_title: true
   show_title: false
   position: 1
+
+# ------------------------------------------------- Contact section
 mbox_expertise:
+  label: expertise
   section: contact
   kind: RichTextBox
+  subkind: Standard
   title_en: "Expertise"
   title_fr: "Expertise"
   title_it: "Specializzazione"
   title_de: "Fachkenntnisse"
+  standard: true
+  locked_title: true
   show_title: true
-  position: 2
+  position: 1
 mbox_mission:
+  label: mission
   section: contact
   kind: RichTextBox
+  subkind: Standard
   title_en: "Mission"
   title_fr: "Mission"
   title_it: "Missione"
   title_de: "Aufgabe"
+  standard: true
+  locked_title: true
+  show_title: true
+  position: 2
+mbox_contactfree:
+  label: contactfree
+  section: contact
+  kind: RichTextBox
+  subkind: Free
+  standard: false
+  locked_title: false
   show_title: true
   position: 3
+
+# ------------------------------------------------- Biography section
 mbox_biography:
+  label: biography
   section: bio
   kind: RichTextBox
+  subkind: Standard
   title_en: "Biography"
   title_fr: "Biographie"
   title_it: "Biografia"
   title_de: "Biographie"
+  standard: true
+  locked_title: true
   show_title: false
   position: 1
 mbox_curriculum:
+  label: curriculum
   section: bio
   kind: RichTextBox
+  subkind: Standard
   title_en: "Curriculum vitae"
   title_fr: "Curriculum vitae"
   title_it: "Curriculum vitae"
   title_de: "Lebenslauf"
+  standard: true
+  locked_title: true
   show_title: false
   position: 2
+mbox_biocurrwork:
+  label: currwork
+  section: bio
+  kind: RichTextBox
+  subkind: Standard
+  title_en: "Current Work"
+  title_fr: "Travail en Cours"
+  title_it: "Occupazione attuale"
+  title_de: "Current Work"
+  standard: true
+  locked_title: true
+  show_title: true
+  position: 3
 mbox_education:
+  label: education
   section: bio
   kind: IndexBox
   subkind: Education
@@ -52,9 +99,12 @@ mbox_education:
   title_fr: "Education"
   title_it: "Percorso Educativo"
   title_de: "Ausbildung"
+  standard: true
+  locked_title: true
   show_title: true
-  position: 3
+  position: 4
 mbox_experience:
+  label: experience
   section: bio
   kind: IndexBox
   subkind: Experience
@@ -62,9 +112,12 @@ mbox_experience:
   title_fr: "Parcours professionnel"
   title_it: "Esperienza lavorativa"
   title_de: "Berufserfahrung"
+  standard: true
+  locked_title: true
   show_title: true
-  position: 4
+  position: 5
 mbox_award:
+  label: award
   section: bio
   kind: IndexBox
   subkind: Award
@@ -72,10 +125,12 @@ mbox_award:
   title_fr: "Recompenses"
   title_it: "Riconoscimenti"
   title_de: "Auszeichnungen"
+  standard: true
+  locked_title: true
   show_title: true
-  position: 4
-
+  position: 6
 mbox_publication:
+  label: publication
   section: bio
   kind: IndexBox
   subkind: Publication
@@ -83,17 +138,54 @@ mbox_publication:
   title_fr: "Publications Representatives"
   title_it: "Pubblicazioni rappresentative"
   title_de: "Ausgewählte Publikationen"
+  standard: true
+  locked_title: true
   show_title: true
-  position: 1
+  position: 7
+mbox_biofree:
+  label: biofree
+  section: bio
+  kind: RichTextBox
+  subkind: Free
+  standard: false
+  locked_title: false
+  show_title: true
+  position: 8
 
 # ------------------------------------------------------------- research section
 
-mbox_expertise:
+mbox_field:
+  label: field
   section: research
   kind: RichTextBox
+  subkind: Standard
   title_en: "Current Research Field"
   title_fr: "Domaine de recherche actuel"
   title_it: "Dominio di ricerca"
   title_de: "Aktuelles Forschungsfeld"
+  standard: true
+  locked_title: true
   show_title: true
   position: 1
+mbox_achievements:
+  label: achievements
+  section: research
+  kind: IndexBox
+  subkind: Achievement
+  title_en: "Annual Achievements"
+  title_fr: "Réalisations annuelles"
+  title_it: "Risultati dell'anno"
+  title_de: "Jährliche Erfolge"
+  standard: false
+  locked_title: true
+  show_title: true
+  position: 2
+mbox_researchfree:
+  label: researchfree
+  section: research
+  kind: RichTextBox
+  subkind: Free
+  standard: false
+  locked_title: false
+  show_title: true
+  position: 3

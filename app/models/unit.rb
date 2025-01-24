@@ -17,8 +17,6 @@ class Unit
   end
 
   def initialize(data)
-    Rails.logger.debug("Unit::init: data=#{data.inspect}")
-
     @id = data['id']
     @name_fr = data['name']
     @name_en = data['nameen']

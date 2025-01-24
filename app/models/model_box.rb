@@ -5,6 +5,13 @@ class ModelBox < ApplicationRecord
   has_many :boxes, class_name: "Box", dependent: :nullify
   positioned on: %i[section_id locale]
   serialize  :data, coder: YAML
+  validates :label, uniqueness: true
+  validates :title_en, presence: true, if: -> { locked_title? }
+  validates :title_fr, presence: true, if: -> { locked_title? }
+  validates :title_it, presence: true, if: -> { locked_title? }
+  validates :title_de, presence: true, if: -> { locked_title? }
+
+  scope :standard, -> { where(standard: true) }
 
   def new_box_for_profile(profile)
     box = Object.const_get(kind).send("from_model", self)

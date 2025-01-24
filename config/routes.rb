@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :achievements
   # Custom Error Pages
   match '/500', via: :all, to: 'errors#internal_server_error'
   match '/401', via: :all, to: 'errors#unauthorized'
@@ -60,7 +61,7 @@ Rails.application.routes.draw do
 
   # profile#show using _legacy_ layout
   get '/:sciper_or_name', to: 'people#show', as: 'person',
-                          constraints: { sciper_or_name: /([0-9]{6})|([a-z]+\.[a-z]+)/ }
+                          constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
 
   if Rails.env.production?
     root 'application#homepage'

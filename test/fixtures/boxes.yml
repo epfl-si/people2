@@ -7,8 +7,8 @@ gio_box_expertise:
   model: mbox_expertise
   title_en: Expertise
   title_fr: Domaines de compétences
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 1
@@ -22,8 +22,8 @@ gio_box_education:
   model: mbox_education
   title_en: Education
   title_fr: Formation
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 2
@@ -36,8 +36,8 @@ gio_box_experience:
   section: bio
   title_en: Professional experience
   title_fr: Parcours professionnel
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 3
@@ -50,8 +50,8 @@ gio_box_publication:
   section: research
   title_en: "Selected Publications"
   title_fr: "Publications Representatives"
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 4
@@ -65,8 +65,8 @@ edo_box_awards:
   section: bio
   title_en: Awards
   title_fr: Récompenses
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 4
@@ -79,8 +79,8 @@ oli_box_expertise:
   section: bio
   title_en: Expertise
   title_fr: Expertise
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 1
@@ -92,8 +92,8 @@ oli_box_bio:
   section: research
   title_en: Biography
   title_fr: Biographie
+  locked_title: true
   show_title: false
-  locked: true
   visible: true
   audience: 0
   position: 2
@@ -105,8 +105,8 @@ oli_box_cv:
   section: bio
   title_en: Curriculum vitae
   title_fr: Curriculum vitae
+  locked_title: true
   show_title: false
-  locked: true
   visible: true
   audience: 0
   position: 3
@@ -119,8 +119,8 @@ oli_box_edu:
   section: bio
   title_en: Education
   title_fr: Education
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 4
@@ -132,8 +132,8 @@ oli_box_mission:
   section: bio
   title_en: Mission
   title_fr: Mission
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 5
@@ -145,8 +145,8 @@ oli_box_pubs:
   section: research
   title_en: Selected Publications
   title_fr: Publications Representatives
+  locked_title: true
   show_title: true
-  locked: true
   visible: true
   audience: 0
   position: 6
@@ -159,8 +159,8 @@ nat_box_expertise:
   section: bio
   title_en: Expertise
   title_fr: Expertise
+  locked_title: true
   show_title: true
-  locked: true
   visible: false
   audience: 0
   position: 1
@@ -171,8 +171,8 @@ nat_box_availability:
   profile: natalie
   section: contact
   title_fr: Disponibilité
+  locked_title: true
   show_title: true
-  locked: false
   visible: true
   audience: 2
   position: 2
@@ -182,8 +182,8 @@ nat_box_work:
   profile: natalie
   section: bio
   title_fr: Travail en Cours
+  locked_title: false
   show_title: true
-  locked: false
   visible: true
   audience: 1
   position: 3
@@ -195,8 +195,8 @@ nat_box_mission:
   section: bio
   title_en: Mission
   title_fr: Mission
+  locked_title: true
   show_title: true
-  locked: true
   visible: false
   audience: 0
   position: 4
@@ -208,8 +208,8 @@ nat_box_bio:
   section: bio
   title_en: Biography
   title_fr: Biographie
+  locked_title: true
   show_title: false
-  locked: true
   visible: false
   audience: 0
   position: 5
@@ -221,8 +221,8 @@ nat_box_cv:
   section: bio
   title_en: Curriculum vitae
   title_fr: Curriculum vitae
+  locked_title: true
   show_title: false
-  locked: true
   visible: true
   audience: 0
   position: 6
@@ -235,8 +235,8 @@ nat_box_edu_en:
   section: bio
   title_en: Education
   title_fr: Education
+  locked_title: true
   show_title: true
-  locked: true
   visible: false
   audience: 0
   position: 7
@@ -248,8 +248,8 @@ nat_box_missions:
   section: bio
   title_en: Mission
   title_fr: Mission
+  locked_title: true
   show_title: true
-  locked: true
   visible: false
   audience: 0
   position: 8

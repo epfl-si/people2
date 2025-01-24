@@ -6,16 +6,18 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string  :sciper, index: { unique: true, name: 'unique_scipers' }
 
       # TODO: remove show_birthday as it is no longer available from API
-      t.boolean :show_birthday
-      t.boolean :show_function
-      t.boolean :show_nationality
-      t.boolean :show_phone
-      t.boolean :show_photo
-      t.boolean :show_weburl
+      t.boolean :show_birthday, default: false
+      t.boolean :show_function, default: false
+      t.boolean :show_nationality, default: false
+      t.boolean :show_phone, default: false
+      t.boolean :show_photo, default: true
+      t.boolean :show_weburl, default: false
 
       t.string :force_lang, default: nil
       t.string :default_lang, default: nil
       t.string :personal_web_url
+
+      t.string :phone, default: nil
 
       # Translatable attributes
       t.string :nationality_en
