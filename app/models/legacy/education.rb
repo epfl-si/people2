@@ -3,6 +3,10 @@
 module Legacy
   class Education < Legacy::BaseCv
     self.table_name = 'edu'
+
+    include Ollamable
+    ollamizes :title
+
     belongs_to :cv, class_name: 'Cv', foreign_key: 'sciper', inverse_of: :educations
   end
 end

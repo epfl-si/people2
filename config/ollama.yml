@@ -1,0 +1,15 @@
+# OpenID Connect (OIDC) configuration for the app
+# Available as `Rails.application.config_for(:ollama)`
+
+ollama_config: &ollama_config
+  url: <%= ENV.fetch("OLLAMA_URL", "http://localhost:11434") %>
+
+# 12-factor trumps Rails dogma, see
+# https://nebulab.com/blog/12-factor-rails-settings
+# 💡 You want all three aliases, even in dev, otherwise `./bin/rake` won't work!
+development:
+  <<: *ollama_config
+test:
+  <<: *ollama_config
+production:
+  <<: *ollama_config
