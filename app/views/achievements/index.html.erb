@@ -1,0 +1,15 @@
+<%= turbo_frame_tag :achievements_index do %>
+	<%= turbo_frame_tag "achievements", src: nil, target: nil, data: {controller: "sortable"} do %>
+		<% @achievements.each do |achievement| %>
+			<%= render 'editable_achievement', achievement: achievement %>
+		<% end %>
+	<% end %>
+
+	<div class="list-group-item" %>
+		<%= turbo_frame_tag "new_achievement_form" do %>
+			<div class="row justify-content-center">
+				<%= link_to icon_text('add', 'plus-circle'), new_profile_achievement_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+			</div>
+		<% end %>
+	</div>
+<% end %>

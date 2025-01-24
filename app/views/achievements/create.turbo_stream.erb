@@ -1,0 +1,12 @@
+<%= turbo_stream.append "achievements" do %>
+<%= render "editable_achievement", achievement: @achievement %> 
+<% end %>
+
+<%= turbo_stream.replace "new_achievement_form" do %>
+<%= turbo_frame_tag "new_achievement_form" do %>
+	<div class="row justify-content-center">
+		<%= link_to icon_text('add', 'plus'), new_profile_achievement_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+	</div>
+<% end %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

@@ -1,0 +1,36 @@
+<% # achievement.errors.add :base, "This is a very severe error" %>
+<% # achievement.errors.add :base, "This is a less severe error" %>
+
+<%= form_with(model: [profile, Achievement], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: Achievement if Achievement.errors.any? %>
+
+  <div class="form-group">
+    <%= form.label Achievement.human_attribute_name(:description_fr) %>
+    <%= form.text_field :description_fr, placeholder: "Prix Nobel", class: input_class_for(form, :description_fr) %>
+    <%#= errors_for(form, :title_fr) %>
+  </div>
+  <div class="form-group">
+    <%= form.label Achievement.human_attribute_name(:description_en) %>
+    <%= form.text_field :description_en, placeholder: "Nobel prize" %>
+  </div>
+  <div class="form-group">
+    <%= form.label Achievement.human_attribute_name(:year) %>
+    <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
+  </div>
+  <div class="form-group">
+    <%= form.label Achievement.human_attribute_name(:url) %>
+    <%= form.url_field :url %>
+  </div>
+  <div class="form-group">
+    <%= form.label Achievement.human_attribute_name(:category) %>
+    <%= form.collection_select :category_id, Achievement.categories, :id, :t_name %>
+  </div>
+  <div class="form-group">
+    <%= form.label Achievement.human_attribute_name(:audience) %>
+    <span class="inform_visibility"><%= audience_selector form %></div>
+  </div>
+  <%= form_actions(form, Achievement) %>
+<% end %>
+
+
+

@@ -1,0 +1,11 @@
+<div class="list-group-item list-group-item-borderless education-list">
+  <p>
+    <strong><%= achievement.category.t_name %></strong>:
+    <% if achievement.url.present? %>
+      <%= link_to achievement.t_description, achievement.url %>
+    <% else %>
+      <%= achievement.t_description %>
+    <% end %>
+  </p>
+  <p><%= achievement.year %></p>
+</div>
