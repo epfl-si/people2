@@ -64,3 +64,5 @@ Security/MarshalLoad:
 
 Rails/RefuteMethods:
   Enabled: false
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false

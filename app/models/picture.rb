@@ -56,6 +56,8 @@ class Picture < ApplicationRecord
 
   def refuse_destroy_if_camipro
     return unless camipro?
+    # We still allow to destroy picture if it's profile is being destroyed too
+    return if destroyed_by_association
 
     errors.add :base, "activerecord.errors.picture.attributes.base.undeletable"
     throw :abort

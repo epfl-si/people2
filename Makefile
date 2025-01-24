@@ -261,6 +261,13 @@ courses: dcup
 	docker compose exec webapp bin/rails data:courses
 
 
+## seed the data for Work::Sciper
+scipers: dcup
+	docker compose exec webapp bin/rails legacy:seed_scipers
+
+legaimport: dcup
+	docker compose exec webapp bin/rails legacy:import
+
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb
