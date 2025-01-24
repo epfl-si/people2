@@ -10,24 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
-  create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id"
-    t.integer "unit_id"
-    t.integer "position", null: false
-    t.string "sciper"
-    t.boolean "visible", default: true
-    t.boolean "visible_addr", default: true
-    t.string "unit_fr"
-    t.string "unit_en"
-    t.string "unit_it"
-    t.string "unit_de"
-    t.text "role", null: false
-    t.string "gender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id", "position"], name: "index_accreds_on_profile_id_and_position", unique: true
-    t.index ["profile_id"], name: "index_accreds_on_profile_id"
+ActiveRecord::Schema[7.1].define(version: 2023_06_06_141719) do
+  create_table "accreds", primary_key: ["sciper", "unit"], charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, default: "", null: false
+    t.string "unit", limit: 6, default: "", null: false
+    t.string "accred_show", limit: 1, default: ""
+    t.integer "ordre", limit: 1, default: 0, null: false
+    t.string "accred_tree_show", limit: 1
+    t.string "addr_hide", limit: 1
+    t.string "office_hide", limit: 32
+  end
+
+  create_table "achievements", id: :integer, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, null: false
+    t.string "cvlang", limit: 2
+    t.timestamp "created_at", default: -> { "current_timestamp()" }, null: false
+    t.integer "year", null: false
+    t.column "category", "enum('education','research','innovation','awards','other')", default: "other"
+    t.text "description", null: false
+    t.string "url", limit: 256
+    t.integer "ordre", limit: 1
+    t.index ["sciper"], name: "sciper"
   end
 
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -76,104 +79,114 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "awards", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id", null: false
-    t.bigint "category_id", null: false
-    t.bigint "origin_id", null: false
-    t.string "title_en"
-    t.string "title_fr"
-    t.string "title_it"
-    t.string "title_de"
-    t.string "issuer"
-    t.integer "year"
+  create_table "awards", id: :integer, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.integer "ordre"
+    t.string "sciper", limit: 10, null: false
+    t.string "title", null: false
+    t.string "grantedby"
+    t.string "dates", limit: 45
     t.string "url"
-    t.integer "position", null: false
-    t.integer "audience", default: 0
-    t.boolean "visible", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_awards_on_category_id"
-    t.index ["origin_id"], name: "index_awards_on_origin_id"
-    t.index ["profile_id", "position"], name: "index_awards_on_profile_id_and_position", unique: true
-    t.index ["profile_id"], name: "index_awards_on_profile_id"
+    t.integer "year"
+    t.string "category", limit: 64
+    t.string "origin", limit: 32
+    t.index ["sciper"], name: "sciper"
   end
 
-  create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "type", null: false
-    t.string "subkind"
-    t.bigint "profile_id", null: false
-    t.bigint "section_id", null: false
-    t.bigint "model_box_id"
-    t.string "title_en"
-    t.string "title_fr"
-    t.string "title_it"
-    t.string "title_de"
-    t.boolean "show_title", default: true
-    t.boolean "locked", default: false
-    t.integer "audience", default: 0
-    t.boolean "visible", default: false
-    t.integer "position", null: false
-    t.text "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["model_box_id"], name: "index_boxes_on_model_box_id"
-    t.index ["profile_id"], name: "index_boxes_on_profile_id"
-    t.index ["section_id"], name: "index_boxes_on_section_id"
+  create_table "boxes", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, default: "", null: false
+    t.string "label", limit: 50
+    t.text "content", size: :medium
+    t.string "box_show", limit: 1, default: ""
+    t.string "position", limit: 1, default: "", null: false
+    t.integer "ordre", limit: 1, default: 0, null: false
+    t.string "cvlang", limit: 2, default: "", null: false
+    t.string "sys", limit: 1
+    t.text "src", size: :long
+    t.timestamp "ts", default: -> { "current_timestamp() ON UPDATE current_timestamp()" }, null: false
+    t.text "contentutf8"
+    t.index ["sciper"], name: "sciper"
   end
 
-  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "code"
-    t.string "title_en"
-    t.string "title_fr"
-    t.string "title_it"
-    t.string "title_de"
-    t.string "language_en"
-    t.string "language_fr"
-    t.string "language_it"
-    t.string "language_de"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "boxes_old", id: :integer, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, default: "", null: false
+    t.string "label", limit: 50
+    t.text "content"
+    t.string "box_show", limit: 1, default: ""
+    t.string "position", limit: 1, default: "", null: false
+    t.integer "ordre", limit: 1, default: 0, null: false
+    t.string "cvlang", limit: 2, default: "", null: false
+    t.string "sys", limit: 1
   end
 
-  create_table "educations", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id", null: false
-    t.string "title_en"
-    t.string "title_fr"
-    t.string "title_it"
-    t.string "title_de"
-    t.string "field_en"
-    t.string "field_fr"
-    t.string "field_it"
-    t.string "field_de"
-    t.string "director"
-    t.string "school", null: false
-    t.integer "year_begin"
-    t.integer "year_end"
-    t.integer "position", null: false
-    t.integer "audience", default: 0
-    t.boolean "visible", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id", "position"], name: "index_educations_on_profile_id_and_position", unique: true
-    t.index ["profile_id"], name: "index_educations_on_profile_id"
+  create_table "common", primary_key: "sciper", id: { type: :string, limit: 100, default: "" }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "photo_show", limit: 1, default: ""
+    t.string "photo_ext", limit: 1, default: ""
+    t.string "fax", limit: 100, default: ""
+    t.string "fax_show", limit: 1, default: ""
+    t.string "tel_prive", limit: 100, default: ""
+    t.string "tel_prive_show", limit: 1, default: ""
+    t.string "funct_show", limit: 1, default: ""
+    t.string "all_doct_act", limit: 1, default: ""
+    t.string "mainunit_show", limit: 1, default: ""
+    t.string "datenaiss_show", limit: 1, default: ""
+    t.string "origine", limit: 100, default: ""
+    t.string "origine_show", limit: 1, default: ""
+    t.string "nat", limit: 100, default: ""
+    t.string "nat_show", limit: 1, default: ""
+    t.string "web_perso", limit: 256, default: ""
+    t.string "web_perso_show", limit: 1, default: ""
+    t.string "pub_src", limit: 1, default: ""
+    t.string "infoQuery", default: ""
+    t.string "infoBasketID", limit: 20, default: ""
+    t.string "infoFormat", limit: 20, default: ""
+    t.string "pub_show", limit: 1, default: ""
+    t.string "tromb_show", limit: 1, default: ""
+    t.datetime "date_maj_pub", precision: nil
+    t.string "profil_chercheur", limit: 1
+    t.string "edu_show", limit: 1
+    t.string "parcours_show", limit: 1
+    t.string "defaultcv", limit: 2
+    t.integer "photo_ts"
+    t.string "research_tab", limit: 1
+    t.boolean "use_inclusive_job", default: false
+    t.boolean "email_show", default: true
+    t.string "email_replacement", limit: 64
   end
 
-  create_table "experiences", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id", null: false
-    t.string "title_en"
-    t.string "title_fr"
-    t.string "title_it"
-    t.string "title_de"
-    t.string "location"
-    t.integer "year_begin", null: false
-    t.integer "year_end"
-    t.integer "position", null: false
-    t.integer "audience", default: 0
-    t.boolean "visible", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id", "position"], name: "index_experiences_on_profile_id_and_position", unique: true
-    t.index ["profile_id"], name: "index_experiences_on_profile_id"
+  create_table "cv", id: false, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, default: "", null: false
+    t.string "cvlang", limit: 2, default: "", null: false
+    t.datetime "datecr", precision: nil, null: false
+    t.datetime "datemod", precision: nil, null: false
+    t.string "creator", limit: 6, default: "", null: false
+    t.string "lastmodby", limit: 6, default: "", null: false
+    t.string "profile_show", limit: 1, default: ""
+    t.text "curriculum", size: :medium
+    t.string "curriculum_show", limit: 1
+    t.text "expertise", size: :medium
+    t.string "expertise_show", limit: 1, default: ""
+    t.text "mission", size: :medium
+    t.string "mission_show", limit: 1, default: ""
+    t.string "titre", limit: 100, default: ""
+    t.string "titre_show", limit: 1, default: ""
+    t.string "special", limit: 100
+    t.index ["sciper", "cvlang"], name: "cv_lang"
+  end
+
+  create_table "edu", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "ordre", default: 0, null: false
+    t.string "sciper", limit: 10, default: "", null: false
+    t.string "title", default: "", null: false
+    t.string "field", default: "", null: false
+    t.string "director", default: "", null: false
+    t.string "univ", default: "", null: false
+    t.string "dates", limit: 100, default: "", null: false
+    t.index ["sciper"], name: "sciper"
+  end
+
+  create_table "exceptions", primary_key: "sciper", id: { type: :string, limit: 10, default: "" }, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.string "admin", limit: 10, default: "", null: false
+    t.timestamp "date", default: -> { "current_timestamp() ON UPDATE current_timestamp()" }, null: false
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -186,10 +199,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.index ["artist_id"], name: "index_items_on_artist_id"
   end
 
+  create_table "logs", id: { type: :integer, unsigned: true }, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.timestamp "ts", null: false
+    t.string "sciper", limit: 8, default: "", null: false
+    t.string "scipertodo", limit: 8, default: "", null: false
+    t.text "msg", null: false
+    t.index ["ts", "sciper"], name: "indx"
+  end
+
   create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "kind", default: "RichTextBox"
     t.string "subkind"
     t.bigint "section_id", null: false
+    t.string "label", null: false
     t.string "title_en", null: false
     t.string "title_fr", null: false
     t.string "title_it", null: false
@@ -202,60 +224,89 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
   end
 
-  create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id", null: false
-    t.boolean "camipro", default: false
-    t.integer "failed_attempts", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_pictures_on_profile_id"
+  create_table "parcours", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "ordre", default: 0, null: false
+    t.string "sciper", limit: 10, default: "", null: false
+    t.string "title", default: "", null: false
+    t.string "field", default: "", null: false
+    t.string "univ", default: "", null: false
+    t.string "dates", limit: 100, default: "", null: false
+    t.index ["sciper"], name: "sciper"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "sciper"
-    t.boolean "show_birthday"
-    t.boolean "show_function"
-    t.boolean "show_nationality"
-    t.boolean "show_phone"
-    t.boolean "show_photo"
-    t.boolean "show_weburl"
+    t.boolean "show_birthday", default: false
+    t.boolean "show_function", default: false
+    t.boolean "show_nationality", default: false
+    t.boolean "show_phone", default: false
+    t.boolean "show_photo", default: true
+    t.boolean "show_weburl", default: false
     t.string "force_lang"
     t.string "default_lang"
     t.string "personal_web_url"
+    t.string "phone"
     t.string "nationality_en"
     t.string "nationality_fr"
     t.string "nationality_it"
     t.string "nationality_de"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "selected_picture_id"
-    t.bigint "camipro_picture_id"
-    t.index ["camipro_picture_id"], name: "index_profiles_on_camipro_picture_id"
     t.index ["sciper"], name: "unique_scipers", unique: true
-    t.index ["selected_picture_id"], name: "index_profiles_on_selected_picture_id"
   end
 
-  create_table "publications", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id", null: false
-    t.string "title", null: false
-    t.string "url", null: false
-    t.string "authors", null: false
-    t.integer "year", null: false
-    t.integer "position", null: false
-    t.string "journal", null: false
-    t.integer "audience", default: 0
-    t.boolean "visible"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_publications_on_profile_id"
+  create_table "profresearch", primary_key: "sciper", id: :integer, default: 0, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.text "col1"
+    t.text "col2"
+    t.text "col3"
+    t.text "col4"
+    t.text "col5"
+    t.text "skills"
+    t.text "parcours"
+    t.string "parcours_show", limit: 1, default: "1"
+    t.text "awds"
+    t.string "awds_show", limit: 1, default: "1"
+    t.text "col9"
+    t.text "wos"
+    t.string "wos_show", limit: 1, default: "1"
+    t.text "orcid"
+    t.string "orcid_show", limit: 1, default: "1"
+    t.text "biblioprofile"
+    t.text "scopus"
+    t.string "scopus_show", limit: 1, default: "1"
+    t.text "col11"
+    t.text "col12"
+    t.text "col13"
+    t.text "googlescholar"
+    t.string "googlescholar_show", limit: 1, default: "1"
   end
 
-  create_table "redirects", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "ns"
-    t.integer "sciper"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "publications", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, default: "", null: false
+    t.text "auteurspub"
+    t.text "titrepub"
+    t.text "revuepub"
+    t.integer "ordre", limit: 1
+    t.string "urlpub", limit: 100, default: ""
+    t.string "showpub", limit: 1, default: ""
+    t.index ["sciper"], name: "sciper"
+  end
+
+  create_table "redirects", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6, default: "", null: false
+    t.string "url", limit: 128, default: "", null: false
+    t.string "ns", limit: 32, default: "", null: false
+    t.index ["ns"], name: "ns"
+    t.index ["sciper"], name: "sciper"
+  end
+
+  create_table "research_ids", id: :integer, charset: "latin1", collation: "latin1_swedish_ci", force: :cascade do |t|
+    t.string "sciper", limit: 10
+    t.string "tag", limit: 16
+    t.string "content", limit: 128
+    t.integer "ordre"
+    t.string "id_show", limit: 1
+    t.index ["sciper"], name: "sciper"
   end
 
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -272,50 +323,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "name_en"
-    t.string "name_fr"
-    t.string "name_it"
-    t.string "name_de"
-    t.string "property", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "socials", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "profile_id"
-    t.string "sciper"
-    t.string "tag"
-    t.string "value"
-    t.integer "position", default: 0
-    t.boolean "visible", default: true
-    t.integer "audience", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_socials_on_profile_id"
-  end
-
-  create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.bigint "course_id", null: false
-    t.bigint "profile_id"
-    t.string "sciper"
-    t.string "role"
-    t.string "kind"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_teacherships_on_course_id"
-    t.index ["profile_id"], name: "index_teacherships_on_profile_id"
-  end
-
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    t.string "password"
-    t.string "provider"
-    t.string "sciper"
-    t.string "uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "teachingact", primary_key: "sciper", id: { type: :string, limit: 6, default: "" }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.text "pdocs", size: :medium
+    t.text "tsect", size: :medium
+    t.text "phdstuds", size: :medium
+    t.text "cours", size: :long
+    t.timestamp "ts", default: -> { "current_timestamp() ON UPDATE current_timestamp()" }, null: false
   end
 
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -330,18 +343,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_27_110051) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "awards", "profiles"
-  add_foreign_key "awards", "selectable_properties", column: "category_id"
-  add_foreign_key "awards", "selectable_properties", column: "origin_id"
-  add_foreign_key "boxes", "model_boxes"
-  add_foreign_key "boxes", "profiles"
-  add_foreign_key "boxes", "sections"
-  add_foreign_key "educations", "profiles"
-  add_foreign_key "experiences", "profiles"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
-  add_foreign_key "pictures", "profiles"
-  add_foreign_key "publications", "profiles"
-  add_foreign_key "teacherships", "courses"
-  add_foreign_key "teacherships", "profiles"
 end
