@@ -7,7 +7,14 @@ require Rails.root.join('app/services/api_accreds_getter').to_s
 
 WITH_AI = true
 SKIP_SHIT = false
-SCIPERS = ['102717'].freeze # ['124369'] #['131639', '124369', '182447']
+SCIPERS = [
+  '102717', # a prof with achievements
+  '124369', # Rudi who has various free text boxes
+  '182447', # Her
+  '334422', # Asked by Natalie
+  '103938', # Asked by Natalie
+  '105611' # Asked by Natalie
+].freeze
 SECPOS = [
   { "bio"      => "B" },
   { "research" => "P" },
@@ -167,7 +174,7 @@ namespace :legacy do
 
           # First check if this is one of the free text boxes with standard label
           smb = STDLABELS[ob.label]
-          if smb.present?
+          if smb.present? # standard boxes are published by default
             box_by_label[smb] ||= RichTextBox.from_model(mboxes[smb])
             b = box_by_label[smb]
           else
@@ -177,12 +184,15 @@ namespace :legacy do
             # Asked Natalie if we can just discard this shit but I guess the
             # answer  will be that we have to eat it instead. Therefore, for
             # the moment we get ready for both answers.
-            next if SKIP_SHIT
+            # A third option might be that we import shit anyway but set it as draft
+            # so people are somehow forced to do some cleaning.
+            next if SKIP_SHIT # non-standard boxes are set as draft
 
             b = box_by_label[smb] || RichTextBox.from_model(mb)
           end
 
-          b.visible = ob.visible?
+          b.audience = 0
+          b.visibility = 0
           b.profile = profile
           b.send("content_#{lang}=", ob.sanitized_content)
           b.send("title_#{lang}=", ob.sanitized_label)
@@ -234,7 +244,9 @@ namespace :legacy do
           e = profile.publications.new(
             title: le.titrepub,
             journal: le.revuepub,
-            authors: le.auteurspub
+            authors: le.auteurspub,
+            audience: 0,
+            visibility: 0
           )
           e.url = le.urlpub if le.urlpub.present?
           unless e.save
@@ -253,7 +265,9 @@ namespace :legacy do
           lang = le.title_lang? || fallback_lang if detect_lang_with_ai
           e = profile.educations.new(
             year_begin: le.year_begin,
-            year_end: le.year_end
+            year_end: le.year_end,
+            audience: 0,
+            visibility: 0
           )
           e.send("title_#{lang}=", le.title)
           e.send("field_#{lang}=", le.field) if le.field.present?
@@ -274,7 +288,9 @@ namespace :legacy do
           lang = le.title_lang? || fallback_lang if detect_lang_with_ai
           e = profile.experiences.new(
             year_begin: le.year_begin,
-            year_end: le.year_end
+            year_end: le.year_end,
+            audience: 0,
+            visibility: 0
           )
           e.send("title_#{lang}=", le.title)
           e.send("field_#{lang}=", le.field) if le.field.present?
@@ -297,7 +313,8 @@ namespace :legacy do
           end
           e = profile.achievements.new(
             year: le.year,
-            audience: 1
+            audience: 1,
+            visibility: 0
           )
           e.send("description_#{lang}=", le.description)
           e.url = le.url if le.url.present?
@@ -318,7 +335,9 @@ namespace :legacy do
       cv.awards.order(:ordre).each do |le|
         lang = le.title_lang? || fallback_lang if detect_lang_with_ai
         e = profile.awards.new(
-          year: le.year
+          year: le.year,
+          audience: 0,
+          visibility: 0
         )
         e.send("title_#{lang}=", le.title)
         e.issuer = le.grantedby if le.grantedby.present?
