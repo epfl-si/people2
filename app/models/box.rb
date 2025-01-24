@@ -13,7 +13,7 @@ class Box < ApplicationRecord
   validates :t_title, translatability: true
 
   # before_create :ensure_sciper
-  positioned on: %i[profile section locked]
+  positioned on: %i[profile section]
 
   def self.from_model(mb)
     new(
@@ -25,7 +25,7 @@ class Box < ApplicationRecord
       title_it: mb.title_it,
       title_de: mb.title_de,
       show_title: mb.show_title,
-      locked: true,
+      locked_title: mb.locked_title,
       position: mb.position,
       data: mb.data
     )

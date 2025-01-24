@@ -20,6 +20,7 @@ class Profile < ApplicationRecord
   has_many :index_boxes, class_name: 'IndexBox', dependent: :destroy
   has_many :text_boxes, class_name: 'RichTextBox', dependent: :destroy
   has_many :socials, dependent: :destroy
+  has_many :achievements, dependent: :destroy
   has_many :awards, dependent: :destroy
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
@@ -56,13 +57,10 @@ class Profile < ApplicationRecord
     show_nationality: false,
     show_phone: true,
     show_photo: false,
-    show_title: false,
     force_lang: nil,
     personal_web_url: nil,
     nationality_en: nil,
     nationality_fr: nil,
-    title_en: nil,
-    title_fr: nil
   }.freeze
 
   def self.new_with_defaults(sciper)
@@ -134,7 +132,7 @@ class Profile < ApplicationRecord
   # Check that all standard (ModelBox) boxes are present for this profile
   def complete_standard_boxes!
     model_box_ids = boxes.map(&:model_box_id).uniq.compact
-    ModelBox.where.not(id: model_box_ids).includes(:section).find_each do |mb|
+    ModelBox.standard.where.not(id: model_box_ids).includes(:section).find_each do |mb|
       b = mb.new_box_for_profile(self)
       b.save!
       boxes << b
