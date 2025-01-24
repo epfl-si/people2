@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+edo_achi1:
+  audience: 1
+  position: 1
+  profile: edouard
+  year: 2010
+  category: aa_innovation
+  description_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit
+  description_fr: sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+  url: https://www.epfl.ch
+
+edo_achi2:
+  audience: 1
+  position: 2
+  profile: edouard
+  year: 2018
+  category: aa_research
+  description_en: Lorem ipsum dolor sit amet, consectetur adipisicing elit
+  description_fr: sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+  url: https://google.com

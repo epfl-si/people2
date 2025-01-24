@@ -1,0 +1,15 @@
+<%= turbo_frame_tag dom_id(achievement), "data-sortable-url" => achievement_path(achievement, format: 'json') do %>
+  <div class="list-group-item">
+    <div class="row">
+      <div class="col-md-8">
+        <h4 class="h5 mb-0"><%= achievement.t_description %></h4>
+        <p class="text-muted small mb-0">
+          <%= achievement.year %> – <%= achievement.url %>
+        </p>
+      </div>
+      <div class="col-md-4 text-right">
+        <%= render "shared/item_actions", item: achievement %>
+      </div>
+    </div>
+  </div>
+<% end %>
