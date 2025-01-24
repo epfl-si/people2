@@ -28,6 +28,9 @@ class Person
                        official_first: @data.delete('firstname'),
                        official_last: @data.delete('lastname'),
                      })
+
+    # TODO: this is an N+1 trigger. Since the table is small, we could load it in memory at boot time;
+    @options = Option.for(sciper)
   end
 
   def self.find(sciper_or_email)
@@ -109,6 +112,10 @@ class Person
   #       changing name, with modified usual names etc.
   def email_user
     email.gsub(/@.*$/, '')
+  end
+
+  def option(key)
+    @options[key]
   end
 
   def sciper
