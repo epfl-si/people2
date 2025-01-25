@@ -90,6 +90,8 @@ span.visibility {
 
 #pictures_section {
   min-height: 400px;
+    border: 1px solid #c1c1c1;
+    padding: 1em;
 }
 
 .btn-cancel {
@@ -172,7 +174,9 @@ span.visibility {
     background-color: white;
   }
 }
-
+.upload {
+  border: 0px;
+}
 // ----
 .upload .btn {
   margin-bottom: 0.5rem;
