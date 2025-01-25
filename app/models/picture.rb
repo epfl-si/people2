@@ -10,6 +10,7 @@ class Picture < ApplicationRecord
 
   belongs_to :profile
   has_one_attached :image
+  has_one_attached :cropped_image
 
   after_commit :check_attachment
 

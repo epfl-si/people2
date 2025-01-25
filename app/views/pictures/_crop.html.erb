@@ -1,0 +1,48 @@
+<turbo-frame id="profile_picture">
+  <div id="<%= dom_id(picture) %>"> 
+    <% image_url = picture.image.attached? ? url_for(picture.image) : "" %>
+    <% cropped_image_url = picture.cropped_image.attached? ? url_for(picture.cropped_image) : "" %>
+
+<%= content_tag(:div, "", data: {
+  controller: "crop",
+  images_url: picture_path(picture),
+  images_id: picture.id,
+  original_image_url: image_url
+}, class: "container d-flex justify-content-center align-items-start gap-3") do %>
+      
+      <div class="image-container text-center md-2">
+        <%= image_tag(image_url, class: "image", id: "source", data: {
+          crop_target: "source"
+        }) %>
+      </div>
+
+      <div class="image-container text-center">
+        <div class="preview-frame p-3">
+          <h5 class="text-center mb-3">Preview</h5>
+          <div class="d-flex justify-content-center flex-column align-items-center gap-3">
+
+            <div class="image-preview round">
+              <%= image_tag(cropped_image_url, class: "image", id: "rounded_output", data: {
+                crop_target: "output"
+              }) %>
+            </div>
+
+            <div class="image-preview">
+              <%= image_tag(cropped_image_url, class: "image", id: "output", data: {
+                crop_target: "output"
+              }) %>
+            </div>
+          </div>
+        </div>
+      <%= form_with model: picture, url: picture_path(picture), method: :put, data: { crop_target: "form", turbo_frame: "profile_picture" }, local: true do |f| %>
+        <%= f.hidden_field :cropped_image, id: "cropped_image_field", data: { crop_target: "field" } %> 
+        <%= f.button "Confirm", class: "btn btn-primary mt-3", data: {
+          action: "click->crop#click",
+          crop_target: "cropButton"
+        } %>
+      <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>
