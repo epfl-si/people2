@@ -1,6 +1,6 @@
 ---
 
-- name: Patch app src code
+- name: Patch app src code (directories)
   tags:
     - people.src.patch
   ansible.posix.synchronize:
@@ -11,6 +11,17 @@
     - config
     - db
     - lib
+  notify: reload-people
+
+- name: Patch app src code (files)
+  tags:
+    - people.src.patch
+  ansible.builtin.copy:
+    src: '../{{ item }}'
+    dest: '{{ people.srcdir }}/{{ item }}'
+  with_items:
+    - VERSION
+  notify: reload-people
 
 - name: Nuke dev database for the app
   tags:
