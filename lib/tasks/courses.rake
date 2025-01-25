@@ -45,8 +45,13 @@ namespace :data do
       course.code = cdata['courseCode']
       course.title_en = cc['name']['en']
       course.title_fr = cc['name']['fr']
-      course.language_en = cc['lang']['en'].downcase
-      course.language_fr = cc['lang']['fr'].downcase
+      if cc['lang'].nil?
+        course.language_en = 'unknown'
+        course.language_fr = 'inconnu'
+      else
+        course.language_en = cc['lang']['en'].downcase
+        course.language_fr = cc['lang']['fr'].downcase
+      end
       course.save!
 
       tt.each do |t|
