@@ -1,0 +1,2 @@
+#!/bin/bash
+podman exec -i mariadb mariadb --user={{ _secrets.people.db_user }} --password={{ _secrets.people.db_password }} people

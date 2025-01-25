@@ -254,12 +254,12 @@ migrate: dcup
 ## run rails migration and seed with initial data
 seed: migrate webmocks
 	docker compose exec webapp bin/rails db:seed
-	make courses
+	docker compose exec webapp bin/rails legacy:import
+	docker compose exec webapp bin/rails data:courses
 
 ## reload the list of all courses from ISA
 courses: dcup
 	docker compose exec webapp bin/rails data:courses
-
 
 ## seed the data for Work::Sciper
 scipers: dcup
@@ -268,9 +268,13 @@ scipers: dcup
 legaimport: dcup
 	docker compose exec webapp bin/rails legacy:import
 
+nukestorage:
+	docker compose exec webapp /bin/bash -c "rm -rf storage/[0-9a-zA-Z][0-9a-zA-Z]"
+
 ## restart with a fresh new dev database for the webapp
 reseed:
 	make nukedb
+	make nukestorage
 	sleep 2
 	make seed
 
@@ -336,8 +340,14 @@ restore_dinfo:
 .PHONY: nata_patch nata_reseed
 
 ## patch the source code of the app mounted on the test server for Natalie
-nata_patch:	
+nata_patch:
 	cd ops && ./possible.sh --test -t people.src.patch
+
+nata_reinit: dcup
+	ssh peonext 'rm -rf data/people/storage/*'
+	docker compose exec webapp tar cvf - storage | ssh peonext "tar -xvf - -C data/people"
+	$(SQLDUMP) people | ssh peonext "./bin/peopledb"
+	make nata_patch
 
 ## reseed the database on the test server for Natalie
 nata_reseed: test_patch

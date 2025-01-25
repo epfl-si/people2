@@ -9,3 +9,17 @@
     - "{{ people.mariadb.data }}"
     - "{{ people.mariadb.init }}"
 
+- name: ensure bin dir for utility scripts
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/bin"
+    state: directory
+
+- name: ensure utility scripts
+  ansible.builtin.template:
+    src: "bin/{{ item }}"
+    dest: "/home/{{ ansible_user }}/bin/{{ item }}"
+    mode: 0755
+  with_items:
+    - peopledb
+
+
