@@ -307,10 +307,7 @@ namespace :legacy do
         b.profile = profile
         b.save
         cv.achievements.order(:ordre).each do |le|
-          if detect_lang_with_ai
-            lang = le.description_lang? || fallback_lang
-            puts "@@@ lang=#{lang}"
-          end
+          lang = le.description_lang? || fallback_lang if detect_lang_with_ai
           e = profile.achievements.new(
             year: le.year,
             audience: 1,
