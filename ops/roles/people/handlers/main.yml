@@ -1,0 +1,3 @@
+---
+- name: reload-people
+  ansible.builtin.shell: podman restart peoapp
