@@ -2,8 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 import Cropper from "cropperjs";
 
 export default class extends Controller {
-  static targets = ["source", "output", "cropButton", "field", "form"];
-
+  static targets = ["source", "output", "cropButton", "field", "file", "form"];
   connect() {
     const originalImageUrl = this.element.dataset.originalImageUrl;
     if (originalImageUrl) {
@@ -32,6 +31,7 @@ export default class extends Controller {
       },
       crop: () => {
         this.updatePreview();
+        this.updateFileInput();
       },
     });
   }
@@ -83,25 +83,17 @@ export default class extends Controller {
     }
   }
 
-  click(event) {
-    event.preventDefault();
-
+  updateFileInput() {
     const canvas = this.cropper.getCroppedCanvas({
       width: 250,
       height: 360,
     });
 
     canvas.toBlob((blob) => {
-      if (blob) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.fieldTarget.value = reader.result;
-          this.formTarget.requestSubmit();
-        };
-        reader.readAsDataURL(blob);
-      } else {
-        console.error("Failed to generate blob from cropped canvas.");
-      }
-    }, "image/png");
+      let file = new File([blob], "cropped_image.jpg", { type: "image/jpeg" });
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      this.fileTarget.files = dataTransfer.files;    
+    }, 'image/jpeg');
   }
 }

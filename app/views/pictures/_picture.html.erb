@@ -4,10 +4,9 @@
       <%= profile_photo(picture, resize_to_limit: [300, 300], alt: 'Avatar image', class: 'img-fluid') %>
     </picture>
     <div class="card-body">
-      <%= link_to icon('crop'), crop_picture_path(picture, format: :turbo_stream), 
+      <%= link_to icon('crop'), edit_picture_path(picture), 
                   class: "btn btn-primary btn-sm btn-block", 
                   data: { turbo_stream: true } %>
-
       <%= link_to icon('heart'), set_favorite_picture_profile_path(@profile, picture_id: picture.id), 
                   class: "btn btn-primary btn-sm btn-block", 
                   method: :patch, data: { turbo_stream: true, turbo_method: 'patch' } %>
