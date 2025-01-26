@@ -11,6 +11,7 @@
     - config
     - db
     - lib
+    - vendor
   notify: reload-people
 
 - name: Patch app src code (files)
