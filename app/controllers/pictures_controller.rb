@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class PicturesController < BackendController
-  before_action :set_picture, only: %i[crop update destroy]
-  before_action :set_profile, only: %i[crop update]
+  before_action :set_picture, only: %i[edit update destroy]
+  before_action :set_profile, only: %i[edit update]
 
   # GET /profile/profile_id/pictures or /profile/profile_id/pictures.json
   def index
     @profile = Profile.find(params[:profile_id])
-    @pictures = Picture.order(:camipro)
+    @pictures = @profile.pictures
   end
 
   # # GET /pictures/1 or /pictures/1.json
@@ -20,37 +20,24 @@ class PicturesController < BackendController
   # https://medium.com/@fabriciobonjorno/upload-profile-image-in-real-time-1c74313a1116
   # POST /profile/profile_id/pictures or /profile/profile_id/pictures.json
 
-  def crop
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "profile_picture",
-          partial: "pictures/crop",
-          locals: { picture: @picture }
-        )
-      end
-    end
-  end
+  # # GET /pictures/1/edit
+  def edit; end
 
   def update
-    unless params[:picture].present? && params[:picture][:cropped_image].present?
-      render json: { error: "No cropped image data provided" }, status: :unprocessable_entity and return
-    end
-
-    begin
-      file = data_url_to_uploaded_file(params[:picture][:cropped_image])
-      @picture.cropped_image.attach(file)
-    rescue StandardError
-      flash.now[:error] = "flash.generic.error.update"
-      render json: { error: "Unable to process cropped image" }, status: :unprocessable_entity and return
-    end
-
     respond_to do |format|
-      format.turbo_stream do
-        flash.now[:success] = "flash.generic.success.update"
-        render :update
+      if @picture.update(picture_params)
+        format.turbo_stream do
+          flash.now[:success] = "flash.generic.success.update"
+          render :update
+        end
+        format.json { render :show, status: :ok, location: @picture }
+      else
+        format.turbo_stream do
+          flash.now[:error] = "flash.generic.error.update"
+          render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @picture }
+        end
+        format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
-      format.html { redirect_to picture_path(@picture), notice: "Picture updated successfully." }
     end
   end
 
@@ -113,22 +100,5 @@ class PicturesController < BackendController
 
   def picture_params
     params.require(:picture).permit(:cropped_image, :image)
-  end
-
-  def data_url_to_uploaded_file(data_url)
-    content_type = data_url[/data:(.*?);base64,/, 1]
-    decoded_data = Base64.decode64(data_url.split(",")[1])
-    filename = "cropped_image.#{content_type.split('/').last}"
-
-    tempfile = Tempfile.new(filename)
-    tempfile.binmode
-    tempfile.write(decoded_data)
-    tempfile.rewind
-
-    ActionDispatch::Http::UploadedFile.new(
-      tempfile: tempfile,
-      filename: filename,
-      type: content_type
-    )
   end
 end

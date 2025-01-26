@@ -34,13 +34,7 @@ Rails.application.routes.draw do
     resources :educations, shallow: true
     resources :experiences, shallow: true
     resources :publications, shallow: true
-
-    resources :pictures, shallow: true, only: %i[index create destroy update] do
-      member do
-        get :crop
-      end
-    end
-
+    resources :pictures, shallow: true
     resources :accreds, shallow: true, only: %i[index show update]
     member do
       patch :set_favorite_picture
