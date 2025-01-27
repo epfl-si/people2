@@ -9,6 +9,7 @@ module Legacy
     URL_RE = %r{(http|https)://infoscience-exports\.epfl\.ch/\d+/(\?ln=(fr|en))?}
 
     scope  :visible, -> { where(box_show: '1') }
+    scope  :with_source, -> { where.not("src is NULL or LTRIM(RTRIM(src)) = ''") }
 
     default_scope do
       where(position: 'P', sys: 'I')
