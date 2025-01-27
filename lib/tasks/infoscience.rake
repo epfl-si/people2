@@ -1,23 +1,45 @@
 # frozen_string_literal: true
 
-namespace :chore do
-  desc 'Extract legacy people that are using an infoscience export link'
-  task natislinks: :environment do
-    boxes = Legacy::Box.where("sys = 'I' and src is not null and src != ''")
-    scipers = boxes.map(&:sciper).sort.uniq
-    people = scipers.map { |s| Ldap::Person.for_sciper(s) }.compact
-    urls = {}
-    boxes.each do |b|
-      urls[b.sciper] ||= []
-      urls[b.sciper] << b.src
+require 'csv'
+namespace :legacy do
+  desc 'Export invalid infoscience links for Julien to look with library'
+  task infoscience_for_julien: :environment do
+    scipers = Work::Sciper.with_profile.map(&:sciper)
+    boxes = Legacy::Infoscience
+            .with_source
+            .where.not("src LIKE '%infoscience-export%'")
+            .where.not("src LIKE '%infoscience.epfl.ch/record%'")
+            .where(sciper: scipers).order(:sciper)
+    puts "There are #{boxes.count} infoscience boxes to be imported"
+    opath = Rails.root.join("tmp/infoscience")
+    opath.mkdir unless opath.directory?
+    data = boxes.map do |b|
+      res = {}
+      res['sciper'] = b.sciper.to_i
+      res['src'] = b.src
+      res['lang'] = b.cvlang
+      if b.content.present?
+        res['cache'] = "#{b.sciper}_#{b.cvlang}.html"
+        ofile = opath.join(res['cache'])
+        File.open(ofile, 'w+') do |f|
+          f.puts b.content
+        end
+      else
+        res['cache'] = 'NONE'
+      end
+      res
     end
-    r = people.map do |p|
-      {
-        name: p.name.to_s,
-        mail: p.email.to_s,
-        urls: urls[p.sciper],
-      }
+    File.open(opath.join("index.yml"), 'w+') do |f|
+      f.puts data.to_yaml
     end
-    puts r.to_yaml
+    csvstring = CSV.generate do |csv|
+      csv << data.first.keys
+      data.each do |b|
+        csv << b.values
+      end
+    end
+    File.open(opath.join("index.csv"), 'w+') do |f|
+      f.puts csvstring
+    end
   end
 end
