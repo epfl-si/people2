@@ -30,7 +30,7 @@ class Person
                      })
 
     # TODO: this is an N+1 trigger. Since the table is small, we could load it in memory at boot time;
-    @options = Option.for(sciper)
+    @options = SpecialOption.for(sciper)&.index_by(&:key) || {}
   end
 
   def self.find(sciper_or_email)
@@ -120,6 +120,11 @@ class Person
 
   def sciper
     id
+  end
+
+  def public_email
+    o = option(:mail)
+    o.present? ? o.email : email
   end
 
   # Updated visible_phones method

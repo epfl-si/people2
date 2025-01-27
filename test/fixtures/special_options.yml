@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sciper: 121769
+  ns: giovanni.cangiani
+  type: SpecialMail
+  data: this.isatest@epfl.ch
+
+two:
+  sciper: 999999
+  ns: ciccio.pasticcio
+  type: SpecialRedirect
+  data: https://en.wikipedia.org/wiki/Alan_Turing
