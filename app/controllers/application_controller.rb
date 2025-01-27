@@ -21,6 +21,26 @@ class ApplicationController < ActionController::Base
     "195348" => "Another external for which there should be no people page",
     "123456" => "a (fake) existing person with redirect applied",
   }.freeze
+  EXTRAPROFILES = [
+    {
+      name: "Loïc",
+      sciper: "185853",
+      email: "loic.gardiol",
+      desc: "an external for which there should be no people page",
+    },
+    {
+      name: "Herve",
+      sciper: "195348",
+      email: "195348",
+      desc: "Another external for which there should be no people page",
+    },
+    {
+      name: "Ciccio",
+      sciper: "999999",
+      email: "ciccio.pasticcio",
+      desc: "a (fake) existing person that does not have to appear and must be redirected",
+    }
+  ].freeze
   def devindex
     @data = []
     Profile.all.find_each do |profile|
@@ -33,6 +53,7 @@ class ApplicationController < ActionController::Base
       }
       @data << OpenStruct.new(d)
     end
+    EXTRAPROFILES.each { |d| @data << OpenStruct.new(d) }
   end
 
   def self.unique_counter_value

@@ -224,14 +224,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
   end
 
-  create_table "options", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "sciper"
-    t.integer "kind"
-    t.text "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.boolean "camipro", default: false
@@ -283,14 +275,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
     t.index ["profile_id"], name: "index_publications_on_profile_id"
   end
 
-  create_table "redirects", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "ns"
-    t.integer "sciper"
-    t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "sections", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "title_en"
     t.string "title_fr"
@@ -327,6 +311,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_socials_on_profile_id"
+  end
+
+  create_table "special_options", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "sciper"
+    t.string "ns"
+    t.string "type", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
