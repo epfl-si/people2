@@ -18,3 +18,8 @@
   </small>
 </p>
 </div>
+<% if @profile.show_nationality? %>
+<p>
+  <%= @profile.t_nationality %>
+</p>
+<% end %>
