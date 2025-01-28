@@ -55,9 +55,6 @@ restore() {
 		tables=""; ;;
 	esac
 
-	h="$(db_secret $db 3)"
-	u="$(db_secret $db 4)"
-	p="$(db_secret $db 5)"
 
 	[ -d $DUMPDIR ] || mkdir -p $DUMPDIR
 
@@ -66,6 +63,9 @@ restore() {
 	# dump="mysqldump -h $h -u $u -p'$p' $db $tables | gzip"
 	# ssh -C $DATASRC "mysqldump -h $h -u $u -p'$p' $db $tables | gzip"
 	if [ ! -f $dumpfile ] ; then
+		h="$(db_secret $db 3)"
+		u="$(db_secret $db 4)"
+		p="$(db_secret $db 5)"
 		ssh -C $DATASRC "mysqldump -h $h -u $u -p'$p' $db $tables | gzip" > $dumpfile
 	fi
 	gunzip -c  $dumpfile | fixdb | exec_mysql $db
