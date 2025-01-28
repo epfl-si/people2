@@ -130,6 +130,10 @@ class Accreditation
     @visible
   end
 
+  def hidden?
+    !visible?
+  end
+
   def hidden_addr?
     prefs.present? && prefs.hidden_addr?
   end
