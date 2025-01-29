@@ -6,11 +6,11 @@ class RichTextBoxesController < BoxesController
     @box = RichTextBox.includes(:profile).find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
-  def box_params
-    params.require(:rich_text_box).permit(
-      :audience, :visibility,
-      :title_fr, :title_en, :content_fr, :content_en
-    )
+  def box_symbol
+    :rich_text_box
+  end
+
+  def extra_plist
+    %i[title_fr title_en content_fr content_en]
   end
 end
