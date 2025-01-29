@@ -17,6 +17,8 @@ class Profile < ApplicationRecord
   translates :nationality, :title
 
   has_many :boxes, dependent: :destroy
+  has_many :model_boxes, through: :boxes, source: :model
+  # has_many :section_boxes, ->(section) { where(section_id: section.id) }, class_name: 'Box'
   has_many :index_boxes, class_name: 'IndexBox', dependent: :destroy
   has_many :text_boxes, class_name: 'RichTextBox', dependent: :destroy
   has_many :socials, dependent: :destroy
@@ -139,6 +141,15 @@ class Profile < ApplicationRecord
   #     mb.new_box_for_profile(self).save!
   #   end
   # end
+
+  def available_optional_boxes(section = nil)
+    @box_count_by_model ||= boxes.group(:model_box_id).count
+    if section.present?
+      section.model_boxes.optional
+    else
+      ModelBox.includes(:section).optional
+    end.select { |b| (@box_count_by_model[b.id] || 0) < b.max_copies }
+  end
 
   # Check that all standard (ModelBox) boxes are present for this profile
   def complete_standard_boxes!
