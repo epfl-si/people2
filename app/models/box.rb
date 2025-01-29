@@ -19,6 +19,7 @@ class Box < ApplicationRecord
     new(
       section: mb.section,
       model: mb,
+      type: mb.kind,
       subkind: mb.subkind,
       title_en: mb.title_en,
       title_fr: mb.title_fr,

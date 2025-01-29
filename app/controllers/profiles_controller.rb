@@ -22,6 +22,10 @@ class ProfilesController < BackendController
       [a.section.position, a.position] <=> [b.section.position, b.position]
     end
     @boxes_by_section = boxes.group_by(&:section)
+    box_count_by_model = @profile.boxes.group(:model_box_id).count
+    @optional_boxes = ModelBox.includes(:section).optional.select do |b|
+      (box_count_by_model[b.id] || 0) < b.max_copies
+    end.group_by(&:section_id)
   end
 
   # PATCH/PUT /profile/:id
