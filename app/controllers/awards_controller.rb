@@ -113,8 +113,8 @@ class AwardsController < BackendController
   # Only allow a list of trusted parameters through.
   def award_params
     params.require(:award).permit(
-      :location, :title_fr, :title_en, :year, :issuer,
-      :audience, :visibility, :position
+      :location, :title_fr, :title_en, :title_it, :title_de, :year, :issuer,
+      :audience, :visibility, :position, :origin_id, :category_id
     )
   end
 end
