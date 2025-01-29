@@ -6,8 +6,7 @@ class IndexBoxesController < BoxesController
     @box = IndexBox.includes(:profile).find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
-  def box_params
-    params.require(:index_box).permit(:audience, :visibility)
+  def box_symbol
+    :index_box
   end
 end
