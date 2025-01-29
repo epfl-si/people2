@@ -14,24 +14,54 @@ class BoxesController < BackendController
 
   # GET /boxes/new
   def new
-    @box = Box.new
+    # TODO: raise error if mbid is not provided
+    mbid = params.require(:model_box_id)
+    @mbox = ModelBox.find(mbid)
+    # ensure the number of boxes does not overgrow
+    if @profile.boxes.where(model_box_id: mbid).count < @mbox.max_copies
+      @box = Box.from_model(@mbox)
+    else
+      respond_to do |format|
+        format.html { head :forbidden }
+        format.json { render json: { msg: "Max number of boxes reached" }, status: :forbidden }
+      end
+    end
   end
 
   # GET /boxes/1/edit
   def edit; end
 
-  # POST /boxes or /boxes.json
+  # POST /profile/:profile_id/boxes or /profile/:profile_id/boxes.json
   def create
-    @box = Box.new(box_params)
+    mbid = box_params(:create).require(:model_box_id)
+    @mbox = ModelBox.find(mbid)
+
+    if @profile.boxes.where(model_box_id: mbid).count >= @mbox.max_copies
+      raise "Unexpected. Asking to create a new box when max number already reached"
+    end
+
+    @box = Box.from_model(@mbox)
+    @box.profile = @profile
+    @box.assign_attributes(box_params)
+    ok = @box.save
+    if ok
+      box_count_by_model = @box.profile.boxes.group_by(&:model_box_id).count
+      @optional_boxes = ModelBox
+                        .includes(:section).optional
+                        .where(section_id: @box.section_id).select do |b|
+        (box_count_by_model[b.id] || 0) < b.max_copies
+      end
+      flash.now[:success] = "flash.generic.success.create"
+    end
+    return if ok
 
     respond_to do |format|
-      if @box.save
-        format.html { redirect_to box_url(@box), notice: "Box was successfully created." }
-        format.json { render :show, status: :created, location: @box }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @box.errors, status: :unprocessable_entity }
+      format.turbo_stream do
+        flash.now[:success] = "flash.generic.error.create"
+        render :new, status: :unprocessable_entity
       end
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @box.errors, status: :unprocessable_entity }
     end
   end
 
@@ -82,6 +112,10 @@ class BoxesController < BackendController
   end
 
   private
+
+  def set_profile
+    @profile = Profile.find(params.require(:profile_id))
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_box

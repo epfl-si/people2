@@ -1,3 +1,4 @@
+# TODO: translate and check/complete translations
 # ------------------------------------------------- Side section
 mbox_social:
   label: social
@@ -8,6 +9,11 @@ mbox_social:
   title_fr: "Resaux Socials"
   title_it: "Reti Sociali"
   title_de: "Soziale Netzwerke"
+  description_en: "Box with social and research network links"
+  description_fr: "Box with social and research network links"
+  description_it: "Box with social and research network linkse"
+  description_de: "Box with social and research network links"
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: false
@@ -23,6 +29,11 @@ mbox_expertise:
   title_fr: "Expertise"
   title_it: "Specializzazione"
   title_de: "Fachkenntnisse"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -36,6 +47,11 @@ mbox_mission:
   title_fr: "Mission"
   title_it: "Missione"
   title_de: "Aufgabe"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -45,6 +61,11 @@ mbox_contactfree:
   section: contact
   kind: RichTextBox
   subkind: Free
+  description_en: "Text box with free rich text content"
+  description_fr: "Text box with free rich text content"
+  description_it: "Text box with free rich text content"
+  description_de: "Text box with free rich text content"
+  max_copies: 3
   standard: false
   locked_title: false
   show_title: true
@@ -60,6 +81,11 @@ mbox_biography:
   title_fr: "Biographie"
   title_it: "Biografia"
   title_de: "Biographie"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: false
@@ -73,6 +99,11 @@ mbox_curriculum:
   title_fr: "Curriculum vitae"
   title_it: "Curriculum vitae"
   title_de: "Lebenslauf"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: false
@@ -86,6 +117,11 @@ mbox_biocurrwork:
   title_fr: "Travail en Cours"
   title_it: "Occupazione attuale"
   title_de: "Current Work"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -99,6 +135,11 @@ mbox_education:
   title_fr: "Education"
   title_it: "Percorso Educativo"
   title_de: "Ausbildung"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -112,6 +153,11 @@ mbox_experience:
   title_fr: "Parcours professionnel"
   title_it: "Esperienza lavorativa"
   title_de: "Berufserfahrung"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -125,6 +171,11 @@ mbox_award:
   title_fr: "Recompenses"
   title_it: "Riconoscimenti"
   title_de: "Auszeichnungen"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -138,6 +189,11 @@ mbox_publication:
   title_fr: "Publications Representatives"
   title_it: "Pubblicazioni rappresentative"
   title_de: "Ausgewählte Publikationen"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -147,6 +203,11 @@ mbox_biofree:
   section: bio
   kind: RichTextBox
   subkind: Free
+  description_en: "Text box with free rich text content"
+  description_fr: "Text box with free rich text content"
+  description_it: "Text box with free rich text content"
+  description_de: "Text box with free rich text content"
+  max_copies: 1
   standard: false
   locked_title: false
   show_title: true
@@ -163,6 +224,11 @@ mbox_field:
   title_fr: "Domaine de recherche actuel"
   title_it: "Dominio di ricerca"
   title_de: "Aktuelles Forschungsfeld"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: true
   locked_title: true
   show_title: true
@@ -176,6 +242,11 @@ mbox_achievements:
   title_fr: "Réalisations annuelles"
   title_it: "Risultati dell'anno"
   title_de: "Jährliche Erfolge"
+  description_en: ""
+  description_fr: ""
+  description_it: ""
+  description_de: ""
+  max_copies: 1
   standard: false
   locked_title: true
   show_title: true
@@ -185,6 +256,27 @@ mbox_researchfree:
   section: research
   kind: RichTextBox
   subkind: Free
+  description_en: "Text box with free rich text content"
+  description_fr: "Text box with free rich text content"
+  description_it: "Text box with free rich text content"
+  description_de: "Text box with free rich text content"
+  max_copies: 3
+  standard: false
+  locked_title: false
+  show_title: true
+  position: 3
+
+# ------------------------------------------------------------- teaching section
+mbox_teachingfree:
+  label: teachingfree
+  section: teaching
+  kind: RichTextBox
+  subkind: Free
+  description_en: "Text box with free rich text content"
+  description_fr: "Text box with free rich text content"
+  description_it: "Text box with free rich text content"
+  description_de: "Text box with free rich text content"
+  max_copies: 3
   standard: false
   locked_title: false
   show_title: true

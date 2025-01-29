@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ModelBox < ApplicationRecord
+  include Translatable
+  translates :title, :description
   belongs_to :section, class_name: 'Section'
   has_many :boxes, class_name: "Box", dependent: :nullify
   positioned on: %i[section_id locale]
@@ -12,6 +14,11 @@ class ModelBox < ApplicationRecord
   validates :title_de, presence: true, if: -> { locked_title? }
 
   scope :standard, -> { where(standard: true) }
+  scope :optional, -> { where(standard: false) }
+
+  def self.for_label(label)
+    where(label: label).first
+  end
 
   def new_box_for_profile(profile)
     box = Object.const_get(kind).send("from_model", self)

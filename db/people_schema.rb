@@ -207,12 +207,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
   create_table "model_boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "kind", default: "RichTextBox"
     t.string "subkind"
+    t.integer "max_copies", default: 1
     t.bigint "section_id", null: false
     t.string "label", null: false
     t.string "title_en"
     t.string "title_fr"
     t.string "title_it"
     t.string "title_de"
+    t.string "description_en"
+    t.string "description_fr"
+    t.string "description_it"
+    t.string "description_de"
     t.boolean "standard", default: true
     t.boolean "show_title", default: true
     t.boolean "locked_title", default: true

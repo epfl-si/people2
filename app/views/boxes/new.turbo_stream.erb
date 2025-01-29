@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "add_#{@box.section.label}_box" do %>
+  <%= render "#{@box.class.name.tableize}/new", profile: @profile, box: @box %>
+<% end %>

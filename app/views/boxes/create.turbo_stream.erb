@@ -1,0 +1,11 @@
+<% if @optional_boxes.present? && !@optional_boxes.empty? %>
+	<%= turbo_stream.replace "add_#{@box.section.label}_box" do %>
+    <%= render "boxes/add", profile: @profile, section: @box.section, boxes: @optional_boxes %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove "add_#{@box.section.label}_box" %>
+<% end %>
+<%= turbo_stream.append "#{@box.section.label}_boxes" do %>
+  <%= render "profiles/#{@box.class.to_s.underscore}", box: @box %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

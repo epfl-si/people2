@@ -49,14 +49,21 @@
   <hr>
 
   <% @sections.each do |section| %>
-    <% if @boxes_by_section[section].present? %>
     <h2><%= section.t_title %></h2>
-    <section data-controller="sortable">
-      <% @boxes_by_section[section].each do |box| %>
-        <%= render box.class.to_s.underscore, box: box %>
+    <section>
+      <% if @optional_boxes[section.id].present? %>
+        <%= render "boxes/add", profile: @profile, section: section, boxes: @optional_boxes[section.id] %>
+      <% end %>
+
+      <%= turbo_frame_tag "#{section.label}_boxes", src: nil, target: nil, data: {controller: "sortable"} do %>
+        <%#= turbo_frame_tag "new_#{section.label}_box" %>
+        <% if @boxes_by_section[section].present? %>
+          <% @boxes_by_section[section].each do |box| %>
+            <%= render box.class.to_s.underscore, box: box %>
+          <% end %>
+        <% end %>
       <% end %>
     </section>
-    <% end %>
   <% end %>
 
 </div>
