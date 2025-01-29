@@ -2,17 +2,9 @@
 <% # award.errors.add :base, "This is a less severe error" %>
 
 <%= form_with(model: [profile, award], local: false, class: "instaform") do |form| %>
+  <% translations = (profile ||= award.profile).translations %>
   <%= render "shared/form_errors", item: award if award.errors.any? %>
-
-  <div class="form-group">
-    <%= form.label Award.human_attribute_name(:title_fr) %>
-    <%= form.text_field :title_fr, placeholder: "Prix Nobel", class: input_class_for(form, :title_fr) %>
-    <%#= errors_for(form, :title_fr) %>
-  </div>
-  <div class="form-group">
-    <%= form.label Award.human_attribute_name(:title_en) %>
-    <%= form.text_field :title_en, placeholder: "Nobel prize" %>
-  </div>
+  <%= translated_text_fields(form, :title, translations) %>
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:issuer) %>
     <%= form.text_field :issuer, placeholder: "The Swedish Academy" %>
@@ -31,7 +23,7 @@
   </div>
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:origin) %>
-    <%= form.collection_select :origin, Award.origins, :id, :t_name %>
+    <%= form.collection_select :origin_id, Award.origins, :id, :t_name %>
   </div>
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:audience) %>
