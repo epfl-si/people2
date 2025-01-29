@@ -15,7 +15,7 @@ class AchievementsController < BackendController
 
   # GET /profile/profile_id/achievements/new
   def new
-    @achievement = achievement.new
+    @achievement = @profile.achievements.new
   end
 
   # GET /achievements/1/edit
@@ -107,13 +107,13 @@ class AchievementsController < BackendController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_achievement
-    @achievement = achievement.find(params[:id])
+    @achievement = Achievement.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def achievement_params
     params.require(:achievement).permit(
-      :year,
+      :year, :category_id,
       :description_fr, :description_en, :description_it, :description_de,
       :audience, :visible, :position
     )
