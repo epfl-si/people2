@@ -25,20 +25,22 @@ class ApplicationController < ActionController::Base
     {
       name: "Loïc",
       sciper: "185853",
-      email: "loic.gardiol",
       desc: "an external for which there should be no people page",
     },
     {
       name: "Herve",
       sciper: "195348",
-      email: "195348",
       desc: "Another external for which there should be no people page",
     },
     {
       name: "Ciccio",
       sciper: "999999",
-      email: "ciccio.pasticcio",
       desc: "a (fake) existing person that does not have to appear and must be redirected",
+    },
+    {
+      name: "Mr Long Name",
+      sciper: "363247",
+      desc: "A student with an incredibly long name"
     }
   ].freeze
   def devindex
