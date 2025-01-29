@@ -88,8 +88,24 @@ class BoxesController < BackendController
     @box = Box.includes(:profile).find(params[:id])
   end
 
+  def extra_plist
+    []
+  end
+
+  def box_symbol
+    :box
+  end
+
   # Only allow a list of trusted parameters through.
-  def box_params
-    params.require(:box).permit(:audience, :visibility, :position)
+  def box_params(action = nil)
+    plist = %i[audience visibility position]
+    unless action.nil?
+      case action
+      when :create
+        plist << :model_box_id
+      end
+    end
+    plist += extra_plist
+    params.require(box_symbol).permit(plist)
   end
 end
