@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :index_boxes, shallow: true
     resources :boxes, shallow: true
     resources :socials, shallow: true
+    resources :achievements, shallow: true
     resources :awards, shallow: true
     resources :educations, shallow: true
     resources :experiences, shallow: true
