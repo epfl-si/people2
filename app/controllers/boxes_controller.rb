@@ -4,9 +4,11 @@ class BoxesController < BackendController
   before_action :set_profile, only: %i[index create new]
   before_action :set_box, only: %i[show edit update destroy toggle]
 
-  # GET /boxes or /boxes.json
+  # GET /profiles/:profile_id/sections/:section_id/boxes
   def index
-    @boxes = Box.all
+    @section = Section.find(params.require(:section_id))
+    @boxes = @profile.boxes.includes(:section).where(section_id: @section.id)
+    @optional_boxes = @profile.available_optional_boxes(@section)
   end
 
   # GET /boxes/1 or /boxes/1.json
@@ -40,9 +42,8 @@ class BoxesController < BackendController
       raise "Unexpected. Asking to create a new box when max number already reached"
     end
 
-    @box = Box.from_model(@mbox)
+    @box = Box.from_model(@mbox, box_params)
     @box.profile = @profile
-    @box.assign_attributes(box_params)
     ok = @box.save
     if ok
       box_count_by_model = @box.profile.boxes.group_by(&:model_box_id).count

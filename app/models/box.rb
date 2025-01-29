@@ -10,13 +10,14 @@ class Box < ApplicationRecord
   belongs_to :model, class_name: "ModelBox", foreign_key: "model_box_id", inverse_of: :boxes
   scope :index_type, -> { where(type: IndexBox) }
   scope :text_type, -> { where(type: RichTextBox) }
+  scope :in_section, ->(section) { where(section: section) }
   validates :t_title, translatability: true
 
   # before_create :ensure_sciper
   positioned on: %i[profile section]
 
-  def self.from_model(mb)
-    new(
+  def self.from_model(mb, params = nil)
+    b = new(
       section: mb.section,
       model: mb,
       type: mb.kind,
@@ -30,6 +31,8 @@ class Box < ApplicationRecord
       position: mb.position,
       data: mb.data
     )
+    b.assign_attributes(params) if params.present?
+    b
   end
 
   # primary_locale = nil, fallback_locale = nil
