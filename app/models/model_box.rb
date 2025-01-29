@@ -20,6 +20,10 @@ class ModelBox < ApplicationRecord
     where(label: label).first
   end
 
+  def container?
+    kind == "IndexBox"
+  end
+
   def new_box_for_profile(profile)
     box = Object.const_get(kind).send("from_model", self)
     box.profile = profile

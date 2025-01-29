@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :profiles, only: %i[edit update show] do
     resources :rich_text_boxes, shallow: true
     resources :index_boxes, shallow: true
-    resources :boxes, shallow: true
+    resources :boxes, shallow: true, except: %i[index]
     resources :socials, shallow: true
     resources :achievements, shallow: true
     resources :awards, shallow: true
@@ -41,15 +41,17 @@ Rails.application.routes.draw do
       patch :set_favorite_picture
     end
   end
-  put 'boxes/:id/toggle', to: 'boxes#toggle', as: 'toggle_box'
-  put 'socials/:id/toggle', to: 'socials#toggle', as: 'toggle_social'
-  put 'awards/:id/toggle', to: 'awards#toggle', as: 'toggle_award'
-  put 'educations/:id/toggle', to: 'educations#toggle', as: 'toggle_education'
-  put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
+  get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'
+  get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
   put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
   put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
-  put 'publications/:id/toggle', to: 'publications#toggle', as: 'toggle_publication'
-  get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
+
+  # put 'boxes/:id/toggle', to: 'boxes#toggle', as: 'toggle_box'
+  # put 'socials/:id/toggle', to: 'socials#toggle', as: 'toggle_social'
+  # put 'awards/:id/toggle', to: 'awards#toggle', as: 'toggle_award'
+  # put 'educations/:id/toggle', to: 'educations#toggle', as: 'toggle_education'
+  # put 'experiences/:id/toggle', to: 'experiences#toggle', as: 'toggle_experience'
+  # put 'publications/:id/toggle', to: 'publications#toggle', as: 'toggle_publication'
 
   resources :names, only: %i[index show update]
 
