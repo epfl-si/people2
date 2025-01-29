@@ -1,4 +1,4 @@
-<details data-sortable-url='<%= box_path(box, format: "json") %>'>
+<details id='<%= dom_id(box) %>' data-sortable-url='<%= box_path(box, format: "json") %>'>
 <summary><%= render "boxes/editable_box", box: box %></summary>
 <%= render "rich_text_boxes/editable_box", box: box %>
 </details>

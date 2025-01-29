@@ -39,6 +39,7 @@ en:
   ciccio: this is ciccio
   action:
     accred_full_list: "Full list of positions and address"
+    add_a_new: "Add a new"
     admin_data: "Administrative data"
     browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
@@ -63,6 +64,9 @@ en:
     update_education: "Update education"
     create_experience: "Create new work experience"
     create_publication: "Create new publication"
+    create_box: "Create this box"
+    create_index_box: "Create this box"
+    create_rich_text_box: "Create this text box"
     update_experience: "Udate work experience"
     update_publication: "Update publication"
     update_rich_text_box: "Update box"

@@ -7,6 +7,7 @@ fr:
 
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
+    add_a_new: "Ajouter un nouveau "
     admin_data: "Données administratives"
     browse_image_file: "Sélectionner un nouveau fichier photo"
     cancel: "Annuler"
@@ -15,6 +16,9 @@ fr:
     create_education: "Créer une formation"
     create_experience: "Créer un parcours professionnel"
     create_publication: "Ajouter une nouvelle publication"
+    create_box: "Create this box"
+    create_index_box: "Create this box"
+    create_rich_text_box: "Create this text box"
     create_social: "Ajouter un réseau social"
     delete: "Supprimer"
     edit: "Éditer"

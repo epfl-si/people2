@@ -168,6 +168,7 @@ nat_box_expertise:
 # Disponibilité only visible from intranet
 nat_box_availability:
   type: "RichTextBox"
+  model: mbox_contactfree
   profile: natalie
   section: contact
   title_fr: Disponibilité
@@ -179,6 +180,7 @@ nat_box_availability:
 
 nat_box_work:
   type: "RichTextBox"
+  model: mbox_biofree
   profile: natalie
   section: bio
   title_fr: Travail en Cours
