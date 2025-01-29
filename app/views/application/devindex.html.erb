@@ -2,8 +2,10 @@
   <% @data.each do |d| %>
   <li>
     <%= link_to d.name, person_path(d.sciper) %>
+    <% if d.email.present? %>
     |
     <%= link_to d.name, person_path(d.email) %>
+    <% end %>
     ->
     <%= d.desc %>
     <%= link_to "(reference)", "https://people.epfl.ch/#{d.sciper}" %>
