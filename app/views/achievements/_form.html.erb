@@ -2,7 +2,7 @@
 <% # achievement.errors.add :base, "This is a less severe error" %>
 
 <%= form_with(model: [profile, achievement], local: false, class: "instaform") do |form| %>
-  <% translations = (profile ||= Achievement.profile).translations %>
+  <% translations = (profile ||= achievement.profile).translations %>
   <%= render "shared/form_errors", item: achievement if achievement.errors.any? %>
 
   <%= translated_text_fields(form, :description, translations) %>
@@ -10,10 +10,7 @@
     <%= form.label Achievement.human_attribute_name(:year) %>
     <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
   </div>
-  <div class="form-group">
-    <%= form.label Achievement.human_attribute_name(:url) %>
-    <%= form.url_field :url %>
-  </div>
+    <%= single_text_field(form, :url) %>
   <div class="form-group">
     <%= form.label Achievement.human_attribute_name(:category) %>
     <%= form.collection_select :category, Achievement.categories, :id, :t_name %>
