@@ -1,30 +1,12 @@
 <%= form_with(model: [profile, box], local: false, class: "instaform") do |form| %>
+    <% translations = (profile ||= box.profile).translations %>
   <%= render "shared/form_errors", item: box if box.errors.any? %>
   <% if box.new_record? %>
   <%= form.hidden_field :model_box_id %>
   <% end %>
-
   <% unless box.locked_title? %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:title_fr) %>
-    <%= form.text_field :title_fr, placeholder: "Titre pour cet boite de text" %>
-  </div>
+    <%= translated_text_fields(form, :title, translations) %>
   <% end %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:content_fr) %>
-    <div class="rich_text_input"><%= form.rich_text_area :content_fr %></div>
-  </div>
-
-  <% unless box.locked_title? %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:title_en) %>
-    <%= form.text_field :title_en, placeholder: "Title for this text box" %>
-  </div>
-  <% end %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:content_en) %>
-    <div class="rich_text_input"><%= form.rich_text_area :content_en %></div>
-  </div>
-
+    <%= translated_rich_text_fields(form, :content, translations) %>
   <%= form_actions form, box, without_cancel: true %>
 <% end %>
