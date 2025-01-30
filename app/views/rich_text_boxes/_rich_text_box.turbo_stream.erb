@@ -1,3 +1,4 @@
-<%= turbo_stream.replace dom_id(@publication) do %>
-  <%= render "editable_publication", publication: @publication %>
-<% end %>
+<details id='<%= dom_id(box) %>' data-sortable-url='<%= box_path(box, format: "json") %>'>
+<summary><%= render "boxes/editable_box", box: box %></summary>
+<%= render "rich_text_boxes/editable_box", box: box %>
+</details>
