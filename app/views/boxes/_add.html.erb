@@ -1,22 +1,22 @@
-<%= turbo_frame_tag "add_#{section.label}_box"  do %>
-<p>
+<%= turbo_frame_tag "add_#{section.label}_box" do %>
+<nav class="add-box-buttons">
   <% (boxes || []).each do |mb| %>
     <% if mb.container? %>
       <%= form_with(model: [profile, Box.new(model: mb)], local: false, class: "instaform") do |form| %>
         <%= form.hidden_field :model_box_id %>
-        <%= form.submit icon('plus-circle'), class: "btn-confirm" %>
+        <%= form.button type: :submit, class: "btn btn-secondary btn-sm", style: "display: inline;" do %>
+          <%= icon_label(mb.t_description, 'plus-circle', translate: false) %>
+        <% end %>         
       <% end %>
     <% else %>
       <%= link_to( 
-        icon('plus-circle'), 
+        icon_label(mb.t_description, 'plus-circle', translate: false), 
         new_profile_box_path(profile, model_box_id: mb.id),
-        class: "btn-confirm",
+        class: "btn btn-secondary btn-sm",
         method: :get,
         data: {turbo_stream: true, turbo_method:'get'}
       ) %>
     <% end %>
-    <%= mb.t_description %>
-    <br/>
   <% end %>
-</p>
+</nav>
 <% end %>
