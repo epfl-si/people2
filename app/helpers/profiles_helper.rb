@@ -9,6 +9,14 @@ module ProfilesHelper
     lb + fd
   end
 
+  def year_selection_field(form, field, label_class: "form-group", range: 10)
+    current_year = Time.zone.today.year
+    tag.div(class: label_class) do
+      form.label(form.object.class.human_attribute_name(field)) +
+        form.number_field(field, in: (current_year - range)..current_year)
+    end
+  end
+
   def single_rich_text_field(form, field, extracls = "")
     a = field.to_sym
     oc = form.object.class
