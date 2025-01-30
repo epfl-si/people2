@@ -6,6 +6,6 @@
   <%= turbo_stream.remove "add_#{@box.section.label}_box" %>
 <% end %>
 <%= turbo_stream.append "#{@box.section.label}_boxes" do %>
-  <%= render "profiles/#{@box.class.to_s.underscore}", box: @box %>
+  <%= render @box.to_partial_path, box: @box %>
 <% end %>
 <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
