@@ -2,18 +2,11 @@
   <% translations = (profile ||= experience.profile).translations %>
   <%= render "shared/form_errors", item: experience if experience.errors.any? %>
 
-<%= translated_text_fields(form, :title, translations) %>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:location) %>
-    <%= form.text_field :location, placeholder: "Apple corporation" %>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:period) %>
-    <% # TODO: here it would be nice to have the birthday for a more specific date range %>
-    <%= form.number_field :year_begin, in: 1950..Date.today.year %>
-    <%= form.number_field :year_end, in: 1950..Date.today.year %>
-  </div>
-
+  <%= translated_text_fields(form, :title, translations) %>
+  <%= single_text_field(form, :location) %>
+  <% # TODO: here it would be nice to have the birthday for a more specific date range %>
+  <%= year_field_selection(form, [:year_begin, :year_end], 'experience.period', options: { min_year: 1980, max_year: Date.today.year }) %>
+  
   <div class="form-group">
     <%= form.label Award.human_attribute_name(:audience) %>
     <%= audience_selector form %>
