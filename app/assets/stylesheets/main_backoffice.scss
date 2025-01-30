@@ -107,6 +107,16 @@ span.visibility {
   @extend .btn-sm;
 }
 
+.add-box-buttons {
+  margin-bottom: 1em;
+  form {
+    display: inline;
+    padding: 0;
+  }
+  .iconlabel {
+    margin-left: 0.5em;
+  }
+}
 // ---- Forms for editing instances of the models depending on profile
 .instaform {
   padding: spacer(2);

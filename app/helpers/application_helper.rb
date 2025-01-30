@@ -29,18 +29,19 @@ module ApplicationHelper
   end
 
   # span with icon and text
-  def icon_text(txt, icon)
+  def icon_text(txt, icon, translate: true)
     tag.span do
       content_tag(:svg,
                   content_tag(:use, "", { "xlink:href" => "##{icon}" }),
-                  class: "icon text-icon") + t(txt)
+                  class: "icon text-icon") + (translate ? t(txt) : txt)
     end
   end
 
+  # TODO: why do we have two almost identical helpers ??
   # icon + span with text
-  def icon_label(txt, icon)
+  def icon_label(txt, icon, translate: false)
     res = content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
-    res << tag.span(t(txt), class: "label")
+    res << tag.span((translate ? t(txt) : txt), class: "iconlabel")
     res
   end
 
