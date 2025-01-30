@@ -216,6 +216,11 @@ fr:
     visible: "visible"
     visible_address: "address"
   work_experience: "Parcours professionnel"
+  helpers:
+    placeholder:
+      education:
+        title_fr: "Doctorat"
+        field_fr: "Physique des solide"
   activerecord:
     models:
       award: "award"

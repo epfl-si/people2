@@ -255,11 +255,9 @@ en:
     placeholder:
       education:
         title_en: "PhD."
-        title_fr: "Doctorat"
         title_it: "Dottorato"
         title_de: "Doktortitel"
         field_en: "Solid state physics"
-        field_fr: "Physique du solide"
         field_it: "Fisica dello stato solido"
         field_de: "Festkörperphysik"
         director: "John Doe"
