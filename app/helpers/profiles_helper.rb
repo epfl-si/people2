@@ -9,11 +9,20 @@ module ProfilesHelper
     lb + fd
   end
 
-  def year_selection_field(form, field, label_class: "form-group", range: 10)
+  def year_field_selection(form, fields, label_key, options = {})
     current_year = Time.zone.today.year
+    min_year = options.fetch(:min_year, current_year - options.fetch(:range, 10))
+    max_year = options.fetch(:max_year, current_year)
+    label_class = options.fetch(:label_class, "form-group")
+
+    fields = Array(fields)
+
     tag.div(class: label_class) do
-      form.label(form.object.class.human_attribute_name(field)) +
-        form.number_field(field, in: (current_year - range)..current_year)
+      label_text = t(label_key)
+      label_html = form.label(fields.first, label_text)
+      fields_html = fields.map { |field| form.number_field(field, min: min_year, max: max_year) }
+
+      safe_join([label_html, *fields_html])
     end
   end
 

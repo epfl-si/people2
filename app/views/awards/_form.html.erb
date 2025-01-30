@@ -4,10 +4,9 @@
 <%= form_with(model: [profile, award], local: false, class: "instaform") do |form| %>
   <% translations = (profile ||= award.profile).translations %>
   <%= render "shared/form_errors", item: award if award.errors.any? %>
-
   <%= translated_text_fields(form, :title, translations) %>
   <%= single_text_field(form, :issuer) %>
-  <%= year_selection_field(form, :year) %>
+  <%= year_field_selection(form, :year, 'award.year', options: { min_year: 2015, max_year: 2025 }) %>
   <%= single_text_field(form, :url) %>
   <%= single_text_field(form, :category) %>
   <%= single_text_field(form, :origin) %>
