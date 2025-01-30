@@ -9,12 +9,30 @@ module ProfilesHelper
     lb + fd
   end
 
+  def single_rich_text_field(form, field, extracls = "")
+    a = field.to_sym
+    oc = form.object.class
+    tag.div(class: "form-group #{extracls}") do
+      form.label(oc.send(:human_attribute_name, a)) +
+        tag.div(class: "rich_text_input") do
+          form.rich_text_area(a, placeholder: true)
+        end
+    end
+  end
+
   def single_text_field(form, field, extracls = "")
     a = field.to_sym
     oc = form.object.class
     tag.div(class: "form-group #{extracls}") do
       form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
     end
+  end
+
+  def translated_rich_text_fields(form, field, translations = %w[en fr])
+    content = translations.map do |l|
+      single_rich_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
+    end
+    safe_join(content)
   end
 
   def translated_text_fields(form, field, translations = %w[en fr])
