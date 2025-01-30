@@ -1,14 +1,8 @@
 <%= form_with(model: [profile, experience], local: false, class: "instaform") do |form| %>
+  <% translations = (profile ||= experience.profile).translations %>
   <%= render "shared/form_errors", item: experience if experience.errors.any? %>
 
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:title_fr) %>
-    <%= form.text_field :title_fr, placeholder: "developeur d'applications" %>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:title_en) %>
-    <%= form.text_field :title_en, placeholder: "software developer" %>
-  </div>
+<%= translated_text_fields(form, :title, translations) %>
   <div class="form-group">
     <%= form.label Experience.human_attribute_name(:location) %>
     <%= form.text_field :location, placeholder: "Apple corporation" %>
@@ -24,15 +18,7 @@
     <%= form.label Award.human_attribute_name(:audience) %>
     <%= audience_selector form %>
   </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:description_fr) %>
-    <div><%= form.rich_text_area :description_fr %></div>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:description_en) %>
-    <div><%= form.rich_text_area :description_en %></div>
-  </div>
-
+    <%= translated_rich_text_fields(form, :description, translations) %>
   <%= form_actions form, experience %>
 
 <% end %>
