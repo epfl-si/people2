@@ -2,18 +2,11 @@
   <% translations = (profile ||= education.profile).translations %>
   <%= render "shared/form_errors", item: education if education.errors.any? %>
 
-    <%= translated_text_fields(form, :title, translations) %>
-    <%= translated_text_fields(form, :field, translations) %>
+  <%= translated_text_fields(form, :title, translations) %>
+  <%= translated_text_fields(form, :field, translations) %>
 
-    <%= single_text_field(form, :director) %>
-    <%= single_text_field(form, :school) %>
-    <%= year_field_selection(form, [:year_begin, :year_end], 'education.period', options: { min_year: 1990, max_year: 2025 }) %>
+  <%= single_text_field(form, :director) %>
+  <%= single_text_field(form, :school) %>
+  <%= year_field_selection(form, [:year_begin, :year_end], 'education.year', options: { min_year: 1990, max_year: 2025 }) %>
 
-      <div class="form-group">
-      <%= form.label t('education.audience') %>
-      <%= audience_selector form %>
-    </div>
-    <%= form_actions form, education %>
-  
   <% end %>
-  

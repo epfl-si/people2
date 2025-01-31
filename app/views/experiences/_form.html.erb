@@ -6,15 +6,11 @@
   <%= single_text_field(form, :location) %>
   <% # TODO: here it would be nice to have the birthday for a more specific date range %>
   <%= year_field_selection(form, [:year_begin, :year_end], 'experience.period', options: { min_year: 1980, max_year: Date.today.year }) %>
-  
-  <div class="form-group">
-    <%= form.label Award.human_attribute_name(:audience) %>
-    <%= audience_selector form %>
-  </div>
-    <%= translated_rich_text_fields(form, :description, translations) %>
-  <%= form_actions form, experience %>
+  <%= translated_rich_text_fields(form, :description, translations) %>
 
+  <%= form_actions form, experience %>
 <% end %>
+
 
 
 
