@@ -130,6 +130,10 @@ span.visibility {
     }
   }
 
+  .field_with_errors input {
+    border: 2px solid #ff0000;
+  }
+
   .form-group {
     display: flex;
     justify-content: flex-start;
