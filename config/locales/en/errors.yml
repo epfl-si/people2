@@ -1,0 +1,81 @@
+en:
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first:
+              not_in_official: Should be composed of names included in the official
+                first name.
+            usual_last:
+              not_in_official: Should be composed of names included in the official
+                last name.
+  activerecord:
+    errors:
+      messages:
+        record_invalid: Sciper must unique
+      models:
+        award:
+          attributes:
+            issuer:
+              blank: must be present
+            year:
+              blank: must be present
+        education:
+          attributes:
+            school:
+              blank: should be provided
+            year_begin:
+              blank: can't be blanks
+            year_end:
+              blank: can't be blanks
+        experience:
+          attributes:
+            base:
+              missing_year: Either beginning or end of work experience should be present
+            location:
+              blank: should be provided
+            year_begin:
+              blank: should be present
+            year_end:
+              blank: should be present
+  error:
+    award:
+      one: An error prevented this award to be updated
+      other: '%{count} errors prevented this award to be updated'
+      zero: Something prevented this award to be updated (should now happen)
+    one: Error
+    other: Errors
+    picture:
+      one: An error prevented your picture to be updated
+      other: '#{count} errors prevented your picture to be updated'
+      zero: Something prevented your picture to be updated (should now happen)
+    profile:
+      one: An error prevented your profile to be updated
+      other: '#{count} errors prevented your profile to be updated'
+      zero: Something prevented your profile to be updated (should now happen)
+    record:
+      one: An error prevented this record to be updated
+      other: '%{count} errors prevented this record to be updated'
+      zero: Something prevented this record to be updated (should now happen)
+  flash:
+    accred:
+      cannot_hide_all: Cannot hide all accreditations
+    generic:
+      error:
+        create: Error creating record
+        remove: Error deleting
+        update: Error updating record
+      success:
+        create: Record created succesfully
+        remove: Deleted
+        update: Record updated succesfully
+    profile:
+      error:
+        update: Error while updating the base profile
+      success:
+        update: Base profile succesfully updated
+  msg:
+    max_photos_reached: You have reached the maximum number of allowed photos.
+    no_photofile_selected: No photo selected. Please select one if you want to add
+      a photo to your profile

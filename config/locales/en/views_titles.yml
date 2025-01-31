@@ -1,0 +1,88 @@
+en:
+  activerecord:
+    models:
+      award: award
+      box: box
+      education: education
+      experience: work experience
+      profile: profile
+      social: social address
+  awards: Awards
+  biography: Biography
+  birthday: Birthday
+  education:
+    directedby: 'Directed by: '
+  infoscience_publications: Infoscience Publications
+  nationality: Nationality
+  nav:
+    biography: Biography
+    publications: Publications
+    research: Research
+    teaching: Teaching & PhD
+  office: Office
+  person:
+    email: email address
+    firstname: firstname
+    function: function
+    lastname: lastname
+    nationality: nationality
+    official_firstname: official firstname
+    official_lastname: official lastname
+    phone: main phone number
+    photo: profile picture
+    title: title
+    usual_firstname: usual firstname
+    usual_lastname: usual firstname
+    website: personal web site url
+  phone_type:
+    FAX: fax
+    FIXE_ANALOG: analog
+    FIXE_CONF: conf room
+    FIXE_LABO: lab
+    FIXE_OFFICE: office
+    FIXE_WALL: wall
+    OTHER: other
+    SIP_OTHER: sip
+    SOFT: soft
+    VIDEO_CONF: video conf
+  picture:
+    selected: selected
+  publication:
+    authors: Autors(s)
+    link: View the publication
+    title:
+      free: Notes on publications
+      infoscience: EPFL Infoscience
+      people: Other Publications
+  semester:
+    ete: summer
+    hiver: winter
+    undef: undefined
+  student:
+    female: Student
+    male: Student
+  teaching: Teaching
+  title:
+    awards: Awards
+    bachelor_teaching: Teaching
+    biography: Biography
+    courses: Courses
+    current_phd: PhD Students
+    current_phd_students: PhD Students
+    doctoral_teaching: Teaching & PhD
+    editing_languages: Edit Languages
+    education: Education
+    experiences: Work experiences
+    expertise: Fields of expertise
+    of: of
+    past_phd: Past EPFL PhD Students
+    past_phd_students: Past EPFL PhD Students
+    pictures: Profile pictures
+    publications: Publications
+    research: Research
+    selector_audience: Access
+    selector_visibility: Status
+    teaching: Teaching & PhD
+    teaching_domain: Teaching
+    work_experience: Work Experience
+  work_experience: Work Experience

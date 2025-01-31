@@ -1,0 +1,38 @@
+en:
+  action:
+    accred_full_list: Full list of positions and address
+    add_a_new: Add a new
+    admin_data: Administrative data
+    browse_image_file: Select a new photo file
+    confirm: Are you sure?
+    create_award: Create new award
+    create_box: Create this box
+    create_experience: Create new work experience
+    create_index_box: Create this box
+    create_publication: Create new publication
+    create_rich_text_box: Create this text box
+    delete: delete
+    edit_pictures: Edit / Change photo
+    edit_profile: Edit profile
+    hide: Hide
+    hide_search_form: Hide the search form
+    make_address_hidden: Hide address
+    make_address_visible: Show address
+    make_hidden: Hide
+    make_visible: Show
+    of: of
+    search: Search
+    search_people: Search for a person
+    select: Select
+    show_hide_search_form: Show / hide the search form
+    sign_in: Sign in
+    sign_out: Sign out
+    submit: Submit
+    submit_personal_data: Update personal data
+    update_award: Update award
+    update_education: Update education
+    update_experience: Udate work experience
+    update_publication: Update publication
+    update_rich_text_box: Update box
+    upload_image: Upload the image
+    validate: Submit

@@ -1,0 +1,46 @@
+en:
+  admin_data:
+    gid: GID
+    home: Home directory
+    sap: SAP ID
+    sciper: SCIPER Number
+    shell: Shell
+    title: Admin data
+    uid: UID
+    username: Username
+  ciccio: this is ciccio
+  class_delegate: Class delegate
+  common:
+    not_available: NA
+  de: Deutch
+  en: English
+  fr: Français
+  it: Italiano
+  visibility:
+    authenticated: EPFL users only
+    authenticated_access: user
+    draft: Draft (etitor only)
+    editor: Draft (editor only)
+    editor_access: full
+    hidden: hidden
+    hidden_address: NO address
+    intranet: intranet only
+    intranet_access: intranet
+    labels:
+      authenticated: Authenticated users only
+      draft: Draft
+      hidden: Hidden
+      intranet: Intranet only
+      public: World visible
+      published: Published
+    public: public
+    public_access: public
+    short_labels:
+      authenticated: Users
+      draft: Draft
+      hidden: Hidden
+      intranet: Intranet
+      public: World
+      published: Published
+    visible: visible
+    visible_address: address
