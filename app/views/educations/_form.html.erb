@@ -9,4 +9,5 @@
   <%= single_text_field(form, :school) %>
   <%= year_field_selection(form, [:year_begin, :year_end], 'education.year', options: { min_year: 1990, max_year: 2025 }) %>
 
+  <%= form_actions form, education %>
   <% end %>
