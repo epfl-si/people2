@@ -1,0 +1,31 @@
+en:
+  helpers:
+    placeholder: &placeholder
+      education:
+        title_en: "PhD."
+        title_fr: "Doctorat"
+        title_it: "Dottorato"
+        title_de: "Doktortitel"
+        field_en: "Solid state physics"
+        field_it: "Fisica dello stato solido"
+        field_de: "Festkörperphysik"
+        field_fr: "Physique des solides"
+        director: "John Doe"
+        school: "Princeton University"
+      achievement:
+        title: "Edison award"
+
+fr: 
+  helpers:
+    placeholder:
+      <<: *placeholder
+
+it: 
+  helpers:
+    placeholder:
+      <<: *placeholder
+
+de: 
+  helpers:
+    placeholder:
+      <<: *placeholder

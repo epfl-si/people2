@@ -9,6 +9,7 @@ module ProfilesHelper
     lb + fd
   end
 
+  # TODO: REFACTOR → USE HUMAN_ATTRIBUTE
   def year_field_selection(form, fields, label_key, options = {})
     current_year = Time.zone.today.year
     min_year = options.fetch(:min_year, current_year - options.fetch(:range, 10))
@@ -28,9 +29,9 @@ module ProfilesHelper
 
   def single_rich_text_field(form, field, extracls = "")
     a = field.to_sym
-    oc = form.object.class
+    oc = form.object.class.name.downcase.to_sym
     tag.div(class: "form-group #{extracls}") do
-      form.label(oc.send(:human_attribute_name, a)) +
+      form.label(oc, a) +
         tag.div(class: "rich_text_input") do
           form.rich_text_area(a, placeholder: true)
         end
@@ -39,9 +40,9 @@ module ProfilesHelper
 
   def single_text_field(form, field, extracls = "")
     a = field.to_sym
-    oc = form.object.class
+    oc = form.object.class.name.downcase.to_sym
     tag.div(class: "form-group #{extracls}") do
-      form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
+      form.label(oc, a) + form.text_field(a, placeholder: true)
     end
   end
 

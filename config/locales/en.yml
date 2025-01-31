@@ -251,17 +251,6 @@ en:
 
   work_experience: "Work Experience"
 
-  helpers:
-    placeholder:
-      education:
-        title_en: "PhD."
-        title_it: "Dottorato"
-        title_de: "Doktortitel"
-        field_en: "Solid state physics"
-        field_it: "Fisica dello stato solido"
-        field_de: "Festkörperphysik"
-        director: "John Doe"
-        school: "Princeton University"
   activerecord:
     models:
       award: "award"
