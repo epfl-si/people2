@@ -30,6 +30,7 @@ module People
     # ------------------------------------------------------------ local configs
     config.encoding = 'utf-8'
     config.i18n.default_locale = :fr
+    # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.active_storage.draw_routes = true
     # TODO: reverto to default vips for image processing
     # this is not the default because it is slower but it avoids having to

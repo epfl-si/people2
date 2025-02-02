@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 require 'uri'
 year=2024
-tmpfile="/tmp/wsgetpeople_access2024.txt"
-srcfile="wsgetpeople_access2024_suc.txt"
+tmpfile="tmp/wsgetpeople_access2024.txt"
+srcfile="tmp/wsgetpeople_access2024_suc.txt"
 
 unless File.exist?(tmpfile)
 	logsdir="/var/www/vhosts/people.epfl.ch/logs"
@@ -14,23 +14,45 @@ end
 
 system "sort '#{srcfile}' | uniq -c > #{srcfile}" unless File.exist?(srcfile)
 
-ips_count={}
-par_count={}
+ips_count={} # source ip address
+par_count={} # parameter combinations
+str_count={} # structure files
+pos_count={} # position filter
 File.readlines(srcfile, chomp: true).each do |line|
+	# log file where already sort|uniq -c so the first column contains the multiplicity
 	c, ip, req = line.split(" ")
-	ips_count[ip] = (ips_count[ip]||0) + c.to_i
+	c = c.to_i
+	ips_count[ip] = (ips_count[ip]||0) + c
 	# all_params = req.split(/[?&=]/)[(1..).step(2)]
 	q = URI(req).query || "none"
-	all_params = URI::decode_www_form(q).to_h.keys
-	params = all_params.reject{|v| v=~/amp;q|lang|tabs|filter/}
-	pk = params.sort.join(" ")
-	par_count[pk] = (par_count[pk]||0) + c.to_i
+	params = URI::decode_www_form(q).to_h
+	param_names = params.keys.reject{|v| v=~/amp;q|lang|tabs|filter/}
+	pk = param_names.sort.join(" ")
+	par_count[pk] = (par_count[pk]||0) + c
+	unless (str=params["struct"]).nil?
+		str_count[str] = (str_count[str]||0) + c
+	end
+	unless (str=params["position"]).nil?
+		pos_count[str] = (pos_count[str]||0) + c
+	end
 end
 
+printf("# ------------- Source IP addresses")
 ips_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
+printf("# ------------- Used parameter combinations")
 par_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+	printf("%8d %s\n", c, k);
+end
+
+printf("# ------------- Values for struct parameter")
+str_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+	printf("%8d %s\n", c, k);
+end
+
+printf("# ------------- Values for position parameter")
+pos_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end

@@ -247,10 +247,14 @@ refresh_webmocks:
 migrate: dcup
 	docker compose exec webapp ./bin/rails db:migrate
 
+structs:
+	rsync -av $(KBPATH)/structs/ tmp/structs/
+
 ## run rails migration and seed with initial data
-seed: migrate webmocks
+seed: migrate structs webmocks
 	docker compose exec webapp bin/rails db:seed
 	docker compose exec webapp bin/rails legacy:import
+	docker compose exec webapp bin/rails legacy:struct
 	docker compose exec webapp bin/rails data:courses
 
 ## reload the list of all courses from ISA
