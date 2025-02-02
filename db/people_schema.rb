@@ -340,6 +340,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_152206) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "structures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "owners"
+    t.string "label"
+    t.string "description"
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "profile_id"
@@ -355,12 +364,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_152206) do
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "email"
     t.string "name"
-    t.string "password"
     t.string "provider"
     t.string "sciper"
-    t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sciper"], name: "index_users_on_sciper", unique: true
   end
 
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
