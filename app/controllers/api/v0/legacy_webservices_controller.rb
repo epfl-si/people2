@@ -47,32 +47,110 @@ module API
       # TODO: most of what is done here is just passing the request to api.
       #       we should probably send people directly to api instead.
       def people
-        groups   = params[:groups]
-        progcode = params[:progcode]
-        scipers  = params[:scipers]
-        units    = params[:units]
         @errors = []
-        # input validation
-        if [groups, progcode, scipers, units].compact.empty?
-          @errors << "missing mandatory parameter: groups, progcode, scipers, units"
+        pp = people_params
+
+        # ----------------------------------------------------- input validation
+        # Optional parameters: position, struct, lang
+        @options = {}
+        if pp['lang']
+          lang = pp['lang']
+          if Rails.configuration.available_languages.include?(lang)
+            @options[:lang]
+          else
+            @errors << "invalid language #{lang}"
+          end
         end
-        if [groups, progcode, scipers, units].compact.count > 1
+        @options[:lang] ||= Rails.configuration.i18n.default_locale
+
+        if pp['position']
+          position = PositionFilter.new(pp['position'])
+          if position.valid?
+            @options[:position] = position
+          else
+            @errors << "invalid position filter #{pp['position']}"
+          end
+        end
+
+        if pp['struct']
+          structure = Structure.load(struct, lang)
+          if structure.present?
+            @options[:structure] = structure
+          else
+            @errors << "invalid struct file name #{pp['struct']}"
+          end
+        end
+
+        render json: { errors: @errors }, status: :unprocessable_entity unless @errors.empty?
+
+        # Mutually exclusive parameters
+        mp = pp.slice("groups", "progcode", "scipers", "units").compact
+        @errors << "missing mandatory parameter: groups, progcode, scipers, units" if mp.empty?
+        if mp.keys.count > 1
           @errors << "only one of the following mandatory parameters can be present: groups, progcode, scipers, units"
         end
-        unless groups.nil? || groups =~ /^([\w-]*,*)*$/
-          @errors << "groups should be a comma separated list of group names"
-        end
-        @errors << "invalid format for progcode" unless progcode.nil? || progcode =~ /^(ED\w\w)$/
-        unless scipers.nil? || scipers =~ /^(\d{6},*)+$/
-          @errors << "scipers should be a comma separated list of sciper numbers"
-        end
-        @errors << "units should be a comma separated list of unit labels" unless units.nil? || units =~ /^([\w-]*,*)*$/
-        return if @errors.blank?
+        selector = mp.keys.first
+        choice = mp[selector]
 
-        render json: { errors: @errors }, status: :unprocessable_entity
+        Rails.logger.debug("selector: #{selector}  choice: #{choice}")
+
+        send "setup_for_#{selector}", choice
+
+        if @errors.empty?
+          render json: @output
+        else
+          render json: { errors: @errors }, status: :unprocessable_entity
+        end
       end
 
       private
+
+      def load_scipers(scipers)
+        # TODO: may be if we keep the list of valid scipers up to date we can
+        #       spare some call to the api
+        # okscipers = Work::Sciper.live.where(sciper: scipers).map{|s| s.sciper}
+        profiles = Profile.where(sciper: scipers)
+        Person.for_scipers(scipers)
+
+        @output = profiles
+      end
+
+      def setup_for_groups(groups)
+        return if groups =~ /^([\w-]+)(,[\w-]+)*$/
+
+        @errors << "groups should be a comma separated list of group names"
+        nil
+      end
+
+      def setup_for_scipers(scipers)
+        unless scipers =~ /^(\d{6})(,\d{6})*$/
+          @errors << "scipers should be a comma separated list of sciper numbers"
+          return
+        end
+        sa = scipers.split(",")
+        load_scipers(sa)
+      end
+
+      def setup_for_progcode(progcode)
+        return if progcode =~ /^(ED\w\w)$/
+
+        @errors << "invalid format for progcode"
+        nil
+      end
+
+      def setup_for_units(units)
+        return if units =~ /^([\w-]+)(,[\w-]+)*$/
+
+        @errors << "units should be a comma separated list of unit labels"
+        nil
+      end
+
+      def people_params
+        params.permit(
+          :groups, :progcode, :scipers, :units,
+          :position, :struct, :lang
+        )
+      end
 
       # TODO: implement this. We will need an ApiAuthorisation model capable of
       #  - storing a client name (app)

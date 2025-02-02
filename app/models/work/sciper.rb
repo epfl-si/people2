@@ -5,6 +5,7 @@ module Work
     self.primary_key = 'sciper'
     scope :untreated, -> { where(status: 0) }
     scope :treated, -> { where.not(status: 0) }
+    scope :live, -> { where('status > 1') }
     scope :with_profile, -> { where(status: 3) }
     def update_status
       bb = Authorisation.botweb_for_sciper(sciper)
