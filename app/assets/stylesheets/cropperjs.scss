@@ -36,7 +36,21 @@
     border: 1px solid #ddd;
     padding: 5px;
   }
-  
+
+  .image_box_container{
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    justify-content: center;
+    object-fit: cover;
+  }
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+  }
   
 .cropper-container {
     direction: ltr;

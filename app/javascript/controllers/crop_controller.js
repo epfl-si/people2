@@ -17,9 +17,9 @@ export default class extends Controller {
 
   createCropper() {
     this.cropper = new Cropper(this.sourceTarget, {
-      autoCropArea: 0.7,
+      autoCropArea: 1,
       aspectRatio: 250 / 360,
-      viewMode: 1,  
+      viewMode: 3,  
       dragMode: "none",
       responsive: true,
       zoomOnWheel: false,
@@ -41,8 +41,8 @@ export default class extends Controller {
     const imageData = this.cropper.getImageData();
 
     // Dimensions minimales ajustées pour l'affichage réduit
-    const minWidth = 125; // Réduction de l'affichage
-    const minHeight = 180;
+    const minWidth = 250;
+    const minHeight = 360;
 
     const widthRatio = containerData.width / imageData.naturalWidth;
     const heightRatio = containerData.height / imageData.naturalHeight;
