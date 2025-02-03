@@ -9,12 +9,17 @@
       images_url: picture_path(@picture),
       images_id: @picture.id,
       original_image_url: image_url
-    }, class: "container d-flex justify-content-center align-items-start gap-3") do %>
+    }, class: "image_box_container") do %>
       
       <div class="image-container text-center md-2">
         <%= image_tag(image_url, class: "image", id: "source", data: {
           crop_target: "source"
         }) %>
+          <%= form_with model: @picture, url: picture_path(@picture), method: :put, data: { crop_target: "form", turbo_frame: "profile_picture" }, local: true do |f| %>
+          <%= f.file_field :cropped_image, data: {crop_target: "file"}, style: 'display: none;' %>
+          <%= link_to(t('action.cancel'), profile_pictures_path(@profile), class: "btn btn-secondary", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
+          <%= f.button "Confirm", class: "btn btn-primary" %>
+      <% end %>
       </div>
 
       <div class="image-container text-center">
@@ -35,11 +40,6 @@
             </div>
           </div>
         </div>
-      <%= form_with model: @picture, url: picture_path(@picture), method: :put, data: { crop_target: "form", turbo_frame: "profile_picture" }, local: true do |f| %>
-        <%= f.file_field :cropped_image, data: {crop_target: "file"}, style: 'display: none;' %>
-        <%= link_to(t('action.cancel'), profile_pictures_path(@profile), class: "btn-cancel", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
-        <%= f.button "Confirm", class: "btn btn-primary mt-3" %>
-      <% end %>
         </div>
       </div>
     <% end %>
