@@ -18,6 +18,8 @@ ips_count={} # source ip address
 par_count={} # parameter combinations
 str_count={} # structure files
 pos_count={} # position filter
+uni_count={} # units values
+gru_count={} # groups values
 File.readlines(srcfile, chomp: true).each do |line|
 	# log file where already sort|uniq -c so the first column contains the multiplicity
 	c, ip, req = line.split(" ")
@@ -35,10 +37,26 @@ File.readlines(srcfile, chomp: true).each do |line|
 	unless (str=params["position"]).nil?
 		pos_count[str] = (pos_count[str]||0) + c
 	end
+	unless (str=params["units"]).nil?
+		uni_count[str] = (uni_count[str]||0) + c
+	end
+	unless (str=params["groups"]).nil?
+		gru_count[str] = (gru_count[str]||0) + c
+	end
 end
 
 printf("# ------------- Source IP addresses")
 ips_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+	printf("%8d %s\n", c, k);
+end
+
+printf("# ------------- Values for position parameter")
+pos_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+	printf("%8d %s\n", c, k);
+end
+
+printf("# ------------- Values for units parameter")
+uni_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
@@ -52,7 +70,7 @@ str_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Values for position parameter")
-pos_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+printf("# ------------- Values for group parameter")
+gru_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end

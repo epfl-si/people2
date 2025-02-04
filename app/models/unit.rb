@@ -7,19 +7,19 @@ class Unit
   translates :name, :label
 
   def self.find(id)
-    validate_id!(id)
+    raise "Invalid id #{id}" if id.to_i.zero?
+
     unit_data = APIUnitGetter.call(id: id)
     new(unit_data)
   end
 
   def self.find_by_name(name, force: false)
-    validate_id!(id)
-    unit_data = APIUnitGetter.call(name: name, single: true, force: force)
-    new(unit_data)
-  end
+    raise "Invalid name #{name}" unless name =~ /^[\w-]+$/
 
-  def self.for_name(name)
-    validate_name!(name)
+    unit_data = APIUnitGetter.call(name: name, single: true, force: force)
+    return if unit_data.blank?
+
+    new(unit_data)
   end
 
   def initialize(data)
@@ -59,14 +59,5 @@ class Unit
 
   def all_children
     @all_children ||= @all_children_ids.map { |id| Unit.find(id) }
-  end
-
-  def validate_id!(id)
-    return if id.is_a?(Integer)
-    raise "Invalid id #{id}" if id.to_i.zero?
-  end
-
-  def validate_name!(name)
-    raise "Invalid name #{name}" unless name =~ /^[\w-]+$/
   end
 end
