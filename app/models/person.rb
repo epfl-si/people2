@@ -20,6 +20,7 @@ class Person
     # phones and addresses are hash with the unit_id as key
     @phones = (@data.delete('phones') || []).map { |d| Phone.new(d) }.group_by(&:unit_id)
     @addresses = (@data.delete('addresses') || []).map { |d| Address.new(d) }.group_by(&:unit_id)
+    @rooms = (@data.delete('rooms') || []).map { |d| Room.new(d) }.group_by(&:unit_id)
 
     @name = Name.new({
                        id: sciper,
@@ -46,13 +47,18 @@ class Person
     return [] if scipers.empty?
 
     # sort.uniq is to minimize cache miss
-    APIPersonGetter.call!(persid: scipers.sort.uniq).map { |p| new(p) }
+    us = scipers.sort.uniq
+    if us.count > 1
+      APIPersonGetter.call!(persid: us).map { |p| new(p) }
+    else
+      [new(APIPersonGetter.call!(persid: us))]
+    end
   end
 
   def self.for_units(units)
     ids = if units.is_a?(Array)
             if units.first.respond_to?(:id)
-              units.map(&id).sort.uniq
+              units.map(&:id).sort.uniq
             else
               units.sort.uniq
             end
@@ -62,19 +68,23 @@ class Person
     APIPersonGetter.call(unitid: ids).map { |p| new(p) }
   end
 
-  # def self.for_group(name_or_id)
-  #   g = APIPersonGetter.for_group(name_or_id)
-  #   scipers = g.fetch!['persons'].map(&:id)
-  #   for_scipers(scipers)
-  # end
-
-  # def self.for_groups(names_or_ids)
-  #   scipers = names_or_ids.map do |name_or_id|
-  #     g = APIPersonGetter.for_group(name_or_id)
-  #     g.fetch!.map { |p| p['id'] }
-  #   end.flatten.uniq
-  #   for_scipers(scipers)
-  # end
+  def self.for_groups(group_names)
+    gnames = group_names.is_a?(Array) ? group_names : [group_names]
+    scipers = gnames.map do |gn|
+      # unique id for groups is in the form Snnnnn
+      id = if gn =~ /S[0-9]{5}/
+             gn
+           else
+             # TODO: api does free search on the name and send many matches
+             #       temporarily reverting to LDAP.
+             # group = APIGroupGetter.call(name: gn)
+             Ldap::Group.find_by(name: gn).id
+           end
+      members = APIGroupMembersGetter.call(id: id)
+      members.map { |m| m["id"] }
+    end.flatten.uniq
+    for_scipers(scipers)
+  end
 
   def profile!
     unless defined?(@profile)
@@ -108,6 +118,10 @@ class Person
     )
   end
 
+  def email
+    @data["email"] || ""
+  end
+
   # TODO: check if this is always the case as there might be issues with people
   #       changing name, with modified usual names etc.
   def email_user
@@ -128,21 +142,39 @@ class Person
   end
 
   # Updated visible_phones method
-  def visible_phones(unit)
-    @phones[unit]&.select(&:visible?) || []
+  def visible_phones(unit_id)
+    @phones[unit_id]&.select(&:visible?) || []
   end
 
-  def phones(unit)
-    @phones[unit]
+  def phones(unit_id)
+    @phones[unit_id]
   end
 
-  def addresses(unit)
-    @addresses.key?(unit) ? @addresses[unit] : []
+  def addresses(unit_id)
+    @addresses.key?(unit_id) ? @addresses[unit_id] : []
   end
 
-  def address(unit)
-    addresses(unit).first
+  def address(unit_id)
+    addresses(unit_id).first
   end
+
+  def rooms(unit_id)
+    @rooms.key?(unit_id) ? @rooms[unit_id] : []
+  end
+
+  def room(unit_id)
+    rooms(unit_id).first
+  end
+
+  # def visible_addresses_by_unit
+  #   profile = profile!
+  #   if profile.present?
+  #     @hidden_unit_ids ||= profile.accreds.hidden.map{|v| v.unit_id}
+  #     @addresses.slice(@addresses.keys - @hidden_unit_ids)
+  #   else
+  #     @addresses
+  #   end
+  # end
 
   def default_phone
     unless defined?(@default_phone)

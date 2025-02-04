@@ -11,6 +11,9 @@ class Accred < ApplicationRecord
 
   positioned on: :profile
 
+  scope :visible, -> { where(visible: true) }
+  scope :hidden, -> { where(visible: false) }
+
   validate :at_least_one_visible, on: :update
 
   DEFAULTS = {

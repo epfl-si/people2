@@ -44,7 +44,7 @@ class Accreditation
   # The problem we are trying to solve is that accreds are changing frequently.
   # Therefore, the two sets (local accred refs and actual accreds) are not
   # guaranteed to be always identical. When an accred is removed we just have
-  # to garbage collect the corresponding accre preferency. On the other hand,
+  # to garbage collect the corresponding accred preference. On the other hand,
   # when an accred is added, we have to decide what is its position.
   # The current implementation assumes the existence of an external ordering
   # from that will be overridden by the local sorting preferences. New accreds
