@@ -2,14 +2,15 @@
 
 # TODO: is it worth including ActiveModel::API ?
 class Address
-  attr_reader :unit_id, :order, :lines, :hierarchy
+  attr_reader :unit_id, :order, :lines, :hierarchy, :full
 
   def initialize(data)
     @unit_id = data['unitid'].to_i
     @type = data['type']
     @country = data['country']
     @hierarchy = data['part1']
-    @lines = (2..4).map { |n| data["part#{n}"] }.compact.reject(&:empty?)
+    @lines = (1..4).map { |n| data["part#{n}"] }.compact.reject(&:empty?)
+    @full = data['address'] || @lines.join(' $ ')
     @from_default = data['fromdefault'].to_i != 0
   end
 
@@ -17,7 +18,7 @@ class Address
     @from_default
   end
 
-  def full
-    @lines.join(' $ ')
+  def eql?(other)
+    unit_id == other.unit_id && lines == other.lines
   end
 end

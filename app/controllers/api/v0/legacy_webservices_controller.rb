@@ -36,7 +36,7 @@ module API
       #      17 none
       #      55 position progcode
       #    4327 groups position
-      #   28004 position scipers
+      #   28004 position scipers <- should we support this although it does not make sense ?
       #   37543 position struct units
       #   68874 groups
       #  102652 progcode
@@ -80,8 +80,7 @@ module API
             @errors << "invalid struct file name #{pp['struct']}"
           end
         end
-
-        render json: { errors: @errors }, status: :unprocessable_entity unless @errors.empty?
+        fail unless @errors.empty?
 
         # Mutually exclusive parameters
         mp = pp.slice("groups", "progcode", "scipers", "units").compact
@@ -93,52 +92,89 @@ module API
         choice = mp[selector]
 
         Rails.logger.debug("selector: #{selector}  choice: #{choice}")
+        send "validate_#{selector}", choice
+        fail unless @errors.empty?
 
-        send "setup_for_#{selector}", choice
+        # ----------------------------------------------------------------------
 
-        if @errors.empty?
-          render json: @output
-        else
-          render json: { errors: @errors }, status: :unprocessable_entity
+        if selector == "units"
+          units = sanitize_units(choice.split(","))
+          fail unless @errors.empty?
+
+          @persons = Person.for_units(units)
+        end
+        @persons = Person.for_groups(choice.split(",")) if selector == "groups"
+        @persons = Person.for_scipers(choice) if selector == "scipers"
+
+        scipers = @persons.map(&:sciper).uniq
+        @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
+
+        respond_to do |format|
+          if @errors.empty?
+            if structure.present?
+              format.json { render 'people_struct' }
+            else
+              format.json { render 'people_alpha' }
+            end
+          else
+            format.json { render json: { errors: @errors }, status: :unprocessable_entity }
+          end
         end
       end
 
+      # These seams to be the data that is consumed by wordpress
+      # email
+      # nom, prenom
+      # photo_show
+      # phones taken from the unit in alpha list and from the person in struct list
+      # fonction_fr, fonction_en, unit->fonction_fr, unit->fonction_en
+      # unites, unit->ordre, unit->rooms
+      # rooms
+      # ------------------------------------------------------------------------
+
       private
 
-      def load_scipers(scipers)
+      def fail
+        respond_to do |format|
+          format.json { render json: { errors: @errors }, status: :unprocessable_entity }
+        end
+      end
+
+      def sanitize_scipers(scipers)
         # TODO: may be if we keep the list of valid scipers up to date we can
         #       spare some call to the api
         # okscipers = Work::Sciper.live.where(sciper: scipers).map{|s| s.sciper}
-        profiles = Profile.where(sciper: scipers)
-        Person.for_scipers(scipers)
-
-        @output = profiles
+        scipers
       end
 
-      def setup_for_groups(groups)
+      def sanitize_units(unit_names)
+        units = unit_names.uniq.map { |name| Unit.find_by(name: name) }.compact
+        @errors << "units must be of the same level" if units.min(&:level) != units.max(&:level)
+        units
+      end
+
+      def validate_groups(groups)
         return if groups =~ /^([\w-]+)(,[\w-]+)*$/
 
         @errors << "groups should be a comma separated list of group names"
         nil
       end
 
-      def setup_for_scipers(scipers)
-        unless scipers =~ /^(\d{6})(,\d{6})*$/
-          @errors << "scipers should be a comma separated list of sciper numbers"
-          return
-        end
-        sa = scipers.split(",")
-        load_scipers(sa)
+      def validate_scipers(scipers)
+        return if scipers =~ /^(\d{6})(,\d{6})*$/
+
+        @errors << "scipers should be a comma separated list of sciper numbers"
+        nil
       end
 
-      def setup_for_progcode(progcode)
+      def validate_progcode(progcode)
         return if progcode =~ /^(ED\w\w)$/
 
         @errors << "invalid format for progcode"
         nil
       end
 
-      def setup_for_units(units)
+      def validate_units(units)
         return if units =~ /^([\w-]+)(,[\w-]+)*$/
 
         @errors << "units should be a comma separated list of unit labels"
