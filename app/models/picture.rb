@@ -9,8 +9,18 @@ class Picture < ApplicationRecord
   before_destroy :refuse_destroy_if_camipro
 
   belongs_to :profile
-  has_one_attached :image
-  has_one_attached :cropped_image
+  has_one_attached :image do |attachable|
+    attachable.variant :small, resize_to_limit: [100, 100]
+    attachable.variant :medium, resize_to_limit: [200, 200]
+    attachable.variant :large, resize_to_limit: [400, 400]
+    attachable.variant :huge, resize_to_limit: [800, 800]
+  end
+  has_one_attached :cropped_image do |attachable|
+    attachable.variant :small, resize_to_limit: [100, 100]
+    attachable.variant :medium, resize_to_limit: [200, 200]
+    attachable.variant :large, resize_to_limit: [400, 400]
+    attachable.variant :huge, resize_to_limit: [800, 800]
+  end
 
   after_commit :check_attachment
 
@@ -24,6 +34,14 @@ class Picture < ApplicationRecord
     baseurl = "https://#{Rails.application.config_for(:epflapi).camipro_host}/api/v1/photos/#{sciper}?time=#{t}&app=people"
     digest = OpenSSL::HMAC.hexdigest('SHA256', k, baseurl)
     baseurl + "&hash=#{digest}"
+  end
+
+  def visible_image
+    if cropped_image&.attached?
+      cropped_image
+    elsif image&.attached?
+      image
+    end
   end
 
   def selected?

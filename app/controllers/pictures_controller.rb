@@ -1,17 +1,28 @@
 # frozen_string_literal: true
 
 class PicturesController < BackendController
-  before_action :set_picture, only: %i[edit update destroy]
-  before_action :set_profile, only: %i[edit update]
+  before_action :set_picture, only: %i[show edit update destroy]
+  before_action :set_profile, only: %i[index create]
 
   # GET /profile/profile_id/pictures or /profile/profile_id/pictures.json
   def index
-    @profile = Profile.find(params[:profile_id])
     @pictures = @profile.pictures
   end
 
-  # # GET /pictures/1 or /pictures/1.json
-  # def show; end
+  # GET /pictures/1 or /pictures/1.json
+  def show
+    variant = params[:v]&.to_sym || :medium
+    raise ActiveRecord::RecordNotFound unless @profile&.show_photo? && @picture.selected?
+
+    respond_to do |format|
+      format.html do
+        redirect_to url_for(@picture.visible_image.variant(variant))
+      end
+      format.json do
+        render json: { location: image_path('profile_image_placeholder.svg') }
+      end
+    end
+  end
 
   # # GET /pictures/1/edit
   # def edit; end
@@ -62,8 +73,6 @@ class PicturesController < BackendController
   end
 
   def create
-    @profile = Profile.find(params[:profile_id])
-
     if @profile.pictures.count + 1 > Rails.application.config_for(:limits).max_profile_pictures
       raise "Max number of profile pictures reached"
     end
@@ -89,11 +98,13 @@ class PicturesController < BackendController
   private
 
   def set_profile
-    @profile = @picture.profile
+    @profile = Profile.find(params[:profile_id])
   end
 
   def set_picture
-    @picture = Picture.find(params[:id])
+    @picture = Picture.includes(:profile).find(params[:id])
+    @profile = @picture.profile
+  # TODO: we can probably avoid this. More test in the crop feature needed.
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Picture not found" }, status: :not_found
   end
