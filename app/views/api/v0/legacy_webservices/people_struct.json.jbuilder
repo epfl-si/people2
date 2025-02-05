@@ -42,3 +42,13 @@
 #       ...
 #   }
 # ]
+
+# json.(@structure, :sections)
+json.array!(@structure.sections.reject { |s| s.items.empty? }) do |section|
+  json.label section.title
+  json.members do
+    section.items.each do |person|
+      json.partial! 'flat_person', person: person
+    end
+  end
+end
