@@ -10,32 +10,34 @@
       images_id: @picture.id,
       original_image_url: image_url
     }, class: "image_box_container") do %>
-      
-      <div class="image-container text-center md-2">
-        <%= image_tag(image_url, class: "image", id: "source", data: {
-          crop_target: "source"
-        }) %>
+      <div class="image-container-crop">
+        <div class="image-container text-center md-2">
+          <%= image_tag(image_url, class: "image", id: "source", data: {
+            crop_target: "source"
+          }) %>
+        </div>
+        <div class="crop-actions">
           <%= form_with model: @picture, url: picture_path(@picture), method: :put, data: { crop_target: "form", turbo_frame: "profile_picture" }, local: true do |f| %>
-          <%= f.file_field :cropped_image, data: {crop_target: "file"}, style: 'display: none;' %>
-          <%= link_to(t('action.cancel'), profile_pictures_path(@profile), class: "btn btn-secondary", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
-          <%= f.button "Confirm", class: "btn btn-primary" %>
-      <% end %>
+            <%= f.file_field :cropped_image, data: {crop_target: "file"}, style: 'display: none;' %>
+            <%= link_to(t('action.cancel'), profile_pictures_path(@profile), class: "btn btn-secondary", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
+            <%= f.button "Confirm", class: "btn btn-primary" %> 
+          <% end %>
+        </div>
       </div>
-
-      <div class="image-container text-center">
+      <div class="image-container image-container-preview text-center">
         <div class="preview-frame p-3">
           <h5 class="text-center mb-3">Preview</h5>
           <div class="d-flex justify-content-center flex-column align-items-center gap-3">
 
             <div class="image-preview round">
               <%= image_tag(cropped_image_url, class: "image", id: "rounded_output", data: {
-                crop_target: "output"
+                crop_target: "outputRounded"
               }) %>
             </div>
 
             <div class="image-preview">
-              <%= image_tag(cropped_image_url, class: "image", id: "output", data: {
-                crop_target: "output"
+              <%= image_tag(cropped_image_url, class: "image image-preview-hidden", id: "output", data: {
+                crop_target: "outputDefault"
               }) %>
             </div>
           </div>
