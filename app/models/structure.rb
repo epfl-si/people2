@@ -10,10 +10,24 @@ class Structure < ApplicationRecord
     where(label: label).first
   end
 
-  def filters
-    @filters ||= data.map do |d|
+  def sections
+    @sections ||= data.map do |d|
       f = PositionFilter.new(d["filter"])
-      OpenStruct.new(title: d["title"], filter: f) if f.valid?
+      OpenStruct.new(title: d["title"], filter: f, items: []) if f.valid?
     end.compact
+  end
+
+  def valid?
+    sections.count == data.count
+  end
+
+  def store(person)
+    sections.each do |f|
+      if person.match_position_filter?(f.filter)
+        f.items << person
+        return true
+      end
+    end
+    false
   end
 end

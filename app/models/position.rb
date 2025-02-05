@@ -36,6 +36,10 @@ class Position
     )
   end
 
+  def match_legacy_filter?(filter)
+    filter.match?(label_frm)
+  end
+
   # In the original People, prof were determined by the followint regex
   # /ordinaire|tenure|assoc|bours|enseignement|titulaire|professeur invit/
   # TODO: there must be a better way using accred properties or similar

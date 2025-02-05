@@ -20,6 +20,7 @@ str_count={} # structure files
 pos_count={} # position filter
 uni_count={} # units values
 gru_count={} # groups values
+pco_count={} # progcode values
 File.readlines(srcfile, chomp: true).each do |line|
 	# log file where already sort|uniq -c so the first column contains the multiplicity
 	c, ip, req = line.split(" ")
@@ -42,6 +43,9 @@ File.readlines(srcfile, chomp: true).each do |line|
 	end
 	unless (str=params["groups"]).nil?
 		gru_count[str] = (gru_count[str]||0) + c
+	end
+	unless (str=params["progcode"]).nil?
+		pco_count[str] = (pco_count[str]||0) + c
 	end
 end
 
@@ -72,5 +76,10 @@ end
 
 printf("# ------------- Values for group parameter")
 gru_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+	printf("%8d %s\n", c, k);
+end
+
+printf("# ------------- Values for progcode parameter")
+pco_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
