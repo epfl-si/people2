@@ -210,6 +210,17 @@ class Person
     @main_position ||= accreditations.min.position
   end
 
+  def accred_for_unit(unit_id)
+    @accreds_by_unit ||= accreditations.group_by(&:unit_id)
+    @accreds_by_unit[unit_id].first
+  end
+
+  def match_position_filter?(filter)
+    accreditations.any? do |a|
+      a.position.match_legacy_filter?(filter)
+    end
+  end
+
   def student?
     accreditations.any?(&:student?)
   end

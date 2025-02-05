@@ -46,40 +46,41 @@ module API
       # 3010329 scipers
       # TODO: most of what is done here is just passing the request to api.
       #       we should probably send people directly to api instead.
+      POSITION_RE = /^(!?[[:alpha:]]+)( (or|and) (!?[[:alpha:]]+))*$/
       def people
         @errors = []
         pp = people_params
 
         # ----------------------------------------------------- input validation
         # Optional parameters: position, struct, lang
-        @options = {}
-        if pp['lang']
+        if pp['lang'].present?
           lang = pp['lang']
           if Rails.configuration.available_languages.include?(lang)
-            @options[:lang]
+            @lang = lang
           else
             @errors << "invalid language #{lang}"
           end
         end
-        @options[:lang] ||= Rails.configuration.i18n.default_locale
+        @lang ||= Rails.configuration.i18n.default_locale
 
-        if pp['position']
-          position = PositionFilter.new(pp['position'])
-          if position.valid?
-            @options[:position] = position
+        if pp['position'].present?
+          f = PositionFilter.new(pp['position'])
+          if f.valid?
+            @position = f
           else
             @errors << "invalid position filter #{pp['position']}"
           end
         end
 
         if pp['struct']
-          structure = Structure.load(struct, lang)
-          if structure.present?
-            @options[:structure] = structure
+          struct = Structure.load(pp['struct'], @lang)
+          if struct.present?
+            @structure = struct
           else
             @errors << "invalid struct file name #{pp['struct']}"
           end
         end
+
         fail unless @errors.empty?
 
         # Mutually exclusive parameters
@@ -91,27 +92,47 @@ module API
         selector = mp.keys.first
         choice = mp[selector]
 
-        Rails.logger.debug("selector: #{selector}  choice: #{choice}")
         send "validate_#{selector}", choice
         fail unless @errors.empty?
 
-        # ----------------------------------------------------------------------
-
-        if selector == "units"
+        case selector
+        when "units"
           units = sanitize_units(choice.split(","))
           fail unless @errors.empty?
 
           @persons = Person.for_units(units)
+        when "groups"
+          @persons = Person.for_groups(choice.split(","))
+        when "scipers"
+          @persons = Person.for_scipers(choice)
+        when "progcode"
+          scipers = IsaThDirectorsGetter.call(progcode: choice).map { |r| r["sciper"] }
+          @persons = Person.for_scipers(scipers)
+        else
+          raise "Invalid selector value. This should not happen as pre-validation occurs"
         end
-        @persons = Person.for_groups(choice.split(",")) if selector == "groups"
-        @persons = Person.for_scipers(choice) if selector == "scipers"
+
+        # Filter result based on the position list provided
+        # I am not 100% sure yet but legacy version selects a person if
+        # ANY of is positions matches (even if not in the requested unit)
+        # For some reason position filtering is admitted also in presence
+        # of struct which will lead to quite empty struct... 37543 hits in 2024
+        if @position
+          @persons.select! do |person|
+            person.match_position_filter?(@position)
+          end
+        end
+
+        # TODO: check if @persons contains duplicates
+        # TODO: filter out profile that do not have the "visibiliteweb" property
 
         scipers = @persons.map(&:sciper).uniq
         @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
 
         respond_to do |format|
           if @errors.empty?
-            if structure.present?
+            if @structure.present?
+              @persons.each { |person| @structure.store(person) }
               format.json { render 'people_struct' }
             else
               format.json { render 'people_alpha' }
@@ -149,36 +170,39 @@ module API
 
       def sanitize_units(unit_names)
         units = unit_names.uniq.map { |name| Unit.find_by(name: name) }.compact
-        @errors << "units must be of the same level" if units.min(&:level) != units.max(&:level)
+        levmin = units.min(&:level).level
+        levmax = units.max(&:level).level
+        @errors << "units must be of the same level" if levmin != levmax
+        @errors << "struct parameter is admitted only for leaf (level 4) units" if levmax < 4 && @structure.present?
         units
       end
 
       def validate_groups(groups)
+        @errors << "struc can only be used in combination with units" if @structure.present?
         return if groups =~ /^([\w-]+)(,[\w-]+)*$/
 
         @errors << "groups should be a comma separated list of group names"
-        nil
       end
 
       def validate_scipers(scipers)
+        @errors << "struc can only be used in combination with units" if @structure.present?
+
         return if scipers =~ /^(\d{6})(,\d{6})*$/
 
         @errors << "scipers should be a comma separated list of sciper numbers"
-        nil
       end
 
       def validate_progcode(progcode)
+        @errors << "struc can only be used in combination with units" if @structure.present?
         return if progcode =~ /^(ED\w\w)$/
 
         @errors << "invalid format for progcode"
-        nil
       end
 
       def validate_units(units)
         return if units =~ /^([\w-]+)(,[\w-]+)*$/
 
         @errors << "units should be a comma separated list of unit labels"
-        nil
       end
 
       def people_params
