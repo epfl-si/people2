@@ -12,7 +12,7 @@ gio_box_expertise_fr:
   body: >
     HPC, Algorithmes, Réseaux, Programmation, IT, DBA, Unix, Physique des solides computationnelle
 
-giova_exp_text_algo: 
+giova_exp_text_algo_en: 
   record: giova_exp_algo (Experience) 
   name: description_en
   body: >
@@ -25,7 +25,7 @@ giova_exp_text_algo:
     system and HPC cluster. I also work as a scientific advisor and developer in a
     web2.0 project.
 
-giova_exp_text_algo: 
+giova_exp_text_algo_fr: 
   record: giova_exp_algo (Experience) 
   name: description_fr
   body: >
@@ -39,7 +39,7 @@ giova_exp_text_algo:
     projet web2.0.
 
 
-giova_exp_text_kandou: 
+giova_exp_text_kandou_en: 
   record: giova_exp_kandou (Experience) 
   name: description_en
   body: >
@@ -48,9 +48,9 @@ giova_exp_text_kandou:
     HPC, web developer.
 
 
-giova_exp_text_kandou: 
+giova_exp_text_kandou_fr: 
   record: giova_exp_kandou (Experience) 
-  name: description_en
+  name: description_fr
   body: >
     Responsable de tout ce qui concerne les technologies de l'information 
     pour l'entreprise : acquisition de matériel, déploiement, installation 
@@ -59,17 +59,6 @@ giova_exp_text_kandou:
     pour le web.
 
 # ---------------------------------------------------------------------- Olivier
-oli_box_expertise_en:
-  record: oli_box_expertise (Box)
-  name: content_en
-  body: >
-    Information theory<br/>Random matrices<br/>Stochastic calculus
-
-oli_box_expertise_fr:
-  record: oli_box_expertise (Box)
-  name: content_fr
-  body: >
-    Théorie de l'information&nbsp;<br/>Matrices aléatoires<br/>Calcul stochastique
 
 oli_box_cv_en:
   record: oli_box_cv (Box)
@@ -202,15 +191,6 @@ nat_box_mission_en:
     Dépositaire de la Charte graphique de l'EPFL, elle s'occupe de la mise au point des maquettes, du respect de l'orthodoxie de l'aspect et de la validité des différentes pages, ainsi que du choix des images illustrant les sites.
     Elle est également responsable du suivi de l'actualité et de la mise à jour sur les portails institutionnels.
     Sites de référence: <a href="http://atelierweb.epfl.ch">atelier web:</a> création de site web à l'epfl  et <a href="http://kis.epfl.ch">KIS</a>.
-
-nat_box_expertise_fr:
-  record: nat_box_expertise (Box)
-  name: content_fr
-  body: >
-    architecture web - ergonomie - usability - ergonomie - design et 
-    architecture de l&apos;information - cms - iconographie - 
-    graphisme web - charte graphique - design - logo - expertise communication 
-    web - html - css2 - ui design
 
 nat_box_cv_fr:
   record: nat_box_cv (Box)
