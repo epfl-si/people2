@@ -21,6 +21,7 @@ pos_count={} # position filter
 uni_count={} # units values
 gru_count={} # groups values
 pco_count={} # progcode values
+stu_count={} # structure + unit parameter
 File.readlines(srcfile, chomp: true).each do |line|
 	# log file where already sort|uniq -c so the first column contains the multiplicity
 	c, ip, req = line.split(" ")
@@ -34,6 +35,9 @@ File.readlines(srcfile, chomp: true).each do |line|
 	par_count[pk] = (par_count[pk]||0) + c
 	unless (str=params["struct"]).nil?
 		str_count[str] = (str_count[str]||0) + c
+		unless (uni=params["units"]).nil?
+			stu_count["#{uni} / #{str}"] = (stu_count["#{uni} / #{str}"]||0) + c
+		end
 	end
 	unless (str=params["position"]).nil?
 		pos_count[str] = (pos_count[str]||0) + c
@@ -49,37 +53,42 @@ File.readlines(srcfile, chomp: true).each do |line|
 	end
 end
 
-printf("# ------------- Source IP addresses")
+printf("# ------------- Source IP addresses\n")
 ips_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Values for position parameter")
+printf("# ------------- Values for position parameter\n")
 pos_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Values for units parameter")
+printf("# ------------- Values for units parameter\n")
 uni_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Used parameter combinations")
+printf("# ------------- Used parameter combinations\n")
 par_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Values for struct parameter")
+printf("# ------------- Values for struct parameter\n")
 str_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Values for group parameter")
+printf("# ------------- Values for group parameter\n")
 gru_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end
 
-printf("# ------------- Values for progcode parameter")
+printf("# ------------- Values for progcode parameter\n")
 pco_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
+	printf("%8d %s\n", c, k);
+end
+
+printf("# ------------- Values for unit / structure parameter\n")
+stu_count.to_a.sort{|a,b| a[1] <=> b[1]}.each do |k,c|
 	printf("%8d %s\n", c, k);
 end

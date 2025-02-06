@@ -5,7 +5,7 @@ class Accreditation
   attr_accessor :prefs
   attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order,
               :unit_label_fr, :unit_label_en, :unit_label_it, :unit_label_de
-  attr_writer :unit, :botweb
+  attr_writer :unit, :botweb, :gestprofil
 
   include Translatable
   translates :unit_label, :status_label, :class_label
@@ -95,11 +95,13 @@ class Accreditation
     accreds = accreds_data.map { |data| new(data) }
 
     # prefetch botweb and unit properties for all accreds at once for optimization
-    botwebs = Authorisation.botweb_for_sciper(sciper).select(&:ok?).index_by(&:unit_id)
+    botwebs = Authorisation.property_for_sciper(sciper, 'botweb').select(&:ok?).index_by(&:unit_id)
+    gestprofils = Authorisation.property_for_sciper(sciper, 'gestprofil').select(&:ok?).index_by(&:unit_id)
     units = APIUnitGetter.call(ids: accreds.map(&:unit_id)).map { |d| Unit.new(d) }.index_by(&:id)
     accreds.each do |a|
       a.unit = units[a.unit_id]
       a.botweb = botwebs.key?(a.unit_id.to_s) ? true : false
+      a.gestprofil = gestprofils.key?(a.unit_id.to_s) ? true : false
     end
     accreds
   end
@@ -110,10 +112,18 @@ class Accreditation
 
   def botweb?
     unless defined?(@botweb)
-      aa = Authorisation.botweb_for_sciper(sciper)
+      aa = Authorisation.property_for_sciper(sciper, 'botweb')
       @botweb = aa.find { |a| a.unit_id == @unit_id && a.ok? }.present?
     end
     @botweb
+  end
+
+  def gestpforil?
+    unless defined?(@gestprofil)
+      aa = Authorisation.property_for_sciper(sciper, 'gestprofil')
+      @gestprofil = aa.find { |a| a.unit_id == @unit_id && a.ok? }.present?
+    end
+    @gestprofil
   end
 
   def visible?

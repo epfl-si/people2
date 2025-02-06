@@ -52,12 +52,12 @@ class AuthorisationTest < ActiveSupport::TestCase
     assert_not @auth2.ok?, "Authorisation2 should return false for ok?"
   end
 
-  test "botweb_for_sciper should return authorisations for sciper" do
+  test "botweb property_for_sciper should return authorisations for sciper" do
     mock = Minitest::Mock.new
     mock.expect :fetch, [@auth_data1]
 
     APIAuthGetter.stub :new, mock do
-      auths = Authorisation.botweb_for_sciper('12345')
+      auths = Authorisation.property_for_sciper('12345', "botweb")
       assert_not_empty auths, "Expected non-empty authorisations list for sciper '12345'"
       assert_equal '12345', auths.first.sciper
       assert_equal '101', auths.first.unit_id
