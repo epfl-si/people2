@@ -4,7 +4,9 @@ module Ldap
   class Group < Base
     attr_reader :dn, :cn, :id, :gid
 
-    def self.find_by_name(name)
+    def self.find_by(name: nil)
+      raise "Please provide a name parameter" if name.blank?
+
       o = {
         base: "ou=groups,#{Base.base}",
         filter: Net::LDAP::Filter.eq(:objectClass, "groupOfNames") &

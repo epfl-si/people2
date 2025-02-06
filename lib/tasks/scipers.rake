@@ -50,7 +50,7 @@ namespace :legacy do
       ss = Work::Sciper.where(status: 0).take(100)
       ss.each do |s|
         if ldap_scipers[s.sciper].present?
-          bb = Authorisation.botweb_for_sciper(s.sciper)
+          bb = Authorisation.property_for_sciper(s.sciper, "botweb")
           s.status = if bb.empty?
                        2
                      else
