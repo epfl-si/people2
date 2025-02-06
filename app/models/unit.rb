@@ -10,16 +10,25 @@ class Unit
     raise "Invalid id #{id}" if id.to_i.zero?
 
     unit_data = APIUnitGetter.call(id: id)
-    new(unit_data)
+    # TODO: after rails conventions, this should except instead of returning nil
+    unit_data.nil? ? nil : new(unit_data)
   end
 
-  def self.find_by_name(name, force: false)
-    raise "Invalid name #{name}" unless name =~ /^[\w-]+$/
+  def self.find_by(name: nil, force: false)
+    raise "Invalid name #{name}" unless name.present? && name =~ /^[\w-]+$/
 
-    unit_data = APIUnitGetter.call(name: name, single: true, force: force)
-    return if unit_data.blank?
-
-    new(unit_data)
+    # TODO: this is a temporary workaround for an api BUG (INC0692789)
+    if name.include?("-")
+      units_data = APIUnitGetter.call(query: name, force: force)
+      unit_data = if units_data.count == 1
+                    units_data.first
+                  else
+                    units_data.find { |ud| ud["name"] == name }
+                  end
+    else
+      unit_data = APIUnitGetter.call(id: name, force: force)
+    end
+    unit_data.nil? ? nil : new(unit_data)
   end
 
   def initialize(data)

@@ -30,15 +30,6 @@ class Authorisation
     @resource_id
   end
 
-  # TODO: do we really need these aliases ?
-  def self.botweb_for_sciper(sciper)
-    property_for_sciper(sciper, 'botweb')
-  end
-
-  def self.aar_for_sciper(sciper)
-    right_for_sciper(sciper, 'AAR.report.control')
-  end
-
   # TODO: check that the given property is in the list of available properties
   def self.property_for_sciper(sciper, property = 'botweb')
     auth_data = APIAuthGetter.call(persid: sciper, authid: property, type: 'property')

@@ -18,9 +18,9 @@ class Person
     @camipro = @data.delete('camipro') || {}
 
     # phones and addresses are hash with the unit_id as key
-    @phones = (@data.delete('phones') || []).map { |d| Phone.new(d) }.group_by(&:unit_id)
-    @addresses = (@data.delete('addresses') || []).map { |d| Address.new(d) }.group_by(&:unit_id)
-    @rooms = (@data.delete('rooms') || []).map { |d| Room.new(d) }.group_by(&:unit_id)
+    @phones = @data.delete('phones')&.map { |d| Phone.new(d) }
+    @addresses = @data.delete('addresses')&.map { |d| Address.new(d) }
+    @rooms = @data.delete('rooms')&.map { |d| Room.new(d) }
 
     @name = Name.new({
                        id: sciper,
@@ -29,9 +29,6 @@ class Person
                        official_first: @data.delete('firstname'),
                        official_last: @data.delete('lastname'),
                      })
-
-    # TODO: this is an N+1 trigger. Since the table is small, we could load it in memory at boot time;
-    @options = SpecialOption.for(sciper)&.index_by(&:key) || {}
   end
 
   def self.find(sciper_or_email)
@@ -75,13 +72,14 @@ class Person
       id = if gn =~ /S[0-9]{5}/
              gn
            else
-             # TODO: api does free search on the name and send many matches
-             #       temporarily reverting to LDAP.
-             # group = APIGroupGetter.call(name: gn)
-             Ldap::Group.find_by(name: gn).id
+             Group.find_by(name: name)&.id
            end
-      members = APIGroupMembersGetter.call(id: id)
-      members.map { |m| m["id"] }
+      if id.present?
+        members = APIGroupMembersGetter.call(id: id)
+        members.map { |m| m["id"] }
+      else
+        []
+      end
     end.flatten.uniq
     for_scipers(scipers)
   end
@@ -97,7 +95,7 @@ class Person
   def can_have_profile?
     unless defined?(@can_have_profile)
       @can_have_profile = begin
-        a = Authorisation.botweb_for_sciper(sciper)
+        a = Authorisation.property_for_sciper(sciper, "botweb")
         a.any? { |d| d.active? && d.ok? }
       end
     end
@@ -129,6 +127,8 @@ class Person
   end
 
   def option(key)
+    # TODO: this is an N+1 trigger. Since the table is small, we could load it in memory at boot time;
+    @options ||= SpecialOption.for(sciper)&.index_by(&:key) || {}
     @options[key]
   end
 
@@ -141,46 +141,70 @@ class Person
     o.present? ? o.email : email
   end
 
+  # --- phone
+
+  def phones(unit_id = nil)
+    if unit_id.nil?
+      @phones
+    else
+      @phones_by_unit ||= @phones.group_by(&:unit_id)
+      @phones_by_unit.key?(unit_id) ? @phones_by_unit[unit_id] : []
+    end
+  end
+
   # Updated visible_phones method
-  def visible_phones(unit_id)
-    @phones[unit_id]&.select(&:visible?) || []
+  def visible_phones(unit_id = nil)
+    phones(unit_id)&.select(&:visible?) || []
   end
-
-  def phones(unit_id)
-    @phones[unit_id]
-  end
-
-  def addresses(unit_id)
-    @addresses.key?(unit_id) ? @addresses[unit_id] : []
-  end
-
-  def address(unit_id)
-    addresses(unit_id).first
-  end
-
-  def rooms(unit_id)
-    @rooms.key?(unit_id) ? @rooms[unit_id] : []
-  end
-
-  def room(unit_id)
-    rooms(unit_id).first
-  end
-
-  # def visible_addresses_by_unit
-  #   profile = profile!
-  #   if profile.present?
-  #     @hidden_unit_ids ||= profile.accreds.hidden.map{|v| v.unit_id}
-  #     @addresses.slice(@addresses.keys - @hidden_unit_ids)
-  #   else
-  #     @addresses
-  #   end
-  # end
 
   def default_phone
-    unless defined?(@default_phone)
-      @default_phone = @phones.present? ? @phones.values.flatten.select(&:visible?).flatten.min : nil
-    end
+    @default_phone = visible_phones.min unless defined?(@default_phone)
     @default_phone
+  end
+
+  # --- address
+
+  def addresses(unit_id = nil)
+    if unit_id.nil?
+      @addresses
+    else
+      @addresses_by_unit ||= @addresses.group_by(&:unit_id)
+      @addresses_by_unit.key?(unit_id) ? @addresses_by_unit[unit_id] : []
+    end
+  end
+
+  def visible_addresses(unit_id = nil)
+    # TODO: address does not have the visible property while this is supposed
+    # to be set in Accred.
+    # addresses(unit_id)&.select(&:visible?) || []
+    addresses(unit_id)
+  end
+
+  def address(unit_id = nil)
+    visible_addresses(unit_id).first
+  end
+
+  def default_address
+    unless defined?(@default_address)
+      # TODO: we should take into account the additional ordering of accreds
+      @default_address = visible_addresses&.first
+    end
+    @default_address
+  end
+
+  # --- rooms
+
+  def rooms(unit_id = nil)
+    if unit_id.nil?
+      @rooms
+    else
+      @rooms_by_unit ||= @rooms.group_by(&:unit_id)
+      @rooms_by_unit.key?(unit_id) ? @rooms_by_unit[unit_id] : []
+    end
+  end
+
+  def room(unit_id = nil)
+    rooms(unit_id).first
   end
 
   # TODO: fix once the actual data is available in api
@@ -189,6 +213,7 @@ class Person
   end
 
   # TODO: check errors on api calls and decide how to recover
+  # TODO: once accred for profile is loaded, we can update visibility on address
   def accreditations
     profile = profile!
     @accreditations ||= if profile.present?

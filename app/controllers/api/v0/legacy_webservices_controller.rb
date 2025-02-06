@@ -19,16 +19,20 @@ module API
         end
       end
 
-      # get cgi-bin/wsgetpeople. Params:
-      #  optional:
+      # get cgi-bin/wsgetpeople. Parameters:
+      # Optional:
       #  - lang      en|fr            /^(fr|en|)$/          defaults to 'en'
       #  - position
       #  - struct
-      #  mutually exclusive:
+      # Mutually exclusive:
       #  - units     unit_list        /^([\w\-]*,*)*$/
       #  - scipers   scipers_list     /^(\d+,*)*$/
       #  - progcode  prog_code_list   /^(ED\w\w)$/
       #  - groups    group_list
+      # Rules:
+      #  - units can be multiple but only if of the same level;
+      #  - struct is available only in combination with level 4 units;
+      #
       # The parameters that have been actually used (see bin/wsgetpeople_stats.rb)
       # in 2024 are the following (excluding lang param):
       #       1 struct tmpl units
@@ -90,17 +94,17 @@ module API
           @errors << "only one of the following mandatory parameters can be present: groups, progcode, scipers, units"
         end
         selector = mp.keys.first
-        choice = mp[selector]
+        choice = mp[selector].chomp
 
         send "validate_#{selector}", choice
         fail unless @errors.empty?
 
         case selector
         when "units"
-          units = sanitize_units(choice.split(","))
+          @units = sanitize_units(choice.split(","))
           fail unless @errors.empty?
 
-          @persons = Person.for_units(units)
+          @persons = Person.for_units(@units)
         when "groups"
           @persons = Person.for_groups(choice.split(","))
         when "scipers"
@@ -112,9 +116,14 @@ module API
           raise "Invalid selector value. This should not happen as pre-validation occurs"
         end
 
+        # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
+        @persons.select!(&:can_have_profile?)
+
         # Filter result based on the position list provided
         # I am not 100% sure yet but legacy version selects a person if
         # ANY of is positions matches (even if not in the requested unit)
+        # TODO: if we could rely on the single position returned by api,
+        # we could spare a lot of requests to api.
         # For some reason position filtering is admitted also in presence
         # of struct which will lead to quite empty struct... 37543 hits in 2024
         if @position
@@ -123,8 +132,8 @@ module API
           end
         end
 
-        # TODO: check if @persons contains duplicates
-        # TODO: filter out profile that do not have the "visibiliteweb" property
+        # TODO: check if @persons contains duplicates. Already checked for
+        # units, sciper is automatic. It remains groups.
 
         scipers = @persons.map(&:sciper).uniq
         @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
