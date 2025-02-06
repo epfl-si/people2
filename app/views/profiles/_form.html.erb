@@ -21,7 +21,6 @@
 			<%= show_attribute_switch(form, :show_photo) %>
 		</div>
 	</div>
-
 	<% if @person.default_phone.present? %>
 	<div class="form-group row">
 		<%= form.label t('person.phone'), class: "col-sm-3  col-form-label" %>
@@ -33,7 +32,10 @@
 		</div>
 	</div>
 	<% end %>
-
+	<div class="form-group row">
+		<%= profile_text_field(form, :expertise_fr, "Escrime") %>
+		<%= profile_text_field(form, :expertise_en, "Spider sense") %>
+	</div>
 	<div class="form-group row">
 		<%= profile_text_field(form, :nationality_fr, "suisse, français") %>
 		<%= profile_text_field(form, :nationality_en, "suiss, french") %>

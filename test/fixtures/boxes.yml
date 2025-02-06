@@ -1,22 +1,7 @@
 # --------------------------------------------------------------------------- Me
-gio_box_expertise:
-  type: "RichTextBox"
-  model: mbox_expertise
-  profile: giova
-  section: bio
-  model: mbox_expertise
-  title_en: Expertise
-  title_fr: Domaines de compétences
-  locked_title: true
-  show_title: true
-  audience: 0
-  visibility: 0
-  position: 1
-
 gio_box_education:
   type: "IndexBox"
   subkind: "Education"
-  model: mbox_education
   profile: giova
   section: bio
   model: mbox_education
@@ -72,19 +57,6 @@ edo_box_awards:
   position: 4
 
 # ---------------------------------------------------------------------- Olivier
-oli_box_expertise:
-  type: "RichTextBox"
-  model: mbox_expertise
-  profile: olivier
-  section: bio
-  title_en: Expertise
-  title_fr: Expertise
-  locked_title: true
-  show_title: true
-  audience: 0
-  visibility: 0
-  position: 1
-
 oli_box_bio:
   type: "RichTextBox"
   model: mbox_biography

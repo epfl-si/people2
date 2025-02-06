@@ -18,6 +18,11 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string :phone, default: nil
 
       # Translatable attributes
+      t.text :expertise_en
+      t.text :expertise_fr
+      t.text :expertise_it
+      t.text :expertise_de
+
       t.string :nationality_en
       t.string :nationality_fr
       t.string :nationality_it
