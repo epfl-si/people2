@@ -46,6 +46,16 @@ module ProfilesHelper
     end
   end
 
+  def profile_single_text_field(form, field, placeholder)
+    a = field.to_sym
+    object_class = form.object.class.name.downcase.to_sym
+    lb = form.label(object_class, a, class: "col-sm-3 col-form-label")
+    fd = tag.div(class: "col-sm-9") do
+      form.text_field(a, class: "form-control", placeholder: placeholder)
+    end
+    lb + fd
+  end
+
   def translated_rich_text_fields(form, field, translations = %w[en fr])
     content = translations.map do |l|
       single_rich_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
@@ -56,6 +66,18 @@ module ProfilesHelper
   def translated_text_fields(form, field, translations = %w[en fr])
     content = translations.map do |l|
       single_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
+    end
+    safe_join(content)
+  end
+
+  def translated_profile_text_fields(form, field, placeholder, translations = %w[en fr])
+    content = translations.map do |l|
+      attr = "#{field}_#{l}"
+      lb = form.label form.object.class.send(:human_attribute_name, attr), class: "col-sm-3 col-form-label"
+      fd = tag.div(class: "col-sm-9") do
+        form.text_field attr, class: "form-control", placeholder: "#{placeholder} (#{l.upcase})"
+      end
+      lb + fd
     end
     safe_join(content)
   end

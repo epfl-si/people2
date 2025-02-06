@@ -35,8 +35,7 @@
 	<% end %>
 
 	<div class="form-group row">
-		<%= profile_text_field(form, :nationality_fr, "suisse, français") %>
-		<%= profile_text_field(form, :nationality_en, "suiss, french") %>
+		<%= translated_profile_text_fields(form, :nationality, "suisse, français") %>
 		<div class="col-sm-9 offset-sm-3">
 			<%= show_attribute_switch(form, :show_nationality) %>
 		</div>
@@ -44,7 +43,7 @@
 
 	<hr>
 	<div class="form-group row">
-		<%= profile_text_field(form, :personal_web_url, "https://www.epfl.ch/labs/MYLAB/") %>
+		<%= profile_single_text_field(form, :personal_web_url, "https://www.epfl.ch/labs/MYLAB/") %>
 		<div class="col-sm-9 offset-sm-3">
 			<%= show_attribute_switch(form, :show_weburl) %>
 		</div>
