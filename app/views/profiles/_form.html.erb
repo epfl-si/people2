@@ -1,5 +1,4 @@
 <%= turbo_frame_tag "profile_form" do %>
-
 <% if profile.errors.any? %>
   <div style="color: red">
     <h2><%= t("error.profile", count: profile.errors.count) %></h2>
@@ -10,11 +9,10 @@
     </ul>
   </div>
 <% end %>
+<% translations = profile.translations %>
 
 
-<%= form_with(model: profile, local: false) do |form| %>
-
-
+<%= form_with(model: profile, local: false, class: "instaform") do |form| %>
 	<div class="form-group row">
 		<%= form.label t('person.photo'), class: "col-sm-3  col-form-label" %>
 		<div class="col-sm-9 inform">
@@ -32,24 +30,16 @@
 		</div>
 	</div>
 	<% end %>
-	<div class="form-group row">
-		<%= profile_text_field(form, :expertise_fr, "Escrime") %>
-		<%= profile_text_field(form, :expertise_en, "Spider sense") %>
-	</div>
-	<div class="form-group row">
-		<%= profile_text_field(form, :nationality_fr, "suisse, français") %>
-		<%= profile_text_field(form, :nationality_en, "suiss, french") %>
-		<div class="col-sm-9 offset-sm-3">
-			<%= show_attribute_switch(form, :show_nationality) %>
-		</div>
-	</div>
 
+  <%= translated_text_fields(form, :expertise, translations) %>
+  <%= translated_text_fields(form, :nationality, translations) %>
+	<div class="col-sm-9 offset-sm-3">
+		<%= show_attribute_switch(form, :show_nationality) %>
+	</div>
 	<hr>
-	<div class="form-group row">
-		<%= profile_text_field(form, :personal_web_url, "https://www.epfl.ch/labs/MYLAB/") %>
-		<div class="col-sm-9 offset-sm-3">
-			<%= show_attribute_switch(form, :show_weburl) %>
-		</div>
+	<%= single_text_field(form, :personal_web_url) %>
+	<div class="col-sm-9 offset-sm-3">
+		<%= show_attribute_switch(form, :show_weburl) %>
 	</div>
 
 	<hr>

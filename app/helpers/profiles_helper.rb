@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
 module ProfilesHelper
-  def profile_text_field(form, attr, placeholder)
-    lb = form.label form.object.class.send(:human_attribute_name, attr), class: "col-sm-3  col-form-label"
-    fd = tag.div(class: "col-sm-9") do
-      form.text_field attr, class: "form-control", placeholder: placeholder
-    end
-    lb + fd
-  end
-
   def single_text_field(form, field, extracls = "")
     a = field.to_sym
     oc = form.object.class
@@ -21,13 +13,6 @@ module ProfilesHelper
     content = translations.map do |l|
       single_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
     end
-    # oc = form.object.class
-    # content = translations.map do |l|
-    #   a = "#{field}_#{l}".to_sym
-    #   tag.div(class: "form-group") do
-    #     form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
-    #   end
-    # end
     safe_join(content)
   end
 
