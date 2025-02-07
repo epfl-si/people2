@@ -264,6 +264,15 @@ en:
         field_de: "Festkörperphysik"
         director: "John Doe"
         school: "Princeton University"
+      profile:
+        expertise_fr: "Escrime"
+        expertise_en: "Spider sense"
+        expertise_it: "Fisica dei solidi"
+        expertise_de: "Spider sense"
+        nationality_en: "swiss, french"
+        nationality_fr: "suisse, français"
+        nationality_de: "schweizer, französisch"
+        personal_web_url: "https://slideshot.epfl.ch/"
   activerecord:
     models:
       award: "award"
