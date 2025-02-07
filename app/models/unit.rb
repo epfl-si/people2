@@ -17,17 +17,7 @@ class Unit
   def self.find_by(name: nil, force: false)
     raise "Invalid name #{name}" unless name.present? && name =~ /^[\w-]+$/
 
-    # TODO: this is a temporary workaround for an api BUG (INC0692789)
-    if name.include?("-")
-      units_data = APIUnitGetter.call(query: name, force: force)
-      unit_data = if units_data.count == 1
-                    units_data.first
-                  else
-                    units_data.find { |ud| ud["name"] == name }
-                  end
-    else
-      unit_data = APIUnitGetter.call(id: name, force: force)
-    end
+    unit_data = APIUnitGetter.call(id: name, force: force)
     unit_data.nil? ? nil : new(unit_data)
   end
 
