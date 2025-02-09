@@ -36,8 +36,39 @@
     border: 1px solid #ddd;
     padding: 5px;
   }
-  
-  
+
+  .image-preview-hidden{
+    display: none;
+  }
+
+  .image_box_container{
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    justify-content: center;
+  }
+
+  .image-container-crop{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-height: 800px;
+    max-width: 40em;
+  }
+
+  .crop-actions{
+    margin-top: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
 .cropper-container {
     direction: ltr;
     font-size: 0;
@@ -88,6 +119,8 @@
     background-color: #000;
     opacity: 0.5;
 }
+
+
 
 .cropper-view-box {
     display: block;
