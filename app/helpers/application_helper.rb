@@ -49,21 +49,26 @@ module ApplicationHelper
     content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
   end
 
-  def profile_photo(picture, options = {})
-    options = options.symbolize_keys
-    tag_options = options.slice(:alt, :class, :id, :size)
-    if picture.present? && picture.cropped_image&.attached?
-      image_tag(picture.cropped_image, alt: 'Cropped Image', class: 'img-fluid')
-    elsif picture.present? && (img = picture.image).present? && img.attached?
-      rep_options = options.slice(:resize_to_limit, :resize_to_fit, :resize_to_fill, :resize_and_pad, :crop, :rotate)
-      if rep_options.empty?
+  # Create an image tag for the profile picture.
+  # When both cropped and original pictures are present, then
+  # the cropped one is taken.
+  # The variant parameter is one of
+  #   :small, :medium, :large, :huge, :full
+  #   the defalt :full option will take the image as it was uploaded
+  # tag_options are the usual :alt, :class, :id, :size, etc.
+  def profile_photo(picture, variant = :full, tag_options = {})
+    img = picture&.visible_image
+    if img.blank?
+      tag_options[:alt] ||= "Profile picture placeholder"
+      ph_src = image_path('profile_image_placeholder.svg')
+      image_tag(ph_src, tag_options)
+    else
+      tag_options[:alt] ||= "Profile picture"
+      if variant.nil? || variant == :full
         image_tag(img, tag_options)
       else
-        image_tag(img.representation(rep_options), tag_options)
+        image_tag(img.variant(variant), tag_options)
       end
-    else
-      ph_src = options[:ph] || image_path('profile_image_placeholder.svg')
-      image_tag(ph_src, tag_options)
     end
   end
 
