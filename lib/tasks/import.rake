@@ -152,6 +152,9 @@ namespace :legacy do
       profile.personal_web_url = url if url.present?
       profile.show_weburl = cv.web_perso_show == "1"
 
+      profile.expertise_fr = cv_fr.sanitized_expertise if cv_fr.expertise.present?
+      profile.expertise_en = cv_en.sanitized_expertise if cv_en.expertise.present?
+
       unless profile.save
         errs = profile.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
         puts "ERROR creating profile: #{errs}"

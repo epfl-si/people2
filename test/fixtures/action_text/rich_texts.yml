@@ -12,7 +12,7 @@ gio_box_expertise_fr:
   body: >
     HPC, Algorithmes, Réseaux, Programmation, IT, DBA, Unix, Physique des solides computationnelle
 
-giova_exp_text_algo: 
+giova_exp_text_algo_en: 
   record: giova_exp_algo (Experience) 
   name: description_en
   body: >
@@ -25,7 +25,7 @@ giova_exp_text_algo:
     system and HPC cluster. I also work as a scientific advisor and developer in a
     web2.0 project.
 
-giova_exp_text_algo: 
+giova_exp_text_algo_fr: 
   record: giova_exp_algo (Experience) 
   name: description_fr
   body: >
@@ -39,7 +39,7 @@ giova_exp_text_algo:
     projet web2.0.
 
 
-giova_exp_text_kandou: 
+giova_exp_text_kandou_en: 
   record: giova_exp_kandou (Experience) 
   name: description_en
   body: >
@@ -48,9 +48,9 @@ giova_exp_text_kandou:
     HPC, web developer.
 
 
-giova_exp_text_kandou: 
+giova_exp_text_kandou_fr: 
   record: giova_exp_kandou (Experience) 
-  name: description_en
+  name: description_fr
   body: >
     Responsable de tout ce qui concerne les technologies de l'information 
     pour l'entreprise : acquisition de matériel, déploiement, installation 

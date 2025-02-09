@@ -169,7 +169,7 @@ fr:
     current_phd: "Doctorants"
     current_phd_students: "Doctorant·es"
     doctoral_teaching: "Enseignement & PhD"
-    editing_languages: "Edit Languages"
+    editing_languages: "Languages visibles en edition"
     educations: "Formation"
     experiences: "Expériences de travail"
     expertise: "Champs de compétences"
@@ -248,6 +248,26 @@ fr:
         title_fr: "titre (fr)"
         year_begin: "first year"
         year_end: "last year"
+      profile:
+        show_birthday: date d'anniversaire visible
+        show_nationality: nationalité visible
+        show_phone: téléphone visible
+        show_photo: photo visible
+        show_weburl: page web personnelle visible
+        personal_web_url: page web personnelle
+        expertise_en: spécialisation (mots-clés, en)
+        expertise_fr: spécialisation (mots-clés, fr)
+        expertise_it: spécialisation (mots-clés, it)
+        expertise_de: spécialisation (mots-clés, de)
+        nationality_en: nationalité (en)
+        nationality_fr: nationalité (fr)
+        nationality_it: nationalité (it)
+        nationality_de: nationalité (de)
+        en_enabled: anglais
+        fr_enabled: frençais
+        it_enabled: italien
+        de_enabled: allemand
+        translations: Traductions qui seront disponibles sur mon profil public
       person:
         function: main function
     errors:
