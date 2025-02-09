@@ -57,26 +57,18 @@ module ApplicationHelper
   #   the defalt :full option will take the image as it was uploaded
   # tag_options are the usual :alt, :class, :id, :size, etc.
   def profile_photo(picture, variant = :full, tag_options = {})
-    img = nil
-    if picture.present?
-      if (ci = picture.cropped_image).present? && ci.attached?
-        img = ci
-        tag_options[:alt] ||= "Cropped profile picture"
-      elsif (oi = picture.image).present? && oi.attached?
-        img = oi
-        tag_options[:alt] ||= "Profile picture"
-      end
-    end
+    img = picture&.visible_image
     if img.blank?
       tag_options[:alt] ||= "Profile picture placeholder"
       ph_src = image_path('profile_image_placeholder.svg')
       image_tag(ph_src, tag_options)
-      return
-    end
-    if variant.nil? || variant == :full
-      image_tag(img, tag_options)
     else
-      image_tag(img.variant(variant), tag_options)
+      tag_options[:alt] ||= "Profile picture"
+      if variant.nil? || variant == :full
+        image_tag(img, tag_options)
+      else
+        image_tag(img.variant(variant), tag_options)
+      end
     end
   end
 
