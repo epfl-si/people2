@@ -191,6 +191,24 @@ span.visibility {
 .upload .btn {
   margin-bottom: 0.5rem;
 }
+// -------------------------------------------------------------------- pictures
+.card-img-top {
+  height: 140px;
+}
+
+// ----------------------------------------------------------------------- boxes
+details {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  summary {
+    // height: 4em;
+    margin-bottom: 0.5lh;
+  }
+}
 
 // ------------------------------------------------- translation switching magic
 #tr_switchable {
