@@ -40,7 +40,7 @@
 <div class="container">
   <div class="row people-basic-info">
     <div class="col-md-6 col-lg-4">
-      <%= profile_photo(@profile&.photo, alt: 'Avatar image', class: 'mx-auto img-fluid bg-gray-100') %>
+      <%= profile_photo(@profile&.photo, :large, class: 'mx-auto img-fluid bg-gray-100') %>
       <%#= render "socials" if @visible_socials.present? %>
 
       <% @side_zone_bbs.each do |section, boxes| %>
