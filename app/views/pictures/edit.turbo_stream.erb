@@ -8,7 +8,7 @@
       controller: "crop",
       images_url: picture_path(@picture),
       images_id: @picture.id,
-      original_image_url: image_url
+      'crop-original-image-url-value': image_url,
     }, class: "image_box_container") do %>
       <div class="image-container-crop">
         <div class="image-container text-center md-2">

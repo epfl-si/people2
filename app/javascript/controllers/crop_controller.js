@@ -3,9 +3,12 @@ import Cropper from "cropperjs";
 
 export default class extends Controller {
   static targets = ["source", "outputDefault", "outputRounded", "file"];
+  static values = {
+    originalImageUrl: String
+  }
 
   connect() {
-    const originalImageUrl = this.element.dataset.originalImageUrl;
+    const originalImageUrl = this.originalImageUrlValue;
     if (originalImageUrl) {
       this.outputDefaultTarget.classList.add("image-preview-hidden");
       this.loadAndResizeImage(originalImageUrl);
