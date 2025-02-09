@@ -34,7 +34,7 @@ mbox_expertise:
   description_it: "Expertise Box"
   description_de: "Expertise Box"
   max_copies: 1
-  standard: true
+  standard: false
   locked_title: true
   show_title: true
   position: 1

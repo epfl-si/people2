@@ -18,8 +18,8 @@ edouard:
   nationality_fr: Suisse
   nationality_en: Swiss
   personal_web_url: "http://dcsl.epfl.ch"
-  # expertise_fr: "Computer Systems, Data center networks, Virtualization"
-  # expertise_en: "Computer Systems, Data center infrastructure and networking, Operating systems, Virtualization"
+  expertise_fr: "Systèmes informatiques, réseaux de centres de données, virtualisation"
+  expertise_en: "Computer Systems, Data center infrastructure and networking, Operating systems, Virtualization"
 
 francesco:
   sciper: "363674"
@@ -39,7 +39,7 @@ giovanni:
   show_photo: true
   nationality_en: italian, swiss
   nationality_fr: italienne, suisse
-  # personal_web_url: https://slideshot.epfl.ch/
+  personal_web_url: https://slideshot.epfl.ch/
 
 martin:
   sciper: "126003"

@@ -16,7 +16,7 @@
   class="<%= translation_classlist(@profile) %>" 
 >
   <nav id="edit_lang_switchers">
-    <h5><%= t "editing_languages" %></h5>
+    <h5><%= t "title.editing_languages" %></h5>
     <% @profile.translations.each do |l| %>
       <%= button_tag(l,
         class: "btn btn-sm btn-secondary", 
