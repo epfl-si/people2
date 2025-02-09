@@ -58,9 +58,6 @@ export default class extends Controller {
         cropBoxResizable: true,
         cropBoxMovable: true,
         modal: true,
-        ready: () => {
-          this.formatImageToScreen();
-        },
         crop: () => {
           this.updatePreview();
           this.updateFileInput();
