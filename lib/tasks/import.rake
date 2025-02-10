@@ -152,13 +152,32 @@ namespace :legacy do
       profile.personal_web_url = url if url.present?
       profile.show_weburl = cv.web_perso_show == "1"
 
-      profile.expertise_fr = cv_fr.sanitized_expertise if cv_fr.expertise.present?
-      profile.expertise_en = cv_en.sanitized_expertise if cv_en.expertise.present?
-
       unless profile.save
         errs = profile.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
         puts "ERROR creating profile: #{errs}"
         next
+      end
+
+      # ---------------------------------------------------------- Special Boxes
+
+      # Expertise is the only rich text  box whose content is in the cv table
+      if cv_en.expertise.present? || cv_fr.expertise.present?
+        e_fr = cv_fr.sanitized_expertise || ""
+        e_en = cv_en.sanitized_expertise || ""
+        if e_en.length < Profile::EXPERTISE_MAX_LEN && e_fr.length < Profile::EXPERTISE_MAX_LEN
+          profile.expertise_fr = e_fr if e_fr.present?
+          profile.expertise_en = e_en if e_en.present?
+        else
+          m = mboxes['expertise']
+          b = RichTextBox.from_model(m)
+          b.profile = profile
+          b.content_fr = e_fr if e_fr.present?
+          b.content_en = e_en if e_en.present?
+          unless b.save
+            errs = b.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+            puts "Skipping invalid expertise (sciper: #{profile.sciper}): #{errs}"
+          end
+        end
       end
 
       # -------------------------------------------------------- Free Text Boxes

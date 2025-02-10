@@ -302,6 +302,16 @@ fr:
           attributes:
             base:
               undeletable: "La photo Camipro ne peut pas être supprimée, mais vous pouvez toujours masquer votre photo de profil"
+        profile:
+          attributes:
+            expertise_en:
+              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
+            expertise_fr:
+              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
+            expertise_ir:
+              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
+            expertise_de:
+              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
         publication:
           attributes:
             title:

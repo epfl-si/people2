@@ -60,6 +60,8 @@ giova:
   nationality_en: italian, swiss
   nationality_fr: italien
   personal_web_url: https://slideshot.epfl.ch/
+  expertise_en: "HPC, Full-stack dev, DevOps, Ruby on Rails"
+  expertise_fr: "HPC, Full-stack dev, DevOps, Ruby on Rails"
 
 natalie:
   sciper: "116080"

@@ -251,6 +251,7 @@ en:
 
   work_experience: "Work Experience"
 
+
   helpers:
     placeholder:
       education:
@@ -264,6 +265,18 @@ en:
         field_de: "Festkörperphysik"
         director: "John Doe"
         school: "Princeton University"
+
+  # Default error messages full list here: 
+  # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
+  errors:
+    messages:
+      blank: "must be provided"
+      required: "must exist"
+      taken: "has already been taken (must be unique)"
+      invalid: "incorrect format"
+      greater_than: "must be greater than %{count}"
+      less_than: "must be smaller than %{count}"
+
   activerecord:
     models:
       award: "award"
@@ -319,6 +332,11 @@ en:
       person:
         function: main function
     errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Cannot delete record because a dependent %{record} exists"
+          has_many: "Cannot delete record because dependent %{record} exist"
       models:
         education:
           attributes:
@@ -362,6 +380,16 @@ en:
           attributes:
             base:
               undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
+        profile:
+          attributes:
+            expertise_en:
+              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
+            expertise_fr:
+              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
+            expertise_ir:
+              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
+            expertise_de:
+              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
         social:
           attributes:
             value:
