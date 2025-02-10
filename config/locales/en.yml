@@ -329,6 +329,7 @@ en:
         it_enabled: italian
         de_enabled: german
         translations: Translations that will be available on my public profile
+        visible_items: "Visible items"
       person:
         function: main function
     errors:
