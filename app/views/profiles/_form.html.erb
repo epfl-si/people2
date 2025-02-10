@@ -11,47 +11,31 @@
 <% end %>
 <% translations = profile.translations %>
 
-
 <%= form_with(model: profile, local: false, class: "instaform") do |form| %>
 	<div class="form-group row">
-		<%= form.label t('person.photo'), class: "col-sm-3  col-form-label" %>
-		<div class="col-sm-9 inform">
+		<%= form.label(:visible_items, class: "col-md-3 col-sm-3") %>
+		<div class="col-md-3 col-sm-9">
 			<%= show_attribute_switch(form, :show_photo) %>
-		</div>
-	</div>
-	<% if @person.default_phone.present? %>
-	<div class="form-group row">
-		<%= form.label t('person.phone'), class: "col-sm-3  col-form-label" %>
-		<div class="col-sm-9 inform">
-			<%= @person.default_phone.number %>
-		</div>
-		<div class="col-sm-9 offset-sm-3">
+			<%= show_attribute_switch(form, :show_nationality) %>
+			<%= show_attribute_switch(form, :show_weburl) %>
+			<% if @person.default_phone.present? %>
 			<%= show_attribute_switch(form, :show_phone) %>
+			<% end %>
 		</div>
-	</div>
-	<% end %>
-
-  <%= translated_text_fields(form, :expertise, translations) %>
-  <%= translated_text_fields(form, :nationality, translations) %>
-	<div class="col-sm-9 offset-sm-3">
-		<%= show_attribute_switch(form, :show_nationality) %>
-	</div>
-	<hr>
-	<%= single_text_field(form, :personal_web_url) %>
-	<div class="col-sm-9 offset-sm-3">
-		<%= show_attribute_switch(form, :show_weburl) %>
-	</div>
-
-	<hr>
-	<div class="form-group row">
-		<%= form.label(:translations, class: "col-sm-3 col-form-label") %>
-		<div class="col-sm-9">
+		<%= form.label(:translations, class: "col-md-3 col-sm-3") %>
+		<div class="col-md-3 col-sm-9">
 			<%= show_attribute_switch(form, :en_enabled) %>
 			<%= show_attribute_switch(form, :fr_enabled) %>
 			<%= show_attribute_switch(form, :it_enabled) %>
 			<%= show_attribute_switch(form, :de_enabled) %>
 		</div>
 	</div>
+
+	<hr>
+
+  <%= translated_text_fields(form, :expertise, translations) %>
+  <%= translated_text_fields(form, :nationality, translations) %>
+	<%= single_text_field(form, :personal_web_url) %>
 
   <div class="row justify-content-center">
 		<%= form.submit t('action.submit_personal_data'), class: "btn btn-primary btn-sm" %>
