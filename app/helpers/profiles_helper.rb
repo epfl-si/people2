@@ -21,13 +21,6 @@ module ProfilesHelper
     content = translations.map do |l|
       single_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
     end
-    # oc = form.object.class
-    # content = translations.map do |l|
-    #   a = "#{field}_#{l}".to_sym
-    #   tag.div(class: "form-group") do
-    #     form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
-    #   end
-    # end
     safe_join(content)
   end
 
