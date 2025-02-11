@@ -5,7 +5,7 @@ people:
   env: "{{ RAILS_ENV | default('development') }}"
   filecache: "{{ DATA_BASEDIR }}/people/filecache"
   redis: "{{ (SELECT_CACHE == 'local_redis') | ternary('redis://cache:6379/0', REDIS_URL) }}"
-  repo: "https://github.com/epfl-si/people2023.git"
+  repo: "https://github.com/epfl-si/people2.git"
   srcdir: "{{ PEOPLE_SRCDIR }}"
   storage: "{{ DATA_BASEDIR }}/people/storage"
   mariadb:

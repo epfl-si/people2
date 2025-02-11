@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
       response_type: "code",
       scope: "openid email profile",
       state: new_state,
-      redirect_uri: cfg.callback_url,
+      redirect_uri: callback_uri,
     }
     auth_url = URI::HTTPS.build(
       host: cfg.server,
@@ -90,6 +90,12 @@ class SessionsController < ApplicationController
 
   private
 
+  def callback_uri
+    c = URI(oidc_callback_url)
+    c.query = nil
+    c.to_s
+  end
+
   def fetch_oidc_token(code)
     cfg = Rails.application.config_for(:oidc)
     uri = URI::HTTPS.build(host: cfg.server, path: cfg.base_path + cfg.token_path)
@@ -98,7 +104,7 @@ class SessionsController < ApplicationController
                                 client_secret: cfg.secret,
                                 code: code,
                                 grant_type: "authorization_code",
-                                redirect_uri: cfg.callback_url,
+                                redirect_uri: callback_uri,
                               })
     JSON.parse(res.body)
   end
