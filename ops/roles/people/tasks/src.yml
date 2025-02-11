@@ -7,11 +7,11 @@
     version: "{{ people.branch }}"
     force: true
 
-- name: Select the correct Gemfile.lock file
-  ansible.builtin.file:
-    path: "{{ people.srcdir }}/Gemfile.lock"
-    state: link
-    src: "Gemfile.lock.docker"
+# - name: Select the correct Gemfile.lock file
+#   ansible.builtin.file:
+#     path: "{{ people.srcdir }}/Gemfile.lock"
+#     state: link
+#     src: "Gemfile.lock.docker"
 
 - name: Build people app image
   containers.podman.podman_image:
