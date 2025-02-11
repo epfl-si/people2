@@ -8,7 +8,6 @@ production:
   token_path: /token"
   client_id: <%= ENV.fetch('ENTRA_CLIENT_ID') %>
   secret: <%= ENV.fetch('ENTRA_SECRET') %>
-  callback_url: https://people.epfl.ch/auth/oidc_callback
 
 <% if ENV.fetch("USE_KEYCLOAK", false) %>
 development: &dev_oidc_config
@@ -17,7 +16,6 @@ development: &dev_oidc_config
   auth_path: /auth
   token_path: /token
   client_id: hello_rails
-  callback_url: https://people.dev.jkldsa.com/auth/oidc_callback
   # secret: ""
 <% else %>
 development: &dev_oidc_config
@@ -27,7 +25,6 @@ development: &dev_oidc_config
   token_path: /token
   client_id: <%= ENV.fetch('ENTRA_CLIENT_ID') %>
   secret: <%= ENV.fetch('ENTRA_SECRET') %>
-  callback_url: https://people.dev.jkldsa.com/auth/oidc_callback
 <% end %>
 
 test:
