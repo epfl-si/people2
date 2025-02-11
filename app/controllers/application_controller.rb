@@ -4,59 +4,7 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :register_client_origin
 
-  # rescue_from ActionPolicy::Unauthorized do |_exception|
-  #   redirect_to "/401"
-  # end
-  DESCS = {
-    "116080" => "profile with forced french language and some bio box",
-    "243371" => "very little data but usual name different from official one",
-    "121769" => "nothing special but its me ;)",
-    "229105" => "a professor with a lot of affiliations",
-    "110635" => "a standard prof",
-    "126003" => "a prof with various affiliations and links",
-    "107931" => "a teacher",
-    "363674" => "a student",
-    "173563" => "A person whose profile should be created the first edit",
-    "185853" => "an external for which there should be no people page",
-    "195348" => "Another external for which there should be no people page",
-    "123456" => "a (fake) existing person with redirect applied",
-  }.freeze
-  EXTRAPROFILES = [
-    {
-      name: "Loïc",
-      sciper: "185853",
-      desc: "an external for which there should be no people page",
-    },
-    {
-      name: "Herve",
-      sciper: "195348",
-      desc: "Another external for which there should be no people page",
-    },
-    {
-      name: "Ciccio",
-      sciper: "999999",
-      desc: "a (fake) existing person that does not have to appear and must be redirected",
-    },
-    {
-      name: "Mr Long Name",
-      sciper: "363247",
-      desc: "A student with an incredibly long name"
-    }
-  ].freeze
-  def devindex
-    @data = []
-    Profile.all.find_each do |profile|
-      person = profile.person
-      d = {
-        name: person.name.display.to_s,
-        sciper: profile.sciper.to_s,
-        email: person.email_user.to_s,
-        desc: DESCS[profile.sciper] || "Automatic Import",
-      }
-      @data << OpenStruct.new(d)
-    end
-    EXTRAPROFILES.each { |d| @data << OpenStruct.new(d) }
-  end
+  include Authentication
 
   def self.unique_counter_value
     @indx ||= 0
@@ -69,8 +17,8 @@ class ApplicationController < ActionController::Base
   end
 
   def compute_audience(sciper)
-    @audience = if user_signed_in?
-                  if current_user.sciper == sciper
+    @audience = if authenticated?
+                  if Current.user.sciper == sciper
                     3
                   else
                     2
