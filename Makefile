@@ -69,11 +69,8 @@ tunnel_up:
 tunnel_down:
 	./bin/tunneld.sh -m local stop
 
-dcup: envcheck Gemfile.lock $(ELE_FILES)
+dcup: envcheck $(ELE_FILES)
 	docker compose up --no-recreate -d
-
-Gemfile.lock: Gemfile.lock.docker
-	cp $< $@
 
 # --------------------------------------------------- Interaction with local app
 .PHONY: logs ps top console shell dbconsole debug redis dbstatus
@@ -135,9 +132,8 @@ about:
 
 ## build the web app and atela container
 build: envcheck $(ELE_FILES) #codecheck
-	if [ "$(REBUNDLE)" == "yes" ] ; then rm -f Gemfile.lock ; else cp Gemfile.lock.docker Gemfile.lock ; fi
+	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
-	if [ "$(REBUNDLE)" == "yes" ] ; then docker compose run webapp cat /rails/Gemfile.lock > Gemfile.lock.docker ; fi
 
 ## build image discarding all cached layers
 rebuild: envcheck

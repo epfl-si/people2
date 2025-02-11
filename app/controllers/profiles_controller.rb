@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProfilesController < BackendController
+class ProfilesController < ApplicationController
   before_action :load_and_authorize_profile, except: [:new]
   before_action :load_person, except: %i[set_favorite_picture new]
 

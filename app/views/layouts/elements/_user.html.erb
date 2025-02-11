@@ -1,11 +1,10 @@
 <li>
-  <% if user_signed_in? %>
-    <%= button_to icon_label('action.sign_out', 'user-check'), destroy_user_session_path,
-      method: :delete, data: { turbo: false }, class: "btn btn-link"
+  <% if authenticated? %>
+    <%= button_to icon_label('action.sign_out', 'user-check'), session_path, method: :delete, data: { turbo: false }, class: "btn btn-link"
     %>
   <% else %>
-    <%= button_to icon_label('action.sign_in', 'user'), user_oidc_omniauth_authorize_path,
-      method: :post, data: { turbo: false }, class: "btn btn-link"
+    <%= button_to icon_label('action.sign_in', 'user'), new_session_path,
+      method: :get, data: { turbo: false }, class: "btn btn-link"
     %>
 <% end %>
 </li>
