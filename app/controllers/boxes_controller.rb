@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BoxesController < BackendController
+class BoxesController < ApplicationController
   before_action :set_profile, only: %i[index create new]
   before_action :set_box, only: %i[show edit update destroy toggle]
 
