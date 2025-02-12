@@ -15,15 +15,13 @@ Rails.application.routes.draw do
   #   # the `inflect.acronym("OIDC")` stanza in ./initializers/inflections.rb
   #   get 'config', to: 'frontend_config#get' # i.e. OIDC::FrontendConfigController#get
   # end
-
   # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
   # post '/graphql', to: 'graphql#execute'
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  devise_scope :user do
-    get 'sign_in', to: 'devise/sessions#new', as: :new_user_session
-    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
-  end
+  # resource :session
+  # resources :passwords, param: :token
+  resource :session, only: %i[new destroy create]
+  get "/auth/oidc_callback", to: "sessions#create", as: "oidc_callback"
 
   resources :profiles, only: %i[edit update show] do
     resources :rich_text_boxes, shallow: true
@@ -69,6 +67,6 @@ Rails.application.routes.draw do
   if Rails.env.production?
     root 'application#homepage'
   else
-    root 'application#devindex'
+    root 'pages#devindex'
   end
 end
