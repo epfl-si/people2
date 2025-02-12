@@ -7,13 +7,13 @@ ruby "3.2.3"
 # ---------------------------------------------------- Standard (from rails new)
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.3", ">= 7.1.3.3"
+gem "rails", "~> 8.0.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+gem "sqlite3", ">= 2.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -82,7 +82,6 @@ end
 gem "action_policy"
 # gem 'activeresource'
 # gem 'cached_resource'
-gem "devise", "~> 4.9"
 
 # Database adapters
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
@@ -92,11 +91,6 @@ gem 'mysql2'
 # # To enable CORS from keycloak
 # gem 'rack-cors'
 
-gem 'omniauth-cas'
-gem 'omniauth_openid_connect'
-gem 'omniauth-rails_csrf_protection'
-# gem 'omniauth-tequila'
-
 # Ollama LLM AI for translation and language detection
 # https://github.com/gbaptista/ollama-ai
 gem 'ollama-ai'
@@ -105,7 +99,7 @@ gem 'ostruct'
 
 # PaperTrail for tracking changes to models
 # https://github.com/paper-trail-gem/paper_trail
-gem 'paper_trail', '~> 15'
+gem 'paper_trail', '~> 16'
 
 # Positioning replaces acts_as_list by the same author
 # https://github.com/brendon/positioning

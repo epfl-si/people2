@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_11_152206) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -309,6 +309,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "socials", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.string "sciper"
@@ -379,6 +388,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_073648) do
   add_foreign_key "model_boxes", "sections"
   add_foreign_key "pictures", "profiles"
   add_foreign_key "publications", "profiles"
+  add_foreign_key "sessions", "users"
   add_foreign_key "teacherships", "courses"
   add_foreign_key "teacherships", "profiles"
 end

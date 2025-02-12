@@ -54,9 +54,14 @@
       SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
       ISA_URL: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
 
-      OIDC_HOSTNAME: "{{ hosts.keycloak }}"
-      OIDC_REALM: "{{ keycloak.realm }}"
-      OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
+      # USE_KEYCLOAK: no
+      ENTRA_TENANT_ID: "{{ _secrets.people.entra_oidc.tenant_id }}"
+      ENTRA_CLIENT_ID: "{{ _secrets.people.entra_oidc.client_id }}"
+      ENTRA_SECRET: "{{ _secrets.people.entra_oidc.secret }}"
+
+      # OIDC_HOSTNAME: "{{ hosts.keycloak }}"
+      # OIDC_REALM: "{{ keycloak.realm }}"
+      # OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
       # TODO: The above OIDC_ are enough for keycloak. Might need the following 
       # on other providers.
       # OIDC_ISSUER:
