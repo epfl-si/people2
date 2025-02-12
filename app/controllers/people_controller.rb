@@ -2,6 +2,7 @@
 
 class PeopleController < ApplicationController
   # protect_from_forgery
+  allow_unauthenticated_access only: :show
   layout 'public'
 
   def show
