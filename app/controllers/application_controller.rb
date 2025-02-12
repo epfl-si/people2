@@ -52,4 +52,8 @@ class ApplicationController < ActionController::Base
   def register_client_origin
     @is_intranet_client = Rails.configuration.intranet_re.match?(request.remote_ip)
   end
+
+  def current_user
+    Current.user
+  end
 end
