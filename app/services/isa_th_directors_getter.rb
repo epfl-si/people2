@@ -19,7 +19,7 @@ class IsaThDirectorsGetter < IsaService
     JSON.parse(body).reject do |r|
       r["sciper"].blank? ||
         r["visibility"]["excludeweb"] ||
-        (r["typeDirecteur"] =~ /^Codirecteur/).zero?
+        r["typeDirecteur"] =~ /^Codirecteur/
     end
   end
 
