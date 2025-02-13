@@ -59,4 +59,8 @@ class Unit
   def all_children
     @all_children ||= @all_children_ids.map { |id| Unit.find(id) }
   end
+
+  def <=>(other)
+    level <=> other.level
+  end
 end

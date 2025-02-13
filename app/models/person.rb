@@ -168,7 +168,7 @@ class Person
     if unit_id.nil?
       @addresses
     else
-      @addresses_by_unit ||= @addresses.group_by(&:unit_id)
+      @addresses_by_unit ||= @addresses&.group_by(&:unit_id) || {}
       @addresses_by_unit.key?(unit_id) ? @addresses_by_unit[unit_id] : []
     end
   end
@@ -198,7 +198,7 @@ class Person
     if unit_id.nil?
       @rooms
     else
-      @rooms_by_unit ||= @rooms.group_by(&:unit_id)
+      @rooms_by_unit ||= @rooms&.group_by(&:unit_id) || {}
       @rooms_by_unit.key?(unit_id) ? @rooms_by_unit[unit_id] : []
     end
   end
