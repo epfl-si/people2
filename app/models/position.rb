@@ -43,7 +43,7 @@ class Position
   # In the original People, prof were determined by the followint regex
   # /ordinaire|tenure|assoc|bours|enseignement|titulaire|professeur invit/
   # TODO: there must be a better way using accred properties or similar
-  PROF_RE = /(^Profess)|enseignement/i
+  PROF_RE = /^Profess|enseignement|cours$/i
   def possibly_teacher?
     PROF_RE.match(@label_frm)
   end

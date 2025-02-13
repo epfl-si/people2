@@ -3,6 +3,7 @@
 module API
   module V0
     class LegacyWebservicesController < ApplicationController
+      allow_unauthenticated_access
       protect_from_forgery
       before_action :check_auth
 
@@ -108,7 +109,7 @@ module API
         when "groups"
           @persons = Person.for_groups(choice.split(","))
         when "scipers"
-          @persons = Person.for_scipers(choice)
+          @persons = Person.for_scipers(choice.split(","))
         when "progcode"
           scipers = IsaThDirectorsGetter.call(progcode: choice).map { |r| r["sciper"] }
           @persons = Person.for_scipers(scipers)
@@ -179,8 +180,10 @@ module API
 
       def sanitize_units(unit_names)
         units = unit_names.uniq.map { |name| Unit.find_by(name: name) }.compact
-        levmin = units.min(&:level).level
-        levmax = units.max(&:level).level
+        # levmin = units.min{|u| u.level}.level
+        # levmax = units.max{|u| u.level}.level
+        levmin = units.min.level
+        levmax = units.max.level
         @errors << "units must be of the same level" if levmin != levmax
         @errors << "struct parameter is admitted only for leaf (level 4) units" if levmax < 4 && @structure.present?
         units
