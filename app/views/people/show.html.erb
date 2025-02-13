@@ -2,7 +2,7 @@
     <!-- Open Graph / Facebook -->
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="EPFL People">
-  <meta property="og:title" content="EPFL People – <%= @person.name.display %>">
+  <meta property="og:title" content="<%= @person.name.display %>">
   <meta property="og:description" content="<%= @person.name.display %>'s EPFL profile">
   <meta property="og:profile:first_name" content="<% @person.name.display_first %>">
   <meta property="og:profile:last_name" content="<% @person.name.display_last %>">
@@ -16,7 +16,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="EPFL People – <%= @person.name.display %>">
+  <meta name="twitter:title" content="<%= @person.name.display %>">
   <meta name="twitter:description" content="<%= @person.name.display %>'s EPFL profile">
   <% if @profile_picture %>
   <meta name="twitter:image" content="<%= url_for(@profile_picture) %>">

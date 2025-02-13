@@ -39,9 +39,9 @@ end
 # json.rooms        person.rooms&.map{|r| r.name}&.join(",") || ""
 json.rooms        person.rooms&.first&.name || ""
 json.status       person.status || ""
-json.fonction_en  person.position.t_label(person.gender, 'en')
-json.fonction_fr  person.position.t_label(person.gender, 'fr')
-json.phones       person.phones.map(&:number).uniq
+json.fonction_en  person.position&.t_label(person.gender, 'en')
+json.fonction_fr  person.position&.t_label(person.gender, 'fr')
+json.phones       person.phones&.map(&:number)&.uniq
 if profile.present?
   json.people do
     json.partial! 'profile', profile: profile
