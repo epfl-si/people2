@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Unit
-  attr_reader :id, :hierarchy, :level, :type, :address, :url
+  attr_reader :id, :parent_id, :hierarchy, :level, :type, :address, :url
 
   include Translatable
   translates :name, :label
@@ -31,9 +31,6 @@ class Unit
     @label_en = data['labelen']
     @label_de = data['labelde']
     @label_it = data['labelid']
-    @hierarchy = data['path']
-    @level = data['level']
-    @parent_id = data['parentid']
     @kind = data['type']
     @resp_id = data['responsibleid']
     # @type = data['unittype']['label']
@@ -50,6 +47,43 @@ class Unit
       'part4' => data['address4'],
       'city' => data['city']
     )
+    fix_for_reorg21(data)
+  end
+
+  # The units have been partially reorganized from 4 to 5 level.
+  # After some reverse engineering I conclude that this concerns only the units
+  # of type EPFL VPx. Example unit 13030 which is shown by api as
+  # EPFL VPO-SI ISAS ISAS-FSD should read EPFL VPO VPO-SI ISAS ISAS-FSD instead
+  # This function fixes it. 
+  # The parent of a level 2 unit (e.g. VPO-SI) is EPFL. Instead it is actually a 
+  # level 3 unit and its parent is VPO (level 2) instead. Therefore, the parentid
+  # provided by api is wrong and the only way of fixing it is by looking at the
+  # parent unit name.
+  VPLEVEL2 = {
+    "VPI" => 10012,
+    "VPO" => 10046,
+    "VPF" => 13367,
+    "VPA" => 13876,
+    "VPH" => 13928,
+    "VPS" => 14518,
+  }
+  def fix_for_reorg21(data)
+    h21 = data['path'].split(" ")
+    @level = h21.count
+    @parent_id = data['parentid']
+    if h21[1] =~ /^VP.-/        
+      vp=h21[1].split("-").first
+      h21.insert(1,vp)
+      @level += 1
+      if @level == 3
+        @parent_id = VPLEVEL2[vp]
+      end
+    end
+    @hierarchy = h21.join(" ")
+  end
+
+  def parent
+    @parent ||= Unit.find(@parent_id)
   end
 
   def direct_children
