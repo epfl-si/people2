@@ -21,11 +21,11 @@ module Legacy
     has_many :social_ids,     class_name: 'SocialId', foreign_key: 'sciper', dependent: :destroy, inverse_of: :cv
     has_many :teaching_activities, class_name: 'TeachingActivity', foreign_key: 'sciper', dependent: :destroy,
                                    inverse_of: :cv
+    has_many :accreds, class_name: "AccredPref", foreign_key: "sciper", dependent: :destroy, inverse_of: :cv
 
     # has_one  :account, :class_name => "Account", :foreign_key => "sciper"
     # has_many :offices, :class_name => "Office", :foreign_key => "sciper"
     # has_many :postal_addresses, :class_name => "PostalAddress", :foreign_key => "sciper"
-    # has_many :accreds, :class_name => "Accreditation", :foreign_key => "persid"
     # This does not work. I think because it is missing the class for
     # Accreditation and looks for the accreds table in dinfo db
     # has_and_belongs_to_many :units, :join_table => "accreds",

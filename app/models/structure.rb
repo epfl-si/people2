@@ -3,6 +3,8 @@
 class Structure < ApplicationRecord
   serialize :data, coder: JSON
   validates :label, uniqueness: true
+  validate :check_sections_count_match
+
   def self.load(label, lang = 'en')
     if ["1", 1].include?(label)
       label = lang == 'en' ? "default_en_struct" : "default_struct"
@@ -17,7 +19,7 @@ class Structure < ApplicationRecord
     end.compact
   end
 
-  def valid?
+  def check_sections_count_match
     sections.count == data.count
   end
 

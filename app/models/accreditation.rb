@@ -103,10 +103,10 @@ class Accreditation
       a.botweb = botwebs.key?(a.unit_id.to_s) ? true : false
       a.gestprofil = gestprofils.key?(a.unit_id.to_s) ? true : false
     end
-    # TODO: remove me
+    # TODO: remove me after final import for production
     # During development we do not want to import everything upfront.
     # Therefore, we import on request when needed.
-    if Rails.env.development? && accreds.count > 1 && accreds.any?(&:botweb?)
+    if Rails.env.development? && accreds.any?(&:botweb?) # && accreds.count > 1
       LegacyProfileImportJob.perform_later(sciper)
     end
     accreds

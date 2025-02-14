@@ -67,6 +67,9 @@ class LegacyProfileImportJob < ApplicationJob
         next
       end
 
+      # ---------------------------------------------------------------- Accreds
+      import_accreds(profile)
+
       # ---------------------------------------------------------- Special Boxes
 
       # Expertise is the only rich text  box whose content is in the cv table
@@ -277,6 +280,32 @@ class LegacyProfileImportJob < ApplicationJob
           Rails.logger.debug "Skipping invalid award #{le.id} (sciper: #{profile.sciper}): #{errs}"
         end
       end
+    end
+  end
+
+  # import the legacy accred preferences (only for still valid accreds)
+  def import_accreds(profile)
+    accreds = Accreditation.for_sciper(profile.sciper)
+    return unless accreds.count > 1
+
+    prefs = Legacy::AccredPref.where(sciper: profile.sciper).order('ordre')
+    return if prefs.empty?
+
+    abu = accreds.index_by(&:unit_id)
+    prefs.each_with_index do |pref, _order|
+      next unless (a = abu[pref.unit.to_i])
+
+      profile.accreds.create({
+                               sciper: a.sciper,
+                               unit_id: a.unit_id,
+                               unit_en: a.unit_label_en,
+                               unit_fr: a.unit_label_fr,
+                               unit_it: a.unit_label_en,
+                               unit_de: a.unit_label_en,
+                               role: a.position,
+                               visible: pref.visible?,
+                               visible_addr: pref.visible_addr?,
+                             })
     end
   end
 end
