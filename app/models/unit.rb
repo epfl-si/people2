@@ -54,30 +54,28 @@ class Unit
   # After some reverse engineering I conclude that this concerns only the units
   # of type EPFL VPx. Example unit 13030 which is shown by api as
   # EPFL VPO-SI ISAS ISAS-FSD should read EPFL VPO VPO-SI ISAS ISAS-FSD instead
-  # This function fixes it. 
-  # The parent of a level 2 unit (e.g. VPO-SI) is EPFL. Instead it is actually a 
+  # This function fixes it.
+  # The parent of a level 2 unit (e.g. VPO-SI) is EPFL. Instead it is actually a
   # level 3 unit and its parent is VPO (level 2) instead. Therefore, the parentid
   # provided by api is wrong and the only way of fixing it is by looking at the
   # parent unit name.
   VPLEVEL2 = {
-    "VPI" => 10012,
-    "VPO" => 10046,
-    "VPF" => 13367,
-    "VPA" => 13876,
-    "VPH" => 13928,
-    "VPS" => 14518,
-  }
+    "VPI" => 10_012,
+    "VPO" => 10_046,
+    "VPF" => 13_367,
+    "VPA" => 13_876,
+    "VPH" => 13_928,
+    "VPS" => 14_518,
+  }.freeze
   def fix_for_reorg21(data)
     h21 = data['path'].split(" ")
     @level = h21.count
     @parent_id = data['parentid']
-    if h21[1] =~ /^VP.-/        
-      vp=h21[1].split("-").first
-      h21.insert(1,vp)
+    if h21[1] =~ /^VP.-/
+      vp = h21[1].split("-").first
+      h21.insert(1, vp)
       @level += 1
-      if @level == 3
-        @parent_id = VPLEVEL2[vp]
-      end
+      @parent_id = VPLEVEL2[vp] if @level == 3
     end
     @hierarchy = h21.join(" ")
   end
