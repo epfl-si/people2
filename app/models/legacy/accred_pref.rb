@@ -19,6 +19,14 @@ module Legacy
       unit
     end
 
+    def visible?
+      accred_show == "1"
+    end
+
+    def visible_addr?
+      addr_hide != "1"
+    end
+
     def hidden?
       # accred_show is a char in the db
       accred_show != "1"
