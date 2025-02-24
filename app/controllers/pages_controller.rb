@@ -48,10 +48,15 @@ class PagesController < ApplicationController
     @data = []
     Profile.all.find_each do |profile|
       person = profile.person
+      begin
+        email = person.email_user.to_s
+      rescue StandardError
+        email = nil
+      end
       d = {
         name: person.name.display.to_s,
         sciper: profile.sciper.to_s,
-        email: person.email_user.to_s,
+        email: email,
         desc: DESCS[profile.sciper] || "Automatic Import",
       }
       @data << OpenStruct.new(d)
