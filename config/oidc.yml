@@ -11,7 +11,7 @@ production:
 
 <% if ENV.fetch("USE_KEYCLOAK", false) %>
 development: &dev_oidc_config
-  server: <%= ENV.fetch('KC_SERVER', 'keycloak.dev.jkdlsa.com') %>
+  server: <%= ENV.fetch('KC_SERVER', 'keycloak.dev.jkldsa.com') %>
   base_path: /realms/rails/protocol/openid-connect
   auth_path: /auth
   token_path: /token
