@@ -8,8 +8,10 @@ namespace :legacy do
     boxes = Legacy::Infoscience
             .with_source
             .where.not("src LIKE '%infoscience-export%'")
-            .where.not("src LIKE '%infoscience.epfl.ch/record%'")
-            .where(sciper: scipers).order(:sciper)
+            # .where.not("src LIKE '%infoscience.epfl.ch/record%'")
+            .where(sciper: scipers)
+            .where(box_show: 1)
+            .order(:sciper)
     puts "There are #{boxes.count} infoscience boxes to be imported"
     opath = Rails.root.join("tmp/infoscience")
     opath.mkdir unless opath.directory?
