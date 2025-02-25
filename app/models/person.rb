@@ -210,4 +210,9 @@ class Person
       @data[m]
     end
   end
+
+  def courses
+    Course.joins(:teacherships)
+          .where(teacherships: { sciper: sciper })
+  end
 end
