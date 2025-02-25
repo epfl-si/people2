@@ -37,6 +37,7 @@ class Unit
     @url = data['url']
     @direct_children_ids = data['directchildren'].split(",").map(&:to_i)
     @all_children_ids = data['allchildren'].split(",").map(&:to_i)
+    fix_for_reorg21(data)
     @address = Address.new(
       'unitid' => @id,
       'country' => data['country'],
@@ -47,7 +48,6 @@ class Unit
       'part4' => data['address4'],
       'city' => data['city']
     )
-    fix_for_reorg21(data)
   end
 
   # The units have been partially reorganized from 4 to 5 level.
