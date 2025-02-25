@@ -62,7 +62,7 @@ class PeopleController < ApplicationController
       @teachings = nil
     end
 
-    @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
+    @courses = @person.courses.group_by { |c| c.t_title(I18n.locale) }
 
     return unless @profile
 
