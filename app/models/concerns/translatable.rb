@@ -58,16 +58,14 @@ module Translatable
   # return translation of a translated attribute in the required locale
   # if available otherwise return the translation in the default locale
   def translation_for(attribute, primary_lang = nil, fallback_lang = nil)
-    # primary_lang ||= Thread.current[:primary_lang] || I18n.locale
-    # fallback_lang ||= Thread.current[:fallback_lang] || I18n.default_locale
-    primary_lang ||= I18n.locale
-    fallback_lang ||= Thread.current[:translations] || %w[en fr it de]
+    primary_lang ||= Current.primary_lang || I18n.locale
+    fallback_lang ||= Current.translations || %w[en fr it de]
     langs = [primary_lang] + fallback_lang
 
     if respond_to?("#{attribute}_en")
-      langs.map { |l| send "#{attribute}_#{l}" }.compact.first
+      langs.map { |l| send("#{attribute}_#{l}") }.compact.first
     else
-      langs.map { |l| instance_variable_get "@#{attribute}_#{l}" }.compact.first
+      langs.map { |l| instance_variable_get("@#{attribute}_#{l}") }.compact.first
     end
   end
 
@@ -84,8 +82,8 @@ module Translatable
   end
 
   def translated_body_for(attribute, primary_lang = nil, fallback_lang = nil)
-    primary_lang ||= Thread.current[:primary_lang] || I18n.locale
-    fallback_lang ||= Thread.current[:fallback_lang] || I18n.default_locale
+    primary_lang ||= Current.primary_lang || I18n.locale
+    fallback_lang ||= Current.fallback_lang || I18n.default_locale
 
     t = send("#{attribute}_#{primary_lang}")
     t = send("#{attribute}_#{fallback_lang}") if primary_lang != fallback_lang && (t.id.nil? || t.body.empty?)
@@ -93,13 +91,13 @@ module Translatable
   end
 
   def inclusive_translation_for(attribute, gender = nil, primary_lang = nil, fallback_lang = nil)
-    gender ||= Thread.current[:gender]
+    gender ||= Current.gender
     if gender.nil?
       raise "inclusive_translation_for requires gender to be passed explicitly or set as Thread.current[:gender]"
     end
 
-    primary_lang ||= Thread.current[:primary_lang] || I18n.locale
-    fallback_lang ||= Thread.current[:fallback_lang] || I18n.default_locale
+    primary_lang ||= Current.primary_lang || I18n.locale
+    fallback_lang ||= Current.fallback_lang || I18n.default_locale
     inclusive_translation_for!(attribute, gender,
                                primary_lang) || inclusive_translation_for!(attribute, gender, fallback_lang)
   end
