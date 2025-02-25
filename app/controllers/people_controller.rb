@@ -40,7 +40,7 @@ class PeopleController < ApplicationController
     compute_audience(@sciper)
     @admin_data = @audience > 1 ? @person.admin_data : nil
 
-    Thread.current[:gender] = @person.gender
+    Current.gender = @person.gender
 
     # TODO: would a sort of "PublicSection" class make things easier here ?
     #       keep in mind that here we only manage boxes but we will have
@@ -49,7 +49,7 @@ class PeopleController < ApplicationController
     return unless @profile
 
     # take into account profile's enaled languages
-    Thread.current[:translations] = @profile.translations
+    Current.translations = @profile.translations
 
     # teachers are supposed to all have a profile
     @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
