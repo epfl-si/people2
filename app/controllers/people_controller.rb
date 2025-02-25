@@ -62,9 +62,7 @@ class PeopleController < ApplicationController
       @teachings = nil
     end
 
-    @courses = Course.joins(:teacherships)
-                     .where(teacherships: { sciper: @sciper })
-                     .group_by { |c| c.t_title(I18n.locale) }
+    @courses = @profile.courses.group_by { |c| c.t_title(I18n.locale) }
 
     return unless @profile
 
