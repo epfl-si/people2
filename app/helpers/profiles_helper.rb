@@ -148,9 +148,4 @@ module ProfilesHelper
         form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
     end
   end
-
-  def courses
-    Course.joins(:teacherships)
-          .where(teacherships: { sciper: sciper })
-  end
 end
