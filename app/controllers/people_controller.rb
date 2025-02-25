@@ -62,7 +62,13 @@ class PeopleController < ApplicationController
       @teachings = nil
     end
 
+<<<<<<< HEAD
     @courses = @person.courses.group_by { |c| c.t_title(I18n.locale) }
+=======
+    @courses = Course.joins(:teacherships)
+                     .where(teacherships: { sciper: @sciper })
+                     .group_by { |c| c.t_title(I18n.locale) }
+>>>>>>> 90b42da ([refac] Courses now use sciper trough `teachership` records)
 
     return unless @profile
 
