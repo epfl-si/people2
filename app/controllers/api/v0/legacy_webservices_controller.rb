@@ -142,7 +142,7 @@ module API
         respond_to do |format|
           if @errors.empty?
             if @structure.present?
-              @persons.each { |person| @structure.store(person) }
+              @persons.each { |person| @structure.store!(person) }
               format.json { render 'people_struct' }
             else
               format.json { render 'people_alpha' }

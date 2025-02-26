@@ -10,14 +10,18 @@
 # aaa and !bbb and ccc
 
 class PositionFilter
-  attr_reader
-
   OKTOKEN = "!?[-^$\/'.*&\s[:alnum:]]+"
   LEGACY_FILTER_RE = /^(#{OKTOKEN})(\s(or|and)\s(#{OKTOKEN}))*$/i
 
   def initialize(rule)
     # TODO: more strict validation ?
     @valid = rule.encode(Encoding::ASCII_8BIT, replace: '') =~ LEGACY_FILTER_RE
+
+    if rule.strip == "*"
+      @catch_all = true
+      return
+    end
+    @catch_all = false
 
     if rule.include?(" and ")
       @all = true
@@ -29,10 +33,11 @@ class PositionFilter
     @tokens = rule.split(sep).map do |t|
       neg = t.start_with?("!")
       t = t[1..] if neg
+      # The * in filter token is shell glob style but must be an exact match otherwise
+      re = Regexp.new("^#{t.gsub('*', '.*')}$", 'i')
       OpenStruct.new(
         neg: neg,
-        # The * in filter token is shell glob style
-        re: Regexp.new(t.gsub("*", ".*"), 'i')
+        re: re
       )
     end
   end
@@ -41,7 +46,12 @@ class PositionFilter
     !@valid.nil?
   end
 
+  def catch_all?
+    @catch_all
+  end
+
   def match?(str)
+    return true if @catch_all
     return @tokens.all? { |t| token_match(t, str) } if @all
 
     @tokens.any? { |t| token_match(t, str) }
