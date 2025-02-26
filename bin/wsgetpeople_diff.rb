@@ -15,6 +15,7 @@ def fetch(query, srv=1)
   sig = Digest::MD5.hexdigest(query.to_s)
   cf = "#{CACHE}/#{srv}/#{sig}.json"
   if File.exist?(cf)
+    log "#{query} <- #{cf}"
     json = File.read(cf)
   else
     uri = URI::HTTPS.build(
@@ -22,7 +23,7 @@ def fetch(query, srv=1)
       path: "/cgi-bin/wsgetpeople",
       query: query
       )
-    log "Fetching #{uri.to_s} -> #{cf}"
+    log "#{query} -> #{uri.to_s} -> #{cf}"
     json = Net::HTTP.get(uri)
     File.open(cf, 'w+') do |f|
       f.puts(json)

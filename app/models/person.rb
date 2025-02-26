@@ -2,7 +2,7 @@
 
 # This class represents a person as described by api.epfl.ch
 class Person
-  attr_reader :data, :position, :name
+  attr_reader :data, :name
 
   private_class_method :new
 
@@ -53,16 +53,15 @@ class Person
   end
 
   def self.for_units(units)
-    ids = if units.is_a?(Array)
-            if units.first.respond_to?(:id)
-              units.map(&:id).sort.uniq
-            else
-              units.sort.uniq
-            end
+    uorids = units.is_a?(Array) ? units : [units]
+    ids = if uorids.first.respond_to?(:id)
+            uorids.map(&:id).sort.uniq
           else
-            units.respond_to?(:id) ? units.id : units
+            uorids.sort.uniq
           end
-    APIPersonGetter.call(unitid: ids).map { |p| new(p) }
+    APIPersonGetter.call(unitid: ids).map { |p| new(p) }.reject do |p|
+      ids.map { |id| p.accred_for_unit(id) }.compact.select(&:botweb?).empty?
+    end
   end
 
   def self.for_groups(group_names)
@@ -147,7 +146,7 @@ class Person
     if unit_id.nil?
       @phones
     else
-      @phones_by_unit ||= @phones.group_by(&:unit_id)
+      @phones_by_unit ||= @phones&.group_by(&:unit_id) || {}
       @phones_by_unit.key?(unit_id) ? @phones_by_unit[unit_id] : []
     end
   end
@@ -228,7 +227,17 @@ class Person
   end
 
   def positions
-    @positions ||= accreditations.map(&:position)
+    @positions ||= accreditations.sort.map(&:position)
+  end
+
+  def position!
+    positions.first
+  end
+
+  def position
+    # The two might not match because the position returned by API is query
+    # dependent. On the other hand, it is a waste to load accreds all the time
+    @accreditations.present? ? positions.first : @position
   end
 
   def main_position
@@ -237,13 +246,22 @@ class Person
 
   def accred_for_unit(unit_id)
     @accreds_by_unit ||= accreditations.group_by(&:unit_id)
-    @accreds_by_unit[unit_id].first
+    @accreds_by_unit[unit_id]&.first
   end
 
   def match_position_filter?(filter)
     accreditations.any? do |a|
       a.position.match_legacy_filter?(filter)
     end
+  end
+
+  def select_posistions!(filter)
+    fa = accreditations.select do |a|
+      a.position.match_legacy_filter?(filter)
+    end
+    return if fa.empty?
+
+    @accreditations = [fa.first]
   end
 
   def student?
