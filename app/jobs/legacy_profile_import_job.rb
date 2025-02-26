@@ -39,7 +39,11 @@ class LegacyProfileImportJob < ApplicationJob
       profile = Profile.for_sciper(sciper)
       next if profile.present?
 
-      cv = Legacy::Cv.find(sciper)
+      begin
+        cv = Legacy::Cv.find(sciper)
+      rescue StandardError
+        next
+      end
       cv_en = cv.translated_part('en')
       cv_fr = cv.translated_part('fr')
 

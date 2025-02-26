@@ -32,4 +32,57 @@ class Structure < ApplicationRecord
     end
     false
   end
+
+  # In this case, in order to reproduce the original behaviour, we rewrite the
+  # accreditations so that we only keep the one that matches.
+  def store!(person)
+    sections.each do |f|
+      next unless person.match_position_filter?(f.filter)
+
+      person.select_posistions!(f.filter) unless f.filter.catch_all?
+      f.items << person
+      return true
+    end
+    false
+  end
 end
+
+#-------------------------------------------------------------- original sources
+# getAllAccredsSolved returns consilidated accreds in no explicit order
+# $accreds = $units ? getUnitsAccreds ($units) : getScipersAccreds ($scipers);
+# In getUnitsAccreds:
+# foreach my $unit_id (keys %$unit_ids) {
+#   foreach my $accred ( $Accreds->getAllAccredsSolved('unitid', $unit_id) ) {
+#     next unless $Accreds->getAccredProperty ($accred, $visibiliteweb);
+#     ...
+#     my $person = $accred->{person};
+#     my $grp = getFunctGroup($accred->{position}->{labelfr});
+#     push @{$groups_array->{$grouplabels[$grp]}}, {
+#       sciper => $person->{id},
+#       nom    => $person->{name},
+#       prenom => $person->{fname},
+#       ...
+#     };
+
+# Struct file reader stores $maxgroups labels and lists of functions
+# in @grouplabels and @groupfuncts respectively. Therefore, this finds the index
+# of the index of the first group that matches the person position $func
+#
+# sub getFunctGroup {
+#   my ($func) = @_;
+#    for (my $i = 0; $i < $maxgroups; $i++) {
+#      foreach my $group_func (split (/,/, $groupfuncts[$i])) {
+#        if ($group_func =~/\*/) {
+#         $group_func =~ s/\*//g;
+#         if ($func =~ /^$group_func/i) {
+#           return $i ;
+#         }
+#        } else {
+#         if ($func =~ /^$group_func$/i) {
+#           return $i ;
+#         }
+#        }
+#      }
+#    }
+#    return $maxgroups;
+# }
