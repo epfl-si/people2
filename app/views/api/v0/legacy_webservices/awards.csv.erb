@@ -1,0 +1,6 @@
+<% require 'csv' %>
+<% headers = ["id", "sciper", "year", "category", "origin", "title", "grantedby", "url"] %>
+<%= CSV.generate_line headers %>
+<%- @awards.each do |award| -%>
+  <%= CSV.generate_line([award.id, award.sciper, award.year, award.category.t_name, award.origin.t_name, award.t_title, award.issuer, award.url]) -%>
+<%- end -%>

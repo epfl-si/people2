@@ -15,4 +15,6 @@ class Award < ApplicationRecord
             presence: true,
             numericality: { only_integer: true, less_than_or_equal_to: Time.zone.today.year }
   validates :t_title, translatability: true
+
+  delegate :sciper, to: :profile
 end
