@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     namespace :v0 do
       get '/wsgetPhoto', to: 'legacy_webservices#photo'
       get '/wsgetpeople', to: 'legacy_webservices#people'
+      get '/prof_awards', to: 'legacy_webservices#awards'
     end
   end
 
