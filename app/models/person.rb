@@ -126,7 +126,7 @@ class Person
   end
 
   def option(key)
-    # TODO: this is an N+1 trigger. Since the table is small, we could load it in memory at boot time;
+    # N+1 avoided by loading all the very fiew records at once (see SpecialOption)
     @options ||= SpecialOption.for(sciper)&.index_by(&:key) || {}
     @options[key]
   end
