@@ -5,7 +5,24 @@ class SelectableProperty < ApplicationRecord
   translates :name
   validates :label, uniqueness: { scope: :property }
 
-  scope :award_category, -> { where(property: 'award_category') }
-  scope :award_origin, -> { where(property: 'award_origin') }
-  scope :achievement_category, -> { where(property: 'achievement_category') }
+  # scope :award_category, -> { where(property: 'award_category') }
+  # scope :award_origin, -> { where(property: 'award_origin') }
+  # scope :achievement_category, -> { where(property: 'achievement_category') }
+
+  # TODO: we might need to refresh after save
+  def self.all_by_property
+    @all_by_property ||= all.group_by(&:property)
+  end
+
+  def self.award_category
+    all_by_property['award_category']
+  end
+
+  def self.award_origin
+    all_by_property['award_origin']
+  end
+
+  def self.achievement_category
+    all_by_property['achievement_category']
+  end
 end

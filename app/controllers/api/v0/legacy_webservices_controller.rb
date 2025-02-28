@@ -116,25 +116,9 @@ module API
         send "validate_#{selector}", choice
         fail unless @errors.empty?
 
-        case selector
-        when "units"
-          @units = sanitize_units(choice.split(","))
-          fail unless @errors.empty?
-
-          @persons = Person.for_units(@units)
-        when "groups"
-          @persons = Person.for_groups(choice.split(","))
-        when "scipers"
-          @persons = Person.for_scipers(choice.split(","))
-        when "progcode"
-          scipers = IsaThDirectorsGetter.call(progcode: choice).map { |r| r["sciper"] }
-          @persons = Person.for_scipers(scipers)
-        else
-          raise "Invalid selector value. This should not happen as pre-validation occurs"
-        end
-
-        # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
-        @persons.select!(&:can_have_profile?)
+        force = pp['refresh'].present?
+        Rails.logger.debug("!!! FORCE=#{force ? 'yes' : 'no'}")
+        @persons = load_persons(selector, choice, force: force)
 
         # Filter result based on the position list provided
         # I am not 100% sure yet but legacy version selects a person if
@@ -201,7 +185,7 @@ module API
         levmin = units.min.level
         levmax = units.max.level
         @errors << "units must be of the same level" if levmin != levmax
-        @errors << "struct parameter is admitted only for leaf (level 4) units" if levmax < 4 && @structure.present?
+        @errors << "struct parameter is admitted only for leaf (level 4, 5) units" if levmax < 4 && @structure.present?
         units
       end
 
@@ -233,10 +217,68 @@ module API
         @errors << "units should be a comma separated list of unit labels"
       end
 
+      def load_persons(selector, choice, force: false)
+        ttl = case selector
+              when "scipers"
+                if scipers.count < 8
+                  0
+                else
+                  4.hours
+                end
+              else
+                24.hours
+              end
+        if ttl.positive?
+          cache_key = "wsgetpeople_persons_#{selector}_#{choice}"
+          Rails.cache.delete(cache_key) if force
+          Rails.cache.fetch(cache_key, expires_in: ttl) do
+            do_load_persons(selector, choice)
+          end
+        else
+          do_load_persons(selector, choice)
+        end
+      end
+
+      def do_load_persons(selector, choice)
+        Rails.logger.debug("do_load_persons for selector=#{selector} choice=#{choice}")
+        case selector
+        when "units"
+          units = sanitize_units(choice.split(","))
+          fail unless @errors.empty?
+
+          # For branch non-leaf, we return a simplified version including professors only (classid: 5,6)
+          if units.first.level < 4
+            aa = []
+            units.each do |u|
+              aa += APIAccredsGetter.call(classid: [5, 6], unitid: u.id)
+            end
+            scipers = aa.map { |a| a["persid"] }.uniq
+            persons = Person.for_scipers(scipers)
+          else
+            persons = Person.for_units(units)
+          end
+        when "groups"
+          persons = Person.for_groups(choice.split(","))
+        when "scipers"
+          persons = Person.for_scipers(choice.split(","))
+        when "progcode"
+          scipers = IsaThDirectorsGetter.call(progcode: choice).map { |r| r["sciper"] }
+          persons = Person.for_scipers(scipers)
+        else
+          raise "Invalid selector value. This should not happen as pre-validation occurs"
+        end
+
+        # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
+        persons.select!(&:can_have_profile?)
+        # Fetch accreditations that we will need in any case so that it is cached
+        persons.each(&:accreditations)
+        persons
+      end
+
       def people_params
         params.permit(
           :groups, :progcode, :scipers, :units,
-          :position, :struct, :lang
+          :position, :struct, :lang, :refresh
         )
       end
 
@@ -247,6 +289,7 @@ module API
       #  - storing a secret_key for rapidly expiring signed requests (à la camipro photos)
       # The auth method will be chosen based on which fields are present.
       def check_auth
+        Rails.logger.debug("Check Auth to be implemented")
         true
       end
     end

@@ -112,6 +112,16 @@ class Accreditation
     accreds
   end
 
+  def self.for_all_full_professors
+    accreds_data = APIAccredsGetter.call(classid: 5)
+    accreds_data.map { |data| new(data) }
+  end
+
+  def self.for_all_professors
+    accreds_data = APIAccredsGetter.call(classid: [5, 6])
+    accreds_data.map { |data| new(data) }
+  end
+
   def unit
     @unit ||= Unit.find(@unit_id)
   end
