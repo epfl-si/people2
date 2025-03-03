@@ -59,6 +59,8 @@
       ENTRA_CLIENT_ID: "{{ _secrets.people.entra_oidc.client_id }}"
       ENTRA_SECRET: "{{ _secrets.people.entra_oidc.secret }}"
 
+      SUPERUSERS: "{{ _secrets.people.superusers }}"
+
       # OIDC_HOSTNAME: "{{ hosts.keycloak }}"
       # OIDC_REALM: "{{ keycloak.realm }}"
       # OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
