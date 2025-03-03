@@ -22,6 +22,9 @@
               </span>
             <% end %>
             <small>
+            <% if (r=@person.room(accred.unit.id)).present? %>
+              <%= t "office" %>: <%= link_to r.name, r.url.to_s, target: "_new" %><br />
+            <% end %>
               <%= hierarchy_links accred.unit.hierarchy %>
             </small>
           </p>
