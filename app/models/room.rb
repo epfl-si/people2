@@ -3,6 +3,8 @@
 class Room
   attr_reader :id, :unit_id, :name, :order
 
+  PLAN_URL = URI.parse("https://plan.epfl.ch/")
+
   def initialize(data)
     @id      = data['id'].to_i
     @unit_id = data['unitid'].to_i
@@ -26,5 +28,11 @@ class Room
 
   def eql?(other)
     name == other.name
+  end
+
+  def url
+    u = PLAN_URL
+    u.query = URI.encode_www_form(room: @name)
+    u
   end
 end
