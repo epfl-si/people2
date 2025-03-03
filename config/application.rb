@@ -39,7 +39,7 @@ module People
 
     # Custom generic app configs: everything from ENV with defaults
     # Use as Rails.configuration.key
-    config.admin_scipers = ENV.fetch('ADMIN_SCIPERS', '').split(/\s*,\s*/).select { |v| v =~ /[0-9]{6}/ }
+    config.superusers = ENV.fetch('SUPERUSERS', '').split(/\s*,\s*/).select { |v| v =~ /[0-9]{6}/ }
     config.intranet_re = Regexp.new(ENV.fetch('INTRANET_RE', '^128\.17[89]'))
     config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', true)
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')

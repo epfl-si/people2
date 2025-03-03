@@ -113,6 +113,8 @@ services:
       ENTRA_CLIENT_ID: "${DEV_ENTRA_CLIENT_ID}"
       ENTRA_SECRET: "${DEV_ENTRA_SECRET}"
 
+      SUPERUSERS: "${SUPERUSERS}"
+
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"

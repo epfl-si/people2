@@ -42,7 +42,7 @@ class User < ApplicationRecord
     !all_admins.find { |r| r['persid'].to_i == sciper.to_i }.nil?
   end
 
-  def admin?
-    Rails.configuration.admin_scipers.include?(sciper)
+  def superuser?
+    Rails.configuration.superusers.include?(sciper)
   end
 end

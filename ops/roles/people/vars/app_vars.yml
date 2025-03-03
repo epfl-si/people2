@@ -8,6 +8,7 @@ people:
   repo: "https://github.com/epfl-si/people2.git"
   srcdir: "{{ PEOPLE_SRCDIR }}"
   storage: "{{ DATA_BASEDIR }}/people/storage"
+  superusers: "{{ SUPERUSERS }}"
   mariadb:
     data: "{{ DATA_BASEDIR }}/people/mariadb/data"
     init: "{{ DATA_BASEDIR }}/people/mariadb/init"

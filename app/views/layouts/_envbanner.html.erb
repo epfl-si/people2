@@ -52,7 +52,7 @@ $('#console').ready(function() {
     &#9679;
     <%= I18n.locale.upcase %>
     &#9679;
-    <%= authenticated? ? "signed in as #{Current.user.name}" : "NOT signed-in" %>
+    <%= authenticated? ? "signed in as #{Current.user.name} #{Current.user.superuser? ? '(superuser)' : ''}" : "NOT signed-in" %>
     &#9679;
     <% if @audience.present? %>
       <%= @original_audience.present? ?

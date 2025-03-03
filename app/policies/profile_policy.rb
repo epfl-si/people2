@@ -11,6 +11,6 @@ class ProfilePolicy < ApplicationPolicy
     # `user` is a performing subject,
     # `record` is a target object (the profile in this case)
     # in order fastest -> slowest
-    (user.sciper == record.sciper) || user.admin? || user.admin_for_profile?(record)
+    (user.sciper == record.sciper) || user.superuser? || user.admin_for_profile?(record)
   end
 end
