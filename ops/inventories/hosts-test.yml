@@ -75,5 +75,7 @@ all:
     SELECT_OIDC: local_keycloak
     SILENT_TRANSLATION_ERR: "yes"
 
+    SUPERUSERS: 121769
+
     # ---                                                                 whoami
     WHOAMI_HOSTNAME: peoami.fsd.team
