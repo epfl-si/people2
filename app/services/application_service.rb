@@ -80,6 +80,10 @@ class ApplicationService
 
   # by default we assume request body is json
   # dofetch can be overridden to add custom parser of the result
+  # If you just need the raw output (e.g. for html content), override as
+  # def dofetch
+  #   fetch_http
+  # end
   def dofetch
     body = fetch_http
     body.nil? ? nil : JSON.parse(body)
@@ -110,22 +114,35 @@ class ApplicationService
     end
   end
 
-  def do_fetch_http(uri = @url)
-    Rails.logger.debug("app_service: do_fetch_http fetching #{uri}")
+  def do_fetch_http(uri = @url, limit = 10)
+    raise ArgumentError, 'HTTP redirect limit reached' if limit <= 0
 
-    req = genreq
+    req = genreq(uri)
+
     opts = { use_ssl: true, read_timeout: 100 }
     opts.merge!(http_opts)
-    res = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
+    response = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
       http.request(req)
     end
-    return unless res.is_a?(Net::HTTPSuccess)
-
-    res.body.force_encoding('UTF-8')
+    case response
+    when Net::HTTPSuccess
+      response.body.force_encoding('UTF-8')
+    when Net::HTTPRedirection
+      rediuri = URI.parse(response['location'])
+      if rediuri.relative?
+        rediuri.scheme ||= uri.scheme
+        rediuri.hostname ||= uri.hostname
+        rediuri = URI.parse(rediuri.to_s) unless rediuri.is_a?(URI::HTTPS)
+      end
+      do_fetch_http(rediuri, limit - 1)
+    else
+      Rails.logger.debug("app_service: request went bad")
+      nil
+    end
   end
 
-  def genreq
-    Net::HTTP::Get.new(@url)
+  def genreq(url = @url)
+    Net::HTTP::Get.new(url)
   end
 
   def cache_key
