@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :infosciences
   resources :achievements
   # Custom Error Pages
   match '/500', via: :all, to: 'errors#internal_server_error'
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
     resources :awards, shallow: true
     resources :educations, shallow: true
     resources :experiences, shallow: true
+    resources :infosciences, shallow: true
     resources :publications, shallow: true
     resources :pictures, shallow: true
     resources :accreds, shallow: true, only: %i[index show update]

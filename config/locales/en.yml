@@ -332,7 +332,10 @@ en:
         visible_items: "Visible items"
       person:
         function: main function
+
     errors:
+      # for a list of standard error messages keys, see:
+      #   https://guides.rubyonrails.org/i18n.html#error-message-interpolation
       messages:
         record_invalid: "Validation failed: %{errors}"
         restrict_dependent_destroy:
@@ -363,6 +366,11 @@ en:
               blank: "should be present"
             year_begin:
               blank: "should be present"
+        infoscience:
+          attributes:
+            url:
+              invalid_format: "Invalid URL format. It should look like https://infoscience-exports.epfl.ch/NNNN"
+              taken: "You already have a paper listing with that url"
         name:
           attributes:
             usual_first:

@@ -1,0 +1,4 @@
+<%= turbo_stream.replace dom_id(@infoscience) do %>
+  <%= render "editable_infoscience", infoscience: @infoscience %>
+<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

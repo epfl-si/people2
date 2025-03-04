@@ -173,6 +173,26 @@ class LegacyProfileImportJob < ApplicationJob
         fallback_lang = lang if detect_lang_with_ai
       end
 
+      # Infoscience links
+      is_boxes = cv.boxes.infoscience
+      is_boxes.order(:ordre).each do |le|
+        e = profile.infosciences.new(
+          url: le.src,
+          visibility: le.visible? ? 0 : 2
+        )
+        e.title_en = le.sanitized_label if le.label.present?
+        unless e.save
+          errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+          Rails.logger.debug "Skipping invalid infoscience box #{le.id} (sciper: #{profile.sciper}): #{errs}"
+        end
+      end
+      # taken care automagically by IndexBoxable
+      # if c.positive?
+      #   b = IndexBox.from_model(mboxes['infoscience'])
+      #   b.profile = profile
+      #   b.save
+      # end
+
       # Publications
       if cv.publications.count.positive?
         b = IndexBox.from_model(mboxes['publication'])
@@ -188,7 +208,7 @@ class LegacyProfileImportJob < ApplicationJob
           )
           e.url = le.urlpub if le.urlpub.present?
           unless e.save
-            errs = e.errors.map { |err| "#{e.attribute}: #{err.type}" }.join(", ")
+            errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
             Rails.logger.debug "Skipping invalid publication #{le.id} (sciper: #{profile.sciper}): #{errs}"
           end
         end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_11_152206) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_03_145919) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -192,6 +192,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_152206) do
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_experiences_on_profile_id_and_position", unique: true
     t.index ["profile_id"], name: "index_experiences_on_profile_id"
+  end
+
+  create_table "infosciences", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
+    t.string "url"
+    t.integer "position"
+    t.integer "audience", default: 0
+    t.integer "visibility", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_infosciences_on_profile_id"
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -392,6 +407,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_152206) do
   add_foreign_key "boxes", "sections"
   add_foreign_key "educations", "profiles"
   add_foreign_key "experiences", "profiles"
+  add_foreign_key "infosciences", "profiles"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
   add_foreign_key "pictures", "profiles"
