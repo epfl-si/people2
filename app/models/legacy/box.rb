@@ -13,6 +13,7 @@ module Legacy
     scope :with_content, -> { where("content IS NOT NULL and content <> ''") }
     # Boxes with sys not null are specialized and their content comes from other tables;
     scope :free_text, -> { where("sys IS NULL or sys = ''") }
+    scope :infoscience, -> { where(sys: 'I').where("src IS NOT NULL and src <> ''") }
 
     def visible?
       box_show == '1'

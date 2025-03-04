@@ -1,0 +1,20 @@
+<% # infoscience.errors.add :base, "This is a very severe error" %>
+<% # infoscience.errors.add :base, "This is a less severe error" %>
+
+<%= form_with(model: [profile, infoscience], local: false, class: "instaform") do |form| %>
+  <% translations = (profile ||= infoscience.profile).translations %>
+  <%= render "shared/form_errors", item: infoscience if infoscience.errors.any? %>
+  <%= translated_text_fields(form, :title, translations) %>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:url) %>
+    <%= form.url_field :url %>
+  </div>
+  <div class="form-group">
+    <%= form.label Award.human_attribute_name(:audience) %>
+    <span class="inform_visibility"><%= audience_selector form %></div>
+  </div>
+  <%= form_actions(form, infoscience) %>
+<% end %>
+
+
+
