@@ -54,10 +54,10 @@ class APIBaseGetter < ApplicationService
     "v1/#{@resource}"
   end
 
-  def genreq
+  def genreq(url = @url)
     Rails.logger.debug "epfl api genreq"
     cfg = Rails.application.config_for(:epflapi)
-    req = Net::HTTP::Get.new(@url)
+    req = Net::HTTP::Get.new(url)
     req.basic_auth cfg.username, cfg.password
     req
   end
