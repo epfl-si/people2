@@ -26,7 +26,7 @@ class ModelBox < ApplicationRecord
 
   def new_box_for_profile(profile)
     box = Object.const_get(kind).send("from_model", self)
-    box.profile = profile
+    box.profile_id = profile.id
     box
   end
 end

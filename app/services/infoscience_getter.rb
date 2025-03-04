@@ -3,11 +3,14 @@
 class InfoscienceGetter < ApplicationService
   attr_reader :url
 
-  def initialize(url)
-    @url = url
+  def initialize(data = {})
+    url = data[:url]
+    raise "url parameter is mandatory for InfoscienceGetter" if url.blank?
+
+    @url = URI.parse(url)
   end
 
-  def fetch
+  def dofetch
     fetch_http
   end
 end

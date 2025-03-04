@@ -1,0 +1,15 @@
+<%= turbo_frame_tag :infosciences_index do %>
+	<%= turbo_frame_tag "infosciences", src: nil, target: nil, data: {controller: "sortable"} do %>
+		<% @infosciences.each do |infoscience| %>
+			<%= render 'editable_infoscience', infoscience: infoscience %>
+		<% end %>
+	<% end %>
+
+	<div class="list-group-item" %>
+		<%= turbo_frame_tag "new_infoscience_form" do %>
+			<div class="row justify-content-center">
+				<%= link_to icon_text('add', 'plus-circle'), new_profile_infoscience_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+			</div>
+		<% end %>
+	</div>
+<% end %>

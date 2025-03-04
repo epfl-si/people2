@@ -180,6 +180,24 @@ mbox_award:
   locked_title: true
   show_title: true
   position: 6
+mbox_infoscience:
+  label: infoscience
+  section: bio
+  kind: IndexBox
+  subkind: Infoscience
+  title_en: "Publications"
+  title_fr: "Publications"
+  title_it: "Pubblicazioni"
+  title_de: "Publikationen"
+  description_en: "Infoscience Publications Box"
+  description_fr: "Infoscience Publications Box"
+  description_it: "Infoscience Publications Box"
+  description_de: "Infoscience Publications Box"
+  max_copies: 1
+  standard: true
+  locked_title: true
+  show_title: true
+  position: 7
 mbox_publication:
   label: publication
   section: bio
@@ -197,7 +215,7 @@ mbox_publication:
   standard: false
   locked_title: true
   show_title: true
-  position: 7
+  position: 8
 mbox_biofree:
   label: biofree
   section: bio
@@ -211,7 +229,7 @@ mbox_biofree:
   standard: false
   locked_title: false
   show_title: true
-  position: 8
+  position: 9
 
 # ------------------------------------------------------------- research section
 
