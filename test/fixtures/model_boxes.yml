@@ -180,42 +180,6 @@ mbox_award:
   locked_title: true
   show_title: true
   position: 6
-mbox_infoscience:
-  label: infoscience
-  section: bio
-  kind: IndexBox
-  subkind: Infoscience
-  title_en: "Publications"
-  title_fr: "Publications"
-  title_it: "Pubblicazioni"
-  title_de: "Publikationen"
-  description_en: "Infoscience Publications Box"
-  description_fr: "Infoscience Publications Box"
-  description_it: "Infoscience Publications Box"
-  description_de: "Infoscience Publications Box"
-  max_copies: 1
-  standard: true
-  locked_title: true
-  show_title: true
-  position: 7
-mbox_publication:
-  label: publication
-  section: bio
-  kind: IndexBox
-  subkind: Publication
-  title_en: "Selected Publications"
-  title_fr: "Publications Representatives"
-  title_it: "Pubblicazioni rappresentative"
-  title_de: "Ausgewählte Publikationen"
-  description_en: "Selected Publications Box"
-  description_fr: "Selected Publications Box"
-  description_it: "Selected Publications Box"
-  description_de: "Selected Publications Box"
-  max_copies: 1
-  standard: false
-  locked_title: true
-  show_title: true
-  position: 8
 mbox_biofree:
   label: biofree
   section: bio
@@ -231,8 +195,45 @@ mbox_biofree:
   show_title: true
   position: 9
 
-# ------------------------------------------------------------- research section
+# --------------------------------------------------------- publications section
+mbox_publication:
+  label: publication
+  section: pub
+  kind: IndexBox
+  subkind: Publication
+  title_en: "Selected Publications"
+  title_fr: "Publications Representatives"
+  title_it: "Pubblicazioni rappresentative"
+  title_de: "Ausgewählte Publikationen"
+  description_en: "Selected Publications Box"
+  description_fr: "Selected Publications Box"
+  description_it: "Selected Publications Box"
+  description_de: "Selected Publications Box"
+  max_copies: 1
+  standard: false
+  locked_title: true
+  show_title: true
+  position: 1
+mbox_infoscience:
+  label: infoscience
+  section: pub
+  kind: IndexBox
+  subkind: Infoscience
+  title_en: "Infoscience Publications"
+  title_fr: "Publications Infoscience"
+  title_it: "Pubblicazioni Infoscience"
+  title_de: "Infoscience Publikationen"
+  description_en: "Infoscience Publications Box"
+  description_fr: "Infoscience Publications Box"
+  description_it: "Infoscience Publications Box"
+  description_de: "Infoscience Publications Box"
+  max_copies: 6
+  standard: true
+  locked_title: true
+  show_title: false
+  position: 2
 
+# ------------------------------------------------------------- research section
 mbox_field:
   label: field
   section: research
