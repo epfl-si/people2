@@ -6,14 +6,6 @@ contact:
   show_title: false
   create_allowed: true
   position: 1
-bio:
-  title_en: "Biography"
-  title_fr: "Biographie"
-  zone: "main"
-  label: "bio"
-  show_title: false
-  create_allowed: true
-  position: 2
 side:
   title_en: "Side"
   title_fr: "Sous la photo"
@@ -21,15 +13,23 @@ side:
   label: "side"
   show_title: false
   create_allowed: true
-  position: 3
-# pub:
-#   title_en: "Publications"
-#   title_fr: "Publications"
-#   zone: "main"
-#   label: "pub"
-#   show_title: true
-#   create_allowed: true
-#   position: 3
+  position: 1
+bio:
+  title_en: "Biography"
+  title_fr: "Biographie"
+  zone: "main"
+  label: "bio"
+  show_title: false
+  create_allowed: true
+  position: 1
+pub:
+  title_en: "Publications"
+  title_fr: "Publications"
+  zone: "main"
+  label: "pub"
+  show_title: false
+  create_allowed: true
+  position: 2
 research:
   title_en: "Research"
   title_fr: "Recherche"
@@ -37,7 +37,7 @@ research:
   label: "research"
   show_title: true
   create_allowed: true
-  position: 4
+  position: 3
 teaching:
   title_en: "Teaching"
   title_fr: "Enseignement"
@@ -45,4 +45,4 @@ teaching:
   label: "teaching"
   show_title: true
   create_allowed: true
-  position: 5
+  position: 4
