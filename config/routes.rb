@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :infosciences
-  resources :achievements
   # Custom Error Pages
   match '/500', via: :all, to: 'errors#internal_server_error'
   match '/401', via: :all, to: 'errors#unauthorized'
@@ -45,6 +43,10 @@ Rails.application.routes.draw do
   get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
   put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
   put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
+
+  resources :accreditations, only: [] do
+    resources :function_changes, shallow: true, except: %i[index]
+  end
 
   # put 'boxes/:id/toggle', to: 'boxes#toggle', as: 'toggle_box'
   # put 'socials/:id/toggle', to: 'socials#toggle', as: 'toggle_social'

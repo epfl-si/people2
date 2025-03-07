@@ -7,6 +7,8 @@ class Accreditation
               :unit_label_fr, :unit_label_en, :unit_label_it, :unit_label_de
   attr_writer :unit, :botweb, :gestprofil
 
+  include ActiveModel::Model
+
   include Translatable
   translates :unit_label, :status_label, :class_label
 
@@ -38,6 +40,22 @@ class Accreditation
     }
     @position = Position.new(posdata)
     @prefs = nil
+  end
+
+  # In api.epfl.ch, the id of an accred is built as follows: id="#{sciper}:#{unit_id}"
+  def self.find(id)
+    data = APIAccredsGetter.call(id: id)
+    raise RecordNotFound if data.blank?
+
+    new(data)
+  end
+
+  def id
+    "#{@sciper}:#{@unit_id}"
+  end
+
+  def accreditors
+    @accreditors ||= Accreditor.for_sciper(@sciper)
   end
 
   # TODO: this is still suboptimal but presently I don't know how to improve it.

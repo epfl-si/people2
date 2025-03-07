@@ -36,7 +36,12 @@ en:
   it: Italiano
   de: Deutch
 
-  ciccio: this is ciccio
+  messages:
+    function_change_explain: >
+      It is not possible to change the position function directly. 
+      Please fill and submit this form to request the change to one of your
+      accreditors.
+
   action:
     accred_full_list: "Full list of positions and address"
     add_a_new: "Add a new"
@@ -83,6 +88,10 @@ en:
       zero: "Something prevented this award to be updated (should now happen)"
       one: "An error prevented this award to be updated"
       other: "%{count} errors prevented this award to be updated"
+    function_change:
+      one: "Please fix the following error for your request to be sent"
+      other: "Please fix the following errors for your request to be sent"
+      zero: "Something went wrong unexpectedly while trying to submit your request. Please try again later or contact our service desk (1234@epfl.ch)"
     picture:
       zero: "Something prevented your picture to be updated (should now happen)"
       one: "An error prevented your picture to be updated"
@@ -107,6 +116,9 @@ en:
         create: "Error creating record"
         update: "Error updating record"
         remove: "Error deleting"
+    function_change:
+      success:
+        create: "Function change request sent to your chosen accreditors"
     profile:
       success:
         update: "Base profile succesfully updated"

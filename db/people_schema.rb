@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_145919) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_05_140614) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -192,6 +192,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_145919) do
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_experiences_on_profile_id_and_position", unique: true
     t.index ["profile_id"], name: "index_experiences_on_profile_id"
+  end
+
+  create_table "function_changes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "accreditation_id"
+    t.string "requested_by"
+    t.string "treated_by"
+    t.text "accreditor_scipers"
+    t.string "function"
+    t.string "status"
+    t.text "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "infosciences", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|

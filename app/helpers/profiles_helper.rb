@@ -148,4 +148,30 @@ module ProfilesHelper
         form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
     end
   end
+
+  def remote_modal_for(uri, &block)
+    content = capture(&block)
+    link_to content, uri, data: { turbo_frame: :remote_modal }
+  end
+
+  def modal_dialog(title, &block)
+    content = capture(&block)
+    button = tag.button(type: "button", class: "close", data: { action: "click->remote-modal#close" }) do
+      tag.span("&times;".html_safe, "aria-hidden": true)
+    end
+
+    turbo_frame_tag :remote_modal do
+      tag.dialog(
+        "aria-labelledby": "modal_title",
+        "data-controller": "remote-modal"
+      ) do
+        tag.div(class: "modal-content") do
+          safe_join([
+                      tag.div(class: "modal-header") { safe_join([tag.h5(title, id: "modal_title"), button]) },
+                      turbo_frame_tag(:remote_modal_body, class: "modal-body") { content }
+                    ])
+        end
+      end
+    end
+  end
 end

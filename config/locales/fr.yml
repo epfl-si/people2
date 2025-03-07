@@ -4,7 +4,11 @@ fr:
   en: English
   it: Italiano
   de: Deutch
-
+  messages:
+    function_change_explain: >
+      Merci de modifier directement le champ Fonction ci-dessous et de justifier
+      la demande en précisant la raison. Votre demande de mise à jour des 
+      données de l'annuaire sera soumise pour approbation.
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
     add_a_new: "Ajouter un nouveau "
@@ -65,12 +69,16 @@ fr:
   education: 
     directedby: "Dirigé par : "
   error:
+    one: "Erreur"
+    other: "Erreurs"
     award:
       one: "Une erreur a empêché cette récompense d'être mise à jour"
       other: "%{count} erreurs ont empêché cette récompense d'être mise à jour"
       zero: "Quelque chose a empêché cette récompense d'être mise à jour (ne devrait pas se produire)"
-    one: "Erreur"
-    other: "Erreurs"
+    function_change:
+      one: "Merci de corriger l'erreur suivant afin de pouvoir envoyer votre request"
+      other: "Merci de corriger les erreurs suivants afin de pouvoir envoyer votre request"
+      zero: "Quelque chose a empêché cet request de passer (ne devrait pas se produire)"
     picture:
       one: "Une erreur a empêché votre photo d'être mise à jour"
       other: "#{count} erreurs ont empêché votre photo d'être mise à jour"
@@ -95,6 +103,9 @@ fr:
         create: "Enregistrement créé avec succès"
         remove: "Supprimé"
         update: "Enregistrement mis à jour avec succès"
+    function_change:
+      success:
+        create: "Function change request sent to your chosen accreditors"
     profile:
       error:
         update: "Erreur lors de la mise à jour du profil de base"
