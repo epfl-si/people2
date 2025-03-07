@@ -5,7 +5,7 @@
 class APIAccredsGetter < APIBaseGetter
   def initialize(data = {})
     @resource = "accreds"
-    @idname = :sciper
+    @idname = :id
     @params = [
       # classid(int): id of the class
       # Example : 4

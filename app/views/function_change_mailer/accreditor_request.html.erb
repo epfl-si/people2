@@ -1,0 +1,35 @@
+<p>
+  Bonjour <%= @accreditor.display %>,
+</p>
+
+<p>
+une demande de mise à jour de la fonction dans <em>Accred</em> 
+a été déposée pour : 
+<%= link_to @person.name.display, person_url(sciper_or_name: @person.sciper) %>.
+</p>
+
+<dl>
+  <dt>Sciper:</dt>
+  <dd><%= @person.sciper %></dd>
+
+  <dt>Unité:</dt>
+  <dd><%= @function_change.unit_id %> (<%= @accreditation.unit_name %>)</dd>
+
+  <dt>Ancienne Fonction:</dt>
+  <dd><%= @accreditation.position.id %> / <%= @accreditation.position.label_en %> / <%= @accreditation.position.label_frm %> / <%= @accreditation.position.label_frf %></dd>
+
+  <dt>Fonction demandé:</dt>
+  <dd><%= @function_change.function %></dd>
+
+  <dt>Raison:</dt>
+  <dd><%= @function_change.reason %></dd>
+</dl>
+
+<p>
+Merci de faire le necessaire ou de 
+<%= link_to("contacter", "mailto:#{@person.email}") %>
+la personne pour expliquer un éventuel refus.
+</p>
+
+
+<p>Message généré automatiquement par l'application <em>People</em></p>

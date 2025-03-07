@@ -47,7 +47,7 @@
   </section>
 
   <hr>
-
+  
 <ul class="nav nav-tabs mt-5" role="tablist">
   <% active = "active" %>
   <% @sections.each do |section| %>
@@ -74,3 +74,5 @@
   <% end %>
 
 </div>
+
+<%= turbo_frame_tag :remote_modal %>

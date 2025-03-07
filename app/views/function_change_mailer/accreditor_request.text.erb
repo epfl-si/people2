@@ -1,0 +1,28 @@
+Bonjour <%= @accreditor.display %>,
+
+une demande de mise à jour fonction accred pour : <%= @person.name.display %>
+
+une demande de mise à jour de la fonction dans <em>Accred</em> 
+a été déposée pour <%= @person.name.display %>.
+
+Merci de faire le necessaire ou de contacter (<%= @person.email} %>)
+la personne pour expliquer un éventuel refus.
+
+
+Mise à jour      : Fonction Accred
+Sciper           : <%= @person.sciper %>
+Unité            : <%= @function_change.unit_id %> (<%= @accreditation.unit_name %>)
+Ancienne Fonction: <%= @accreditation.position.id %> / <%= @accreditation.position.label_en %> / <%= @accreditation.position.label_frm %> / <%= @accreditation.position.label_frf %>
+
+Fonction demandé : <%= @function_change.function %>
+
+Raison:
+
+<%= @function_change.reason %>
+
+
+
+
+
+Message généré automatiquement par l'application <%= root.url %>.
+
