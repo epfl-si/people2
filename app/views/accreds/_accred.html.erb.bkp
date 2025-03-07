@@ -19,10 +19,20 @@
             %>
           </span>
           <%= accred.role.t_label(@profile.gender) %>
-          <%= remote_modal_for(new_accreditation_function_change_path(accred.accreditation_id)) do %>
+          &nbsp;
+          <button class="link"
+            data-controller="modal"
+            data-modal-dialog-param='<%= "position_modal_#{accred.unit_id}" %>'>
             <%= icon('edit-3') %>
-          <% end %>
+          </button>
         </p>
+        <dialog id='<%= "position_modal_#{accred.unit_id}" %>' aria-labelledby="modal_title">
+          <%=
+            turbo_frame_tag "function_change_#{accred.unit_id}", 
+            src: new_accreditation_function_change_path(accred.accreditation_id), 
+            loading: :lazy
+          %>
+        </dialog>
       </div>
       <div class="col text-right">
         <% if count > 1 %>

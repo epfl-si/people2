@@ -211,6 +211,10 @@ class Person
     rand(1..10) == 1
   end
 
+  def accreditors
+    @accreditors ||= Accreditor.for_sciper(@sciper)
+  end
+
   # TODO: check errors on api calls and decide how to recover
   # TODO: once accred for profile is loaded, we can update visibility on address
   def accreditations

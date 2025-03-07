@@ -33,6 +33,10 @@ class Accred < ApplicationRecord
     accreditations.map(&:prefs)
   end
 
+  def accreditation_id
+    "#{sciper}:#{unit_id}"
+  end
+
   def hidden?
     !visible?
   end

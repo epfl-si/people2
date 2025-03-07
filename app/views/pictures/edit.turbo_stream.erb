@@ -1,5 +1,4 @@
-<%= turbo_stream.replace 'profile_picture' do %>
-<turbo-frame id="profile_picture">
+<%= turbo_stream.update 'profile_picture' do %>
   <div id="<%= dom_id(@picture) %>"> 
     <% image_url = @picture.image.attached? ? url_for(@picture.image) : "" %>
     <% cropped_image_url = @picture.cropped_image.attached? ? url_for(@picture.cropped_image) : "" %>
@@ -46,5 +45,4 @@
       </div>
     <% end %>
   </div>
-</turbo-frame>
 <% end %>

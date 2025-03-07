@@ -1,5 +1,3 @@
-<%= turbo_stream.replace dom_id(@achievement) do %>
-<%= turbo_frame_tag dom_id(@achievement) do %>
+<%= turbo_stream.update dom_id(@achievement) do %>
   <%= render "achievements/form", profile: nil, achievement: @achievement, cancel: achievement_url(@achievement, format: 'turbo_stream') %>
-<% end %>
 <% end %>
