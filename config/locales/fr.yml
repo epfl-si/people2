@@ -66,6 +66,7 @@ fr:
   class_delegate: "Délégué de classe"
   common:
     not_available: non disponible
+    editing_profile: "Modification du profile de %{name}"
   education: 
     directedby: "Dirigé par : "
   error:

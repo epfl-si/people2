@@ -8,6 +8,6 @@ class PersonPolicy < ApplicationPolicy
 
   def update?
     Rails.logger.debug(user.inspect)
-    (user.sciper == record.sciper) || user.admin? || user.admin_for_profile?(record)
+    (user.sciper == record.sciper) || user.superuser? || user.admin_for_profile?(record)
   end
 end

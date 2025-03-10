@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   match '/404', via: :all, to: 'errors#not_found'
   match '/422', via: :all, to: 'errors#unprocessable_content'
 
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up" => "rails/health#show", as: :rails_health_check
+
   # namespace :oidc do
   #   # URL prefix for controllers in this section is `/oidc/`, and
   #   # controllers live in module `OIDC` (not "Oidc"), thanks to
