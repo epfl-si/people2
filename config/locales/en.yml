@@ -81,6 +81,8 @@ en:
     validate: "Submit"
   common:
     not_available: NA
+    editing_profile: "Editing %{name}'s profile."
+
   error:
     one: "Error"
     other: "Errors"
