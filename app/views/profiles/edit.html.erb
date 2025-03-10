@@ -1,5 +1,9 @@
 <% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
 
+<section id="name_section">
+  <h2><%= t "common.editing_profile", name: @person.name.display %></h2>
+</section>
+
 <section id="pictures_section">
   <%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
 </section>
@@ -37,6 +41,11 @@
     ) %>    
   </nav>
 
+  <%=
+    if @person.name.customizable?
+      render "name", profile: @profile, person: @person 
+    end
+  %>
   <%= render "form", profile: @profile %>
 
   <hr>
