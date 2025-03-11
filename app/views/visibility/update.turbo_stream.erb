@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@item, :visibility) do %>
+	<%= render "shared/item_visibility", item: @item %>
+<% end %>

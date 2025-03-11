@@ -1,17 +1,16 @@
 <% # TODO: check accessibility %>
 <%= tag.div(id: dom_id(item, :visibility), class: "gcpopover", data: {controller: "popover"}) do %>
-<div class="gcpopover" data-controller="popover" id="<%= dom_id(item, :visibility) %>">
   <%= visibility_icon_button(item) %>
   <template data-popover-target="content">
     <div class="visibility-container" data-popover-target="card">
       <%= form_with(
-         model: item,
+         method: "patch",
+         url: visibility_path(model: item.class.name.underscore, id: item.id),
          remote: true, 
-         format: 'json',
          class: ["visibility-radios"],
          data: {controller: 'auto-submit', "visibility-target": "form"},
       ) do |form| %>
-        <%= visibility_selector(form) %>
+        <%= visibility_selector(form, item) %>
       <% end %>
     </div>
   </template>
