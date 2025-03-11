@@ -1,2 +1,87 @@
-<% box = @profile.boxes.first %>
-<%= render box.to_partial_path, box: box %>
+<% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
+
+<section id="name_section">
+  <h2><%= t "common.editing_profile", name: @person.name.display %></h2>
+</section>
+
+<section id="pictures_section">
+  <%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
+</section>
+
+<p data-controller="social"></p>
+<hr>
+
+<div
+  id="tr_switchable"
+  data-controller="language"
+  data-language-full-value="<%= translation_classlist(@profile) %>"
+  data-language-active-value="btn btn-sm btn-primary"
+  data-language-inactive-value="btn btn-sm btn-secondary"
+  class="<%= translation_classlist(@profile) %>" 
+>
+  <nav id="edit_lang_switchers">
+    <h5><%= t "title.editing_languages" %></h5>
+    <% @profile.translations.each do |l| %>
+      <%= button_tag(l,
+        class: "btn btn-sm btn-secondary", 
+        data: {
+          "action": "language#setEnabledLanguage",
+          "language-target": "button",
+          "langcls": "tr_enable_#{l}",
+        }
+      ) %>
+    <% end %>
+    <%= button_tag("All",
+      class: "btn btn-sm btn-primary", 
+      data: {
+        "action": "language#setEnabledLanguage",
+        "language-target": "button",
+        "langcls": translation_classlist(@profile),
+      }
+    ) %>    
+  </nav>
+
+  <%=
+    if @person.name.customizable?
+      render "name", profile: @profile, person: @person 
+    end
+  %>
+  <%= render "form", profile: @profile %>
+
+  <hr>
+  <section id="accreds_section">
+  <%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
+  Loading awards... (for demoing purpose, an artificial delay is added)
+  <% end %>
+  </section>
+
+  <hr>
+  
+<ul class="nav nav-tabs mt-5" role="tablist">
+  <% active = "active" %>
+  <% @sections.each do |section| %>
+    <% id = "section_#{section.label}" %>
+    <li class="nav-item">
+      <%= link_to section.t_title, "##{id}", id: "#{id}-tab", role: "tab",
+                  class: "nav-link #{active}", data: { toggle: "tab" },
+                  aria: { controls: id, selected: active ? "true" : "false" } %>
+    </li>
+    <% active = "" %>
+  <% end %>
+</ul>
+
+<div class="tab-content p-3">
+  <% active = "active" %>
+  <% @sections.each do |section| %>
+    <% id = "section_#{section.label}" %>
+    <div class="tab-pane fade show <%= active %>" id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+      <section>
+        <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(@profile, section), loading: :lazy %>
+      </section>
+    </div>
+    <% active = "" %>
+  <% end %>
+
+</div>
+
+<%= turbo_frame_tag :remote_modal %>

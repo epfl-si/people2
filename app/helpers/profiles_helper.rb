@@ -80,14 +80,15 @@ module ProfilesHelper
     end
   end
 
-  def visibility_selector(form, with_stimulus: true)
-    id0 = dom_id(form.object, :visibility)
-    # stim_data = { action: 'input->auto-submit#submit' }
-    stim_data = { action: "input->visibility#onChange", "visibility-target": "radio" }
+  def visibility_selector(form, item, with_stimulus: true)
+    # item = form.object
+    id0 = dom_id(item, :visibility)
+    stim_data = { action: 'input->auto-submit#submit' }
+    # stim_data = { action: "input->visibility#onChange", "visibility-target": "radio" }
 
     content = []
 
-    form.object.visibility_options.each do |o|
+    item.visibility_options.each do |o|
       id = "#{id0}_#{o.value}"
       title = t "visibility.labels.#{o.label}"
       label_data = { label: title }

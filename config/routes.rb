@@ -48,6 +48,8 @@ Rails.application.routes.draw do
   put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
   put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
 
+  patch 'visibility/:model/:id', to: 'visibility#update', as: 'visibility'
+
   resources :accreditations, only: [] do
     resources :function_changes, shallow: true, except: %i[index]
   end
