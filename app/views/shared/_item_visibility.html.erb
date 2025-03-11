@@ -1,43 +1,18 @@
-<%= tag.div(
-    class: "visibility-container #{extra_class&.join(' ')}",
-    data: {
-      "controller": "visibility",
-      "visibility-model-value": item.class.name.underscore,
-      "visibility-field-value": "visibility"
-    }
-  ) do %>
-  <%= form_with(
-      model: item, 
-      remote: true, 
-      format: 'json',
-      class: ["visibility-radios"],
-      data: {"visibility-target": "form"},
-    ) do |form| %>
-    <%= visibility_selector(form, with_stimulus: true) %>
-  <% end %>
-  <span class="text" data-visibility-target="label">
-    <%= t "visibility.short_labels.#{item.visibility_label}" %>
-  </span>
-<% end %>
-
-<%= tag.div(
-    class: "visibility-container #{extra_class&.join(' ')}",
-    data: {
-      "controller": "visibility",
-      "visibility-model-value": item.class.name.underscore,
-      "visibility-field-value": "audience"
-    }
-  ) do %>
-  <%= form_with(
-      model: item, 
-      remote: true, 
-      format: 'json',
-      class: ["visibility-radios"],
-      data: {"visibility-target": "form"},
-    ) do |form| %>
-    <%= audience_selector(form, with_stimulus: true) %>
-  <% end %>
-  <span class="text" data-visibility-target="label">
-    <%= t "visibility.short_labels.#{item.audience_label}" %>
-  </span>
+<% # TODO: check accessibility %>
+<%= tag.div(id: dom_id(item, :visibility), class: "gcpopover", data: {controller: "popover"}) do %>
+<div class="gcpopover" data-controller="popover" id="<%= dom_id(item, :visibility) %>">
+  <%= visibility_icon_button(item) %>
+  <template data-popover-target="content">
+    <div class="visibility-container" data-popover-target="card">
+      <%= form_with(
+         model: item,
+         remote: true, 
+         format: 'json',
+         class: ["visibility-radios"],
+         data: {controller: 'auto-submit', "visibility-target": "form"},
+      ) do |form| %>
+        <%= visibility_selector(form) %>
+      <% end %>
+    </div>
+  </template>
 <% end %>
