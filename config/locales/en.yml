@@ -226,6 +226,27 @@ en:
     hidden_address: "NO address"
     intranet: "intranet only"
     intranet_access: "intranet"
+    # { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
+    # { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
+    # { label: 'intranet', icon: 'home',       value: 1, box: true,  item: false },
+    # { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false },
+    # { label: 'draft',    icon: 'edit-3',     value: 3, box: true,  item: false },
+    # { label: 'hidden',   icon: 'eye-off',    value: 4, box: true,  item: true },
+    label:
+      visible: "Visible"
+      public: "Public, visible from all-over the internet"
+      intranet: "Intranet, visible only within the EPFL internal network"
+      auth: "Authentified, visible only by logged-in people with known identity"
+      draft: "Draft, visible only by the owner/editor of the profile"
+      hidden: "Hidden"
+    short_label:
+      visible: "Visible"
+      public: "Public"
+      intranet: "Intranet"
+      auth: "Authorized"
+      draft: "Draft"
+      hidden: "Hidden"
+
     labels:
       published: "Published"
       draft: "Draft"
