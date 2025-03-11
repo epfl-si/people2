@@ -9,60 +9,76 @@
 #       - hidden  => audience=0, visibility=2
 
 module AudienceLimitable
-  AUDIENCE_OPTIONS = [
-    { label: 'public', icon: 'globe' },
-    { label: 'intranet', icon: 'home' },
-    { label: 'authenticated', icon: 'user-check' }
-  ].freeze
+  # label: is used for translations
+  # icon:  the icon to used to indicate the status
+  # value: the integer value stored in the database
+  # box:   if this option is available for boxes
+  # item:  if this option is available for items in index boxes or other elements
+  ALL_VISIBILITY_OPTIONS = [
+    { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
+    { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
+    { label: 'intranet', icon: 'home',       value: 1, box: true,  item: false },
+    { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false },
+    { label: 'draft',    icon: 'edit-3',     value: 3, box: true,  item: false },
+    { label: 'hidden',   icon: 'eye-off',    value: 4, box: true,  item: true }
+  ].map { |h| OpenStruct.new(h) }.freeze
+  BOX_VIS_OPTIONS  = ALL_VISIBILITY_OPTIONS.select(&:box)
+  ITEM_VIS_OPTIONS = ALL_VISIBILITY_OPTIONS.select(&:item)
 
-  VISIBILITY_OPTIONS = [
-    { label: 'published', icon: 'eye' },
-    { label: 'draft', icon: 'edit-3' },
-    { label: 'hidden', icon: 'eye-off' }
-  ].freeze
+  BOX_VIS_OPTIONS_DICT = BOX_VIS_OPTIONS.index_by(&:value)
+  ITEM_VIS_OPTIONS_DICT = ITEM_VIS_OPTIONS.index_by(&:value)
 
   extend ActiveSupport::Concern
 
   included do
     # Reminder: ranges do not include the upper limit
-    scope :world_visible, -> { where(audience: 0, visibility: 0) }
-    scope :intranet_visible, -> { where(audience: 0...2, visibility: 0) }
-    scope :auth_visible, -> { where(audience: 0...3, visibility: 0) }
-    scope :owner_visible, -> { where(visibility: 0...2) }
-    scope :for_audience, ->(audience) { where(audience: 0...(audience + 1), visibility: 0) }
-    validates :audience, numericality: { in: 0...3 }
-    validates :visibility, numericality: { in: 0...3 }
+    scope :world_visible, -> { where(visibility: 0) }
+    scope :intranet_visible, -> { where(visibility: 0...2) }
+    scope :auth_visible, -> { where(visibility: 0...3) }
+    scope :owner_visible, -> { where(visibility: 0...4) }
+    scope :for_audience, ->(audience) { where(visibility: 0...(audience + 1)) }
+    validates :visibility, numericality: { in: 0...5 }
+
+    if self <= Box
+      def visibility_options
+        BOX_VIS_OPTIONS
+      end
+
+      def visibility_option
+        BOX_VIS_OPTIONS_DICT[visibility]
+      end
+    else
+      def visibility_options
+        ITEM_VIS_OPTIONS
+      end
+
+      def visibility_option
+        ITEM_VIS_OPTIONS_DICT[visibility]
+      end
+    end
   end
 
   def visible_by?(level = 0)
-    audience <= level
+    visibility <= level
   end
 
   def world_visible?
-    visibilty.zero? && audience.zero?
+    visibilty.zero?
   end
 
   def intranet_visible?
-    visibilty.zero? && audience < 2
+    visibilty < 2
   end
 
   def auth_visible?
-    visibilty.zero? && audience < 3
+    visibilty < 3
   end
 
   def owner_visible?
-    visibility != 2
+    visibility < 4
   end
 
   def hidden?
-    visibility == 2
-  end
-
-  def visibility_label(v = visibility)
-    VISIBILITY_OPTIONS[v][:label]
-  end
-
-  def audience_label(v = audience)
-    AUDIENCE_OPTIONS[v][:label]
+    visibility > 3
   end
 end
