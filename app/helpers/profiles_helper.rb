@@ -90,7 +90,7 @@ module ProfilesHelper
 
     item.visibility_options.each do |o|
       id = "#{id0}_#{o.value}"
-      title = t "visibility.labels.#{o.label}"
+      title = t "visibility.label.#{o.label}"
       label_data = { label: title }
       content << if with_stimulus
                    form.radio_button(:visibility, o.value, id: id, data: stim_data.merge(label_data))
