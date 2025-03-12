@@ -343,15 +343,16 @@ restore_dinfo:
 nata_patch:
 	cd ops && ./possible.sh --test -t people.src.patch
 
+## reinitialize the test server with data from development workstations
 nata_reinit: dcup
 	ssh peonext 'rm -rf data/people/storage/*'
 	docker compose exec webapp tar cvf - storage | ssh peonext "tar -xvf - -C data/people"
 	$(SQLDUMP) people | ssh peonext "./bin/peopledb"
 	make nata_patch
 
-## reseed the database on the test server for Natalie
-nata_reseed: test_patch
-	cd ops && ./possible.sh --test -t people.db.reseed
+# ## reseed the database on the test server for Natalie
+# nata_reseed: test_patch
+# 	cd ops && ./possible.sh --test -t people.db.reseed
 
 # ------------------------------------------------------------------------------
 .PHONY: clean
