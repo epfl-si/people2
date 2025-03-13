@@ -74,6 +74,9 @@ class Social < ApplicationRecord
       'icon' => 'stack-overflow',
       're' => /^[0-9]+$/
     },
+    # TODO: the mastodon address needs to be something like @instance@username
+    #       and the URL have to be recomputed accordingly.
+    #       Alternatively, we can limit to epfl instance social.epfl.ch
     'mastodon' => {
       'img' => 'mastodon.png',
       'url' => 'https://mastodon.social/@XXX',
