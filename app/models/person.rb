@@ -31,11 +31,11 @@ class Person
                      })
   end
 
-  def self.find(sciper_or_email)
+  def self.find(sciper_or_email, force: false)
     data = if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
-             APIPersonGetter.call!(persid: sciper_or_email, single: true)
+             APIPersonGetter.call!(persid: sciper_or_email, single: true, force: force)
            else
-             APIPersonGetter.call!(email: sciper_or_email, single: true)
+             APIPersonGetter.call!(email: sciper_or_email, single: true, force: force)
            end
     new(data)
   end
@@ -206,11 +206,6 @@ class Person
     rooms(unit_id).first
   end
 
-  # TODO: fix once the actual data is available in api
-  def class_delegate?
-    rand(1..10) == 1
-  end
-
   def accreditors
     @accreditors ||= Accreditor.for_sciper(@sciper)
   end
@@ -270,6 +265,11 @@ class Person
 
   def student?
     accreditations.any?(&:student?)
+  end
+
+  # TODO: fix once the actual data is available in api
+  def class_delegate?
+    accreditations.any?(&:student?) && rand(1..10) == 1
   end
 
   # def gender
