@@ -42,6 +42,11 @@ class PagesController < ApplicationController
       name: "Mr Long Name",
       sciper: "363247",
       desc: "A student with an incredibly long name"
+    },
+    {
+      name: "Giustino",
+      sciper: "400868",
+      desc: "a student who is also class delegate",
     }
   ].freeze
   def devindex
