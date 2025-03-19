@@ -31,7 +31,7 @@ export
 SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
 SQLDUMP=docker compose exec -T mariadb mariadb-dump --password=mariadb
 
-# ----------------------------------------------------------- Run/stop local app
+## ---------------------------------------------------------- Run/stop local app
 .PHONY: css dev up reload kc down fulldown tunnel_up tunnel_down
 
 ## start the dev env with sass builder and app server (try to emulate ./bin/dev)
@@ -72,7 +72,7 @@ tunnel_down:
 dcup: envcheck $(ELE_FILES)
 	docker compose up --no-recreate -d
 
-# --------------------------------------------------- Interaction with local app
+## -------------------------------------------------- Interaction with local app
 .PHONY: logs ps top console shell dbconsole debug redis dbstatus
 
 ## tail -f the logs
@@ -127,7 +127,7 @@ dbstatus:
 about:
 	./bin/rails about && ./bin/rails stats
 
-# -------------------------------------------------------------- Container image
+## ------------------------------------------------------------- Container image
 .PHONY: build rebuild
 
 ## build the web app and atela container
@@ -143,7 +143,7 @@ rebuild: envcheck
 
 envcheck: .env .git/hooks/pre-commit
 
-# ------------------------------------------ Source code and dev env maintenance
+## ----------------------------------------- Source code and dev env maintenance
 .PHONY: erd codecheck cop docop dodocop minor patch
 
 ## generate an entity relation diagram with mermaid_erd
@@ -200,7 +200,7 @@ $(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 $(ELE_SRCDIR)/dist/css/*.css:
 	cd $(ELEMENTS_DIR) && yarn build	
 
-# ---------------------------------------------------------------------- Testing
+## --------------------------------------------------------------------- Testing
 .PHONY: test testup test-system
 
 ## run automated tests
@@ -225,7 +225,7 @@ test-system: testup
 test-models:
 	docker compose exec webapp ./bin/rails test:models
 
-# -------------------------------------------------- Cache and off-line webmocks
+## ------------------------------------------------- Cache and off-line webmocks
 
 ## flush cache from redis db
 flush:
@@ -240,7 +240,7 @@ refresh_webmocks:
 	@ENABLE_WEBMOCK=false WEBMOCKS=$(KBPATH)/webmocks URLS=$(KBPATH)/webmock_urls.txt APIPASS=$(EPFLAPI_PASSWORD) RAILS_ENV=development ./bin/rails data:webmocks
 	rsync -av --delete $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
-# ------------------------------------------------ migration data/db maintenance
+## ----------------------------------------------- migration data/db maintenance
 .PHONY: migrate seed reseed nukedb restore_webmocks webmocks
 
 ## run rails migration
@@ -307,7 +307,7 @@ kconfig: up
 	@/bin/bash -c 'while curl -I https://keycloak.dev.jkldsa.com/admin/master/console 2>/dev/null | grep -q "HTTP/2 502" ; do echo "waiting for kc to be alive (interrupt if it continues for more than ~40 secs)"; sleep 5; done'
 	cd ops && ./possible.sh --dev -t keycloak.config
 
-# ---------------------------------------------------------- Legacy DB from prod
+## --------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder
 
 .PHONY: restore restore_cv restore_cadi restore_dinfo restore_accred restore_bottin
@@ -336,11 +336,11 @@ restore_cv:
 restore_dinfo:
 	./bin/restoredb.sh dinfo
 
-# --------------------------------------------------- Test (dev-like) deployment
+## -------------------------------------------------- Test (dev-like) deployment
 .PHONY: nata_patch nata_reseed
 
 ## patch the source code of the app mounted on the test server for Natalie
-nata_patch:
+nata_patch: patch
 	cd ops && ./possible.sh --test -t people.src.patch
 
 ## reinitialize the test server with data from development workstations
@@ -364,4 +364,19 @@ clean:
 # ------------------------------------------------------------------------------
 .PHONY: help
 help:
-	@cat Makefile | gawk 'BEGIN{print "Available rules:";} /^# ---+ /{gsub(/ -+/,"", $$0); printf("\n%s:\n", $$0);} /^##/{gsub("^##", "", $$0); i=$$0; getline; gsub(/:.*$$/, "", $$0); printf("%-16s  %s\n", $$0, i);}'
+	@cat Makefile | gawk '                           \
+		BEGIN{                                       \
+			print "Available rules:";                \
+		}                                            \
+		/^## ---+ /{                                 \
+			gsub(/^## -+ /,"", $$0);                 \
+			printf("\n\033[1m%s\033[0m\n", $$0);     \
+			next;                                    \
+		}                                            \
+		/^##/{                                       \
+			gsub("^##", "", $$0);                    \
+			i=$$0;                                   \
+			getline;                                 \
+			gsub(/:.*$$/, "", $$0);                  \
+			printf("%-16s  %s\n", $$0, i);           \
+		}'
