@@ -160,6 +160,11 @@ class Accreditation
     @gestprofil
   end
 
+  def student?
+    # $is_student         = 1 if $accred->{statusid} =~ /^(4|5|6)$/;
+    3 < @status_id && @status_id < 7
+  end
+
   def visible?
     # There are actually 3 level of visibility check fir accreditations.
     # 1. must have the 'botweb' property (self.for_sciper)
