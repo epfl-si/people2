@@ -72,9 +72,7 @@ module Legacy
     self.abstract_class = true
     establish_connection :cv
 
-    def deshit(text)
-      Legacy.deshit(text)
-    end
+    delegate :deshit, to: :Legacy
 
     # generic deshitter: attach the sanitize_ method to any string property
     def method_missing(name, *args, &block)

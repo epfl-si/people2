@@ -118,8 +118,8 @@ class Accreditation
     units = APIUnitGetter.call(ids: accreds.map(&:unit_id)).map { |d| Unit.new(d) }.index_by(&:id)
     accreds.each do |a|
       a.unit = units[a.unit_id]
-      a.botweb = botwebs.key?(a.unit_id.to_s) ? true : false
-      a.gestprofil = gestprofils.key?(a.unit_id.to_s) ? true : false
+      a.botweb = botwebs.key?(a.unit_id.to_s) || false
+      a.gestprofil = gestprofils.key?(a.unit_id.to_s) || false
     end
     # TODO: remove me after final import for production
     # During development we do not want to import everything upfront.

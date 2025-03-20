@@ -29,24 +29,17 @@ module ApplicationHelper
   end
 
   # span with icon and text
-  def icon_text(txt, icon, translate: true)
-    tag.span do
-      content_tag(:svg,
-                  content_tag(:use, "", { "xlink:href" => "##{icon}" }),
-                  class: "icon text-icon") + (translate ? t(txt) : txt)
-    end
-  end
-
-  # TODO: why do we have two almost identical helpers ??
-  # icon + span with text
-  def icon_label(txt, icon, translate: false)
-    res = content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
-    res << tag.span((translate ? t(txt) : txt), class: "iconlabel")
-    res
+  def icon_text(icon, txt, translate: true)
+    content_tag(:span, icon(icon) + (translate ? t(txt) : txt))
   end
 
   def icon(icon)
-    content_tag(:svg, content_tag(:use, "", { "xlink:href" => "##{icon}" }), class: "icon text-icon")
+    content_tag(
+      :svg,
+      content_tag(:use, "", { "xlink:href" => "##{icon}" }),
+      class: "icon text-icon",
+      'aria-hidden': true
+    )
   end
 
   # Create an image tag for the profile picture.

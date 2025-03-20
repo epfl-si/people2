@@ -76,7 +76,7 @@ group :test do
   gem 'simplecov'
 end
 
-# ----------------------------------------- version bumps due to security issues 
+# ----------------------------------------- version bumps due to security issues
 #                       (https://github.com/epfl-si/people2/security/dependabot)
 
 gem "json", ">= 2.10.2"
