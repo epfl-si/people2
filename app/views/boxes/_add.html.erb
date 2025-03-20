@@ -5,12 +5,12 @@
       <%= form_with(model: [profile, Box.new(model: mb)], local: false, class: "instaform") do |form| %>
         <%= form.hidden_field :model_box_id %>
         <%= form.button type: :submit, class: "btn btn-secondary btn-sm", style: "display: inline;" do %>
-          <%= icon_label(mb.t_description, 'plus-circle', translate: false) %>
+          <%= icon_text('plus-circle', mb.t_description, translate: false) %>
         <% end %>         
       <% end %>
     <% else %>
       <%= link_to( 
-        icon_label(mb.t_description, 'plus-circle', translate: false), 
+        icon_text('plus-circle', mb.t_description, translate: false), 
         new_profile_box_path(profile, model_box_id: mb.id),
         class: "btn btn-secondary btn-sm",
         method: :get,
