@@ -8,14 +8,14 @@
         <p>
           <span class='visibility'>
           <%= accred.visible? ?
-            icon_text("visibility.visible", 'eye') :
-            icon_text("visibility.hidden", 'eye-off') 
+            icon_text('eye', "visibility.visible") :
+            icon_text('eye-off', "visibility.hidden") 
           %>
           </span>
           <span class='visibility'>
             <%= accred.visible_addr? ?
-              icon_text("visibility.visible_address", 'map-pin') :
-              icon_text("visibility.hidden_address", 'map-pin') 
+              icon_text('map-pin', "visibility.visible_address") :
+              icon_text('map-pin', "visibility.hidden_address") 
             %>
           </span>
           <%= accred.role.t_label(@profile.gender) %>
@@ -36,9 +36,9 @@
       </div>
       <div class="col text-right">
         <% if count > 1 %>
-        <%= link_to accred.visible? ? icon_text('action.make_hidden', 'eye-off') : icon_text('action.make_visible', 'eye'), toggle_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
+        <%= link_to accred.visible? ? icon_text('eye-off', 'action.make_hidden') : icon_text('eye', 'action.make_visible'), toggle_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
         <% end %>
-        <%= link_to accred.visible_addr? ? icon_text('action.make_address_hidden', 'map-pin') : icon_text('action.make_address_visible', 'map-pin'), toggle_addr_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
+        <%= link_to accred.visible_addr? ? icon_text('map-pin', 'action.make_address_hidden') : icon_text('map-pin', 'action.make_address_visible'), toggle_addr_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
 
 <%= turbo_stream.update "new_publication_form" do %>
     <div class="row justify-content-center">
-	  <%= link_to icon_text('add', 'plus'), new_profile_publication_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+	  <%= link_to icon_text('plus-circle', 'add'), new_profile_publication_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
 	</div>
 <% end %>
 
