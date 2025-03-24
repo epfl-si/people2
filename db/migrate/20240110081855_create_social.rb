@@ -8,7 +8,7 @@ class CreateSocial < ActiveRecord::Migration[7.0]
       t.string :tag
       t.string :value
       t.integer :position, default: false
-      t.integer :visibility, default: 4 # 0=public, 1=intranet, 2=authenticated, 3=owner, 4=hidden
+      t.integer :visibility, default: 4 # 0=public, 4=hidden
       t.timestamps
     end
   end

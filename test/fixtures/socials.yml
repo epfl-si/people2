@@ -4,7 +4,6 @@ gio_social_linkedin:
   tag: linkedin
   sciper: 121769
   value: giovannicangiani
-  audience: 0
   visibility: 0
 
 gio_social_github:
@@ -12,7 +11,6 @@ gio_social_github:
   tag: github
   sciper: 123456
   value: multiscan
-  audience: 0
   visibility: 1
 
 domq_social_linkedin:
@@ -20,5 +18,4 @@ domq_social_linkedin:
   tag: linkedin
   sciper: 123456
   value: domq
-  audience: 0
   visibility: 0

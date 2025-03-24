@@ -25,10 +25,6 @@
     <%= form.label Achievement.human_attribute_name(:category) %>
     <%= form.collection_select :category, Achievement.categories, :id, :t_name %>
   </div>
-  <div class="form-group">
-    <%= form.label Achievement.human_attribute_name(:audience) %>
-    <span class="inform_visibility"><%= audience_selector form %></div>
-  </div>
   <%= form_actions(form, achievement) %>
 <% end %>
 

@@ -115,7 +115,7 @@ class AchievementsController < ApplicationController
     params.require(:achievement).permit(
       :year, :category_id,
       :description_fr, :description_en, :description_it, :description_de,
-      :audience, :visible, :position
+      :visibility, :position
     )
   end
 end

@@ -8,7 +8,6 @@ gio_edu_uni:
   school:   "Università di Trieste"
   year_begin: 1990
   year_end:  1997
-  audience: 0
   visibility: 0
   position: 1
 
@@ -22,7 +21,6 @@ gio_edu_phd:
   school:   "EPFL"
   year_begin: 2002
   year_end:  2024
-  audience: 0
   visibility: 0
   position: 2
 

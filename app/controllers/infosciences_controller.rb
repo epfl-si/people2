@@ -114,7 +114,7 @@ class InfosciencesController < ApplicationController
   def infoscience_params
     params.require(:infoscience).permit(
       :title_fr, :title_en, :title_it, :title_de, :url,
-      :audience, :visibility, :position
+      :visibility, :position
     )
   end
 end

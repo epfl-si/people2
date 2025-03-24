@@ -9,7 +9,6 @@ gio_box_expertise:
   title_fr: Domaines de compétences
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 1
 
@@ -24,7 +23,6 @@ gio_box_education:
   title_fr: Formation
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 2
 
@@ -38,7 +36,6 @@ gio_box_experience:
   title_fr: Parcours professionnel
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 3
 
@@ -52,7 +49,6 @@ gio_box_publication:
   title_fr: "Publications Representatives"
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 4
 
@@ -67,7 +63,6 @@ edo_box_awards:
   title_fr: Récompenses
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 4
 
@@ -81,7 +76,6 @@ oli_box_expertise:
   title_fr: Expertise
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 1
 
@@ -94,7 +88,6 @@ oli_box_bio:
   title_fr: Biographie
   locked_title: true
   show_title: false
-  audience: 0
   visibility: 0
   position: 2
 
@@ -107,7 +100,6 @@ oli_box_cv:
   title_fr: Curriculum vitae
   locked_title: true
   show_title: false
-  audience: 0
   visibility: 0
   position: 3
 
@@ -121,7 +113,6 @@ oli_box_edu:
   title_fr: Education
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 4
 
@@ -134,7 +125,6 @@ oli_box_mission:
   title_fr: Mission
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 5
 
@@ -147,7 +137,6 @@ oli_box_pubs:
   title_fr: Publications Representatives
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 6
 
@@ -161,7 +150,6 @@ nat_box_expertise:
   title_fr: Expertise
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 1
   position: 1
 
@@ -174,7 +162,6 @@ nat_box_availability:
   title_fr: Disponibilité
   locked_title: true
   show_title: true
-  audience: 2
   visibility: 0
   position: 2
 
@@ -187,7 +174,6 @@ nat_box_work:
   locked_title: false
   show_title: true
   visibility: 0
-  audience: 1
   position: 3
 
 nat_box_mission:
@@ -199,7 +185,6 @@ nat_box_mission:
   title_fr: Mission
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 2
   position: 4
 
@@ -212,7 +197,6 @@ nat_box_bio:
   title_fr: Biographie
   locked_title: true
   show_title: false
-  audience: 0
   visibility: 1
   position: 5
 
@@ -225,7 +209,6 @@ nat_box_cv:
   title_fr: Curriculum vitae
   locked_title: true
   show_title: false
-  audience: 0
   visibility: 0
   position: 6
 
@@ -239,7 +222,6 @@ nat_box_edu_en:
   title_fr: Education
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 7
 
@@ -252,6 +234,5 @@ nat_box_missions:
   title_fr: Mission
   locked_title: true
   show_title: true
-  audience: 0
   visibility: 0
   position: 8
