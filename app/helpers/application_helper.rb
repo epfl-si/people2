@@ -68,8 +68,15 @@ module ApplicationHelper
   # <svg class="icon feather" aria-hidden="true"><use xlink:href="#activity"></use></svg>
 
   # Return the full url for static stuff coming from EPFL elements cdn
+  # Files organization is not exaclty the one that we find in the dist directory
+  # path is based on the `dist` directory and have to be tweaked otherwise
   def belurl(path)
-    "https://web2018.epfl.ch/6.5.1/#{path}"
+    if Rails.configuration.use_local_elements
+      "/elements/#{path}"
+    else
+      real_path = path.gsub(/^(svg|favicons)/, "icons")
+      "https://web2018.epfl.ch/7.2.0/#{real_path}"
+    end
   end
 
   def language_switcher

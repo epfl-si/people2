@@ -10,7 +10,7 @@ COMPOSE_FILE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
 SSH_AUTH_SOCK_DIR = $(dir $(SSH_AUTH_SOCK_FILE))
 
-ELE_SRCDIR ?= ../elements
+ELE_SRCDIR ?= ./vendor/elements
 ELE_DSTDIR = ./app/assets/stylesheets/elements
 ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variables.scss)
 
@@ -179,14 +179,22 @@ minor:
 patch:
 	./bin/rails version:patch
 
-
-
 .git/hooks/pre-commit:
 	if [ ! -l .git/hooks ] ; then mv .git/hooks .git/hooks.trashme && ln -s ../.git_hooks .git/hooks ; fi
 
 .env:
 	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
 	exit 1
+
+## Rebuild EPFL elements and copy here
+elements: elements_build
+	rsync -av $(ELE_SRCDIR)/dist/ public/elements/
+
+elements_build: $(ELE_SRCDIR)
+	cd $(ELE_SRCDIR)  && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn dist
+
+$(ELE_SRCDIR):
+	cd $(dir $(ELE_SRCDIR)) && git clone git@github.com:epfl-si/elements.git
 
 $(ELE_DSTDIR)/bootstrap-variables.scss: $(ELE_SRCDIR)/assets/config/bootstrap-variables.scss
 	grep -E -v "^@include" $< > $@
@@ -197,8 +205,7 @@ $(ELE_DSTDIR)/bootstrap-variables.scss: $(ELE_SRCDIR)/assets/config/bootstrap-va
 $(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 	cp $< $@
 
-$(ELE_SRCDIR)/dist/css/*.css:
-	cd $(ELEMENTS_DIR) && yarn build	
+$(ELE_SRCDIR)/dist/css/*.css: elements_build
 
 ## --------------------------------------------------------------------- Testing
 .PHONY: test testup test-system
