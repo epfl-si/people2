@@ -10,7 +10,7 @@ class CreateInfosciences < ActiveRecord::Migration[8.0]
       t.string  :title_de
       t.string  :url
       t.integer :position
-      t.integer :visibility, default: 3 # 0=public, 1=intranet, 2=authenticated, 3=owner, 4=hidden
+      t.integer :visibility, default: 4 # 0=public, 4=hidden
 
       t.timestamps
     end

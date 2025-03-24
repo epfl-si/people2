@@ -38,6 +38,8 @@ module AudienceLimitable
     scope :owner_visible, -> { where(visibility: 0...4) }
     scope :for_audience, ->(audience) { where(visibility: 0...(audience + 1)) }
     validates :visibility, numericality: { in: 0...5 }
+    # Ensure visibility defaults to the least visible option
+    before_save -> { self[:visibility] = visibility_options.last.value if visibility.blank? }
 
     if self <= Box
       def visibility_options
