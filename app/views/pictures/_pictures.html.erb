@@ -2,9 +2,12 @@
 <div class="row">
 	<div class='col-sm-3'>
 		<div class="card">
-		  <picture class="card-img-top">
-				<%= profile_photo(profile.photo, :medium, class: 'img-fluid') %>
+		  <picture>
+				<%= profile_photo(profile.photo, variant: :medium, class: 'img-fluid') %>
 		  </picture>
+		  <div class="card-body">
+		  	<%= tag.p t('messages.currently_selected_picture') %>
+		  </div>
 		</div>
 	</div>
 	<div class='col-sm-9'>

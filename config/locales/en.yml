@@ -37,6 +37,7 @@ en:
   de: Deutch
 
   messages:
+    currently_selected_picture: Currently selected picture
     function_change_explain: >
       It is not possible to change the position function directly. 
       Please fill and submit this form to request the change to one of your
