@@ -147,8 +147,6 @@ class Social < ApplicationRecord
 
   validate :url_actually_exists
 
-  before_save :ensure_sciper
-
   def self.for_sciper(sciper)
     where(sciper: sciper).order(:position)
   end
@@ -195,10 +193,6 @@ class Social < ApplicationRecord
   end
 
   private
-
-  def ensure_sciper
-    sciper || profile.sciper
-  end
 
   def validate_format_of_value
     unless RESEARCH_IDS.key?(tag)

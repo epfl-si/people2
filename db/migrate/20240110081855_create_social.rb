@@ -4,7 +4,6 @@ class CreateSocial < ActiveRecord::Migration[7.0]
   def change
     create_table :socials do |t|
       t.references :profile
-      t.string :sciper
       t.string :tag
       t.string :value
       t.integer :position, default: false
