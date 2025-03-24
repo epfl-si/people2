@@ -45,6 +45,24 @@ services:
       - traefik
       - default
 
+  elements:
+    build:
+      context: vendor
+      dockerfile: elements.Dockerfile
+    profiles:
+      - elements
+    volumes:
+      - ./vendor/elements/assets:/elements/assets
+    command: "yarn start"
+    labels:
+      - traefik.docker.network=traefik
+      - traefik.http.services.elements.loadbalancer.server.port=3000
+      - traefik.http.routers.elements.rule=Host("elements.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.elements.tls=true
+    networks:
+      - traefik
+      - default
+
   mariadb:
     image: mariadb:11.4.3
     environment:
@@ -105,6 +123,7 @@ services:
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
       ADMIN_SCIPERS: ${ADMIN_SCIPERS}
+      USE_LOCAL_ELEMENTS: true
 
       OLLAMA_URL: http://${DOCKER_IP}:11434
 

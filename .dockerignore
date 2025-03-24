@@ -40,3 +40,4 @@ Dockerfile
 db/*.sqlite3
 /dbdata
 /keycloak
+/vendor/elements
