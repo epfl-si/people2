@@ -133,7 +133,7 @@ class BoxesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def box_params(action = nil)
-    plist = %i[audience visibility position]
+    plist = %i[visibility position]
     unless action.nil?
       case action
       when :create

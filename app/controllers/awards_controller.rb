@@ -114,7 +114,7 @@ class AwardsController < ApplicationController
   def award_params
     params.require(:award).permit(
       :location, :title_fr, :title_en, :title_it, :title_de, :year, :issuer,
-      :audience, :visibility, :position, :origin_id, :category_id
+      :visibility, :position, :origin_id, :category_id
     )
   end
 end

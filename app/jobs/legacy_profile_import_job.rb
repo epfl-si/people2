@@ -129,7 +129,6 @@ class LegacyProfileImportJob < ApplicationJob
             b = box_by_label[smb] || RichTextBox.from_model(mb)
           end
 
-          b.audience = 0
           b.visibility = 0
           b.profile = profile
           b.send("content_#{lang}=", ob.sanitized_content)
@@ -203,7 +202,6 @@ class LegacyProfileImportJob < ApplicationJob
             title: le.titrepub,
             journal: le.revuepub,
             authors: le.auteurspub,
-            audience: 0,
             visibility: 0
           )
           e.url = le.urlpub if le.urlpub.present?
@@ -224,7 +222,6 @@ class LegacyProfileImportJob < ApplicationJob
           e = profile.educations.new(
             year_begin: le.year_begin,
             year_end: le.year_end,
-            audience: 0,
             visibility: 0
           )
           e.send("title_#{lang}=", le.title)
@@ -247,7 +244,6 @@ class LegacyProfileImportJob < ApplicationJob
           e = profile.experiences.new(
             year_begin: le.year_begin,
             year_end: le.year_end,
-            audience: 0,
             visibility: 0
           )
           e.send("title_#{lang}=", le.title)
@@ -268,7 +264,6 @@ class LegacyProfileImportJob < ApplicationJob
           lang = le.description_lang? || fallback_lang if detect_lang_with_ai
           e = profile.achievements.new(
             year: le.year,
-            audience: 1,
             visibility: 0
           )
           e.send("description_#{lang}=", le.description)
@@ -291,7 +286,6 @@ class LegacyProfileImportJob < ApplicationJob
         lang = le.title_lang? || fallback_lang if detect_lang_with_ai
         e = profile.awards.new(
           year: le.year,
-          audience: 0,
           visibility: 0
         )
         e.send("title_#{lang}=", le.title)

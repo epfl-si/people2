@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 edo_achi1:
-  audience: 1
+  visibility: 0
   position: 1
   profile: edouard
   year: 2010
@@ -11,7 +11,7 @@ edo_achi1:
   url: https://www.epfl.ch
 
 edo_achi2:
-  audience: 1
+  visibility: 0
   position: 2
   profile: edouard
   year: 2018

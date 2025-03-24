@@ -19,8 +19,7 @@ class BoxTest < ActiveSupport::TestCase
     assert_equal "Domaines de compétences", @gio_box_expertise.title_fr
     assert @gio_box_expertise.show_title
     assert @gio_box_expertise.locked
-    assert @gio_box_expertise.visible
-    assert_equal 0, @gio_box_expertise.audience
+    assert_equal 0, @gio_box_expertise.visibility
     assert_equal 1, @gio_box_expertise.position
   end
 

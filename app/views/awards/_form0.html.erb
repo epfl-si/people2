@@ -33,11 +33,6 @@
       <%= form.number_field :year, in: 1950..Date.today.year, class: "form-control" %>
     </div>  
 
-    <%= form.label Award.human_attribute_name(:audience), class: "col-sm-3  col-form-label" %>
-    <%= audience_selector form %>
-    
-    <%= visibility_switch form %>
-
   </div>
 
   <div class="row justify-content-center">

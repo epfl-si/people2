@@ -12,7 +12,7 @@ class CreateAchievements < ActiveRecord::Migration[7.1]
       t.text :description_it
       t.text :description_de
       t.string :url
-      t.integer :visibility, default: 3 # 0=public, 1=intranet, 2=authenticated, 3=owner, 4=hidden
+      t.integer :visibility, default: 4 # 0=public, 4=hidden
 
       t.timestamps
     end
