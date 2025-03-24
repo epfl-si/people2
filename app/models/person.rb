@@ -2,7 +2,7 @@
 
 # This class represents a person as described by api.epfl.ch
 class Person
-  attr_reader :data, :name
+  attr_reader :account, :automap, :camipro, :data, :name
 
   private_class_method :new
 
@@ -13,9 +13,9 @@ class Person
     @position = @data.delete('position')
     @position = Position.new(@position) unless @position.nil?
 
-    @account = @data.delete('account') || {}
-    @automap = @data.delete('automap') || {}
-    @camipro = @data.delete('camipro') || {}
+    @account = OpenStruct.new(@data.delete('account') || {})
+    @automap = OpenStruct.new(@data.delete('automap') || {})
+    @camipro = OpenStruct.new(@data.delete('camipro') || {})
 
     # phones and addresses are hash with the unit_id as key
     @phones = @data.delete('phones')&.map { |d| Phone.new(d) }
@@ -111,7 +111,7 @@ class Person
 
   def admin_data
     @admin_data ||= OpenStruct.new(
-      @account.merge(@automap).merge(@camipro).merge({ sciper: sciper })
+      @account.to_h.merge(@automap.to_h).merge(@camipro.to_h).merge({ sciper: sciper })
     )
   end
 
