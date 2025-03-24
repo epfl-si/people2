@@ -35,6 +35,7 @@
       DEFAULT_URL: "https://{{ hosts.people }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
+      USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
       # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
       # if REDIS_CACHE is defined then redis is used otherwise default to memory
       REDIS_CACHE: "{{ people.redis }}"
@@ -60,6 +61,7 @@
       ENTRA_SECRET: "{{ _secrets.people.entra_oidc.secret }}"
 
       SUPERUSERS: "{{ _secrets.people.superusers }}"
+
 
       # OIDC_HOSTNAME: "{{ hosts.keycloak }}"
       # OIDC_REALM: "{{ keycloak.realm }}"

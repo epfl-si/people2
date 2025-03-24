@@ -9,6 +9,7 @@ people:
   srcdir: "{{ PEOPLE_SRCDIR }}"
   storage: "{{ DATA_BASEDIR }}/people/storage"
   superusers: "{{ SUPERUSERS }}"
+  use_local_elements: "{{ USE_LOCAL_ELEMENTS | default(false) }}"
   mariadb:
     data: "{{ DATA_BASEDIR }}/people/mariadb/data"
     init: "{{ DATA_BASEDIR }}/people/mariadb/init"

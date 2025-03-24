@@ -186,6 +186,9 @@ patch:
 	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
 	exit 1
 
+
+.PHONY: elements elements_build
+
 ## Rebuild EPFL elements and copy here
 elements: elements_build
 	rsync -av $(ELE_SRCDIR)/dist/ public/elements/
@@ -205,7 +208,7 @@ $(ELE_DSTDIR)/bootstrap-variables.scss: $(ELE_SRCDIR)/assets/config/bootstrap-va
 $(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 	cp $< $@
 
-$(ELE_SRCDIR)/dist/css/*.css: elements_build
+# $(ELE_SRCDIR)/dist/css/*.css: elements_build
 
 ## --------------------------------------------------------------------- Testing
 .PHONY: test testup test-system
@@ -282,6 +285,7 @@ nukestorage:
 reseed:
 	make nukedb
 	make nukestorage
+	rm db/people_schema.rb
 	sleep 2
 	make seed
 
