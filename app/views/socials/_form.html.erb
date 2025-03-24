@@ -6,13 +6,13 @@
       <%= form.label Social.human_attribute_name(:tag) %>
       <%= form.select :tag, 
           options_for_select(
-            research_ids_options.map do |label, key|
+            Social::TAG_SELECT_OPTIONS.map do |label, key|
               [
                 label,
                 key,
                 {
-                  "data-url-prefix": Social::RESEARCH_IDS.dig(key, "url").gsub("XXX", ""),
-                  "data-placeholder": Social::RESEARCH_IDS.dig(key, "placeholder") || 'Enter ID or Username'
+                  "data-url-prefix": Social::RESEARCH_IDS.dig(key, :url).gsub("XXX", ""),
+                  "data-placeholder": Social::RESEARCH_IDS.dig(key, :placeholder) || 'Enter ID or Username'
                 }
               ]
             end,
@@ -38,11 +38,6 @@
           <span class="text-muted" id="social_url_prefix" data-socials-target="urlPrefix"></span>
         </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <%= form.label Social.human_attribute_name(:audience) %>
-      <%= audience_selector form %>
     </div>
 
     <%= form_actions form, @social %>
