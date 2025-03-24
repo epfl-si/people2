@@ -5,6 +5,7 @@ fr:
   it: Italiano
   de: Deutch
   messages:
+    currently_selected_picture: Selection présente
     function_change_explain: >
       Merci de modifier directement le champ Fonction ci-dessous et de justifier
       la demande en précisant la raison. Votre demande de mise à jour des 

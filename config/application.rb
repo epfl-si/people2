@@ -36,6 +36,7 @@ module People
     # this is not the default because it is slower but it avoids having to
     # install libvips which has tons of deps...
     # config.active_storage.variant_processor = :mini_magick
+    config.active_storage.variant_processor = :vips
 
     # Custom generic app configs: everything from ENV with defaults
     # Use as Rails.configuration.key

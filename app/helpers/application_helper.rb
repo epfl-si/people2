@@ -42,26 +42,37 @@ module ApplicationHelper
     )
   end
 
-  # Create an image tag for the profile picture.
-  # When both cropped and original pictures are present, then
-  # the cropped one is taken.
-  # The variant parameter is one of
-  #   :small, :medium, :large, :huge, :full
-  #   the defalt :full option will take the image as it was uploaded
-  # tag_options are the usual :alt, :class, :id, :size, etc.
-  def profile_photo(picture, variant = :full, tag_options = {})
-    img = picture&.visible_image
-    if img.blank?
-      tag_options[:alt] ||= "Profile picture placeholder"
-      ph_src = image_path('profile_image_placeholder.svg')
-      image_tag(ph_src, tag_options)
+  # Create an image_tag with 2 additional image sources for 2x, 3x display density
+  # img must be an Active Storage image attachment
+  # options can include
+  #   :variant (:small, :medium, :large) leave empty for original full size image
+  #   :size (e.g. '200') and all other valid options for tag.img
+  def responsive_image(img, options = {})
+    options = options.symbolize_keys
+    variant = options.delete(:variant)
+    if variant.present?
+      options[:srcset] = {
+        resolve_asset_source("image", img.variant("#{variant}2".to_sym), true) => "2x",
+        resolve_asset_source("image", img.variant("#{variant}3".to_sym), true) => "3x",
+      }
+      image_tag(img.variant(variant), options)
     else
-      tag_options[:alt] ||= "Profile picture"
-      if variant.nil? || variant == :full
-        image_tag(img, tag_options)
-      else
-        image_tag(img.variant(variant), tag_options)
-      end
+      image_tag(img, options)
+    end
+  end
+
+  # options
+  def profile_photo(picture, options = {})
+    img = picture&.visible_image
+    options[:size] ||= '400'
+    options[:variant] ||= :medium
+    if img.blank?
+      options[:alt] ||= "Profile picture placeholder"
+      ph_src = image_path('profile_image_placeholder.svg')
+      image_tag(ph_src, options)
+    else
+      options[:alt] ||= "Profile picture"
+      responsive_image(img, options)
     end
   end
 

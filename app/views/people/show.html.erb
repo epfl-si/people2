@@ -36,9 +36,7 @@
 <div class="container">
   <div class="row people-basic-info">
     <div class="col-md-6 col-lg-4">
-      <%= profile_photo(@profile&.photo, :large, class: 'mx-auto img-fluid bg-gray-100') %>
-      <%#= render "socials" if @visible_socials.present? %>
-
+      <%= profile_photo(@profile&.photo, class: 'mx-auto img-fluid bg-gray-100', variant: :large, size: 300) %>
       <% @side_zone_bbs.each do |section, boxes| %>
         <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
       <% end %>

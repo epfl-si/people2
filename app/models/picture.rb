@@ -10,16 +10,27 @@ class Picture < ApplicationRecord
 
   belongs_to :profile
   has_one_attached :image do |attachable|
-    attachable.variant :small, resize_to_limit: [100, 100]
-    attachable.variant :medium, resize_to_limit: [200, 200]
-    attachable.variant :large, resize_to_limit: [400, 400]
-    attachable.variant :huge, resize_to_limit: [800, 800]
+    # resize with pad to avoid tombstone photo effect
+    attachable.variant :small, resize_and_pad: [100, 100, { background: [255] }]
+    attachable.variant :small2, resize_and_pad: [200, 200, { background: [255] }]
+    attachable.variant :small3, resize_and_pad: [300, 300, { background: [255] }]
+    attachable.variant :medium, resize_and_pad: [200, 200, { background: [255] }]
+    attachable.variant :medium2, resize_and_pad: [400, 400, { background: [255] }]
+    attachable.variant :medium3, resize_and_pad: [600, 600, { background: [255] }]
+    attachable.variant :large, resize_to_limit: [300, 300]
+    attachable.variant :large2, resize_to_limit: [600, 600]
+    attachable.variant :large3, resize_to_limit: [900, 900]
   end
   has_one_attached :cropped_image do |attachable|
-    attachable.variant :small, resize_to_limit: [100, 100]
-    attachable.variant :medium, resize_to_limit: [200, 200]
-    attachable.variant :large, resize_to_limit: [400, 400]
-    attachable.variant :huge, resize_to_limit: [800, 800]
+    attachable.variant :small, resize_and_pad: [100, 100, { background: [255] }]
+    attachable.variant :small2, resize_and_pad: [200, 200, { background: [255] }]
+    attachable.variant :small3, resize_and_pad: [300, 300, { background: [255] }]
+    attachable.variant :medium, resize_and_pad: [200, 200, { background: [255] }]
+    attachable.variant :medium2, resize_and_pad: [400, 400, { background: [255] }]
+    attachable.variant :medium3, resize_and_pad: [600, 600, { background: [255] }]
+    attachable.variant :large, resize_to_limit: [300, 300]
+    attachable.variant :large2, resize_to_limit: [600, 600]
+    attachable.variant :large3, resize_to_limit: [900, 900]
   end
 
   after_commit :check_attachment
