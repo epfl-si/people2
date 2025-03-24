@@ -76,6 +76,7 @@ all:
     SILENT_TRANSLATION_ERR: "yes"
 
     SUPERUSERS: 121769
+    USE_LOCAL_ELEMENTS: "yes"
 
     # ---                                                                 whoami
     WHOAMI_HOSTNAME: peoami.fsd.team
