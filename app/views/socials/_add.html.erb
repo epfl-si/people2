@@ -1,0 +1,10 @@
+<div class="list-group-item list-group-item-borderless">
+  <%= turbo_frame_tag "new_social_form" do %>
+	<div class="row justify-content-center">
+		<%= form_with url: new_profile_social_path(profile), method: :get, local: false, data: { turbo_stream: true, turbo_method: 'get' } do |form| %>
+  		<%= form.select :tag, selector %>
+  		<%= form.submit t("action.new"), class: "btn-confirm" %>
+		<% end %>
+	</div>
+  <% end %>
+</div>

@@ -1,4 +1,0 @@
-<%= turbo_stream.update "new_social_form" do %>
-  <%= render "socials/form", profile: @profile, social: @social %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

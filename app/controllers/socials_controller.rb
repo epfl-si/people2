@@ -3,19 +3,63 @@
 class SocialsController < ApplicationController
   include SocialsHelper
   before_action :set_profile, only: %i[index create new]
+  before_action :set_socials, only: %i[index create]
   before_action :set_social, only: %i[show edit update destroy toggle]
 
   # GET /profile/profile_id/socials or /profile/profile_id/socials.json
-  def index
-    @socials = @profile.socials.order(:position)
-  end
+  def index; end
 
   # GET /socials/1 or /socials/1.json
   def show; end
 
   # GET /profile/profile_id/socials/new
   def new
-    @social = Social.new
+    tag = params[:tag]
+    if tag.present?
+      new_step2(tag)
+    else
+      new_step1
+    end
+  end
+
+  def new_step1
+    set_socials
+    respond_to do |format|
+      format.turbo_stream do
+        render :new_step1
+      end
+    end
+  end
+
+  def new_step2(tag)
+    unless Social.tag?(tag)
+      # TODO: return useful error to user
+      raise "Invalid social tag"
+    end
+
+    @social = Social.new(tag: tag)
+    respond_to do |format|
+      if @social.automatic?
+        @social.profile = @profile
+        if @social.save
+          # need to call it here otherwise it incomplete
+          set_socials
+          format.turbo_stream do
+            flash.now[:success] = "flash.generic.success.create"
+            render :create
+          end
+        else
+          format.turbo_stream do
+            flash.now[:error] = "flash.generic.error.create"
+            render :new_step2, status: :unprocessable_entity, locals: { profile: @profile, social: @social }
+          end
+        end
+      else
+        format.turbo_stream do
+          render :new_step2, locals: { profile: @profile, social: @social }
+        end
+      end
+    end
   end
 
   # GET /socials/1/edit
@@ -63,8 +107,10 @@ class SocialsController < ApplicationController
 
   # DELETE /socials/1 or /socials/1.json
   def destroy
+    @profile = @social.profile
     @social.destroy!
 
+    set_socials
     respond_to do |format|
       format.turbo_stream do
         flash.now[:success] = "flash.generic.success.remove"
@@ -101,8 +147,14 @@ class SocialsController < ApplicationController
     @profile = Profile.find(params[:profile_id])
   end
 
+  def set_socials
+    @socials = @profile.socials.order(:position)
+    @tag_selector = Social.remaining(@socials).map { |s| [s[:label], s[:tag]] }
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_social
-    @social = Social.find(params[:id])
+    @social = Social.includes(:profile).find(params[:id])
+    @profile = @social.profile
   end
 end

@@ -1,7 +1,7 @@
-<%= turbo_stream.replace dom_id(@social) do %>
-<%= turbo_frame_tag dom_id(@social) do %>
-  <%= form_with(model: @social, local: false, class: "instaform", data: {controller: "socials" }) do |form| %>
+<%= turbo_stream.update "new_social_form" do %>
+  <%= form_with(model: [@profile, @social], local: false, class: "instaform", data: {controller: "socials" }) do |form| %>
     <%= render "shared/form_errors", item: @social if @social.errors.any? %>
+    <%= form.hidden_field(:tag) %>
 
     <div class="form-group">
       <%= form.label Social.human_attribute_name(:url) %>
@@ -15,7 +15,13 @@
         </div>
       </div>
     </div>
-    <%= form_actions form, @social %>
+
+    
+    <%= form_actions form, @social do %>
+    <%= link_to(t('action.cancel'), new_profile_social_path(@profile), 
+                         class: "btn-cancel", method: :get,
+                         data: { turbo_stream: true, turbo_method: 'get' }) %>
+    <% end %>
   <% end %>
 <% end %>
-<% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
