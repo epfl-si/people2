@@ -32,9 +32,10 @@ module ProfilesHelper
     profile.translations.map { |t| "tr_enable_#{t}" }.join(" ")
   end
 
-  def form_actions(form, item, without_cancel: false)
+  def form_actions(form, item, without_cancel: false, &block)
     klass = item.class.name.underscore
     tag.div(class: "form-actions") do
+      concat capture(&block)
       if item.new_record?
         concat form.submit t("action.create_#{klass}"), class: "btn-confirm"
       else

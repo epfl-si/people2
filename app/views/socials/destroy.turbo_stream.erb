@@ -1,2 +1,5 @@
 <%= turbo_stream.remove @social %>
+<%= turbo_stream.replace "social_add" do %>
+  <%= render 'add', profile: @profile, selector: @tag_selector %>
+<% end %>
 <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
