@@ -3,16 +3,44 @@
 # TODO: this class mimics the logic of the equivalent in people legacy.
 #       May be there is a nicer way of doing this.
 
+# TODO: orcid record should not be editable but it is not clear yet
+#       where to ge the data from. It might be possible that currently
+#       the library writes directly into the database!!
+#       Also publons and scopus might be obtaineable from orcid itself:
+#       See, for example https://orcid.org/0000-0002-8984-6584
+#       have easily parseable data at the following address:
+#       https://orcid.org/0000-0002-8984-6584/summary.json
+#         "externalIdentifiers": [
+#           {
+#             "id": "930641",
+#             "commonName": "ResearcherID",
+#             "reference": "A-8847-2010",
+#             "url": "http://www.researcherid.com/rid/A-8847-2010",
+#             "validated": false
+#           },
+#           {
+#             "id": "2615263",
+#             "commonName": "Scopus Author ID",
+#             "reference": "7004169597",
+#             "url": "http://www.scopus.com/inward/authorDetails.url?authorID=7004169597&partnerID=MN8TOARS",
+#             "validated": false
+#           }
+#         ],
+#       On the other hand, this is not always the case. Example:
+#       https://orcid.org/0000-0002-8984-6584/summary.json
+#       https://orcid.org/0009-0008-7241-7119/summary.json
+
 class Social < ApplicationRecord
   include AudienceLimitable
-
+  AUTO_MAX_AGE = 180.days
   RESEARCH_IDS_LIST = [
     {
       tag: 'orcid',
       # img: 'ORCIDiD_icon16x16.png',
       url: 'https://orcid.org/XXX',
-      placeholder: '0000-0002-1825-0097',
+      placeholder: '0000-0002-5489-2425',
       label: 'ORCID',
+      automatic: true,
       position: 0,
       icon: "icon-orcid",
       re: /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
@@ -35,7 +63,7 @@ class Social < ApplicationRecord
       tag: 'scopus',
       img: 'scopus.png',
       url: 'https://www.scopus.com/authid/detail.uri?authorId=XXX',
-      placeholder: '57192201516',
+      placeholder: '23049566200',
       label: 'Scopus ID',
       position: 2,
       # icon: "icon-scopus",
@@ -90,6 +118,7 @@ class Social < ApplicationRecord
       url: 'https://social.epfl.ch/@XXX',
       placeholder: 'username',
       label: 'Mastodon',
+      automatic: true,
       position: 7,
       icon: 'icon-mastodon',
       re: /^[A-Za-z0-9_]+$/
@@ -114,16 +143,6 @@ class Social < ApplicationRecord
       icon: 'instagram',
       re: /^[A-Za-z0-9._]+$/
     },
-    # {
-    #   tag: # 'twitter',
-    #   # img: 'twitter.png',
-    #   url: 'https://twitter.com/XXX',
-    #   placeholder: 'username',
-    #   label: 'Twitter',
-    #   position: 10,
-    #   icon: 'twitter',
-    #   re: /^[A-Za-z0-9_]+$/
-    # },
     {
       tag: 'muskidiocy',
       url: 'https://x.com/XXX',
@@ -140,59 +159,83 @@ class Social < ApplicationRecord
 
   belongs_to :profile, class_name: "Profile", inverse_of: :socials
 
-  validates :value, presence: true
-  validates :tag, presence: true
-  validates :tag, inclusion: { in: RESEARCH_IDS.keys }
-  validate :validate_format_of_value
+  before_save :fetch_value, if: -> { automatic? }
 
-  validate :url_actually_exists
+  validates :value, presence: true, unless: -> { automatic? }
+  validate :validate_format_of_value, unless: -> { automatic? }
+  validate :url_actually_exists, unless: -> { automatic? }
+  validates :tag, presence: true, uniqueness: true, inclusion: { in: RESEARCH_IDS.keys }
 
   def self.for_sciper(sciper)
     where(sciper: sciper).order(:position)
   end
 
+  def self.tag?(tag)
+    tag.present? && RESEARCH_IDS.key?(tag)
+  end
+
+  def self.remaining(list)
+    available_tags = RESEARCH_IDS_LIST.map { |s| s[:tag] } - list.map(&:tag)
+    available_tags.map { |t| RESEARCH_IDS[t] }
+  end
+
+  def automatic?
+    specs&.automatic || false
+  end
+
+  def specs
+    @specs ||= Social.tag?(tag) ? OpenStruct.new(RESEARCH_IDS[tag]) : nil
+  end
+
   def url
-    @url ||= begin
-      @s = RESEARCH_IDS[tag]
-      @s[:url].sub('XXX', value)
-    end
+    specs&.url&.sub('XXX', value)
   end
 
   def icon_class
-    @s ||= RESEARCH_IDS[tag]
-    @s[:icon].nil? ? '' : "social-icon-#{@s['icon']}"
+    icon.nil? ? '' : "social-icon-#{icon}"
   end
 
   def icon
-    @s ||= RESEARCH_IDS[tag]
-    @s[:icon]
-  end
-
-  def customicon
-    @s ||= RESEARCH_IDS[tag]
-    @s[:customicon]
+    specs&.icon
   end
 
   def image
-    @s ||= RESEARCH_IDS[tag]
-    @s.key?(:img) ? "social/#{@s[:img]}" : nil
+    specs&.img
   end
 
   def label
-    @s ||= RESEARCH_IDS[tag]
-    @s[:label]
+    specs&.label
   end
 
   def url_prefix
-    RESEARCH_IDS.dig(tag, 'url').gsub('XXX', '') if tag.present?
+    url&.gsub('XXX', '')
   end
 
   def default_position
-    @s ||= RESEARCH_IDS[tag]
-    @s[:position]
+    specs&.position
+  end
+
+  def value
+    if automatic? && self[:value].blank?
+      fetch_value
+    else
+      self[:value]
+    end
   end
 
   private
+
+  def fetch_value
+    m = "fetch_#{tag}"
+    raise NotImplementedError unless respond_to?(m, :include_private)
+
+    v = send(m)
+
+    dir = persisted? && (self[:value] != v || updated_at < AUTO_MAX_AGE.ago)
+    self.value = v
+    save if dir
+    v
+  end
 
   def validate_format_of_value
     unless RESEARCH_IDS.key?(tag)
@@ -210,5 +253,25 @@ class Social < ApplicationRecord
   # TODO: fire a request to the url and check if it actually exist
   def url_actually_exists
     true
+  end
+
+  def sciper
+    @sciper ||= profile.sciper
+  end
+
+  def fetch_orcid
+    ldp = Ldap::Person.for_sciper(sciper)
+    return nil? if ldp.blank?
+
+    ldp.eduPersonOrcid&.sub("https://orcid.org/", "")
+  end
+
+  def fetch_mastodon
+    ldp = Ldap::Person.for_sciper(sciper)
+    return nil? if ldp.blank?
+
+    uids = ldp.uid
+    uid = uids.is_a?(Array) ? uids.first : uids
+    uid.gsub(/^@.*$/, "")
   end
 end

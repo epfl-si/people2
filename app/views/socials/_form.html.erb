@@ -1,31 +1,7 @@
 <%= turbo_frame_tag dom_id(social) do %>
-  <%= form_with(model: [@profile, @social], local: false, class: "instaform", data: { controller: "socials" }) do |form| %>
-    <%= render "shared/form_errors", item: @social if @social.errors.any? %>
-
-    <div class="form-group">
-      <%= form.label Social.human_attribute_name(:tag) %>
-      <%= form.select :tag, 
-          options_for_select(
-            Social::TAG_SELECT_OPTIONS.map do |label, key|
-              [
-                label,
-                key,
-                {
-                  "data-url-prefix": Social::RESEARCH_IDS.dig(key, :url).gsub("XXX", ""),
-                  "data-placeholder": Social::RESEARCH_IDS.dig(key, :placeholder) || 'Enter ID or Username'
-                }
-              ]
-            end,
-            selected: form.object.tag
-          ),
-          {},
-          {
-            class: 'form-control social-tag-select',
-            id: 'social_tag_select',
-            data: { "socials-target" => "tagSelect", action: "socials#tagChanged" }
-          } 
-      %>
-    </div>
+  <%= form_with(model: [profile, social], local: false, class: "instaform", data: {controller: "socials" }) do |form| %>
+    <%= render "shared/form_errors", item: social if social.errors.any? %>
+    <%= form.hidden_field(:tag) %>
 
     <div class="form-group">
       <%= form.label Social.human_attribute_name(:url) %>
@@ -39,7 +15,6 @@
         </div>
       </div>
     </div>
-
     <%= form_actions form, @social %>
   <% end %>
 <% end %>
