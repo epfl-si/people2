@@ -164,7 +164,7 @@ class Social < ApplicationRecord
   validates :value, presence: true, unless: -> { automatic? }
   validate :validate_format_of_value, unless: -> { automatic? }
   validate :url_actually_exists, unless: -> { automatic? }
-  validates :tag, presence: true, uniqueness: true, inclusion: { in: RESEARCH_IDS.keys }
+  validates :tag, presence: true, uniqueness: { scope: :profile_id }, inclusion: { in: RESEARCH_IDS.keys }
 
   def self.for_sciper(sciper)
     where(sciper: sciper).order(:position)
@@ -191,6 +191,14 @@ class Social < ApplicationRecord
     specs&.url&.sub('XXX', value)
   end
 
+  def url_prefix
+    specs&.url&.sub('XXX', '')
+  end
+
+  def url_pattern
+    specs&.url
+  end
+
   def icon_class
     icon.nil? ? '' : "social-icon-#{icon}"
   end
@@ -205,10 +213,6 @@ class Social < ApplicationRecord
 
   def label
     specs&.label
-  end
-
-  def url_prefix
-    url&.gsub('XXX', '')
   end
 
   def default_position

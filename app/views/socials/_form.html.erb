@@ -1,20 +1,49 @@
-<%= turbo_frame_tag dom_id(social) do %>
-  <%= form_with(model: [profile, social], local: false, class: "instaform", data: {controller: "socials" }) do |form| %>
-    <%= render "shared/form_errors", item: social if social.errors.any? %>
-    <%= form.hidden_field(:tag) %>
-
-    <div class="form-group">
-      <%= form.label Social.human_attribute_name(:url) %>
-      <div class="container">
-        <div class="row">
-          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { "socials-target" => "valueField", action: "blur->socials#sanitizeValue" } %>
-          <button type="button" class="btn btn-sm btn-primary ml-2" data-action="click->socials#checkLink">Check Link</button>
-        </div>
-        <div class="row">
-          <span class="text-muted" id="social_url_prefix" data-socials-target="urlPrefix"></span>
-        </div>
+<%= form_with(
+  model: [profile, social],
+  local: false,
+  class: "instaform",
+  data: {
+    controller: 'socials',
+    'socials-pattern-value': social.url_pattern,
+  }
+) do |form| %>
+  <%= render "shared/form_errors", item: social if social.errors.any? %>
+  <%= form.hidden_field(:tag) if social.new_record? %>
+  <div class="form-group">
+    <%= form.label Social.human_attribute_name(:url, label: social.label) %>
+    <div class="container">
+      <div class="row">
+        <%= form.text_field(
+          :value, placeholder: social.specs&.placeholder, 
+          class: "form-control", 
+            id: "social_value", 
+            data: { 
+              "socials-target" => "valueField", 
+              action: "input->socials#onValueChange" 
+            } 
+        ) %>
+        <button 
+          type="button" 
+          class="btn btn-sm btn-primary ml-2" 
+          data-action="click->socials#checkLink"
+          data-socials-target="checkButton"
+          disabled
+        >
+          <%= t('action.check_social_link') %>
+        </button>
+      <div class="row">
+        <pre class="text-muted" data-socials-target="urlPreview"><%= social.url_prefix %></pre>
+      </div>
       </div>
     </div>
-    <%= form_actions form, @social %>
+  </div>
+  <%= form_actions form, social, label: social.label do %>
+    <%= link_to(
+      t('action.cancel'), 
+      new_profile_social_path(profile), 
+      class: "btn-cancel", 
+      method: :get,
+      data: { turbo_stream: true, turbo_method: 'get' }
+    ) if social.new_record? %>
   <% end %>
 <% end %>

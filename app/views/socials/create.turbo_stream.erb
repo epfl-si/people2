@@ -2,7 +2,7 @@
   <%= render "editable_social", social: @social, profile: @profile %>
 <% end %>
 
-<%= turbo_stream.replace "social_add" do %>
+<%= turbo_stream.update "new_social" do %>
   <%= render 'add', profile: @profile, selector: @tag_selector %>
 <% end %>
 

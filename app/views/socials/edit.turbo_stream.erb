@@ -1,21 +1,3 @@
-<%= turbo_stream.replace dom_id(@social) do %>
-<%= turbo_frame_tag dom_id(@social) do %>
-  <%= form_with(model: @social, local: false, class: "instaform", data: {controller: "socials" }) do |form| %>
-    <%= render "shared/form_errors", item: @social if @social.errors.any? %>
-
-    <div class="form-group">
-      <%= form.label Social.human_attribute_name(:url) %>
-      <div class="container">
-        <div class="row">
-          <%= form.text_field :value, placeholder: "", class: "form-control", id: "social_value", data: { "socials-target" => "valueField", action: "blur->socials#sanitizeValue" } %>
-          <button type="button" class="btn btn-sm btn-primary ml-2" data-action="click->socials#checkLink">Check Link</button>
-        </div>
-        <div class="row">
-          <span class="text-muted" id="social_url_prefix" data-socials-target="urlPrefix"></span>
-        </div>
-      </div>
-    </div>
-    <%= form_actions form, @social %>
-  <% end %>
-<% end %>
+<%= turbo_stream.update dom_id(@social) do %>
+  <%= render "form", profile: nil, social: @social %>
 <% end %>
