@@ -46,6 +46,7 @@ en:
   action:
     accred_full_list: "Full list of positions and address"
     add_a_new: "Add a new"
+    add_social: "Click to add a new research Id or social network address"
     admin_data: "Administrative data"
     browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
@@ -73,9 +74,11 @@ en:
     create_box: "Create this box"
     create_index_box: "Create this box"
     create_rich_text_box: "Create this text box"
+    create_social: "Create %{label} entry"
     update_experience: "Udate work experience"
     update_publication: "Update publication"
     update_rich_text_box: "Update box"
+    update_social: "Confirm change to %{label}"
     sign_in: "Sign in"
     sign_out: "Sign out"
     upload_image: "Upload the image"
@@ -112,7 +115,7 @@ en:
       cannot_hide_all: "Cannot hide all accreditations"
     generic:
       success:
-        create: "Record created succesfully"
+        create: "Record created succesfully. Remember to make it visible."
         update: "Record updated succesfully"
         remove: "Deleted"
       error:
@@ -368,6 +371,8 @@ en:
         visible_items: "Visible items"
       person:
         function: main function
+      social:
+        url: Enter your %{label} identifier
 
     errors:
       # for a list of standard error messages keys, see:

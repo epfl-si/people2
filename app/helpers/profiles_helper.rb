@@ -32,12 +32,12 @@ module ProfilesHelper
     profile.translations.map { |t| "tr_enable_#{t}" }.join(" ")
   end
 
-  def form_actions(form, item, without_cancel: false, &block)
+  def form_actions(form, item, without_cancel: false, label: nil, &block)
     klass = item.class.name.underscore
     tag.div(class: "form-actions") do
       concat capture(&block)
       if item.new_record?
-        concat form.submit t("action.create_#{klass}"), class: "btn-confirm"
+        concat form.submit t("action.create_#{klass}", label: label), class: "btn-confirm"
       else
         unless without_cancel
           concat link_to(t('action.cancel'),
@@ -45,7 +45,7 @@ module ProfilesHelper
                          class: "btn-cancel", method: :get,
                          data: { turbo_stream: true, turbo_method: 'get' })
         end
-        concat form.submit t("action.update_#{klass}"), class: "btn-confirm"
+        concat form.submit t("action.update_#{klass}", label: label), class: "btn-confirm"
       end
     end
   end
