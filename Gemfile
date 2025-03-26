@@ -139,6 +139,8 @@ group :development do
   gem 'brakeman'
   gem 'bundler-audit'
 
+  gem 'faker'
+
   # Used to generate mock data:
   gem 'prime', '~> 0.1.2'
 
