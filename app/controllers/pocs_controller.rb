@@ -7,6 +7,7 @@ class PocsController < ApplicationController
   # and, as soon as those classes are present, the next replace/update does not
   # works. If the class is removed manually, then the update/replace works again
   # (only once in the case of update).
+  # It turned out that this was due to a stupid mod for animations added to turbo
   def turboru
     respond_to do |format|
       format.html { render 'turboru', layout: 'zero' }
