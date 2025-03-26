@@ -13,6 +13,7 @@ fr:
   action:
     accred_full_list: "Liste complète des adresses et fonctions"
     add_a_new: "Ajouter un nouveau "
+    add_social: "Click to add a new research Id or social network address"
     admin_data: "Données administratives"
     browse_image_file: "Sélectionner un nouveau fichier photo"
     cancel: "Annuler"
@@ -24,7 +25,7 @@ fr:
     create_box: "Create this box"
     create_index_box: "Create this box"
     create_rich_text_box: "Create this text box"
-    create_social: "Ajouter un réseau social"
+    create_social: "Create %{label} entry"
     delete: "Supprimer"
     edit: "Éditer"
     edit_pictures: "Modifier / Changer la photo"
@@ -49,6 +50,8 @@ fr:
     update_publication: "Mettre à jour la publication"
     update_rich_text_box: "Mettre à jour la boîte"
     update_social: "Modifier le réseau social"
+    update_social: "Confirm change to %{label}"
+
     upload_image: "Télécharger l'image"
     validate: "Valider"
   admin_data:
@@ -102,7 +105,7 @@ fr:
         remove: "Erreur lors de la suppression"
         update: "Erreur lors de la mise à jour de l'enregistrement"
       success:
-        create: "Enregistrement créé avec succès"
+        create: "Enregistrement créé avec succès. Remember to make it visible."
         remove: "Supprimé"
         update: "Enregistrement mis à jour avec succès"
     function_change:
@@ -287,6 +290,8 @@ fr:
         translations: Traductions qui seront disponibles sur mon profil public
       person:
         function: main function
+      social:
+        url: Enter your %{label} identifier
     errors:
       messages:
         record_invalid : "Sciper must unique"
