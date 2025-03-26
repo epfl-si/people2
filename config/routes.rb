@@ -79,6 +79,7 @@ Rails.application.routes.draw do
   if Rails.env.production?
     root 'application#homepage'
   else
+    get '/pocs/turboru', to: 'pocs#turboru'
     root 'pages#devindex'
   end
 end
