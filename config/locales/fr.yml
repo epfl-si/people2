@@ -6,6 +6,8 @@ fr:
   de: Deutch
   messages:
     currently_selected_picture: Selection présente
+    empty_orcid_help: >
+      link will appear as soon as your orcid account is synchronized
     function_change_explain: >
       Merci de modifier directement le champ Fonction ci-dessous et de justifier
       la demande en précisant la raison. Votre demande de mise à jour des 
@@ -35,6 +37,7 @@ fr:
     make_address_visible: "Afficher l'adresse"
     make_hidden: "Cacher"
     make_visible: "Visible"
+    more: "En savoir plus"
     of: "de"
     search: "Rechercher sur le site"
     search_people: "Rechercher sur le site"

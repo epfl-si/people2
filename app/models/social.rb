@@ -37,75 +37,73 @@ class Social < ApplicationRecord
     {
       tag: 'orcid',
       # img: 'ORCIDiD_icon16x16.png',
-      url: 'https://orcid.org/XXX',
+      url_pattern: 'https://orcid.org/XXX',
       placeholder: '0000-0002-5489-2425',
       label: 'ORCID',
       automatic: true,
-      position: 0,
+      default_position: 0,
       icon: "icon-orcid",
       re: /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
-      help: {
-        'en' => 'https://orcid-integration.epfl.ch/',
-        'fr' => 'https://orcid-integration.epfl.ch/'
-      }
+      help_on_empty: 'messages.empty_orcid_help',
+      help_url: 'https://orcid-integration.epfl.ch/'
     },
     {
       tag: 'wos',
       # img: 'publons.png',
-      url: 'https://www.webofscience.com/wos/author/record/XXX',
+      url_pattern: 'https://www.webofscience.com/wos/author/record/XXX',
       placeholder: 'AAX-5119-2020',
       label: 'Publons - Web of Science ID',
-      position: 1,
+      default_position: 1,
       icon: "icon-wos",
       re: /^([A-Z]+-[0-9]{4}-[0-9]{4}|[0-9])+$/
     },
     {
       tag: 'scopus',
       img: 'scopus.png',
-      url: 'https://www.scopus.com/authid/detail.uri?authorId=XXX',
+      url_pattern: 'https://www.scopus.com/authid/detail.uri?authorId=XXX',
       placeholder: '23049566200',
       label: 'Scopus ID',
-      position: 2,
+      default_position: 2,
       # icon: "icon-scopus",
       re: /^[0-9]+$/
     },
     {
       tag: 'googlescholar',
       # img: 'google-scholar.svg',
-      url: 'https://scholar.google.com/citations?user=XXX',
+      url_pattern: 'https://scholar.google.com/citations?user=XXX',
       placeholder: 'abcdEFGhiJKLMno',
       label: 'Google Scholar ID',
-      position: 3,
+      default_position: 3,
       icon: 'icon-googlescholar',
       re: /^[0-9a-zA-Z.-]+$/
     },
     {
       tag: 'linkedin',
       # img: 'linkedin.jpg',
-      url: 'https://www.linkedin.com/in/XXX',
+      url_pattern: 'https://www.linkedin.com/in/XXX',
       placeholder: 'john-doe-12345',
       label: 'Linkedin',
-      position: 4,
+      default_position: 4,
       icon: 'linkedin',
       re: %r{^[a-z][a-z0-9-]+/?$}
     },
     {
       tag: 'github',
       # img: 'github.png',
-      url: 'https://github.com/XXX',
+      url_pattern: 'https://github.com/XXX',
       placeholder: 'username',
       label: 'GitHub',
-      position: 5,
+      default_position: 5,
       icon: 'github',
       re: /^[A-Za-z0-9_.-]+$/
     },
     {
       tag: 'stack_overflow',
       # img: 'stack-overflow.svg',
-      url: 'https://stackoverflow.com/users/XXX',
+      url_pattern: 'https://stackoverflow.com/users/XXX',
       placeholder: '12345678',
       label: 'Stack Overflow',
-      position: 6,
+      default_position: 6,
       icon: 'icon-stackoverflow',
       re: /^[0-9]+$/
     },
@@ -115,40 +113,40 @@ class Social < ApplicationRecord
     {
       tag: 'mastodon',
       # img: 'mastodon.png',
-      url: 'https://social.epfl.ch/@XXX',
+      url_pattern: 'https://social.epfl.ch/@XXX',
       placeholder: 'username',
       label: 'Mastodon',
       automatic: true,
-      position: 7,
+      default_position: 7,
       icon: 'icon-mastodon',
       re: /^[A-Za-z0-9_]+$/
     },
     {
       tag: 'facebook',
       # img: 'facebook.png',
-      url: 'https://www.facebook.com/XXX',
+      url_pattern: 'https://www.facebook.com/XXX',
       placeholder: 'john.doe',
       label: 'Facebook',
-      position: 8,
+      default_position: 8,
       icon: 'icon-facebook',
       re: /^[A-Za-z0-9.]+$/
     },
     {
       tag: 'instagram',
       # img: 'instagram.png',
-      url: 'https://www.instagram.com/XXX',
+      url_pattern: 'https://www.instagram.com/XXX',
       placeholder: '@username',
       label: 'Instagram',
-      position: 9,
+      default_position: 9,
       icon: 'instagram',
       re: /^[A-Za-z0-9._]+$/
     },
     {
       tag: 'muskidiocy',
-      url: 'https://x.com/XXX',
+      url_pattern: 'https://x.com/XXX',
       placeholder: 'username',
       label: 'X (Twitter)',
-      position: 99,
+      default_position: 99,
       icon: 'icon-x',
       re: /^[A-Za-z0-9_]+$/
     }
@@ -156,6 +154,11 @@ class Social < ApplicationRecord
 
   RESEARCH_IDS = RESEARCH_IDS_LIST.index_by { |v| v[:tag] }.freeze
   TAG_SELECT_OPTIONS = RESEARCH_IDS_LIST.map { |v| [v[:label], v[:tag]] }
+
+  SPECS_DELEGATE_METHODS = %w[
+    automatic help_on_empty help_url icon img label
+    default_position placeholder re url_pattern
+  ].freeze
 
   belongs_to :profile, class_name: "Profile", inverse_of: :socials
 
@@ -180,7 +183,11 @@ class Social < ApplicationRecord
   end
 
   def automatic?
-    specs&.automatic || false
+    automatic || false
+  end
+
+  def icon_class
+    icon.nil? ? '' : "social-icon-#{icon}"
   end
 
   def specs
@@ -188,35 +195,11 @@ class Social < ApplicationRecord
   end
 
   def url
-    specs&.url&.sub('XXX', value)
+    url_pattern&.sub('XXX', value)
   end
 
   def url_prefix
-    specs&.url&.sub('XXX', '')
-  end
-
-  def url_pattern
-    specs&.url
-  end
-
-  def icon_class
-    icon.nil? ? '' : "social-icon-#{icon}"
-  end
-
-  def icon
-    specs&.icon
-  end
-
-  def image
-    specs&.img
-  end
-
-  def label
-    specs&.label
-  end
-
-  def default_position
-    specs&.position
+    url_pattern&.sub('XXX', '')
   end
 
   def value
@@ -224,6 +207,12 @@ class Social < ApplicationRecord
       fetch_value
     else
       self[:value]
+    end
+  end
+
+  SPECS_DELEGATE_METHODS.each do |m|
+    define_method(m) do
+      specs&.send(m.to_sym)
     end
   end
 

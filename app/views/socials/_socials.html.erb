@@ -2,9 +2,9 @@
   <ul class="social-icon-list list-inline">
   <% @visible_socials.each do |s| %>
     <li>
-      <% if s.image.present? %>
+      <% if s.img.present? %>
         <a href="<%= s.url %>" target="_blank" class="social-icon social-icon-details social-icon-discrete" rel="nofollow" title="View on <%= s.label %>">
-          <%= image_tag(s.image, size: "24") %>
+          <%= image_tag(s.img, size: "24") %>
         </a>
       <% elsif s.icon.present? %>
         <a href="<%= s.url %>" target="_blank" class="social-icon social-icon-details social-icon-<%= s.icon %> social-icon-discrete" rel="nofollow" title="View on <%= s.label %>"><%= icon(s.icon) %>

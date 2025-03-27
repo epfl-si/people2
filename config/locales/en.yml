@@ -38,6 +38,8 @@ en:
 
   messages:
     currently_selected_picture: Currently selected picture
+    empty_orcid_help: >
+      link will appear as soon as your orcid account is synchronized
     function_change_explain: >
       It is not possible to change the position function directly. 
       Please fill and submit this form to request the change to one of your
@@ -59,6 +61,7 @@ en:
     make_address_visible: "Show address"
     make_hidden: "Hide"
     make_visible: "Show"
+    more: "More information"
     of: "of"
     search: "Search"
     search_people: "Search for a person"
