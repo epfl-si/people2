@@ -131,11 +131,26 @@ GEM
     faraday-typhoeus (1.1.0)
       faraday (~> 2.0)
       typhoeus (~> 1.4)
+    ffi (1.17.1-aarch64-linux-gnu)
+    ffi (1.17.1-aarch64-linux-musl)
+    ffi (1.17.1-arm-linux-gnu)
+    ffi (1.17.1-arm-linux-musl)
+    ffi (1.17.1-arm64-darwin)
     ffi (1.17.1-x86_64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
+    ffi (1.17.1-x86_64-linux-musl)
     forwardable (1.3.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.30.1)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.30.1-aarch64-linux)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.30.1-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
     google-protobuf (4.30.1-x86_64-darwin)
       bigdecimal
       rake (>= 13)
@@ -196,9 +211,21 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
+    nokogiri (1.18.6-aarch64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.6-aarch64-linux-musl)
+      racc (~> 1.4)
+    nokogiri (1.18.6-arm-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.6-arm-linux-musl)
+      racc (~> 1.4)
+    nokogiri (1.18.6-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.18.6-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.6-x86_64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.6-x86_64-linux-musl)
       racc (~> 1.4)
     ollama-ai (1.3.0)
       faraday (~> 2.10)
@@ -322,9 +349,21 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
+    sass-embedded (1.86.0-aarch64-linux-gnu)
+      google-protobuf (~> 4.30)
+    sass-embedded (1.86.0-aarch64-linux-musl)
+      google-protobuf (~> 4.30)
+    sass-embedded (1.86.0-arm-linux-gnueabihf)
+      google-protobuf (~> 4.30)
+    sass-embedded (1.86.0-arm-linux-musleabihf)
+      google-protobuf (~> 4.30)
+    sass-embedded (1.86.0-arm64-darwin)
+      google-protobuf (~> 4.30)
     sass-embedded (1.86.0-x86_64-darwin)
       google-protobuf (~> 4.30)
     sass-embedded (1.86.0-x86_64-linux-gnu)
+      google-protobuf (~> 4.30)
+    sass-embedded (1.86.0-x86_64-linux-musl)
       google-protobuf (~> 4.30)
     securerandom (0.4.1)
     selenium-webdriver (4.30.1)
@@ -347,8 +386,14 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (2.6.0-aarch64-linux-gnu)
+    sqlite3 (2.6.0-aarch64-linux-musl)
+    sqlite3 (2.6.0-arm-linux-gnu)
+    sqlite3 (2.6.0-arm-linux-musl)
+    sqlite3 (2.6.0-arm64-darwin)
     sqlite3 (2.6.0-x86_64-darwin)
     sqlite3 (2.6.0-x86_64-linux-gnu)
+    sqlite3 (2.6.0-x86_64-linux-musl)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.6)
@@ -385,8 +430,17 @@ GEM
     zeitwerk (2.7.2)
 
 PLATFORMS
-  x86_64-darwin-21
+  aarch64-linux
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux-gnu
+  arm-linux-gnueabihf
+  arm-linux-musl
+  arm-linux-musleabihf
+  arm64-darwin
+  x86_64-darwin
   x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   action_policy
