@@ -6,8 +6,7 @@
 			<% end %>
 	  <% end %>
 	<% end %>
-
+	<%= turbo_frame_tag "new_social" do %>
+		<%= render 'add', profile: @profile, selector: @tag_selector %>
+	<% end %>
 <% end %>	
-<%= turbo_frame_tag "new_social" do %>
-	<%= render 'add', profile: @profile, selector: @tag_selector %>
-<% end %>
