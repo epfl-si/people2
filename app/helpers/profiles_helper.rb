@@ -35,7 +35,7 @@ module ProfilesHelper
   def form_actions(form, item, without_cancel: false, label: nil, &block)
     klass = item.class.name.underscore
     tag.div(class: "form-actions") do
-      concat capture(&block)
+      concat capture(&block) if block_given?
       if item.new_record?
         concat form.submit t("action.create_#{klass}", label: label), class: "btn-confirm"
       else
