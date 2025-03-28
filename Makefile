@@ -134,7 +134,7 @@ about:
 build: envcheck $(ELE_FILES) #codecheck
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
-	[ "$(REBUNDLE)" == "yes" ] && docker run --rm --etrypoint=/bin/bash people2023-webapp cp /rails/Gemfile.lock ./
+	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
 
 ## build image discarding all cached layers
 rebuild: envcheck

@@ -27,7 +27,7 @@
     all_volumes: '{{ mandatory_volumes + dev_volumes if people.env == "development" else mandatory_volumes }}'
   containers.podman.podman_container:
     name: peoapp
-    image: "people"
+    image: "people:{{ people_image_version }}"
     env:
       APP_HOSTNAME: "{{ hosts.people }}"
       RAILS_ENV: "{{ people.env }}"
