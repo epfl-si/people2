@@ -6,16 +6,36 @@
     dest: "{{ people.srcdir }}"
     version: "{{ people.branch }}"
     force: true
+  tags:
+    - people.src
 
-# - name: Select the correct Gemfile.lock file
-#   ansible.builtin.file:
-#     path: "{{ people.srcdir }}/Gemfile.lock"
-#     state: link
-#     src: "Gemfile.lock.docker"
+- name: Read people src code version
+  ansible.builtin.slurp:
+    src: "{{ people.srcdir }}/VERSION"
+  register: slurped_version
+  tags:
+    - people.src
+    - people.run
+
+- name: Store people src code version as fact 
+  ansible.builtin.set_fact:
+    people_image_version: "{{ PEOPLE_VERSION | default(slurped_version.content | ansible.builtin.b64decode) }}"
+  tags:
+    - people.src
+    - people.run
+
+- name: Debug image version
+  ansible.builtin.debug:
+    var: people_image_version
+  tags:
+    - people.src
+    - people.run
 
 - name: Build people app image
   containers.podman.podman_image:
-    name: people
+    name: "people:{{ people_image_version }}"
     path: "{{ people.srcdir }}"
-    force: true
+    force: "{{ people_image_version == 'latest' }}"
+  tags:
+    - people.src
 

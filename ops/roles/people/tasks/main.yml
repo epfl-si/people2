@@ -27,10 +27,14 @@
   import_tasks:
     file: run_whoami.yml
 
+# This defines the people_image_version fact. Therefore it needs to be
+# executed also for people.run tag. 
+# For updating the src code and building, use the people.src tag
 - name: Source Code to Docker Image
   tags:
     - people.src
-  import_tasks:
+    - people.run
+  include_tasks:
     file: src.yml
 
 - name: Dev only source code stuff
