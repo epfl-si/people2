@@ -81,6 +81,8 @@ class Accreditation
         end
       end
       last_order = orders.max
+      # remove no longer relevant accred prefs
+      (pbu.keys - accreds.map(&:unit_id)).each { |uid| pbu[uid].destroy }
     end
     next_order = (last_order || 0) + 1
     accreds.select { |a| a.prefs.nil? }.sort { |a, b| a.accred_order <=> b.accred_order }.each do |a|
