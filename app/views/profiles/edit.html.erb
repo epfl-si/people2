@@ -51,7 +51,7 @@
   <hr>
   <section id="accreds_section">
   <%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
-  Loading awards... (for demoing purpose, an artificial delay is added)
+    <%= render 'shared/spinner' %>
   <% end %>
   </section>
 
@@ -76,7 +76,9 @@
     <% id = "section_#{section.label}" %>
     <div class="tab-pane fade show <%= active %>" id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
       <section>
-        <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(@profile, section), loading: :lazy %>
+        <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(@profile, section), loading: :lazy do %>
+          <%= render 'shared/spinner' %>
+        <% end %>
       </section>
     </div>
     <% active = "" %>
