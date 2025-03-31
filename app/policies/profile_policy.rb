@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class ProfilePolicy < ApplicationPolicy
-  # everyone can see any post
   def show?
     true
   end
 
   def update?
-    Rails.logger.debug(user.inspect)
+    return false if user.blank?
+
     # `user` is a performing subject,
     # `record` is a target object (the profile in this case)
     # in order fastest -> slowest
