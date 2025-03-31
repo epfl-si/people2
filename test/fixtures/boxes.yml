@@ -185,7 +185,7 @@ nat_box_mission:
   title_fr: Mission
   locked_title: true
   show_title: true
-  visibility: 2
+  visibility: 1
   position: 4
 
 nat_box_bio:

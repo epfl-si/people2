@@ -286,7 +286,8 @@ nukestorage:
 reseed:
 	make nukedb
 	make nukestorage
-	rm db/people_schema.rb
+	rm -f db/people_schema.rb
+	rm -f db/schema.rb
 	sleep 2
 	make seed
 
