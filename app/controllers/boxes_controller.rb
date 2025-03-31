@@ -7,7 +7,7 @@ class BoxesController < ApplicationController
   # GET /profiles/:profile_id/sections/:section_id/boxes
   def index
     @section = Section.find(params.require(:section_id))
-    @boxes = @profile.boxes.includes(:section).where(section_id: @section.id)
+    @boxes = @profile.boxes.includes(:section).where(section_id: @section.id).order(:position)
     @optional_boxes = @profile.available_optional_boxes(@section)
   end
 
