@@ -75,7 +75,7 @@
       # OIDC_LOGOUT_ENDPOINT:
 
     volumes: '{{ all_volumes }}'
-    restart_policy: unless-stopped
+    restart_policy: always
     state: started
     network:
       - traefik

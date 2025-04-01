@@ -72,7 +72,7 @@ all:
     # REDIS_URL: redis://cache:6379/0
     SELECT_CACHE: local_redis
     SELECT_DB: local_mariadb
-    SELECT_OIDC: local_keycloak
+    SELECT_OIDC: entraid
     SILENT_TRANSLATION_ERR: "yes"
     # PEOPLE_VERSION: latest
 
