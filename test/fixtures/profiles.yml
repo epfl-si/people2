@@ -87,3 +87,53 @@ olivier:
   nationality_fr: CH
   nationality_en: CH
   personal_web_url: "https://ipgold.epfl.ch/"
+
+
+
+
+
+
+
+
+
+
+
+# -------------------------------------------------TEST
+
+valid_profile:
+  id: 1
+  sciper: "123456"
+  show_birthday: false
+  show_function: true
+  show_nationality: true
+  show_phone: true
+  show_photo: true
+  show_weburl: false
+  personal_web_url: "https://example.com"
+  phone: "+41 21 693 0000"
+  expertise_en: "DevOps, Automation"
+  expertise_fr: "DevOps, Automatisation"
+  nationality_en: "Swiss"
+  nationality_fr: "Suisse"
+  en_enabled: true
+  fr_enabled: true
+  it_enabled: false
+  de_enabled: false
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>
+
+minimal_profile:
+  id: 2
+  sciper: "654321"
+  show_birthday: false
+  show_function: false
+  show_nationality: false
+  show_phone: false
+  show_photo: false
+  show_weburl: false
+  en_enabled: true
+  fr_enabled: true
+  it_enabled: false
+  de_enabled: false
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>
