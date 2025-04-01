@@ -300,3 +300,30 @@ mbox_teachingfree:
   locked_title: false
   show_title: true
   position: 3
+
+
+
+# ---------------------------------------TEST
+rich_text_model:
+  id: 1
+  kind: "RichTextBox"
+  subkind: "intro"
+  max_copies: 1
+  section: main_section
+  label: "rich_text_intro"
+  title_en: "Intro Title"
+  title_fr: "Titre d'Introduction"
+  title_it: "Titolo Introduzione"
+  title_de: "Einleitungstitel"
+  description_en: "Introductory content"
+  description_fr: "Contenu introductif"
+  description_it: "Contenuto introduttivo"
+  description_de: "Einleitender Inhalt"
+  standard: true
+  show_title: true
+  locked_title: false
+  position: 1
+  data: "---\nfoo: bar\n"
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>
+

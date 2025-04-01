@@ -3,24 +3,28 @@
 require 'test_helper'
 
 class CourseTest < ActiveSupport::TestCase
-  fixtures :courses
-
-  def setup
-    @cs308 = courses(:cs308)
-    @com516 = courses(:com516)
-    @phys201 = courses(:phys201)
+  test "current_academic_year before August returns previous-current year" do
+    date = Date.new(2024, 5, 15)
+    assert_equal "2023-2024", Course.current_academic_year(date)
   end
 
-  test "edu_url should handle cases with missing code" do
-    assert_nil @cs308.edu_url(:en), "edu_url should return nil if code is missing"
+  test "current_academic_year from August onward returns current-next year" do
+    date = Date.new(2024, 10, 1)
+    assert_equal "2024-2025", Course.current_academic_year(date)
   end
 
-  test "edu_url should return correct URL format" do
-    expected_url = "https://edu.epfl.ch/coursebook/en/general-physics-electromagnetism-PHYS-201-C"
-    assert_equal expected_url, @phys201.edu_url(:en), "edu_url should return correct URL format"
+  test "edu_url returns nil if code or translated title is blank" do
+    course = Course.new(code: "", title_en: "")
+    assert_nil course.edu_url(:en)
   end
 
-  test "edu_url should handle cases with missing title" do
-    assert_nil @com516.edu_url(:en), "edu_url should return nil if title is missing"
+  test "edu_url builds correct URL based on locale and code" do
+    course = Course.new(
+      code: "CS-101",
+      title_en: "Introduction to Programming"
+    )
+
+    expected_url = "https://edu.epfl.ch/coursebook/en/introduction-to-programming-CS-101"
+    assert_equal expected_url, course.edu_url(:en)
   end
 end
