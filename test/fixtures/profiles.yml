@@ -101,7 +101,6 @@ olivier:
 # -------------------------------------------------TEST
 
 valid_profile:
-  id: 1
   sciper: "123456"
   show_birthday: false
   show_function: true
@@ -123,7 +122,6 @@ valid_profile:
   updated_at: <%= Time.zone.now %>
 
 minimal_profile:
-  id: 2
   sciper: "654321"
   show_birthday: false
   show_function: false
