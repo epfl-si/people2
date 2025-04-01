@@ -13,7 +13,7 @@
       - 80
     volumes: 
       - "{{ traefik.basedir }}:/etc/traefik"
-    # restart_policy: unless-stopped
+    restart_policy: always
     # force_restart: "{{ traefik_static_config.changed | default(false) or 'traefik.reload' in ansible_run_tags  }}"
     state: started
     # generate_systemd: false
