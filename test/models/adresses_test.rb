@@ -3,74 +3,50 @@
 require 'test_helper'
 
 class AddressTest < ActiveSupport::TestCase
-  def setup
-    @address_data1 = {
-      'unitid' => '101',
-      'type' => 'Office',
-      'country' => 'CH',
-      'part1' => 'Bâtiment A',
-      'part2' => 'Etage 2',
-      'part3' => 'Bureau 201',
-      'part4' => 'Rue de l\'Exemple',
-      'fromdefault' => '1'
+  # There is no addresses in the database so we can't use fixtures.
+  test "initializes with correct attributes" do
+    data = {
+      "unitid" => "42",
+      "type" => "work",
+      "country" => "CH",
+      "part1" => "EPFL",
+      "part2" => "School of Engineering",
+      "part3" => "IC",
+      "part4" => "",
+      "address" => "EPFL $ School of Engineering $ IC",
+      "fromdefault" => "1"
     }
 
-    @address_data2 = {
-      'unitid' => '202',
-      'type' => 'Home',
-      'country' => 'FR',
-      'part1' => 'Maison B',
-      'part2' => 'Etage 1',
-      'part3' => 'Appartment 10',
-      'part4' => 'Avenue du Test',
-      'fromdefault' => '0'
-    }
+    address = Address.new(data)
 
-    @incomplete_address_data = {
-      'unitid' => '303',
-      'type' => 'Warehouse',
-      'country' => 'US',
-      'part1' => 'Building C',
-      'part2' => nil,
-      'part3' => 'Suite 5',
-      'part4' => nil,
-      'fromdefault' => '1'
-    }
-
-    @address1 = Address.new(@address_data1)
-    @address2 = Address.new(@address_data2)
-    @incomplete_address = Address.new(@incomplete_address_data)
+    assert_equal 42, address.unit_id
+    assert_equal "EPFL", address.hierarchy
+    assert_equal ["EPFL", "School of Engineering", "IC"], address.lines
+    assert_equal "EPFL $ School of Engineering $ IC", address.full
+    assert address.default?, "Should be default since fromdefault is '1'"
   end
 
-  test "should initialize with correct attributes" do
-    assert_equal 101, @address1.unit_id
-    assert_equal 'Bâtiment A', @address1.hierarchy
-    assert_equal ['Etage 2', 'Bureau 201', 'Rue de l\'Exemple'], @address1.lines
-    assert @address1.default?
-
-    assert_equal 202, @address2.unit_id
-    assert_equal 'Maison B', @address2.hierarchy
-    assert_equal ['Etage 1', 'Appartment 10', 'Avenue du Test'], @address2.lines
-    assert_not @address2.default?
+  test "default? returns false when fromdefault is 0" do
+    address = Address.new({ "unitid" => "1", "fromdefault" => "0", "part1" => "A" })
+    assert_not address.default?, "Should not be default"
   end
 
-  test "default? should return correct boolean value" do
-    assert @address1.default?, "Address1 should be default"
-    assert_not @address2.default?, "Address2 should not be default"
+  test "eql? returns true when unit_id and lines match" do
+    data1 = { "unitid" => "1", "part1" => "A", "fromdefault" => "0" }
+    data2 = { "unitid" => "1", "part1" => "A", "fromdefault" => "0" }
+
+    a1 = Address.new(data1)
+    a2 = Address.new(data2)
+
+    assert a1.eql?(a2), "Addresses with same unit_id and lines should be equal"
   end
 
-  test "full should return a string with all address lines joined by ' $ '" do
-    expected_full1 = "Etage 2 $ Bureau 201 $ Rue de l'Exemple"
-    expected_full2 = "Etage 1 $ Appartment 10 $ Avenue du Test"
+  test "eql? returns false when unit_id or lines differ" do
+    a1 = Address.new({ "unitid" => "1", "part1" => "A" })
+    a2 = Address.new({ "unitid" => "2", "part1" => "A" })
+    a3 = Address.new({ "unitid" => "1", "part1" => "B" })
 
-    assert_equal expected_full1, @address1.full, "Full address for Address1 is incorrect"
-    assert_equal expected_full2, @address2.full, "Full address for Address2 is incorrect"
-  end
-
-  test "full should not have consecutive '$' symbols if some lines are missing" do
-    expected_full_incomplete = "Suite 5"
-
-    assert_equal expected_full_incomplete, @incomplete_address.full,
-                 "Full address for incomplete address should not have consecutive '$'"
+    refute a1.eql?(a2), "Different unit_id should not be equal"
+    refute a1.eql?(a3), "Different lines should not be equal"
   end
 end
