@@ -4,7 +4,6 @@ gio_box_expertise:
   model: mbox_expertise
   profile: giova
   section: bio
-  model: mbox_expertise
   title_en: Expertise
   title_fr: Domaines de compétences
   locked_title: true
@@ -18,7 +17,6 @@ gio_box_education:
   model: mbox_education
   profile: giova
   section: bio
-  model: mbox_education
   title_en: Education
   title_fr: Formation
   locked_title: true
