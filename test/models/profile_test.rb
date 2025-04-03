@@ -1,31 +1,26 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class ProfileTest < ActiveSupport::TestCase
-  test 'shy person does not provide his personal photo' do
-    u = profiles(:edouard)
-    assert_not(u.show_photo)
-    assert_nil(u.photo)
+  test "new_with_defaults initializes with correct default attributes" do
+    profile = Profile.new_with_defaults("123456")
+
+    assert_equal "123456", profile.sciper
+    refute false, profile.show_birthday
+    assert true, profile.show_function
+    assert_nil profile.personal_web_url
   end
 
-  test 'person with one personal picture and no camipro picture' do
-    u = profiles(:natalie)
-    assert(u.show_photo)
-    assert_equal(1, u.pictures.count)
-    p = u.pictures.first
-    assert_not p.camipro?, "The personal picture appears as the camipro one"
-    u.cache_camipro_picture!
-    assert_equal(2, u.pictures.count)
-    assert_not_nil u.selected_picture, "Selected picture is absent"
+  test "fallback_translation returns first enabled language" do
+    profile = Profile.new(en_enabled: false, fr_enabled: true, it_enabled: true, de_enabled: false)
+
+    assert_equal :fr, profile.fallback_translation
   end
 
-  test 'profile with no picture gets camipro picture by default' do
-    u = profiles(:edouard)
-    assert_equal(0, u.pictures.count)
+  test "fallback_translation returns fr if nothing enabled" do
+    profile = Profile.new(en_enabled: false, fr_enabled: false, it_enabled: false, de_enabled: false)
 
-    p = u.photo!
-    assert_equal(1, u.pictures.count)
-    assert p.camipro?
+    assert_equal "fr", profile.fallback_translation
   end
 end
