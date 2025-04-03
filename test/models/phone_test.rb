@@ -1,63 +1,36 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
-class PhoneTest < Minitest::Test
-  def setup
-    @phone_visible = Phone.new({
-                                 'unitid' => '101',
-                                 'order' => '1',
-                                 'hidden' => '0',
-                                 'number' => '12345',
-                                 'fromdefault' => '1'
-                               })
+class PhoneTest < ActiveSupport::TestCase
+  test "initializes with correct attributes" do
+    data = { "unitid" => "42", "order" => "3", "number" => "+41 21 123 45 67", "hidden" => "0", "fromdefault" => "1" }
+    phone = Phone.new(data)
 
-    @phone_hidden = Phone.new({
-                                'unitid' => '102',
-                                'order' => '2',
-                                'hidden' => '1',
-                                'number' => '67890',
-                                'fromdefault' => '0'
-                              })
-
-    @phone_second = Phone.new({
-                                'unitid' => '101',
-                                'order' => '2',
-                                'hidden' => '0',
-                                'number' => '54321',
-                                'fromdefault' => '0'
-                              })
+    assert_equal 42, phone.unit_id
+    assert_equal 3, phone.order
+    assert_equal "+41 21 123 45 67", phone.number
+    assert phone.default?
+    assert phone.visible?
+    refute phone.hidden?
   end
 
-  def test_initialization
-    assert_equal 101, @phone_visible.unit_id
-    assert_equal 1, @phone_visible.order
-    assert_equal '12345', @phone_visible.number
-    assert @phone_visible.default?, "Phone should be marked as default"
+  test "hidden? is true when hidden is 1" do
+    phone = Phone.new({ "hidden" => "1", "unitid" => "1", "order" => "0" })
+    assert phone.hidden?
+    refute phone.visible?
   end
 
-  def test_visibility
-    assert @phone_visible.visible?, "Phone should be visible"
-    refute @phone_hidden.visible?, "Phone should be hidden"
+  test "default? is false when fromdefault is 0" do
+    phone = Phone.new({ "fromdefault" => "0", "unitid" => "1", "order" => "0" })
+    refute phone.default?
   end
 
-  def test_hidden
-    refute @phone_visible.hidden?, "Phone should not be hidden"
-    assert @phone_hidden.hidden?, "Phone should be hidden"
-  end
+  test "phones are comparable by order" do
+    p1 = Phone.new({ "unitid" => "1", "order" => "2" })
+    p2 = Phone.new({ "unitid" => "1", "order" => "1" })
 
-  def test_default
-    assert @phone_visible.default?, "Phone should be marked as default"
-    refute @phone_hidden.default?, "Phone should not be marked as default"
-  end
-
-  def test_comparison_operator
-    assert @phone_visible < @phone_second, "Phone with order 1 should come before phone with order 2"
-    assert @phone_second > @phone_visible, "Phone with order 2 should come after phone with order 1"
-  end
-
-  def test_number
-    assert_equal '12345', @phone_visible.number
-    assert_equal '67890', @phone_hidden.number
+    assert_operator p2, :<, p1
+    assert_equal [p2, p1], [p1, p2].sort
   end
 end

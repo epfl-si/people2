@@ -1,93 +1,79 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
-class PositionTest < Minitest::Test
-  def setup
-    @position_data = {
-      'id' => 1,
-      'labelen' => 'Professor',
-      'labelfr' => 'Professeur',
-      'labelinclusive' => 'Professeur inclusif',
-      'labelxx' => 'Professeur XX'
+class PositionTest < ActiveSupport::TestCase
+  test "initialize maps labels and fallbacks correctly" do
+    h = {
+      "id" => 42,
+      "labelen" => "Researcher",
+      "labelfr" => "Chercheur",
+      "labelinclusive" => "Chargé·e de recherche",
+      "labelxx" => "Chargé X"
     }
-    @position = Position.new(@position_data)
+
+    pos = Position.new(h)
+
+    assert_equal 42, pos.id
+    assert_equal "Researcher", pos.label_en
+    assert_equal "Chercheur", pos.label_frm
+    assert_equal "Chargé·e de recherche", pos.label_fri
+    assert_equal "Chargé X", pos.label_frf
+    assert_equal "Researcher", pos.label_it
+    assert_equal "Researcher", pos.label_de
   end
 
-  def test_initialization
-    assert_equal 1, @position.id
-    assert_equal 'Professor', @position.label_en
-    assert_equal 'Professeur', @position.label_frm
-    assert_equal 'Professeur inclusif', @position.label_fri
-    assert_equal 'Professeur XX', @position.label_frf
-  end
-
-  def test_initialization_with_missing_inclusive_label
-    position_data = {
-      'id' => 2,
-      'labelen' => 'Teacher',
-      'labelfr' => 'Enseignant'
+  test "fallback to labelfr when inclusive labels are missing" do
+    h = {
+      "labelfr" => "Assistant",
+      "labelen" => "Assistant"
     }
-    position = Position.new(position_data)
-    assert_equal 2, position.id
-    assert_equal 'Teacher', position.label_en
-    assert_equal 'Enseignant', position.label_frm
-    assert_equal 'Enseignant', position.label_fri
-    assert_equal 'Enseignant', position.label_frf
+
+    pos = Position.new(h)
+
+    assert_equal "Assistant", pos.label_fri
+    assert_equal "Assistant", pos.label_frf
   end
 
-  def test_load
-    payload = YAML.dump(@position_data)
-    loaded_position = Position.load(payload)
-
-    assert_equal @position.id, loaded_position.id
-    assert_equal @position.label_en, loaded_position.label_en
-    assert_equal @position.label_frm, loaded_position.label_frm
-    assert_equal @position.label_fri, loaded_position.label_fri
-    assert_equal @position.label_frf, loaded_position.label_frf
+  test "match_legacy_filter? returns true if regex matches label_frm" do
+    pos = Position.new({ "labelfr" => "Chargé de cours" })
+    assert pos.match_legacy_filter?(/cours/)
+    refute pos.match_legacy_filter?(/doctorat/)
   end
 
-  def test_dump
-    dumped_data = Position.dump(@position)
-    expected_yaml = YAML.dump({
-                                "id" => 1,
-                                "labelen" => 'Professor',
-                                "labelfr" => 'Professeur',
-                                "labelinclusive" => 'Professeur inclusif',
-                                "labelxx" => 'Professeur XX'
-                              })
+  test "possibly_teacher? matches on known patterns" do
+    pos = Position.new({ "labelfr" => "Professeur ordinaire" })
+    assert pos.possibly_teacher?
 
-    assert_equal expected_yaml, dumped_data
+    pos2 = Position.new({ "labelfr" => "Technicien" })
+    refute pos2.possibly_teacher?
   end
 
-  def test_possibly_teacher_with_professor_label
-    assert @position.possibly_teacher?, "Position with 'Professeur' should be recognized as a teacher"
+  test "enseignant? matches ENS_RE patterns" do
+    pos = Position.new({ "labelfr" => "Professeur honoraire" })
+    assert pos.enseignant?
+
+    pos2 = Position.new({ "labelfr" => "Chargé de recherche" })
+    refute pos2.enseignant?
   end
 
-  def test_possibly_teacher_with_non_teacher_label
-    non_teacher_position = Position.new({
-                                          'id' => 3,
-                                          'labelen' => 'Assistant',
-                                          'labelfr' => 'Assistant'
-                                        })
-    refute non_teacher_position.possibly_teacher?, "Position with 'Assistant' should not be recognized as a teacher"
-  end
+  test "dump and load produces a valid Position object" do
+    original = Position.new({
+                              "id" => 1,
+                              "labelen" => "Lecturer",
+                              "labelfr" => "Chargé de cours",
+                              "labelinclusive" => "Chargé·e de cours",
+                              "labelxx" => "CoursX"
+                            })
 
-  def test_enseignant_with_honorary_professor_label
-    honorary_position = Position.new({
-                                       'id' => 4,
-                                       'labelen' => 'Honorary Professor',
-                                       'labelfr' => 'Professeur honoraire'
-                                     })
-    assert honorary_position.enseignant?, "Position with 'Professeur honoraire' should be recognized as a teacher"
-  end
+    dumped = Position.dump(original)
+    reloaded = Position.load(dumped)
 
-  def test_enseignant_with_non_teacher_label
-    non_teacher_position = Position.new({
-                                          'id' => 5,
-                                          'labelen' => 'Researcher',
-                                          'labelfr' => 'Chercheur'
-                                        })
-    refute non_teacher_position.enseignant?, "Position with 'Chercheur' should not be recognized as a teacher"
+    assert_instance_of Position, reloaded
+    assert_equal original.label_en, reloaded.label_en
+    assert_equal original.label_frm, reloaded.label_frm
+    assert_equal original.label_fri, reloaded.label_fri
+    assert_equal original.label_frf, reloaded.label_frf
+    assert_equal original.id, reloaded.id
   end
 end
