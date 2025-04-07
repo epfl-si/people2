@@ -20,7 +20,9 @@ class Structure < ApplicationRecord
   end
 
   def check_sections_count_match
-    sections.count == data.count
+    return if sections.count == data.count
+
+    errors.add(:data, "sections count does not match data entries")
   end
 
   def store(person)
