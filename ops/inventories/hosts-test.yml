@@ -76,7 +76,6 @@ all:
     SILENT_TRANSLATION_ERR: "yes"
     # PEOPLE_VERSION: latest
 
-    SUPERUSERS: 121769
     USE_LOCAL_ELEMENTS: "yes"
 
     # ---                                                                 whoami
