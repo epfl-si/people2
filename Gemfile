@@ -105,6 +105,9 @@ gem 'net-ldap'
 # https://github.com/gbaptista/ollama-ai
 gem 'ollama-ai'
 
+# gem 'opdo_epfl_spymiddleware', path: 'vendor/gems/opdo-rails'
+# gem 'opdo_epfl_spymiddleware', git: 'https://github.com/epfl-si/opdo-rails', branch: 'fix/people_compatibility'
+
 gem 'ostruct'
 
 # PaperTrail for tracking changes to models
