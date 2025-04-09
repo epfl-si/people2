@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
     @sections = Section.order(:position)
     @profile.complete_standard_boxes!
 
-    boxes = @profile.boxes.includes(:section).sort do |a, b|
+    boxes = @profile.boxes.includes(:section, :model).sort do |a, b|
       [a.section.position, a.position] <=> [b.section.position, b.position]
     end
     @boxes_by_section = boxes.group_by(&:section)
