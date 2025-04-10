@@ -3,10 +3,12 @@
 require "test_helper"
 
 class BoxTest < ActiveSupport::TestCase
-  fixtures :boxes, :profiles, :sections, :model_boxes
-
   test "from_model builds a box with correct attributes" do
-    model_box = model_boxes(:rich_text_model)
+    model_box = ModelBox.new(
+      section: Section.new,
+      kind: "RichTextBox",
+      title_en: "Test Title EN"
+    )
 
     box = Box.from_model(model_box, { subkind: "updated-subkind" })
 
@@ -25,7 +27,10 @@ class BoxTest < ActiveSupport::TestCase
   end
 
   test "delegates sciper to profile" do
-    box = boxes(:basic_box)
+    profile = Profile.new(sciper: "123456")
+
+    box = Box.new(profile: profile)
+
     assert_equal "123456", box.sciper
   end
 end
