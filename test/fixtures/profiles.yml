@@ -98,10 +98,10 @@ olivier:
 
 
 
-# -------------------------------------------------TEST
+# # -------------------------------------------------TEST
 
 valid_profile:
-  sciper: "123456"
+  sciper: "140997"
   show_birthday: false
   show_function: true
   show_nationality: true
@@ -122,7 +122,7 @@ valid_profile:
   updated_at: <%= Time.zone.now %>
 
 minimal_profile:
-  sciper: "654321"
+  sciper: "330887"
   show_birthday: false
   show_function: false
   show_nationality: false
