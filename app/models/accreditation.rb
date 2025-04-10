@@ -154,7 +154,7 @@ class Accreditation
     @botweb
   end
 
-  def gestpforil?
+  def gestprofil
     unless defined?(@gestprofil)
       aa = Authorisation.property_for_sciper(sciper, 'gestprofil')
       @gestprofil = aa.find { |a| a.unit_id == @unit_id && a.ok? }.present?
