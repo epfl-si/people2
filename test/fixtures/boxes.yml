@@ -234,27 +234,3 @@ nat_box_missions:
   show_title: true
   visibility: 0
   position: 8
-
-
-
-# ---------------------------------------TEST
-
-basic_box:
-  id: 1
-  type: "RichTextBox"
-  subkind: "intro"
-  profile: valid_profile
-  section: main_section
-  model: rich_text_model
-  title_en: "My Rich Text"
-  title_fr: "Mon Texte Riche"
-  title_it: "Il Mio Testo Ricco"
-  title_de: "Mein Rich-Text"
-  show_title: true
-  locked_title: false
-  visibility: 0
-  position: 1
-  data: "---\nfoo: bar\n"
-  created_at: <%= Time.zone.now %>
-  updated_at: <%= Time.zone.now %>
-
