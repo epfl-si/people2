@@ -53,7 +53,10 @@ TODO: remove this dead code. We keep it just for a little while because
       render "name", profile: @profile, person: @person 
     end
   %>
-  <%= render "form", profile: @profile %>
+  <section id="profile_section">
+    <%= render "form", profile: @profile %>
+  </section>
+
 
   <hr>
   <section id="accreds_section">
