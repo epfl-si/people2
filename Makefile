@@ -42,7 +42,7 @@ dev: up
 css: 
 	bin/rails dartsass:watch
 ## start the dev tunnel and start all the servers
-up: tunnel_up dcup
+up: tunnel_up elements dcup 
 
 ## restart the webapp container
 reload: envcheck
@@ -194,8 +194,11 @@ patch:
 elements: elements_build
 	rsync -av $(ELE_SRCDIR)/dist/ public/elements/
 
+# elements_build: $(ELE_SRCDIR)
+# 	cd $(ELE_SRCDIR)  && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn dist
+
 elements_build: $(ELE_SRCDIR)
-	cd $(ELE_SRCDIR)  && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn dist
+	cd $(ELE_SRCDIR) && source ~/.nvm/nvm.sh && nvm use 18 && yarn run dist
 
 $(ELE_SRCDIR):
 	cd $(dir $(ELE_SRCDIR)) && git clone git@github.com:epfl-si/elements.git
@@ -216,7 +219,7 @@ $(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 
 ## run automated tests
 test:
-	docker compose exec -e RAILS_ENV=test webapp ./bin/rails test
+	docker compose exec -e RAILS_ENV=test webapp ./bin/rails test 
 
 ## prepare and run the test server 
 testup:
@@ -226,9 +229,9 @@ testup:
 	docker compose exec webapp sed -i '0,/end/{s/initialize(\*)/initialize(*args)/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
 	docker compose exec webapp sed -i '0,/end/{s/super/super args/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
 
-# testprepare:
-# 	docker compose exec webapp ./bin/rails db:test:prepare
-# 	docker compose exec -e RAILS_ENV=test webapp ./bin/rails db:migrate
+testprepare:
+	docker compose exec -e RAILS_ENV=test webapp ./bin/rails db:test:prepare
+	docker compose exec -e RAILS_ENV=test webapp ./bin/rails db:migrate
 
 test-system: testup
 	docker compose exec webapp ./bin/rails test:system
