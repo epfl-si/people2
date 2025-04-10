@@ -21,6 +21,7 @@ AllCops:
     - "log/**/*"
     - "public/**/*"
     - "storage/**/*"
+    - "test/models/position_filter_test.rb"
 Bundler/DuplicatedGroup:
   Enabled: false
 Lint/AmbiguousOperatorPrecedence:

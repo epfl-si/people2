@@ -33,8 +33,7 @@ class PositionFilter
     @tokens = rule.split(sep).map do |t|
       neg = t.start_with?("!")
       t = t[1..] if neg
-      # The * in filter token is shell glob style but must be an exact match otherwise
-      re = Regexp.new("^#{t.gsub('*', '.*')}$", 'i')
+      re = Regexp.new(t.gsub('*', '.*'), 'i')
       OpenStruct.new(
         neg: neg,
         re: re
