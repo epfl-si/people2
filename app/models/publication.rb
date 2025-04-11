@@ -5,6 +5,7 @@ class Publication < ApplicationRecord
   include Translatable
   include IndexBoxable
   belongs_to :profile
+  audience_limit
   positioned on: :profile
 
   validates :title, presence: true

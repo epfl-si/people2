@@ -31,56 +31,56 @@ module AudienceLimitable
   extend ActiveSupport::Concern
 
   included do
-    # Reminder: ranges do not include the upper limit
-    scope :world_visible, -> { where(visibility: 0) }
-    scope :intranet_visible, -> { where(visibility: 0...2) }
-    scope :auth_visible, -> { where(visibility: 0...3) }
-    scope :owner_visible, -> { where(visibility: 0...4) }
-    scope :for_audience, ->(audience) { where(visibility: 0...(audience + 1)) }
-    validates :visibility, numericality: { in: 0...5 }
-    # Ensure visibility defaults to the least visible option
-    before_save -> { self[:visibility] = visibility_options.last.value if visibility.blank? }
-
-    if self <= Box
-      def visibility_options
-        BOX_VIS_OPTIONS
-      end
-
-      def visibility_option
-        BOX_VIS_OPTIONS_DICT[visibility]
-      end
-    else
-      def visibility_options
-        ITEM_VIS_OPTIONS
-      end
-
-      def visibility_option
-        ITEM_VIS_OPTIONS_DICT[visibility]
+    def self.audience_limit
+      # Reminder: ranges do not include the upper limit
+      # scope :world_visible, -> { where(visibility: 0) }
+      # scope :intranet_visible, -> { where(visibility: 0...2) }
+      # scope :auth_visible, -> { where(visibility: 0...3) }
+      # scope :owner_visible, -> { where(visibility: 0...4) }
+      scope :for_audience, ->(audience) { where(visibility: 0...(audience + 1)) }
+      # Ensure visibility defaults to the least visible option
+      if self <= Box
+        audience_limit_methods(:box)
+      else
+        audience_limit_methods(:item)
       end
     end
-  end
 
-  def visible_by?(level = 0)
-    visibility <= level
-  end
+    def self.audience_limit_property(property, strategy: :box)
+      audience_limit_methods(strategy, property)
+    end
 
-  def world_visible?
-    visibilty.zero?
-  end
-
-  def intranet_visible?
-    visibilty < 2
-  end
-
-  def auth_visible?
-    visibilty < 3
-  end
-
-  def owner_visible?
-    visibility < 4
-  end
-
-  def hidden?
-    visibility > 3
+    # TODO: this method cannot be called twice without property
+    def self.audience_limit_methods(strategy, property = nil)
+      visprefix = property.nil? ? "" : "#{property}_"
+      vismethod = "#{visprefix}visibility"
+      vismsym = vismethod.to_sym
+      validates vismsym, numericality: { in: 0...5 }
+      before_save -> { self[vismsym] = visibility_options.last.value if send(vismethod).blank? }
+      case strategy
+      when :box
+        define_method("#{vismethod}_options") do
+          BOX_VIS_OPTIONS
+        end
+        define_method("#{vismethod}_option") do
+          BOX_VIS_OPTIONS_DICT[send(vismethod)]
+        end
+      when :item
+        define_method("#{vismethod}_options") do
+          ITEM_VIS_OPTIONS
+        end
+        define_method("#{vismethod}_option") do
+          ITEM_VIS_OPTIONS_DICT[send(vismethod)]
+        end
+      else
+        raise "Invalid strategy #{strategy}"
+      end
+      define_method("#{visprefix}visible_by") do |level|
+        send(vismethod) <= level
+      end
+      define_method("#{visprefix}hidden?") do
+        send(vismethod) > 3
+      end
+    end
   end
 end

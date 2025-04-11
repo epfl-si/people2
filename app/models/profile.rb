@@ -14,8 +14,13 @@ class Profile < ApplicationRecord
   # self.primary_key = 'sciper'
   EXPERTISE_MAX_LEN = 200
 
+  include AudienceLimitable
   include Translatable
   translates :nationality, :title
+  audience_limit_property "nationality"
+  audience_limit_property "phone"
+  audience_limit_property "photo"
+  audience_limit_property "weburl"
 
   has_many :boxes, dependent: :destroy
   has_many :model_boxes, through: :boxes, source: :model

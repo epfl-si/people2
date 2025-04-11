@@ -8,6 +8,7 @@ class Education < ApplicationRecord
   belongs_to :profile
   positioned on: :profile
 
+  audience_limit
   translates :title, :field
 
   validates :school, presence: true
