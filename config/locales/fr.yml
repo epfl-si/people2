@@ -155,7 +155,7 @@ fr:
     nationality: "Nationalité"
     official_firstname: "Prénom officiel"
     official_lastname: "Nom officiel"
-    phone: "Numéro de téléphone"
+    phone: "Numéro de téléphone privé"
     photo: "Photo de profil"
     title: "Titre"
     usual_firstname: "Prénom usuel"
@@ -174,6 +174,10 @@ fr:
     VIDEO_CONF: "Visio conférence"
   picture:
     selected: "Sélectionné"
+  profile:
+    nationality: nationality
+    expertise: expertise (keywords)
+    personal_web_url: personal page url
   publication:
     link: "Voir la publication"
     authors: "Auteur(s)"
@@ -202,6 +206,7 @@ fr:
     past_phd: "A dirigé les thèses EPFL de"
     past_phd_students: "Ancien·nes doctorant·es"
     pictures: "Photos de profil"
+    profile_picture: "Profile picture"
     publications: "Publications"
     research: "Recherche"
     selector_audience: "Access"

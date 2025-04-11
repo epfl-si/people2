@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
 
     return unless @profile
 
-    @profile_picture = @profile.photo.image if @profile.photo&.image&.attached?
+    @profile_picture = @profile.photo(@audience).image if @profile.photo&.image&.attached?
     # @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
     @visible_socials = @profile.socials.for_audience(@audience)
 

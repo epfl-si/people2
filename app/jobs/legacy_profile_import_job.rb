@@ -25,6 +25,10 @@ class LegacyProfileImportJob < ApplicationJob
     "Travail en cours" => "currwork",
   }.freeze
 
+  def show_to_visibility(v)
+    v == "1" ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
+  end
+
   def perform(scipers)
     achie_cats = SelectableProperty.achievement_category.index_by(&:label)
     award_cats = SelectableProperty.award_category.index_by(&:label)
@@ -49,21 +53,21 @@ class LegacyProfileImportJob < ApplicationJob
 
       # ---------------------------------------------------------------- Profile
       profile = Profile.new_with_defaults(sciper)
-      profile.show_birthday = cv.datenaiss_show == "1"
-      profile.show_photo = cv.photo_show == "1"
+      profile.birthday_visibility = show_to_visibility(cv.datenaiss_show)
+      profile.photo_visibility = show_to_visibility(cv.photo_show)
 
       nat = cv.sanitized_nat
       profile.nationality_en = nat if nat.present?
       profile.nationality_fr = nat if nat.present?
-      profile.show_nationality = cv.nat_show == "1"
+      profile.nationality_visibility = show_to_visibility(cv.nat_show)
 
       tel = cv.tel_prive&.strip
-      profile.phone = tel if tel.present?
-      profile.show_phone = cv.tel_prive_show == "1"
+      profile.personal_phone = tel if tel.present?
+      profile.personal_phone_visibility = show_to_visibility(cv.tel_prive_show)
 
       url = cv.web_perso&.strip
       profile.personal_web_url = url if url.present?
-      profile.show_weburl = cv.web_perso_show == "1"
+      profile.personal_web_url_visibility = show_to_visibility(cv.web_perso_show)
 
       unless profile.save
         errs = profile.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")

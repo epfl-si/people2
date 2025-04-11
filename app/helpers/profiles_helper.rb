@@ -81,32 +81,23 @@ module ProfilesHelper
     end
   end
 
-  def visibility_selector(form, item, with_stimulus: true)
+  def visibility_selector(form, item, property: nil, with_stimulus: true)
     # item = form.object
-    id0 = dom_id(item, :visibility)
+    prop = property.nil? ? "visibility" : "#{property}_visibility"
+    id0 = dom_id(item, prop.to_sym)
     stim_data = { action: 'input->auto-submit#submit' }
-    # stim_data = { action: "input->visibility#onChange", "visibility-target": "radio" }
-
     content = []
-
-    item.visibility_options.each do |o|
+    content << form.hidden_field(:property, value: property) if property.present?
+    item.send("#{prop}_options").each do |o|
       id = "#{id0}_#{o.value}"
       title = t "visibility.label.#{o.label}"
       label_data = { label: title }
-      content << if with_stimulus
-                   form.radio_button(
-                     :visibility, o.value,
-                     id: id,
-                     data: stim_data.merge(label_data),
-                     checked: item.visibility == o.value
-                   )
-                 else
-                   form.radio_button(
-                     :visibility, o.value,
-                     id: id, data: label_data,
-                     checked: item.visibility == o.value
-                   )
-                 end
+      content << form.radio_button(
+        :visibility, o.value,
+        id: id,
+        data: (with_stimulus ? stim_data.merge(label_data) : label_data),
+        checked: item.send(prop) == o.value
+      )
       content << form.label("visibility_#{o.value}".to_sym, tag.span(icon(o.icon)), for: id, title: title)
     end
     content = safe_join(content)

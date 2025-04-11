@@ -161,6 +161,11 @@ class Person
     @default_phone
   end
 
+  def phone_visible_by?(audience)
+    p = profile!
+    p.nil? ? default_phone.present? : p.phone_visible_by?(audience)
+  end
+
   # --- address
 
   def addresses(unit_id = nil)

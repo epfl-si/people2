@@ -191,6 +191,10 @@ en:
     SIP_OTHER: sip
   picture:
     selected: selected
+  profile:
+    nationality: nationality
+    expertise: expertise (keywords)
+    personal_web_url: personal page url
   publication:
     link: "View the publication"
     authors: "Autors(s)"
@@ -219,6 +223,7 @@ en:
     expertise: "Fields of expertise"
     of: "of"
     past_phd_students: "Past EPFL PhD Students"
+    profile_picture: "Profile picture"
     publications: "Publications"
     selector_audience: "Access"
     selector_visibility: "Status"

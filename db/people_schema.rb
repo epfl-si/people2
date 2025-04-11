@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_09_093718) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_05_140614) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -261,14 +261,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_09_093718) do
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "sciper"
-    t.boolean "show_birthday", default: false
-    t.boolean "show_function", default: false
-    t.boolean "show_nationality", default: false
-    t.boolean "show_phone", default: false
-    t.boolean "show_photo", default: true
-    t.boolean "show_weburl", default: false
+    t.integer "birthday_visibility", default: 4
+    t.integer "nationality_visibility", default: 4
+    t.integer "personal_phone_visibility", default: 4
+    t.integer "photo_visibility", default: 4
+    t.integer "personal_web_url_visibility", default: 4
+    t.integer "expertise_visibility", default: 0
+    t.integer "phone_visibility", default: 0
     t.string "personal_web_url"
-    t.string "phone"
+    t.string "personal_phone"
     t.string "expertise_en"
     t.string "expertise_fr"
     t.string "expertise_it"
@@ -384,9 +385,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_09_093718) do
     t.string "name"
     t.string "provider"
     t.string "sciper"
+    t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "username"
     t.index ["sciper"], name: "index_users_on_sciper", unique: true
   end
 

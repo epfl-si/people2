@@ -10,18 +10,8 @@
   </div>
 <% end %>
 <% translations = profile.translations %>
-
 <%= form_with(model: profile, local: false, class: "instaform") do |form| %>
 	<div class="form-group row">
-		<%= form.label(:visible_items, class: "col-md-3 col-sm-3") %>
-		<div class="col-md-3 col-sm-9">
-			<%= show_attribute_switch(form, :show_photo) %>
-			<%= show_attribute_switch(form, :show_nationality) %>
-			<%= show_attribute_switch(form, :show_weburl) %>
-			<% if @person.default_phone.present? %>
-			<%= show_attribute_switch(form, :show_phone) %>
-			<% end %>
-		</div>
 		<%= form.label(:translations, class: "col-md-3 col-sm-3") %>
 		<div class="col-md-3 col-sm-9">
 			<%= show_attribute_switch(form, :en_enabled) %>

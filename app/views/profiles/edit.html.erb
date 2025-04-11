@@ -48,52 +48,50 @@ TODO: remove this dead code. We keep it just for a little while because
   </nav>
 -->
 
-  <%=
-    if @person.name.customizable?
-      render "name", profile: @profile, person: @person 
-    end
-  %>
-  <section id="profile_section">
-    <%= render "form", profile: @profile %>
-  </section>
 
+<section id="profile_section">
+    <%#= render "form", profile: @profile %>
+    <%= render "editable_profile", profile: @profile %>
+</section>
 
-  <hr>
-  <section id="accreds_section">
+<hr>
+<section id="accreds_section">
   <%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
     <%= render 'shared/spinner' %>
   <% end %>
-  </section>
+</section>
 
-  <hr>
+<hr>
+<section id="boxes_section" >
+  <h3><%= t 'title.editable_boxes' %></h3>
   
-<ul class="nav nav-tabs mt-5" role="tablist">
-  <% active = "active" %>
-  <% @sections.each do |section| %>
-    <% id = "section_#{section.label}" %>
-    <li class="nav-item">
-      <%= link_to section.t_title, "##{id}", id: "#{id}-tab", role: "tab",
-                  class: "nav-link #{active}", data: { toggle: "tab" },
-                  aria: { controls: id, selected: active ? "true" : "false" } %>
-    </li>
-    <% active = "" %>
-  <% end %>
-</ul>
+  <ul class="nav nav-tabs mt-5" role="tablist">
+    <% active = "active" %>
+    <% @sections.each do |section| %>
+      <% id = "section_#{section.label}" %>
+      <li class="nav-item">
+        <%= link_to section.t_title, "##{id}", id: "#{id}-tab", role: "tab",
+                    class: "nav-link #{active}", data: { toggle: "tab" },
+                    aria: { controls: id, selected: active ? "true" : "false" } %>
+      </li>
+      <% active = "" %>
+    <% end %>
+  </ul>
 
-<div class="tab-content p-3">
-  <% active = "active" %>
-  <% @sections.each do |section| %>
-    <% id = "section_#{section.label}" %>
-    <div class="tab-pane fade show <%= active %>" id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-      <section>
-        <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(@profile, section), loading: :lazy do %>
-          <%= render 'shared/spinner' %>
-        <% end %>
-      </section>
-    </div>
-    <% active = "" %>
-  <% end %>
+  <div class="tab-content p-3">
+    <% active = "active" %>
+    <% @sections.each do |section| %>
+      <% id = "section_#{section.label}" %>
+      <div class="tab-pane fade show <%= active %>" id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+        <section>
+          <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(@profile, section), loading: :lazy do %>
+            <%= render 'shared/spinner' %>
+          <% end %>
+        </section>
+      </div>
+      <% active = "" %>
+    <% end %>
 
-</div>
-
+  </div>
+</section>
 <%= turbo_frame_tag :remote_modal %>

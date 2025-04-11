@@ -16,11 +16,14 @@ class Profile < ApplicationRecord
 
   include AudienceLimitable
   include Translatable
-  translates :nationality, :title
+  translates :nationality, :title, :expertise
+  audience_limit_property "birthday"
+  audience_limit_property "expertise"
   audience_limit_property "nationality"
   audience_limit_property "phone"
   audience_limit_property "photo"
-  audience_limit_property "weburl"
+  audience_limit_property "personal_phone"
+  audience_limit_property "personal_web_url"
 
   has_many :boxes, dependent: :destroy
   has_many :model_boxes, through: :boxes, source: :model
@@ -66,14 +69,23 @@ class Profile < ApplicationRecord
   after_create :cache_camipro_picture!
 
   DEFAULTS = {
-    show_birthday: false,
-    show_function: true,
-    show_nationality: false,
-    show_phone: true,
-    show_photo: false,
+    birthday_visibility: AudienceLimitable::HIDDEN,
+    expertise_visibility: AudienceLimitable::VISIBLE,
+    nationality_visibility: AudienceLimitable::HIDDEN,
+    phone_visibility: AudienceLimitable::VISIBLE,
+    photo_visibility: AudienceLimitable::HIDDEN,
+    personal_phone_visibility: AudienceLimitable::HIDDEN,
+    personal_web_url_visibility: AudienceLimitable::HIDDEN,
+    personal_phone: nil,
     personal_web_url: nil,
+    expertise_en: nil,
+    expertise_fr: nil,
+    expertise_it: nil,
+    expertise_de: nil,
     nationality_en: nil,
     nationality_fr: nil,
+    nationality_it: nil,
+    nationality_de: nil,
   }.freeze
 
   def self.new_with_defaults(sciper)
@@ -107,8 +119,8 @@ class Profile < ApplicationRecord
     @person ||= Person.find(sciper)
   end
 
-  def photo
-    show_photo ? photo! : nil
+  def photo(audience = 0)
+    photo_visible_by?(audience) ? photo! : nil
   end
 
   def photo!
@@ -127,15 +139,6 @@ class Profile < ApplicationRecord
 
   def any_publication?
     publications.present?
-  end
-
-  # TODO: Birthday is no long available in data from api. Get rid of it.
-  def show_birthday?
-    false
-  end
-
-  def birthday
-    nil
   end
 
   # TODO: this whole idea of enforcing boxes everywhere is not great. Here we
