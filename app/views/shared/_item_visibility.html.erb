@@ -1,5 +1,8 @@
+<% 
+  prop = (property ||= nil).present? ? "#{property}_visibility" : "visibility" 
+%>
 <%= tag.div(
-    id: dom_id(item, :visibility),
+    id: dom_id(item, prop),
     class: "gc-visibility-container",
   ) do %>
   <%= form_with(
@@ -9,9 +12,9 @@
      remote: true, 
      data: {controller: 'auto-submit'},
   ) do |form| %>
-    <%= visibility_selector(form, item) %>
+    <%= visibility_selector(form, item, property: property) %>
   <% end %>
   <span class="text" data-visibility-target="label">
-    <%= t "visibility.short_labels.#{item.visibility_option.label}" %>
+    <%= t "visibility.short_labels.#{item.send("#{prop}_option").label}" %>
   </span>
 <% end %>

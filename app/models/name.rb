@@ -20,6 +20,10 @@ class Name
     "#{display_first} #{display_last}"
   end
 
+  def official_display
+    "#{official_first} #{official_last}"
+  end
+
   def suggested_first
     official_first.split(/\W+/).first
   end

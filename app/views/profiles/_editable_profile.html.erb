@@ -1,0 +1,70 @@
+<h3>
+	<%= t 'title.profile_details' %>
+	<%= remote_modal_for(edit_profile_path(profile, details: true)) do %>
+	  <%= icon('edit-3') %>
+	<% end %>
+</h3>
+<dl class="definition-list definition-list-grid">
+
+	<dt><%= t "profile.available_languages" %></dt>
+	<dd>
+		<%= profile.translations.map{|l| t(l)}.join(", ") %>
+		<%= remote_modal_for(edit_profile_path(profile, languages: true)) do %>
+		  <%= icon('edit-3') %>
+		<% end %>
+	</dd>
+
+  <dt><%= t "profile.official_name" %></dt>
+  <dd><span><%= profile.person.name.official_display %></span></dd>
+
+  <% if profile.person.name.customizable? %>
+  <dt><%= t "profile.usual_name" %></dt>
+  <dd>
+  	<span><%= profile.person.name.display %></span>
+		<%= remote_modal_for(edit_profile_path(profile, name: true)) do %>
+		  <%= icon('edit-3') %>
+		<% end %>
+  </dd>
+  <% end %>
+
+  <dt><%= t "profile.nationality" %></dt>
+  <% if (d=profile.t_nationality).present? %>
+	  <dd class="rpush">
+	  	<span><%= d %></span>
+	  	<%= render 'shared/item_visibility', item: profile, property: 'nationality' %>
+	  </dd>
+  <% else %>
+  	<dd><span><%= t "undefined" %></span></dd>
+	<% end %>
+
+  <dt><%= t "profile.expertise" %></dt>
+  <% if (d=profile.t_expertise).present? %>
+	  <dd class="rpush">
+	  	<span><%= d %></span>
+	  	<%= render 'shared/item_visibility', item: profile, property: 'expertise' %>
+	  </dd>
+  <% else %>
+  	<dd><span><%= t "undefined" %></span></dd>
+	<% end %>
+
+  <dt><%= t "profile.personal_web_url" %></dt>
+  <% if (d=profile.personal_web_url).present? %>
+	  <dd class="rpush">
+	  	<span><%= d %></span>
+	  	<%= render 'shared/item_visibility', item: profile, property: 'personal_web_url' %>
+	  </dd>
+  <% else %>
+  	<dd><span><%= t "undefined" %></span></dd>
+	<% end %>
+
+  <dt><%= t "profile.personal_phone" %></dt>
+  <% if (d=profile.personal_phone).present? %>
+	  <dd class="rpush">
+	  	<span><%= d %></span>
+	  	<%= render 'shared/item_visibility', item: profile, property: 'phone' %>
+	  </dd>
+  <% else %>
+	  <dd><span><%= t "undefined" %></span></dd>
+	<% end %>
+
+</dl>

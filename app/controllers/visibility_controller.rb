@@ -6,7 +6,11 @@ class VisibilityController < ApplicationController
     klass = params[:model].camelize
     # TODO: restrict allowed values of klass
     @item = Kernel.const_get(klass).find params[:id]
-    @item.visibility = params[:visibility]
+    if (@property = params[:property]).present?
+      @item.send("#{@property}_visibility=", params[:visibility])
+    else
+      @item.visibility = params[:visibility]
+    end
     respond_to do |format|
       if @item.save
         format.turbo_stream

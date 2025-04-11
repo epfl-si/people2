@@ -14,10 +14,12 @@ module AudienceLimitable
   # value: the integer value stored in the database
   # box:   if this option is available for boxes
   # item:  if this option is available for items in index boxes or other elements
+  HIDDEN = 4
+  VISIBLE = 0
   ALL_VISIBILITY_OPTIONS = [
     { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
     { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
-    { label: 'intranet', icon: 'home',       value: 1, box: true,  item: false },
+    { label: 'intranet', icon: 'icon-epfl-corporate-logo', value: 1, box: true, item: false },
     { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false },
     { label: 'draft',    icon: 'edit-3',     value: 3, box: false, item: false },
     { label: 'hidden',   icon: 'eye-off',    value: 4, box: true, item: true }
@@ -75,7 +77,7 @@ module AudienceLimitable
       else
         raise "Invalid strategy #{strategy}"
       end
-      define_method("#{visprefix}visible_by") do |level|
+      define_method("#{visprefix}visible_by?") do |level|
         send(vismethod) <= level
       end
       define_method("#{visprefix}hidden?") do

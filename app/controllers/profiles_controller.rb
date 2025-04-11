@@ -15,17 +15,25 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    @sections = Section.order(:position)
-    @profile.complete_standard_boxes!
+    if params[:details]
+      render 'edit_details'
+    elsif params[:name]
+      render 'edit_name'
+    elsif params[:languages]
+      render 'edit_languages'
+    else
+      @sections = Section.order(:position)
+      @profile.complete_standard_boxes!
 
-    boxes = @profile.boxes.includes(:section, :model).sort do |a, b|
-      [a.section.position, a.position] <=> [b.section.position, b.position]
+      boxes = @profile.boxes.includes(:section, :model).sort do |a, b|
+        [a.section.position, a.position] <=> [b.section.position, b.position]
+      end
+      @boxes_by_section = boxes.group_by(&:section)
+      box_count_by_model = @profile.boxes.group(:model_box_id).count
+      @optional_boxes = ModelBox.includes(:section).optional.select do |b|
+        (box_count_by_model[b.id] || 0) < b.max_copies
+      end.group_by(&:section_id)
     end
-    @boxes_by_section = boxes.group_by(&:section)
-    box_count_by_model = @profile.boxes.group(:model_box_id).count
-    @optional_boxes = ModelBox.includes(:section).optional.select do |b|
-      (box_count_by_model[b.id] || 0) < b.max_copies
-    end.group_by(&:section_id)
   end
 
   # PATCH/PUT /profile/:id
@@ -90,7 +98,8 @@ class ProfilesController < ApplicationController
       :expertise_fr, :expertise_en, :expertise_it, :expertise_de,
       :personal_web_url,
       :en_enabled, :fr_enabled, :it_enabled, :de_enabled,
-      :show_phone, :show_nationality, :show_weburl
+      :personal_phone_visibility, :personal_web_url_visibility,
+      :nationality_visibility, :expertise_visibility, :photo_visibility
     )
   end
 end

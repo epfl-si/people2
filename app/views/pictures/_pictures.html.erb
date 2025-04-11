@@ -1,4 +1,8 @@
 <turbo-frame id="profile_picture">
+<div class="rpush">
+<h3><%= t 'title.profile_picture' %></h3>
+<%= render 'shared/item_visibility', item: profile, property: 'photo' %>
+</div>
 <div class="row">
 	<div class='col-sm-3'>
 		<div class="card">
