@@ -8,10 +8,10 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       # TODO: remove show_birthday as it is no longer available from API
       t.boolean :show_birthday, default: false
       t.boolean :show_function, default: false
-      t.boolean :show_nationality, default: false
-      t.boolean :show_phone, default: false
-      t.boolean :show_photo, default: true
-      t.boolean :show_weburl, default: false
+      t.integer :nationality_visibility
+      t.integer :phone_visibility
+      t.integer :photo_visibility
+      t.integer :weburl_visibility
 
       t.string :personal_web_url
 

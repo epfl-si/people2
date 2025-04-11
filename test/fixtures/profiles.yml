@@ -2,19 +2,21 @@
 
 domq:
   sciper: "243371"
-  show_birthday: false
-  show_nationality: false
-  show_phone: true
-  show_photo: true
+  # show_birthday: false
+  # show_nationality: false
+  # show_phone: true
+  # show_photo: true
+  phone_visibility: 0
+  photo_visibility: 0
   nationality_fr: Suisse
   nationality_en: Swiss
 
 edouard:
   sciper: "229105"
-  show_birthday: false
-  show_nationality: false
-  show_phone: false
-  show_photo: false
+  # show_birthday: false
+  # show_nationality: false
+  # show_phone: false
+  # show_photo: false
   nationality_fr: Suisse
   nationality_en: Swiss
   personal_web_url: "http://dcsl.epfl.ch"
@@ -23,40 +25,40 @@ edouard:
 
 francesco:
   sciper: "363674"
-  show_birthday: false
-  show_nationality: false
-  show_phone: false
-  show_photo: false
+  # show_birthday: false
+  # show_nationality: false
+  # show_phone: false
+  # show_photo: false
   nationality_fr: Italienne
   nationality_en: Italian
   # personal_web_url:
 
 giovanni:
   sciper: "110635"
-  show_birthday: false
-  show_nationality: false
-  show_phone: true
-  show_photo: true
+  # show_birthday: false
+  # show_nationality: false
+  # show_phone: true
+  # show_photo: true
   nationality_en: italian, swiss
   nationality_fr: italienne, suisse
   personal_web_url: https://slideshot.epfl.ch/
 
 martin:
   sciper: "126003"
-  show_birthday: false
-  show_nationality: true
-  show_phone: true
-  show_photo: true
+  # show_birthday: false
+  # show_nationality: true
+  # show_phone: true
+  # show_photo: true
   nationality_fr: Allemande
   nationality_en: German
   personal_web_url: "http://lampwww.epfl.ch/~odersky/"
 
 giova: 
   sciper: "121769"
-  show_birthday: true
-  show_nationality: true
-  show_phone: true
-  show_photo: true
+  # show_birthday: true
+  # show_nationality: true
+  # show_phone: true
+  # show_photo: true
   nationality_en: italian, swiss
   nationality_fr: italien
   personal_web_url: https://slideshot.epfl.ch/
@@ -65,10 +67,10 @@ giova:
 
 natalie:
   sciper: "116080"
-  show_birthday: true
-  show_nationality: true
-  show_phone: true
-  show_photo: true
+  # show_birthday: true
+  # show_nationality: true
+  # show_phone: true
+  # show_photo: true
   en_enabled: false
   fr_enabled: true
   nationality_fr: Suisse
@@ -80,10 +82,10 @@ natalie:
 
 olivier:
   sciper: "107931"
-  show_birthday: false
-  show_nationality: true
-  show_phone: true
-  show_photo: true
+  # show_birthday: false
+  # show_nationality: true
+  # show_phone: true
+  # show_photo: true
   nationality_fr: CH
   nationality_en: CH
   personal_web_url: "https://ipgold.epfl.ch/"

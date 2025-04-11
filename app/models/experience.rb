@@ -8,6 +8,7 @@ class Experience < ApplicationRecord
   belongs_to :profile
   # broadcasts_to :profile
 
+  audience_limit
   positioned on: :profile
 
   translates :title, :field

@@ -5,6 +5,7 @@ class Infoscience < ApplicationRecord
   include AudienceLimitable
   include Translatable
   include IndexBoxable
+  audience_limit
   translates :title
   positioned on: :profile
 

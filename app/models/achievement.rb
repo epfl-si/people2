@@ -6,6 +6,7 @@ class Achievement < ApplicationRecord
   include Translatable
   include WithSelectableProperties
   include IndexBoxable
+  audience_limit
   with_selectable_properties :category
   translates :description
   positioned on: :profile

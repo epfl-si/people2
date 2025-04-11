@@ -3,6 +3,7 @@
 class Box < ApplicationRecord
   include AudienceLimitable
   include Translatable
+  audience_limit
   translates :title
   serialize  :data, coder: YAML
   belongs_to :section, class_name: 'Section'

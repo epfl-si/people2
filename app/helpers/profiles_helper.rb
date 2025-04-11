@@ -94,9 +94,18 @@ module ProfilesHelper
       title = t "visibility.label.#{o.label}"
       label_data = { label: title }
       content << if with_stimulus
-                   form.radio_button(:visibility, o.value, id: id, data: stim_data.merge(label_data))
+                   form.radio_button(
+                     :visibility, o.value,
+                     id: id,
+                     data: stim_data.merge(label_data),
+                     checked: item.visibility == o.value
+                   )
                  else
-                   form.radio_button(:visibility, o.value, id: id, data: label_data)
+                   form.radio_button(
+                     :visibility, o.value,
+                     id: id, data: label_data,
+                     checked: item.visibility == o.value
+                   )
                  end
       content << form.label("visibility_#{o.value}".to_sym, tag.span(icon(o.icon)), for: id, title: title)
     end
