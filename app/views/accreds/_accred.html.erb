@@ -1,35 +1,16 @@
 <%= turbo_frame_tag dom_id(accred), "data-sortable-url" => accred_path(accred, format: 'json') do %>
-  <div class="list-group-item">
-    <div class="row">
-      <div class="col">
-        <h4 class="h5 mb-0">
-          <%= accred.t_unit %>
-        </h4>
-        <p>
-          <span class='visibility'>
-          <%= accred.visible? ?
-            icon_text('eye', "visibility.visible") :
-            icon_text('eye-off', "visibility.hidden") 
-          %>
-          </span>
-          <span class='visibility'>
-            <%= accred.visible_addr? ?
-              icon_text('map-pin', "visibility.visible_address") :
-              icon_text('map-pin', "visibility.hidden_address") 
-            %>
-          </span>
-          <%= accred.role.t_label(@profile.gender) %>
-          <%= remote_modal_for(new_accreditation_function_change_path(accred.accreditation_id)) do %>
-            <%= icon('edit-3') %>
-          <% end %>
-        </p>
-      </div>
-      <div class="col text-right">
-        <% if count > 1 %>
-        <%= link_to accred.visible? ? icon_text('eye-off', 'action.make_hidden') : icon_text('eye', 'action.make_visible'), toggle_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
-        <% end %>
-        <%= link_to accred.visible_addr? ? icon_text('map-pin', 'action.make_address_hidden') : icon_text('map-pin', 'action.make_address_visible'), toggle_addr_accred_path(accred), class: "btn btn-secondary btn-sm", method: :put, data: {turbo_stream: true, turbo_method:'put'} %>
-      </div>
+  <div class="list-group-item rpush">
+    <div>
+      <h4 class="h5 mb-0">
+        <%= accred.t_unit %>
+      </h4>
+      <%= accred.role.t_label(@profile.gender) %>
+      <%= remote_modal_for(new_accreditation_function_change_path(accred.accreditation_id)) do %>
+        <%= icon('edit-3') %>
+      <% end %>
+    </div>
+    <div>
+      <%= render 'shared/item_visibility', item: accred %>
     </div>
   </div>
 <% end %>

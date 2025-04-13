@@ -16,8 +16,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_05_140614) do
     t.integer "unit_id"
     t.integer "position", null: false
     t.string "sciper"
-    t.boolean "visible", default: true
-    t.boolean "visible_addr", default: true
+    t.integer "visibility", default: 0
+    t.integer "address_visibility", default: 0
     t.string "unit_fr"
     t.string "unit_en"
     t.string "unit_it"

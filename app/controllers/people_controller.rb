@@ -30,7 +30,7 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:sciper_or_name])
     raise ActiveRecord::RecordNotFound if @person.blank?
 
-    @accreds = @person.accreditations.select(&:visible?).sort
+    @accreds = @person.accreditations.select { |a| a.visible_by?(AudienceLimitable::WORLD) }.sort
     raise ActiveRecord::RecordNotFound if @accreds.empty?
 
     @sciper = @person&.sciper

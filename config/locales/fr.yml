@@ -101,7 +101,7 @@ fr:
       zero: "Quelque chose a empêché cet enregistrement d'être mis à jour (ne devrait pas se produire)"
   flash:
     accred:
-      cannot_hide_all: "Impossible de masquer toutes les accréditations"
+      cannot_hide_all: "Impossible de masquer toutes les accréditations au publique"
     box:
       error:
         cannot_delete: "Standard and boxes with content cannot be deleted"

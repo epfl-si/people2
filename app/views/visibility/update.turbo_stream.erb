@@ -1,3 +1,4 @@
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
 <%= turbo_stream.replace dom_id(@item, @property.present? ? "#{@property}_visibility" : "visibility") do %>
 	<%= render "shared/item_visibility", item: @item, property: @property %>
 <% end %>

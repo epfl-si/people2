@@ -19,14 +19,14 @@ class ApplicationController < ActionController::Base
   def compute_audience(sciper)
     @audience = if authenticated?
                   if Current.user.sciper == sciper
-                    3
+                    AudienceLimitable::OWNER
                   else
-                    2
+                    AudienceLimitable::AUTENTICATED
                   end
                 elsif @is_intranet_client
-                  1
+                  AudienceLimitable::INTRANET
                 else
-                  0
+                  AudienceLimitable::WORLD
                 end
     return unless Rails.env.development?
 
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     return unless fe
 
     @original_audience = @audience
-    @audience = [[0, fe.to_i].max, 3].min
+    @audience = [[AudienceLimitable::WORLD, fe.to_i].max, AudienceLimitable::OWNER].min
   end
 
   private

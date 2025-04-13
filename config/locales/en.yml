@@ -115,7 +115,7 @@ en:
       other: "%{count} errors prevented this record to be updated"
   flash:
     accred:
-      cannot_hide_all: "Cannot hide all accreditations"
+      cannot_hide_all: "Cannot hide all accreditations to general public"
     box:
       error:
         cannot_delete: "Standard and boxes with content cannot be deleted"

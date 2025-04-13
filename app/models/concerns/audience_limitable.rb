@@ -16,6 +16,11 @@ module AudienceLimitable
   # item:  if this option is available for items in index boxes or other elements
   HIDDEN = 4
   VISIBLE = 0
+  WORLD = 0
+  INTRANET = 1
+  AUTENTICATED = 2
+  OWNER = 3
+  NOBPDY = 4
   ALL_VISIBILITY_OPTIONS = [
     { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
     { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
@@ -33,19 +38,16 @@ module AudienceLimitable
   extend ActiveSupport::Concern
 
   included do
-    def self.audience_limit
+    def self.audience_limit(strategy = nil)
       # Reminder: ranges do not include the upper limit
       # scope :world_visible, -> { where(visibility: 0) }
       # scope :intranet_visible, -> { where(visibility: 0...2) }
       # scope :auth_visible, -> { where(visibility: 0...3) }
       # scope :owner_visible, -> { where(visibility: 0...4) }
+      strategy ||= (self <= Box ? :box : :item)
       scope :for_audience, ->(audience) { where(visibility: 0...(audience + 1)) }
-      # Ensure visibility defaults to the least visible option
-      if self <= Box
-        audience_limit_methods(:box)
-      else
-        audience_limit_methods(:item)
-      end
+      scope :visible, -> { where(visibility: VISIBLE) } if strategy == :item
+      audience_limit_methods(strategy)
     end
 
     def self.audience_limit_property(property, strategy: :box)
@@ -73,6 +75,12 @@ module AudienceLimitable
         end
         define_method("#{vismethod}_option") do
           ITEM_VIS_OPTIONS_DICT[send(vismethod)]
+        end
+        define_method("#{visprefix}hidden?") do
+          send("#{visprefix}visibility") >= HIDDEN
+        end
+        define_method("#{visprefix}visible?") do
+          send("#{visprefix}visibility") == VISIBLE
         end
       else
         raise "Invalid strategy #{strategy}"

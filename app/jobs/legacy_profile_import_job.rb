@@ -29,6 +29,14 @@ class LegacyProfileImportJob < ApplicationJob
     v == "1" ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
   end
 
+  def visible_to_visibility(v)
+    v ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
+  end
+
+  def hidden_to_visibility(v)
+    v ? AudienceLimitable::HIDDEN : AudienceLimitable::VISIBLE
+  end
+
   def perform(scipers)
     achie_cats = SelectableProperty.achievement_category.index_by(&:label)
     award_cats = SelectableProperty.award_category.index_by(&:label)
@@ -325,8 +333,8 @@ class LegacyProfileImportJob < ApplicationJob
                                unit_it: a.unit_label_en,
                                unit_de: a.unit_label_en,
                                role: a.position,
-                               visible: pref.visible?,
-                               visible_addr: pref.visible_addr?,
+                               visibility: visible_to_visibility(pref.visible?),
+                               address_visibility: visible_to_visibility(pref.visible_addr?),
                              })
     end
   end

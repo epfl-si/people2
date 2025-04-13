@@ -40,8 +40,8 @@ class AccredTest < ActiveSupport::TestCase
 
   test "hidden_addr? should return correct value" do
     all_accreds.each do |accred|
-      expected_hidden_addr = !accred.visible_addr?
-      assert_equal expected_hidden_addr, accred.hidden_addr?,
+      expected_hidden_addr = !accred.address.visible?
+      assert_equal expected_hidden_addr, accred.address_hidden?,
                    "Accred with ID #{accred.id} hidden_addr? method should return #{expected_hidden_addr}"
     end
   end
