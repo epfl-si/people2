@@ -4,6 +4,9 @@ class Accred < ApplicationRecord
   attr_reader :data
 
   include Translatable
+  include AudienceLimitable
+  audience_limit(:box)
+  audience_limit_property('address', strategy: :item)
 
   translates :unit
   serialize :role, coder: Position
@@ -17,8 +20,8 @@ class Accred < ApplicationRecord
   validate :at_least_one_visible, on: :update
 
   DEFAULTS = {
-    visible: true,
-    visible_addr: true,
+    visibility: AudienceLimitable::WORLD,
+    address_visibility: AudienceLimitable::WORLD,
   }.freeze
 
   def self.for_sciper(sciper)
@@ -37,17 +40,10 @@ class Accred < ApplicationRecord
     "#{sciper}:#{unit_id}"
   end
 
-  def hidden?
-    !visible?
-  end
-
-  def hidden_addr?
-    !visible_addr?
-  end
-
+  # TODO: to be rewritten in case we want to switch to :box visibility
   def at_least_one_visible
-    return true unless visible_changed? && !visible?
-    return true unless profile.accreds.where(visible: true).count < 2
+    return true unless visibility_changed? && !visible_by?(AudienceLimitable::WORLD)
+    return true unless profile.accreds.for_audience(AudienceLimitable::WORLD).count < 2
 
     errors.add(:visible, "cannot_hide_all_accreds")
     false

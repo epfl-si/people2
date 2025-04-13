@@ -168,25 +168,28 @@ class Accreditation
   end
 
   def visible?
+    visible_by?(AudienceLimitable::WORLD)
+  end
+
+  def visible_by?(audience = AudienceLimitable::WORLD)
     # There are actually 3 level of visibility check fir accreditations.
     # 1. must have the 'botweb' property (self.for_sciper)
     # 2. (done here) purely teaching position can be hidden
     # 3. (done in prefs) user can decide to hide certains accreds
-    unless defined?(@visible)
-      @visible =
-        botweb? &&
-        (prefs.present? ? prefs.visible? : true) &&
-        !(Rails.configuration.hide_teacher_accreds && @position.enseignant?)
-    end
-    @visible
+    @visibility ||= {}
+    return @visibility[audience] if @visibility.key?(audience)
+
+    @visibility[audience] = botweb? &&
+                            (prefs.present? ? prefs.visible_by?(audience) : true) &&
+                            !(Rails.configuration.hide_teacher_accreds && @position.enseignant?)
   end
 
-  def hidden?
-    !visible?
-  end
+  # def hidden?
+  #   !visible?
+  # end
 
   def hidden_addr?
-    prefs.present? && prefs.hidden_addr?
+    prefs.present? && prefs.address_hidden?
   end
 
   def order
