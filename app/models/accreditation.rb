@@ -55,7 +55,7 @@ class Accreditation
   end
 
   def accreditors
-    @accreditors ||= Accreditor.for_sciper(@sciper)
+    @accreditors ||= Accreditor.for_sciper(@sciper).uniq(&:sciper)
   end
 
   # TODO: this is still suboptimal but presently I don't know how to improve it.
