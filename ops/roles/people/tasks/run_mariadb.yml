@@ -49,7 +49,7 @@
     volumes:
       - "{{ people.mariadb.data }}:/var/lib/mysql"
       - "{{ people.mariadb.init }}:/docker-entrypoint-initdb.d"
-    restart_policy: unless-stopped
+    restart_policy: always
     state: started
     network: 
       # - mariadb

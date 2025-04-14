@@ -15,6 +15,7 @@
 <p>
   <small>
     <%= link_to "vCard", person_path(format: "vcf") %>
+    <%= link_to "Atari", "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
   </small>
 </p>
 </div>

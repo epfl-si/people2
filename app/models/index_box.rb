@@ -42,4 +42,8 @@ class IndexBox < Box
   def content_for?(audience_level = 0, _primary_locale = nil, _fallback_locale = nil)
     visible_items(audience_level).count.positive?
   end
+
+  def user_destroyable?
+    !content? && super
+  end
 end

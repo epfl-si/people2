@@ -45,7 +45,12 @@ class Box < ApplicationRecord
     visible_by?(audience_level)
   end
 
+  def user_destroyable?
+    !standard?
+  end
+
   delegate :sciper, to: :profile
+  delegate :standard?, to: :model
 end
 
 # Subclasses in STI need to be on their own file because otherwise

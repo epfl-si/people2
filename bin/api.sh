@@ -7,13 +7,12 @@
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
 BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 
-ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)
-AUTH="-H 'authorization: Basic ${ENCPAS}'"
-# AUTH="--basic --user 'people:${EPFLAPI_PASSWORD}'"
+# ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)
+# AUTH="-H 'authorization: Basic ${ENCPAS}'"
+AUTH="--basic --user people:${EPFLAPI_PASSWORD}"
 
 apiget() {
   url="$1"
-  # echo curl -X GET $AUTH -H 'accept: application/json' "$url"
   curl -X GET $AUTH -H 'accept: application/json' "$url" 2>/dev/null
 }
 

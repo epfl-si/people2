@@ -68,6 +68,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 WORKDIR /rails
 # Note that Gemfile.lock does not necessarily exist
 COPY Gemfile Gemfile.lock* ./
+COPY vendor/gems ./vendor/gems
 RUN gem update --system 3.5.11 && bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 

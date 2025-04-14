@@ -1,7 +1,7 @@
 <% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
 
 <section id="name_section">
-  <h2><%= t "common.editing_profile", name: @person.name.display %></h2>
+  <h2><%= t "common.editing_profile", name: @person.name.display %> / <%= @person.sciper %></h2>
 </section>
 
 <section id="pictures_section">
@@ -11,6 +11,12 @@
 <p data-controller="social"></p>
 <hr>
 
+<div>
+
+<!--
+TODO: remove this dead code. We keep it just for a little while because
+      I espect that it might be reaccepted as it already happened for
+      other things...
 <div
   id="tr_switchable"
   data-controller="language"
@@ -40,13 +46,17 @@
       }
     ) %>    
   </nav>
+-->
 
   <%=
     if @person.name.customizable?
       render "name", profile: @profile, person: @person 
     end
   %>
-  <%= render "form", profile: @profile %>
+  <section id="profile_section">
+    <%= render "form", profile: @profile %>
+  </section>
+
 
   <hr>
   <section id="accreds_section">

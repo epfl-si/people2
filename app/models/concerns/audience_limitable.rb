@@ -19,8 +19,8 @@ module AudienceLimitable
     { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
     { label: 'intranet', icon: 'home',       value: 1, box: true,  item: false },
     { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false },
-    { label: 'draft',    icon: 'edit-3',     value: 3, box: true,  item: false },
-    { label: 'hidden',   icon: 'eye-off',    value: 4, box: true,  item: true }
+    { label: 'draft',    icon: 'edit-3',     value: 3, box: false, item: false },
+    { label: 'hidden',   icon: 'eye-off',    value: 4, box: true, item: true }
   ].map { |h| OpenStruct.new(h) }.freeze
   BOX_VIS_OPTIONS  = ALL_VISIBILITY_OPTIONS.select(&:box)
   ITEM_VIS_OPTIONS = ALL_VISIBILITY_OPTIONS.select(&:item)

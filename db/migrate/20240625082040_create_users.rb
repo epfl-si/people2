@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.string :name
       t.string :provider
       t.string :sciper
+      t.string :username
       t.timestamps
     end
     add_index :users, :sciper, unique: true

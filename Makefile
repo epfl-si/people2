@@ -130,15 +130,17 @@ about:
 ## ------------------------------------------------------------- Container image
 .PHONY: build rebuild
 
-## build the web app and atela container
-build: envcheck $(ELE_FILES) #codecheck
+## build the web app docker image (set REBUNDLE=yes for refreshing Gemfile.lock)
+build: envcheck $(ELE_FILES)
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
 	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
 
 ## build image discarding all cached layers
 rebuild: envcheck
+	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build --no-cache
+	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
 
 
 
@@ -187,7 +189,6 @@ patch:
 	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
 	exit 1
 
-
 .PHONY: elements elements_build
 
 ## Rebuild EPFL elements and copy here
@@ -198,7 +199,7 @@ elements: elements_build
 # 	cd $(ELE_SRCDIR)  && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn dist
 
 elements_build: $(ELE_SRCDIR)
-	cd $(ELE_SRCDIR) && source ~/.nvm/nvm.sh && nvm use 18 && yarn run dist
+	cd $(ELE_SRCDIR) && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn install && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn dist
 
 $(ELE_SRCDIR):
 	cd $(dir $(ELE_SRCDIR)) && git clone git@github.com:epfl-si/elements.git
@@ -261,6 +262,7 @@ refresh_webmocks:
 migrate: dcup
 	docker compose exec webapp ./bin/rails db:migrate
 
+## retrive struct files from keybase
 structs:
 	rsync -av $(KBPATH)/structs/ tmp/structs/
 
@@ -289,7 +291,8 @@ nukestorage:
 reseed:
 	make nukedb
 	make nukestorage
-	rm db/people_schema.rb
+	rm -f db/people_schema.rb
+	rm -f db/schema.rb
 	sleep 2
 	make seed
 
