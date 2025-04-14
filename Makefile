@@ -355,7 +355,7 @@ restore_dinfo:
 .PHONY: nata_patch nata_reseed
 
 ## patch the source code of the app mounted on the test server for Natalie
-nata_patch: patch
+nata_patch:
 	cd ops && ./possible.sh --test -t people.src.patch
 
 ## reinitialize the test server with data from development workstations
