@@ -14,9 +14,13 @@ class User < ApplicationRecord
     sciper = data["uniqueid"] || data["sciper"] || Person.find(email)&.sciper
     raise "Could not determine user sciper" if sciper.blank?
 
+    username = data['username'] || data['gaspar'] || data['sciper']
+    raise "Could not determine user username" if username.blank?
+
     User.create_with(
       email: email,
       name: "#{data['given_name']} #{data['family_name']}",
+      username: username,
       provider: 'oidc'
     ).find_or_create_by(sciper: sciper)
   end

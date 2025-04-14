@@ -87,26 +87,26 @@ class Social < ApplicationRecord
       icon: 'linkedin',
       re: %r{^[a-z][a-z0-9-]+/?$}
     },
-    {
-      tag: 'github',
-      # img: 'github.png',
-      url_pattern: 'https://github.com/XXX',
-      placeholder: 'username',
-      label: 'GitHub',
-      default_position: 5,
-      icon: 'github',
-      re: /^[A-Za-z0-9_.-]+$/
-    },
-    {
-      tag: 'stack_overflow',
-      # img: 'stack-overflow.svg',
-      url_pattern: 'https://stackoverflow.com/users/XXX',
-      placeholder: '12345678',
-      label: 'Stack Overflow',
-      default_position: 6,
-      icon: 'icon-stackoverflow',
-      re: /^[0-9]+$/
-    },
+    # {
+    #   tag: 'github',
+    #   # img: 'github.png',
+    #   url_pattern: 'https://github.com/XXX',
+    #   placeholder: 'username',
+    #   label: 'GitHub',
+    #   default_position: 5,
+    #   icon: 'github',
+    #   re: /^[A-Za-z0-9_.-]+$/
+    # },
+    # {
+    #   tag: 'stack_overflow',
+    #   # img: 'stack-overflow.svg',
+    #   url_pattern: 'https://stackoverflow.com/users/XXX',
+    #   placeholder: '12345678',
+    #   label: 'Stack Overflow',
+    #   default_position: 6,
+    #   icon: 'icon-stackoverflow',
+    #   re: /^[0-9]+$/
+    # },
     # TODO: the mastodon address needs to be something like @instance@username
     #       and the URL have to be recomputed accordingly.
     #       Alternatively, we can limit to epfl instance social.epfl.ch
@@ -120,36 +120,36 @@ class Social < ApplicationRecord
       default_position: 7,
       icon: 'icon-mastodon',
       re: /^[A-Za-z0-9_]+$/
-    },
-    {
-      tag: 'facebook',
-      # img: 'facebook.png',
-      url_pattern: 'https://www.facebook.com/XXX',
-      placeholder: 'john.doe',
-      label: 'Facebook',
-      default_position: 8,
-      icon: 'icon-facebook',
-      re: /^[A-Za-z0-9.]+$/
-    },
-    {
-      tag: 'instagram',
-      # img: 'instagram.png',
-      url_pattern: 'https://www.instagram.com/XXX',
-      placeholder: '@username',
-      label: 'Instagram',
-      default_position: 9,
-      icon: 'instagram',
-      re: /^[A-Za-z0-9._]+$/
-    },
-    {
-      tag: 'muskidiocy',
-      url_pattern: 'https://x.com/XXX',
-      placeholder: 'username',
-      label: 'X (Twitter)',
-      default_position: 99,
-      icon: 'icon-x',
-      re: /^[A-Za-z0-9_]+$/
     }
+    # {
+    #   tag: 'facebook',
+    #   # img: 'facebook.png',
+    #   url_pattern: 'https://www.facebook.com/XXX',
+    #   placeholder: 'john.doe',
+    #   label: 'Facebook',
+    #   default_position: 8,
+    #   icon: 'icon-facebook',
+    #   re: /^[A-Za-z0-9.]+$/
+    # },
+    # {
+    #   tag: 'instagram',
+    #   # img: 'instagram.png',
+    #   url_pattern: 'https://www.instagram.com/XXX',
+    #   placeholder: '@username',
+    #   label: 'Instagram',
+    #   default_position: 9,
+    #   icon: 'instagram',
+    #   re: /^[A-Za-z0-9._]+$/
+    # },
+    # {
+    #   tag: 'muskidiocy',
+    #   url_pattern: 'https://x.com/XXX',
+    #   placeholder: 'username',
+    #   label: 'X (Twitter)',
+    #   default_position: 99,
+    #   icon: 'icon-x',
+    #   re: /^[A-Za-z0-9_]+$/
+    # }
   ].freeze
 
   RESEARCH_IDS = RESEARCH_IDS_LIST.index_by { |v| v[:tag] }.freeze

@@ -15,4 +15,5 @@ class ApplicationPolicy < ActionPolicy::Base
   #  def owner?
   #    record.user_id == user.id
   #  end
+  authorize :user, allow_nil: true
 end

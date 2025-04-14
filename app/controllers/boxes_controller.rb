@@ -7,7 +7,7 @@ class BoxesController < ApplicationController
   # GET /profiles/:profile_id/sections/:section_id/boxes
   def index
     @section = Section.find(params.require(:section_id))
-    @boxes = @profile.boxes.includes(:section).where(section_id: @section.id)
+    @boxes = @profile.boxes.includes(:section).where(section_id: @section.id).order(:position)
     @optional_boxes = @profile.available_optional_boxes(@section)
   end
 
@@ -87,11 +87,30 @@ class BoxesController < ApplicationController
 
   # DELETE /boxes/1 or /boxes/1.json
   def destroy
-    @box.destroy
-
-    respond_to do |format|
-      format.html { redirect_to boxes_url, notice: "Box was successfully destroyed." }
-      format.json { head :no_content }
+    if @box.user_destroyable?
+      respond_to do |format|
+        if @box.destroy
+          flash.now[:success] = "flash.box.success.deleted"
+          format.turbo_stream
+          format.json { head :no_content }
+        else
+          msg = "flash.box.error.destroy_unexpectedly_failed"
+          format.turbo_stream do
+            flash.now[:error] = msg
+            turbo_stream.replace("flash-messages", partial: "shared/flash")
+          end
+          format.json { render json: { error: msg }, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        msg = "flash.box.error.cannot_delete"
+        format.turbo_stream do
+          flash.now[:error] = msg
+          turbo_stream.replace("flash-messages", partial: "shared/flash")
+        end
+        format.json { render json: { error: msg }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -120,7 +139,7 @@ class BoxesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_box
-    @box = Box.includes(:profile).find(params[:id])
+    @box = Box.includes(:profile, :model).find(params[:id])
   end
 
   def extra_plist
