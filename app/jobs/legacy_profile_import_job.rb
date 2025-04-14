@@ -189,7 +189,7 @@ class LegacyProfileImportJob < ApplicationJob
       is_boxes.order(:ordre).each do |le|
         e = profile.infosciences.new(
           url: le.src,
-          visibility: le.visible? ? 0 : 2
+          visibility: visible_to_visibility(le.visible?)
         )
         e.title_en = le.sanitized_label if le.label.present?
         unless e.save
@@ -214,7 +214,7 @@ class LegacyProfileImportJob < ApplicationJob
             title: le.titrepub,
             journal: le.revuepub,
             authors: le.auteurspub,
-            visibility: 0
+            visibility: AudienceLimitable::VISIBLE
           )
           e.url = le.urlpub if le.urlpub.present?
           unless e.save
@@ -234,7 +234,7 @@ class LegacyProfileImportJob < ApplicationJob
           e = profile.educations.new(
             year_begin: le.year_begin,
             year_end: le.year_end,
-            visibility: 0
+            visibility: AudienceLimitable::VISIBLE
           )
           e.send("title_#{lang}=", le.title)
           e.send("field_#{lang}=", le.field) if le.field.present?
@@ -256,7 +256,7 @@ class LegacyProfileImportJob < ApplicationJob
           e = profile.experiences.new(
             year_begin: le.year_begin,
             year_end: le.year_end,
-            visibility: 0
+            visibility: AudienceLimitable::VISIBLE
           )
           e.send("title_#{lang}=", le.title)
           e.send("field_#{lang}=", le.field) if le.field.present?
@@ -276,7 +276,7 @@ class LegacyProfileImportJob < ApplicationJob
           lang = le.description_lang? || fallback_lang if detect_lang_with_ai
           e = profile.achievements.new(
             year: le.year,
-            visibility: 0
+            visibility: AudienceLimitable::VISIBLE
           )
           e.send("description_#{lang}=", le.description)
           e.url = le.url if le.url.present?
@@ -298,7 +298,7 @@ class LegacyProfileImportJob < ApplicationJob
         lang = le.title_lang? || fallback_lang if detect_lang_with_ai
         e = profile.awards.new(
           year: le.year,
-          visibility: 0
+          visibility: AudienceLimitable::VISIBLE
         )
         e.send("title_#{lang}=", le.title)
         e.issuer = le.grantedby if le.grantedby.present?
