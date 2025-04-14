@@ -102,6 +102,12 @@ fr:
   flash:
     accred:
       cannot_hide_all: "Impossible de masquer toutes les accréditations"
+    box:
+      error:
+        cannot_delete: "Standard and boxes with content cannot be deleted"
+        destroy_unexpectedly_failed: "Something went wrong while deleting the box"
+      success:
+        deleted: "Box successfully deleted"
     generic:
       error:
         create: "Erreur lors de la création de l'enregistrement"
