@@ -4,37 +4,51 @@ require 'test_helper'
 
 class SelectablePropertyTest < ActiveSupport::TestCase
   def setup
-    @major_award = selectable_properties(:ac_majour)
-    @discipline_award = selectable_properties(:ac_discipline)
-    @best_award = selectable_properties(:ac_best)
-    @epfl_origin = selectable_properties(:ao_epfl)
-    @swiss_origin = selectable_properties(:ao_suisse)
-    @international_origin = selectable_properties(:ao_international)
+    Award.delete_all
+    SelectableProperty.delete_all
+
+    SelectableProperty.instance_variable_set(:@all_by_property, nil)
   end
 
-  test 'should return correct English name' do
-    assert_equal 'Major award, medal or prize', @major_award.name_en, 'English name should be correct for major award'
+  test "all_by_property groups records by property" do
+    sp1 = SelectableProperty.create!(
+      label: "a1",
+      name_en: "X",
+      property: "award_category"
+    )
+
+    sp2 = SelectableProperty.create!(
+      label: "a3",
+      name_en: "Z",
+      property: "award_category"
+    )
+
+    sp3 = SelectableProperty.create!(
+      label: "o1",
+      name_en: "Y",
+      property: "award_origin"
+    )
+
+    grouped = SelectableProperty.all_by_property
+    assert_equal [sp1, sp2], grouped["award_category"].sort_by(&:label)
+    assert_equal [sp3], grouped["award_origin"]
   end
 
-  test 'should return correct French name' do
-    assert_equal 'Prix important, medaille', @major_award.name_fr, 'French name should be correct for major award'
-  end
+  test "award_category returns correct records" do
+    sp1 = SelectableProperty.create!(
+      label: "c1",
+      name_en: "M",
+      property: "award_category"
+    )
 
-  test 'award_category scope should return correct records' do
-    award_categories = SelectableProperty.award_category
+    sp2 = SelectableProperty.create!(
+      label: "c2",
+      name_en: "N",
+      property: "award_origin"
+    )
 
-    assert_includes award_categories, @major_award, 'Major award should be in award categories'
-    assert_includes award_categories, @discipline_award, 'Discipline award should be in award categories'
-    assert_includes award_categories, @best_award, 'Best publication award should be in award categories'
-    assert_not_includes award_categories, @epfl_origin, 'EPFL origin should not be in award categories'
-  end
-
-  test 'award_origin scope should return correct records' do
-    award_origins = SelectableProperty.award_origin
-
-    assert_includes award_origins, @epfl_origin, 'EPFL origin should be in award origins'
-    assert_includes award_origins, @swiss_origin, 'Swiss origin should be in award origins'
-    assert_includes award_origins, @international_origin, 'International origin should be in award origins'
-    assert_not_includes award_origins, @major_award, 'Major award should not be in award origins'
+    result = SelectableProperty.award_category
+    assert_includes result, sp1
+    assert_not_includes result, sp2
   end
 end

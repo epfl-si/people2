@@ -20,7 +20,9 @@ class Structure < ApplicationRecord
   end
 
   def check_sections_count_match
-    sections.count == data.count
+    return if sections.count == data.count
+
+    errors.add(:data, "sections count does not match data entries")
   end
 
   def store(person)
@@ -39,7 +41,7 @@ class Structure < ApplicationRecord
     sections.each do |f|
       next unless person.match_position_filter?(f.filter)
 
-      person.select_posistions!(f.filter) unless f.filter.catch_all?
+      person.select_positions!(f.filter) unless f.filter.catch_all?
       f.items << person
       return true
     end

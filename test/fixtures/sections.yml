@@ -46,3 +46,19 @@ teaching:
   show_title: true
   create_allowed: true
   position: 4
+
+
+# ---------------------------------------TEST
+main_section:
+  id: 1
+  title_en: "Main Section"
+  title_fr: "Section Principale"
+  title_it: "Sezione Principale"
+  title_de: "Hauptbereich"
+  label: "main"
+  zone: "top"
+  position: 1
+  show_title: true
+  create_allowed: true
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>

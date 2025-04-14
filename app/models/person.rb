@@ -254,7 +254,7 @@ class Person
     end
   end
 
-  def select_posistions!(filter)
+  def select_positions!(filter)
     fa = accreditations.select do |a|
       a.position.match_legacy_filter?(filter)
     end
