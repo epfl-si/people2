@@ -45,6 +45,7 @@ module People
     config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', true)
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
     config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', false)
+    config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', false)
     routes.default_url_options[:host] = config.app_hostname
 
     config.available_languages = %w[en fr]

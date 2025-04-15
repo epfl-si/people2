@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   match '/404', via: :all, to: 'errors#not_found'
   match '/422', via: :all, to: 'errors#unprocessable_content'
 
+  unless Rails.configuration.enable_direct_uploads
+    match "/rails/active_storage/direct_uploads", to: proc { [404, {}, ['Not Found']] }, via: :all
+  end
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
