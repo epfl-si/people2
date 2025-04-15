@@ -24,6 +24,15 @@ module ProfilesHelper
     safe_join(content)
   end
 
+  def rich_text_input(form, property)
+    cls = if Rails.configuration.enable_direct_uploads
+            "rich_text_input"
+          else
+            "rich_text_input disable-trix-file-attachment"
+          end
+    tag.div form.rich_text_area(property), class: cls
+  end
+
   def translation_list(profile)
     profile.translations.join(" ")
   end

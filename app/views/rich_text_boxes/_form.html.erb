@@ -12,7 +12,7 @@
   <% end %>
   <div class="form-group">
     <%= form.label Box.human_attribute_name(:content_fr) %>
-    <div class="rich_text_input"><%= form.rich_text_area :content_fr %></div>
+    <%= rich_text_input(form, :content_fr) %>
   </div>
 
   <% unless box.locked_title? %>
@@ -23,7 +23,7 @@
   <% end %>
   <div class="form-group">
     <%= form.label Box.human_attribute_name(:content_en) %>
-    <div class="rich_text_input"><%= form.rich_text_area :content_en %></div>
+    <%= rich_text_input(form, :content_en) %>
   </div>
 
   <%= form_actions form, box, without_cancel: true %>
