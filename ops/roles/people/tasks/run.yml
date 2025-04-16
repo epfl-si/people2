@@ -62,6 +62,9 @@
 
       SUPERUSERS: "{{ _secrets.people.superusers }}"
 
+      # Migration Phase
+      LEGACY_SERVER_URL: "{{ people.legacy_server_url }}"
+      ENABLE_ADOPTION: "{{ people.enable_adoption }}"
 
       # OIDC_HOSTNAME: "{{ hosts.keycloak }}"
       # OIDC_REALM: "{{ keycloak.realm }}"
