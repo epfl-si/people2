@@ -58,7 +58,6 @@ fr:
     update_rich_text_box: "Mettre à jour la boîte"
     update_social: "Modifier le réseau social"
     update_social: "Confirm change to %{label}"
-
     upload_image: "Télécharger l'image"
     validate: "Valider"
   admin_data:
@@ -78,6 +77,11 @@ fr:
   common:
     not_available: non disponible
     editing_profile: "Modification du profile de %{name}"
+  dev:
+    action:
+      abandon: abandon
+      adopt: adopt
+      revert: revert
   education: 
     directedby: "Dirigé par : "
   error:

@@ -6,11 +6,9 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def update?
-    return false if user.blank?
-
     # `user` is a performing subject,
     # `record` is a target object (the profile in this case)
     # in order fastest -> slowest
-    (user.sciper == record.sciper) || user.superuser? || user.admin_for_profile?(record)
+    owner_or_su? || admin_for?(record)
   end
 end

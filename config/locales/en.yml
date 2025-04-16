@@ -93,7 +93,11 @@ en:
   common:
     not_available: NA
     editing_profile: "Editing %{name}'s profile."
-
+  dev:
+    action:
+      abandon: abandon
+      adopt: adopt
+      revert: revert
   error:
     one: "Error"
     other: "Errors"

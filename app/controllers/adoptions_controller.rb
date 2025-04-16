@@ -4,6 +4,7 @@ class AdoptionsController < ApplicationController
   # PATCH/PUT /awards/1 or /awards/1.json
   def update
     @adoption = Adoption.find(params[:id])
+    authorize! @adoption, to: :update?
 
     respond_to do |_format|
       if @adoption.update(adoption_params)
