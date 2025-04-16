@@ -1,4 +1,17 @@
-<% fake_breadcrumbs [t("action.edit_profile"), @person.name.display] %>
+<% if Rails.configuration.enable_adoption %>
+<% content_for :menu do %>
+  <%= link_to(
+    icon_text('check-circle', 'action.preview'), 
+    preview_path(sciper_or_name: @person.email_user), 
+    class: "btn btn-link", target: '_blank'
+  ) %>
+<% end %>
+<% end %>
+
+<% fake_breadcrumbs [
+  t("action.edit_profile"), 
+  link_to(@person.name.display, person_path(sciper_or_name: @person.email_user))
+] %>
 
 <section id="name_section">
   <h2><%= t "common.editing_profile", name: @person.name.display %> / <%= @person.sciper %></h2>

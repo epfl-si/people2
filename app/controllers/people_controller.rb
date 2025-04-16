@@ -2,12 +2,24 @@
 
 class PeopleController < ApplicationController
   # protect_from_forgery
-  allow_unauthenticated_access only: :show
+  allow_unauthenticated_access only: [:show]
   layout 'public'
 
   def show
     r = SpecialRedirect.for_sciper_or_name(params[:sciper_or_name])
     redirect_to(r.url, allow_other_host: true) and return if r.present?
+
+    if Rails.configuration.enable_adoption
+      m = Adoption.not_yet(params[:sciper_or_name])
+      if m.present?
+        respond_to do |format|
+          format.html { render plain: m.content(I18n.locale) }
+        end
+        # render plain: content
+        # # render body: content
+        return
+      end
+    end
 
     set_show_data
 
@@ -22,7 +34,26 @@ class PeopleController < ApplicationController
     end
   end
 
+  # TODO: remove after migration from legacy
+  if Rails.configuration.enable_adoption
+    def preview
+      @adoption = Adoption.not_yet(params[:sciper_or_name])
+      if @adoption
+        @special_partial = 'adopt'
+        set_show_data
+        render 'people/show'
+      else
+        redirect_to action: :show
+      end
+    end
+  end
+
   private
+
+  # TODO
+  def migrated?(_sciper_or_name)
+    rand(1..10) < 6
+  end
 
   def set_show_data
     # ActiveSupport::Notifications.instrument('set_base_data') do

@@ -20,7 +20,7 @@ module Ldap
     def self.find(opts = {})
       o = {
         base: Base.base,
-        filter: Net::LDAP::Filter.eq(:objectClass, "person")
+        filter: Net::LDAP::Filter.eq(:objectClass, "person") & Net::LDAP::Filter.ne("ou", "services")
       }.merge(opts)
       l = Base.ldap.search(o)
       return if l.blank?

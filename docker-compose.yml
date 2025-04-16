@@ -119,11 +119,13 @@ services:
       ATELA_KEY: ${ATELA_KEY}
       EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
+      LEGACY_SERVER_URL: ${LEGACY_SERVER_URL:-https://personnes.epfl.ch}
       OFFLINE_CACHEDIR: "/srv/filecache"
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-no}
       ADMIN_SCIPERS: ${ADMIN_SCIPERS}
       USE_LOCAL_ELEMENTS: true
+      ENABLE_ADOPTION: true
 
       OLLAMA_URL: http://${DOCKER_IP}:11434
 
@@ -143,6 +145,12 @@ services:
       - storage:/srv/app/storage
       - filecache:/srv/filecache
     labels:
+      # There is no way to do this with labels. :_(
+      # - "traefik.http.services.legacypeople.loadbalancer.servers.url=http://dinfo11.epfl.ch/"
+      # - "traefik.http.services.legacypeople.headers='Host: people.epfl.ch'"
+      # - "traefik.http.routes.legacypeople.rule=Host('people.${DOMAIN:-dev.jkldsa.com}') && PathPrefix('/legacy')"
+      # - "traefik.http.routes.legacypeople.service=legacypeople"
+
       - traefik.http.middlewares.cgibin.replacepathregex.regex=^/cgi-bin/(.*)
       - traefik.http.middlewares.cgibin.replacepathregex.replacement=/api/v0/$$1
 
