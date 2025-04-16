@@ -25,9 +25,12 @@ class SessionsController < ApplicationController
   # instead of asking username/password we just redirect to the auth server
   def new
     # If I came from this app, then we go back after login
-    b = URI(request.referer)
-    r = URI(root_url)
-    session[:return_to_after_authenticating] = request.referer if b.host == r.host && b.path.start_with?(r.path)
+    rf = request.referer
+    if rf.present?
+      b = URI(rf)
+      r = URI(root_url)
+      session[:return_to_after_authenticating] = rf if b.host == r.host && b.path.start_with?(r.path)
+    end
 
     cfg = Rails.application.config_for(:oidc)
     query = {
