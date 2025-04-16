@@ -76,7 +76,8 @@ all:
     SILENT_TRANSLATION_ERR: "yes"
     # PEOPLE_VERSION: latest
 
-    USE_LOCAL_ELEMENTS: "yes"
+    USE_LOCAL_ELEMENTS: true
+    ENABLE_ADOPTION: true
 
     # ---                                                                 whoami
     WHOAMI_HOSTNAME: peoami.fsd.team

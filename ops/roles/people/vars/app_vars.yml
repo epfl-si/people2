@@ -9,6 +9,8 @@ people:
   srcdir: "{{ PEOPLE_SRCDIR }}"
   storage: "{{ DATA_BASEDIR }}/people/storage"
   use_local_elements: "{{ USE_LOCAL_ELEMENTS | default(false) }}"
+  legacy_server_url: "{{ LEGACY_SERVER_URL | default('https://personnes.epfl.ch') }}"
+  enable_adoption: "{{ ENABLE_ADOPTION | default(false) }}"
   mariadb:
     data: "{{ DATA_BASEDIR }}/people/mariadb/data"
     init: "{{ DATA_BASEDIR }}/people/mariadb/init"
