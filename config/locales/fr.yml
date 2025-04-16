@@ -5,6 +5,9 @@ fr:
   it: Italiano
   de: Deutch
   messages:
+    adoption_explain: >
+      Your are watching you future profile. Please click on the following
+      button to adopt it as your actual profile
     currently_selected_picture: Selection présente
     empty_orcid_help: >
       link will appear as soon as your orcid account is synchronized
@@ -20,6 +23,7 @@ fr:
     browse_image_file: "Sélectionner un nouveau fichier photo"
     cancel: "Annuler"
     confirm: "Êtes-vous sûr ?"
+    confirm_profile_adoption: "I adopt the new profile"
     create_award: "Créer une nouvelle récompense"
     create_education: "Créer une formation"
     create_experience: "Créer un parcours professionnel"

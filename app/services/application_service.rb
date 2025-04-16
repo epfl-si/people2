@@ -86,7 +86,11 @@ class ApplicationService
   # end
   def dofetch
     body = fetch_http
-    body.nil? ? nil : JSON.parse(body)
+    if body.nil?
+      nil
+    else
+      (@raw ? body : JSON.parse(body))
+    end
   end
 
   def dofetch!

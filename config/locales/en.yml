@@ -37,6 +37,9 @@ en:
   de: Deutch
 
   messages:
+    adoption_explain: >
+      Your are watching you future profile. Please click on the following
+      button to adopt it as your actual profile
     currently_selected_picture: Currently selected picture
     empty_orcid_help: >
       link will appear as soon as your orcid account is synchronized
@@ -52,6 +55,7 @@ en:
     admin_data: "Administrative data"
     browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
+    confirm_profile_adoption: "I adopt the new profile"
     delete: "delete"
     edit_profile: "Edit profile"
     edit_pictures: "Edit / Change photo"
