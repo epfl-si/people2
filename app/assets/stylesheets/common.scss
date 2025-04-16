@@ -39,3 +39,14 @@ details {
 details:hover {
   background-color: $gray-200;
 }
+
+.btn-mini {
+  padding: .187rem .38rem;
+  font-size: .6rem;
+  line-height: 1;
+  border-radius: 2px;
+}
+
+.form-inline {
+  display: inline;
+}

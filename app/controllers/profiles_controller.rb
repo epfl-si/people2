@@ -22,6 +22,10 @@ class ProfilesController < ApplicationController
     elsif params[:languages]
       render 'edit_languages'
     else
+
+      # TODO: remove after migration from legacy
+      @adoption = Adoption.where(sciper: @profile.sciper).first if Rails.configuration.enable_adoption
+
       @sections = Section.order(:position)
       @profile.complete_standard_boxes!
 

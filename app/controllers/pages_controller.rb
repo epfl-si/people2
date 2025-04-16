@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  allow_unauthenticated_access only: :devindex
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern
 
@@ -67,5 +66,9 @@ class PagesController < ApplicationController
       @data << OpenStruct.new(d)
     end
     EXTRAPROFILES.each { |d| @data << OpenStruct.new(d) }
+    scipers = @data.map(&:sciper).uniq
+    @adoptions =
+      Adoption.where(sciper: scipers)
+              .select { |a| allowed_to?(:update?, a) }.index_by(&:sciper)
   end
 end

@@ -1,4 +1,5 @@
-<% if Rails.configuration.enable_adoption %>
+<% # TODO: remove after migration from legacy %>
+<% if Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
 <% content_for :menu do %>
   <%= link_to(
     icon_text('check-circle', 'action.preview'), 
