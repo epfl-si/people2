@@ -80,6 +80,14 @@ Rails.application.routes.draw do
   get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
 
+  if Rails.configuration.enable_adoption
+    resources :adoptions, only: %i[update]
+    get '/:sciper_or_name/preview',
+        to: 'people#preview',
+        as: 'preview',
+        constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
+  end
+
   if Rails.env.production?
     root 'application#homepage'
   else

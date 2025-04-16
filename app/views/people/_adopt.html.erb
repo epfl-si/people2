@@ -1,0 +1,7 @@
+<p>
+	<%= t 'message.adoption_explain' %>.
+	<%= form_with(model: @adoption) do |form| %>
+	  <%= form.hidden_field :accepted, value: true %>
+	  <%= form.submit t('action.confirm_profile_adoption'), class: 'btn-confirm' %>
+	<% end %>
+</p>

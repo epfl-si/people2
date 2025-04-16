@@ -1,3 +1,14 @@
+<% if @special_partial.present? || @special_message.present? %>
+  <% content_for :special_message do %>
+   <div id='special'>
+      <% if @special_partial %>
+        <%= render @special_partial %>
+      <% else %>
+        <p><%= @special_message %></p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
 <% content_for :head do %>
     <!-- Open Graph / Facebook -->
   <meta property="og:type" content="profile">

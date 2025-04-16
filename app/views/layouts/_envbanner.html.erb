@@ -28,6 +28,9 @@
   #envbanner button:hover {
     background: #DDD;
   }
+  #envbanner a {
+    color: #FFF;
+  }
 </style>
 <script type="text/javascript">
 function toggle_console() {
@@ -61,6 +64,10 @@ $('#console').ready(function() {
       %>
       &#9679;
     <% end %>
+    <%= link_to "Notes", "/rails/info/notes" %>
+    &#9679;
+    <%= link_to "ERD", "/erd" %>
+    &#9679;
   <% end %>
 
   <%= Rails.env.to_s.upcase %>
