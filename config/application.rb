@@ -42,10 +42,17 @@ module People
     # Use as Rails.configuration.key
     config.superusers = ENV.fetch('SUPERUSERS', '').split(/\s*,\s*/).select { |v| v =~ /[0-9]{6}/ }
     config.intranet_re = Regexp.new(ENV.fetch('INTRANET_RE', '^128\.17[89]'))
-    config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', true)
+    config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', 'true') == 'true'
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
-    config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', false)
-    config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', false)
+    config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false') == 'true'
+    config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', 'no') == 'true'
+
+    # The next 3 params are just for the migration period
+    # TODO: remove after migration from legacy
+    config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').downcase == 'true'
+    config.legacy_server_url = ENV.fetch('LEGACY_SERVER_URL', 'https://personnes.epfl.ch/')
+    config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 2.days)
+
     routes.default_url_options[:host] = config.app_hostname
 
     config.available_languages = %w[en fr]

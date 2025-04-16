@@ -4,7 +4,7 @@ class ProfilesController < ApplicationController
   before_action :load_and_authorize_profile, except: [:new]
   before_action :load_person, except: %i[set_favorite_picture new]
 
-  # GET /person/:sciper/profile/new
+  # GET /people/:sciper/profile/new
   # Profiles will be saved to DB only if an authorised person click on the edit link
   def new
     @person = Person.find(params[:sciper])

@@ -53,3 +53,16 @@ button.close {
   margin-top: -0.2ex;
 }
 
+#special {
+  font-size: 18px;
+  position: static;
+  top: 0;
+  width: 100%;
+  padding: 2px 1em;
+  background-color: #B51F1F;
+  color: #fff;
+  font: fixed;
+  margin-bottom: 4px;
+  // height: 32px;  
+  z-index: 100;
+}

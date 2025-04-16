@@ -58,6 +58,7 @@
 /vendor/elements
 /vendor/gems/*
 /public/elements
+/public/erd.html
 
 # System specific crap
 .DS_Store
