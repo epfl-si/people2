@@ -29,8 +29,8 @@ module ApplicationHelper
   end
 
   # span with icon and text
-  def icon_text(icon, txt, translate: true)
-    content_tag(:span, icon(icon) + (translate ? t(txt) : txt))
+  def icon_text(icon, txt)
+    content_tag(:span, icon(icon) + txt)
   end
 
   def icon(icon)

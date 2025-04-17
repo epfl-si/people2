@@ -8,7 +8,7 @@
   <div class="list-group-item list-group-item-borderless">
     <%= turbo_frame_tag "new_education_form" do %>
       <div class="row justify-content-center">
-        <%= link_to icon_text('plus-circle', 'add') ,new_profile_education_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
+        <%= link_to icon_text('plus-circle', t('add')) ,new_profile_education_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
       </div>
     <% end %>
   </div>

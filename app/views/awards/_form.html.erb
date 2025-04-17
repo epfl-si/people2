@@ -1,28 +1,19 @@
-<% # award.errors.add :base, "This is a very severe error" %>
-<% # award.errors.add :base, "This is a less severe error" %>
-
 <%= form_with(model: [profile, award], local: false, class: "instaform") do |form| %>
   <% translations = (profile ||= award.profile).translations %>
   <%= render "shared/form_errors", item: award if award.errors.any? %>
-  <%= translated_text_fields(form, :title, translations) %>
+  <%= translated_text_fields(form, :title, translations: translations, label: ".title") %>
+  <%= single_text_field(form, :issuer, label: ".issuer") %>
+  <%= single_text_field(form, :url, label: ".url") %>
   <div class="form-group">
-    <%= form.label Award.human_attribute_name(:issuer) %>
-    <%= form.text_field :issuer, placeholder: "The Swedish Academy" %>
-  </div>
-  <div class="form-group">
-    <%= form.label Award.human_attribute_name(:year) %>
+    <%= form.label t('.year') %>
     <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
   </div>
   <div class="form-group">
-    <%= form.label Award.human_attribute_name(:url) %>
-    <%= form.url_field :url %>
-  </div>
-  <div class="form-group">
-    <%= form.label Award.human_attribute_name(:category) %>
+    <%= form.label t('.category') %>
     <%= form.collection_select :category_id, Award.categories, :id, :t_name %>
   </div>
   <div class="form-group">
-    <%= form.label Award.human_attribute_name(:origin) %>
+    <%= form.label t('.origin') %>
     <%= form.collection_select :origin_id, Award.origins, :id, :t_name %>
   </div>
   <%= form_actions(form, award) %>

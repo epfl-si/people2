@@ -1,9 +1,9 @@
 <li>
   <% if authenticated? %>
-    <%= button_to icon_text('user-check', 'action.sign_out'), session_path, method: :delete, data: { turbo: false }, class: "btn btn-link"
+    <%= button_to icon_text('user-check', t('action.sign_out')), session_path, method: :delete, data: { turbo: false }, class: "btn btn-link"
     %>
   <% else %>
-    <%= button_to icon_text('use', 'action.sign_in'), new_session_path,
+    <%= button_to icon_text('use', t('action.sign_in')), new_session_path,
       method: :get, data: { turbo: false }, class: "btn btn-link"
     %>
 <% end %>

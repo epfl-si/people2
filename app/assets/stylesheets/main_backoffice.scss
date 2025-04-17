@@ -134,7 +134,7 @@ summary .rpush {
 .instaform {
   padding: spacer(2);
 
-  input {
+  input, .field_with_errors input {
     @extend .form-control;
   }
 
@@ -155,7 +155,7 @@ summary .rpush {
 
   // TODO: for screen < sm the label should be on the left as we do not
   //       have multiple columns
-  label {
+  label, .field_with_errors label {
     text-align: right;
     padding-right: 1em;
   }

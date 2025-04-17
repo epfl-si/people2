@@ -9,17 +9,20 @@ module ProfilesHelper
     lb + fd
   end
 
-  def single_text_field(form, field, extracls = "")
+  def single_text_field(form, field, label: nil, extracls: "")
     a = field.to_sym
     oc = form.object.class
     tag.div(class: "form-group #{extracls}") do
-      form.label(oc.send(:human_attribute_name, a)) + form.text_field(a, placeholder: true)
+      form.label(t(label||field)) + form.text_field(a, placeholder: true)
     end
   end
 
-  def translated_text_fields(form, field, translations = %w[en fr])
+  def translated_text_fields(
+        form, field, label: nil,
+        translations: Rails.configuration.available_languages
+      )
     content = translations.map do |l|
-      single_text_field(form, "#{field}_#{l}", "tr_target_#{l}")
+      single_text_field(form, "#{field}_#{l}", label: "#{label||field}_#{l}", extracls: "tr_target_#{l}")
     end
     safe_join(content)
   end
@@ -31,6 +34,23 @@ module ProfilesHelper
             "rich_text_input disable-trix-file-attachment"
           end
     tag.div form.rich_text_area(property), class: cls
+  end
+
+  def single_rich_text_area(form, field, label: nil, extracls: "")
+    a = field.to_sym
+    tag.div(class: "form-group #{extracls}") do
+      form.label(t(label||field)) + rich_text_input(form, field)
+    end
+  end
+
+  def translated_rich_text_areas(
+        form, field, label: nil,
+        translations: Rails.configuration.available_languages
+      )
+    content = translations.map do |l|
+      single_rich_text_area(form, "#{field}_#{l}", label: "#{label||field}_#{l}", extracls: "tr_target_#{l}")
+    end
+    safe_join(content)
   end
 
   def translation_list(profile)

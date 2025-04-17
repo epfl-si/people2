@@ -1,0 +1,58 @@
+en:
+  activerecord:
+    # Model attribute names
+    attributes:
+      award: &attr
+        category: category
+        issuer: granted by
+        origin: origin
+        title: title
+        title_en: title (en)
+        title_fr: title (fr)
+        title_it: title (it)
+        title_de: title (de)
+        url: url
+        year: year
+    # Errors for the model attributes (those that are shown upon form submission)
+    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+    errors:
+      models:
+        award:
+          attributes:
+            category:
+            issuer:
+            origin:
+            title:
+            title_en:
+            title_fr:
+            title_it:
+            title_de:
+            url:
+            year:
+    models:
+      award: "award"
+  # Summary message for model errors
+  error:
+    award:
+      zero: "Something prevented this award to be updated (should now happen)"
+      one: "An error prevented this award to be updated"
+      other: "%{count} errors prevented this award to be updated"
+  helpers:
+    # Placeholders for the form text fields
+    placeholder:
+      award:
+        issuer: "Royal Swedish Academy of Sciences"
+        title_en: "Nobel Prize"
+        title_fr: "Prix Nobel"
+        title_it: "Premio Nobel"
+        title_de: "Nobelpreis"
+        url: "https://www.nobelprize.org/"
+  awards:
+    # Override model attribute names as they appear in form labels
+    form:
+      <<: *attr
+      title_en: "title in english"
+      title_fr: "title in french"
+      title_it: "title in italian"
+      title_de: "title in german"
+    index:

@@ -39,7 +39,7 @@
   <!-- TODO: decide if we show the edit profile link always or only to logged in users -->
   <% if @profile.present? %>
   <li>
-    <%= link_to icon_text("edit", "action.edit_profile"), @profile.persisted? ? edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper) %>
+    <%= link_to icon_text("edit", t("action.edit_profile")), @profile.persisted? ? edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper) %>
   </li>
   <% end %>
 <% end %>
