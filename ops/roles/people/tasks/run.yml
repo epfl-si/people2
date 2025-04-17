@@ -29,53 +29,56 @@
     name: peoapp
     image: "people:{{ people_image_version }}"
     env:
-      APP_HOSTNAME: "{{ hosts.people }}"
+      # ------------------------------ deployment-independent mandatory ENV vars
       RAILS_ENV: "{{ people.env }}"
-      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(hosts.people, '') }}"
-      DEFAULT_URL: "https://{{ hosts.people }}"
-      ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
-      ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
-      USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
-      # in dev cache is enabled only if the file "tmp/caching-dev.txt" exists
-      # if REDIS_CACHE is defined then redis is used otherwise default to memory
-      REDIS_CACHE: "{{ people.redis }}"
-      # I set this to get rid of an warning msg but it does not work.
-      # https://www.oracle.com/database/technologies/faq-nls-lang.html
-      # NLS_LANG: "en_US.UTF-8"
+      SUPERUSERS: "{{ _secrets.people.superusers }}"
 
+      # -------------------------------------------------- with ok default value
+      # APP_HOSTNAME: people.epfl.ch
+      APP_HOSTNAME: "{{ hosts.people }}"
+      # ENABLE_DIRECT_UPLOADS: false
+      # HIDE_ENS_ACCREDDS: true
+      # INTRANET_RE: '^128\.17[89]'
+      # RAILS_LOG_LEVEL: info in prod
+      # if REDIS_CACHE is defined then redis is used otherwise default to memory
+      # note that in dev cache is enabled only if presence of tmp/caching-dev.txt
+      REDIS_CACHE: "{{ people.redis }}"
+      # SEEDS_PATH: db/seeds/data
+      # USE_LOCAL_ELEMENTS: false
+      USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
+
+      # ----------------------------------------------------------- dev specific
+      # DEV_SEEDS_PATH: db/seeds_dev/data
+      FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
+      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(hosts.people, '') }}"
+      SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
+
+      # ---------------------------------------------------- transition specific
+      ENABLE_ADOPTION: "{{ people.enable_adoption }}"
+      LEGACY_SERVER_URL: "{{ people.legacy_server_url }}"
+      # LEGACY_PAGES_CACHE: 2days
+
+      # ----------------------------- read in yml files (will go to config maps)
+
+      # --> epflapi.yml
+      ATELA_KEY: "{{ _secrets.people.atela_key }}"
       CAMIPRO_PHOTO_KEY: "{{ _secrets.people.camipro_photo_key }}"
       CAMIPRO_PHOTO_HOST: "{{ CAMIPRO_PHOTO_HOST | default('camipro-photos.epfl.ch') }}"
-      ORACOURS_PWD: "{{ _secrets.people.oracle_cours_password }}"
-      ATELA_KEY: "{{ _secrets.people.atela_key }}"
+      ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
+      ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
       EPFLAPI_BACKEND_URL: "{{ EPFLAPI_BACKEND_URL | default('https://api.epfl.ch/v1') }}"
       EPFLAPI_PASSWORD: "{{ _secrets.people.epflapi_password }}"
-      OFFLINE_CACHEDIR: "/srv/filecache"
-      FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
-      SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
-      SILENT_TRANSLATION_ERR: "{{ SILENT_TRANSLATION_ERR | default('no') }}"
       ISA_URL: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
+      OFFLINE_CACHEDIR: "/srv/filecache"
 
-      # USE_KEYCLOAK: no
+      # # --> ollama.yml
+      # OLLAMA_URL: http://${DOCKER_IP}:11434
+
+      # --> oidc.yml
       ENTRA_TENANT_ID: "{{ _secrets.people.entra_oidc.tenant_id }}"
       ENTRA_CLIENT_ID: "{{ _secrets.people.entra_oidc.client_id }}"
       ENTRA_SECRET: "{{ _secrets.people.entra_oidc.secret }}"
-
-      SUPERUSERS: "{{ _secrets.people.superusers }}"
-
-      # Migration Phase
-      LEGACY_SERVER_URL: "{{ people.legacy_server_url }}"
-      ENABLE_ADOPTION: "{{ people.enable_adoption }}"
-
-      # OIDC_HOSTNAME: "{{ hosts.keycloak }}"
-      # OIDC_REALM: "{{ keycloak.realm }}"
-      # OIDC_IDENTIFIER: "{{ keycloak.identifier }}"
-      # TODO: The above OIDC_ are enough for keycloak. Might need the following 
-      # on other providers.
-      # OIDC_ISSUER:
-      # OIDC_AUTH_ENDPOINT:
-      # OIDC_TOKEN_ENDPOINT:
-      # OIDC_USERINFO_ENDPOINT:
-      # OIDC_LOGOUT_ENDPOINT:
+      USE_KEYCLOAK: no
 
     volumes: '{{ all_volumes }}'
     restart_policy: always

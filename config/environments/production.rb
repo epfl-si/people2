@@ -55,9 +55,10 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new($stdout)
-                                       .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  config.logger =
+    ActiveSupport::Logger.new($stdout)
+                         .tap  { |l| l.formatter = ::Logger::Formatter.new }
+                         .then { |l| ActiveSupport::TaggedLogging.new(l) }
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -69,7 +70,7 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-  if ENV['REDIS_CACHE'].present?
+  if ENV['REDIS_CACHE'].present? && !ENV['REDIS_CACHE'].match?(config.re_false)
     config.cache_store = :redis_cache_store, {
       url: ENV['REDIS_CACHE'],
       connect_timeout: 10, # Defaults to 20 seconds

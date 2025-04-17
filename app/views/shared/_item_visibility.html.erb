@@ -15,6 +15,6 @@
     <%= visibility_selector(form, item, property: property) %>
   <% end %>
   <span class="text" data-visibility-target="label">
-    <%= t "visibility.short_labels.#{item.send("#{prop}_option").label}" %>
+    <%= t "visibility.short_label.#{item.send("#{prop}_option").label}" %>
   </span>
 <% end %>
