@@ -101,10 +101,6 @@ en:
   error:
     one: "Error"
     other: "Errors"
-    award:
-      zero: "Something prevented this award to be updated (should now happen)"
-      one: "An error prevented this award to be updated"
-      other: "%{count} errors prevented this award to be updated"
     function_change:
       one: "Please fix the following error for your request to be sent"
       other: "Please fix the following errors for your request to be sent"
@@ -159,13 +155,12 @@ en:
     uid: "UID"
     home: "Home directory"
     shell: "Shell"
-  awards: "Awards"
-  biography: "Biography"
-  birthday: "Birthday"
-  class_delegate: "Class delegate"
-  hello: "Hello world"
-  infoscience_publications: "Infoscience Publications"
-  nationality: "Nationality"
+  # biography: "Biography"
+  # birthday: "Birthday"
+  # class_delegate: "Class delegate"
+  # hello: "Hello world"
+  # infoscience_publications: "Infoscience Publications"
+  # nationality: "Nationality"
   nav:
     biography: "Biography"
     publications: "Publications"
@@ -294,8 +289,9 @@ en:
     public_access: "public"
     visible: "visible"
     visible_address: "address"
-  education: 
+  educations: 
     directedby: "Directed by: "
+    period: "Period"
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"
@@ -312,21 +308,6 @@ en:
 
   work_experience: "Work Experience"
 
-
-  helpers:
-    placeholder:
-      education:
-        title_en: "PhD."
-        title_fr: "Doctorat"
-        title_it: "Dottorato"
-        title_de: "Doktortitel"
-        field_en: "Solid state physics"
-        field_fr: "Physique du solide"
-        field_it: "Fisica dello stato solido"
-        field_de: "Festkörperphysik"
-        director: "John Doe"
-        school: "Princeton University"
-
   # Default error messages full list here: 
   # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
   errors:
@@ -337,6 +318,7 @@ en:
       invalid: "incorrect format"
       greater_than: "must be greater than %{count}"
       less_than: "must be smaller than %{count}"
+      untranslatable: "at least one translation must be present"
 
   activerecord:
     models:
@@ -347,50 +329,6 @@ en:
       profile: "profile"
       social: "social address"
     attributes:
-      award:
-        title_en: title (en)
-        title_fr: title (fr)
-        issuer: Granted by
-        origin: Origin
-        year: Year
-        url: Url
-      education:
-        title_en: "title (en)"
-        title_fr: "title (fr)"
-        title_it: "title (it)"
-        title_de: "title (de)"
-        field_en: "field (en)"
-        field_fr: "field (fr)"
-        field_it: "field (it)"
-        field_de: "field (de)"
-      experience:
-        location: "copany or location or institution"
-        period: "period (years)"
-        title_en: "title (en)"
-        title_fr: "title (fr)"
-        year_begin: "first year"
-        year_end: "last year"
-      profile:
-        show_birthday: visible birthday
-        show_nationality: visible nationality
-        show_phone: visible main phone
-        show_photo: show photo
-        show_weburl: show personal web address
-        personal_web_url: personal web address
-        expertise_en: expertise (keywords, en)
-        expertise_fr: expertise (keywords, fr)
-        expertise_it: expertise (keywords, it)
-        expertise_de: expertise (keywords, de)
-        nationality_en: nationality (en)
-        nationality_fr: nationality (fr)
-        nationality_it: nationality (it)
-        nationality_de: nationality (de)
-        en_enabled: english
-        fr_enabled: french
-        it_enabled: italian
-        de_enabled: german
-        translations: Translations that will be available on my public profile
-        visible_items: "Visible items"
       person:
         function: main function
       social:
@@ -405,20 +343,6 @@ en:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
       models:
-        education:
-          attributes:
-            school:
-              blank: "should be provided"
-            year_begin:
-              blank: "can't be blank"
-            year_end:
-              blank: "can't be blank"
-        award:
-          attributes:
-            issuer:
-              blank: "must be present"
-            year:
-              blank: "must be present"
         experience:
           attributes:
             base:

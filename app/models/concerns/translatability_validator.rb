@@ -4,11 +4,13 @@
 class TranslatabilityValidator < ActiveModel::EachValidator
   def validate_each(record, t_attribute, _value)
     attribute = t_attribute[2..]
-    pp = %w[en fr].map { |l| record.attributes["#{attribute}_#{l}"].present? }
+    pp = Rails.configuration.available_languages.map do |l|
+      record.attributes["#{attribute}_#{l}"].present?
+    end
     return if pp.any?
 
-    %w[en fr].each do |l|
-      record.errors.add("#{attribute}_#{l}", "at least one of the translations must be present")
+    Rails.configuration.available_languages.map.each do |l|
+      record.errors.add("#{attribute}_#{l}", I18n.t("errors.messages.untranslatable"))
     end
   end
 end

@@ -1,33 +1,15 @@
 <%= form_with(model: [profile, experience], local: false, class: "instaform") do |form| %>
+  <% translations = (profile ||= experience.profile).translations %>
   <%= render "shared/form_errors", item: experience if experience.errors.any? %>
 
+  <%= translated_text_fields(form, :title, translations: translations, label: ".title") %>
+  <%= single_text_field(form, :location, label: ".location") %>
   <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:title_fr) %>
-    <%= form.text_field :title_fr, placeholder: "developeur d'applications" %>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:title_en) %>
-    <%= form.text_field :title_en, placeholder: "software developer" %>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:location) %>
-    <%= form.text_field :location, placeholder: "Apple corporation" %>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:period) %>
-    <% # TODO: here it would be nice to have the birthday for a more specific date range %>
+    <%= form.label t('.period') %>
     <%= form.number_field :year_begin, in: 1950..Date.today.year %>
     <%= form.number_field :year_end, in: 1950..Date.today.year %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:description_fr) %>
-    <div><%= form.rich_text_area :description_fr %></div>
-  </div>
-  <div class="form-group">
-    <%= form.label Experience.human_attribute_name(:description_en) %>
-    <div><%= form.rich_text_area :description_en %></div>
-  </div>
+  </div>  
+  <%= translated_rich_text_areas(form, :description, translations: translations, label: ".description") %>
 
   <%= form_actions form, experience %>
 

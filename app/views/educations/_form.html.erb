@@ -2,14 +2,14 @@
   <% translations = (profile ||= education.profile).translations %>
   <%= render "shared/form_errors", item: education if education.errors.any? %>
 
-  <%= translated_text_fields(form, :title, translations) %>
-  <%= translated_text_fields(form, :field, translations) %>
+  <%= translated_text_fields(form, :title, translations: translations, label: ".title") %>
+  <%= translated_text_fields(form, :field, translations: translations, label: ".field") %>
 
-  <%= single_text_field(form, :director) %>
-  <%= single_text_field(form, :school) %>
+  <%= single_text_field(form, :director, label: ".director") %>
+  <%= single_text_field(form, :school, label: ".school") %>
 
   <div class="form-group">
-    <%= form.label t('education.period') %>
+    <%= form.label t('.period') %>
     <%= form.number_field :year_begin, in: 1950..Date.today.year %>
     <%= form.number_field :year_end, in: 1950..Date.today.year %>
   </div>  
