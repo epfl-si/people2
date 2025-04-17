@@ -20,7 +20,7 @@ Rails.application.configure do
   config.eager_load = false
 
   # Show full error reports.
-  config.consider_all_requests_local = ENV.fetch('SHOW_ERROR_PAGES', 'no') == 'no'
+  config.consider_all_requests_local = ENV.fetch('SHOW_ERROR_PAGES', 'no').match?(config.re_true)
 
   # Enable server timing
   config.server_timing = true
@@ -35,7 +35,7 @@ Rails.application.configure do
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
 
-    config.cache_store = if ENV['REDIS_CACHE'].present?
+    config.cache_store = if ENV['REDIS_CACHE'].present? && !ENV['REDIS_CACHE'].match?(config.re_false)
                            [:redis_cache_store, {
                              url: ENV['REDIS_CACHE'],
                              connect_timeout: 10, # Defaults to 20 seconds
@@ -48,7 +48,6 @@ Rails.application.configure do
                          end
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
@@ -82,7 +81,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations.
-  config.i18n.raise_on_missing_translations = ENV.fetch('SILENT_TRANSLATION_ERR', 'no') != "yes"
+  config.i18n.raise_on_missing_translations = false
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true

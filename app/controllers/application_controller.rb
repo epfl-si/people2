@@ -28,10 +28,7 @@ class ApplicationController < ActionController::Base
                 else
                   AudienceLimitable::WORLD
                 end
-    return unless Rails.env.development?
-
-    fe = ENV.fetch('FORCE_AUDIENCE', false)
-    return unless fe
+    return unless (fe = Rails.configuration.force_audience)
 
     @original_audience = @audience
     @audience = [[AudienceLimitable::WORLD, fe.to_i].max, AudienceLimitable::OWNER].min

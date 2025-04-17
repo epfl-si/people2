@@ -28,6 +28,8 @@ module People
     # config.eager_load_paths << Rails.root.join("extras")
 
     # ------------------------------------------------------------ local configs
+    config.re_true = /^\s*(true|yes|oui|si|y+|t+)\s*$/i
+    config.re_false = /^\s*(false|non?|n+|f+)\s*$/i
     config.encoding = 'utf-8'
     config.i18n.default_locale = :fr
     # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
@@ -38,29 +40,47 @@ module People
     # config.active_storage.variant_processor = :mini_magick
     config.active_storage.variant_processor = :vips
 
+    # -------------------------------------------------------------
     # Custom generic app configs: everything from ENV with defaults
-    # Use as Rails.configuration.key
+    # Use as Rails.configuration.KEY
+    # Purely boolean values
+    #    must have a default string value (e.g. 'true') and
+    #    be converted to boolean with .match?(config.re_true)
+    # Other values
+    #    that do not have a maningfull default value should be
+    #    defaulted to boolean false so thay can be safely used
+    #    as flags because even an empty string is eval as true
+    # -------------------------------------------------------------
+
+    vf = Rails.root.join("VERSION")
+    config.version = File.exist?(vf) ? File.read(vf) : "0.0.0"
     config.superusers = ENV.fetch('SUPERUSERS', '').split(/\s*,\s*/).select { |v| v =~ /[0-9]{6}/ }
     config.intranet_re = Regexp.new(ENV.fetch('INTRANET_RE', '^128\.17[89]'))
-    config.hide_teacher_accreds = ENV.fetch('SKIP_ENS_ACCREDDS', 'true') == 'true'
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
-    config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false') == 'true'
-    config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', 'no') == 'true'
 
-    # The next 3 params are just for the migration period
-    # TODO: remove after migration from legacy
-    config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').downcase == 'true'
+    config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', 'false').match?(config.re_true)
+    config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false').match?(config.re_true)
+    config.hide_teacher_accreds = ENV.fetch('HIDE_ENS_ACCREDDS', 'true').match?(config.re_true)
+    config.force_audience = Rails.env.development? && ENV.fetch('FORCE_AUDIENCE', false)
+    # TODO: remove next 3 lines after migration from legacy
+    config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
     config.legacy_server_url = ENV.fetch('LEGACY_SERVER_URL', 'https://personnes.epfl.ch/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 2.days)
+
+    # There are other ENV vars read in the yml files
+    # which will probably become config maps
+
+    # ENV vars that are read by files in environments/*.rb
+    # development: REDIS_CACHE, SHOW_ERROR_PAGES
+    # production: RAILS_LOG_LEVEL
+    # db/seed.rb: DEV_SEEDS_PATH, SEEDS_PATH
 
     routes.default_url_options[:host] = config.app_hostname
 
     config.available_languages = %w[en fr]
 
-    vf = Rails.root.join("VERSION")
-    config.version = File.exist?(vf) ? File.read(vf) : "0.0.0"
-
-    # This is a cookie-free Web app!
+    # This ~~is~~ was a cookie-free Web app!
+    # Screw the EU, I don't see the difference between a cookie and an auth token.
     # config.middleware.delete ActionDispatch::Cookies
     # config.middleware.delete ActionDispatch::Session::CookieStore
     # config.session_store :disabled

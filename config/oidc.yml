@@ -9,7 +9,7 @@ production:
   client_id: <%= ENV.fetch('ENTRA_CLIENT_ID') %>
   secret: <%= ENV.fetch('ENTRA_SECRET') %>
 
-<% if ENV.fetch("USE_KEYCLOAK", "no") == "yes" %>
+<% if ENV.fetch("USE_KEYCLOAK", "no").match?(Rails.configuration.re_true) %>
 development: &dev_oidc_config
   server: <%= ENV.fetch('KC_SERVER', 'keycloak.dev.jkldsa.com') %>
   base_path: /realms/rails/protocol/openid-connect
