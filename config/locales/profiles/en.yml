@@ -1,0 +1,97 @@
+en:
+  activerecord:
+    # Model attribute names
+    attributes:
+      profile: &attr
+        personal_web_url: personal web page url 
+        personal_phone: personal phone number
+        expertise: expertise
+        expertise_en: expertise (keywords, EN)
+        expertise_fr: expertise (keywords, FR)
+        expertise_it: expertise (keywords, IT)
+        expertise_de: expertise (keywords, DE)
+        nationality: nationality
+        nationality_en: nationality (EN)
+        nationality_fr: nationality (FR)
+        nationality_it: nationality (IT)
+        nationality_de: nationality (DE)
+        en_enabled: profile in english
+        fr_enabled: profile in french
+        it_enabled: profile in italian
+        de_enabled: profile in german
+
+    # Errors for the model attributes (those that are shown upon form submission)
+    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+    errors:
+      models:
+        profile:
+          attributes:
+            personal_web_url:
+            personal_phone:
+            expertise_en:
+            expertise_fr:
+            expertise_it:
+            expertise_de:
+            nationality_en:
+            nationality_fr:
+            nationality_it:
+            nationality_de:
+            en_enabled:
+            fr_enabled:
+            it_enabled:
+            de_enabled:
+
+    models:
+      profile: "profile"
+  # Summary message for model errors
+  error:
+    profile:
+      zero: "Something prevented your profile from being updated"
+      one: "An error prevented your profile from being updated"
+      other: "%{count} errors prevented your profile from being updated"
+  helpers:
+    # Placeholders for the form text fields
+    placeholder:
+      profile:
+        personal_web_url: https://ciccio.com
+        personal_phone: +41 7891234
+        expertise: Software Wizard
+        expertise_en: physics, solid state, computational
+        expertise_fr: architecture, bâtiments, theatres
+        expertise_it: metallurgia, tribologia
+        expertise_de: TODO
+        nationality: swisse
+        nationality_en: swiss
+        nationality_fr: suiss
+        nationality_it: svizzera
+        nationality_de: schweizer
+  profiles:
+    edit:
+      title:
+        editing_languages: Multilanguage profile
+        edit_language: Editing language
+    # Override model attribute names as they appear in form labels
+    form:
+      <<: *attr
+      expertise_help: few keywords describing your expertise
+      expertise: expertise (few keywords)
+      expertise_en: expertise (few keywords in english)
+      expertise_fr: expertise (few keywords in french)
+      expertise_it: expertise (few keywords in italian)
+      expertise_de: expertise (few keywords in german)
+      nationality: nationality
+      nationality_en: nationality in english
+      nationality_fr: nationality in french
+      nationality_it: nationality in italian
+      nationality_de: nationality in german
+      action:
+        submit: save profile details
+    languages_form:
+      translations: provided translations
+      en_enabled: profile will be visible in english
+      fr_enabled: profile will be visible in french
+      it_enabled: profile will be visible in italian
+      de_enabled: profile will be visible in german
+      action:
+        submit: save languages selection
+    index:

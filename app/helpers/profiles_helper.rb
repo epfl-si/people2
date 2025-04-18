@@ -9,56 +9,113 @@ module ProfilesHelper
     lb + fd
   end
 
-  def single_text_field(form, field, label: nil, extracls: "")
-    a = field.to_sym
-    oc = form.object.class
-    tag.div(class: "form-group #{extracls}") do
-      form.label(t(label||field)) + form.text_field(a, placeholder: true)
+  def form_group(help: nil, extracls: "", &block)
+    c = []
+    c << tag.div(class: "form-group #{extracls}") do
+      capture(&block)
+    end
+    c << tag.small(help, class: "form-text text-muted") if help.present?
+    safe_join c
+  end
+
+  def single_text_field(form, attr, label: nil, help: nil, extracls: "")
+    a = attr.to_sym
+    tlabel = label || ".#{attr}"
+    ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
+    form_group(help: help, extracls: extracls) do
+      form.label(t(tlabel)) +
+        form.text_field(
+          a, placeholder: true, class: "form-control", "aria-describedby": ahelp
+        )
     end
   end
 
   def translated_text_fields(
-        form, field, label: nil,
-        translations: Rails.configuration.available_languages
-      )
+    form, attr, label: nil, help: nil,
+    translations: Rails.configuration.available_languages
+  )
     content = translations.map do |l|
-      single_text_field(form, "#{field}_#{l}", label: "#{label||field}_#{l}", extracls: "tr_target_#{l}")
+      tattr = "#{attr}_#{l}"
+      tlabel = label || ".#{tattr}"
+      single_text_field(form, tattr, label: tlabel, extracls: "tr_target_#{l}", help: help)
     end
     safe_join(content)
   end
 
-  def rich_text_input(form, property)
+  def rich_text_input(form, attr)
     cls = if Rails.configuration.enable_direct_uploads
             "rich_text_input"
           else
             "rich_text_input disable-trix-file-attachment"
           end
-    tag.div form.rich_text_area(property), class: cls
+    tag.div form.rich_text_area(attr), class: cls
   end
 
-  def single_rich_text_area(form, field, label: nil, extracls: "")
-    a = field.to_sym
-    tag.div(class: "form-group #{extracls}") do
-      form.label(t(label||field)) + rich_text_input(form, field)
+  def single_rich_text_area(form, attr, label: nil, extracls: "")
+    attr.to_sym
+    form_group(extracls: extracls) do
+      form.label(t(label || ".#{attr}")) + rich_text_input(form, attr)
     end
   end
 
   def translated_rich_text_areas(
-        form, field, label: nil,
-        translations: Rails.configuration.available_languages
-      )
+    form, _field, label: nil,
+    translations: Rails.configuration.available_languages
+  )
     content = translations.map do |l|
-      single_rich_text_area(form, "#{field}_#{l}", label: "#{label||field}_#{l}", extracls: "tr_target_#{l}")
+      tattr = "#{attr}_#{l}"
+      tlabel = label || ".#{tattr}"
+      single_rich_text_area(form, tattr, label: tlabel, extracls: "tr_target_#{l}")
     end
     safe_join(content)
+  end
+
+  def attribute_switch(form, attr, label: nil)
+    id = "ck_#{form.object_name.gsub(/[^a-z0-9]+/, '_').gsub(/_$/, '')}_#{attr}"
+    tlabel = t(label || ".#{attr}")
+    tag.div(class: 'custom-control custom-checkbox') do
+      form.check_box(attr, class: 'custom-control-input', id: id) +
+        form.label(tlabel, class: "custom-control-label", for: id)
+    end
+  end
+
+  def item_translations(item)
+    if item.respond_to?("translations")
+      item.translations
+    elsif item.respond_to?("profile")
+      item.profile.translations
+    else
+      Rails.configuration.available_languages
+    end
+  end
+
+  def all_lang_span(item, attr, languages: nil)
+    languages ||= item_translations(item)
+    c = languages.map do |l|
+      tag.span(item.send("#{attr}_#{l}"), class: "tr_target_#{l}")
+    end
+    safe_join(c)
   end
 
   def translation_list(profile)
     profile.translations.join(" ")
   end
 
-  def translation_classlist(profile)
-    profile.translations.map { |t| "tr_enable_#{t}" }.join(" ")
+  def current_work_translation(item)
+    tt = item_translations(item)
+    if tt.include?(I18n.locale.to_s)
+      I18n.locale.to_s
+    else
+      tt.first
+    end
+  end
+
+  def translation_classlist(item)
+    # this is if we want to enable all languages by default
+    # profile.translations.map { |t| "tr_enable_#{t}" }.join(" ")
+    # this is if we want to have the current locale or the first of the list
+    t = current_work_translation(item)
+    "tr_enable_#{t}"
   end
 
   def form_actions(form, item, without_cancel: false, label: nil, &block)
@@ -131,14 +188,6 @@ module ProfilesHelper
     end
     content = safe_join(content)
     tag.div(content, class: "visibility-radios")
-  end
-
-  def show_attribute_switch(form, attr)
-    id = "ck_#{form.object_name.gsub(/[^a-z0-9]+/, '_').gsub(/_$/, '')}_#{attr}"
-    tag.div(class: 'custom-control custom-checkbox') do
-      form.check_box(attr, class: 'custom-control-input', id: id) +
-        form.label(form.object.class.send(:human_attribute_name, attr), class: "custom-control-label", for: id)
-    end
   end
 
   def remote_modal_for(uri, &block)

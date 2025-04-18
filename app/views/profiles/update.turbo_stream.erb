@@ -1,4 +1,19 @@
-<%= turbo_stream.replace "profile_form" do %>
-<%= render "form", profile: @profile %>
+<% if @profile.errors.any? %>
+	<%= 
+		turbo_stream.replace "profile_form" do
+			render "form", profile: @profile
+		end 
+	%>
+<% else %>
+	<%= 
+		turbo_stream.replace :remote_modal do
+			turbo_frame_tag :remote_modal
+		end 
+	%>
+	<%=
+		turbo_stream.update "profile_section" do
+    	render "editable_profile", profile: @profile
+    end
+  %>
 <% end %>
 <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

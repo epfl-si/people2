@@ -48,6 +48,9 @@ en:
       Please fill and submit this form to request the change to one of your
       accreditors.
 
+  generic:
+    form:
+      texfield_for: "%{attr}"
   action:
     accred_full_list: "Full list of positions and address"
     add_a_new: "Add a new"
