@@ -131,7 +131,9 @@ summary .rpush {
 }
 
 // ---- Forms for editing instances of the models depending on profile
-.instaform {
+
+
+.instaform0 {
   padding: spacer(2);
 
   input, .field_with_errors input {
@@ -170,6 +172,12 @@ summary .rpush {
   .form-group {
     display: flex;
     justify-content: flex-start;
+    label {
+      flex-grow: 1;
+    }
+    input, div, select {
+      flex-grow: 3;
+    }
   }
 
   .form-actions {
@@ -272,15 +280,31 @@ details {
   }
 }
 
-#edit_lang_switchers {
+#edit_lang_switchers0 {
   position: fixed;
-  top: 75px;
-  right: 40px;
+  bottom: 20px;
+  right: 20px;
   padding: 1em;
   border-radius: 0.5em;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   z-index: 100;
+}
+
+#edit_lang_switchers {
+  position: fixed;
+  top: 0;
+  left: 15vw;
+  width: 70vw;
+  padding: 0.2em;
+  border-radius: 0 0 0.5em 0.5em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em 2em;
 }
 
 // ---------------------------------------------------------- visibility popover

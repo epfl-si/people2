@@ -28,9 +28,9 @@
   <% end %>
 
   <dt><%= t "profile.nationality" %></dt>
-  <% if (d=profile.t_nationality).present? %>
+  <% if (profile.t_nationality).present? %>
 	  <dd class="rpush">
-	  	<span><%= d %></span>
+	  	<%= all_lang_span(profile, "nationality") %>
 	  	<%= render 'shared/item_visibility', item: profile, property: 'nationality' %>
 	  </dd>
   <% else %>
@@ -38,9 +38,9 @@
 	<% end %>
 
   <dt><%= t "profile.expertise" %></dt>
-  <% if (d=profile.t_expertise).present? %>
+  <% if (profile.t_expertise).present? %>
 	  <dd class="rpush">
-	  	<span><%= d %></span>
+	  	<%= all_lang_span(profile, "nationality") %>
 	  	<%= render 'shared/item_visibility', item: profile, property: 'expertise' %>
 	  </dd>
   <% else %>

@@ -11,25 +11,12 @@
 <% end %>
 <% translations = profile.translations %>
 <%= form_with(model: profile, local: false, class: "instaform") do |form| %>
-	<div class="form-group row">
-		<%= form.label(:translations, class: "col-md-3 col-sm-3") %>
-		<div class="col-md-3 col-sm-9">
-			<%= show_attribute_switch(form, :en_enabled) %>
-			<%= show_attribute_switch(form, :fr_enabled) %>
-			<%= show_attribute_switch(form, :it_enabled) %>
-			<%= show_attribute_switch(form, :de_enabled) %>
-		</div>
-	</div>
-
-	<hr>
-
-  <%= translated_text_fields(form, :expertise, translations) %>
-  <%= translated_text_fields(form, :nationality, translations) %>
+  <%= translated_text_fields(form, :expertise, translations: translations) %>
+  <%= translated_text_fields(form, :nationality, translations: translations) %>
 	<%= single_text_field(form, :personal_web_url) %>
 
   <div class="row justify-content-center">
-		<%= form.submit t('action.submit_personal_data'), class: "btn btn-primary btn-sm" %>
+		<%= form.submit t('.action.submit'), class: "btn btn-primary btn-sm" %>
 	</div>
-
 <% end %>
 <% end %>

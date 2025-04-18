@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "profile_form", local: true, "data-turbo": false do %>
+<%= form_with(model: profile) do |form| %>
+	<%= hidden_field_tag("part", "languages") %>
+  <%= form_group do %>
+		<%= form.label(t('.translations')) %>
+		<div>
+			<%= attribute_switch(form, :en_enabled, label: ".en_enabled") %>
+			<%= attribute_switch(form, :fr_enabled, label: ".fr_enabled") %>
+			<%= attribute_switch(form, :it_enabled, label: ".it_enabled") %>
+			<%= attribute_switch(form, :de_enabled, label: ".de_enabled") %>
+		</div>
+	<% end %>
+  <div class="row justify-content-center">
+		<%= form.submit t('.action.submit'), class: "btn btn-primary btn-sm" %>
+	</div>
+<% end %>
+<% end %>

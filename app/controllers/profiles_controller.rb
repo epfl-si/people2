@@ -42,24 +42,49 @@ class ProfilesController < ApplicationController
 
   # PATCH/PUT /profile/:id
   def update
-    respond_to do |format|
-      if @profile.update(profile_params)
-        # format.html { redirect_to edit_profile_path(@profile), notice: "Profile was successfully updated." }
-        format.turbo_stream do
-          flash.now[:success] = "flash.profile.success.update"
-          render :update
-        end
-        # format.json { render :show, status: :ok, location: @profile }
-      else
-        # format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream do
-          flash.now[:error] = "flash.profile.error.update"
-          render :update, status: :unprocessable_entity
-        end
-        # format.json { render json: @experience.errors, status: :unprocessable_entity }
-      end
+    part = params[:part]
+    case part
+    when "languages"
+      update_languages
+    else
+      update_base
     end
   end
+
+  def update_base
+    return if @profile.update(profile_params)
+
+    respond_to do |format|
+      # format.html { render :edit, status: :unprocessable_entity }
+      format.turbo_stream do
+        flash.now[:error] = "flash.profile.error.update"
+        render :update, status: :unprocessable_entity
+      end
+      # format.json { render json: @experience.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def update_languages
+    unless @profile.update(profile_params)
+      flash[:error] = t("something whent wrong while saving your language selection")
+    end
+    redirect_to edit_profile_path(@profile)
+  end
+  #     Rails.logger.debug("part=#{part}")
+  #     if @profile.update(profile_params)
+  #       if part && part == "languages"
+  #         Rails.logger.debug("part is languages => redirecting")
+  #       end
+  #       # format.html { redirect_to edit_profile_path(@profile), notice: "Profile was successfully updated." }
+  #       format.turbo_stream do
+  #         flash.now[:success] = "flash.profile.success.update"
+  #         render :update
+  #       end
+  #       # format.json { render :show, status: :ok, location: @profile }
+  #     else
+  #     end
+  #   end
+  # end
 
   # PATCH /profile/:id/set_favorite_picture/picture_id
   def set_favorite_picture
