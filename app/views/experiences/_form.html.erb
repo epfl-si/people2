@@ -2,13 +2,11 @@
   <% translations = (profile ||= experience.profile).translations %>
   <%= render "shared/form_errors", item: experience if experience.errors.any? %>
 
-  <%= translated_text_fields(form, :title, translations: translations, label: ".title") %>
-  <%= single_text_field(form, :location, label: ".location") %>
-  <div class="form-group">
-    <%= form.label t('.period') %>
-    <%= form.number_field :year_begin, in: 1950..Date.today.year %>
-    <%= form.number_field :year_end, in: 1950..Date.today.year %>
-  </div>  
+  <%= translated_text_fields(form, :title, translations: translations) %>
+  <%= single_text_field(form, :location) %>
+
+  <%= range_number_field(form, :year_begin, :year_end, '.period', min: 1950, max: Date.today.year) %>
+
   <%= translated_rich_text_areas(form, :description, translations: translations, label: ".description") %>
 
   <%= form_actions form, experience %>

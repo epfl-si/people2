@@ -30,14 +30,66 @@ module ProfilesHelper
     end
   end
 
+  def single_number_field(form, attr, min: nil, max: nil, label: nil, help: nil, extracls: "")
+    a = attr.to_sym
+    tlabel = label || ".#{attr}"
+    ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
+    form_group(help: help, extracls: extracls) do
+      form.label(t(tlabel)) +
+        form.number_field(
+          a, min: min, max: max, class: "form-control", "aria-describedby": ahelp
+        )
+    end
+  end
+
+  def range_number_field(
+    form,
+    attr_a, attr_b,
+    label,
+    min: nil, max: nil,
+    help: nil,
+    extracls: ""
+  )
+    a = attr_a.to_sym
+    b = attr_b.to_sym
+
+    form_group(help: help, extracls: extracls) do
+      form.label(t(label)) +
+        tag.div do
+          form.number_field(a, min: min, max: max, class: "form-control") +
+            "&nbsp;&mdash;&nbsp;".html_safe +
+            form.number_field(b, min: min, max: max, class: "form-control")
+        end
+    end
+  end
+
+  def single_url_field(form, attr, label: nil, help: nil, extracls: "")
+    sattr = attr.to_sym
+    tlabel = label || ".#{attr}"
+    form_group(help: help, extracls: extracls) do
+      form.label(t(tlabel)) +
+        form.url_field(sattr, class: "form-control", "aria-describedby": ahelp)
+    end
+  end
+
   def translated_text_fields(
     form, attr, label: nil, help: nil,
     translations: Rails.configuration.available_languages
   )
-    content = translations.map do |l|
+    content = []
+    btlabel = t(label || ".#{attr}")
+    translations.each do |l|
+      tlang = t("t#{l}")
+      # Attribute for language l
       tattr = "#{attr}_#{l}"
-      tlabel = label || ".#{tattr}"
-      single_text_field(form, tattr, label: tlabel, extracls: "tr_target_#{l}", help: help)
+      # Translated label for language l
+      tlabel = t("translated_label", language: tlang, label: btlabel)
+      ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+      label = form.label(tlabel)
+      text_field = form.text_field(tattr, placeholder: true, class: "form-control", "aria-describedby": ahelp)
+      content << form_group(help: help, extracls: "tr_target_#{l}") do
+        label + text_field
+      end
     end
     safe_join(content)
   end
@@ -59,13 +111,21 @@ module ProfilesHelper
   end
 
   def translated_rich_text_areas(
-    form, _field, label: nil,
+    form, attr, label: nil, help: nil,
     translations: Rails.configuration.available_languages
   )
-    content = translations.map do |l|
-      tattr = "#{attr}_#{l}"
-      tlabel = label || ".#{tattr}"
-      single_rich_text_area(form, tattr, label: tlabel, extracls: "tr_target_#{l}")
+    content = []
+    btlabel = t(label || ".#{attr}")
+    translations.each do |l|
+      tlang = t("t#{l}")
+      # Attribute for language l
+      # Translated label for language l
+      tlabel = t("translated_label", language: tlang, label: btlabel)
+      label = form.label(tlabel)
+      tarea = rich_text_input(form, attr)
+      content << form_group(help: help, extracls: "tr_target_#{l}") do
+        label + tarea
+      end
     end
     safe_join(content)
   end
@@ -123,15 +183,15 @@ module ProfilesHelper
     tag.div(class: "form-actions") do
       concat capture(&block) if block_given?
       if item.new_record?
-        concat form.submit t("action.create_#{klass}", label: label), class: "btn-confirm"
+        concat form.submit t("generic.form.create", label: label), class: "btn-confirm"
       else
         unless without_cancel
-          concat link_to(t('action.cancel'),
+          concat link_to(t('generic.form.cancel'),
                          send("#{klass}_path", item),
                          class: "btn-cancel", method: :get,
                          data: { turbo_stream: true, turbo_method: 'get' })
         end
-        concat form.submit t("action.update_#{klass}", label: label), class: "btn-confirm"
+        concat form.submit t("generic.form.update", label: label), class: "btn-confirm"
       end
     end
   end

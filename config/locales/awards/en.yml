@@ -51,8 +51,7 @@ en:
     # Override model attribute names as they appear in form labels
     form:
       <<: *attr
-      title_en: "title in english"
-      title_fr: "title in french"
-      title_it: "title in italian"
-      title_de: "title in german"
+      help:
+        category: "Dropdown menu for award category"
+        origin: "Dropdown menu for selecting the origin of the award"
     index:

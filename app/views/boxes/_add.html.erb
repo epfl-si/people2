@@ -1,4 +1,3 @@
-<%= turbo_frame_tag "add_#{section.label}_box" do %>
 <nav class="add-box-buttons">
   <% (boxes || []).each do |mb| %>
     <% if mb.container? %>
@@ -19,4 +18,3 @@
     <% end %>
   <% end %>
 </nav>
-<% end %>

@@ -42,9 +42,11 @@ en:
     # Override model attribute names as they appear in form labels
     form:
       <<: *attr
+      title: title
       title_en: "title in english"
       title_fr: "title in french"
       title_it: "title in italian"
       title_de: "title in german"
       url: "infoscience exports url"
+      create: submit to create infoscience block
     index:

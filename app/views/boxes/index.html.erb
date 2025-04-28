@@ -1,7 +1,9 @@
 <%= turbo_frame_tag "#{@section.label}_section" do %>
 
 <% if @optional_boxes.present? %>
-  <%= render "boxes/add", profile: @profile, section: @section, boxes: @optional_boxes %>
+  <%= turbo_frame_tag "add_#{@section.label}_box" do %>
+    <%= render "boxes/add", profile: @profile, section: @section, boxes: @optional_boxes %>
+  <% end %>
 <% end %>
 
 <%= turbo_frame_tag "#{@section.label}_boxes", src: nil, target: nil, data: {controller: "sortable"} do %>

@@ -5,12 +5,6 @@ gio_social_linkedin:
   value: giovannicangiani
   visibility: 0
 
-gio_social_github:
-  profile: giova
-  tag: github
-  value: multiscan
-  visibility: 1
-
 domq_social_linkedin:
   profile: domq
   tag: linkedin
