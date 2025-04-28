@@ -5,26 +5,10 @@
   <% end %>
 
   <% unless box.locked_title? %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:title_fr) %>
-    <%= form.text_field :title_fr, placeholder: "Titre pour cet boite de text" %>
-  </div>
+    <%= translated_text_fields(form, :title) %>
   <% end %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:content_fr) %>
-    <%= rich_text_input(form, :content_fr) %>
-  </div>
 
-  <% unless box.locked_title? %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:title_en) %>
-    <%= form.text_field :title_en, placeholder: "Title for this text box" %>
-  </div>
-  <% end %>
-  <div class="form-group">
-    <%= form.label Box.human_attribute_name(:content_en) %>
-    <%= rich_text_input(form, :content_en) %>
-  </div>
+  <%= translated_rich_text_areas(form, :content) %>
 
   <%= form_actions form, box, without_cancel: true %>
 <% end %>

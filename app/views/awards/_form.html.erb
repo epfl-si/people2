@@ -2,19 +2,19 @@
   <% translations = (profile ||= award.profile).translations %>
   <%= render "shared/form_errors", item: award if award.errors.any? %>
   <%= translated_text_fields(form, :title, translations: translations, label: ".title") %>
-  <%= single_text_field(form, :issuer, label: ".issuer") %>
-  <%= single_text_field(form, :url, label: ".url") %>
-  <div class="form-group">
-    <%= form.label t('.year') %>
-    <%= form.number_field :year, in: (Date.today.year-10)..Date.today.year %>
-  </div>
-  <div class="form-group">
-    <%= form.label t('.category') %>
-    <%= form.collection_select :category_id, Award.categories, :id, :t_name %>
-  </div>
-  <div class="form-group">
-    <%= form.label t('.origin') %>
-    <%= form.collection_select :origin_id, Award.origins, :id, :t_name %>
+  <%= single_text_field(form, :issuer) %>
+  <%= single_text_field(form, :url) %>
+
+  <div class="form-row-group">
+    <%= single_number_field(form, :year, min: Date.today.year-10, max: Date.today.year) %>
+    <%= form_group do %>
+      <%= form.label t('.category') %>
+      <%= form.collection_select :category_id, Award.categories, :id, :t_name, "aria-describedby": t(".help.category") %>
+    <% end %>
+    <%= form_group do %>
+      <%= form.label t('.origin') %>
+      <%= form.collection_select :origin_id, Award.origins, :id, :t_name, "aria-describedby": t(".help.origin") %>
+    <% end %>
   </div>
   <%= form_actions(form, award) %>
 <% end %>

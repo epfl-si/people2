@@ -4,6 +4,7 @@ en:
     attributes:
       education: &attr
         director: "director"
+        field: "field"
         field_en: "field (en)"
         field_fr: "field (fr)"
         field_it: "field (it)"
@@ -60,13 +61,5 @@ en:
     # Override model attribute names as they appear in form labels
     form:
       <<: *attr
-      period: "period"
-      title_en: "title in english"
-      title_fr: "title in french"
-      title_it: "title in italian"
-      title_de: "title in german"
-      field_en: "field in english"
-      field_fr: "field in french"
-      field_it: "field in italian"
-      field_de: "field in german"
+      period: period (years)
     index:

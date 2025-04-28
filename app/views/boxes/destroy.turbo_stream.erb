@@ -1,2 +1,7 @@
 <%= turbo_stream.remove dom_id(@box) %>
+<% if @optional_boxes.present? && !@optional_boxes.empty? %>
+	<%= turbo_stream.update "add_#{@box.section.label}_box" do %>
+    <%= render "boxes/add", profile: @profile, section: @box.section, boxes: @optional_boxes %>
+  <% end %>
+<% end %>
 <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

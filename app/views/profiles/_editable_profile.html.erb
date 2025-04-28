@@ -9,9 +9,9 @@
 	<dt><%= t "profile.available_languages" %></dt>
 	<dd>
 		<%= profile.translations.map{|l| t(l)}.join(", ") %>
-		<%= remote_modal_for(edit_profile_path(profile, languages: true)) do %>
-		  <%= icon('edit-3') %>
-		<% end %>
+		<%#= remote_modal_for(edit_profile_path(profile, languages: true)) do %>
+		  <%#= icon('edit-3') %>
+		<%# end %>
 	</dd>
 
   <dt><%= t "profile.official_name" %></dt>

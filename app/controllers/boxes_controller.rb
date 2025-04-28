@@ -46,12 +46,8 @@ class BoxesController < ApplicationController
     @box.profile = @profile
     ok = @box.save
     if ok
-      box_count_by_model = @box.profile.boxes.group_by(&:model_box_id).count
-      @optional_boxes = ModelBox
-                        .includes(:section).optional
-                        .where(section_id: @box.section_id).select do |b|
-        (box_count_by_model[b.id] || 0) < b.max_copies
-      end
+      @section = @box.section
+      @optional_boxes = @profile.available_optional_boxes(@section)
       flash.now[:success] = "flash.generic.success.create"
     end
     return if ok
@@ -88,9 +84,12 @@ class BoxesController < ApplicationController
   # DELETE /boxes/1 or /boxes/1.json
   def destroy
     if @box.user_destroyable?
+      @profile = @box.profile
       respond_to do |format|
         if @box.destroy
           flash.now[:success] = "flash.box.success.deleted"
+          @section = @box.section
+          @optional_boxes = @profile.available_optional_boxes(@section)
           format.turbo_stream
           format.json { head :no_content }
         else

@@ -35,6 +35,11 @@ en:
   en: English
   it: Italiano
   de: Deutch
+  tfr: French
+  ten: English
+  tit: Italian
+  tde: German
+  translated_label: "%{label} in %{language}"
 
   messages:
     adoption_explain: >
@@ -51,6 +56,10 @@ en:
   generic:
     form:
       texfield_for: "%{attr}"
+      update: Subit Changes
+      create: Create Record
+      cancel: Cancel
+
   action:
     accred_full_list: "Full list of positions and address"
     add_a_new: "Add a new"
