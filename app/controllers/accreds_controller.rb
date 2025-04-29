@@ -6,7 +6,7 @@ class AccredsController < ApplicationController
 
   # GET /profile/profile_id/accreds or /profile/profile_id/accreds.json
   def index
-    @accreds = Accred.for_profile!(@profile).sort
+    @accreds = Accred.for_profile!(@profile).sort { |a, b| a.position <=> b.position }
   end
 
   # GET /accreds/1 or /accreds/1.json
