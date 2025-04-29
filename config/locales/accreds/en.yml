@@ -2,3 +2,9 @@ en:
   accreds:
     form:
     index:
+en:
+  accreds:
+    toggle:
+      cannot_hide_all: "At least one accreditation should remain world visible"
+    toggle_addr:
+      error: "Something prevented this address to be toggled, please retry later or ask for support"
