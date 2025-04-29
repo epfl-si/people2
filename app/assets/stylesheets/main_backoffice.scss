@@ -42,11 +42,10 @@ $font-size-xxs: 0.6rem;
 
 #flash-messages {
   position: fixed;
-  z-index: 99;
-  top: 1ex;
-  left: 300px;
+  z-index: 100;
+  bottom: 1rem;
+  right: 1rem;
 }
-
 
 // ---- turbo replacement animation
 .turbo-replace-enter {
@@ -166,7 +165,42 @@ summary .rpush {
     }
   }
 
-  // ----------------------------------------------------------- fix trix editor
+// ----------------------------------------------------------- sortable feedback
+.sortable-mv {
+  display: inline-block;
+}
+.sortable-ok {
+  display: none;
+  color: #7ed321;
+}
+.sortable-ko {
+  display: none;
+  color: #ff0000;
+}
+.sortable-done {
+  .sortable-mv {
+    display: none;
+  }
+  .sortable-ok {
+    display: inline-block;
+  }
+  .sortable-ko {
+    display: none;
+  }  
+}
+.sortable-error {
+  .sortable-mv {
+    display: none;
+  }
+  .sortable-ok {
+    display: none;
+  }
+  .sortable-ko {
+    display: inline-block;
+  }  
+}
+
+// ----------------------------------------------------------- fix trix editor
   .rich_text_input {
     padding: 0.5rem;
     background-color: white;
