@@ -34,6 +34,7 @@ class AccredsController < ApplicationController
     end
   end
 
+  # Dead code should be managed by the standard visibility controller
   # PATCH/PUT /accreds/1/toggle or /accreds/1/toggle.json
   def toggle
     respond_to do |format|
@@ -46,7 +47,7 @@ class AccredsController < ApplicationController
         # revert
         @accred.visible = !@accred.visible?
         format.turbo_stream do
-          flash.now[:error] = "flash.accred.cannot_hide_all"
+          flash.now[:error] = ".cannot_hide_all"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @accred.errors, status: :unprocessable_entity }
@@ -54,6 +55,7 @@ class AccredsController < ApplicationController
     end
   end
 
+  # Dead code should be managed by the standard visibility controller
   # PATCH/PUT /accreds/1/toggle_address or /accreds/1/toggle_address.json
   def toggle_addr
     respond_to do |format|
@@ -64,7 +66,7 @@ class AccredsController < ApplicationController
         format.json { render :show, status: :ok, location: @accred }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".error"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @accred.errors, status: :unprocessable_entity }
@@ -89,8 +91,8 @@ class AccredsController < ApplicationController
   def accred_params
     params.require(:accred).permit(
       :position,
-      :visible,
-      :visible_addr
+      :visibility,
+      :address_visibility
     )
   end
 end
