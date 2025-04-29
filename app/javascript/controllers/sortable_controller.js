@@ -18,12 +18,22 @@ export default class extends Controller {
     this.sortable.destroy();
   }
 
-  // TODO: add flash message with put result
   onEnd(event) {
     const { newIndex, item } = event;
     const url = item.dataset["sortableUrl"]
     put(url, {
       body: JSON.stringify({ position: newIndex + 1 })
+    }).then((response) => {
+      if(response.response.ok) {
+        // this.element.classList.add("ciccio");
+        item.classList.add("sortable-done");
+      } else {
+        // this.element.classList.add("pasticcio");
+        item.classList.add("sortable-error");
+      }
+      setTimeout(() => {
+        item.classList.remove("sortable-done", "sortable-error");
+      }, "2000");
     });
   }
 }
