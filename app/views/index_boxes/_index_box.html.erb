@@ -1,11 +1,5 @@
 <% variants = box.plural_variant %>
-
-<%= turbo_frame_tag dom_id(box), "data-sortable-url" => box_path(box, format: 'json') do %>
-	<details>
-	<summary><%= render "boxes/editable_box", box: box %></summary>
-	<section id="#{variants}_section">
-	<%= turbo_frame_tag "#{variants}_index", src: send("profile_#{variants}_path", @profile), loading: :lazy do %>
-	<% end %>
-	</section>
-	</details>
+<section id="#{variants}_section">
+<%= turbo_frame_tag "#{variants}_index", src: send("profile_#{variants}_path", @profile), loading: :lazy do %>
 <% end %>
+</section>

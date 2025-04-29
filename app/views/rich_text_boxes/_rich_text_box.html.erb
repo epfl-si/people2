@@ -1,6 +1,1 @@
-<%= turbo_frame_tag dom_id(box), "data-sortable-url" => box_path(box, format: 'json') do %>
-<details>
-<summary><%= render "boxes/editable_box", box: box %></summary>
 <%= render "rich_text_boxes/editable_box", box: box %>
-</details>
-<% end %>
