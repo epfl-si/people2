@@ -1,15 +1,17 @@
  <div id="flash-messages">
   <% flash.each do |type, message| 
     at = case type
-    when "notice"
-      "info"
+    when "success"
+      "success"
     when "alert"
       "warning"
     when "error"
       "danger"
+    else
+      "info"
     end
   %>
-    <div class="alert alert-<%= at %>" data-controller="flash" role="alert">
+    <div class="alert alert-<%= at %> alert-dismissible" data-controller="flash" role="alert">
       <%= t message %>
       <button type="button" class="close" data-action="flash#dismiss" aria-label="Close">
         <span aria-hidden="true">&times;</span>
