@@ -80,7 +80,7 @@ module ProfilesHelper
     content = []
     btlabel = t(label || ".#{attr}")
     translations.each do |l|
-      tlang = t("t#{l}")
+      tlang = t("lang.#{l}")
       # Attribute for language l
       tattr = "#{attr}_#{l}"
       # Translated label for language l
