@@ -9,10 +9,11 @@
         <%= icon('edit-3') %>
       <% end %>
     </div>
-    <div>
-      <%= render 'shared/item_visibility', item: accred %>
-      <%= render 'shared/item_sortable' %>
-    </div>
+    <% if count > 1 %>
+      <div>
+        <%= render 'shared/item_visibility', item: accred %>
+        <%= render 'shared/item_sortable' %>
+      </div>
     <% end %>
   </div>
 <% end %>
