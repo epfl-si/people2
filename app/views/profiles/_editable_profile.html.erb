@@ -8,7 +8,7 @@
 
 	<dt><%= t "profile.available_languages" %></dt>
 	<dd>
-		<%= profile.translations.map{|l| t(l)}.join(", ") %>
+		<%= profile.translations.map{|l| t("lang.#{l}")}.join(", ") %>
 		<%#= remote_modal_for(edit_profile_path(profile, languages: true)) do %>
 		  <%#= icon('edit-3') %>
 		<%# end %>
@@ -40,7 +40,7 @@
   <dt><%= t "profile.expertise" %></dt>
   <% if (profile.t_expertise).present? %>
 	  <dd class="rpush">
-	  	<%= all_lang_span(profile, "nationality") %>
+	  	<%= profile.t_expertise %>
 	  	<%= render 'shared/item_visibility', item: profile, property: 'expertise' %>
 	  </dd>
   <% else %>

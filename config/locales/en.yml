@@ -31,14 +31,16 @@
 
 en:
   # Each language is read in its own language by the screen reader
-  fr: Français
-  en: English
-  it: Italiano
-  de: Deutch
-  tfr: French
-  ten: English
-  tit: Italian
-  tde: German
+  lang:
+    fr: French
+    en: English
+    it: Italian
+    de: German
+    native:
+      fr: Français
+      en: English
+      it: Italiano
+      de: Deutch
   translated_label: "%{label} in %{language}"
 
   messages:

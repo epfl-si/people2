@@ -38,7 +38,8 @@
 
     <% sl = current_work_translation(@profile) %>
     <% @profile.translations.each do |l| %>
-      <%= button_tag(t(l),
+      <%= button_tag(
+        t("lang.#{l}"),
         class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
         data: {
           "action": "language#setEnabledLanguage",
