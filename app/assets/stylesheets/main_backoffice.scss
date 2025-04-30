@@ -165,6 +165,23 @@ summary .rpush {
     }
   }
 
+  // ----------------------------------------------------------- fix trix editor
+  .rich_text_input {
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px #707070 solid;
+  }
+}
+
+// ---------------------------------------------------------------- image upload
+.upload {
+  border: 0px;
+}
+// ----
+.upload .btn {
+  margin-bottom: 0.5rem;
+}
+
 // ----------------------------------------------------------- sortable feedback
 .sortable-mv {
   display: inline-block;
@@ -200,21 +217,6 @@ summary .rpush {
   }  
 }
 
-// ----------------------------------------------------------- fix trix editor
-  .rich_text_input {
-    padding: 0.5rem;
-    background-color: white;
-    border: 1px #707070 solid;
-  }
-}
-
-.upload {
-  border: 0px;
-}
-// ----
-.upload .btn {
-  margin-bottom: 0.5rem;
-}
 // -------------------------------------------------------------------- pictures
 .card-img-top {
   height: 140px;
