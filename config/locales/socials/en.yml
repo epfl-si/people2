@@ -1,0 +1,43 @@
+en:
+  activerecord:
+    # Model attribute names
+    attributes:
+      social: &attr
+        tag: "type"
+        value: "value"
+    # Errors for the model attributes (those that are shown upon form submission)
+    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+    errors:
+      models:
+        social:
+          attributes:
+            tag:
+              blank: "Type cannot be blank"
+              invalid: "Invalid social type"
+            value:
+              blank: "Value cannot be blank"
+              incorrect_format: "Value format is incorrect"
+    models:
+      social: "social link"
+  # Summary message for model errors
+  error:
+    social:
+      zero: "Something prevented this social link to be updated (should now happen)"
+      one: "An error prevented this social link to be updated"
+      other: "%{count} errors prevented this social link to be updated"
+  helpers:
+    # Placeholders for the form text fields
+    placeholder:
+      social:
+        value: "Enter your identifier"
+  socials:
+    # Override model attribute names as they appear in form labels
+    form:
+      <<: *attr
+      tag: "social type"
+      value: "identifier"
+    index:
+      title: "Social Links"
+    action:
+      add_social: "Add Social Link"
+      more: "Learn more"
