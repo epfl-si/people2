@@ -365,7 +365,9 @@ details {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  font-size: 120%;
   span.text {
+    display: none;
     font-size: 60%;
     // line-height: 60%;
     // margin-top: -1ex;
