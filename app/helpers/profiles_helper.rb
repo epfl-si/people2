@@ -66,6 +66,7 @@ module ProfilesHelper
   def single_url_field(form, attr, label: nil, help: nil, extracls: "")
     sattr = attr.to_sym
     tlabel = label || ".#{attr}"
+    ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
     form_group(help: help, extracls: extracls) do
       form.label(t(tlabel)) +
         form.url_field(sattr, class: "form-control", "aria-describedby": ahelp)
