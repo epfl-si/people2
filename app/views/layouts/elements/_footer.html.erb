@@ -90,5 +90,12 @@
   </svg>
 </button>
 </div>
-<%= tag.div "people v. #{Rails.configuration.version}", id: 'version' %>
+<%= tag.div id: 'version' do %>
+  <%= link_to "people", "https://github.com/epfl-si/people2" %>
+  &nbsp;
+  <% t("nav.version", version: Rails.configuration.version) %>
+  &#9679;
+  <%= link_to t("nav.issues"), "https://github.com/epfl-si/people2/issues", target: "_blank" %>
+<% end %>
+
 </div>
