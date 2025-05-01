@@ -131,18 +131,16 @@ about:
 .PHONY: build rebuild
 
 ## build the web app docker image (set REBUNDLE=yes for refreshing Gemfile.lock)
-build: envcheck $(ELE_FILES)
+build: envcheck $(ELE_FILES) VERSION
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
 	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
 
 ## build image discarding all cached layers
-rebuild: envcheck
+rebuild: envcheck VERSION
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build --no-cache
 	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
-
-
 
 envcheck: .env .git/hooks/pre-commit
 
@@ -174,13 +172,22 @@ docop:
 dodocop:
 	./bin/bundle exec rubocop --autocorrect-all
 
+VERSION:
+	git tag -l --sort=creatordate | tail -n 1 > $@
+
+## add git tag using value stored in VERSION file
+tag: VERSION
+	b=$$(git tag -l --sort=creatordate | tail -n 1); a=$$(cat VERSION); [ "$$a" == "$$b" ] || git tag -a $$a
+
 ## increase minor version
-minor:
+minor: VERSION
 	./bin/rails version:minor
+	@echo "remember to 'make tag' to store it into git once you have the commit"
 
 ## increase patch version
-patch:
+patch: VERSION
 	./bin/rails version:patch
+	@echo "remember to 'make tag' to store it into git once you have the commit"
 
 .git/hooks/pre-commit:
 	if [ ! -l .git/hooks ] ; then mv .git/hooks .git/hooks.trashme && ln -s ../.git_hooks .git/hooks ; fi
