@@ -9,6 +9,13 @@
   tags:
     - people.src
 
+- name: Create VERSION file
+  ansible.builtin.shell:
+    chdir: "{{ people.srcdir }}"
+    cmd: "git tag -l --sort=creatordate | tail -n 1 > VERSION"
+  tags:
+    - people.src
+
 - name: Read people src code version
   ansible.builtin.slurp:
     src: "{{ people.srcdir }}/VERSION"
