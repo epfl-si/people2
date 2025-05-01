@@ -29,15 +29,13 @@
             </small>
           </p>
         <% end %>
-      </div>
-      <% if accred.unit.url.present? %>
-        <div class="col-sm-12">
+        <% if accred.unit.url.present? %>
           <p>
             <span class="sr-only"><%= t "website" %>: </span>
             <%= link_to accred.unit.url, accred.unit.url %>
           </p>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>
