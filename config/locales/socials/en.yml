@@ -22,7 +22,7 @@ en:
   # Summary message for model errors
   error:
     social:
-      zero: "Something prevented this social link to be updated (should now happen)"
+      zero: "Something prevented this social link to be updated (should not happen)"
       one: "An error prevented this social link to be updated"
       other: "%{count} errors prevented this social link to be updated"
   helpers:

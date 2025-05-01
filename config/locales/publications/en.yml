@@ -24,7 +24,7 @@ en:
   # Summary message for model errors
   error:
     publication:
-      zero: "Something prevented this publication to be updated (should now happen)"
+      zero: "Something prevented this publication to be updated (should not happen)"
       one: "An error prevented this publication to be updated"
       other: "%{count} errors prevented this publication to be updated"
   helpers:

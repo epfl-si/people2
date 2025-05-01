@@ -25,7 +25,7 @@ en:
   # Summary message for model errors
   error:
     rich_text_box:
-      zero: "Something prevented this rich_text_box to be updated (should now happen)"
+      zero: "Something prevented this rich_text_box to be updated (should not happen)"
       one: "An error prevented this rich_text_box to be updated"
       other: "%{count} errors prevented this rich_text_box to be updated"
   helpers:

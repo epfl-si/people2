@@ -9,24 +9,25 @@
   tags:
     - people.src
 
-- name: Create VERSION file
+- name: Determine VERSION number from git
   ansible.builtin.shell:
     chdir: "{{ people.srcdir }}"
-    cmd: "git tag -l --sort=creatordate | tail -n 1 > VERSION"
-  tags:
-    - people.src
-
-- name: Read people src code version
-  ansible.builtin.slurp:
-    src: "{{ people.srcdir }}/VERSION"
-  register: slurped_version
+    cmd: "/usr/bin/git tag -l --sort=creatordate | tail -n 1"
+  register: git_version
   tags:
     - people.src
     - people.run
 
+- name: Create VERSION file
+  ansible.builtin.copy:
+    dest: "{{ people.srcdir }}/VERSION"
+    content: "{{ git_version.stdout | trim }}"
+  tags:
+    - people.src
+
 - name: Store people src code version as fact 
   ansible.builtin.set_fact:
-    people_image_version: "{{ PEOPLE_VERSION | default(slurped_version.content | ansible.builtin.b64decode) }}"
+    people_image_version: "{{ PEOPLE_VERSION | default(git_version.stdout | trim) }}"
   tags:
     - people.src
     - people.run

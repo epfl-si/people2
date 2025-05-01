@@ -41,7 +41,7 @@ en:
   # Summary message for model errors
   error:
     experience:
-      zero: "Something prevented this experience to be updated (should now happen)"
+      zero: "Something prevented this experience to be updated (should not happen)"
       one: "An error prevented this experience to be updated"
       other: "%{count} errors prevented this experience to be updated"
   helpers:
