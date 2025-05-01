@@ -15,8 +15,8 @@
 </p>
 <p>
   <small>
-    <%= link_to t("nav.vcard"), person_path(format: "vcf") %>
-    <%= link_to t("nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
+    <%= link_to t(".nav.vcard"), person_path(format: "vcf") %>
+    <%= link_to t(".nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
   </small>
 </p>
 </div>
