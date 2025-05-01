@@ -28,7 +28,13 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
-
+#
+# ------------------------------------------------------------------------------
+# We try to keep here only translations that are occurring all-over the code
+# and move view/model/controller specific translations to dedicated file unless
+# the number of translation is soo small that a new file would be overkill
+# ------------------------------------------------------------------------------
+#
 en:
   # Each language is read in its own language by the screen reader
   lang:
@@ -44,9 +50,6 @@ en:
   translated_label: "%{label} in %{language}"
 
   messages:
-    adoption_explain: >
-      Your are watching you future profile. Please click on the following
-      button to adopt it as your actual profile
     empty_orcid_help: >
       link will appear as soon as your orcid account is synchronized
     function_change_explain: >
@@ -56,70 +59,33 @@ en:
 
   generic:
     form:
-      texfield_for: "%{attr}"
-      update: Submit Changes
-      create: Create Record
       cancel: Cancel
+      create: Create Record
+      submit: Submit
+      update: Submit Changes
+      texfield_for: "%{attr}"
 
   nav:
-    atari: Administrative Data
-    biography: "Biography"
     issues: issues
-    publications: "Publications"
-    research: "Research"
-    teaching: "Teaching & PhD"
-    vcard: vCard
     version: "v. %{version}"
 
   action:
-    accred_full_list: "Full list of positions and address"
-    add_a_new: "Add a new"
-    add_social: "Click to add a new research Id or social network address"
-    admin_data: "Administrative data"
     confirm: "Are you sure?"
-    confirm_profile_adoption: "I adopt the new profile"
     delete: "delete"
     edit_profile: "Edit profile"
-    edit_pictures: "Edit / Change photo"
     hide_search_form: "Hide the search form"
-    hide: "Hide"
-    make_address_hidden: "Hide address"
-    make_address_visible: "Show address"
-    make_hidden: "Hide"
-    make_visible: "Show"
     more: "More information"
-    of: "of"
     search: "Search"
     search_people: "Search for a person"
-    select: "Select"
     show_hide_search_form: "Show / hide the search form"
-    submit_personal_data: "Update personal data"
-    submit: "Submit"
-    create_award: "Create new award"
-    update_award: "Update award"
-    update_education: "Update education"
-    create_experience: "Create new work experience"
-    create_publication: "Create new publication"
-    create_box: "Create this box"
-    create_index_box: "Create this box"
-    create_rich_text_box: "Create this text box"
-    create_social: "Create %{label} entry"
-    update_experience: "Udate work experience"
-    update_publication: "Update publication"
-    update_rich_text_box: "Update box"
-    update_social: "Confirm change to %{label}"
     sign_in: "Sign in"
     sign_out: "Sign out"
-    upload_image: "Upload the image"
-    validate: "Submit"
-  common:
-    not_available: NA
-    editing_profile: "Editing %{name}'s profile."
   dev:
     action:
       abandon: abandon
       adopt: adopt
       revert: revert
+
   error:
     one: "Error"
     other: "Errors"
@@ -165,93 +131,7 @@ en:
         update: "Base profile succesfully updated"
       error:
         update: "Error while updating the base profile"
-  msg:
-  admin_data:
-    title: "Admin data"
-    sciper: "SCIPER Number"
-    sap: "SAP ID"
-    username: "Username"
-    gid: "GID"
-    uid: "UID"
-    home: "Home directory"
-    shell: "Shell"
-  # biography: "Biography"
-  # birthday: "Birthday"
-  # class_delegate: "Class delegate"
-  # hello: "Hello world"
-  # infoscience_publications: "Infoscience Publications"
-  # nationality: "Nationality"
-  office: "Office"
-  person:
-    firstname: firstname
-    function: function
-    lastname: lastname
-    email: email address
-    nationality: nationality
-    official_firstname: official firstname
-    official_lastname: official lastname
-    phone: main phone number
-    photo: profile picture
-    title: title
-    usual_firstname: usual firstname
-    usual_lastname: usual firstname
-    website: personal web site url
-  phone_type:
-    FIXE_CONF: conf room
-    FAX: fax
-    FIXE_OFFICE: office
-    SOFT: soft
-    FIXE_LABO: lab
-    OTHER: other
-    FIXE_WALL: wall
-    FIXE_ANALOG: analog
-    VIDEO_CONF: video conf
-    SIP_OTHER: sip
-  picture:
-    selected: selected
-  profile:
-    nationality: nationality
-    expertise: expertise (keywords)
-    personal_web_url: personal page url
-  publication:
-    link: "View the publication"
-    authors: "Autors(s)"
-    title:
-      free: Notes on publications
-      infoscience: EPFL Infoscience
-      people: Other Publications
-  semester:
-    ete: summer
-    hiver: winter
-    undef: undefined
-  student:
-    female: Student
-    male: Student
-  teaching: "Teaching"
-  title:
-    awards: "Awards"
-    bachelor_teaching: "Teaching"
-    biography: "Biography"
-    current_phd_students: "PhD Students"
-    courses: "Courses"
-    doctoral_teaching: "Teaching & PhD"
-    education: "Education"
-    editing_languages: "Edit Languages"
-    experiences: "Work experiences"
-    expertise: "Fields of expertise"
-    of: "of"
-    past_phd_students: "Past EPFL PhD Students"
-    profile_picture: "Profile picture"
-    publications: "Publications"
-    selector_audience: "Access"
-    selector_visibility: "Status"
-    research: "Research"
-    teaching: "Teaching & PhD"
-    work_experience: "Work Experience"
-    current_phd: "PhD Students"
-    past_phd: "Past EPFL PhD Students"
-    pictures: "Profile pictures"
-    teaching_domain: "Teaching"
+
   visibility:
     authenticated: "EPFL users only"
     authenticated_access: "user"
@@ -304,9 +184,7 @@ en:
     public_access: "public"
     visible: "visible"
     visible_address: "address"
-  educations: 
-    directedby: "Directed by: "
-    period: "Period"
+
   footer:
     folow:
       us: "Suivez l'EPFL sur les réseaux sociaux"
@@ -321,7 +199,6 @@ en:
     copy: "EPFL, tous droits réservés"
     back_to_the_top: "Retour en haut de la page"
 
-  work_experience: "Work Experience"
 
   # Default error messages full list here: 
   # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
@@ -343,12 +220,6 @@ en:
       experience: "work experience"
       profile: "profile"
       social: "social address"
-    attributes:
-      person:
-        function: main function
-      social:
-        url: Enter your %{label} identifier
-
     errors:
       # for a list of standard error messages keys, see:
       #   https://guides.rubyonrails.org/i18n.html#error-message-interpolation
@@ -357,60 +228,7 @@ en:
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
-      models:
-        experience:
-          attributes:
-            base:
-              missing_year: "Either beginning or end of work experience should be present"
-            location:
-              blank: "should be provided"
-            year_end:
-              blank: "should be present"
-            year_begin:
-              blank: "should be present"
-        infoscience:
-          attributes:
-            url:
-              invalid_format: "Invalid URL format. It should look like https://infoscience-exports.epfl.ch/NNNN"
-              taken: "You already have a paper listing with that url"
-        name:
-          attributes:
-            usual_first:
-              not_in_official: "Should be composed of names included in the official first name."
-            usual_last:
-              not_in_official: "Should be composed of names included in the official last name."
-        publication:
-          attributes:
-            title:
-              blank: "can't be blank"
-            url:
-              invalid: "is invalid"
-            year:
-              not_a_number: "is not a number"  
-        picture:
-          attributes:
-            base:
-              undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
-        profile:
-          attributes:
-            expertise_en:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
-            expertise_fr:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
-            expertise_ir:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
-            expertise_de:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
-        social:
-          attributes:
-            value:
-              blank: "can't be blank"
-              incorrect_format: "has an incorrect format"
-            tag:
-              blank: "can't be blank"
-              inclusion: "is not included in the list"
-        messages:
-            record_invalid : "Sciper must unique"
+
   activemodel:
     errors:
       models:

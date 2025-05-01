@@ -1,115 +1,113 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   "true": "foo"
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+#
+# ------------------------------------------------------------------------------
+# We try to keep here only translations that are occurring all-over the code
+# and move view/model/controller specific translations to dedicated file unless
+# the number of translation is soo small that a new file would be overkill
+# ------------------------------------------------------------------------------
+#
 fr:
   # Each language is read in its own language by the screen reader
-  fr: Français
-  en: English
-  it: Italiano
-  de: Deutch
+  lang:
+    fr: French
+    en: English
+    it: Italian
+    de: German
+    native:
+      fr: Français
+      en: English
+      it: Italiano
+      de: Deutch
+  translated_label: "%{label} in %{language}"
+
   messages:
-    adoption_explain: >
-      Your are watching you future profile. Please click on the following
-      button to adopt it as your actual profile
-    currently_selected_picture: Selection présente
     empty_orcid_help: >
       link will appear as soon as your orcid account is synchronized
     function_change_explain: >
-      Merci de modifier directement le champ Fonction ci-dessous et de justifier
-      la demande en précisant la raison. Votre demande de mise à jour des 
-      données de l'annuaire sera soumise pour approbation.
+      It is not possible to change the position function directly. 
+      Please fill and submit this form to request the change to one of your
+      accreditors.
+
+  generic:
+    form:
+      cancel: Cancel
+      create: Create Record
+      submit: Submit
+      update: Submit Changes
+      texfield_for: "%{attr}"
+
+  nav:
+    issues: issues
+    version: "v. %{version}"
+
   action:
-    accred_full_list: "Liste complète des adresses et fonctions"
-    add_a_new: "Ajouter un nouveau "
-    add_social: "Click to add a new research Id or social network address"
-    admin_data: "Données administratives"
-    browse_image_file: "Sélectionner un nouveau fichier photo"
-    cancel: "Annuler"
-    confirm: "Êtes-vous sûr ?"
-    confirm_profile_adoption: "I adopt the new profile"
-    create_award: "Créer une nouvelle récompense"
-    create_education: "Créer une formation"
-    create_experience: "Créer un parcours professionnel"
-    create_publication: "Ajouter une nouvelle publication"
-    create_box: "Create this box"
-    create_index_box: "Create this box"
-    create_rich_text_box: "Create this text box"
-    create_social: "Create %{label} entry"
-    delete: "Supprimer"
-    edit: "Éditer"
-    edit_pictures: "Modifier / Changer la photo"
-    edit_profile: "Modifier le profil"
-    hide_search_form: "Masquer le formulaire de recherche"
-    make_address_hidden: "Cacher l'adresse"
-    make_address_visible: "Afficher l'adresse"
-    make_hidden: "Cacher"
-    make_visible: "Visible"
-    more: "En savoir plus"
-    of: "de"
-    search: "Rechercher sur le site"
-    search_people: "Rechercher sur le site"
-    select: "Sélectionner"
-    show_hide_search_form: "Afficher / masquer le formulaire de recherche"
-    sign_in: "Connexion"
-    sign_out: "Déconnexion"
-    submit: "Envoyer"
-    submit_personal_data: "Mettre à jour le profil de base"
-    update_award: "Mettre à jour la récompense"
-    update_education: "Mettre à jour la formation"
-    update_experience: "Mettre à jour le parcours professionnel"
-    update_publication: "Mettre à jour la publication"
-    update_rich_text_box: "Mettre à jour la boîte"
-    update_social: "Modifier le réseau social"
-    update_social: "Confirm change to %{label}"
-    upload_image: "Télécharger l'image"
-    validate: "Valider"
-  admin_data:
-    gid: "GID"
-    home: "Répertoire personnel"
-    sap: "Matricule SAP"
-    sciper: "Numéro SCIPER"
-    shell: "Shell"
-    title: "Données administratives"
-    uid: "UID"
-    username: "Nom d'utilisateur"
-  awards: "Récompenses"
-  birthday: "Date de naissance"
-  biography: "Biographie"
-  ciccio: "C'est Ciccio"
-  class_delegate: "Délégué de classe"
-  common:
-    not_available: non disponible
-    editing_profile: "Modification du profile de %{name}"
+    confirm: "Are you sure?"
+    delete: "delete"
+    edit_profile: "Edit profile"
+    hide_search_form: "Hide the search form"
+    more: "More information"
+    search: "Search"
+    search_people: "Search for a person"
+    show_hide_search_form: "Show / hide the search form"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
   dev:
     action:
       abandon: abandon
       adopt: adopt
       revert: revert
-  education: 
-    directedby: "Dirigé par : "
+
   error:
-    one: "Erreur"
-    other: "Erreurs"
-    award:
-      one: "Une erreur a empêché cette récompense d'être mise à jour"
-      other: "%{count} erreurs ont empêché cette récompense d'être mise à jour"
-      zero: "Quelque chose a empêché cette récompense d'être mise à jour (ne devrait pas se produire)"
+    one: "Error"
+    other: "Errors"
     function_change:
-      one: "Merci de corriger l'erreur suivant afin de pouvoir envoyer votre request"
-      other: "Merci de corriger les erreurs suivants afin de pouvoir envoyer votre request"
-      zero: "Quelque chose a empêché cet request de passer (ne devrait pas se produire)"
+      one: "Please fix the following error for your request to be sent"
+      other: "Please fix the following errors for your request to be sent"
+      zero: "Something went wrong unexpectedly while trying to submit your request. Please try again later or contact our service desk (1234@epfl.ch)"
     picture:
-      one: "Une erreur a empêché votre photo d'être mise à jour"
-      other: "#{count} erreurs ont empêché votre photo d'être mise à jour"
-      zero: "Quelque chose a empêché votre photo d'être mise à jour (ne devrait pas se produire)"
+      zero: "Something prevented your picture to be updated (should not happen)"
+      one: "An error prevented your picture to be updated"
+      other: "#{count} errors prevented your picture to be updated"
     profile:
-      one: "Une erreur a empêché votre profil d'être mis à jour"
-      other: "#{count} erreurs ont empêché votre profil d'être mis à jour"
-      zero: "Quelque chose a empêché votre profil d'être mis à jour (ne devrait pas se produire)"
+      zero: "Something prevented your profile to be updated (should not happen)"
+      one: "An error prevented your profile to be updated"
+      other: "#{count} errors prevented your profile to be updated"
     record:
-      one: "Une erreur a empêché cet enregistrement d'être mis à jour"
-      other: "%{count} erreurs ont empêché cet enregistrement d'être mis à jour"
-      zero: "Quelque chose a empêché cet enregistrement d'être mis à jour (ne devrait pas se produire)"
+      zero: "Something prevented this record to be updated (should not happen)"
+      one: "An error prevented this record to be updated"
+      other: "%{count} errors prevented this record to be updated"
   flash:
     accred:
-      cannot_hide_all: "Impossible de masquer toutes les accréditations au publique"
+      cannot_hide_all: "Cannot hide all accreditations to general public"
     box:
       error:
         cannot_delete: "Standard and boxes with content cannot be deleted"
@@ -117,122 +115,33 @@ fr:
       success:
         deleted: "Box successfully deleted"
     generic:
-      error:
-        create: "Erreur lors de la création de l'enregistrement"
-        remove: "Erreur lors de la suppression"
-        update: "Erreur lors de la mise à jour de l'enregistrement"
       success:
-        create: "Enregistrement créé avec succès. Remember to make it visible."
-        remove: "Supprimé"
-        update: "Enregistrement mis à jour avec succès"
+        create: "Record created succesfully. Remember to make it visible."
+        update: "Record updated succesfully"
+        remove: "Deleted"
+      error:
+        create: "Error creating record"
+        update: "Error updating record"
+        remove: "Error deleting"
     function_change:
       success:
         create: "Function change request sent to your chosen accreditors"
     profile:
-      error:
-        update: "Erreur lors de la mise à jour du profil de base"
       success:
-        update: "Profil de base mis à jour avec succès"
-  footer:
-    accessibility: "Accessibilité"
-    back_to_the_top: "Retour en haut de la page"
-    copy: "EPFL, tous droits réservés"
-    data_protection: "Protection des données"
-    follow:
-      facebook: "Suivez l'EPFL sur Facebook"
-      instagram: "Suivez l'EPFL sur Instagram"
-      linkedin: "Suivez l'EPFL sur LinkedIn"
-      twitter: "Suivez l'EPFL sur X"
-      us: "Suivre les pulsations de l'EPFL sur les réseaux sociaux"
-      youtube: "Suivez l'EPFL sur Youtube"
-    legal: "Mentions légales"
-  hello: "Bonjour"
-  infoscience_publications: "Publications Infoscience"
-  nationality: "Nationalité"
-  nav:
-    biography: "Biographie"
-    publications: "Publications"
-    research: "Recherche"
-    teaching: "Enseignement"
-  office: "Local"
-  person:
-    email: "Adresse email"
-    firstname: "Prénom"
-    function: "Fonction"
-    lastname: "Nom"
-    nationality: "Nationalité"
-    official_firstname: "Prénom officiel"
-    official_lastname: "Nom officiel"
-    phone: "Numéro de téléphone privé"
-    photo: "Photo de profil"
-    title: "Titre"
-    usual_firstname: "Prénom usuel"
-    usual_lastname: "Nom usuel"
-    website: "Adresse de la page web personnelle"
-  phone_type:
-    FAX: "Fax"
-    FIXE_ANALOG: "Fixe analogique"
-    FIXE_CONF: "Fixe conférence"
-    FIXE_LABO: "Fixe labo"
-    FIXE_OFFICE: "Fixe bureau"
-    FIXE_WALL: "Fixe mural"
-    OTHER: "Autre"
-    SIP_OTHER: "SIP autre"
-    SOFT: "Soft"
-    VIDEO_CONF: "Visio conférence"
-  picture:
-    selected: "Sélectionné"
-  profile:
-    nationality: nationality
-    expertise: expertise (keywords)
-    personal_web_url: personal page url
-  publication:
-    link: "Voir la publication"
-    authors: "Auteur(s)"
-    title: "titre"
-  semester:
-    ete: "Été"
-    hiver: "Hiver"
-    undef: "Indéfini"
-  student:
-    female: "Étudiante"
-    male: "Étudiant"
-  teaching: "Enseignement"
-  title:
-    awards: "Récompenses"
-    bachelor_teaching: "Enseignement"
-    biography: "Biographie"
-    courses: "Cours"
-    current_phd: "Doctorants"
-    current_phd_students: "Doctorant·es"
-    doctoral_teaching: "Enseignement & PhD"
-    editing_languages: "Languages visibles en edition"
-    educations: "Formation"
-    experiences: "Expériences de travail"
-    expertise: "Champs de compétences"
-    of: "de"
-    past_phd: "A dirigé les thèses EPFL de"
-    past_phd_students: "Ancien·nes doctorant·es"
-    pictures: "Photos de profil"
-    profile_picture: "Profile picture"
-    publications: "Publications"
-    research: "Recherche"
-    selector_audience: "Access"
-    selector_visibility: "Status"
-    teaching: "Enseignement"
-    teaching_domain: "Domaine d'enseignement"
-    work_experience: "Parcours professionnel"
+        update: "Base profile succesfully updated"
+      error:
+        update: "Error while updating the base profile"
+
   visibility:
-    authenticated: "Uniquement par les utilisateurs de l'EPFL"
-    authenticated_access: "Utilisateurs"
-    draft: "Brouillon (éditeur uniquement)"
+    authenticated: "EPFL users only"
+    authenticated_access: "user"
+    draft: "Draft (etitor only)"
     editor: "Draft (editor only)"
     editor_access: "full"
-    hidden: "Caché"
+    hidden: "hidden"
     hidden_address: "NO address"
-    intranet: "Uniquement sur l'intranet"
+    intranet: "intranet only"
     intranet_access: "intranet"
-
     # { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
     # { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
     # { label: 'intranet', icon: 'home',       value: 1, box: true,  item: false },
@@ -240,24 +149,69 @@ fr:
     # { label: 'draft',    icon: 'edit-3',     value: 3, box: true,  item: false },
     # { label: 'hidden',   icon: 'eye-off',    value: 4, box: true,  item: true },
     label:
-      visible: "Visible par tous"
-      public: "Publique, visible globalement par internet"
-      intranet: "Intranet, visible seulement depuis le reseau de l'EPFL"
-      auth: "Autentifié, visible seulement si le systeme connait l'identité du visiteur"
-      draft: "Brouillon, visible seulement par l'editeur"
-      hidden: "Invisible, caché pour tout le monde"
+      visible: "Visible"
+      public: "Public, visible from all-over the internet"
+      intranet: "Intranet, visible only within the EPFL internal network"
+      auth: "Authentified, visible only by logged-in people with known identity"
+      draft: "Draft, visible only by the owner/editor of the profile"
+      hidden: "Hidden"
     short_label:
       visible: "Visible"
-      public: "Publique"
+      public: "Public"
       intranet: "Intranet"
-      auth: "Personnel"
-      draft: "Brouillon"
-      hidden: "Invisible"
-    public: "Publique"
+      auth: "Authorized"
+      draft: "Draft"
+      hidden: "Hidden"
+
+    labels:
+      published: "Published"
+      draft: "Draft"
+      hidden: "Hidden"
+
+      public: "World visible"
+      intranet: "Intranet only"
+      authenticated: "Authenticated users only"
+    short_labels:
+      published: "Published"
+      draft: "Draft"
+      hidden: "Hidden"
+
+      public: "World"
+      intranet: "Intranet"
+      authenticated: "Users"
+
+    public: "public"
     public_access: "public"
     visible: "visible"
     visible_address: "address"
-  work_experience: "Parcours professionnel"
+
+  footer:
+    folow:
+      us: "Suivez l'EPFL sur les réseaux sociaux"
+      facebook: "Suivez l'EPFL sur Facebook"
+      instagram: "Suivez l'EPFL sur Instagram"
+      linkedin: "Suivez l'EPFL sur LinkedIn"
+      twitter: "Suivez l'EPFL sur X"
+      youtube: "Suivez l'EPFL sur Youtube"
+    accessibility: "Accessibilité"
+    legal: "Mentions légales"
+    data_protection: "Protection des données"
+    copy: "EPFL, tous droits réservés"
+    back_to_the_top: "Retour en haut de la page"
+
+
+  # Default error messages full list here: 
+  # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
+  errors:
+    messages:
+      blank: "must be provided"
+      required: "must exist"
+      taken: "has already been taken (must be unique)"
+      invalid: "incorrect format"
+      greater_than: "must be greater than %{count}"
+      less_than: "must be smaller than %{count}"
+      untranslatable: "at least one translation must be present"
+
   activerecord:
     models:
       award: "award"
@@ -266,115 +220,14 @@ fr:
       experience: "work experience"
       profile: "profile"
       social: "social address"
-    attributes:
-      award:
-        title_en: titre (en)
-        title_fr: title (fr)
-        issuer: Granted by
-        origin: Origin
-        year: Year
-        url: Url
-      education:
-        title_en: "titre (en)"
-        title_fr: "titre (fr)"
-        title_it: "titre (it)"
-        title_de: "titre (de)"
-        field_en: "domain (en)"
-        field_fr: "domain (fr)"
-        field_it: "domain (it)"
-        field_de: "domain (de)"
-      experience:
-        location: "copany or location or institution"
-        period: "period (years)"
-        title_en: "titre (en)"
-        title_fr: "titre (fr)"
-        year_begin: "first year"
-        year_end: "last year"
-      profile:
-        show_birthday: date d'anniversaire visible
-        show_nationality: nationalité visible
-        show_phone: téléphone visible
-        show_photo: photo visible
-        show_weburl: page web personnelle visible
-        personal_web_url: page web personnelle
-        expertise_en: spécialisation (mots-clés, en)
-        expertise_fr: spécialisation (mots-clés, fr)
-        expertise_it: spécialisation (mots-clés, it)
-        expertise_de: spécialisation (mots-clés, de)
-        nationality_en: nationalité (en)
-        nationality_fr: nationalité (fr)
-        nationality_it: nationalité (it)
-        nationality_de: nationalité (de)
-        en_enabled: anglais
-        fr_enabled: frençais
-        it_enabled: italien
-        de_enabled: allemand
-        translations: Traductions qui seront disponibles sur mon profil public
-      person:
-        function: main function
-      social:
-        url: Enter your %{label} identifier
     errors:
+      # for a list of standard error messages keys, see:
+      #   https://guides.rubyonrails.org/i18n.html#error-message-interpolation
       messages:
-        record_invalid : "Sciper must unique"
-      models:
-        education:
-          attributes:
-            school:
-              blank: "ne peut pas être vide"
-            year_begin:
-              blank: "ne peut pas être vide"
-            year_end:
-              blank: "ne peut pas être vide"
-        experience:
-          attributes:
-            base:
-              missing_year: "Le début ou la fin de l'expérience de travail doit être renseigné"
-            location:
-              blank: "doit être fourni"
-            year_end:
-              blank: "doit être renseigné"
-            year_begin:
-              blank: "doit être renseigné"
-        name:
-          attributes:
-            usual_first:
-              not_in_official: "Doit être composé de(s) prénom(s) inclus dans le prénom officiel."
-            usual_last:
-              not_in_official: "Doit être composé de(s) nom(s) inclus dans le nom de famille officiel."
-        picture:
-          attributes:
-            base:
-              undeletable: "La photo Camipro ne peut pas être supprimée, mais vous pouvez toujours masquer votre photo de profil"
-        profile:
-          attributes:
-            expertise_en:
-              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
-            expertise_fr:
-              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
-            expertise_ir:
-              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
-            expertise_de:
-              too_long: "est supposé être une courte liste de mot clef (max %{count} character)"
-        publication:
-          attributes:
-            title:
-              blank: "ne peut pas être vide"
-            url:
-              invalid: "l'url est invalide"
-            year:
-              not_a_number: "n'est pas un nombre"
-        social:
-          attributes:
-            value:
-              blank: "ne peut pas être vide"
-              incorrect_format: "a un format incorrect"
-            tag:
-              blank: "ne peut pas être vide"
-              inclusion: "n'est pas inclus dans la liste"
-  errors:
-    messages:
-      not_in_official: "Doit être composé de(s) prénom(s) inclus dans le prénom officiel."
+        record_invalid: "Validation failed: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Cannot delete record because a dependent %{record} exists"
+          has_many: "Cannot delete record because dependent %{record} exist"
 
   activemodel:
     errors:
@@ -382,6 +235,6 @@ fr:
         name:
           attributes:
             usual_first:
-              not_in_official: "Doit être composé des prénoms inclus dans le prénom officiel "
+              not_in_official: "Should be composed of names included in the official first name."
             usual_last:
-              not_in_official: "Doit être composé des noms inclus dans le nom de famille officiel."
+              not_in_official: "Should be composed of names included in the official last name."
