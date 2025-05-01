@@ -58,9 +58,19 @@ en:
   generic:
     form:
       texfield_for: "%{attr}"
-      update: Subit Changes
+      update: Submit Changes
       create: Create Record
       cancel: Cancel
+
+  nav:
+    atari: Administrative Data
+    biography: "Biography"
+    issues: issues
+    publications: "Publications"
+    research: "Research"
+    teaching: "Teaching & PhD"
+    vcard: vCard
+    version: "v. %{version}"
 
   action:
     accred_full_list: "Full list of positions and address"
@@ -175,11 +185,6 @@ en:
   # hello: "Hello world"
   # infoscience_publications: "Infoscience Publications"
   # nationality: "Nationality"
-  nav:
-    biography: "Biography"
-    publications: "Publications"
-    teaching: "Teaching & PhD"
-    research: "Research"
   office: "Office"
   person:
     firstname: firstname
