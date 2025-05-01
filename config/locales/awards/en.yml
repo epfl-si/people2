@@ -34,7 +34,7 @@ en:
   # Summary message for model errors
   error:
     award:
-      zero: "Something prevented this award to be updated (should now happen)"
+      zero: "Something prevented this award to be updated (should not happen)"
       one: "An error prevented this award to be updated"
       other: "%{count} errors prevented this award to be updated"
   helpers:

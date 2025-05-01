@@ -1,0 +1,39 @@
+en:
+  activerecord:
+    # Model attribute names
+    attributes:
+      picture: &attr
+        selected: selected
+        camipro: camipro
+        failed_attempts: number of failed attempts of fetching the camipro picture
+    # Errors for the model attributes (those that are shown upon form submission)
+    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+    errors:
+      models:
+        picture:
+          attributes:
+            selected:
+            camipro:
+    models:
+      picture: "picture"
+  # Summary message for model errors
+  error:
+    picture:
+      zero: "Something prevented this picture to be updated (should not happen)"
+      one: "An error prevented this picture to be updated"
+      other: "%{count} errors prevented this picture to be updated"
+  helpers:
+    # Placeholders for the form text fields
+    placeholder:
+      picture:
+  pictures:
+    # Override model attribute names as they appear in form labels
+    currently_selected_picture: Currently selected profile picture
+    form:
+      <<: *attr
+      browse_image_file: Select a new photo file
+      max_photos_reached: "You have reached the maximum number of allowed photos."
+      no_photofile_selected: "No new photo selected. Please select one if you want to add a photo to your profile"
+
+
+    index:

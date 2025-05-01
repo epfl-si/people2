@@ -173,7 +173,7 @@ dodocop:
 	./bin/bundle exec rubocop --autocorrect-all
 
 VERSION:
-	git tag -l --sort=creatordate | tail -n 1 > $@
+	git tag -l --sort=creatordate | tail -n 1 | sed 's/\n//' > $@
 
 ## add git tag using value stored in VERSION file
 tag: VERSION

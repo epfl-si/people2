@@ -31,7 +31,7 @@ en:
   # Summary message for model errors
   error:
     achievement:
-      zero: "Something prevented this achievement to be updated (should now happen)"
+      zero: "Something prevented this achievement to be updated (should not happen)"
       one: "An error prevented this achievement to be updated"
       other: "%{count} errors prevented this achievement to be updated"
   helpers:

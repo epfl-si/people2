@@ -40,7 +40,7 @@ en:
   # Summary message for model errors
   error:
     education:
-      zero: "Something prevented this education entry to be updated (should now happen)"
+      zero: "Something prevented this education entry to be updated (should not happen)"
       one: "An error prevented this education entry to be updated"
       other: "%{count} errors prevented this education entry to be updated"
   helpers:

@@ -47,7 +47,6 @@ en:
     adoption_explain: >
       Your are watching you future profile. Please click on the following
       button to adopt it as your actual profile
-    currently_selected_picture: Currently selected picture
     empty_orcid_help: >
       link will appear as soon as your orcid account is synchronized
     function_change_explain: >
@@ -77,7 +76,6 @@ en:
     add_a_new: "Add a new"
     add_social: "Click to add a new research Id or social network address"
     admin_data: "Administrative data"
-    browse_image_file: "Select a new photo file"
     confirm: "Are you sure?"
     confirm_profile_adoption: "I adopt the new profile"
     delete: "delete"
@@ -130,15 +128,15 @@ en:
       other: "Please fix the following errors for your request to be sent"
       zero: "Something went wrong unexpectedly while trying to submit your request. Please try again later or contact our service desk (1234@epfl.ch)"
     picture:
-      zero: "Something prevented your picture to be updated (should now happen)"
+      zero: "Something prevented your picture to be updated (should not happen)"
       one: "An error prevented your picture to be updated"
       other: "#{count} errors prevented your picture to be updated"
     profile:
-      zero: "Something prevented your profile to be updated (should now happen)"
+      zero: "Something prevented your profile to be updated (should not happen)"
       one: "An error prevented your profile to be updated"
       other: "#{count} errors prevented your profile to be updated"
     record:
-      zero: "Something prevented this record to be updated (should now happen)"
+      zero: "Something prevented this record to be updated (should not happen)"
       one: "An error prevented this record to be updated"
       other: "%{count} errors prevented this record to be updated"
   flash:
@@ -168,8 +166,6 @@ en:
       error:
         update: "Error while updating the base profile"
   msg:
-    max_photos_reached: "You have reached the maximum number of allowed photos."
-    no_photofile_selected: "No photo selected. Please select one if you want to add a photo to your profile"
   admin_data:
     title: "Admin data"
     sciper: "SCIPER Number"
