@@ -48,3 +48,14 @@ Check all available tags with the following command
 ```
 ./possible.sh --test -t ingress.config.certs
 ```
+
+
+#### Usefull address
+
+ * 128.178.1.17 -> my workstation
+ * 128.178.224.34 128.178.224.35 -> legacy web servers for people.epfl.ch dinfo11, dinfo12 
+ * 10.95.96.153 -> peonext new VM for test deployment
+ * 10.98.72.0/21 -> range for Openshift cluster nodes
+ * 10.98.72.140, 10.98.72.141, 10.98.72.142 -> egress of the Openshift cluster (all requests to external services will be seen as coming from one of these address) 
+ 
+ 
