@@ -1,8 +1,0 @@
-<% unless @boxes['K'].empty? %>
-  <div class="col-sm-12 my-3">
-    <% @boxes['K'].each do |b| %>
-      <h5><%= b.label %></h5>
-      <div><%= sanitize(b.content) %></div>
-    <% end %>
-  </div>
-<% end %>
