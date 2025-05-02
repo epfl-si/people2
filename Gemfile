@@ -163,4 +163,12 @@ group :development do
   # gem 'guard', require: false
 
   gem "webmock"
+
+  # https://dev.37signals.com/kamal-prometheus/
+  # https://betterstack.com/community/guides/monitoring/ruby-rails-prometheus/
+  # https://github.com/yabeda-rb/yabeda-rails
+  gem "yabeda"
+  gem "yabeda-prometheus-mmap"
+  gem "yabeda-puma-plugin"
+  gem "yabeda-rails"
 end

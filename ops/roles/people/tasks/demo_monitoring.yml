@@ -1,0 +1,71 @@
+---
+
+- name: ensure demo monitoring directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "u+rwx,g+rwx,o+rwx"
+  with_items:
+    - "{{ people.prometheus.data }}"
+    - "{{ people.prometheus.config }}"
+    - "{{ people.grafana.data }}"
+    - "{{ people.grafana.config }}"
+
+- name: Ensure prometheus configuration file
+  ansible.builtin.copy:
+    dest: "{{ people.prometheus.config }}/prometheus.yml"
+    content: |
+      # For a more complete config example:
+      # https://github.com/prometheus/prometheus/blob/release-3.3/config/testdata/conf.good.yml
+      global:
+        scrape_interval: 15s
+        external_labels:
+          monitor: 'people-monitor'
+      scrape_configs:
+        - job_name: 'people'
+          metrics_path: '/metrics'
+          static_configs:
+            - targets: ['peoapp:9394']
+
+- name: Ensure grafana configuration files
+  ansible.builtin.copy:
+    src: "{{ people.grafana.src_config }}/"
+    dest: "{{ people.grafana.config }}/"
+
+- name: Ensure prometheus image
+  containers.podman.podman_image:
+    name: "docker.io/prom/prometheus:{{ prometheus_version }}"
+
+- name: Ensure grafana image
+  containers.podman.podman_image:
+    name: "docker.io/grafana/grafana:{{ grafana_version }}"
+
+- name: Ensure prometheus service
+  containers.podman.podman_container:
+    name: prometheus
+    image: "prometheus:{{ prometheus_version }}"
+    volumes:
+      - "{{ people.prometheus.config }}:/etc/prometheus"
+      - "{{ people.prometheus.data }}:/prometheus"
+    labels:
+      traefik.http.routers.peometheus.rule: "Host(`{{ hosts.prometheus }}`)"
+      traefik.http.routers.peometheus.tls: "{{ tls_in_labels }}"
+      traefik.http.routers.peometheus.service: "peometheus"
+      traefik.http.services.peometheus.loadbalancer.server.port: "{{ ports.prometheus }}"
+    network:
+      - traefik
+
+- name: Ensure grafana service
+  containers.podman.podman_container:
+    name: grafana
+    image: "grafana:{{ grafana_version }}"
+    volumes:
+      - "{{ people.grafana.config }}:/etc/grafana"
+      - "{{ people.grafana.data }}:/var/lib/grafana"
+    labels:
+      traefik.http.routers.peofana.rule: "Host(`{{ hosts.grafana }}`)"
+      traefik.http.routers.peofana.tls: "{{ tls_in_labels }}"
+      traefik.http.routers.peofana.service: "peofana"
+      traefik.http.services.peofana.loadbalancer.server.port: "{{ ports.grafana }}"
+    network:
+      - traefik

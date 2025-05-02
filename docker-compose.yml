@@ -167,10 +167,10 @@ services:
       # - "traefik.http.routes.legacypeople.rule=Host('people.${DOMAIN:-dev.jkldsa.com}') && PathPrefix('/legacy')"
       # - "traefik.http.routes.legacypeople.service=legacypeople"
 
+      - traefik.docker.network=traefik
       - traefik.http.middlewares.cgibin.replacepathregex.regex=^/cgi-bin/(.*)
       - traefik.http.middlewares.cgibin.replacepathregex.replacement=/api/v0/$$1
 
-      - traefik.docker.network=traefik
       - traefik.http.services.people2.loadbalancer.server.port=${PORT:-3000}
       - traefik.http.routers.people2.rule=Host("people.${DOMAIN:-dev.jkldsa.com}")
       - traefik.http.routers.people2.tls=true
@@ -188,6 +188,36 @@ services:
       - default
     tty: true
     stdin_open: true
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/dev-prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus:/prometheus
+    labels:
+      - traefik.docker.network=traefik
+      - traefik.http.routers.peometheus.rule=Host("peometheus.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.peometheus.tls=true
+      - traefik.http.services.peometheus.loadbalancer.server.port=9090
+    networks:
+      - traefik
+      - default
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./ops/roles/people/files/demo-monitoring/grafana:/etc/grafana
+      - grafana:/var/lib/grafana
+    labels:
+      - traefik.docker.network=traefik
+      - traefik.http.routers.peofana.rule=Host("peofana.${DOMAIN:-dev.jkldsa.com}")
+      - traefik.http.routers.peofana.tls=true
+      - traefik.http.services.peofana.loadbalancer.server.port=3000
+    networks:
+      - traefik
+      - default
+
+
 
   # directus:
   #   image: directus/directus:11.0.0
@@ -277,6 +307,8 @@ volumes:
   mariadb: {}
   filecache: {}
   storage: {}
+  prometheus: {}
+  grafana: {}
   # directus_uploads: {}
   # directus_extensions: {}
 networks:

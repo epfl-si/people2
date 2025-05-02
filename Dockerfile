@@ -93,5 +93,5 @@ RUN ./bin/rails dartsass:build
 ENTRYPOINT ["/bin/bash", "/srv/app/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
+EXPOSE 3000 9394
 CMD ["./bin/dev"]

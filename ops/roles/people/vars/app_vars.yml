@@ -14,3 +14,10 @@ people:
   mariadb:
     data: "{{ DATA_BASEDIR }}/people/mariadb/data"
     init: "{{ DATA_BASEDIR }}/people/mariadb/init"
+  prometheus:
+    data: "{{ DATA_BASEDIR }}/people/prometheus/data"
+    config: "{{ DATA_BASEDIR }}/people/prometheus/config"
+  grafana:
+    data: "{{ DATA_BASEDIR }}/people/grafana/data"
+    config: "{{ DATA_BASEDIR }}/people/grafana/data"
+    src_config: "demo-monitoring/grafana"

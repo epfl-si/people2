@@ -81,3 +81,8 @@ all:
 
     # ---                                                                 whoami
     WHOAMI_HOSTNAME: peoami.fsd.team
+
+    # ---                                                        demo monitoring
+    ENABLE_DEMO_MONITORING: true
+    GRAFANA_HOSTNAME: peofana.fsd.team
+    PROMETHEUS_HOSTNAME: peotheus.fsd.team
