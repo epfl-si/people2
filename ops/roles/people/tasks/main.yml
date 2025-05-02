@@ -75,9 +75,17 @@
   import_tasks:
     file: config.yml
 
-
 - name: People admin
   tags:
     - never
   import_tasks:
     file: admin.yml
+
+- name: Demo Monitoring
+  tags:
+    - people.run
+    - people.run.monitoring
+  import_tasks:
+    file: demo_monitoring.yml
+  when: ENABLE_DEMO_MONITORING
+

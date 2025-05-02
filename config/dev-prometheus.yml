@@ -1,0 +1,11 @@
+# For a more complete config example:
+# https://github.com/prometheus/prometheus/blob/release-3.3/config/testdata/conf.good.yml
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'people-monitor'
+scrape_configs:
+  - job_name: 'people'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['webapp:9394']

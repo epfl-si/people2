@@ -10,13 +10,17 @@ traefik_version: "v2.11"
 mariadb_version: "11.4.3"
 valkey_version: "7.2"
 keycloak_version: "25.0.0"
+prometheus_version: "v3.3.0"
+grafana_version: "11.6.1"
 
 config:
   ingress_type: "{{ INGRESS_TYPE | default('traefik') }}"
 
 ports:
+  grafana: 3000
   keycloak: 9091
   people: 3000
+  prometheus: 9090
   whoami: 9092
   traefik_https: "{{ TRAEFIK_HTTPS_PORT | default(4433) }}"
   traefik_http: "{{ TRAEFIK_HTTP_PORT | default(8033) }}"
@@ -26,5 +30,7 @@ hosts:
   traefik_console: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
   whoami: "{{ WHOAMI_HOSTNAME }}"
   keycloak: "{{ OIDC_HOSTNAME }}"
+  grafana: "{{ GRAFANA_HOSTNAME | default(peofana) }}"
+  prometheus: "{{ PROMETHEUS_HOSTNAME | default(peotheus) }}"
 
 tls_in_labels: "{{ (config.ingress_type == 'firewall') }}"
