@@ -196,7 +196,8 @@ class Social < ApplicationRecord
   end
 
   def url
-    url_pattern&.sub('XXX', value)
+    v = value.presence || placeholder
+    url_pattern&.sub('XXX', v)
   end
 
   def url_prefix

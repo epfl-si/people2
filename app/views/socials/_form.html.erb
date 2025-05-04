@@ -9,41 +9,25 @@
 ) do |form| %>
   <%= render "shared/form_errors", item: social if social.errors.any? %>
   <%= form.hidden_field(:tag) if social.new_record? %>
-  <div class="form-group">
-    <%= form.label Social.human_attribute_name(:url, label: social.label) %>
-    <div class="container">
-      <div class="row">
-        <%= form.text_field(
-          :value, placeholder: social.specs&.placeholder, 
-          class: "form-control", 
-            id: "social_value", 
-            data: { 
-              "socials-target" => "valueField", 
-              action: "input->socials#onValueChange" 
-            } 
-        ) %>
-        <button 
-          type="button" 
-          class="btn btn-sm btn-primary ml-2" 
-          data-action="click->socials#checkLink"
-          data-socials-target="checkButton"
-          disabled
-        >
-          <%= t('action.check_social_link') %>
-        </button>
-      <div class="row">
-        <pre class="text-muted" data-socials-target="urlPreview"><%= social.url_prefix %></pre>
-      </div>
-      </div>
-    </div>
-  </div>
-  <%= form_actions form, social, label: social.label do %>
-    <%= link_to(
-      t('action.cancel'), 
-      new_profile_social_path(profile), 
-      class: "btn-cancel", 
-      method: :get,
-      data: { turbo_stream: true, turbo_method: 'get' }
-    ) if social.new_record? %>
+
+  <%= form_group do %>
+    <%= form.label(t(".identifier_label.#{social.tag}")) %>
+    <%= form.text_field(
+      :value,
+      placeholder: social.specs&.placeholder,
+      data: {
+        "socials-target" => "valueField",
+        action: "input->socials#onValueChange"
+      }
+    ) %>
   <% end %>
-<% end %>
+  <p>
+    <%= icon("corner-down-right") %>
+    <%= link_to social.url, social.url, target: "_blank", data: {socials_target: "urlPreview"} %>
+  </p>
+  <%= form_actions(form, social) %>
+
+
+
+
+  <% end %>
