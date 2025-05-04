@@ -3,6 +3,7 @@
 class Adoption < ApplicationRecord
   validates :sciper, uniqueness: true
   validates :email, uniqueness: { allow_blank: true }
+  scope :accepted, -> { where(accepted: true) }
 
   def self.for_sciper_or_name(v)
     s = v.is_a?(Integer) || v =~ /^\d{6}$/ ? { sciper: v } : { email: "#{v}@epfl.ch" }
