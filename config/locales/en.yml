@@ -53,7 +53,7 @@ en:
     empty_orcid_help: >
       link will appear as soon as your orcid account is synchronized
     function_change_explain: >
-      It is not possible to change the position function directly. 
+      It is not possible to change the position function directly.
       Please fill and submit this form to request the change to one of your
       accreditors.
 
@@ -72,6 +72,7 @@ en:
   action:
     confirm: "Are you sure?"
     delete: "delete"
+    edit: "edit"
     edit_profile: "Edit profile"
     hide_search_form: "Hide the search form"
     more: "More information"
@@ -199,8 +200,7 @@ en:
     copy: "EPFL, tous droits réservés"
     back_to_the_top: "Retour en haut de la page"
 
-
-  # Default error messages full list here: 
+  # Default error messages full list here:
   # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
   errors:
     messages:

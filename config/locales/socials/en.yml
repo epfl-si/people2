@@ -39,6 +39,18 @@ en:
       <<: *attr
       tag: "social type"
       value: "identifier"
+      identifier_label:
+        facebook: "Facebook Identifier"
+        github: "GitHub Username"
+        googlescholar: "Google Scholar User ID"
+        instagram: "Instagram Identifier"
+        linkedin: "LinkedIn Profile ID"
+        mastodon: "Mastodon Username (@ will be prepended)"
+        muskidiocy: "Twitter Username"
+        orcid: "ORCID identifier"
+        scopus: "Scopus AuthorID"
+        stack_overflow: "Stack Overflow Username"
+        wos: "Web of Science Author ID"
     index:
       title: "Social Links"
     action:
