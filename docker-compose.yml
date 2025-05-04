@@ -183,6 +183,10 @@ services:
 
       # - traefik.http.routers.peoplengrok.rule=Host("2.tcp.eu.ngrok.io")
       # - traefik.http.routers.peoplengrok.tls=true
+
+    # TODO: remove wen done dev metrics
+    ports:
+      - "9394:9394"
     networks:
       - traefik
       - default
@@ -216,8 +220,6 @@ services:
     networks:
       - traefik
       - default
-
-
 
   # directus:
   #   image: directus/directus:11.0.0

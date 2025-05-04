@@ -8,6 +8,7 @@ class AdoptionsController < ApplicationController
 
     respond_to do |_format|
       if @adoption.update(adoption_params)
+        Yabeda.people.adoptions_count.set({}, Adoption.accepted.count)
         redirect_to person_path(sciper_or_name: @adoption.sciper)
       else
         flash[:error] = "flash.error_saving_profile_adoption"
