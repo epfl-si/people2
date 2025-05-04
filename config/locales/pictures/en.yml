@@ -32,7 +32,7 @@ en:
     currently_selected_picture: Currently selected profile picture
     form:
       <<: *attr
-      browse_image_file: Select a new photo file
+      browse_image_file: Select a new profile image to upload
       max_photos_reached: "You have reached the maximum number of allowed photos."
       no_photofile_selected: "No new photo selected. Please select one if you want to add a photo to your profile"
       upload_image: "Upload the image"

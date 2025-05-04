@@ -111,7 +111,6 @@ class ProfilesController < ApplicationController
 
   def load_and_authorize_profile
     @profile ||= Profile.find(params[:id])
-    Rails.logger.debug("======= authorized? #{allowed_to?(:update?, @profile) ? 'yes' : 'no'}")
     authorize! @profile, to: :update?
   end
 
