@@ -13,23 +13,22 @@
 
 @use "sass:map";
 
-
-@import 'elements/elements';
-@import 'elements/vendors';
+@import "elements/elements";
+@import "elements/vendors";
 
 // helper function used in bootstrap-variables (but undefined therein)
 @function theme-color($name) {
   @return map.get($theme-colors, $name);
 }
-@import 'elements/bootstrap-variables';
+@import "elements/bootstrap-variables";
 
-@import 'fonts';
+@import "fonts";
 // note that normally trix is included in actiontext but not when imported
 // into a scss. Therefore, we have to declare it explicitly.
-@import 'trix';
-@import 'actiontext';
-@import 'common';
-@import 'cropperjs';
+@import "trix";
+@import "actiontext";
+@import "common";
+@import "cropperjs";
 
 // ------------------------------------------------------------------ extra vars
 $font-size-xxs: 0.6rem;
@@ -57,13 +56,21 @@ $font-size-xxs: 0.6rem;
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 // ----
 
@@ -72,7 +79,7 @@ span.visibility {
   @extend .tag-sm;
   @extend .tag-primary;
   font-size: $font-size-xxs;
-  margin-top: .1em;
+  margin-top: 0.1em;
   svg {
     margin-right: spacer(1);
   }
@@ -84,15 +91,14 @@ span.visibility {
 }
 
 .custom-checkbox {
-  padding-top: 1.0ex;
+  padding-top: 1ex;
 }
 
 #pictures_section {
   min-height: 400px;
-    border: 1px solid #c1c1c1;
-    padding: 1em;
+  border: 1px solid #c1c1c1;
+  padding: 1em;
 }
-
 
 .add-box-buttons {
   margin-bottom: 1em;
@@ -114,7 +120,6 @@ summary .rpush {
   display: inline-flex;
   justify-content: space-between;
   width: calc(100% - 25px);
-
 }
 
 // ---- Forms for editing instances of the models depending on profile
@@ -129,7 +134,7 @@ summary .rpush {
       margin-bottom: 0.25rem;
       font-size: 0.75em;
     }
-    input[type=number] {
+    input[type="number"] {
       display: inline-block;
       width: min-content;
     }
@@ -142,7 +147,6 @@ summary .rpush {
     justify-content: flex-start;
     gap: 2em;
   }
-
 
   .form-actions {
     display: flex;
@@ -157,8 +161,9 @@ summary .rpush {
       @extend .btn-sm;
     }
 
-    // TODO: this does not fully work: button takes transparent instead of red bg 
-    .btn-submit, .btn-confirm {
+    // TODO: this does not fully work: button takes transparent instead of red bg
+    .btn-submit,
+    .btn-confirm {
       @extend .btn;
       @extend .btn-primary;
       @extend .btn-sm;
@@ -203,7 +208,7 @@ summary .rpush {
   }
   .sortable-ko {
     display: none;
-  }  
+  }
 }
 .sortable-error {
   .sortable-mv {
@@ -214,7 +219,7 @@ summary .rpush {
   }
   .sortable-ko {
     display: inline-block;
-  }  
+  }
 }
 
 // -------------------------------------------------------------------- pictures
@@ -241,7 +246,10 @@ details {
 
 // ------------------------------------------------- translation switching magic
 #tr_switchable {
-  .tr_target_en, .tr_target_fr, .tr_target_it, .tr_target_fr {
+  .tr_target_en,
+  .tr_target_fr,
+  .tr_target_it,
+  .tr_target_fr {
     // visibility: hidden;
     display: none;
   }
@@ -285,8 +293,9 @@ details {
 #edit_lang_switchers {
   position: fixed;
   top: 0;
-  left: 15vw;
-  width: 70vw;
+  left: 25vw;
+  width: 50vw;
+  min-width: 600px;
   padding: 0.2em;
   border-radius: 0 0 0.5em 0.5em;
   background-color: #fff;
@@ -330,7 +339,7 @@ details {
         border-bottom: 2px solid #fff;
         border-radius: 15%;
         span {
-          transition: transform .2s ease-in-out;
+          transition: transform 0.2s ease-in-out;
         }
         span:hover {
           top: -0.5ex;
@@ -349,10 +358,8 @@ details {
         }
       }
     }
-
   }
 }
-
 
 // ---------------------------------------------------------- giova's visibility
 .gc-visibility-container {
@@ -383,7 +390,7 @@ details {
       border-bottom: 2px solid #fff;
       border-radius: 15%;
       span {
-        transition: transform .2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
       }
       span:hover {
         top: -0.5ex;
@@ -403,7 +410,6 @@ details {
     }
   }
 }
-
 
 // ---------------------------------------------------------------- modal dialog
 dialog {
@@ -465,6 +471,6 @@ dialog {
 
   input[type="checkbox"]:checked::before {
     transform: scale(1);
-    background-color: #F00;
+    background-color: #f00;
   }
 }

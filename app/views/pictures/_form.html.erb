@@ -7,7 +7,7 @@
       <% end %>
       <%= form.file_field :image, class: "upload-input", onchange: "this.nextElementSibling.nextElementSibling.textContent = this.previousElementSibling.title = this.files[0].name; this.nextElementSibling.removeAttribute('disabled');" %>
       <%= form.submit t(".upload_image"), disabled: true, class: "btn btn-primary btn-sm btn-upload" %>
-      <div class="upload-preview"><%= t '.no_photofile_selected' %></div>
+      <div class="upload-preview"></div>
     </div>
   <% end %>
 <% else %>

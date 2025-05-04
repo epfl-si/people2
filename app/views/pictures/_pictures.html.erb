@@ -7,7 +7,7 @@
 	<div class='col-sm-3'>
 		<div class="card">
 		  <picture>
-				<%= profile_photo(profile.photo, variant: :medium, class: 'img-fluid') %>
+				<%= profile_photo(profile.photo!, variant: :medium, class: 'img-fluid') %>
 		  </picture>
 		  <div class="card-body">
 		  	<%= tag.p t('.currently_selected_picture') %>
