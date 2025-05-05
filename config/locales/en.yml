@@ -51,9 +51,10 @@ en:
   translated_label: "%{label} in %{language}"
 
   messages:
-    empty_orcid_help: >
+    empty_orcid_help: >-
       link will appear as soon as your orcid account is synchronized
-    function_change_explain: >
+
+    function_change_explain: >-
       It is not possible to change the position function directly.
       Please fill and submit this form to request the change to one of your
       accreditors.
@@ -67,6 +68,7 @@ en:
       texfield_for: "%{attr}"
 
   nav:
+    app_with_version: "EPFL People v. %{version}"
     issues: issues
     version: "v. %{version}"
 
@@ -188,18 +190,18 @@ en:
     visible_address: "address"
 
   footer:
-    folow:
-      us: "Suivez l'EPFL sur les réseaux sociaux"
-      facebook: "Suivez l'EPFL sur Facebook"
-      instagram: "Suivez l'EPFL sur Instagram"
-      linkedin: "Suivez l'EPFL sur LinkedIn"
-      twitter: "Suivez l'EPFL sur X"
-      youtube: "Suivez l'EPFL sur Youtube"
-    accessibility: "Accessibilité"
-    legal: "Mentions légales"
-    data_protection: "Protection des données"
-    copy: "EPFL, tous droits réservés"
-    back_to_the_top: "Retour en haut de la page"
+    follow:
+      us: "Follow EPFL on the social networks"
+      facebook: "Follow the EPFL on Facebook"
+      instagram: "Follow the EPFL on Instagram"
+      linkedin: "Follow the EPFL on LinkedIn"
+      twitter: "Follow the EPFL on X"
+      youtube: "Follow the EPFL on Youtube"
+    accessibility: "Accessibility"
+    legal: "Disclaimer"
+    data_protection: "Privacy policy"
+    copy: "EPFL, all rights reserved"
+    back_to_the_top: "Back to the top of the page"
 
   # Default error messages full list here:
   # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
