@@ -1,0 +1,25 @@
+<%= form_with(model: admin_translation, class: "instaform") do |form| %>
+  <% if admin_translation.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(admin_translation.errors.count, "error") %> prohibited this admin_translation from being saved:</h2>
+
+      <ul>
+        <% admin_translation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= single_text_field(form, :en) %>
+  <%= single_text_field(form, :fr) %>
+  <%= single_text_field(form, :it) %>
+  <%= single_text_field(form, :de) %>
+  <%= form_group do %>
+    <%= form.label :done %>
+    <%= form.checkbox :done %>
+  <% end %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

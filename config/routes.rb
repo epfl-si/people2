@@ -88,6 +88,10 @@ Rails.application.routes.draw do
         constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
   end
 
+  namespace :admin do
+    resources :translations, except: %i[new create destroy]
+  end
+
   if Rails.env.production?
     root 'application#homepage'
   else
