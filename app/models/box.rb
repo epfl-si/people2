@@ -46,6 +46,22 @@ class Box < ApplicationRecord
     visible_by?(audience_level)
   end
 
+  # Sync with model_box
+  def sync!
+    return if model_box_id.nil?
+
+    mb = model
+    if mb.locked_title
+      self.title_en = mb.title_en
+      self.title_fr = mb.title_fr
+      self.title_it = mb.title_it
+      self.title_de = mb.title_de
+    end
+    self.show_title = mb.show_title
+    self.locked_title = mb.locked_title
+    save!
+  end
+
   def user_destroyable?
     !standard?
   end

@@ -13,6 +13,8 @@ class ModelBox < ApplicationRecord
   validates :title_it, presence: true, if: -> { locked_title? }
   validates :title_de, presence: true, if: -> { locked_title? }
 
+  after_save :sync!
+
   scope :standard, -> { where(standard: true) }
   scope :optional, -> { where(standard: false) }
 
@@ -28,5 +30,12 @@ class ModelBox < ApplicationRecord
     box = Object.const_get(kind).send("from_model", self)
     box.profile_id = profile.id
     box
+  end
+
+  private
+
+  def sync!
+    Rails.logger.debug("Syncing ModelBox #{id}")
+    boxes.each(&:sync!)
   end
 end
