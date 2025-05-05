@@ -95,6 +95,21 @@ module ProfilesHelper
     safe_join(content)
   end
 
+  def translated_h2(obj, attr: "title", translations: nil)
+    translations ||= obj.profile.translations
+    content = []
+    translations.each do |l|
+      tlang = t("lang.#{l}")
+      # Attribute for language l
+      tattr = "#{attr}_#{l}".to_sym
+      # Translated label for language l
+      ttitle = obj.send(tattr)
+      ttitle = t("no_title_for_locale", language: tlang) if ttitle.blank?
+      content << tag.h2(ttitle, class: "tr_target_#{l}")
+    end
+    safe_join(content)
+  end
+
   def rich_text_input(form, attr)
     cls = if Rails.configuration.enable_direct_uploads
             "rich_text_input"

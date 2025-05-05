@@ -47,6 +47,7 @@ fr:
       en: English
       it: Italiano
       de: Deutch
+  no_title_for_locale: "Not title in %{language}"
   translated_label: "%{label} in %{language}"
 
   messages:

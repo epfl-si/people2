@@ -26,7 +26,8 @@ class ProfilesController < ApplicationController
       # TODO: remove after migration from legacy
       @adoption = Adoption.where(sciper: @profile.sciper).first if Rails.configuration.enable_adoption
 
-      @sections = Section.order(:position)
+      @contact_sections = Section.where(edit_zone: "contact")
+      @sections = Section.where.not(edit_zone: "contact").order(:position)
       @profile.complete_standard_boxes!
 
       boxes = @profile.boxes.includes(:section, :model).sort do |a, b|

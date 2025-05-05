@@ -8,7 +8,8 @@ class CreateSections < ActiveRecord::Migration[7.0]
       t.string :title_it
       t.string :title_de
       t.string :label
-      t.string :zone
+      t.string :zone, default: "main"
+      t.string :edit_zone, default: "main"
       t.integer :position, null: false
       t.boolean :show_title
       t.boolean :create_allowed
