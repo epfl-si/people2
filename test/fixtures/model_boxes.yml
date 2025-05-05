@@ -5,9 +5,9 @@ mbox_social:
   section: side
   kind: IndexBox
   subkind: Social
-  title_en: "Research IDs"
-  title_fr: "Identifiants de recherche"
-  title_it: "ID di ricerca"
+  title_en: "Research/social IDs"
+  title_fr: "Identifiants de recherche ou de réseau social"
+  title_it: "ID di ricerca o di social network"
   title_de: "Forschungsidentifikatoren"
   description_en: "Box for social and research network links"
   description_fr: "Box for social and research network links"
