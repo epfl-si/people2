@@ -1,0 +1,26 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Translations" %>
+
+<h1>Translations</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>EN</th>
+      <th>FR</th>
+      <th>IT</th>
+      <th>DE</th>
+      <th><done</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @translations_by_file.each do |file, translations| %>
+      <tr><td colspan="6"><h3><%= file %></h3></td></tr>
+      <%= render partial: "translation", collection: translations %>
+    <% end %>
+  </tbody>
+</table>
+<%= turbo_frame_tag :remote_modal %>

@@ -1,0 +1,11 @@
+<% content_for :title, "New translation" %>
+
+<h1>New translation</h1>
+
+<%= render "form", admin_translation: @admin_translation %>
+
+<br>
+
+<div>
+  <%= link_to "Back to translations", admin_translations_path %>
+</div>

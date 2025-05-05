@@ -1,0 +1,13 @@
+<tr id="<%= dom_id(translation) %>">
+  <td><%= translation.key %></td>
+  <td><%= translation.en.truncate(40) %></td>
+  <td><%= translation.fr&.truncate(20) %></td>
+  <td><%= translation.it&.truncate(20) %></td>
+  <td><%= translation.de&.truncate(20) %></td>
+  <td><%= icon(translation.done? ? 'check-square' : 'square') %></td>
+  <td>
+    <%= remote_modal_for(edit_admin_translation_path(translation)) do %>
+      <%= icon('edit-3') %>
+    <% end %>
+  </td>
+</tr>
