@@ -5,10 +5,10 @@ mbox_social:
   section: side
   kind: IndexBox
   subkind: Social
-  title_en: "Social Networks"
-  title_fr: "Resaux Socials"
-  title_it: "Reti Sociali"
-  title_de: "Soziale Netzwerke"
+  title_en: "Research IDs"
+  title_fr: "Identifiants de recherche"
+  title_it: "ID di ricerca"
+  title_de: "Forschungsidentifikatoren"
   description_en: "Box for social and research network links"
   description_fr: "Box for social and research network links"
   description_it: "Box for social and research network links"
@@ -34,7 +34,7 @@ mbox_expertise:
   description_it: "Expertise Box"
   description_de: "Expertise Box"
   max_copies: 1
-  standard: false 
+  standard: false
   locked_title: true
   show_title: true
   position: 1

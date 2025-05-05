@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_15_091447) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_05_054802) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -329,6 +329,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_091447) do
     t.boolean "create_allowed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "edit_zone", default: "main"
   end
 
   create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|

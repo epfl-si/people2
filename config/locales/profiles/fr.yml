@@ -4,14 +4,14 @@ fr:
     expertise: Expertise
     nationality: Nationality
     official_name: Official Name
-    personal_web_url: personal web page url 
+    personal_web_url: personal web page url
     personal_phone: personal phone number
     usual_name: Usual Name
   activerecord:
     # Model attribute names
     attributes:
       profile: &arattr
-        <<: *attr 
+        <<: *attr
         expertise_en: expertise (keywords, EN)
         expertise_fr: expertise (keywords, FR)
         expertise_it: expertise (keywords, IT)
@@ -73,6 +73,8 @@ fr:
   profiles:
     edit:
       title:
+        boxes_main: Main content editable boxes
+        boxes_contact: Contact zone editable boxes
         editing_languages: Multilanguage profile
         edit_language: Editing language
         editing: "Editing %{name}'s profile (sciper: %{sciper})"

@@ -1,0 +1,29 @@
+
+<ul class="nav nav-tabs mt-5" role="tablist">
+  <% active = "active" %>
+  <% sections.each do |section| %>
+    <% id = "section_#{section.label}" %>
+    <li class="nav-item">
+      <%= link_to section.t_title, "##{id}", id: "#{id}-tab", role: "tab",
+                  class: "nav-link #{active}", data: { toggle: "tab" },
+                  aria: { controls: id, selected: active ? "true" : "false" } %>
+    </li>
+    <% active = "" %>
+  <% end %>
+</ul>
+
+<div class="tab-content p-3">
+  <% active = "active" %>
+  <% sections.each do |section| %>
+    <% id = "section_#{section.label}" %>
+    <div class="tab-pane fade show <%= active %>" id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
+      <section>
+        <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(profile, section), loading: :lazy do %>
+          <%= render 'shared/spinner' %>
+        <% end %>
+      </section>
+    </div>
+    <% active = "" %>
+  <% end %>
+
+</div>

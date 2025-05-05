@@ -2,15 +2,15 @@
 <% if Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
 <% content_for :menu do %>
   <%= link_to(
-    icon_text('check-circle', t('action.preview')), 
-    preview_path(sciper_or_name: @person.email_user), 
+    icon_text('check-circle', t('action.preview')),
+    preview_path(sciper_or_name: @person.email_user),
     class: "btn btn-link", target: '_blank'
   ) %>
 <% end %>
 <% end %>
 
 <% fake_breadcrumbs [
-  t("action.edit_profile"), 
+  t("action.edit_profile"),
   link_to(@person.name.display, person_path(sciper_or_name: @person.email_user))
 ] %>
 
@@ -31,7 +31,7 @@
   data-language-full-value="<%= translation_classlist(@profile) %>"
   data-language-active-value="btn btn-sm btn-primary"
   data-language-inactive-value="btn btn-sm btn-secondary"
-  class="<%= translation_classlist(@profile) %>" 
+  class="<%= translation_classlist(@profile) %>"
 >
   <nav id="edit_lang_switchers" class="justify-content-center">
     <h5><%= t ".title.edit_language" %></h5>
@@ -67,37 +67,15 @@
   </section>
 
   <hr>
+  <section id="contact_boxes_section">
+    <h3><%= t '.title.boxes_contact' %></h3>
+    <%= render "sections", sections: @contact_sections, profile: @profile %>
+  </section>
+
+  <hr>
   <section id="boxes_section" >
-    <h3><%= t 'title.editable_boxes' %></h3>
-    
-    <ul class="nav nav-tabs mt-5" role="tablist">
-      <% active = "active" %>
-      <% @sections.each do |section| %>
-        <% id = "section_#{section.label}" %>
-        <li class="nav-item">
-          <%= link_to section.t_title, "##{id}", id: "#{id}-tab", role: "tab",
-                      class: "nav-link #{active}", data: { toggle: "tab" },
-                      aria: { controls: id, selected: active ? "true" : "false" } %>
-        </li>
-        <% active = "" %>
-      <% end %>
-    </ul>
-
-    <div class="tab-content p-3">
-      <% active = "active" %>
-      <% @sections.each do |section| %>
-        <% id = "section_#{section.label}" %>
-        <div class="tab-pane fade show <%= active %>" id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-          <section>
-            <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(@profile, section), loading: :lazy do %>
-              <%= render 'shared/spinner' %>
-            <% end %>
-          </section>
-        </div>
-        <% active = "" %>
-      <% end %>
-
-    </div>
+    <h3><%= t '.title.boxes_main' %></h3>
+    <%= render "sections", sections: @sections, profile: @profile %>
   </section>
   <%= turbo_frame_tag :remote_modal %>
 </div><% #tr_switchable %>
