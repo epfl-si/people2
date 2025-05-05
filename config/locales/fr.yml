@@ -67,6 +67,7 @@ fr:
       texfield_for: "%{attr}"
 
   nav:
+    app_with_version: "EPFL People v. %{version}"
     issues: issues
     version: "v. %{version}"
 
@@ -188,7 +189,7 @@ fr:
     visible_address: "address"
 
   footer:
-    folow:
+    follow:
       us: "Suivez l'EPFL sur les réseaux sociaux"
       facebook: "Suivez l'EPFL sur Facebook"
       instagram: "Suivez l'EPFL sur Instagram"
