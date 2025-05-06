@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: for nicer inline editing
+#   see https://andrewfoster.hashnode.dev/inline-editing-and-deleting-with-hotwire-part-2
 module Admin
   class TranslationsController < ApplicationController
     before_action :set_admin_translation, only: %i[show edit update]
@@ -13,19 +15,15 @@ module Admin
     # GET /admin/translations/1 or /admin/translations/1.json
     def show; end
 
-    # GET /admin/translations/new
-    def new
-      @admin_translation = Admin::Translation.new
-    end
-
     # GET /admin/translations/1/edit
     def edit; end
 
     # PATCH/PUT /admin/translations/1 or /admin/translations/1.json
     def update
-      respond_to do |format|
-        format.turbo_stream
-      end
+      @admin_translation.update(admin_translation_params)
+      # respond_to do |format|
+      #   format.turbo_stream
+      # end
     end
 
     private
