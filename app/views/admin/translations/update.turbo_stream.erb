@@ -1,19 +1,6 @@
-<% if @admin_translation.errors.any? %>
-	<%=
-		turbo_stream.replace "admin_translation_form" do
-			render "form", admin_translation: @admin_translation
-		end
-	%>
-<% else %>
-	<%=
-		turbo_stream.replace :remote_modal do
-			turbo_frame_tag :remote_modal
-		end
-	%>
-	<%=
-		turbo_stream.replace dom_id(@admin_translation) do
-    	render "translation", translation: @admin_translation
-    end
-  %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= turbo_stream.replace dom_id(@admin_translation) do
+  render "translation_data", translation: @admin_translation
+end %>
+<%= turbo_stream.replace dom_id(@admin_translation, 'form') do
+  render "translation_form", translation: @admin_translation
+end %>

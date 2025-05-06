@@ -1,10 +1,12 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Translations" %>
+<style>
+  #translations-table .tr-hidden {
+    display: none;
+  }
+</style>
 
 <h1>Translations</h1>
 
-<table class="table">
+<table id="translations-table" class="table", data-controller="trform">
   <thead>
     <tr>
       <th>Key</th>
@@ -12,8 +14,8 @@
       <th>FR</th>
       <th>IT</th>
       <th>DE</th>
-      <th><done</th>
-      <th>Actions</th>
+      <th>done</th>
+      <th>Last Updated</th>
     </tr>
   </thead>
   <tbody>
@@ -23,4 +25,3 @@
     <% end %>
   </tbody>
 </table>
-<%= turbo_frame_tag :remote_modal %>
