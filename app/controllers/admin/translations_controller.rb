@@ -4,12 +4,12 @@
 #   see https://andrewfoster.hashnode.dev/inline-editing-and-deleting-with-hotwire-part-2
 module Admin
   class TranslationsController < ApplicationController
-    before_action :set_admin_translation, only: %i[show edit update autotranslate]
+    before_action :set_admin_translation, only: %i[show edit update autotranslate propagate]
 
     # GET /admin/translations or /admin/translations.json
     def index
       # TODO: stats per file
-      @translations = Admin::Translation.forui.todo.limit(40)
+      @translations = Admin::Translation.forui.todo.order(:en) # .limit(40)
     end
 
     # GET /admin/translations/1 or /admin/translations/1.json
@@ -30,6 +30,17 @@ module Admin
       @admin_translation.autotranslate
       @admin_translation.save
       render action: 'update'
+    end
+
+    # Find all translation with the same content in english and clone the current translation
+    def propagate
+      @translations = Admin::Translation.where(Admin::Translation::DL => @admin_translation[Admin::Translation::DL])
+      @translations.each do |t|
+        Admin::Translation::OTHER_LANGS.each do |l|
+          t[l] = @admin_translation[l]
+        end
+        t.save
+      end
     end
 
     private

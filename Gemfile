@@ -144,6 +144,10 @@ group :development do
 
   gem 'faker'
 
+  # TODO: I wanted to give google translate a try but I cannot figure out how to
+  #       evaluate pricing and to generate the api key.
+  # gem 'google-cloud-translate', '~> 3.2', '>= 3.2.2'
+
   # Used to generate mock data:
   gem 'prime', '~> 0.1.2'
 

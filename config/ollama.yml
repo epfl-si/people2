@@ -3,6 +3,13 @@
 
 ollama_config: &ollama_config
   url: <%= ENV.fetch("OLLAMA_URL", "http://localhost:11434") %>
+  # a: ollama run llama3.2                        <- https://ollama.com/library/llama3.3
+  # b: ollama run granite3-moe                    <- https://ollama.com/library/granite3-moe
+  # c: ollama run thinkverse/towerinstruct        <- https://ollama.com/thinkverse/towerinstruct
+  # d: ollama run dorian2b/vera                   <- https://ollama.com/dorian2b/vera
+  # e: ollama run lauchacarro/qwen2.5-translator  <- https://ollama.com/lauchacarro/qwen2.5-translator
+  # z: ollama run llama3.3                        <- https://ollama.com/library/llama3.3 (42Gb!)
+  model: a
 
 # 12-factor trumps Rails dogma, see
 # https://nebulab.com/blog/12-factor-rails-settings

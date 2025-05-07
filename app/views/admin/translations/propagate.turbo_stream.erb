@@ -1,0 +1,5 @@
+<% @translations.each do |t| %>
+  <%= turbo_stream.replace dom_id(t) do
+    render "translation", translation: t
+  end %>
+<% end %>

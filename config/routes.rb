@@ -91,6 +91,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :translations, except: %i[new create destroy]
     patch 'translations/:id/autotranslate', to: 'translations#autotranslate', as: 'translation_autotranslate'
+    patch 'translations/:id/propagate', to: 'translations#propagate', as: 'translation_propagate'
   end
 
   if Rails.env.production?

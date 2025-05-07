@@ -144,7 +144,8 @@ services:
       OFFLINE_CACHEDIR: "/srv/filecache"
 
       # --> ollama.yml
-      OLLAMA_URL: http://${DOCKER_IP}:11434
+      # OLLAMA_URL: http://${DOCKER_IP}:11434
+      OLLAMA_URL: http://itsidevfsd0006.epfl.ch
 
       # --> oidc.yml
       USE_KEYCLOAK: ${USE_KEYCLOAK:-no}
