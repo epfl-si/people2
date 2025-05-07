@@ -5,7 +5,7 @@ production:
   server: <%= ENV.fetch('ENTRA_SERVER', 'login.microsoftonline.com') %>
   base_path: /<%= ENV.fetch('ENTRA_TENANT_ID') %>/oauth2/v2.0
   auth_path: /authorize
-  token_path: /token"
+  token_path: /token
   client_id: <%= ENV.fetch('ENTRA_CLIENT_ID') %>
   secret: <%= ENV.fetch('ENTRA_SECRET') %>
 

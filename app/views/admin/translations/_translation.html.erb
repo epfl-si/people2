@@ -1,2 +1,29 @@
-<%= render "translation_data", translation: translation %>
-<%= render "translation_form", translation: translation %>
+<tr id="<%= dom_id(translation) %>" data-controller="trform">
+  <td>
+    <%= translation.key %>
+    <div
+      id="<%= dom_id(translation, "form") %>"
+      data-trform-target="form"
+      data-action="keydown.esc->trform#hide_form"
+      class="tr-form tr-hidden"
+    >
+      <p>Editing <%= translation.key %></p>
+      <%= render "form", admin_translation: translation %>
+    </div>
+  </td>
+  <td data-action="click->trform#show_form"><%= translation.en.truncate(40) %></td>
+  <td data-action="click->trform#show_form"><%= translation.fr&.truncate(20) %></td>
+  <td data-action="click->trform#show_form"><%= translation.it&.truncate(20) %></td>
+  <td data-action="click->trform#show_form"><%= translation.de&.truncate(20) %></td>
+  <td><%= icon(translation.done? ? 'check-square' : 'square') %></td>
+  <td><%= translation.updated_at&.strftime('%Y-%m-%d %H:%M') %></td>
+  <td>
+
+
+    <%= form_with(model: translation, url: admin_translation_autotranslate_path(translation), local: false) do |f| %>
+      <%= f.submit "Auto", class: "btn btn-tertiary btn-sm" %>
+    <% end %>
+
+    <%#= link_to("auto", admin_translation_autotranslate_path(translation), class: "btn btn-tertiary btn-sm", method: :put, data: { turbo_stream: true, turbo_method: 'put' }) %>
+  </td>
+</tr>

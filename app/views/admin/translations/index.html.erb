@@ -1,27 +1,51 @@
 <style>
+  #translations-table tr {
+    position: relative;
+  }
+  #translations-table .tr-form {
+    background-color: #fff;
+    box-shadow: 0 5px 10px #0000001a;
+    border: 1px solid #f00;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+
+    min-width: 10rem;
+    padding: 1rem 0;
+    /* margin: .125rem 0 0; */
+    /* font-size: 1rem; */
+    /* color: #333; */
+    text-align: left;
+  }
   #translations-table .tr-hidden {
     display: none;
   }
+  #translations-table tr {
+    cursor: pointer;
+  }
 </style>
+
+<%= link_to "Download", admin_translations_path(format: :zip) %>
 
 <h1>Translations</h1>
 
-<table id="translations-table" class="table", data-controller="trform">
+<table id="translations-table" class="table tr-table  table-sortable" data-tablesaw-sortable>
   <thead>
     <tr>
-      <th>Key</th>
+      <th data-tablesaw-sortable-col>Key</th>
       <th>EN</th>
       <th>FR</th>
       <th>IT</th>
       <th>DE</th>
-      <th>done</th>
-      <th>Last Updated</th>
+      <th data-tablesaw-sortable-col>done</th>
+      <th data-tablesaw-sortable-col>Last Updated</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <% @translations_by_file.each do |file, translations| %>
-      <tr><td colspan="6"><h3><%= file %></h3></td></tr>
-      <%= render partial: "translation", collection: translations %>
-    <% end %>
+    <%= render partial: "translation", collection: @translations %>
   </tbody>
 </table>

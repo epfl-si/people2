@@ -4,12 +4,12 @@
 #   see https://andrewfoster.hashnode.dev/inline-editing-and-deleting-with-hotwire-part-2
 module Admin
   class TranslationsController < ApplicationController
-    before_action :set_admin_translation, only: %i[show edit update]
+    before_action :set_admin_translation, only: %i[show edit update autotranslate]
 
     # GET /admin/translations or /admin/translations.json
     def index
       # TODO: stats per file
-      @translations_by_file = Admin::Translation.where(done: false).group_by(&:file)
+      @translations = Admin::Translation.forui.todo.limit(40)
     end
 
     # GET /admin/translations/1 or /admin/translations/1.json
@@ -26,6 +26,12 @@ module Admin
       # end
     end
 
+    def autotranslate
+      @admin_translation.autotranslate
+      @admin_translation.save
+      render action: 'update'
+    end
+
     private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -35,7 +41,7 @@ module Admin
 
     # Only allow a list of trusted parameters through.
     def admin_translation_params
-      params.expect(admin_translation: %i[file en fr it de done])
+      params.expect(admin_translation: %i[en fr it de done])
     end
   end
 end

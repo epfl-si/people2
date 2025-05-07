@@ -9,8 +9,8 @@ class CreateAdminTranslations < ActiveRecord::Migration[8.0]
       t.string :fr
       t.string :it
       t.string :de
-      t.boolean :done
-
+      t.boolean :done, default: false
+      t.boolean :auto, default: false
       t.timestamps
     end
     add_index :admin_translations, %i[key file], unique: true
