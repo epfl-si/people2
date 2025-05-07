@@ -69,16 +69,27 @@ module Ollamable
   end
 
   def ollama_translate(text, locale)
+    lang = LANGS[locale.to_sym]
     q = "
-      Please translate this in #{LANGS[locale]} (no need to comment,
+      Please translate this in #{lang} (no need to comment,
       just the translation please)
     "
     ollama_query("#{q}: #{text}")
   end
 
-  def ollama_translate_with_html(text, locale)
+  def ollama_translate_from_english(text, locale)
+    lang = LANGS[locale.to_sym]
     q = "
-      Please translate this in #{LANGS[locale]} keeping html tags
+      Please translate the following text from english to #{lang} (no need to comment,
+      just the plain translation please and return an empty string if you cannot translate it)
+    "
+    ollama_query("#{q}: '#{text}'")
+  end
+
+  def ollama_translate_with_html(text, locale)
+    lang = LANGS[locale.to_sym]
+    q = "
+      Please translate this in #{lang} keeping html tags
       (no need to comment, just the translation please)
     "
     ollama_query("#{q}: #{text}")

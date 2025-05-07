@@ -1,6 +1,3 @@
 <%= turbo_stream.replace dom_id(@admin_translation) do
-  render "translation_data", translation: @admin_translation
-end %>
-<%= turbo_stream.replace dom_id(@admin_translation, 'form') do
-  render "translation_form", translation: @admin_translation
+  render "translation", translation: @admin_translation
 end %>

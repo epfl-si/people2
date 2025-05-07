@@ -18,14 +18,14 @@ module ProfilesHelper
     safe_join c
   end
 
-  def single_text_field(form, attr, label: nil, help: nil, extracls: "")
+  def single_text_field(form, attr, label: nil, help: nil, extracls: "", tabindex: nil)
     a = attr.to_sym
     tlabel = label || ".#{attr}"
     ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
     form_group(help: help, extracls: extracls) do
       form.label(t(tlabel)) +
         form.text_field(
-          a, placeholder: true, class: "form-control", "aria-describedby": ahelp
+          a, placeholder: true, class: "form-control", "aria-describedby": ahelp, tabindex: tabindex
         )
     end
   end
