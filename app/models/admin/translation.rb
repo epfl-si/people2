@@ -11,7 +11,7 @@ module Admin
     DL = ALL_LANGS.first
     establish_connection :work
 
-    scope :forui, -> { where.not("key LIKE '%.placeholder.%'") }
+    scope :forui, -> { where.not("key LIKE '%.placeholder.%' OR key LIKE '%lang.native.%'") }
     scope :todo, ->  { where(done: false) }
     validates :key, presence: true, uniqueness: { scope: :file }
 
@@ -32,8 +32,6 @@ module Admin
       autotranslate
       save
     end
-
-    def propagate; end
 
     def self.reload_source_files
       d = Rails.root.join('config/locales').to_s
