@@ -5,6 +5,12 @@ require Rails.root.join('app/services/application_service').to_s
 require Rails.root.join('app/services/api_base_getter').to_s
 require Rails.root.join('app/services/api_accreds_getter').to_s
 
+# TODO: the next two tasks which are very very inefficients can be replaced
+#       by litle more than
+#       ./bin/api.sh \
+#          "authorizations?authid=botweb&status=active&type=property" \
+#          | jq '.authorizations[].persid'
+#       which gets the scipers of all people with botweb property.
 namespace :legacy do
   desc 'Count unique scipers and save the list in work database'
   task seed_scipers: :environment do

@@ -2,7 +2,7 @@
 
 class AccredsController < ApplicationController
   before_action :set_profile, only: %i[index]
-  before_action :set_accred, only: %i[show edit update toggle toggle_addr]
+  before_action :set_accred, only: %i[show edit update]
 
   # GET /profile/profile_id/accreds or /profile/profile_id/accreds.json
   def index
@@ -20,13 +20,13 @@ class AccredsController < ApplicationController
     respond_to do |format|
       if @accred.update(accred_params)
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :update
         end
         format.json { render :show, status: :ok, location: accred_path(@accred) }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, accreds: @accred }
         end
         format.json { render json: @accred.errors, status: :unprocessable_entity }
@@ -48,25 +48,6 @@ class AccredsController < ApplicationController
         @accred.visible = !@accred.visible?
         format.turbo_stream do
           flash.now[:error] = ".cannot_hide_all"
-          render :update, status: :unprocessable_entity
-        end
-        format.json { render json: @accred.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # Dead code should be managed by the standard visibility controller
-  # PATCH/PUT /accreds/1/toggle_address or /accreds/1/toggle_address.json
-  def toggle_addr
-    respond_to do |format|
-      if @accred.update(visible_addr: !@accred.visible_addr?)
-        format.turbo_stream do
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @accred }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".error"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @accred.errors, status: :unprocessable_entity }

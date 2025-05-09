@@ -7,9 +7,7 @@
 
 	<div class="list-group-item" %>
 		<%= turbo_frame_tag "new_award_form" do %>
-			<div class="row justify-content-center">
-				<%= link_to icon_text('plus-circle', t('add')), new_profile_award_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-			</div>
+		  <%= add_record_button(new_profile_award_path(@profile), name: "award") %>
 		<% end %>
 	</div>
 <% end %>

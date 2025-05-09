@@ -38,13 +38,13 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.update(picture_params)
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :update
         end
         format.json { render :show, status: :ok, location: @picture }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @picture }
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }
@@ -58,13 +58,13 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.destroy
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.remove"
+          flash.now[:success] = ".remove"
           render :destroy
         end
         format.json { head :no_content }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.remove"
+          flash.now[:error] = ".remove"
           render 'shared/flash'
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }
@@ -81,13 +81,13 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.save
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.create"
+          flash.now[:success] = ".create"
           render :create, locals: { profile: @profile, picture: @picture }
         end
         format.json { render :show, status: :created, location: @picture }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.create"
+          flash.now[:error] = ".create"
           render :new, status: :unprocessable_entity, locals: { profile: @profile, picture: @picture }
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }

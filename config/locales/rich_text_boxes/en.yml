@@ -20,8 +20,6 @@ en:
             title_fr:
             title_it:
             title_de:
-    models:
-      rich_text_box: "rich_text_box"
   # Summary message for model errors
   error:
     rich_text_box:

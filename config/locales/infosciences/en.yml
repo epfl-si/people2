@@ -23,8 +23,6 @@ en:
               # title_fr:
               # title_it:
               # title_de:
-    models:
-      infoscience: "infoscience"
   # Summary message for model errors
   error:
     infoscience:

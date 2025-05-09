@@ -23,9 +23,7 @@ en:
             url:
               invalid: "is invalid"
             year:
-              not_a_number: "is not a number"  
-    models:
-      publication: "publication"
+              not_a_number: "is not a number"
   # Summary message for model errors
   error:
     publication:
@@ -52,4 +50,3 @@ en:
       authors: "authors"
       year: "publication year"
       journal: "journal name"
- 

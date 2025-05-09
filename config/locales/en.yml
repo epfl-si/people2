@@ -73,6 +73,8 @@ en:
     version: "v. %{version}"
 
   action:
+    add: "Add another"
+    add_record: "Add another %{name}"
     confirm: "Are you sure?"
     delete: "delete"
     edit: "edit"
@@ -93,48 +95,41 @@ en:
   error:
     one: "Error"
     other: "Errors"
-    function_change:
-      one: "Please fix the following error for your request to be sent"
-      other: "Please fix the following errors for your request to be sent"
-      zero: "Something went wrong unexpectedly while trying to submit your request. Please try again later or contact our service desk (1234@epfl.ch)"
-    picture:
-      zero: "Something prevented your picture to be updated (should not happen)"
-      one: "An error prevented your picture to be updated"
-      other: "#{count} errors prevented your picture to be updated"
-    profile:
-      zero: "Something prevented your profile to be updated (should not happen)"
-      one: "An error prevented your profile to be updated"
-      other: "#{count} errors prevented your profile to be updated"
     record:
-      zero: "Something prevented this record to be updated (should not happen)"
-      one: "An error prevented this record to be updated"
-      other: "%{count} errors prevented this record to be updated"
+      zero: "Something prevented this form being recorded (should not happen, please contact the service desk)"
+      one: "An error prevented this form from being recorded"
+      other: "%{count} errors prevented this form from being recorded"
   flash:
-    accred:
-      cannot_hide_all: "Cannot hide all accreditations to general public"
-    box:
-      error:
+    alert:
+    error:
+      create: "Error creating record"
+      update: "Error updating record"
+      remove: "Error deleting record"
+      accred:
+        cannot_hide_all: Cannot hide all accreditations to general public
+      box:
         cannot_delete: "Standard and boxes with content cannot be deleted"
-        destroy_unexpectedly_failed: "Something went wrong while deleting the box"
-      success:
-        deleted: "Box successfully deleted"
-    generic:
-      success:
-        create: "Record created succesfully. Remember to make it visible."
-        update: "Record updated succesfully"
-        remove: "Deleted"
-      error:
-        create: "Error creating record"
-        update: "Error updating record"
-        remove: "Error deleting"
-    function_change:
-      success:
-        create: "Function change request sent to your chosen accreditors"
-    profile:
-      success:
-        update: "Base profile succesfully updated"
-      error:
+        create: "Box could not be created"
+      function_change:
+        create: "Function change request could not be sent. Please try again later or contact the service desk"
+      profile:
         update: "Error while updating the base profile"
+    info:
+    notice:
+      create: "Record created"
+      update: "Record updated"
+      remove: "Record deleted"
+    success:
+      create: "Record created"
+      update: "Record updated"
+      remove: "Record deleted"
+      box:
+        deleted: Box deleted
+        create: "Box created"
+      function_change:
+        create: "Function change request sent to your chosen accreditors"
+      profile:
+        update: "Base profile succesfully updated"
 
   visibility:
     authenticated: "EPFL users only"
@@ -205,24 +200,33 @@ en:
 
   # Default error messages full list here:
   # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
+  # https://github.com/rails/rails/blob/3235827585d87661942c91bc81f64f56d710f0b2/activemodel/lib/active_model/error.rb
   errors:
     messages:
       blank: "must be provided"
-      required: "must exist"
+      required: "is required"
       taken: "has already been taken (must be unique)"
-      invalid: "incorrect format"
+      invalid: "have an incorrect format"
       greater_than: "must be greater than %{count}"
       less_than: "must be smaller than %{count}"
       untranslatable: "at least one translation must be present"
+      incorrect_type: "Is not a property of the correct type"
+      cannot_hide_all_accreds: "At least one accreditation must remain public"
 
   activerecord:
     models:
+      achievement: "annual achievement"
       award: "award"
       box: "box"
       education: "education"
       experience: "work experience"
+      infoscience: "infoscience publication link"
+      picture: "picture"
       profile: "profile"
-      social: "social address"
+      publication: "publication"
+      rich_text_box: "rich_text_box"
+      social: "research id / social link"
+
     errors:
       # for a list of standard error messages keys, see:
       #   https://guides.rubyonrails.org/i18n.html#error-message-interpolation

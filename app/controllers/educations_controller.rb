@@ -29,14 +29,14 @@ class EducationsController < ApplicationController
       if @education.save
         # format.html { append_education }
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.create"
+          flash.now[:success] = ".create"
           render :create, locals: { profile: @profile, education: @education }
         end
         format.json { render :show, status: :created, location: @education }
       else
         # format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.error.create"
+          flash.now[:success] = ".create"
           render :new, status: :unprocessable_entity, locals: { profile: @profile, education: @education }
         end
         format.json { render json: @education.errors, status: :unprocessable_entity }
@@ -49,13 +49,13 @@ class EducationsController < ApplicationController
     respond_to do |format|
       if @education.update(education_params)
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :update
         end
         format.json { render :show, status: :ok, location: @education }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, education: @education }
         end
         format.json { render json: @education.errors, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class EducationsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:success] = "flash.generic.success.remove"
+        flash.now[:success] = ".remove"
         render :destroy
       end
       format.json { head :no_content }
@@ -85,7 +85,7 @@ class EducationsController < ApplicationController
         format.json { render :show, status: :ok, location: @education }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @education.errors, status: :unprocessable_entity }

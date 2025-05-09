@@ -45,8 +45,6 @@ en:
             # nationality_de:
             # personal_web_url:
             # personal_phone:
-    models:
-      profile: "profile"
   # Summary message for model errors
   error:
     profile:

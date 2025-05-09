@@ -1,7 +1,7 @@
 #!/bin/bash
 # Examples of queries to api.epfl.ch that can be useful
 # ./bin/api_epfl.sh > api_examples.txt
-# ./bin/api.sh -r ".firstname" persons/121769   
+# ./bin/api.sh -r ".firstname" persons/121769
 
 . ./.env
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
@@ -34,11 +34,11 @@ jqr=""
 data=""
 while [ $# -gt 0 ] ; do
 case $1 in
--r) 
+-r)
   jqr="$2"
   shift 2
   ;;
--d) 
+-d)
   data="$2"
   shift 2
   ;;

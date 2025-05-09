@@ -21,7 +21,7 @@ module WithSelectableProperties
 
         belongs_to prop, class_name: "SelectableProperty"
         validates "#{prop}_id".to_sym,
-                  inclusion: { in: send("#{prop}_ids"), message: "is not a property of correct type" }
+                  inclusion: { in: send("#{prop}_ids"), message: :incorrect_type }
 
         define_method("t_#{prop}") do |_locale = I18n.locale|
           send(sprop).t_name

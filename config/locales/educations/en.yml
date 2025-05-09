@@ -35,8 +35,6 @@ en:
             title_de:
             year_begin:
             year_end:
-    models:
-      education: "education"
   # Summary message for model errors
   error:
     education:

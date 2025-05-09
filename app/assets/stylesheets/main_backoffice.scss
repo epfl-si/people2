@@ -55,6 +55,10 @@ $font-size-xxs: 0.6rem;
   animation: fade-out 0.25s ease-out;
 }
 
+.translation_missing {
+  color: #00fff9;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -122,6 +126,7 @@ summary .rpush {
   width: calc(100% - 25px);
 }
 
+// ---------------------------------------------------------------------- form
 // ---- Forms for editing instances of the models depending on profile
 
 .instaform {
@@ -137,6 +142,11 @@ summary .rpush {
     input[type="number"] {
       display: inline-block;
       width: min-content;
+    }
+  }
+  .field_with_errors {
+    .form-control {
+      border-color: #ff0000;
     }
   }
 
