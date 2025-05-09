@@ -1,4 +1,3 @@
-<%= turbo_stream.update "new_experience_form" do %>
-  <%= render "experiences/form", profile: @profile, experience: @experience %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= common_editor {
+  render "experiences/form", profile: @profile, experience: @experience
+} %>

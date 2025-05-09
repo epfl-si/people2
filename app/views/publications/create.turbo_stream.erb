@@ -1,9 +1,4 @@
 <%= turbo_stream.append "publications" do %>
-  <%= render "editable_publication", publication: @publication %>
+<%= render "editable_publication", publication: @publication %>
 <% end %>
-
-<%= turbo_stream.update "new_publication_form" do %>
-  <%= add_record_button(new_profile_publication_path(@profile), name: "publication") %>
-<% end %>
-
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= dismiss_common_editor %>
