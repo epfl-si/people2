@@ -1,9 +1,4 @@
 <%= turbo_stream.append "socials" do %>
-  <%= render "editable_social", social: @social, profile: @profile %>
+<%= render "editable_social", social: @social %>
 <% end %>
-
-<%= turbo_stream.update "new_social" do %>
-  <%= render 'add', profile: @profile, selector: @tag_selector %>
-<% end %>
-
-<%= turbo_stream.replace "flash-messages", partial: "shared/flash" %>
+<%= dismiss_common_editor %>

@@ -194,21 +194,40 @@ module ProfilesHelper
     "tr_enable_#{t}"
   end
 
+  def common_editor(title: nil, &block)
+    c = []
+    c << tag.h3(title) if title.present?
+    c << tag.div(capture(&block))
+    c1 = tag.div(class: "container") do
+      safe_join(c)
+    end
+    safe_join [
+      turbo_stream.update("editor_content") { c1 },
+      turbo_stream.replace("flash-messages", partial: "shared/flash")
+    ]
+  end
+
+  def dismiss_common_editor
+    safe_join [
+      turbo_stream.update("editor_content") { "" },
+      turbo_stream.replace("flash-messages", partial: "shared/flash")
+    ]
+  end
+
   def form_actions(form, item, without_cancel: false, label: nil, &block)
-    klass = item.class.name.underscore
+    item.class.name.underscore
+    c = []
+    c << capture(&block) if block_given?
+    unless without_cancel
+      c << tag.button(t("action.dismiss"), class: "btn btn-cancel", "data-action": "click->dismissable#dismiss")
+    end
+    c << if item.new_record?
+           form.submit(t("generic.form.create", label: label), class: "btn-confirm")
+         else
+           form.submit(t("generic.form.update", label: label), class: "btn-confirm")
+         end
     tag.div(class: "form-actions") do
-      concat capture(&block) if block_given?
-      if item.new_record?
-        concat form.submit t("generic.form.create", label: label), class: "btn-confirm"
-      else
-        unless without_cancel
-          concat link_to(t('generic.form.cancel'),
-                         send("#{klass}_path", item),
-                         class: "btn-cancel", method: :get,
-                         data: { turbo_stream: true, turbo_method: 'get' })
-        end
-        concat form.submit t("generic.form.update", label: label), class: "btn-confirm"
-      end
+      safe_join(c)
     end
   end
 

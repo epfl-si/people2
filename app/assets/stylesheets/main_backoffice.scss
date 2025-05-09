@@ -289,17 +289,6 @@ details {
   }
 }
 
-#edit_lang_switchers0 {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 1em;
-  border-radius: 0.5em;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  z-index: 100;
-}
-
 #edit_lang_switchers {
   position: fixed;
   top: 0;
@@ -307,6 +296,23 @@ details {
   width: 50vw;
   min-width: 600px;
   padding: 0.2em;
+  border-radius: 0 0 0.5em 0.5em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em 2em;
+}
+
+#editor {
+  position: fixed;
+  top: 4lh;
+  left: 25vw;
+  width: 50vw;
+  min-width: 600px;
+  /* padding: 0.2em; */
   border-radius: 0 0 0.5em 0.5em;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

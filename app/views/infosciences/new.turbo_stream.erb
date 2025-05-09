@@ -1,4 +1,3 @@
-<%= turbo_stream.update "new_infoscience_form" do %>
-  <%= render "infosciences/form", profile: @profile, infoscience: @infoscience %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= common_editor {
+  render "infosciences/form", profile: @profile, infoscience: @infoscience
+} %>

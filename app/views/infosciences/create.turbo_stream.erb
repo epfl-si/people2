@@ -1,10 +1,4 @@
 <%= turbo_stream.append "infosciences" do %>
-<%= render "editable_infoscience", infoscience: @infoscience %> 
+<%= render "editable_infoscience", infoscience: @infoscience %>
 <% end %>
-
-<%= turbo_stream.update "new_infoscience_form" do %>
-	<div class="row justify-content-center">
-		<%= link_to icon_text('plus-circle', 'add'), new_profile_infoscience_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-	</div>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= dismiss_common_editor %>
