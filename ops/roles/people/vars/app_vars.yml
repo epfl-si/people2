@@ -4,6 +4,7 @@ people:
   enable_webmock: "{{ ENABLE_WEBMOCK | default(false) }}"
   env: "{{ RAILS_ENV | default('development') }}"
   filecache: "{{ DATA_BASEDIR }}/people/filecache"
+  ollama_url: "{{ OLLAMA_URL | default('http://' ~ hosts.docker ~ ':11434') }}"
   redis: "{{ (SELECT_CACHE == 'local_redis') | ternary('redis://cache:6379/0', REDIS_URL) }}"
   repo: "https://github.com/epfl-si/people2.git"
   srcdir: "{{ PEOPLE_SRCDIR }}"
