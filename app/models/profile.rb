@@ -57,7 +57,7 @@ class Profile < ApplicationRecord
 
   # TODO: add all presence validations. Translated properties should be present
   #       in at leat one of the languages when property is visible
-  validates :sciper, uniqueness: { message: "must be unique" }
+  validates :sciper, uniqueness: true
 
   validates :expertise_en, length: { maximum: EXPERTISE_MAX_LEN }
   validates :expertise_fr, length: { maximum: EXPERTISE_MAX_LEN }

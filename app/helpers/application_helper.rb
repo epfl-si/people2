@@ -30,7 +30,7 @@ module ApplicationHelper
 
   # span with icon and text
   def icon_text(icon, txt)
-    content_tag(:span, icon(icon) + txt)
+    content_tag(:span, icon(icon) + " #{txt}")
   end
 
   def icon(icon)

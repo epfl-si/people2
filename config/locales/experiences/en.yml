@@ -41,8 +41,6 @@ en:
             # title_fr:
             # title_it:
             # title_de:
-    models:
-      experience: "work experience"
 
   # Summary message for model errors
   error:

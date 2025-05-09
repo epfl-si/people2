@@ -15,8 +15,6 @@ en:
             base:
               undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
 
-    models:
-      picture: "picture"
   # Summary message for model errors
   error:
     picture:

@@ -58,7 +58,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       # format.html { render :edit, status: :unprocessable_entity }
       format.turbo_stream do
-        flash.now[:error] = "flash.profile.error.update"
+        flash.now[:error] = ".profile.update"
         render :update, status: :unprocessable_entity
       end
       # format.json { render json: @experience.errors, status: :unprocessable_entity }
@@ -94,13 +94,13 @@ class ProfilesController < ApplicationController
       if @profile.update(selected_picture: @picture)
         @pictures = @profile.pictures
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :set_favorite_picture
         end
         format.json { render :show, status: :ok, location: @profile }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           redirect_to :edit
         end
         format.json { render json: @profile.errors, status: :unprocessable_entity }

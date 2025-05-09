@@ -29,14 +29,14 @@ class AwardsController < ApplicationController
       if @award.save
         # format.html { append_award }
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.create"
+          flash.now[:success] = ".create"
           render :create, locals: { profile: @profile, award: @award }
         end
         format.json { render :show, status: :created, location: @award }
       else
         # format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.error.create"
+          flash.now[:success] = ".create"
           render :new, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
         end
         format.json { render json: @award.errors, status: :unprocessable_entity }
@@ -49,13 +49,13 @@ class AwardsController < ApplicationController
     respond_to do |format|
       if @award.update(award_params)
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :update
         end
         format.json { render :show, status: :ok, location: @award }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
         end
         format.json { render json: @award.errors, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class AwardsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:success] = "flash.generic.success.remove"
+        flash.now[:success] = ".remove"
         render :destroy
       end
       format.json { head :no_content }
@@ -85,7 +85,7 @@ class AwardsController < ApplicationController
         format.json { render :show, status: :ok, location: @award }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @award.errors, status: :unprocessable_entity }

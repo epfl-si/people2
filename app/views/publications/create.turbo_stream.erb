@@ -1,11 +1,9 @@
 <%= turbo_stream.append "publications" do %>
-  <%= render "editable_publication", publication: @publication %> 
+  <%= render "editable_publication", publication: @publication %>
 <% end %>
 
 <%= turbo_stream.update "new_publication_form" do %>
-    <div class="row justify-content-center">
-	  <%= link_to icon_text('plus-circle', t('add')), new_profile_publication_path(@profile), class: "btn btn-secondary btn-sm", data: {turbo_stream: true} %>
-	</div>
+  <%= add_record_button(new_profile_publication_path(@profile), name: "publication") %>
 <% end %>
 
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %> 	
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

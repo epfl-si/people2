@@ -15,6 +15,8 @@ class BoxesController < ApplicationController
   def show; end
 
   # GET /boxes/new
+  # This action is called when we create boxes that can be edited right away
+  # as it is the case for text boxes.
   def new
     # TODO: raise error if mbid is not provided
     mbid = params.require(:model_box_id)
@@ -22,6 +24,7 @@ class BoxesController < ApplicationController
     # ensure the number of boxes does not overgrow
     if @profile.boxes.where(model_box_id: mbid).count < @mbox.max_copies
       @box = Box.from_model(@mbox)
+      @box.profile = @profile
     else
       respond_to do |format|
         format.html { head :forbidden }
@@ -34,6 +37,8 @@ class BoxesController < ApplicationController
   def edit; end
 
   # POST /profile/:profile_id/boxes or /profile/:profile_id/boxes.json
+  # For Index boxes instead we need the box to be already present before adding
+  # content. Therefore the box is created on the fly.
   def create
     mbid = box_params(:create).require(:model_box_id)
     @mbox = ModelBox.find(mbid)
@@ -48,13 +53,13 @@ class BoxesController < ApplicationController
     if ok
       @section = @box.section
       @optional_boxes = @profile.available_optional_boxes(@section)
-      flash.now[:success] = "flash.generic.success.create"
+      flash.now[:success] = ".box.create"
     end
     return if ok
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:success] = "flash.generic.error.create"
+        flash.now[:error] = ".box.create"
         render :new, status: :unprocessable_entity
       end
       format.html { render :new, status: :unprocessable_entity }
@@ -67,13 +72,13 @@ class BoxesController < ApplicationController
     respond_to do |format|
       if @box.update(box_params)
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :update
         end
         format.json { render :show, status: :ok, location: @box }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
         end
         format.json { render json: @box.errors, status: :unprocessable_entity }
@@ -87,15 +92,15 @@ class BoxesController < ApplicationController
       @profile = @box.profile
       respond_to do |format|
         if @box.destroy
-          flash.now[:success] = "flash.box.success.deleted"
+          flash.now[:success] = ".box.deleted"
           @section = @box.section
           @optional_boxes = @profile.available_optional_boxes(@section)
           format.turbo_stream
           format.json { head :no_content }
         else
-          msg = "flash.box.error.destroy_unexpectedly_failed"
+
           format.turbo_stream do
-            flash.now[:error] = msg
+            flash.now[:error] = ".remove"
             turbo_stream.replace("flash-messages", partial: "shared/flash")
           end
           format.json { render json: { error: msg }, status: :unprocessable_entity }
@@ -103,9 +108,8 @@ class BoxesController < ApplicationController
       end
     else
       respond_to do |format|
-        msg = "flash.box.error.cannot_delete"
         format.turbo_stream do
-          flash.now[:error] = msg
+          flash.now[:error] = ".box.cannot_delete"
           turbo_stream.replace("flash-messages", partial: "shared/flash")
         end
         format.json { render json: { error: msg }, status: :unprocessable_entity }
@@ -122,7 +126,7 @@ class BoxesController < ApplicationController
         format.json { render :show, status: :ok, location: @box }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @box.errors, status: :unprocessable_entity }
@@ -152,13 +156,8 @@ class BoxesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def box_params(action = nil)
     plist = %i[visibility position]
-    unless action.nil?
-      case action
-      when :create
-        plist << :model_box_id
-      end
-    end
-    plist += extra_plist
+    plist << :model_box_id if %i[create new].include?(action)
+    Rails.logger.debug("box_params for action = '#{action.inspect}': #{plist.join(',')}")
     params.require(box_symbol).permit(plist)
   end
 end

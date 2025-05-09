@@ -27,7 +27,7 @@ class FunctionChangesController < ApplicationController
           ).accreditor_request.deliver_later
         end
         format.turbo_stream do
-          # flash.now[:success] = "flash.generic.success.create"
+          flash.now[:success] = ".function_change.create"
           render :create
         end
         format.json { render :show, status: :created }

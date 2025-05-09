@@ -26,8 +26,6 @@ en:
             description_de:
             url:
             year:
-    models:
-      achievement: "achievement"
   # Summary message for model errors
   error:
     achievement:
@@ -50,6 +48,6 @@ en:
       help:
         category: "Dropdown menu for achievement category"
         rules: >
-          Yearly achievements are to be added until end of April for them 
+          Yearly achievements are to be added until end of April for them
           to appear in the previous year's academic activity report
     index:

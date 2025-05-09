@@ -29,14 +29,14 @@ class AchievementsController < ApplicationController
       if @achievement.save
         # format.html { append_achievement }
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.create"
+          flash.now[:success] = ".create"
           render :create, locals: { profile: @profile, achievement: @achievement }
         end
         format.json { render :show, status: :created, location: @achievement }
       else
         # format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.error.create"
+          flash.now[:success] = ".create"
           render :new, status: :unprocessable_entity, locals: { profile: @profile, achievement: @achievement }
         end
         format.json { render json: @achievement.errors, status: :unprocessable_entity }
@@ -49,13 +49,13 @@ class AchievementsController < ApplicationController
     respond_to do |format|
       if @achievement.update(achievement_params)
         format.turbo_stream do
-          flash.now[:success] = "flash.generic.success.update"
+          flash.now[:success] = ".update"
           render :update
         end
         format.json { render :show, status: :ok, location: @achievement }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, achievement: @achievement }
         end
         format.json { render json: @achievement.errors, status: :unprocessable_entity }
@@ -69,7 +69,7 @@ class AchievementsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:success] = "flash.generic.success.remove"
+        flash.now[:success] = ".remove"
         render :destroy
       end
       format.json { head :no_content }
@@ -85,7 +85,7 @@ class AchievementsController < ApplicationController
         format.json { render :show, status: :ok, location: @achievement }
       else
         format.turbo_stream do
-          flash.now[:error] = "flash.generic.error.update"
+          flash.now[:error] = ".update"
           render :update, status: :unprocessable_entity
         end
         format.json { render json: @achievement.errors, status: :unprocessable_entity }

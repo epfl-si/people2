@@ -45,6 +45,9 @@
 /db/*.sqlite3-*
 /dbdata
 *.bkp
+*.bkp1
+*.bkp2
+*.bkp3
 
 /test/fixtures/webmocks
 

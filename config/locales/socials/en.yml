@@ -17,8 +17,6 @@ en:
             value:
               blank: "Value cannot be blank"
               incorrect_format: "Value format is incorrect"
-    models:
-      social: "research id / social link"
   # Summary message for model errors
   error:
     social:

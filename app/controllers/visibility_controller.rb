@@ -14,14 +14,14 @@ class VisibilityController < ApplicationController
     respond_to do |format|
       if @item.save
         format.turbo_stream
-        flash.now[:success] = "flash.generic.success.update"
+        flash.now[:success] = ".update"
       else
         format.turbo_stream do
           flash.now[:error] =
             if @item.errors.present?
-              @item.errors.map(&:full_message).join(",")
+              @item.errors.map(&:message)
             else
-              "flash.generic.error.update"
+              ".update"
             end
           # Revert model to previous state
           @item = Kernel.const_get(klass).find params[:id]

@@ -2,7 +2,7 @@
 
 class PublicationsController < ApplicationController
   before_action :set_profile, only: %i[index create new]
-  before_action :set_publication, only: %i[show edit update destroy toggle]
+  before_action :set_publication, only: %i[show edit update destroy]
 
   def index
     @publications = @profile.publications.order(:position)
@@ -22,7 +22,7 @@ class PublicationsController < ApplicationController
     respond_to do |format|
       if @publication.save
         format.turbo_stream do
-          flash.now[:success] = "Publication was successfully created."
+          flash.now[:success] = ".create"
           render :create
         end
         format.html do
@@ -31,7 +31,7 @@ class PublicationsController < ApplicationController
         format.json { render :show, status: :created, location: @publication }
       else
         format.turbo_stream do
-          flash.now[:error] = "There was an error creating the publication."
+          flash.now[:error] = ".create"
           render :new, status: :unprocessable_entity
         end
         format.html { render :new }
@@ -44,16 +44,16 @@ class PublicationsController < ApplicationController
     respond_to do |format|
       if @publication.update(publication_params)
         format.turbo_stream do
-          flash.now[:success] = "Publication was successfully updated."
+          flash.now[:success] = ".update"
           render :update
         end
         format.html do
-          redirect_to profile_publications_path(@profile), notice: 'Publication was successfully updated.'
+          redirect_to profile_publications_path(@profile), notice: '.update'
         end
         format.json { render :show, status: :ok, location: @publication }
       else
         format.turbo_stream do
-          flash.now[:error] = "There was an error updating the publication."
+          flash.now[:error] = ".update"
           render :edit, status: :unprocessable_entity
         end
         format.html { render :edit }
@@ -66,28 +66,13 @@ class PublicationsController < ApplicationController
     @publication.destroy!
     respond_to do |format|
       format.turbo_stream do
-        flash.now[:success] = "Publication was successfully destroyed."
+        flash.now[:success] = ".remove"
         render :destroy
       end
       format.html do
-        redirect_to profile_publications_path(@profile), notice: 'Publication was successfully destroyed.'
+        redirect_to profile_publications_path(@profile), notice: '.remove'
       end
       format.json { head :no_content }
-    end
-  end
-
-  def toggle
-    respond_to do |format|
-      if @publication.update(visible: !@publication.visible?)
-        format.turbo_stream { render :update }
-        format.json { render :show, status: :ok, location: @publication }
-      else
-        format.turbo_stream do
-          flash.now[:error] = "There was an error updating the publication visibility."
-          render :edit, status: :unprocessable_entity
-        end
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
-      end
     end
   end
 
