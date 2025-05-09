@@ -1,5 +1,4 @@
 ---
-
 # - name: Ensure traefik config file for people web app (untill we find out how to with labels...)
 #   ansible.builtin.copy:
 #     dest: "{{ traefik.config }}/people.yml"
@@ -14,7 +13,7 @@
 #           people:
 #             loadBalancer:
 #               servers:
-#                 - 
+#                 -
 #                   url: http://peoapp:3000
 
 - name: Ensure people app server containers is running
@@ -72,7 +71,7 @@
       OFFLINE_CACHEDIR: "/srv/filecache"
 
       # # --> ollama.yml
-      # OLLAMA_URL: http://${DOCKER_IP}:11434
+      OLLAMA_URL: "{{ people.ollama_url }}"
 
       # --> oidc.yml
       ENTRA_TENANT_ID: "{{ _secrets.people.entra_oidc.tenant_id }}"
@@ -80,7 +79,7 @@
       ENTRA_SECRET: "{{ _secrets.people.entra_oidc.secret }}"
       USE_KEYCLOAK: no
 
-    volumes: '{{ all_volumes }}'
+    volumes: "{{ all_volumes }}"
     restart_policy: always
     state: started
     network:
@@ -88,7 +87,7 @@
       # - redis
       # - mariadb
     # generate_systemd: false
-      # restart_sec: 10
+    # restart_sec: 10
     labels:
       traefik.http.routers.people.rule: "Host(`{{ hosts.people }}`)"
       traefik.http.routers.people.tls: "{{ tls_in_labels }}"
@@ -96,4 +95,3 @@
       traefik.http.services.people.loadbalancer.server.port: "{{ ports.people }}"
       traefik.http.routers.people.middlewares: peoblock
       traefik.http.middlewares.peoblock.basicauth.users: "{{ _secrets.people.auth.user }}:{{ _secrets.people.auth.pass | password_hash('md5') }}"
-

@@ -5,7 +5,6 @@ _secrets: "{{ _all_secrets[RUNENV] }}"
 _all_rh_secrets: "{{ lookup('file', RH_SECRETS.path) | from_yaml}}"
 rh_credentials: "{{ _all_rh_secrets[RH_SECRETS.key] }} "
 
-
 traefik_version: "v2.11"
 mariadb_version: "11.4.3"
 valkey_version: "7.2"
@@ -26,11 +25,11 @@ ports:
   traefik_http: "{{ TRAEFIK_HTTP_PORT | default(8033) }}"
 
 hosts:
+  docker: "{{ DOCKER_IP | default('127.0.0.1') }}"
   people: "{{ PEOPLE_HOSTNAME | default('people.epfl.ch') }}"
   traefik_console: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
   whoami: "{{ WHOAMI_HOSTNAME }}"
   keycloak: "{{ OIDC_HOSTNAME }}"
   grafana: "{{ GRAFANA_HOSTNAME | default(peofana) }}"
   prometheus: "{{ PROMETHEUS_HOSTNAME | default(peotheus) }}"
-
 tls_in_labels: "{{ (config.ingress_type == 'firewall') }}"

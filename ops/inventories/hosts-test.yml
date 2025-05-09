@@ -12,6 +12,12 @@ all:
       ansible_ip: 10.95.96.153
       ansible_port: 22
       ansible_user: fsd
+    ai:
+      ansible_host: itsidevfsd0006.epfl.ch
+      ansible_ip: 128.178.218.42
+      ansible_port: 22
+      ansible_user: root
+
   vars:
     RUNENV: testnext
     DOMAINS:
@@ -19,13 +25,11 @@ all:
     CERTS_SRC: /keybase/team/epfl_idevfsd/certs/
     RH_SECRETS:
       path: /keybase/team/epfl_idevfsd/RedHat.yml
-      key: rhcp_fsd 
+      key: rhcp_fsd
     SSH_KEYS:
-      -
-        github: multiscan
+      - github: multiscan
         state: present
-      -
-        github: d4rkheart
+      - github: d4rkheart
         state: present
       - # example of revoked key
         github: crazylady2004
@@ -35,8 +39,7 @@ all:
     SELINUX: no
     FIREWALL: yes
     USERS:
-      -
-        username: fsd
+      - username: fsd
         comment: non root user for running applications
         uid: 1000
         linger: true
@@ -63,6 +66,9 @@ all:
     # OIDC_TOKEN_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/token
     # OIDC_USERINFO_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/userinfo
     # OIDC_LOGOUT_ENDPOINT: https://peoak.fsd.team/realms/rails/protocol/openid-connect/logout
+
+    OLLAMA_HOSTNAME: itsidevfsd0006.epfl.ch
+    OLLAMA_URL: https://itsidevfsd0006.epfl.ch
 
     ISA_URL: https://isa-test.epfl.ch/services
 

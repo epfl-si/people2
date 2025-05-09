@@ -1,0 +1,30 @@
+- name: Check existence of ollama binary
+  stat:
+    path: /usr/local/bin/ollama
+  register: ollama_binfile_status
+
+- name: Set fact based on file existence
+  set_fact:
+    ollama_installed: "{{ ollama_binfile_status.stat.exists }}"
+
+- name: Notify ollama installation status
+  debug:
+    msg: "Ollama is already installed"
+  when: ollama_installed
+
+- name: Install ollama with all automatic official script
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://ollama.com/install.sh | sh
+  when: not ollama_installed
+
+- name: Ensure ollama service
+  ansible.builtin.service:
+    name: ollama
+    state: started
+
+- name: Ensure reverse proxy configured (apache version)
+  ansible.builtin.template:
+    src: apache.conf
+    dest: /etc/httpd/conf.d/ollama.conf
+# TODO restart apache
+# TODO add/configure letsencrypt
