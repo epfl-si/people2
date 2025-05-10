@@ -134,11 +134,12 @@ module ProfilesHelper
     btlabel = t(label || ".#{attr}")
     translations.each do |l|
       tlang = t("lang.#{l}")
+      tattr = "#{attr}_#{l}"
       # Attribute for language l
       # Translated label for language l
       tlabel = t("translated_label", language: tlang, label: btlabel)
       label = form.label(tlabel)
-      tarea = rich_text_input(form, attr)
+      tarea = rich_text_input(form, tattr)
       content << form_group(help: help, extracls: "tr_target_#{l}") do
         label + tarea
       end
