@@ -1,3 +1,3 @@
-<%= turbo_stream.append "add_#{@box.section.label}_box" do %>
-  <%= render "#{@box.class.name.tableize}/new", profile: @profile, box: @box %>
-<% end %>
+<%= common_editor {
+  render "#{@box.class.name.tableize}/new", profile: @profile, box: @box
+} %>

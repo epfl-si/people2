@@ -55,6 +55,10 @@ $font-size-xxs: 0.6rem;
   animation: fade-out 0.25s ease-out;
 }
 
+.user_translation_missing {
+  color: $canard;
+}
+
 .translation_missing {
   color: #00fff9;
 }
@@ -289,7 +293,9 @@ details {
   }
 }
 
-#edit_lang_switchers {
+
+// --------------------------------------------------------- common editor modal
+#multilang_editor {
   position: fixed;
   top: 0;
   left: 25vw;
@@ -301,26 +307,19 @@ details {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   z-index: 100;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2em 2em;
+  flex-direction: column;
+  align-items: flex-center;
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em 2em;
+  }
 }
 
 #editor {
-  position: fixed;
-  top: 4lh;
-  left: 25vw;
-  width: 50vw;
-  min-width: 600px;
-  /* padding: 0.2em; */
-  border-radius: 0 0 0.5em 0.5em;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2em 2em;
+  max-height: 85vh;
+  overflow: scroll;
 }
 
 // ---------------------------------------------------------- visibility popover

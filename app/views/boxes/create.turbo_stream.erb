@@ -8,4 +8,4 @@
 <%= turbo_stream.prepend "#{@box.section.label}_boxes" do %>
   <%= render @box.to_partial_path, box: @box %>
 <% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= dismiss_common_editor %>

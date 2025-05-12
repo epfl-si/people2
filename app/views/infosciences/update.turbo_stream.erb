@@ -1,4 +1,4 @@
-<%= turbo_stream.append "infosciences" do %>
+<%= turbo_stream.replace dom_id(@infoscience) do %>
 <%= render "editable_infoscience", infoscience: @infoscience %>
 <% end %>
 <%= dismiss_common_editor %>

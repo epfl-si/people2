@@ -1,13 +1,13 @@
 <%= turbo_frame_tag :achievements_index do %>
-	<%= turbo_frame_tag "achievements", src: nil, target: nil, data: {controller: "sortable"} do %>
-		<% @achievements.each do |achievement| %>
-			<%= render 'editable_achievement', achievement: achievement %>
-		<% end %>
-	<% end %>
+  <%= turbo_frame_tag "achievements", src: nil, target: nil, data: {controller: "sortable"} do %>
+    <% @achievements.each do |achievement| %>
+      <%= render 'editable_achievement', achievement: achievement %>
+    <% end %>
+  <% end %>
 
-	<div class="list-group-item" %>
-		<%= turbo_frame_tag "new_achievement_form" do %>
-		  <%= add_record_button(new_profile_achievement_path(@profile), name: "achievement") %>
-		<% end %>
-	</div>
+  <div class="list-group-item" %>
+    <%= turbo_frame_tag "new_achievement_form" do %>
+      <%= add_record_button(new_profile_achievement_path(@profile), name: "achievement") %>
+    <% end %>
+  </div>
 <% end %>

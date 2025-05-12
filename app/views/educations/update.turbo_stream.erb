@@ -1,4 +1,4 @@
-<%= turbo_stream.append "educations" do %>
+<%= turbo_stream.replace dom_id(@education) do %>
 <%= render "editable_education", education: @education %>
 <% end %>
 <%= dismiss_common_editor %>

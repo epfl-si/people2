@@ -47,6 +47,7 @@ en:
       en: English
       it: Italiano
       de: Deutch
+  no_attribute_for_locale: "%{attribute} in %{language} is not set"
   no_title_for_locale: "Not title in %{language}"
   translated_label: "%{label} in %{language}"
 

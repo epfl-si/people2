@@ -95,17 +95,37 @@ module ProfilesHelper
     safe_join(content)
   end
 
-  def translated_h2(obj, attr: "title", translations: nil)
-    translations ||= obj.profile.translations
-    content = []
-    translations.each do |l|
-      tlang = t("lang.#{l}")
-      # Attribute for language l
-      tattr = "#{attr}_#{l}".to_sym
-      # Translated label for language l
-      ttitle = obj.send(tattr)
-      ttitle = t("no_title_for_locale", language: tlang) if ttitle.blank?
-      content << tag.h2(ttitle, class: "tr_target_#{l}")
+  def translations_for(obj)
+    if obj.respond_to?("profile")
+      obj.send("profile").translations
+    else
+      Rails.available_languages
+    end
+  end
+
+  def localized_attr_value(obj, attr, locale)
+    v = obj.send("#{attr}_#{locale}")
+    if v.blank?
+      a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
+      l = t("lang.#{locale}")
+      v = t("no_attribute_for_locale", attribute: a, language: l)
+    end
+    v
+  end
+
+  def tag_for_localized_attr(tag_name, obj, attr, params = {})
+    translations = params[:translations] || translations_for(obj)
+    cls = params.delete(:class)
+    content = translations.map do |l|
+      params[:class] = cls.nil? ? "tr_target_#{l}" : "#{cls} tr_target_#{l}"
+      v = obj.send("#{attr}_#{l}")
+      if v.blank?
+        a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
+        l = t("lang.#{l}")
+        v = t("no_attribute_for_locale", attribute: a, language: l)
+        params[:class] << " user_translation_missing"
+      end
+      content_tag(tag_name, v, params)
     end
     safe_join(content)
   end
