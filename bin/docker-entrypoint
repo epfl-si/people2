@@ -2,6 +2,8 @@
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  mkdir -p tmp/pids
+  chmod -R 755 tmp
   ./bin/rails dartsass:build
   ./bin/rails db:prepare
 fi
