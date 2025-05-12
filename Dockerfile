@@ -10,7 +10,7 @@
 
 FROM registry.docker.com/library/ruby:3.2.3-bullseye
 
-ARG RAILS_ENV=development
+ARG RAILS_ENV=production
 ARG LIB_HOME=/srv/lib
 
 ENV RAILS_ENV="$RAILS_ENV" \
@@ -19,8 +19,8 @@ ENV RAILS_ENV="$RAILS_ENV" \
 	BUNDLE_PATH="/usr/local/bundle" \
 	OIDC_HOSTNAME=""
 
-RUN mkdir -p /srv/app $OFFLINE_CACHEDIR
-
+RUN mkdir -p /srv/app $OFFLINE_CACHEDIR  && \ 
+	chmod -R 777 /srv/app "$OFFLINE_CACHEDIR"
 # Throw-away build stage to reduce size of final image
 # FROM base as build
 
@@ -62,6 +62,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	curl \
 	libvips \
 	pkg-config \
+	ldap-utils \
 	&& rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -81,17 +82,20 @@ COPY . .
 
 # COPY --from=elements /elements/dist/css/elements.css /elements/dist/css/vendors.css /elements/bootstrap-variables.scss /srv/app/app/assets/stylesheets/elements/
 
-RUN ./bin/rails dartsass:build
+RUN SECRET_KEY_BASE=dummy ./bin/rails dartsass:build
 
 # Precompile bootsnap code for faster boot times
 # RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-# RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/bin/bash", "/srv/app/bin/docker-entrypoint"]
 
+run apt-get update && apt-get install --no-install-recommends -y \ 
+	redis && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000 9394
 CMD ["./bin/dev"]
