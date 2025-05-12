@@ -1,3 +1,9 @@
+- name: Déploiement global
+  hosts: prod
+  gather_facts: false
+  roles:
+    - role: k8s
+
 - name: Common
   hosts: common
   gather_facts: False
