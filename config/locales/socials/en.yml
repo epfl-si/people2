@@ -35,8 +35,6 @@ en:
     # Override model attribute names as they appear in form labels
     form:
       <<: *attr
-      tag: "social type"
-      value: "identifier"
       identifier_label:
         facebook: "Facebook Identifier"
         github: "GitHub Username"
@@ -49,6 +47,9 @@ en:
         scopus: "Scopus AuthorID"
         stack_overflow: "Stack Overflow Username"
         wos: "Web of Science Author ID"
+      new: New %{label}
+      tag: "social type"
+      value: "identifier"
     index:
       title: "Social Links"
     action:

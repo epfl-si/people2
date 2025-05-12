@@ -1,4 +1,4 @@
-<%= turbo_stream.append "socials" do %>
+<%= turbo_stream.replace dom_id(@social) do %>
 <%= render "editable_social", social: @social %>
 <% end %>
 <%= dismiss_common_editor %>
