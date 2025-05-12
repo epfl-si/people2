@@ -107,3 +107,80 @@
                   requests:
                     cpu: "100m"
                     memory: "256Mi"
+
+- name: Deploy the people_webapp
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: people-webapp
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: people
+        template:
+          metadata:
+            labels:
+              app: people
+              version: "v1.03"
+          spec:
+            serviceAccountName: puller
+            containers:
+              - name: people
+                image: "{{ webapp_image }}"
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 3000
+                  - containerPort: 9394
+                    name: metrics
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "256Mi"
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-app-secrets
+                env:
+                  - name: ENABLE_METRICS
+                    value: "true"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /srv/app/storage
+                    subPath: people_storage
+                  - name: pids-path
+                    mountPath: /srv/app/tmp
+            volumes:
+              - name: pids-path
+                emptyDir:
+                  sizeLimit: 100Mi
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
+
+- name: Expose the people_webapp on port 8080 via ClusterIP service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: people
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+      spec:
+        selector:
+          app: people
+        ports:
+          - name: http
+            protocol: TCP
+            port: 8080
+            targetPort: 3000
