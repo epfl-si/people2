@@ -2,7 +2,7 @@
 
 class BoxesController < ApplicationController
   before_action :set_profile, only: %i[index create new]
-  before_action :set_box, only: %i[show edit update destroy toggle]
+  before_action :set_box, only: %i[show edit update destroy]
 
   # GET /profiles/:profile_id/sections/:section_id/boxes
   def index
@@ -40,9 +40,11 @@ class BoxesController < ApplicationController
   # For Index boxes instead we need the box to be already present before adding
   # content. Therefore the box is created on the fly.
   def create
-    mbid = box_params(:create).require(:model_box_id)
+    mbid = params.require(box_symbol).require(:model_box_id)
+    # mbid = box_params(:create).require(:model_box_id)
     @mbox = ModelBox.find(mbid)
 
+    # double check that we are not asked to create more boxed than allowed
     if @profile.boxes.where(model_box_id: mbid).count >= @mbox.max_copies
       raise "Unexpected. Asking to create a new box when max number already reached"
     end
@@ -70,6 +72,7 @@ class BoxesController < ApplicationController
   # PATCH/PUT /boxes/1 or /boxes/1.json
   def update
     respond_to do |format|
+      Rails.logger.debug("update: box_params=#{box_params.inspect}")
       if @box.update(box_params)
         format.turbo_stream do
           flash.now[:success] = ".update"
@@ -117,23 +120,6 @@ class BoxesController < ApplicationController
     end
   end
 
-  def toggle
-    respond_to do |format|
-      if @box.update(visible: !@box.visible?)
-        format.turbo_stream do
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @box }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :update, status: :unprocessable_entity
-        end
-        format.json { render json: @box.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
 
   def set_profile
@@ -145,6 +131,7 @@ class BoxesController < ApplicationController
     @box = Box.includes(:profile, :model).find(params[:id])
   end
 
+  # This needs to be overridden to add box-specific acceptable parameters
   def extra_plist
     []
   end
@@ -156,7 +143,8 @@ class BoxesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def box_params(action = nil)
     plist = %i[visibility position]
-    plist << :model_box_id if %i[create new].include?(action)
+    # plist << :model_box_id if action == :create || action == :new
+    plist << extra_plist
     Rails.logger.debug("box_params for action = '#{action.inspect}': #{plist.join(',')}")
     params.require(box_symbol).permit(plist)
   end

@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col-md-8">
         <div class="d-flex align-items-center">
-          <h4 class="h5 mb-0 mr-2"><%= education.t_title %> | </h4>
-          <div><%= education.t_field %></div>
+          <%= tag_for_localized_attr "h4", education, "title", class: "h5 mb-0 mr-2" %>
+          <%= tag_for_localized_attr "div", education, "field" %>
         </div>
         <p class="text-muted small mb-0">
           <%= period_text(education.year_begin, education.year_end) %> <%= education.school %>
-          <br> 
+          <br>
           <%= t("education.directedby")%> <%= education.director.presence || t("general.not_available") %>
         </p>
       </div>

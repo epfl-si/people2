@@ -17,8 +17,10 @@ class Box < ApplicationRecord
   # before_create :ensure_sciper
   positioned on: %i[profile section]
 
-  def self.from_model(mb, params = nil)
-    b = new(
+  def self.from_model(mb, params = {})
+    klass = Object.const_get(mb.kind)
+    b = klass.new
+    mbparams = {
       section: mb.section,
       model: mb,
       type: mb.kind,
@@ -31,12 +33,17 @@ class Box < ApplicationRecord
       locked_title: mb.locked_title,
       position: mb.position,
       data: mb.data
-    )
-    b.assign_attributes(params) if params.present?
+    }
+    b.assign_attributes(mbparams.merge(params))
     b
   end
 
   # primary_locale = nil, fallback_locale = nil
+
+  # TODO: may be this should be a property stored in the DB and copied from mb upon initialization
+  def container?
+    type == "IndexBox"
+  end
 
   def content?(_primary_locale = nil, _fallback_locale = nil)
     raise "The (abstract) 'content?' method needs to be implemented in the class"

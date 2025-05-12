@@ -1,4 +1,4 @@
-<%= turbo_stream.append "experiences" do %>
+<%= turbo_stream.replace dom_id(@experience) do %>
 <%= render "editable_experience", experience: @experience %>
 <% end %>
 <%= dismiss_common_editor %>

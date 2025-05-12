@@ -7,29 +7,30 @@
   class="<%= translation_classlist(@profile) %>"
 >
 
-<nav id="edit_lang_switchers" class="justify-content-center">
-  <h5><%= t ".title.edit_language" %></h5>
+<div id="multilang_editor">
+  <nav id="edit_lang_switchers" class="justify-content-center">
+    <h5><%= t ".title.edit_language" %></h5>
 
-  <% sl = current_work_translation(@profile) %>
-  <% @profile.translations.each do |l| %>
-    <%= button_tag(
-      t("lang.#{l}"),
-      class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
-      data: {
-        "action": "language#setEnabledLanguage",
-        "language-target": "button",
-        "langcls": "tr_enable_#{l}",
-      }
-    ) %>
-  <% end %>
-  <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
-    <%= icon('edit-3') %>
-  <% end %>
-</nav>
-
-<section id="editor" data-controller="dismissable">
-  <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
+    <% sl = current_work_translation(@profile) %>
+    <% @profile.translations.each do |l| %>
+      <%= button_tag(
+        t("lang.#{l}"),
+        class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
+        data: {
+          "action": "language#setEnabledLanguage",
+          "language-target": "button",
+          "langcls": "tr_enable_#{l}",
+        }
+      ) %>
+    <% end %>
+    <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
+      <%= icon('edit-3') %>
+    <% end %>
+  </nav>
+  <section id="editor" data-controller="dismissable">
+    <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
   </section>
+</div>
 
 <% # TODO: remove after migration from legacy %>
 <% if Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>

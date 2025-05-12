@@ -1,4 +1,4 @@
-<%= turbo_stream.append "publications" do %>
-<%= render "editable_publication", publication: @publication %>
+<%= turbo_stream.replace dom_id(@publication) do %>
+  <%= render "editable_publication", publication: @publication %>
 <% end %>
 <%= dismiss_common_editor %>

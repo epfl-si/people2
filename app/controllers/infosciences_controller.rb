@@ -2,7 +2,7 @@
 
 class InfosciencesController < ApplicationController
   before_action :set_profile, only: %i[index create new]
-  before_action :set_infoscience, only: %i[show edit update destroy toggle]
+  before_action :set_infoscience, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/infosciences or /profile/profile_id/infosciences.json
   def index
@@ -24,73 +24,28 @@ class InfosciencesController < ApplicationController
   # POST /profile/profile_id/infosciences or /profile/profile_id/infosciences.json
   def create
     @infoscience = @profile.infosciences.new(infoscience_params)
-
-    respond_to do |format|
-      if @infoscience.save
-        # format.html { append_infoscience }
-        format.turbo_stream do
-          flash.now[:success] = ".create"
-          render :create, locals: { profile: @profile, infoscience: @infoscience }
-        end
-        format.json { render :show, status: :created, location: @infoscience }
-      else
-        # format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          flash.now[:success] = ".create"
-          render :new, status: :unprocessable_entity, locals: { profile: @profile, infoscience: @infoscience }
-        end
-        format.json { render json: @infoscience.errors, status: :unprocessable_entity }
-      end
+    if @infoscience.save
+      flash.now[:success] = ".create"
+    else
+      flash.now[:success] = ".create"
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /infosciences/1 or /infosciences/1.json
   def update
-    respond_to do |format|
-      if @infoscience.update(infoscience_params)
-        format.turbo_stream do
-          flash.now[:success] = ".update"
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @infoscience }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :edit, status: :unprocessable_entity, locals: { profile: @profile, infoscience: @infoscience }
-        end
-        format.json { render json: @infoscience.errors, status: :unprocessable_entity }
-      end
+    if @infoscience.update(infoscience_params)
+      flash.now[:success] = ".update"
+    else
+      flash.now[:error] = ".update"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /infosciences/1 or /infosciences/1.json
   def destroy
     @infoscience.destroy!
-
-    respond_to do |format|
-      format.turbo_stream do
-        flash.now[:success] = ".remove"
-        render :destroy
-      end
-      format.json { head :no_content }
-    end
-  end
-
-  def toggle
-    respond_to do |format|
-      if @infoscience.update(visible: !@infoscience.visible?)
-        format.turbo_stream do
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @infoscience }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :update, status: :unprocessable_entity
-        end
-        format.json { render json: @infoscience.errors, status: :unprocessable_entity }
-      end
-    end
+    flash.now[:success] = ".remove"
   end
 
   private
