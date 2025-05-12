@@ -2,3 +2,15 @@
 
 - import_tasks: init.yml
   tags: [init]
+
+- import_tasks: webapp.yml
+  tags: [webapp]
+
+- import_tasks: redis.yml
+  tags: [redis]
+
+- import_tasks: monitoring.yml
+  tags: [monitoring]
+
+- import_tasks: route.yml
+  tags: [route]
