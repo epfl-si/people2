@@ -1,0 +1,6 @@
+all:
+  hosts:
+    prod:
+      ansible_connection: local
+  vars:
+    inventory_environment: "prod"
