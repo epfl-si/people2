@@ -1,3 +1,4 @@
+<%= turbo_frame_tag dom_id(social), "data-sortable-url" => education_path(social, format: 'json') do %>
 <div class="list-group-item">
   <div class="row">
     <div class="col-md-8">
@@ -6,7 +7,7 @@
         <div>
           <% if social.value.blank? && social.automatic? && social.help_on_empty %>
             <p>
-              <%= t(social.help_on_empty) %>. 
+              <%= t(social.help_on_empty) %>.
               <%= link_to(t('action.more'), social.help_url, target: 'blank') if social.help_url %>
             </p>
           <% else %>
@@ -23,3 +24,4 @@
     </div>
   </div>
 </div>
+<% end %>

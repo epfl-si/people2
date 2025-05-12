@@ -2,3 +2,6 @@
 <%= render "editable_social", social: @social %>
 <% end %>
 <%= dismiss_common_editor %>
+<%= turbo_stream.update "new_social" do %>
+	<%= render 'add', profile: @profile, selector: @tag_selector %>
+<% end %>
