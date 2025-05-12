@@ -1,0 +1,21 @@
+- name: Créer la Route OpenShift pour exposer l'application people-webapp
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: people-webapp
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+          route: private
+      spec:
+        host: "people-next.epfl.ch"
+        to:
+          kind: Service
+          name: people
+        port:
+          targetPort: http
+        tls:
+          termination: edge
