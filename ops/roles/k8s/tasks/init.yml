@@ -40,3 +40,22 @@
         - name: quay-pull-secret
       imagePullSecrets:
         - name: quay-pull-secret
+
+- name: Create people-webapp service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: people
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+      spec:
+        selector:
+          app: people
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: 3000
