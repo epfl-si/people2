@@ -1,0 +1,69 @@
+# - name: Load Quay secrets from secrets.yml
+#   include_vars:
+#     file: secrets.yml
+#     name: quay_secrets
+
+- name: Flatten app environment config dictionary for use in ConfigMap
+  set_fact:
+    people_config: "{{ people_app_env }}"
+  
+- name: Load secrets from Keybase vault for app and admin
+  set_fact:
+    raw_secrets: "{{ lookup('file', '/keybase/team/epfl_people.prod/ops/secrets-prod.yml') | from_yaml }}"
+    raw_admin_secrets: "{{ lookup('file', '/keybase/team/epfl_people.prod/ops/secrets-admin.yml') | from_yaml }}"
+
+- name: Create Kubernetes Secret with application DB/API credentials
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: people-app-secrets
+        namespace: "{{ app_namespace }}"
+      type: Opaque
+      data:
+        "DATABASE_HOST": "{{ raw_secrets.Db.people.server  | b64encode}}"
+        "DATABASE_PORT": "{{ raw_secrets.Db.people.port | b64encode }}"
+        "DATABASE_NAME": "{{ raw_secrets.Db.people.dbname  | b64encode}}"
+        "DATABASE_USER": "{{ raw_secrets.Db.people.users  | b64encode}}"
+        "DATABASE_PASSWORD": "{{ raw_secrets.Db.people.password  | b64encode}}"
+        "CV_DATABASE_HOST": "{{ raw_secrets.Db.legacy.server  | b64encode}}"
+        "CV_DATABASE_NAME": "{{ raw_secrets.Db.legacy.dbname | b64encode }}"
+        "CV_DATABASE_USER": "{{ raw_secrets.Db.legacy.users  | b64encode}}"
+        "CV_DATABASE_PASSWORD": "{{ raw_secrets.Db.legacy.password  | b64encode}}"
+        "ENTRA_SECRET": "{{ raw_secrets.entra.secret  | b64encode }}"
+        "EPFLAPI_PASSWORD": "{{ raw_secrets.api.password  | b64encode }}"
+        "CAMIPRO_PHOTO_KEY": "{{ raw_secrets.camipro.key  | b64encode }}"
+
+- name: Create Kubernetes Secret with admin DB credentials
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: people-admin-secrets
+        namespace: "{{ app_namespace }}"
+      type: Opaque
+      data:
+        "DATABASE_HOST": "{{ raw_admin_secrets.Db.people.server  | b64encode}}"
+        "DATABASE_PORT": "{{ raw_admin_secrets.Db.people.port | b64encode }}"
+        "DATABASE_NAME": "{{ raw_admin_secrets.Db.people.dbname  | b64encode}}"
+        "DATABASE_USER": "{{ raw_admin_secrets.Db.people.users  | b64encode}}"
+        "DATABASE_PASSWORD": "{{ raw_admin_secrets.Db.people.password  | b64encode}}"
+        "CV_DATABASE_HOST": "{{ raw_admin_secrets.Db.legacy.server  | b64encode}}"
+        "CV_DATABASE_NAME": "{{ raw_admin_secrets.Db.legacy.dbname | b64encode }}"
+        "CV_DATABASE_USER": "{{ raw_admin_secrets.Db.legacy.users  | b64encode}}"
+        "CV_DATABASE_PASSWORD": "{{ raw_admin_secrets.Db.legacy.password  | b64encode}}"
+
+- name: Create Kubernetes ConfigMap with application environment variables
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: people-app-config
+        namespace: "{{ app_namespace }}"
+      data: "{{ people_config }}"
