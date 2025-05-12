@@ -59,3 +59,37 @@
           - protocol: TCP
             port: 80
             targetPort: 3000
+
+- name: Create Redis PVC
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-redis
+        namespace: "{{ app_namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
+- name: Create storage PVC for /srv/app/storage
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-storage
+        namespace: "{{ app_namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: 1Mi
+        storageClassName: ""
+        volumeMode: Filesystem
