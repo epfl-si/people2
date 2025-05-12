@@ -47,6 +47,8 @@ class ProfilesController < ApplicationController
     case part
     when "languages"
       update_languages
+    when "name"
+      raise NotImplementedError
     else
       update_base
     end
@@ -55,16 +57,14 @@ class ProfilesController < ApplicationController
   def update_base
     return if @profile.update(profile_params)
 
-    respond_to do |format|
-      # format.html { render :edit, status: :unprocessable_entity }
-      format.turbo_stream do
-        flash.now[:error] = ".profile.update"
-        render :update, status: :unprocessable_entity
-      end
-      # format.json { render json: @experience.errors, status: :unprocessable_entity }
-    end
+    flash.now[:error] = ".profile.update"
+    render 'edit_details', status: :unprocessable_entity
   end
 
+  # When profile's available languages are changed, we should
+  #  1. re-render the language change nav
+  #  2. re-render all the partials where the list of profile languages is used
+  # Therefore, it is much easier to just reload everything e buona notte
   def update_languages
     unless @profile.update(profile_params)
       flash[:error] = t("something whent wrong while saving your language selection")
