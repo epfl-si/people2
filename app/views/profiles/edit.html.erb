@@ -27,7 +27,7 @@
       <%= icon('edit-3') %>
     <% end %>
   </nav>
-  <section id="editor" data-controller="dismissable">
+  <section id="editor" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" tabindex="0">
     <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
   </section>
 </div>
