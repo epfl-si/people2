@@ -53,12 +53,15 @@ en:
 
   messages:
     empty_orcid_help: >-
-      link will appear as soon as your orcid account is synchronized
-
+      link will appear as soon as your ORCID account is synchronized
     function_change_explain: >-
       It is not possible to change the position function directly.
       Please fill and submit this form to request the change to one of your
       accreditors.
+    function_change_exists: >-
+      There is already a request for changing this job function. We prefer
+      to avoid spamming the accreditors. Please try to contact your accreditor
+      by phone or to contact the service desk asking to discard the old request.
 
   generic:
     form:
@@ -131,6 +134,10 @@ en:
         create: "Function change request sent to your chosen accreditors"
       profile:
         update: "Base profile succesfully updated"
+
+  function_changes:
+    form:
+      function: new position
 
   visibility:
     authenticated: "EPFL users only"
@@ -221,6 +228,7 @@ en:
       box: "box"
       education: "education"
       experience: "work experience"
+      function_change: "position change request"
       infoscience: "infoscience publication link"
       picture: "picture"
       profile: "profile"

@@ -1,3 +1,3 @@
-<%= turbo_stream.replace "remote_modal_body" do %>
-<%= render "function_changes/form" %>
-<% end %>
+<%= common_editor {
+  render "function_changes/form"
+} %>
