@@ -26,10 +26,7 @@ class BoxesController < ApplicationController
       @box = Box.from_model(@mbox)
       @box.profile = @profile
     else
-      respond_to do |format|
-        format.html { head :forbidden }
-        format.json { render json: { msg: "Max number of boxes reached" }, status: :forbidden }
-      end
+      unexpected "Unexpected. Asking to add a new box when max number already reached"
     end
   end
 
@@ -46,26 +43,21 @@ class BoxesController < ApplicationController
 
     # double check that we are not asked to create more boxed than allowed
     if @profile.boxes.where(model_box_id: mbid).count >= @mbox.max_copies
-      raise "Unexpected. Asking to create a new box when max number already reached"
+      unexpected "Unexpected. Asking to create a new box when max number already reached"
+      return
     end
 
     @box = Box.from_model(@mbox, box_params)
     @box.profile = @profile
-    ok = @box.save
-    if ok
+    @box.save
+    if @box.save
       @section = @box.section
       @optional_boxes = @profile.available_optional_boxes(@section)
       flash.now[:success] = ".box.create"
-    end
-    return if ok
-
-    respond_to do |format|
-      format.turbo_stream do
-        flash.now[:error] = ".box.create"
-        render :new, status: :unprocessable_entity
-      end
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: @box.errors, status: :unprocessable_entity }
+    else
+      # TODO: check this
+      flash.now[:error] = ".box.create"
+      render :new, status: :unprocessable_entity
     end
   end
 
