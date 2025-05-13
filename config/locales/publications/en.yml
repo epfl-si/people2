@@ -16,12 +16,6 @@ en:
       models:
         publication:
           attributes:
-            # authors:
-            # journal:
-            title:
-              blank: "can't be blank"
-            url:
-              invalid: "is invalid"
             year:
               not_a_number: "is not a number"
   # Summary message for model errors

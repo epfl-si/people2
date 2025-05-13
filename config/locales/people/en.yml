@@ -13,6 +13,7 @@ en:
     usual_firstname: usual firstname
     usual_lastname: usual firstname
     website: personal web site url
+
   # ---------------------------------------------------------------------- views
   people:
     adopt:
