@@ -73,6 +73,7 @@ en:
       title:
         boxes_main: Main content editable boxes
         boxes_contact: Contact zone editable boxes
+        details: "Profile details"
         editing_languages: Multilanguage profile
         edit_language: Editing language
         editing: "Editing %{name}'s profile (sciper: %{sciper})"
