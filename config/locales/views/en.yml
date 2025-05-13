@@ -1,0 +1,22 @@
+# ---------------------------------------------------------------------- views
+# These keys are ~ view_directory.file_name
+en:
+  accreds:
+    index:
+      title: "Accreditations"
+  footer:
+    follow:
+      us: "Follow EPFL on the social networks"
+      facebook: "Follow the EPFL on Facebook"
+      instagram: "Follow the EPFL on Instagram"
+      linkedin: "Follow the EPFL on LinkedIn"
+      twitter: "Follow the EPFL on X"
+      youtube: "Follow the EPFL on Youtube"
+    accessibility: "Accessibility"
+    legal: "Disclaimer"
+    data_protection: "Privacy policy"
+    copy: "EPFL, all rights reserved"
+    back_to_the_top: "Back to the top of the page"
+  function_changes:
+    form:
+      function: new position

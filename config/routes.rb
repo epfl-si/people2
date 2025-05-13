@@ -49,8 +49,6 @@ Rails.application.routes.draw do
   end
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'
   get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
-  put 'accreds/:id/toggle', to: 'accreds#toggle', as: 'toggle_accred'
-  put 'accreds/:id/toggle_address', to: 'accreds#toggle_addr', as: 'toggle_addr_accred'
 
   patch 'visibility/:model/:id', to: 'visibility#update', as: 'visibility'
 
