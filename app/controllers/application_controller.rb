@@ -36,6 +36,37 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # This is for situation that should not arrive. In case, we want to provide
+  # meaningful output in all formats.
+  def unexpected(message)
+    respond_to do |format|
+      format.html do
+        render inline: "<p><%= message %></p>", status: :forbidden
+      end
+      format.turbo_stream do
+        flash.now[:error] = message
+        render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash")
+      end
+      format.json { render json: { msg: message }, status: :forbidden }
+    end
+  end
+
+  # TODO: this is intended for larger notifications than just the flash.
+  #       We have to implement a larger dismissable popup box or recycle the
+  #       one for editing or an identical one with dismiss button by default.
+  def notifier(message)
+    respond_to do |format|
+      format.html do
+        render inline: "<p><%= message %></p>"
+      end
+      format.turbo_stream do
+        flash.now[:info] = message
+        render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash")
+      end
+      format.json { render json: { msg: message } }
+    end
+  end
+
   def switch_locale(&action)
     locale = params[:lang] || I18n.default_locale
     Current.primary_lang = locale
