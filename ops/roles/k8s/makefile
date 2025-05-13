@@ -2,7 +2,7 @@ APP_NAME=people
 QUAY_REPO=quay-its.epfl.ch/svc0033/$(APP_NAME)
 TAG=latest
 
-# Chemin vers le Dockerfile (modifie si besoin)
+# Chemin vers le Dockerfile
 DOCKERFILE=../../../Dockerfile
 
 # Build local
@@ -18,7 +18,6 @@ push: build
 clean:
 	docker rmi $(APP_NAME):$(TAG) || true
 	docker rmi $(QUAY_REPO):$(TAG) || true
-
 
 ../../../VERSION:
 	git tag -l --sort=creatordate | tail -n 1 | sed 's/\n//' > $@
