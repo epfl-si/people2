@@ -1,3 +1,37 @@
+<div
+  id="tr_switchable"
+  data-controller="language"
+  data-language-full-value="<%= translation_classlist(@profile) %>"
+  data-language-active-value="btn btn-sm btn-primary"
+  data-language-inactive-value="btn btn-sm btn-secondary"
+  class="<%= translation_classlist(@profile) %>"
+>
+
+<div id="multilang_editor">
+  <nav id="edit_lang_switchers" class="justify-content-center">
+    <h5><%= t ".title.edit_language" %></h5>
+
+    <% sl = current_work_translation(@profile) %>
+    <% @profile.translations.each do |l| %>
+      <%= button_tag(
+        t("lang.#{l}"),
+        class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
+        data: {
+          "action": "language#setEnabledLanguage",
+          "language-target": "button",
+          "langcls": "tr_enable_#{l}",
+        }
+      ) %>
+    <% end %>
+    <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
+      <%= icon('edit-3') %>
+    <% end %>
+  </nav>
+  <section id="editor" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" tabindex="0">
+    <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
+  </section>
+</div>
+
 <% # TODO: remove after migration from legacy %>
 <% if Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
 <% content_for :menu do %>
@@ -25,57 +59,29 @@
 <p data-controller="social"></p>
 <hr>
 
-<div
-  id="tr_switchable"
-  data-controller="language"
-  data-language-full-value="<%= translation_classlist(@profile) %>"
-  data-language-active-value="btn btn-sm btn-primary"
-  data-language-inactive-value="btn btn-sm btn-secondary"
-  class="<%= translation_classlist(@profile) %>"
->
-  <nav id="edit_lang_switchers" class="justify-content-center">
-    <h5><%= t ".title.edit_language" %></h5>
+<section>
+  <%= turbo_frame_tag "profile_section" do %>
+    <%= render "editable_profile", profile: @profile %>
+  <% end %>
+</section>
 
-    <% sl = current_work_translation(@profile) %>
-    <% @profile.translations.each do |l| %>
-      <%= button_tag(
-        t("lang.#{l}"),
-        class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
-        data: {
-          "action": "language#setEnabledLanguage",
-          "language-target": "button",
-          "langcls": "tr_enable_#{l}",
-        }
-      ) %>
-    <% end %>
-    <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
-      <%= icon('edit-3') %>
-    <% end %>
-  </nav>
+<hr>
+<section id="accreds_section">
+  <%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
+    <%= render 'shared/spinner' %>
+  <% end %>
+</section>
 
-  <section>
-    <%= turbo_frame_tag "profile_section" do %>
-      <%= render "editable_profile", profile: @profile %>
-    <% end %>
-  </section>
+<hr>
+<section id="contact_boxes_section">
+  <h3><%= t '.title.boxes_contact' %></h3>
+  <%= render "sections", sections: @contact_sections, profile: @profile %>
+</section>
 
-  <hr>
-  <section id="accreds_section">
-    <%= turbo_frame_tag "accreds_index", src: profile_accreds_path(@profile), loading: :lazy do %>
-      <%= render 'shared/spinner' %>
-    <% end %>
-  </section>
-
-  <hr>
-  <section id="contact_boxes_section">
-    <h3><%= t '.title.boxes_contact' %></h3>
-    <%= render "sections", sections: @contact_sections, profile: @profile %>
-  </section>
-
-  <hr>
-  <section id="boxes_section" >
-    <h3><%= t '.title.boxes_main' %></h3>
-    <%= render "sections", sections: @sections, profile: @profile %>
-  </section>
-  <%= turbo_frame_tag :remote_modal %>
+<hr>
+<section id="boxes_section" >
+  <h3><%= t '.title.boxes_main' %></h3>
+  <%= render "sections", sections: @sections, profile: @profile %>
+</section>
+<%= turbo_frame_tag :remote_modal %>
 </div><% #tr_switchable %>

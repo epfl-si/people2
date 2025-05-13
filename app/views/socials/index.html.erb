@@ -1,12 +1,10 @@
 <%= turbo_frame_tag :socials_index do %>
 	<%= turbo_frame_tag "socials", src: nil, target: nil, data: {controller: "sortable"} do %>
 	  <% @socials.each do |social| %>
-			<%= turbo_frame_tag dom_id(social) do %>
-				<%= render 'editable_social', social: social %>
-			<% end %>
+      <%= render 'editable_social', social: social %>
 	  <% end %>
 	<% end %>
 	<%= turbo_frame_tag "new_social" do %>
 		<%= render 'add', profile: @profile, selector: @tag_selector %>
 	<% end %>
-<% end %>	
+<% end %>

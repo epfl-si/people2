@@ -47,17 +47,21 @@ en:
       en: English
       it: Italiano
       de: Deutch
+  no_attribute_for_locale: "%{attribute} in %{language} is not set"
   no_title_for_locale: "Not title in %{language}"
   translated_label: "%{label} in %{language}"
 
   messages:
     empty_orcid_help: >-
-      link will appear as soon as your orcid account is synchronized
-
+      link will appear as soon as your ORCID account is synchronized
     function_change_explain: >-
       It is not possible to change the position function directly.
       Please fill and submit this form to request the change to one of your
       accreditors.
+    function_change_exists: >-
+      There is already a request for changing this job function. We prefer
+      to avoid spamming the accreditors. Please try to contact your accreditor
+      by phone or to contact the service desk asking to discard the old request.
 
   generic:
     form:
@@ -96,7 +100,7 @@ en:
     one: "Error"
     other: "Errors"
     record:
-      zero: "Something prevented this form being recorded (should not happen, please contact the service desk)"
+      zero: "Something prevented this form from being recorded (should not happen, please contact the service desk)"
       one: "An error prevented this form from being recorded"
       other: "%{count} errors prevented this form from being recorded"
   flash:
@@ -184,19 +188,6 @@ en:
     visible: "visible"
     visible_address: "address"
 
-  footer:
-    follow:
-      us: "Follow EPFL on the social networks"
-      facebook: "Follow the EPFL on Facebook"
-      instagram: "Follow the EPFL on Instagram"
-      linkedin: "Follow the EPFL on LinkedIn"
-      twitter: "Follow the EPFL on X"
-      youtube: "Follow the EPFL on Youtube"
-    accessibility: "Accessibility"
-    legal: "Disclaimer"
-    data_protection: "Privacy policy"
-    copy: "EPFL, all rights reserved"
-    back_to_the_top: "Back to the top of the page"
 
   # Default error messages full list here:
   # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
@@ -220,6 +211,7 @@ en:
       box: "box"
       education: "education"
       experience: "work experience"
+      function_change: "position change request"
       infoscience: "infoscience publication link"
       picture: "picture"
       profile: "profile"

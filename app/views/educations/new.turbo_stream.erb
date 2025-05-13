@@ -1,6 +1,3 @@
-<%= turbo_stream.replace "new_education_form" do %>
-  <%= turbo_frame_tag "new_education_form" do %>
-    <%= render "educations/form", education: @education, profile: @profile%>
-  <% end %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= common_editor {
+  render "educations/form", profile: @profile, education: @education
+} %>

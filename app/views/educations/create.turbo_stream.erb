@@ -1,8 +1,4 @@
 <%= turbo_stream.append "educations" do %>
-  <%= render "editable_education", education: @education %>
+<%= render "editable_education", education: @education %>
 <% end %>
-
-<%= turbo_stream.update "new_education_form" do %>
-  <%= add_record_button(new_profile_education_path(@profile), name: "education") %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= dismiss_common_editor %>

@@ -1,1 +1,191 @@
 fr:
+  lang:
+    fr: Français
+    en: Anglais
+    it: Italien
+    de: Allemand
+    native:
+      fr: Français
+      en: English
+      it: Italiano
+      de: Deutch
+  no_attribute_for_locale: "%{attribute} en %{language} n'est pas défini"
+  no_title_for_locale: "Pas de titre en %{language}"
+  translated_label: "%{label} en %{language}"
+
+  messages:
+    empty_orcid_help: >-
+      le lien apparaîtra dès que votre compte ORCID sera synchronisé
+    function_change_explain: >-
+      Il n'est pas possible de changer directement la fonction de poste.
+      Veuillez remplir et soumettre ce formulaire pour demander le changement à l’un de vos
+      accréditeurs.
+    function_change_exists: >-
+      There is already a request for changing this job function. We prefer
+      to avoid spamming the accreditors. Please try to contact your accreditor
+      by phone or to contact the service desk asking to discard the old request.
+
+  generic:
+    form:
+      cancel: Annuler
+      create: Créer un enregistrement
+      submit: Soumettre
+      update: Soumettre les modifications
+      texfield_for: "%{attr}"
+
+  nav:
+    app_with_version: "EPFL People v. %{version}"
+    issues: problèmes
+    version: "v. %{version}"
+
+  action:
+    add: "Ajouter un autre"
+    add_record: "Ajouter un(e) autre %{name}"
+    confirm: "Êtes-vous sûr ?"
+    delete: "supprimer"
+    edit: "modifier"
+    edit_profile: "Modifier le profil"
+    hide_search_form: "Masquer le formulaire de recherche"
+    more: "Plus d’informations"
+    search: "Rechercher"
+    search_people: "Rechercher une personne"
+    show_hide_search_form: "Afficher / masquer le formulaire de recherche"
+    sign_in: "Se connecter"
+    sign_out: "Se déconnecter"
+
+  dev:
+    action:
+      abandon: abandonner
+      adopt: adopter
+      revert: annuler
+
+  error:
+    one: "Erreur"
+    other: "Erreurs"
+    record:
+      zero: "Une erreur a empêché l'enregistrement du formulaire (ne devrait pas se produire, veuillez contacter le support)"
+      one: "Une erreur a empêché l'enregistrement de ce formulaire"
+      other: "%{count} erreurs ont empêché l'enregistrement de ce formulaire"
+
+  flash:
+    alert:
+    error:
+      create: "Erreur lors de la création de l'enregistrement"
+      update: "Erreur lors de la mise à jour de l'enregistrement"
+      remove: "Erreur lors de la suppression de l'enregistrement"
+      accred:
+        cannot_hide_all: Impossible de masquer toutes les accréditations au public
+      box:
+        cannot_delete: "Les boîtes standards et celles contenant du contenu ne peuvent pas être supprimées"
+        create: "Impossible de créer la boîte"
+      function_change:
+        create: "La demande de changement de fonction n’a pas pu être envoyée. Veuillez réessayer plus tard ou contacter le support"
+      profile:
+        update: "Erreur lors de la mise à jour du profil de base"
+    info:
+    notice:
+      create: "Enregistrement créé"
+      update: "Enregistrement mis à jour"
+      remove: "Enregistrement supprimé"
+    success:
+      create: "Enregistrement créé"
+      update: "Enregistrement mis à jour"
+      remove: "Enregistrement supprimé"
+      box:
+        deleted: Boîte supprimée
+        create: "Boîte créée"
+      function_change:
+        create: "Demande de changement de fonction envoyée à vos accréditeurs sélectionnés"
+      profile:
+        update: "Profil de base mis à jour avec succès"
+
+  visibility:
+    authenticated: "Utilisateurs EPFL uniquement"
+    authenticated_access: "utilisateur"
+    draft: "Brouillon (éditeur uniquement)"
+    editor: "Brouillon (éditeur uniquement)"
+    editor_access: "complet"
+    hidden: "caché"
+    hidden_address: "AUCUNE adresse"
+    intranet: "intranet uniquement"
+    intranet_access: "intranet"
+    label:
+      visible: "Visible"
+      public: "Public, visible depuis tout l'internet"
+      intranet: "Intranet, visible uniquement sur le réseau interne de l'EPFL"
+      auth: "Authentifié, visible uniquement par des personnes connectées avec une identité connue"
+      draft: "Brouillon, visible uniquement par le propriétaire/éditeur du profil"
+      hidden: "Caché"
+    short_label:
+      visible: "Visible"
+      public: "Public"
+      intranet: "Intranet"
+      auth: "Autorisé"
+      draft: "Brouillon"
+      hidden: "Caché"
+
+    labels:
+      published: "Publié"
+      draft: "Brouillon"
+      hidden: "Caché"
+      public: "Visible mondialement"
+      intranet: "Intranet uniquement"
+      authenticated: "Utilisateurs authentifiés uniquement"
+
+    short_labels:
+      published: "Publié"
+      draft: "Brouillon"
+      hidden: "Caché"
+      public: "Monde"
+      intranet: "Intranet"
+      authenticated: "Utilisateurs"
+
+    public: "public"
+    public_access: "public"
+    visible: "visible"
+    visible_address: "adresse"
+
+
+  errors:
+    messages:
+      blank: "doit être renseigné"
+      required: "est requis"
+      taken: "a déjà été pris (doit être unique)"
+      invalid: "a un format incorrect"
+      greater_than: "doit être supérieur à %{count}"
+      less_than: "doit être inférieur à %{count}"
+      untranslatable: "au moins une traduction doit être présente"
+      incorrect_type: "N'est pas une propriété du type correct"
+      cannot_hide_all_accreds: "Au moins une accréditation doit rester publique"
+
+  activerecord:
+    models:
+      achievement: "réalisation annuelle"
+      award: "distinction"
+      box: "boîte"
+      education: "formation"
+      experience: "expérience professionnelle"
+      function_change: "changement de fonction"
+      infoscience: "lien vers publication infoscience"
+      picture: "image"
+      profile: "profil"
+      publication: "publication"
+      rich_text_box: "boîte de texte"
+      social: "identifiant de recherche / lien social"
+
+    errors:
+      messages:
+        record_invalid: "Échec de la validation : %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Impossible de supprimer l'enregistrement car une %{record} dépend de lui"
+          has_many: "Impossible de supprimer l'enregistrement car des %{record} dépendent de lui"
+
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first:
+              not_in_official: "Doit être composé de prénoms inclus dans le prénom officiel."
+            usual_last:
+              not_in_official: "Doit être composé de noms inclus dans le nom officiel."

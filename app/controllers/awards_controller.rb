@@ -2,11 +2,10 @@
 
 class AwardsController < ApplicationController
   before_action :set_profile, only: %i[index create new]
-  before_action :set_award, only: %i[show edit update destroy toggle]
+  before_action :set_award, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/awards or /profile/profile_id/awards.json
   def index
-    # sleep 2
     @awards = @profile.awards.order(:position)
   end
 
@@ -24,73 +23,28 @@ class AwardsController < ApplicationController
   # POST /profile/profile_id/awards or /profile/profile_id/awards.json
   def create
     @award = @profile.awards.new(award_params)
-
-    respond_to do |format|
-      if @award.save
-        # format.html { append_award }
-        format.turbo_stream do
-          flash.now[:success] = ".create"
-          render :create, locals: { profile: @profile, award: @award }
-        end
-        format.json { render :show, status: :created, location: @award }
-      else
-        # format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          flash.now[:success] = ".create"
-          render :new, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
-        end
-        format.json { render json: @award.errors, status: :unprocessable_entity }
-      end
+    if @award.save
+      flash.now[:success] = ".create"
+    else
+      flash.now[:success] = ".create"
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /awards/1 or /awards/1.json
   def update
-    respond_to do |format|
-      if @award.update(award_params)
-        format.turbo_stream do
-          flash.now[:success] = ".update"
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @award }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
-        end
-        format.json { render json: @award.errors, status: :unprocessable_entity }
-      end
+    if @award.update(award_params)
+      flash.now[:success] = ".update"
+    else
+      flash.now[:error] = ".update"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /awards/1 or /awards/1.json
   def destroy
     @award.destroy!
-
-    respond_to do |format|
-      format.turbo_stream do
-        flash.now[:success] = ".remove"
-        render :destroy
-      end
-      format.json { head :no_content }
-    end
-  end
-
-  def toggle
-    respond_to do |format|
-      if @award.update(visible: !@award.visible?)
-        format.turbo_stream do
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @award }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :update, status: :unprocessable_entity
-        end
-        format.json { render json: @award.errors, status: :unprocessable_entity }
-      end
-    end
+    flash.now[:success] = ".remove"
   end
 
   private

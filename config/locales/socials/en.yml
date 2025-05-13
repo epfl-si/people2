@@ -18,25 +18,19 @@ en:
               blank: "Value cannot be blank"
               incorrect_format: "Value format is incorrect"
   # Summary message for model errors
-  error:
-    social:
-      zero: "Something prevented this social link to be updated (should not happen)"
-      one: "An error prevented this social link to be updated"
-      other: "%{count} errors prevented this social link to be updated"
   helpers:
     # Placeholders for the form text fields
     placeholder:
       social:
         value: "Enter your identifier"
+
+  # ---------------------------------------------------------------------- views
   socials:
     add:
       add: "Click to add a new research Id or social network address"
-
     # Override model attribute names as they appear in form labels
     form:
       <<: *attr
-      tag: "social type"
-      value: "identifier"
       identifier_label:
         facebook: "Facebook Identifier"
         github: "GitHub Username"
@@ -49,6 +43,9 @@ en:
         scopus: "Scopus AuthorID"
         stack_overflow: "Stack Overflow Username"
         wos: "Web of Science Author ID"
+      new: New %{label}
+      tag: "social type"
+      value: "identifier"
     index:
       title: "Social Links"
     action:

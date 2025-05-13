@@ -1,5 +1,5 @@
 <%= turbo_frame_tag :accreds_index do %>
-	<h3><%= t 'title.accreditations' %></h3>
+	<h3><%= t '.title' %></h3>
 	<%= turbo_frame_tag "accreds", src: nil, target: nil, data: {controller: "sortable"} do %>
 		<% @accreds.each do |accred| %>
 			<%= render 'accred', accred: accred, count: @accreds.count %>

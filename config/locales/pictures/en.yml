@@ -15,16 +15,7 @@ en:
             base:
               undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
 
-  # Summary message for model errors
-  error:
-    picture:
-      zero: "Something prevented this picture to be updated (should not happen)"
-      one: "An error prevented this picture to be updated"
-      other: "%{count} errors prevented this picture to be updated"
-  helpers:
-    # Placeholders for the form text fields
-    placeholder:
-      picture:
+  # ---------------------------------------------------------------------- views
   pictures:
     # Override model attribute names as they appear in form labels
     currently_selected_picture: Currently selected profile picture
@@ -36,3 +27,4 @@ en:
       upload_image: "Upload the image"
     pictures:
       title: "Profile picture"
+      currently_selected: "Currently selected picture"

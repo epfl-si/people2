@@ -5,9 +5,7 @@
         <%= accred.t_unit %>
       </h4>
       <%= accred.role.t_label(@profile.gender) %>
-      <%= remote_modal_for(new_accreditation_function_change_path(accred.accreditation_id)) do %>
-        <%= icon('edit-3') %>
-      <% end %>
+      <%= link_to icon('edit-3'), new_accreditation_function_change_path(accred.accreditation_id), data: {turbo_stream: true} %>
     </div>
     <% if count > 1 %>
       <div>
