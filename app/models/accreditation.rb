@@ -162,6 +162,10 @@ class Accreditation
     @gestprofil
   end
 
+  def profile
+    Profile.for_sciper(@sciper)
+  end
+
   def student?
     # $is_student         = 1 if $accred->{statusid} =~ /^(4|5|6)$/;
     3 < @status_id && @status_id < 7

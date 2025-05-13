@@ -3,12 +3,16 @@
 class FunctionChange < ApplicationRecord
   serialize :accreditor_scipers, type: Array, coder: YAML
 
+  include Translatable
+
   validates :accreditation_id, presence: true
-  validates :function, presence: true
   validates :reason, presence: true
   validates :accreditor_scipers, presence: true
   validate :accreditors_correspondence
   validates :requested_by, presence: true
+
+  translates :function
+  validates :t_function, translatability: true
 
   def accreditation
     raise "Accreditation not provided" if accreditation_id.blank?

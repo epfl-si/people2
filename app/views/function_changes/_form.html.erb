@@ -7,20 +7,18 @@
     <% end %>
   </ul>
 <% end %>
+<% translations = @accreditation.profile&.translations || Rails.configuration.available_languages %>
 <%= form_with(model: @function_change, url: "/accreditations/#{@accreditation.id}/function_changes", local: false, class: "instaform") do |form| %>
-  <div class="form-group">
-    <%= form.label FunctionChange.human_attribute_name(:function) %>
-    <%= form.text_field :function, placeholder: true %>
-  </div>
-  <div class="form-group">
+  <%= translated_text_fields(form, :function, translations: translations, label: ".function") %>
+  <%= form_group do %>
     <%= form.label FunctionChange.human_attribute_name(:reason) %>
     <%= form.text_area :reason %>
-  </div>
-  <div class="form-group">
-    <%= form.label FunctionChange.human_attribute_name(:accreditors) %> 
+  <% end %>
+  <%= form_group do %>
+    <%= form.label FunctionChange.human_attribute_name(:accreditors) %>
     <div class="form-checkboxes">
       <%= form.collection_check_boxes(:accreditor_scipers, @accreditors, :sciper, :display) %>
     </div>
-  </div>
+  <% end %>
   <%= form_actions(form, @function_change) %>
 <% end %>
