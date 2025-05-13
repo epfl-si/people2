@@ -34,27 +34,6 @@ class AccredsController < ApplicationController
     end
   end
 
-  # Dead code should be managed by the standard visibility controller
-  # PATCH/PUT /accreds/1/toggle or /accreds/1/toggle.json
-  def toggle
-    respond_to do |format|
-      if @accred.update(visible: !@accred.visible?)
-        format.turbo_stream do
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @accred }
-      else
-        # revert
-        @accred.visible = !@accred.visible?
-        format.turbo_stream do
-          flash.now[:error] = ".cannot_hide_all"
-          render :update, status: :unprocessable_entity
-        end
-        format.json { render json: @accred.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
 
   def set_profile

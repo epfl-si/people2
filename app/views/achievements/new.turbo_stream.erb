@@ -1,6 +1,3 @@
-<%= turbo_stream.replace "new_achievement_form" do %>
-<%= turbo_frame_tag "new_achievement_form" do %>
-  <%= render "achievements/form", profile: @profile, achievement: @achievement %>
-<% end %>
-<% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= common_editor {
+  render "achievements/form", profile: @profile, achievement: @achievement
+} %>
