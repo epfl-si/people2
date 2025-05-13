@@ -1,5 +1,4 @@
-<%= turbo_stream.update dom_id(@social) do %>
-  <%= render "editable_social", social: @social %>
+<%= turbo_stream.replace dom_id(@social) do %>
+<%= render "editable_social", social: @social %>
 <% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
-
+<%= dismiss_common_editor %>

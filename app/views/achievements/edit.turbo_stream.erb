@@ -1,3 +1,3 @@
-<%= turbo_stream.update dom_id(@achievement) do %>
-  <%= render "achievements/form", profile: nil, achievement: @achievement, cancel: achievement_url(@achievement, format: 'turbo_stream') %>
-<% end %>
+<%= common_editor {
+  render "achievements/form", profile: nil, achievement: @achievement
+} %>

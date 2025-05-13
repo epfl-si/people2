@@ -39,18 +39,7 @@ en:
               too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
             expertise_de:
               too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
-            # nationality_en:
-            # nationality_fr:
-            # nationality_it:
-            # nationality_de:
-            # personal_web_url:
-            # personal_phone:
-  # Summary message for model errors
-  error:
-    profile:
-      zero: "Something prevented your profile from being updated"
-      one: "An error prevented your profile from being updated"
-      other: "%{count} errors prevented your profile from being updated"
+
   helpers:
     # Placeholders for the form text fields
     placeholder:
@@ -67,12 +56,14 @@ en:
         nationality_fr: suiss
         nationality_it: svizzera
         nationality_de: schweizer
+
   # ---------------------------------------------------------------------- views
   profiles:
     edit:
       title:
         boxes_main: Main content editable boxes
         boxes_contact: Contact zone editable boxes
+        details: "Profile details"
         editing_languages: Multilanguage profile
         edit_language: Editing language
         editing: "Editing %{name}'s profile (sciper: %{sciper})"

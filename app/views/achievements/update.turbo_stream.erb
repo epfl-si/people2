@@ -1,4 +1,4 @@
 <%= turbo_stream.replace dom_id(@achievement) do %>
   <%= render "editable_achievement", achievement: @achievement %>
 <% end %>
-<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

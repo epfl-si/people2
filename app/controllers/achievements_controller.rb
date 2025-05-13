@@ -2,11 +2,10 @@
 
 class AchievementsController < ApplicationController
   before_action :set_profile, only: %i[index create new]
-  before_action :set_achievement, only: %i[show edit update destroy toggle]
+  before_action :set_achievement, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/achievements or /profile/profile_id/achievements.json
   def index
-    # sleep 2
     @achievements = @profile.achievements.order(:position)
   end
 
@@ -25,81 +24,31 @@ class AchievementsController < ApplicationController
   def create
     @achievement = @profile.achievements.new(achievement_params)
 
-    respond_to do |format|
-      if @achievement.save
-        # format.html { append_achievement }
-        format.turbo_stream do
-          flash.now[:success] = ".create"
-          render :create, locals: { profile: @profile, achievement: @achievement }
-        end
-        format.json { render :show, status: :created, location: @achievement }
-      else
-        # format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          flash.now[:success] = ".create"
-          render :new, status: :unprocessable_entity, locals: { profile: @profile, achievement: @achievement }
-        end
-        format.json { render json: @achievement.errors, status: :unprocessable_entity }
-      end
+    if @education.save
+      flash.now[:success] = ".create"
+    else
+      flash.now[:error] = ".create"
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /achievements/1 or /achievements/1.json
   def update
-    respond_to do |format|
-      if @achievement.update(achievement_params)
-        format.turbo_stream do
-          flash.now[:success] = ".update"
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @achievement }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :edit, status: :unprocessable_entity, locals: { profile: @profile, achievement: @achievement }
-        end
-        format.json { render json: @achievement.errors, status: :unprocessable_entity }
-      end
+    if @achievement.update(achievement_params)
+      flash.now[:success] = ".update"
+    else
+      flash.now[:error] = ".update"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /achievements/1 or /achievements/1.json
   def destroy
     @achievement.destroy!
-
-    respond_to do |format|
-      format.turbo_stream do
-        flash.now[:success] = ".remove"
-        render :destroy
-      end
-      format.json { head :no_content }
-    end
-  end
-
-  def toggle
-    respond_to do |format|
-      if @achievement.update(visible: !@achievement.visible?)
-        format.turbo_stream do
-          render :update
-        end
-        format.json { render :show, status: :ok, location: @achievement }
-      else
-        format.turbo_stream do
-          flash.now[:error] = ".update"
-          render :update, status: :unprocessable_entity
-        end
-        format.json { render json: @achievement.errors, status: :unprocessable_entity }
-      end
-    end
+    flash.now[:success] = ".remove"
   end
 
   private
-
-  def append_achievement
-    render turbo_stream: turbo_stream.append("jobs",
-                                             partial: "editable_achievement",
-                                             locals: { achievement: @achievement })
-  end
 
   def set_profile
     @profile = Profile.find(params[:profile_id])

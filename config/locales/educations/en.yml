@@ -5,36 +5,10 @@ en:
       education: &attr
         director: "director"
         field: "field"
-        field_en: "field (en)"
-        field_fr: "field (fr)"
-        field_it: "field (it)"
-        field_de: "field (de)"
         school: "school"
         title: "title"
-        title_en: "title (en)"
-        title_fr: "title (fr)"
-        title_it: "title (it)"
-        title_de: "title (de)"
         year_begin: "from year"
         year_end: "to year"
-    # Errors for the model attributes (those that are shown upon form submission)
-    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
-    errors:
-      models:
-        education:
-          attributes:
-            director:
-            field_en:
-            field_fr:
-            field_it:
-            field_de:
-            school:
-            title_en:
-            title_fr:
-            title_it:
-            title_de:
-            year_begin:
-            year_end:
   # Summary message for model errors
   error:
     education:
@@ -55,6 +29,8 @@ en:
         field_de: "Festkörperphysik"
         director: "John Doe"
         school: "Princeton University"
+
+  # ---------------------------------------------------------------------- views
   educations:
     # Override model attribute names as they appear in form labels
     form:

@@ -95,17 +95,37 @@ module ProfilesHelper
     safe_join(content)
   end
 
-  def translated_h2(obj, attr: "title", translations: nil)
-    translations ||= obj.profile.translations
-    content = []
-    translations.each do |l|
-      tlang = t("lang.#{l}")
-      # Attribute for language l
-      tattr = "#{attr}_#{l}".to_sym
-      # Translated label for language l
-      ttitle = obj.send(tattr)
-      ttitle = t("no_title_for_locale", language: tlang) if ttitle.blank?
-      content << tag.h2(ttitle, class: "tr_target_#{l}")
+  def translations_for(obj)
+    if obj.respond_to?("profile")
+      obj.send("profile").translations
+    else
+      Rails.available_languages
+    end
+  end
+
+  def localized_attr_value(obj, attr, locale)
+    v = obj.send("#{attr}_#{locale}")
+    if v.blank?
+      a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
+      l = t("lang.#{locale}")
+      v = t("no_attribute_for_locale", attribute: a, language: l)
+    end
+    v
+  end
+
+  def tag_for_localized_attr(tag_name, obj, attr, params = {})
+    translations = params[:translations] || translations_for(obj)
+    cls = params.delete(:class)
+    content = translations.map do |l|
+      params[:class] = cls.nil? ? "tr_target_#{l}" : "#{cls} tr_target_#{l}"
+      v = obj.send("#{attr}_#{l}")
+      if v.blank?
+        a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
+        l = t("lang.#{l}")
+        v = t("no_attribute_for_locale", attribute: a, language: l)
+        params[:class] << " user_translation_missing"
+      end
+      content_tag(tag_name, v, params)
     end
     safe_join(content)
   end
@@ -134,11 +154,12 @@ module ProfilesHelper
     btlabel = t(label || ".#{attr}")
     translations.each do |l|
       tlang = t("lang.#{l}")
+      tattr = "#{attr}_#{l}"
       # Attribute for language l
       # Translated label for language l
       tlabel = t("translated_label", language: tlang, label: btlabel)
       label = form.label(tlabel)
-      tarea = rich_text_input(form, attr)
+      tarea = rich_text_input(form, tattr)
       content << form_group(help: help, extracls: "tr_target_#{l}") do
         label + tarea
       end
@@ -194,21 +215,41 @@ module ProfilesHelper
     "tr_enable_#{t}"
   end
 
+  def common_editor(title: nil, &block)
+    c = []
+    c << tag.hr
+    c << tag.h3(title) if title.present?
+    c << tag.div(capture(&block))
+    c1 = tag.div(class: "container") do
+      safe_join(c)
+    end
+    safe_join [
+      turbo_stream.update("editor_content") { c1 },
+      turbo_stream.replace("flash-messages", partial: "shared/flash")
+    ]
+  end
+
+  def dismiss_common_editor
+    safe_join [
+      turbo_stream.update("editor_content") { "" },
+      turbo_stream.replace("flash-messages", partial: "shared/flash")
+    ]
+  end
+
   def form_actions(form, item, without_cancel: false, label: nil, &block)
-    klass = item.class.name.underscore
+    item.class.name.underscore
+    c = []
+    c << capture(&block) if block_given?
+    unless without_cancel
+      c << tag.button(t("action.dismiss"), class: "btn btn-cancel", "data-action": "click->dismissable#dismiss")
+    end
+    c << if item.new_record?
+           form.submit(t("generic.form.create", label: label), class: "btn-confirm")
+         else
+           form.submit(t("generic.form.update", label: label), class: "btn-confirm")
+         end
     tag.div(class: "form-actions") do
-      concat capture(&block) if block_given?
-      if item.new_record?
-        concat form.submit t("generic.form.create", label: label), class: "btn-confirm"
-      else
-        unless without_cancel
-          concat link_to(t('generic.form.cancel'),
-                         send("#{klass}_path", item),
-                         class: "btn-cancel", method: :get,
-                         data: { turbo_stream: true, turbo_method: 'get' })
-        end
-        concat form.submit t("generic.form.update", label: label), class: "btn-confirm"
-      end
+      safe_join(c)
     end
   end
 

@@ -1,8 +1,6 @@
 <h3>
-	<%= t 'title.profile_details' %>
-	<%= remote_modal_for(edit_profile_path(profile, details: true)) do %>
-	  <%= icon('edit-3') %>
-	<% end %>
+	<%= t 'profiles.edit.title.details' %>
+	<%= link_to icon('edit-3'), edit_profile_path(profile, details: true), data: {turbo_stream: true} %>
 </h3>
 <dl class="definition-list definition-list-grid">
 
@@ -20,10 +18,8 @@
   <% if profile.person.name.customizable? %>
   <dt><%= t "profile.usual_name" %></dt>
   <dd>
-  	<span><%= profile.person.name.display %></span>
-		<%= remote_modal_for(edit_profile_path(profile, name: true)) do %>
-		  <%= icon('edit-3') %>
-		<% end %>
+    <span><%= profile.person.name.display %></span>
+    <%= link_to icon('edit-3'), edit_profile_path(profile, name: true), data: {turbo_stream: true} %>
   </dd>
   <% end %>
 
