@@ -36,3 +36,4 @@ en:
       upload_image: "Upload the image"
     pictures:
       title: "Profile picture"
+      currently_selected: "Currently selected picture"

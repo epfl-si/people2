@@ -217,6 +217,7 @@ module ProfilesHelper
 
   def common_editor(title: nil, &block)
     c = []
+    c << tag.hr
     c << tag.h3(title) if title.present?
     c << tag.div(capture(&block))
     c1 = tag.div(class: "container") do
