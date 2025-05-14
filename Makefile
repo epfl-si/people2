@@ -19,9 +19,9 @@ REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "
 
 # NOCIMAGE ?= nicolaka/netshoot
 NOCIMAGE ?= jonlabelle/network-tools
-# Figure out the ip address of the host machine so that we can use "public" 
+# Figure out the ip address of the host machine so that we can use "public"
 # dns names served by traefik from within the containers when the name is
-# resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs. 
+# resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs.
 DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.internal)
 
 KCDUMPFILE ?= tmp/dbdumps/keycloak.sql
@@ -39,7 +39,7 @@ dev: up
 	./bin/dev -f Procfile.docker
 	make down
 
-css: 
+css:
 	bin/rails dartsass:watch
 ## start the dev tunnel and start all the servers
 up: tunnel_up dcup
@@ -100,7 +100,7 @@ shell: dcup
 
 ## start an sql console con the database container
 dbconsole: dcup
-	docker compose exec mariadb mariadb -u root --password=mariadb  
+	docker compose exec mariadb mariadb -u root --password=mariadb
 	# docker compose exec webapp ./bin/rails dbconsole
 
 ## attach the console of the rails app for debugging
@@ -111,13 +111,13 @@ debug:
 redis:
 	docker compose exec cache valkey-cli
 
-## toggle Rails caching in dev (will persist reloads as it is just a file in tmp) 
+## toggle Rails caching in dev (will persist reloads as it is just a file in tmp)
 devcache:
 	docker compose exec webapp bin/rails dev:cache
 
 ## start a shell within a container including all usefull network tools
 noc:
-	docker compose --profile noc run --rm noc 
+	docker compose --profile noc run --rm noc
 
 ## show mariadb/INNODB status
 dbstatus:
@@ -134,13 +134,13 @@ about:
 build: envcheck $(ELE_FILES) VERSION
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
-	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
+	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
 
 ## build image discarding all cached layers
 rebuild: envcheck VERSION
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build --no-cache
-	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock	
+	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
 
 envcheck: .env .git/hooks/pre-commit
 
@@ -226,10 +226,10 @@ $(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 test:
 	docker compose exec -e RAILS_ENV=test webapp ./bin/rails test
 
-## prepare and run the test server 
+## prepare and run the test server
 testup:
 	docker compose --profile test up --no-recreate -d
-	# TODO: find a way to fix this by selecting the good deps (stopped working 
+	# TODO: find a way to fix this by selecting the good deps (stopped working
 	# after an upgrade don't know if due to ruby or packages version.
 	docker compose exec webapp sed -i '0,/end/{s/initialize(\*)/initialize(*args)/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
 	docker compose exec webapp sed -i '0,/end/{s/super/super args/}' /usr/local/bundle/gems/capybara-3.39.0/lib/capybara/selenium/logger_suppressor.rb
@@ -248,7 +248,7 @@ test-models:
 
 ## flush cache from redis db
 flush:
-	docker compose exec cache redis-cli FLUSHALL 
+	docker compose exec cache redis-cli FLUSHALL
 
 ## copy webmocks from keybase. This will enable the off-line use (set ENABLE_WEBMOCK=true in .env)
 webmocks:
@@ -334,7 +334,7 @@ kconfig: up
 
 .PHONY: restore restore_cv restore_cadi restore_dinfo restore_accred restore_bottin
 
-## restore the legacy databases (copy from the on-line DB server to local ones) 
+## restore the legacy databases (copy from the on-line DB server to local ones)
 restore:
 	./bin/restoredb.sh all
 
@@ -344,7 +344,7 @@ restore_accred:
 
 ## restore the legacy `bottin` database only
 restore_bottin:
-	./bin/restoredb.sh bottin	
+	./bin/restoredb.sh bottin
 
 ## restore the legacy `cadi` database only
 restore_cadi:
@@ -361,7 +361,12 @@ restore_dinfo:
 ## -------------------------------------------------- Test (dev-like) deployment
 .PHONY: nata_patch nata_reseed
 
-## patch the source code of the app mounted on the test server for Natalie
+
+## redeploy app on the test server for Natalie (docker image will be rebuilt if there is a new tag)
+nata_update:
+	cd ops && ./possible.sh --test -t people.src && ./possible.sh --test -t people.run && ./possible.sh --test -t people.admin.migrate
+
+## patch the source code of the app mounted on the test server for Natalie (same image mounts new code)
 nata_patch:
 	cd ops && ./possible.sh --test -t people.src.patch
 

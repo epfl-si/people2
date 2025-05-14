@@ -46,7 +46,10 @@ module Ollamable
       Rails.logger.warn "Could not connect to Ollama server."
       return nil
     end
-    result.first["response"]
+    result = result&.first
+    return nil if result.blank?
+
+    result["response"]
   end
 
   # TODO: ask to give a confidence level and return nil if below a give threshold
