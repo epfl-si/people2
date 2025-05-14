@@ -69,7 +69,9 @@ module Admin
       end
     end
 
-    def self.zip_archive
+    def self.dump_translations
+      basedir = Rails.root.join("tmp/locales")
+      FileUtils.rm_rf(Dir.glob("#{basedir}/*"), secure: true) if File.exist?("#{basedir}/en.yml")
       Translation.all.group_by(&:file).each do |file, translations|
         # path = src_d.join(file)
         path = Rails.root.join("config/locales/#{file}")
@@ -89,21 +91,20 @@ module Admin
           end
         end
         # prepend language to keys
-        data.map do |k, v|
+        ldata = {}
+        data.each do |k, v|
           v.compact!
-          TranslationsHash.new({ k => v.h })
+          ldata[k] = TranslationsHash.new({ k => v.h })
         end
 
-        dir = Rails.root.join("tmp/locales/#{File.dirname(file)}")
+        dir = "#{basedir}/#{File.dirname(file)}"
         FileUtils.mkdir_p(dir)
         ALL_LANGS.each do |l|
           # data[l].compact!
-          data[l].dump("#{dir}/#{l}.yml")
+          ldata[l].dump("#{dir}/#{l}.yml")
         end
-        # puts data['fr'].deep_get("fr.achievements.form.year")
-
-        # puts data[DL].h.to_yaml
       end
+      basedir
     end
   end
 end

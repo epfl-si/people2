@@ -83,6 +83,8 @@ module Admin
     private
 
     def h_deep_flatten(hash, fh = {}, prefix = nil)
+      return {} if hash.nil?
+
       hash.map do |k, v|
         kk = prefix ? "#{prefix}.#{k}" : k
         if v.is_a?(Hash)

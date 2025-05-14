@@ -5,73 +5,42 @@ require Rails.root.join('app/services/application_service').to_s
 require Rails.root.join('app/services/api_base_getter').to_s
 require Rails.root.join('app/services/api_accreds_getter').to_s
 
-# TODO: the next two tasks which are very very inefficients can be replaced
-#       by litle more than
-#       ./bin/api.sh \
-#          "authorizations?authid=botweb&status=active&type=property" \
-#          | jq '.authorizations[].persid'
-#       which gets the scipers of all people with botweb property.
 namespace :legacy do
-  desc 'Count unique scipers and save the list in work database'
-  task seed_scipers: :environment do
-    scipers = Legacy::Cv.connection.select_all("
+  desc 'Drop all scipers from Work::Sciper table and reload from legacy and up-to-date presence'
+  task seed_eligible_scipers: :environment do
+    # Remove all the scipers
+    Work::Sciper.in_batches(of: 1000).delete_all
+    legacy_scipers = Legacy::Cv.connection.select_all("
       SELECT DISTINCT sciper FROM common
       UNION
       SELECT DISTINCT sciper FROM cv
       UNION
       SELECT DISTINCT sciper FROM accreds
-    ").to_a.map { |v| v["sciper"] }
-    puts "There are #{scipers.count} unique scipers"
-    puts "Here are the first and last 10:"
-    puts scipers.first(10).join(", ")
-    puts scipers.last(10).join(", ")
-    puts "Importing into work db"
-    if Work::Sciper.count.zero?
-      # rubocop:disable Rails/SkipsModelValidations
-      Work::Sciper.insert_all(scipers.map { |s| { sciper: s } })
-      # rubocop:enable Rails/SkipsModelValidations
-    else
-      done = Work::Sciper.all.map { |s| s.sciper.to_s }
-      (scipers - done).each do |sciper|
-        Work::Sciper.find_or_create_by(sciper: sciper)
-      end
-    end
-  end
+    ").to_a.map { |v| v["sciper"].to_i }
 
-  desc 'Check which scipers are still valid and eligible to have a people account'
-  task check_botweb: :environment do
-    lds_file = "tmp/ldap_scipers.txt"
-    # TODO: untested
-    unless File.exist?(lds_file)
-      cmd = "ldapsearch -x -h ldap.epfl.ch -b 'o=epfl,c=ch' objectClass=person uniqueidentifier"
-      cmd += "| awk '/^uniqueIdentifier/{print $2;}' | sort | uniq > #{lds_file}"
-      system(cmd)
-    end
-    ldap_scipers = File.readlines(Rails.root.join(lds_file)).map { |l| [l.chomp, true] }.to_h
+    api_scipers = APIAuthGetter.call(
+      authid: "botweb",
+      status: "active",
+      type: "property"
+    ).map { |a| a["persid"].to_i }.uniq
 
-    total = Work::Sciper.count
-    done = Work::Sciper.treated.count
-    puts "Treated #{done} / #{total}"
-    while done < total
-      ss = Work::Sciper.where(status: 0).take(100)
-      ss.each do |s|
-        if ldap_scipers[s.sciper].present?
-          bb = Authorisation.property_for_sciper(s.sciper, "botweb")
-          s.status = if bb.empty?
-                       2
-                     else
-                       3
-                     end
-        else
-          s.status = 1
-        end
-      end
-      Work::Sciper.transaction do
-        ss.each(&:save)
-      end
-      done += 100
-      puts "Treated #{done} / #{total}"
+    migrated = (api_scipers - legacy_scipers).map do |s|
+      { sciper: s, status: Work::Sciper::STATUS_MIGRATED }
     end
+
+    migranda = (api_scipers.intersection legacy_scipers).map do |s|
+      { sciper: s, status: Work::Sciper::STATUS_WITH_LEGACY_PROFILE }
+    end
+
+    puts "No. unique scipers in legacy db:   #{legacy_scipers.count}"
+    puts "No. uinique eligible scipers:      #{api_scipers.count}"
+    puts "No. common scipers (migranda):     #{migranda.count}"
+    puts "No. scipers not needing migration: #{migrated.count}"
+
+    # rubocop:disable Rails/SkipsModelValidations
+    Work::Sciper.insert_all(migranda)
+    Work::Sciper.insert_all(migrated)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   desc 'Dump text boxes to check sanitizer effectiveness'

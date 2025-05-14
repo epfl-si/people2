@@ -18,12 +18,6 @@ en:
           attributes:
             year:
               not_a_number: "is not a number"
-  # Summary message for model errors
-  error:
-    publication:
-      zero: "Something prevented this publication to be updated (should not happen)"
-      one: "An error prevented this publication to be updated"
-      other: "%{count} errors prevented this publication to be updated"
   helpers:
     # Placeholders for the form text fields
     placeholder:

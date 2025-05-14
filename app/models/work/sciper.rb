@@ -2,23 +2,13 @@
 
 module Work
   class Sciper < Work::Base
+    STATUS_UNKNOWN = 0
+    STATUS_WITH_LEGACY_PROFILE = 1
+    STATUS_MIGRATED = 2
+
     self.primary_key = 'sciper'
-    scope :untreated, -> { where(status: 0) }
-    scope :treated, -> { where.not(status: 0) }
-    scope :live, -> { where('status > 1') }
-    scope :with_profile, -> { where(status: 3) }
-    def update_status
-      bb = Authorisation.botweb_for_sciper(sciper)
-      if bb.empty?
-        aa = Accreditation.for_sciper(sciper)
-        if aa.empty?
-          1
-        else
-          2
-        end
-      else
-        3
-      end
-    end
+    scope :unknown, -> { where(status: STATUS_UNKNOWN) }
+    scope :migranda, -> { where(status: STATUS_WITH_LEGACY_PROFILE) }
+    scope :migrated, -> { where(status: STATUS_MIGRATED) }
   end
 end

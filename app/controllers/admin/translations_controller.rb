@@ -6,10 +6,19 @@ module Admin
   class TranslationsController < ApplicationController
     before_action :set_admin_translation, only: %i[show edit update autotranslate propagate]
 
+    allow_unauthenticated_access
+
     # GET /admin/translations or /admin/translations.json
     def index
-      # TODO: stats per file
-      @translations = Admin::Translation.forui.todo.order(:en) # .limit(40)
+      respond_to do |format|
+        format.html do
+          # TODO: stats per file
+          @translations = Admin::Translation.forui.todo.order(:en) # .limit(40)
+        end
+        format.zip do
+          export_archive
+        end
+      end
     end
 
     # GET /admin/translations/1 or /admin/translations/1.json
@@ -45,12 +54,23 @@ module Admin
 
     private
 
-    # Use callbacks to share common setup or constraints between actions.
+    # TODO: use rubyzip for a more elegant code
+    def export_archive
+      path = Translation.dump_translations
+      ppath = File.dirname(path)
+      bpath = File.basename(path)
+      zpath = "/tmp/locales.tgz"
+      system("tar cvfz #{zpath} -C #{ppath} #{bpath}")
+      send_data File.read(zpath),
+                type: 'application/zip',
+                disposition: 'attachment',
+                filename: "#{bpath}.tgz"
+    end
+
     def set_admin_translation
       @admin_translation = Admin::Translation.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def admin_translation_params
       params.expect(admin_translation: %i[en fr it de done])
     end
