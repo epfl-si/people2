@@ -93,9 +93,10 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.production?
-    root 'application#homepage'
+    root 'pages#homepage'
   else
     get '/pocs/turboru', to: 'pocs#turboru'
+    get '/homepage', to: 'pages#homepage'
     root 'pages#devindex'
   end
 end
