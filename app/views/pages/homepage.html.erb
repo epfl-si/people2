@@ -1,0 +1,16 @@
+<div class="container">
+<h2 class="capitalize"><%= t "app.long_name" %></h2>
+
+<%= form_with url: "https://search.epfl.ch", method: :get do |form| %>
+  <%= form.hidden_field :filter, value: "people" %>
+  <div class="search-form mt-1 input-group">
+    <label for="search" class="sr-only"><% t "action.search_people" %></label>
+    <input type="text" class="form-control" name="q" placeholder="<%= t "action.search" %>">
+    <button type="submit" class="d-none d-xl-block btn btn-primary input-group-append"><%= t "generic.form.submit" %></button>
+  </div>
+<% end %>
+
+<section class="mt-5">
+<%= render "homepage_body_#{I18n.locale}" %>
+</section>
+</div>
