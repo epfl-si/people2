@@ -18,7 +18,7 @@ module Admin
     def autotranslate
       v = self[DL]
       OTHER_LANGS.each do |l|
-        next unless self[l].nil?
+        next if self[l].present?
 
         t = ollama_translate_from_english(v, l)
 
