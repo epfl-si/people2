@@ -359,7 +359,7 @@ restore_dinfo:
 	./bin/restoredb.sh dinfo
 
 ## -------------------------------------------------- Test (dev-like) deployment
-.PHONY: nata_patch nata_reseed
+  .PHONY: nata_patch nata_reinit_legacy nata_reseed nata_update
 
 
 ## redeploy app on the test server for Natalie (docker image will be rebuilt if there is a new tag)
@@ -376,6 +376,9 @@ nata_reinit: dcup
 	docker compose exec webapp tar cvf - storage | ssh peonext "tar -xvf - -C data/people"
 	$(SQLDUMP) people | ssh peonext "./bin/peopledb"
 	make nata_patch
+
+nata_reinit_legacy: dcup
+	$(SQLDUMP) cv | ssh peonext "./bin/legacydb"
 
 # ## reseed the database on the test server for Natalie
 # nata_reseed: test_patch
