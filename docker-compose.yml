@@ -144,8 +144,12 @@ services:
       OFFLINE_CACHEDIR: "/srv/filecache"
 
       # --> ollama.yml
-      # OLLAMA_URL: http://${DOCKER_IP}:11434
-      OLLAMA_URL: http://itsidevfsd0006.epfl.ch
+      OLLAMA_URL: http://${DOCKER_IP}:11434
+      # OLLAMA_URL: http://itsidevfsd0006.epfl.ch
+
+      # OpenAI
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: https://inference-dev.rcp.epfl.ch/v1
 
       # --> oidc.yml
       USE_KEYCLOAK: ${USE_KEYCLOAK:-no}

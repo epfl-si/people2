@@ -91,6 +91,9 @@ gem "action_policy"
 # gem 'activeresource'
 # gem 'cached_resource'
 
+gem 'async'
+gem 'cld'
+
 # Database adapters
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
 # gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
@@ -101,12 +104,16 @@ gem 'net-ldap'
 # # To enable CORS from keycloak
 # gem 'rack-cors'
 
+# TODO: most probably ollama-ai and openai are redundant. We will have to pick one
 # Ollama LLM AI for translation and language detection
 # https://github.com/gbaptista/ollama-ai
 gem 'ollama-ai'
 
-# gem 'opdo_epfl_spymiddleware', path: 'vendor/gems/opdo-rails'
+# TODO: figure out why bundle install during docker build fails
+# gem "openai", github: "openai/openai-ruby", branch: "main"
 # gem 'opdo_epfl_spymiddleware', git: 'https://github.com/epfl-si/opdo-rails', branch: 'fix/people_compatibility'
+gem 'openai', path: 'vendor/gems/openai-ruby'
+# gem 'opdo_epfl_spymiddleware', path: 'vendor/gems/opdo-rails'
 
 gem 'ostruct'
 

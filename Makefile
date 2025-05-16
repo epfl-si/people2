@@ -131,7 +131,7 @@ about:
 .PHONY: build rebuild
 
 ## build the web app docker image (set REBUNDLE=yes for refreshing Gemfile.lock)
-build: envcheck $(ELE_FILES) VERSION
+build: envcheck $(ELE_FILES) VERSION gems
 	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
 	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
@@ -143,6 +143,20 @@ rebuild: envcheck VERSION
 	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
 
 envcheck: .env .git/hooks/pre-commit
+
+
+GDIR=vendor/gems
+GEMS=opdo-rails openai-ruby
+gems: $(GDIR) $(addprefix $(GDIR)/,$(GEMS))
+
+$(GDIR):
+	mkdir -p $(GDIR)
+
+$(GDIR)/opdo-rails:
+	cd $(GDIR) && git clone https://github.com/epfl-si/opdo-rails.git
+
+$(GDIR)/openai-ruby:
+	cd $(GDIR) && git clone https://github.com/openai/openai-ruby.git
 
 ## ----------------------------------------- Source code and dev env maintenance
 .PHONY: erd codecheck cop docop dodocop minor patch

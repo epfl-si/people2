@@ -18,6 +18,7 @@ AllCops:
     - "app/assets/**/*"
     - "bin/*"
     - "db/*schema.rb"
+    - "Learn/**/*"
     - "log/**/*"
     - "public/**/*"
     - "storage/**/*"
