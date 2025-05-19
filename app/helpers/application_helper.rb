@@ -85,8 +85,9 @@ module ApplicationHelper
     if Rails.configuration.use_local_elements
       "/elements/#{path}"
     else
-      real_path = path.gsub(/^(svg|favicons)/, "icons")
-      "https://web2018.epfl.ch/7.2.0/#{real_path}"
+      real_path = path
+                  .gsub(/^(svg|favicons)/, "icons")
+      "https://web2018.epfl.ch/8.0.0/#{real_path}"
     end
   end
 
