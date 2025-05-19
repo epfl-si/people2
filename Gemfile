@@ -101,8 +101,7 @@ gem 'mysql2'
 
 gem 'net-ldap'
 
-# # To enable CORS from keycloak
-# gem 'rack-cors'
+gem 'rack-cors'
 
 # TODO: most probably ollama-ai and openai are redundant. We will have to pick one
 # Ollama LLM AI for translation and language detection
