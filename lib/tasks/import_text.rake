@@ -44,20 +44,20 @@ class LanguageDetector
   end
 end
 
-ROBA = [
-  { model: Legacy::Achievement, props: [:description] },
-  { model: Legacy::Award, props: [:title] },
-  { model: Legacy::Box, props: %i[content label] },
-  { model: Legacy::Education, props: [:title] },
-  { model: Legacy::Experience, props: [:title] }
-].freeze
 namespace :legacy do
   desc 'Copy to user_text table all the texts that need to be translated'
   task fetch_all_texts: :environment do
+    roba = [
+      { model: Legacy::Award, props: [:title] },
+      { model: Legacy::Box, props: %i[content label] },
+      { model: Legacy::Education, props: [:title] },
+      { model: Legacy::Achievement, props: [:description] },
+      { model: Legacy::Experience, props: [:title] }
+    ].freeze
     done = Work::Text.all.pluck(:signature).index_with { |_k| true }
     Work::Sciper.migranda.pluck(:sciper).each do |sciper|
       puts sciper
-      ROBA.each do |k|
+      roba.each do |k|
         k[:model].where(sciper: sciper).find_each do |r|
           k[:props].each do |p|
             v = r.send(p)
