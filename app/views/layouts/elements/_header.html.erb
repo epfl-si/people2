@@ -5,7 +5,7 @@
 			<img src="<%= belurl 'svg/epfl-logo.svg' %>" alt="Logo EPFL, Ecole polytechnique fédérale de Lausanne" class="img-fluid">
 		</a>
     <h1 class="site-title">
-      <a href="/"><%= t app.long_name %></a>
+      <a href="/"><%= t 'app.long_name' %></a>
     </h1>
 		<!-- SEARCH -->
     <%= form_with url: "https://search.epfl.ch", method: :get, html: {class: "d-xl-none"} do |form| %>

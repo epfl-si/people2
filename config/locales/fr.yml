@@ -9,6 +9,10 @@ fr:
       en: English
       it: Italiano
       de: Deutch
+  app:
+    long_name: online people directory
+    name: people
+
   no_attribute_for_locale: "%{attribute} en %{language} n'est pas défini"
   no_title_for_locale: "Pas de titre en %{language}"
   translated_label: "%{label} en %{language}"
