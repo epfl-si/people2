@@ -1,0 +1,200 @@
+# - name: Load Quay secrets from secrets.yml
+#   include_vars:
+#     file: secrets.yml
+#     name: quay_secrets
+
+- name: Flatten app environment config dictionary for use in ConfigMap
+  set_fact:
+    people_config: "{{ people_app_env }}"
+
+- name: Load secrets from Keybase vault for app and admin
+  set_fact:
+    raw_secrets: "{{ lookup('file', '/keybase/team/epfl_people.prod/ops/secrets-prod.yml') | from_yaml }}"
+    raw_admin_secrets: "{{ lookup('file', '/keybase/team/epfl_people.prod/ops/secrets-admin.yml') | from_yaml }}"
+
+- name: Create Kubernetes Secret with application DB/API credentials
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: people-app-secrets
+        namespace: "{{ app_namespace }}"
+      type: Opaque
+      data:
+        "DATABASE_HOST": "{{ raw_secrets.Db.people.server  | b64encode}}"
+        "DATABASE_PORT": "{{ raw_secrets.Db.people.port | b64encode }}"
+        "DATABASE_NAME": "{{ raw_secrets.Db.people.dbname  | b64encode}}"
+        "DATABASE_USER": "{{ raw_secrets.Db.people.users  | b64encode}}"
+        "DATABASE_PASSWORD": "{{ raw_secrets.Db.people.password  | b64encode}}"
+        "CV_DATABASE_HOST": "{{ raw_secrets.Db.legacy.server  | b64encode}}"
+        "CV_DATABASE_NAME": "{{ raw_secrets.Db.legacy.dbname | b64encode }}"
+        "CV_DATABASE_USER": "{{ raw_secrets.Db.legacy.users  | b64encode}}"
+        "CV_DATABASE_PASSWORD": "{{ raw_secrets.Db.legacy.password  | b64encode}}"
+        "ENTRA_SECRET": "{{ raw_secrets.entra.secret  | b64encode }}"
+        "EPFLAPI_PASSWORD": "{{ raw_secrets.api.password  | b64encode }}"
+        "CAMIPRO_PHOTO_KEY": "{{ raw_secrets.camipro.key  | b64encode }}"
+
+- name: Create Kubernetes Secret with admin DB credentials
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: people-admin-secrets
+        namespace: "{{ app_namespace }}"
+      type: Opaque
+      data:
+        "DATABASE_HOST": "{{ raw_admin_secrets.Db.people.server  | b64encode}}"
+        "DATABASE_PORT": "{{ raw_admin_secrets.Db.people.port | b64encode }}"
+        "DATABASE_NAME": "{{ raw_admin_secrets.Db.people.dbname  | b64encode}}"
+        "DATABASE_USER": "{{ raw_admin_secrets.Db.people.users  | b64encode}}"
+        "DATABASE_PASSWORD": "{{ raw_admin_secrets.Db.people.password  | b64encode}}"
+        "CV_DATABASE_HOST": "{{ raw_admin_secrets.Db.legacy.server  | b64encode}}"
+        "CV_DATABASE_NAME": "{{ raw_admin_secrets.Db.legacy.dbname | b64encode }}"
+        "CV_DATABASE_USER": "{{ raw_admin_secrets.Db.legacy.users  | b64encode}}"
+        "CV_DATABASE_PASSWORD": "{{ raw_admin_secrets.Db.legacy.password  | b64encode}}"
+
+- name: Create Kubernetes ConfigMap with application environment variables
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: people-app-config
+        namespace: "{{ app_namespace }}"
+      data: "{{ people_config }}"
+
+- name: Delete old database migration Job if it exists
+  kubernetes.core.k8s:
+    state: absent
+    kind: Job
+    namespace: "{{ app_namespace }}"
+    name: people-webapp-migrate
+  ignore_errors: true
+
+- name:  Create a Kubernetes Job to run bin/rails db:migrate
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: people-webapp-migrate
+        namespace: "{{ app_namespace }}"
+      spec:
+        backoffLimit: 0
+        # Remove completed job after 60 seconds => we can re-create it without getting error
+        ttlSecondsAfterFinished: 60
+        template:
+          metadata:
+            labels:
+              job: people-webapp-migrate
+          spec:
+            restartPolicy: Never
+            serviceAccountName: puller
+            containers:
+              - name: migrate
+                image: "{{ webapp_image }}"
+                command: ["bin/rails", "db:migrate"]
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-admin-secrets
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "256Mi"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+            volumes:
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
+
+- name: Deploy the people_webapp
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: people-webapp
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: people
+        template:
+          metadata:
+            labels:
+              app: people
+              version: "v1.03"
+          spec:
+            serviceAccountName: puller
+            containers:
+              - name: people
+                image: "{{ webapp_image }}"
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 8080
+                  - containerPort: 9394
+                    name: metrics
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "256Mi"
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-app-secrets
+                env:
+                  - name: ENABLE_METRICS
+                    value: "true"
+                    # config for thruster (https://github.com/basecamp/thruster/)
+                  - name: HTTP_PORT
+                    value: "8080"
+                  - name: TARGET_PORT
+                    value: "3000"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+                    subPath: people_storage
+                  - name: pids-path
+                    mountPath: /rails/tmp
+            volumes:
+              - name: pids-path
+                emptyDir:
+                  sizeLimit: 100Mi
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
+
+- name: Expose the people_webapp on port 8080 via ClusterIP service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: people
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+      spec:
+        selector:
+          app: people
+        ports:
+          - name: http
+            protocol: TCP
+            port: 8080
+            targetPort: 3000

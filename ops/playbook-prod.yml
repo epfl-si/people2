@@ -1,0 +1,5 @@
+- name: Déploiement global
+  hosts: prod
+  gather_facts: false
+  roles:
+    - role: k8s
