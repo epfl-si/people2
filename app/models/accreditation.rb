@@ -2,7 +2,7 @@
 
 # Accreditation is the real accred coming from official EPFL accred data
 class Accreditation
-  attr_accessor :prefs
+  attr_accessor :prefs, :status_id
   attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order,
               :unit_label_fr, :unit_label_en, :unit_label_it, :unit_label_de
   attr_writer :unit, :botweb, :gestprofil
