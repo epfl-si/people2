@@ -1,39 +1,38 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      education: &attr
-        director: "director"
-        field: "field"
-        school: "school"
-        title: "title"
-        year_begin: "from year"
-        year_end: "to year"
-  # Summary message for model errors
+      education:
+        director: director
+        field: field
+        school: school
+        title: title
+        year_begin: from year
+        year_end: to year
   error:
     education:
-      zero: "Something prevented this education entry to be updated (should not happen)"
-      one: "An error prevented this education entry to be updated"
-      other: "%{count} errors prevented this education entry to be updated"
+      zero: Something prevented this education entry to be updated (should not happen)
+      one: Please fix the errors below to continue
+      other: "%{count} Please fix the errors below to continue"
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       education:
-        title_en: "PhD."
-        title_fr: "Doctorat"
-        title_it: "Dottorato"
-        title_de: "Doktortitel"
-        field_en: "Solid state physics"
-        field_fr: "Physique du solide"
-        field_it: "Fisica dello stato solido"
-        field_de: "Festkörperphysik"
-        director: "John Doe"
-        school: "Princeton University"
-
-  # ---------------------------------------------------------------------- views
+        title_en: PhD.
+        title_fr: Doctorat
+        title_it: Dottorato
+        title_de: Doktortitel
+        field_en: Solid state physics
+        field_fr: Physique du solide
+        field_it: Fisica dello stato solido
+        field_de: Festkörperphysik
+        director: John Doe
+        school: Princeton University
   educations:
-    # Override model attribute names as they appear in form labels
     form:
-      <<: *attr
+      director: director
+      field: field
+      school: school
+      title: title
+      year_begin: from year
+      year_end: to year
       period: period (years)
-    index:

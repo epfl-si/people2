@@ -1,42 +1,5 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-#
-# ------------------------------------------------------------------------------
-# We try to keep here only translations that are occurring all-over the code
-# and move view/model/controller specific translations to dedicated file unless
-# the number of translation is soo small that a new file would be overkill
-# ------------------------------------------------------------------------------
-#
+---
 en:
-  # Each language is read in its own language by the screen reader
   lang:
     fr: French
     en: English
@@ -47,23 +10,16 @@ en:
       en: English
       it: Italiano
       de: Deutch
-
-  no_attribute_for_locale: "%{attribute} in %{language} is not set"
-  no_title_for_locale: "Not title in %{language}"
+  no_attribute_for_locale: "%{attribute} in %{language} is not provided"
+  no_title_for_locale: Missing title in %{language}
   translated_label: "%{label} in %{language}"
-
   messages:
-    empty_orcid_help: >-
-      link will appear as soon as your ORCID account is synchronized
-    function_change_explain: >-
-      It is not possible to change the position function directly.
-      Please fill and submit this form to request the change to one of your
-      accreditors.
-    function_change_exists: >-
-      There is already a request for changing this job function. We prefer
-      to avoid spamming the accreditors. Please try to contact your accreditor
+    empty_orcid_help: link will appear as soon as your ORCID account is synchronized
+    function_change_explain: 'Change requests validation: please complete and submit
+      the form'
+    function_change_exists: There is already a request for changing this job function.
+      We prefer to avoid spamming the accreditors. Please try to contact your accreditor
       by phone or to contact the service desk asking to discard the old request.
-
   generic:
     form:
       cancel: Cancel
@@ -71,170 +27,147 @@ en:
       submit: Submit
       update: Submit Changes
       texfield_for: "%{attr}"
-
   nav:
-    app_with_version: "EPFL People v. %{version}"
+    app_with_version: EPFL People v. %{version}
     issues: issues
-    version: "v. %{version}"
-
+    version: v. %{version}
   action:
-    add: "Add another"
-    add_record: "Add another %{name}"
-    confirm: "Are you sure?"
-    delete: "delete"
-    edit: "edit"
-    edit_profile: "Edit profile"
-    hide_search_form: "Hide the search form"
-    more: "More information"
-    search: "Search"
-    search_people: "Search for a person"
-    show_hide_search_form: "Show / hide the search form"
-    sign_in: "Sign in"
-    sign_out: "Sign out"
+    add: Add a text bloc
+    add_record: Add another %{name}
+    confirm: Please comfirm
+    delete: delete
+    edit: edit
+    edit_profile: Edit profile
+    hide_search_form: Hide the search form
+    more: More informations
+    search: Search
+    search_people: Search for a person
+    show_hide_search_form: Show / hide the search form
+    sign_in: Sign in
+    sign_out: Sign out
   dev:
     action:
       abandon: abandon
       adopt: adopt
       revert: revert
-
   error:
-    one: "Error"
-    other: "Errors"
+    one: Error
+    other: Errors
     record:
-      zero: "Something prevented this form from being recorded (should not happen, please contact the service desk)"
-      one: "An error prevented this form from being recorded"
-      other: "%{count} errors prevented this form from being recorded"
+      zero: Something prevented this form from being recorded (should not happen,
+        please contact the service desk)
+      one: Please fix the errors below to continue
+      other: "%{count} Please fix the errors below to continue"
   flash:
-    alert:
     error:
-      create: "Error creating record"
-      update: "Error updating record"
-      remove: "Error deleting record"
+      create: Error creating data
+      update: Error updating data
+      remove: Error deleting data
       accred:
         cannot_hide_all: Cannot hide all accreditations to general public
       box:
-        cannot_delete: "Standard and boxes with content cannot be deleted"
-        create: "Box could not be created"
+        cannot_delete: Standard and boxes with content cannot be deleted
+        create: Bloc could not be created
       function_change:
-        create: "Function change request could not be sent. Please try again later or contact the service desk"
+        create: Unable to submit this request. Please try again later or contact 1234@epfl.ch
       profile:
-        update: "Error while updating the base profile"
-    info:
+        update: Error while updating the base profile
     notice:
-      create: "Record created"
-      update: "Record updated"
-      remove: "Record deleted"
+      create: Recorded
+      update: Record updated
+      remove: Record deleted
     success:
-      create: "Record created"
-      update: "Record updated"
-      remove: "Record deleted"
+      create: Record created
+      update: Record updated
+      remove: Record deleted
       box:
-        deleted: Box deleted
-        create: "Box created"
+        deleted: Bloc deleted
+        create: Bloc added
       function_change:
-        create: "Function change request sent to your chosen accreditors"
+        create: Change request forwarded to the selected accreditors
       profile:
-        update: "Base profile succesfully updated"
-
+        update: Page succesfully updated
   visibility:
-    authenticated: "EPFL users only"
-    authenticated_access: "user"
-    draft: "Draft (etitor only)"
-    editor: "Draft (editor only)"
-    editor_access: "full"
-    hidden: "hidden"
-    hidden_address: "NO address"
-    intranet: "intranet only"
-    intranet_access: "intranet"
-    # { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
-    # { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
-    # { label: 'intranet', icon: 'home',       value: 1, box: true,  item: false },
-    # { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false },
-    # { label: 'draft',    icon: 'edit-3',     value: 3, box: true,  item: false },
-    # { label: 'hidden',   icon: 'eye-off',    value: 4, box: true,  item: true },
+    authenticated: EPFL users only
+    authenticated_access: user
+    draft: Private
+    editor: Private
+    editor_access: full
+    hidden: hidden
+    hidden_address: Postal address missing
+    intranet: intranet only
+    intranet_access: intranet
     label:
-      visible: "Visible"
-      public: "Public, visible from all-over the internet"
-      intranet: "Intranet, visible only within the EPFL internal network"
-      auth: "Authentified, visible only by logged-in people with known identity"
-      draft: "Draft, visible only by the owner/editor of the profile"
-      hidden: "Hidden"
+      visible: Visible
+      public: Public, visible to anyone on the internet
+      intranet: Intranet, visible only within the EPFL internal network
+      auth: Visible only to the EPFL people
+      draft: Private, only the profile owner can view this
+      hidden: Private
     short_label:
-      visible: "Visible"
-      public: "Public"
-      intranet: "Intranet"
-      auth: "Authorized"
-      draft: "Draft"
-      hidden: "Hidden"
-
+      visible: Visible
+      public: Public
+      intranet: Intranet (EPFL uniquement)
+      auth: Authorized
+      draft: Draft
+      hidden: Private
     labels:
-      published: "Published"
-      draft: "Draft"
-      hidden: "Hidden"
-
-      public: "World visible"
-      intranet: "Intranet only"
-      authenticated: "Authenticated users only"
+      published: Published
+      draft: Draft
+      hidden: Private
+      public: World visible
+      intranet: Intranet (EPFL only)
+      authenticated: EPFL people only
     short_labels:
-      published: "Published"
-      draft: "Draft"
-      hidden: "Hidden"
-
-      public: "World"
-      intranet: "Intranet"
-      authenticated: "Users"
-
-    public: "public"
-    public_access: "public"
-    visible: "visible"
-    visible_address: "address"
-
-
-  # Default error messages full list here:
-  # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
-  # https://github.com/rails/rails/blob/3235827585d87661942c91bc81f64f56d710f0b2/activemodel/lib/active_model/error.rb
+      published: Published
+      draft: Draft
+      hidden: Private
+      public: World
+      intranet: Intranet
+      authenticated: Users
+    public: public
+    public_access: public
+    visible: visible
+    visible_address: address
   errors:
     messages:
-      blank: "must be provided"
-      required: "is required"
-      taken: "has already been taken (must be unique)"
-      invalid: "have an incorrect format"
-      greater_than: "must be greater than %{count}"
-      less_than: "must be smaller than %{count}"
-      untranslatable: "at least one translation must be present"
-      incorrect_type: "Is not a property of the correct type"
-      cannot_hide_all_accreds: "At least one accreditation must remain public"
-
+      blank: must be provided
+      required: is required
+      taken: has already been taken (must be unique)
+      invalid: have an incorrect format
+      greater_than: must be greater than %{count}
+      less_than: must be smaller than %{count}
+      untranslatable: at least one translation must be present
+      incorrect_type: Invalid value
+      cannot_hide_all_accreds: At least one affiliation must remain public
   activerecord:
     models:
-      achievement: "annual achievement"
-      award: "award"
-      box: "box"
-      education: "education"
-      experience: "work experience"
-      function_change: "position change request"
-      infoscience: "infoscience publication link"
-      picture: "picture"
-      profile: "profile"
-      publication: "publication"
-      rich_text_box: "rich_text_box"
-      social: "research id / social link"
-
+      achievement: annual achievement
+      award: award
+      box: box
+      education: education
+      experience: Work experiences
+      function_change: position change request
+      infoscience: infoscience publication link
+      picture: picture
+      profile: profile
+      publication: publication
+      rich_text_box: rich_text_box
+      social: research id / social link
     errors:
-      # for a list of standard error messages keys, see:
-      #   https://guides.rubyonrails.org/i18n.html#error-message-interpolation
       messages:
-        record_invalid: "Validation failed: %{errors}"
+        record_invalid: 'Validation failed: %{errors}'
         restrict_dependent_destroy:
-          has_one: "Cannot delete record because a dependent %{record} exists"
-          has_many: "Cannot delete record because dependent %{record} exist"
-
+          has_one: Cannot delete data because a dependent %{record} exists
+          has_many: Cannot delete data because dependent %{record} exist
   activemodel:
     errors:
       models:
         name:
           attributes:
             usual_first:
-              not_in_official: "Should be composed of names included in the official first name."
+              not_in_official: Should be composed of names included in the official
+                first name.
             usual_last:
-              not_in_official: "Should be composed of names included in the official last name."
+              not_in_official: Should be composed of names included in the official
+                last name.

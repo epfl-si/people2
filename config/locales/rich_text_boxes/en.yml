@@ -1,22 +1,18 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      rich_text_box: &attr
+      rich_text_box:
         content: content
         title: title
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       rich_text_box:
-        title_en: "My rich text box"
-        title_fr: "Ma boite de contennu libre"
-        title_it: "Il mio contenuto libero"
-        title_de: "My rich text box"
+        title_en: My rich text box
+        title_fr: Ma boite de contennu libre
+        title_it: Il mio contenuto libero
+        title_de: My rich text box
   rich_text_boxes:
-    # Override model attribute names as they appear in form labels
     form:
-      <<: *attr
-      title: title
       content: content
-    index:
+      title: title

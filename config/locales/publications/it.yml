@@ -1,0 +1,23 @@
+---
+it:
+  publication:
+    authors: ''
+    title: Titolo
+    year: Anno
+  activerecord:
+    attributes:
+      publication:
+        authors: ''
+        title: Titolo
+        year: Anno
+    errors:
+      models:
+        publication:
+          attributes:
+            year: {}
+  helpers:
+    placeholder:
+      publication: {}
+  publications:
+    editable_publication: {}
+    form: {}

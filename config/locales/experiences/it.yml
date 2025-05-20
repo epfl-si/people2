@@ -1,0 +1,18 @@
+---
+it:
+  activerecord:
+    attributes:
+      experience:
+        title: Titolo
+    errors:
+      models:
+        experience:
+          attributes:
+            base:
+              missing_year: ''
+  helpers:
+    placeholder:
+      experience: {}
+  experiences:
+    form:
+      title: Titolo

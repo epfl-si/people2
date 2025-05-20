@@ -1,1 +1,103 @@
+---
 it:
+  lang:
+    fr: ''
+    en: ''
+    it: ''
+    de: ''
+    native: {}
+  no_attribute_for_locale: ''
+  no_title_for_locale: ''
+  messages:
+    function_change_explain: ''
+  generic:
+    form:
+      cancel: ''
+      texfield_for: ''
+  nav:
+    app_with_version: ''
+  action:
+    add: ''
+    add_record: ''
+    confirm: ''
+    edit_profile: ''
+    more: ''
+    search: ''
+    search_people: ''
+  dev:
+    action: {}
+  error:
+    one: ''
+    record:
+      one: ''
+      other: ''
+  flash:
+    error:
+      create: ''
+      update: ''
+      remove: ''
+      accred: {}
+      box:
+        create: ''
+      function_change:
+        create: ''
+      profile: {}
+    notice:
+      create: ''
+    success:
+      box:
+        deleted: ''
+        create: ''
+      function_change:
+        create: ''
+      profile:
+        update: ''
+  visibility:
+    authenticated: ''
+    draft: ''
+    editor: ''
+    hidden_address: ''
+    label:
+      public: ''
+      intranet: ''
+      auth: ''
+      draft: ''
+      hidden: ''
+    short_label:
+      intranet: ''
+      draft: Bozza
+      hidden: ''
+    labels:
+      published: ''
+      draft: Bozza
+      hidden: ''
+      intranet: ''
+      authenticated: ''
+    short_labels:
+      published: ''
+      draft: Bozza
+      hidden: ''
+      intranet: ''
+    public: " pubblico"
+    public_access: " pubblico"
+    visible: Visibile
+  errors:
+    messages:
+      incorrect_type: ''
+      cannot_hide_all_accreds: ''
+  activerecord:
+    models:
+      experience: ''
+      publication: Pubblicazione
+    errors:
+      messages:
+        restrict_dependent_destroy:
+          has_one: ''
+          has_many: ''
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first: {}
+            usual_last: {}

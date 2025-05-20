@@ -1,1 +1,103 @@
+---
 de:
+  lang:
+    fr: ''
+    en: ''
+    it: ''
+    de: ''
+    native: {}
+  no_attribute_for_locale: ''
+  no_title_for_locale: ''
+  messages:
+    function_change_explain: ''
+  generic:
+    form:
+      cancel: ''
+      texfield_for: ''
+  nav:
+    app_with_version: ''
+  action:
+    add: ''
+    add_record: ''
+    confirm: ''
+    edit_profile: ''
+    more: ''
+    search: ''
+    search_people: ''
+  dev:
+    action: {}
+  error:
+    one: ''
+    record:
+      one: ''
+      other: ''
+  flash:
+    error:
+      create: ''
+      update: ''
+      remove: ''
+      accred: {}
+      box:
+        create: ''
+      function_change:
+        create: ''
+      profile: {}
+    notice:
+      create: ''
+    success:
+      box:
+        deleted: ''
+        create: ''
+      function_change:
+        create: ''
+      profile:
+        update: ''
+  visibility:
+    authenticated: ''
+    draft: ''
+    editor: ''
+    hidden_address: ''
+    label:
+      public: ''
+      intranet: ''
+      auth: ''
+      draft: ''
+      hidden: ''
+    short_label:
+      intranet: ''
+      draft: Entwurf
+      hidden: ''
+    labels:
+      published: ''
+      draft: Entwurf
+      hidden: ''
+      intranet: ''
+      authenticated: ''
+    short_labels:
+      published: ''
+      draft: Entwurf
+      hidden: ''
+      intranet: ''
+    public: öffentlich
+    public_access: öffentlich
+    visible: Sichtbar
+  errors:
+    messages:
+      incorrect_type: ''
+      cannot_hide_all_accreds: ''
+  activerecord:
+    models:
+      experience: ''
+      publication: Veröffentlichung
+    errors:
+      messages:
+        restrict_dependent_destroy:
+          has_one: ''
+          has_many: ''
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first: {}
+            usual_last: {}

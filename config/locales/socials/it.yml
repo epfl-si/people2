@@ -1,0 +1,33 @@
+---
+it:
+  activerecord:
+    attributes:
+      social: {}
+    errors:
+      models:
+        social:
+          attributes:
+            tag:
+              invalid: ''
+            value: {}
+  helpers:
+    placeholder:
+      social: {}
+  socials:
+    add:
+      add: ''
+    form:
+      identifier_label:
+        facebook: ''
+        github: ''
+        googlescholar: ''
+        instagram: ''
+        linkedin: ''
+        mastodon: ''
+        orcid: ''
+        scopus: ''
+      new: ''
+    index: {}
+    action:
+      add_social: ''
+      more: ''

@@ -1,31 +1,37 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      achievement: &attr
+      achievement:
         category: category
         description: description
         url: url
         year: year
-  # Summary message for model errors
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       achievement:
-        description_en: "Our work on the effect of air composition and aerosol pH on the persistence of airborne respiratory viruses was featured in the Economis, Forbes and other outlets"
-        description_fr: "Nos travaux sur l'effet de la composition de l'air et du pH des aérosols sur la persistance des virus respiratoires aéroportés ont été présentés dans Economis, Forbes et d'autres médias"
-        description_it: "Il nostro lavoro sull'effetto della composizione dell'aria e del pH degli aerosol sulla persistenza dei virus respiratori aerei è stato presentato su Economis, Forbes e altre testate"
-        description_de: "Unsere Arbeit über die Auswirkungen der Luftzusammensetzung und des pH-Werts von Aerosolen auf die Persistenz luftgetragener Atemwegsviren wurde in Economis, Forbes und anderen Medien vorgestellt"
-        url: "https://doi.org/10.1021/acs.est.2c05777"
-
-  # ---------------------------------------------------------------------- views
+        description_en: Our work on the effect of air composition and aerosol pH on
+          the persistence of airborne respiratory viruses was featured in the Economis,
+          Forbes and other outlets
+        description_fr: Nos travaux sur l'effet de la composition de l'air et du pH
+          des aérosols sur la persistance des virus respiratoires aéroportés ont été
+          présentés dans Economis, Forbes et d'autres médias
+        description_it: Il nostro lavoro sull'effetto della composizione dell'aria
+          e del pH degli aerosol sulla persistenza dei virus respiratori aerei è stato
+          presentato su Economis, Forbes e altre testate
+        description_de: Unsere Arbeit über die Auswirkungen der Luftzusammensetzung
+          und des pH-Werts von Aerosolen auf die Persistenz luftgetragener Atemwegsviren
+          wurde in Economis, Forbes und anderen Medien vorgestellt
+        url: https://doi.org/10.1021/acs.est.2c05777
   achievements:
-    # Override model attribute names as they appear in form labels
     form:
-      <<: *attr
+      category: category
+      description: description
+      url: url
+      year: year
       help:
-        category: "Dropdown menu for achievement category"
-        rules: >
-          Yearly achievements are to be added until end of April for them
-          to appear in the previous year's academic activity report
-    index:
+        category: Dropdown menu for achievement category
+        rules: 'Yearly achievements are to be added until end of April for them to
+          appear in the previous year''s academic activity report
+
+          '

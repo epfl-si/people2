@@ -1,0 +1,33 @@
+---
+fr:
+  activerecord:
+    attributes:
+      social: {}
+    errors:
+      models:
+        social:
+          attributes:
+            tag:
+              invalid: L'ID est erronée
+            value: {}
+  helpers:
+    placeholder:
+      social: {}
+  socials:
+    add:
+      add: Ajouter un profil de réseau social ou un identifiant de recherche
+    form:
+      identifier_label:
+        facebook: Profil Facebook
+        github: Nom d'utilisateur Github
+        googlescholar: 'Google Scholar ID '
+        instagram: Instagram ID
+        linkedin: 'Linkedin ID '
+        mastodon: Nom d'utilsateur sur Mastodon (sans le @)
+        orcid: ORCID ID
+        scopus: 'Scopus ID '
+      new: Nouveau %{label}
+    index: {}
+    action:
+      add_social: Ajouter un lien vers un réseau social
+      more: En savoir plus

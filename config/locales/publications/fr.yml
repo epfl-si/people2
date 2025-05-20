@@ -1,0 +1,23 @@
+---
+fr:
+  publication:
+    authors: Auteur(s)
+    title: Titre
+    year: Annee
+  activerecord:
+    attributes:
+      publication:
+        authors: Auteur(s)
+        title: Titre
+        year: année
+    errors:
+      models:
+        publication:
+          attributes:
+            year: {}
+  helpers:
+    placeholder:
+      publication: {}
+  publications:
+    editable_publication: {}
+    form: {}

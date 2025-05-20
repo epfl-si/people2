@@ -1,0 +1,16 @@
+---
+fr:
+  activerecord:
+    attributes:
+      achievement:
+        url: url
+        year: Annee
+  helpers:
+    placeholder:
+      achievement: {}
+  achievements:
+    form:
+      url: url
+      year: Annee
+      help:
+        category: Menu déroulant

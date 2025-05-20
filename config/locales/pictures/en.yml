@@ -1,30 +1,27 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      picture: &attr
+      picture:
         selected: selected
         camipro: camipro
         failed_attempts: number of failed attempts of fetching the camipro picture
-    # Errors for the model attributes (those that are shown upon form submission)
-    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
     errors:
       models:
         picture:
           attributes:
             base:
-              undeletable: "Camipro picture cannot be removed but you can still hide your profile picture"
-
-  # ---------------------------------------------------------------------- views
+              undeletable: The CAMIPRO photo cannot be deleted
   pictures:
-    # Override model attribute names as they appear in form labels
-    currently_selected_picture: Currently selected profile picture
+    currently_selected_picture: Displayed picture
     form:
-      <<: *attr
-      browse_image_file: Select a new profile image to upload
-      max_photos_reached: "You have reached the maximum number of allowed photos."
-      no_photofile_selected: "No new photo selected. Please select one if you want to add a photo to your profile"
-      upload_image: "Upload the image"
+      selected: selected
+      camipro: camipro
+      failed_attempts: number of failed attempts of fetching the camipro picture
+      browse_image_file: Upload a new picture
+      max_photos_reached: You have reached the maximum number of allowed photos.
+      no_photofile_selected: No picture selected
+      upload_image: Upload the image
     pictures:
-      title: "Profile picture"
-      currently_selected: "Currently selected picture"
+      title: My picture
+      currently_selected: Selected picture

@@ -1,21 +1,21 @@
+---
 fr:
   accreds:
     index:
-      title: "Accreitations"
+      title: Mes rattachements
   footer:
     follow:
-      us: "Suivez l'EPFL sur les réseaux sociaux"
-      facebook: "Suivez l'EPFL sur Facebook"
-      instagram: "Suivez l'EPFL sur Instagram"
-      linkedin: "Suivez l'EPFL sur LinkedIn"
-      twitter: "Suivez l'EPFL sur X"
-      youtube: "Suivez l'EPFL sur YouTube"
-    accessibility: "Accessibilité"
-    legal: "Avertissement"
-    data_protection: "Politique de confidentialité"
-    copy: "EPFL, tous droits réservés"
-    back_to_the_top: "Retour en haut de la page"
-
+      us: Suivez l'EPFL sur les réseaux sociaux
+      facebook: Suivez l'EPFL sur Facebook
+      instagram: Suivez l'EPFL sur Instagram
+      linkedin: Suivez l'EPFL sur LinkedIn
+      twitter: Suivez l'EPFL sur X
+      youtube: Suivez l'EPFL sur YouTube
+    accessibility: Accessibilité
+    legal: Mentions légales
+    data_protection: Protection des données
+    copy: EPFL, tous droits réservés
+    back_to_the_top: Retour en haut de page
   function_changes:
     form:
       function: new position

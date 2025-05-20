@@ -1,0 +1,12 @@
+---
+de:
+  activerecord:
+    attributes:
+      rich_text_box:
+        title: Titel
+  helpers:
+    placeholder:
+      rich_text_box: {}
+  rich_text_boxes:
+    form:
+      title: Titel

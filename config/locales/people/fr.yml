@@ -1,0 +1,26 @@
+---
+fr:
+  person:
+    photo: Profile photo
+    title: Titre
+  people:
+    adopt:
+      confirm: Mettre en ligne la nouvelle version de mon profil
+    admin_data:
+      title: Données administratives
+      sciper: Numéro SCIPER
+      sap: SAP ID
+      gid: GID
+      home: Home directory
+      shell: Shell
+    contact:
+      nationality_label: Nationalité
+      nav:
+        atari: Données administratives
+    show: {}
+    teaching:
+      title:
+        courses: Cours
+        current_phd: Doctorants·es actuels·les
+        past_phd: 'A dirigé les thèses EPFL de '
+        past_phd_students: 'A dirigé les thèses EPFL de '

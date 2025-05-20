@@ -1,0 +1,23 @@
+---
+de:
+  publication:
+    authors: ''
+    title: Titel
+    year: Jahr
+  activerecord:
+    attributes:
+      publication:
+        authors: ''
+        title: Titel
+        year: Jahr
+    errors:
+      models:
+        publication:
+          attributes:
+            year: {}
+  helpers:
+    placeholder:
+      publication: {}
+  publications:
+    editable_publication: {}
+    form: {}

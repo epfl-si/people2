@@ -1,0 +1,48 @@
+---
+de:
+  profile:
+    available_languages: Verfügbare Sprachen
+    expertise: ''
+    nationality: ''
+    official_name: ''
+  activerecord:
+    attributes:
+      profile:
+        available_languages: Verfügbare Sprachen
+        expertise: ''
+        nationality: ''
+        official_name: ''
+        en_enabled: Profile verfügbar in Englisch.
+        fr_enabled: Profile verfügbar auf Französisch.
+        it_enabled: Profil verfügbar auf italienisch.
+        de_enabled: Bild verfügbar auf Deutsch
+    errors:
+      models:
+        profile:
+          attributes:
+            expertise_en: {}
+            expertise_fr: {}
+            expertise_ir: {}
+            expertise_de: {}
+  helpers:
+    placeholder:
+      profile: {}
+  profiles:
+    edit:
+      title:
+        boxes_main: ''
+        boxes_contact: ''
+        details: ''
+        editing_languages: ''
+        edit_language: ''
+        editing: ''
+    form:
+      available_languages: Verfügbare Sprachen
+      official_name: ''
+      en_enabled: Profile verfügbar in Englisch.
+      fr_enabled: Profile verfügbar auf Französisch.
+      it_enabled: Profil verfügbar auf italienisch.
+      de_enabled: Bild verfügbar auf Deutsch
+      action: {}
+    languages_form:
+      action: {}

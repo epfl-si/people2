@@ -1,17 +1,23 @@
+---
 en:
-  profile: &attr
-    available_languages: Available Languages
-    expertise: Expertise
+  profile:
+    available_languages: Available languages
+    expertise: Expertises
     nationality: Nationality
     official_name: Official Name
     personal_web_url: personal web page url
     personal_phone: personal phone number
     usual_name: Usual Name
   activerecord:
-    # Model attribute names
     attributes:
-      profile: &arattr
-        <<: *attr
+      profile:
+        available_languages: Available Languages
+        expertise: Expertises
+        nationality: Nationality
+        official_name: Official Name
+        personal_web_url: personal web page url
+        personal_phone: personal phone number
+        usual_name: Usual Name
         expertise_en: expertise (keywords, EN)
         expertise_fr: expertise (keywords, FR)
         expertise_it: expertise (keywords, IT)
@@ -20,32 +26,31 @@ en:
         nationality_fr: nationality (FR)
         nationality_it: nationality (IT)
         nationality_de: nationality (DE)
-        en_enabled: profile in english
-        fr_enabled: profile in french
-        it_enabled: profile in italian
-        de_enabled: profile in german
-
-    # Errors for the model attributes (those that are shown upon form submission)
-    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+        en_enabled: profile available in english
+        fr_enabled: profile available in french
+        it_enabled: profile available in italian
+        de_enabled: profile available in german
     errors:
       models:
         profile:
           attributes:
             expertise_en:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
+              too_long: is supposed to be a short list of keywords. Please keep it
+                below %{count} characters
             expertise_fr:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
+              too_long: is supposed to be a short list of keywords. Please keep it
+                below %{count} characters
             expertise_ir:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
+              too_long: is supposed to be a short list of keywords. Please keep it
+                below %{count} characters
             expertise_de:
-              too_long: "is supposed to be a short list of keywords. Please keep it below %{count} characters"
-
+              too_long: is supposed to be a short list of keywords. Please keep it
+                below %{count} characters
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       profile:
         personal_web_url: https://ciccio.com
-        personal_phone: +41 7891234
+        personal_phone: "+41 7891234"
         expertise: Software Wizard
         expertise_en: physics, solid state, computational
         expertise_fr: architecture, bâtiments, theatres
@@ -56,32 +61,36 @@ en:
         nationality_fr: suiss
         nationality_it: svizzera
         nationality_de: schweizer
-
-  # ---------------------------------------------------------------------- views
   profiles:
     edit:
       title:
-        boxes_main: Main content editable boxes
-        boxes_contact: Contact zone editable boxes
-        details: "Profile details"
-        editing_languages: Multilanguage profile
-        edit_language: Editing language
-        editing: "Editing %{name}'s profile (sciper: %{sciper})"
-
-    # Override model attribute names as they appear in form labels
+        boxes_main: Main content
+        boxes_contact: Contact Blocks Edition
+        details: My personal datas
+        editing_languages: This profile is bilingual
+        edit_language: Choose profile language(s)
+        editing: 'Editing %{name}''s profile (sciper: %{sciper})'
     form:
-      <<: *arattr
-      expertise_help: few keywords describing your expertise
+      available_languages: Available Languages
       expertise: expertise (few keywords)
+      nationality: nationality
+      official_name: Official Name
+      personal_web_url: personal web page url
+      personal_phone: personal phone number
+      usual_name: Usual Name
       expertise_en: expertise (few keywords in english)
       expertise_fr: expertise (few keywords in french)
       expertise_it: expertise (few keywords in italian)
       expertise_de: expertise (few keywords in german)
-      nationality: nationality
       nationality_en: nationality in english
       nationality_fr: nationality in french
       nationality_it: nationality in italian
       nationality_de: nationality in german
+      en_enabled: profile available in english
+      fr_enabled: profile available in french
+      it_enabled: profile available in italian
+      de_enabled: profile available in german
+      expertise_help: few keywords describing your expertise
       action:
         submit: save profile details
     languages_form:
@@ -92,4 +101,3 @@ en:
       de_enabled: profile will be visible in german
       action:
         submit: save languages selection
-    index:

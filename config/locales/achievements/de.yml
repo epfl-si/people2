@@ -1,0 +1,16 @@
+---
+de:
+  activerecord:
+    attributes:
+      achievement:
+        url: url
+        year: Jahr
+  helpers:
+    placeholder:
+      achievement: {}
+  achievements:
+    form:
+      url: url
+      year: Jahr
+      help:
+        category: ''

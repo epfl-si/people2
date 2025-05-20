@@ -1,37 +1,33 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      experience: &attr
-        description: "description"
-        location: "location"
-        period: "period (years)"
-        title: "title"
-        year_begin: "from year"
-        year_end: "to year"
-    # Errors for the model attributes (those that are shown upon form submission)
-    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+      experience:
+        description: description
+        location: location
+        period: period (years)
+        title: title
+        year_begin: from year
+        year_end: to year
     errors:
       models:
         experience:
           attributes:
             base:
-              missing_year: "Either beginning or end of work experience should be present"
-
+              missing_year: Both start and end dates are mandatory
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       experience:
-        location: "Apple inc."
-        title_en: "CEO"
-        title_fr: "PDG"
-        title_it: "AD"
-        title_de: "CEO"
-
-  # ---------------------------------------------------------------------- views
+        location: Apple inc.
+        title_en: CEO
+        title_fr: PDG
+        title_it: AD
+        title_de: CEO
   experiences:
-    # Override model attribute names as they appear in form labels
     form:
-      <<: *attr
-      location: "company or location or institution"
-    index:
+      description: description
+      location: company or location or institution
+      period: period (years)
+      title: title
+      year_begin: from year
+      year_end: to year
