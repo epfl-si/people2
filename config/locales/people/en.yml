@@ -1,5 +1,6 @@
+---
 en:
-  person: &attr
+  person:
     firstname: firstname
     function: function
     lastname: lastname
@@ -13,35 +14,33 @@ en:
     usual_firstname: usual firstname
     usual_lastname: usual firstname
     website: personal web site url
-
-  # ---------------------------------------------------------------------- views
   people:
     adopt:
-      confirm: "I adopt the new profile"
-      explain: >
-        Your are watching you future profile. Please click on the following
+      confirm: Publish the new version of my profile
+      explain: 'Your are watching you future profile. Please click on the following
         button to adopt it as your actual profile
+
+        '
     admin_data:
-      title: "Admin data"
-      sciper: "SCIPER Number"
-      sap: "SAP ID"
-      username: "Username"
-      gid: "GID"
-      uid: "UID"
-      home: "Home directory"
-      shell: "Shell"
-    index:
+      title: Administrative data
+      sciper: SCIPER Number
+      sap: SAP ID
+      username: Username
+      gid: GID
+      uid: UID
+      home: Home directory
+      shell: Shell
     contact:
       nationality_label: Nationality
       nav:
         atari: Administrative Data
         vcard: vCard
     show:
-      teaching: "Teaching"
+      teaching: Teaching
     teaching:
       title:
-        courses: "Courses"
-        current_phd: "PhD Students"
-        past_phd: "Past EPFL PhD Students"
-        teaching: "Teaching & PhD"
-        past_phd_students: "Past EPFL PhD Students"
+        courses: Courses
+        current_phd: PhD Students
+        past_phd: Past EPFL PhD Students
+        teaching: Teaching & PhD
+        past_phd_students: Past EPFL PhD Students

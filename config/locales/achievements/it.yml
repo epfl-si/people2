@@ -1,0 +1,16 @@
+---
+it:
+  activerecord:
+    attributes:
+      achievement:
+        url: url
+        year: Anno
+  helpers:
+    placeholder:
+      achievement: {}
+  achievements:
+    form:
+      url: url
+      year: Anno
+      help:
+        category: ''

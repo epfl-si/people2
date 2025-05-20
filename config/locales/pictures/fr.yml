@@ -1,0 +1,19 @@
+---
+fr:
+  activerecord:
+    attributes:
+      picture: {}
+    errors:
+      models:
+        picture:
+          attributes:
+            base:
+              undeletable: Impossible de supprimer la photo CAMIPRO
+  pictures:
+    currently_selected_picture: Photo affichée
+    form:
+      browse_image_file: Télécharger une nouvelle photo
+      no_photofile_selected: Aucune photo sélectionnée
+    pictures:
+      title: Ma photo
+      currently_selected: Photo sélectionnée

@@ -1,0 +1,19 @@
+---
+fr:
+  activerecord:
+    attributes:
+      infoscience:
+        title: Titre
+        url: url
+    errors:
+      models:
+        infoscience:
+          attributes:
+            url:
+              invalid_format: 'Erreur de saisie: l''URL doit commencer par https://infoscience-exports.epfl.ch/....'
+  helpers:
+    placeholder:
+      infoscience: {}
+  infosciences:
+    form:
+      title: Titre

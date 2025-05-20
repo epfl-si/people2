@@ -1,0 +1,18 @@
+---
+fr:
+  activerecord:
+    attributes:
+      experience:
+        title: Titre
+    errors:
+      models:
+        experience:
+          attributes:
+            base:
+              missing_year: Date de début ET de fin obligatoires
+  helpers:
+    placeholder:
+      experience: {}
+  experiences:
+    form:
+      title: Titre

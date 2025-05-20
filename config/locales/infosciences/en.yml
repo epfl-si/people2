@@ -1,35 +1,27 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      infoscience: &attr
-        title: "title"
-        url: "url"
-    # Errors for the model attributes (those that are shown upon form submission)
-    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+      infoscience:
+        title: title
+        url: url
     errors:
       models:
         infoscience:
           attributes:
             url:
-              invalid_format: "Invalid URL format. It should look like https://infoscience-exports.epfl.ch/NNNN"
-              taken: "You already have a paper listing with that url"
-
+              invalid_format: 'Input error: URL must start with https://infoscience-exports.epfl.ch/....'
+              taken: You already have a paper listing with that url
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       infoscience:
-        title_en: "Publications from infosciences database"
-        title_fr: "Publications"
-        title_it: "Pubblicazioni da infosciences"
-        title_de: "TODO"
-        url: "https://infoscience-exports.epfl.ch/123456"
-
-  # ---------------------------------------------------------------------- views
+        title_en: Publications from infosciences database
+        title_fr: Publications
+        title_it: Pubblicazioni da infosciences
+        title_de: TODO
+        url: https://infoscience-exports.epfl.ch/123456
   infosciences:
-    # Override model attribute names as they appear in form labels
     form:
-      <<: *attr
-      url: "infoscience exports url"
+      title: title
+      url: infoscience exports url
       create: submit to create infoscience block
-    index:

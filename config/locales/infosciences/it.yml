@@ -1,0 +1,19 @@
+---
+it:
+  activerecord:
+    attributes:
+      infoscience:
+        title: Titolo
+        url: url
+    errors:
+      models:
+        infoscience:
+          attributes:
+            url:
+              invalid_format: ''
+  helpers:
+    placeholder:
+      infoscience: {}
+  infosciences:
+    form:
+      title: Titolo

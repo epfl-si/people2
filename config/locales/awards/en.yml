@@ -1,8 +1,8 @@
+---
 en:
   activerecord:
-    # Model attribute names
     attributes:
-      award: &attr
+      award:
         category: category
         issuer: granted by
         origin: origin
@@ -10,22 +10,22 @@ en:
         url: url
         year: year
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       award:
-        issuer: "Royal Swedish Academy of Sciences"
-        title_en: "Nobel Prize"
-        title_fr: "Prix Nobel"
-        title_it: "Premio Nobel"
-        title_de: "Nobelpreis"
-        url: "https://www.nobelprize.org/"
-
-  # ---------------------------------------------------------------------- views
+        issuer: Royal Swedish Academy of Sciences
+        title_en: Nobel Prize
+        title_fr: Prix Nobel
+        title_it: Premio Nobel
+        title_de: Nobelpreis
+        url: https://www.nobelprize.org/
   awards:
-    # Override model attribute names as they appear in form labels
     form:
-      <<: *attr
+      category: category
+      issuer: granted by
+      origin: origin
+      title: title
+      url: url
+      year: year
       help:
-        category: "Dropdown menu for award category"
-        origin: "Dropdown menu for selecting the origin of the award"
-    index:
+        category: Dropdown menu for award category
+        origin: Dropdown menu for selecting the origin of the award

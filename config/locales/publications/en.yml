@@ -1,40 +1,39 @@
+---
 en:
-  publication: &record
-    authors: "Autors(s)"
-    journal: "journal"
-    title: "title"
-    url: "URL"
-    year: "year"
+  publication:
+    authors: Autor(s)
+    journal: journal
+    title: title
+    url: URL
+    year: year
   activerecord:
-    # Model attribute names
     attributes:
-      publication: &attr
-        <<: *record
-    # Errors for the model attributes (those that are shown upon form submission)
-    # See common translation file errors.messages for possible keys (e.g. blank, required etc.)
+      publication:
+        authors: Autor(s)
+        journal: journal
+        title: title
+        url: URL
+        year: year
     errors:
       models:
         publication:
           attributes:
             year:
-              not_a_number: "is not a number"
+              not_a_number: is not a number
   helpers:
-    # Placeholders for the form text fields
     placeholder:
       publication:
-        title: "Research Paper Title"
-        url: "https://example.com"
-        authors: "John Doe, Jane Smith"
-        year: "2024"
-        journal: "Journal of Science"
-  # ---------------------------------------------------------------------- views
+        title: Research Paper Title
+        url: https://example.com
+        authors: John Doe, Jane Smith
+        year: '2024'
+        journal: Journal of Science
   publications:
     editable_publication:
-      link: "View the publication"
+      link: View the publication
     form:
-      <<: *attr
-      title: "publication title"
-      url: "publication URL"
-      authors: "authors"
-      year: "publication year"
-      journal: "journal name"
+      authors: authors
+      journal: journal name
+      title: publication title
+      url: publication URL
+      year: publication year

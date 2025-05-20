@@ -1,0 +1,16 @@
+---
+fr:
+  activerecord:
+    attributes:
+      education:
+        title: Titre
+  error:
+    education:
+      one: Merci de corriger les champs en erreur
+      other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
+  helpers:
+    placeholder:
+      education: {}
+  educations:
+    form:
+      title: Titre

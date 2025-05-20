@@ -1,0 +1,26 @@
+---
+it:
+  person:
+    photo: Immagine del profilo
+    title: Titolo
+  people:
+    adopt:
+      confirm: ''
+    admin_data:
+      title: ''
+      sciper: ''
+      sap: ''
+      gid: ''
+      home: ''
+      shell: ''
+    contact:
+      nationality_label: ''
+      nav:
+        atari: ''
+    show: {}
+    teaching:
+      title:
+        courses: ''
+        current_phd: ''
+        past_phd: ''
+        past_phd_students: ''

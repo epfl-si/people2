@@ -1,0 +1,48 @@
+---
+fr:
+  profile:
+    available_languages: Langues à choix
+    expertise: Expertises
+    nationality: Nationalité
+    official_name: Nom officiel
+  activerecord:
+    attributes:
+      profile:
+        available_languages: Langues à choix
+        expertise: Expertises
+        nationality: Nationalité
+        official_name: Nom officiel
+        en_enabled: profile disponible en anglais
+        fr_enabled: profile disponible en français
+        it_enabled: Profil disponible en italien.
+        de_enabled: profile disponible en allemand
+    errors:
+      models:
+        profile:
+          attributes:
+            expertise_en: {}
+            expertise_fr: {}
+            expertise_ir: {}
+            expertise_de: {}
+  helpers:
+    placeholder:
+      profile: {}
+  profiles:
+    edit:
+      title:
+        boxes_main: Bloc principaux
+        boxes_contact: Edition des blocs de contacts
+        details: Mes informations personnelles
+        editing_languages: Ce profil est bilingue
+        edit_language: Définir la langue(s) du profil
+        editing: Editer
+    form:
+      available_languages: Langues à choix
+      official_name: Nom officiel
+      en_enabled: profile disponible en anglais
+      fr_enabled: profile disponible en français
+      it_enabled: Profil disponible en italien.
+      de_enabled: profile disponible en allemand
+      action: {}
+    languages_form:
+      action: {}

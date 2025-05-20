@@ -1,0 +1,16 @@
+---
+de:
+  activerecord:
+    attributes:
+      education:
+        title: Titel
+  error:
+    education:
+      one: ''
+      other: ''
+  helpers:
+    placeholder:
+      education: {}
+  educations:
+    form:
+      title: Titel

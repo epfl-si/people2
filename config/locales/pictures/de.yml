@@ -1,0 +1,19 @@
+---
+de:
+  activerecord:
+    attributes:
+      picture: {}
+    errors:
+      models:
+        picture:
+          attributes:
+            base:
+              undeletable: ''
+  pictures:
+    currently_selected_picture: ''
+    form:
+      browse_image_file: ''
+      no_photofile_selected: ''
+    pictures:
+      title: ''
+      currently_selected: ''
