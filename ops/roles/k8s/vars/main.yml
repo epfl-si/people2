@@ -1,8 +1,9 @@
-app_namespace: svc0033p-people
+app_namespace: "{{ OC_NAMESPACE }}"
 
-webapp_image: quay-its.epfl.ch/svc0033/people
+app_version: "{{ lookup('file', '../../../VERSION') }}"
+
+webapp_image: "quay-its.epfl.ch/svc0033/people:{{ app_version }}-prod"
 redis_image: quay-its.epfl.ch/svc0033/valkey
-mariadb_version: 11.4.3
 
 inventory_environment: "prod"
 
@@ -19,9 +20,9 @@ keybase_dockerconfig_path: "{{ keybase_path }}/ops/config.json"
 
 
 people_app_env:
-  APP_HOSTNAME: "https://people-next.epfl.ch"
-  RAILS_ENV: "production"
-  DEFAULT_URL: "https://people-next.epfl.ch"
+  APP_HOSTNAME: "{{ APP_HOSTNAME }}"
+  RAILS_ENV: "{{ RUNENV }}"
+  DEFAULT_URL: "https://{{ APP_HOSTNAME }}/"
   ENABLE_API_CACHE: "true"
   ENABLE_WEBMOCK: "false"
   USE_LOCAL_ELEMENTS: "false"
@@ -30,9 +31,9 @@ people_app_env:
   FORCE_AUDIENCE: "false"
   SHOW_ERROR_PAGES: "no"
   SILENT_TRANSLATION_ERR: "no"
-  ISA_URL: "https://isa-test.epfl.ch/services"
-  LEGACY_SERVER_URL: "https://personnes.epfl.ch"
-  ENABLE_ADOPTION: "true"
+  ISA_URL: "{{ ISA_URL }}"
+  LEGACY_SERVER_URL: "{{ LEGACY_SERVER_URL }}"
+  ENABLE_ADOPTION: "{{ ENABLE_ADOPTION }}"
   SECRET_KEY_BASE: "thisisstrongpasswworkd"
   ENTRA_TENANT_ID: "f6c2556a-c4fb-4ab1-a2c7-9e220df11c43"
   ENTRA_CLIENT_ID: "9ca0fc49-17e2-449d-850d-552513993ab4"
@@ -40,4 +41,3 @@ people_app_env:
   RAILS_SERVE_STATIC_FILES: "true"
   CAMIPRO_PHOTO_HOST: "camipro-photos.epfl.ch"
   TMPDIR: "/tmp"
-
