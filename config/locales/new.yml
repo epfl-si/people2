@@ -2,22 +2,38 @@ en:
   app:
     domain: people.epfl.ch
     long_name: online people directory
-    short_name: people
+    name: people
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky username
 
 fr:
   app:
     domain: people.epfl.ch
     long_name: online people directory
     short_name: people
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
 
 it:
   app:
     domain: people.epfl.ch
     long_name: online people directory
     short_name: people
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
 
 de:
   app:
     domain: people.epfl.ch
     long_name: online people directory
     short_name: people
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
