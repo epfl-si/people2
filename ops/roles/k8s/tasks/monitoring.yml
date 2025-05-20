@@ -1,0 +1,16 @@
+- name: Webapp - PodMonitor
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: monitoring.coreos.com/v1
+      kind: PodMonitor
+      metadata:
+        name: people-webapp
+        namespace: "{{ app_namespace }}"
+      spec:
+        podMetricsEndpoints:
+          - port: metrics
+            path: /metrics
+            interval: 30s
+        selector:
+          matchLabels:
+            app: people-webapp

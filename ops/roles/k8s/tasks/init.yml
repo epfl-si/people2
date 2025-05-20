@@ -1,0 +1,95 @@
+
+- name: Load Quay secrets
+  include_vars:
+    file: secrets.yml
+    name: quay_secrets
+
+- name: Check if quay-pull-secret already exists
+  kubernetes.core.k8s_info:
+    kind: Secret
+    name: quay-pull-secret
+    namespace: "{{ app_namespace }}"
+  register: quay_secret_result
+  failed_when: false
+  ignore_errors: true
+
+- name: Create quay-pull-secret if it does not exist
+  when: quay_secret_result.resources | length == 0
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      type: kubernetes.io/dockerconfigjson
+      metadata:
+        name: quay-pull-secret
+        namespace: "{{ app_namespace }}"
+      data:
+        .dockerconfigjson: "{{ pull_secret_config | to_json | b64encode }}"
+
+- name: Create puller ServiceAccount linked to quay-pull-secret
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: puller
+        namespace: "{{ app_namespace }}"
+      secrets:
+        - name: quay-pull-secret
+      imagePullSecrets:
+        - name: quay-pull-secret
+
+- name: Create people-webapp service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: people
+        namespace: "{{ app_namespace }}"
+        labels:
+          app: people
+      spec:
+        selector:
+          app: people
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: 3000
+
+- name: Create Redis PVC
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-redis
+        namespace: "{{ app_namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
+- name: Create storage PVC for /srv/app/storage
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-storage
+        namespace: "{{ app_namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: 1Mi
+        storageClassName: ""
+        volumeMode: Filesystem

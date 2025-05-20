@@ -1,0 +1,33 @@
+---
+
+- name: Ensure openshift connection
+  tags:
+    - always
+  ansible.builtin.shell: |
+    cluster_url="{{ OC_CLUSTER }}"
+    if ! oc whoami > /dev/null 2>&1 || ! oc whoami --show-server | grep -q "$cluster_url"; then
+        echo "Logging into OpenShift cluster at $cluster_url..."
+        oc login "$cluster_url" --web;
+    else
+        echo "Already logged into $cluster_url."
+    fi
+  args:
+    executable: /bin/bash
+  delegate_to: localhost
+
+
+
+- import_tasks: init.yml
+  tags: [init]
+
+- import_tasks: webapp.yml
+  tags: [webapp]
+
+- import_tasks: redis.yml
+  tags: [redis]
+
+- import_tasks: monitoring.yml
+  tags: [monitoring]
+
+- import_tasks: route.yml
+  tags: [route]

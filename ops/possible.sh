@@ -21,7 +21,7 @@ ensure_ansible () {
   if ! test -f ansible-deps-cache/.versions 2>/dev/null; then
     curl https://raw.githubusercontent.com/epfl-si/ansible.suitcase/master/install.sh | \
     SUITCASE_DIR=$PWD/ansible-deps-cache \
-    SUITCASE_PIP_EXTRA="dnspython passlib" \
+    SUITCASE_PIP_EXTRA="dnspython passlib kubernetes" \
     SUITCASE_ANSIBLE_VERSION=9.3.0 \
     bash -x
   fi
@@ -47,23 +47,23 @@ while [ "$#" -gt 0 ]; do
         --help) help_and_exit ;;
         -m) mode=ansible
             ansible_args+=("-m")
-            shift 
+            shift
             ;;
         --dev)
             inventory_mode="dev"
             shift
             ;;
-        --prod) 
+        --prod)
             inventory_mode="prod"
-            shift 
+            shift
             ;;
         --qual)
             inventory_mode="qual"
-            shift 
+            shift
             ;;
         --test)
             inventory_mode="test"
-            shift 
+            shift
             ;;
         -g|--galaxy) mode=galaxy
             shift
