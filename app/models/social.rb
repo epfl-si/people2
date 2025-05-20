@@ -88,16 +88,16 @@ class Social < ApplicationRecord
       icon: 'linkedin',
       re: %r{^[a-z][a-z0-9-]+/?$}
     },
-    # {
-    #   tag: 'github',
-    #   # img: 'github.png',
-    #   url_pattern: 'https://github.com/XXX',
-    #   placeholder: 'username',
-    #   label: 'GitHub',
-    #   default_position: 5,
-    #   icon: 'github',
-    #   re: /^[A-Za-z0-9_.-]+$/
-    # },
+    {
+      tag: 'github',
+      # img: 'github.png',
+      url_pattern: 'https://github.com/XXX',
+      placeholder: 'username',
+      label: 'GitHub',
+      default_position: 5,
+      icon: 'github',
+      re: /^[A-Za-z0-9_.-]+$/
+    },
     # {
     #   tag: 'stack_overflow',
     #   # img: 'stack-overflow.svg',
@@ -120,6 +120,17 @@ class Social < ApplicationRecord
       automatic: true,
       default_position: 7,
       icon: 'icon-mastodon',
+      re: /^[A-Za-z0-9_]+$/
+    },
+    {
+      tag: 'bluesky',
+      # img: 'mastodon.png',
+      url_pattern: 'https://bsky.app/profile/XXX.bsky.social',
+      placeholder: 'username',
+      label: 'Bluesky',
+      automatic: false,
+      default_position: 8,
+      icon: 'icon-bluesky',
       re: /^[A-Za-z0-9_]+$/
     }
     # {
