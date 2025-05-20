@@ -176,15 +176,16 @@ codecheck: cop
 
 ## run rubocop linter to check code copliance with style and syntax rules
 cop:
-	bundle exec rubocop --extra-details 2>/dev/null
+	./bin/rubocop
 
 ## run rubocop linter in autocorrect mode
 docop:
-	./bin/bundle exec rubocop --autocorrect
+	# ./bin/bundle exec rubocop --autocorrect
+	./bin/rubocop --autocorrect
 
 ## run rubocop linter in autocorrect-all mode
 dodocop:
-	./bin/bundle exec rubocop --autocorrect-all
+	./bin/rubocop --autocorrect-all
 
 VERSION:
 	git tag -l --sort=creatordate | tail -n 1 | sed 's/\n//' > $@
@@ -398,12 +399,38 @@ nata_reinit_legacy: dcup
 # nata_reseed: test_patch
 # 	cd ops && ./possible.sh --test -t people.db.reseed
 
+
+## ---------------------------------------------------- Prod openshit deployment
+APP_NAME ?= people
+QUAY_REPO=quay-its.epfl.ch/svc0033/$(APP_NAME)
+
+# Chemin vers le Dockerfile
+DOCKERFILE=../../../Dockerfile
+
+TAG=$(QUAY_REPO):$(shell cat VERSION)-prod
+
+## Build docker image for production
+prod_build: envcheck $(ELE_FILES) VERSION gems
+	docker build -t $(TAG) -f Dockerfile.prod .
+
+## Push production docker image to internal quay registry
+prod_push: prod_build
+	docker push $(TAG)
+
+## Redeploy app to prod cluter
+prod_deploy:
+	cd ops && ./possible.sh --prod -t webapp
+
+## Build, tag and deploy app to production
+prod: prod_push prod_deploy
+
 # ------------------------------------------------------------------------------
 .PHONY: clean
 clean:
 	rm -f api_examples.txt
 	rm -rf test/fixtures/webmocks
 	rm -f $(ELE_FILES)
+	docker rmi $(TAG) || true
 
 # ------------------------------------------------------------------------------
 .PHONY: help

@@ -6,7 +6,7 @@
 - name: Flatten app environment config dictionary for use in ConfigMap
   set_fact:
     people_config: "{{ people_app_env }}"
-  
+
 - name: Load secrets from Keybase vault for app and admin
   set_fact:
     raw_secrets: "{{ lookup('file', '/keybase/team/epfl_people.prod/ops/secrets-prod.yml') | from_yaml }}"
@@ -73,7 +73,7 @@
     state: absent
     kind: Job
     namespace: "{{ app_namespace }}"
-    name: people-webapp-migrate"
+    name: people-webapp-migrate
   ignore_errors: true
 
 - name:  Create a Kubernetes Job to run bin/rails db:migrate
@@ -87,6 +87,8 @@
         namespace: "{{ app_namespace }}"
       spec:
         backoffLimit: 0
+        # Remove completed job after 60 seconds => we can re-create it without getting error
+        ttlSecondsAfterFinished: 60
         template:
           metadata:
             labels:
@@ -107,6 +109,13 @@
                   requests:
                     cpu: "100m"
                     memory: "256Mi"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+            volumes:
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
 
 - name: Deploy the people_webapp
   kubernetes.core.k8s:
@@ -136,7 +145,7 @@
                 image: "{{ webapp_image }}"
                 imagePullPolicy: Always
                 ports:
-                  - containerPort: 3000
+                  - containerPort: 8080
                   - containerPort: 9394
                     name: metrics
                 resources:
@@ -151,12 +160,17 @@
                 env:
                   - name: ENABLE_METRICS
                     value: "true"
+                    # config for thruster (https://github.com/basecamp/thruster/)
+                  - name: HTTP_PORT
+                    value: "8080"
+                  - name: TARGET_PORT
+                    value: "3000"
                 volumeMounts:
                   - name: storage-volume
-                    mountPath: /srv/app/storage
+                    mountPath: /rails/storage
                     subPath: people_storage
                   - name: pids-path
-                    mountPath: /srv/app/tmp
+                    mountPath: /rails/tmp
             volumes:
               - name: pids-path
                 emptyDir:

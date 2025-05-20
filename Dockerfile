@@ -6,11 +6,10 @@
 # RUN rm -f bootstrap-variables.scss && yarn dist
 # RUN grep -E -v "^@include" assets/config/bootstrap-variables.scss > bootstrap-variables.scss
 
-
-
 FROM registry.docker.com/library/ruby:3.2.3-bullseye
 
-ARG RAILS_ENV=production
+ARG RAILS_ENV=development
+ARG APP_HOME=/srv/app
 ARG LIB_HOME=/srv/lib
 
 ENV RAILS_ENV="$RAILS_ENV" \
@@ -19,7 +18,7 @@ ENV RAILS_ENV="$RAILS_ENV" \
 	BUNDLE_PATH="/usr/local/bundle" \
 	OIDC_HOSTNAME=""
 
-RUN mkdir -p /srv/app $OFFLINE_CACHEDIR  && \ 
+RUN mkdir -p /srv/app $OFFLINE_CACHEDIR  && \
 	chmod -R 777 /srv/app "$OFFLINE_CACHEDIR"
 # Throw-away build stage to reduce size of final image
 # FROM base as build
@@ -27,7 +26,7 @@ RUN mkdir -p /srv/app $OFFLINE_CACHEDIR  && \
 # Install packages needed to build gems
 
 # --------------------------------------------------------------------------
-# Oracle shit copied from 
+# Oracle shit copied from
 # https://github.com/chumaky/docker-images/blob/master/postgres_oracle.docker
 # Oracle connector is needed for ISA courses and for changing usual name
 # ARG ORACLE_CLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip
@@ -72,7 +71,6 @@ COPY Gemfile Gemfile.lock* ./
 COPY vendor/gems ./vendor/gems
 RUN gem update --system 3.5.11 && bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
-
 # Dev only
 RUN gem install foreman
 
@@ -94,7 +92,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Entrypoint prepares the database.
 ENTRYPOINT ["/bin/bash", "/srv/app/bin/docker-entrypoint"]
 
-run apt-get update && apt-get install --no-install-recommends -y \ 
+run apt-get update && apt-get install --no-install-recommends -y \
 	redis && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000 9394

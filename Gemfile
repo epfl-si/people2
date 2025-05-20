@@ -48,6 +48,9 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 # gem 'mini_magick', '~> 4.11'
@@ -79,10 +82,11 @@ end
 # ----------------------------------------- version bumps due to security issues
 #                       (https://github.com/epfl-si/people2/security/dependabot)
 
+gem "cgi", ">= 0.3.7"
 gem "json", ">= 2.10.2"
 gem "nokogiri", ">= 1.18.3"
 gem "rack", ">= 3.1.12"
-gem "uri", ">= 1.0.3"
+gem "uri", ">= 0.12.4"
 
 # ------------------------------------------------------------------------ Added
 
@@ -143,6 +147,14 @@ gem 'rubyzip', '< 3.0'
 gem 'connection_pool'
 gem 'database_cleaner-active_record'
 
+# https://dev.37signals.com/kamal-prometheus/
+# https://betterstack.com/community/guides/monitoring/ruby-rails-prometheus/
+# https://github.com/yabeda-rb/yabeda-rails
+gem "yabeda"
+gem "yabeda-prometheus-mmap"
+gem "yabeda-puma-plugin"
+gem "yabeda-rails"
+
 group :development do
   # security tools
   gem 'brakeman'
@@ -173,12 +185,4 @@ group :development do
   # gem 'guard', require: false
 
   gem "webmock"
-
-  # https://dev.37signals.com/kamal-prometheus/
-  # https://betterstack.com/community/guides/monitoring/ruby-rails-prometheus/
-  # https://github.com/yabeda-rb/yabeda-rails
-  gem "yabeda"
-  gem "yabeda-prometheus-mmap"
-  gem "yabeda-puma-plugin"
-  gem "yabeda-rails"
 end
