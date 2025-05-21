@@ -4,7 +4,7 @@
   <%= link_to @person.public_email, "mailto:#{@person.public_email}", class: "btn btn-sm btn-primary" %>
   <% end %>
 
-  <% if @person.phone_visible_by?(@audience) %>
+  <% if @person.phone_visible_by?(@audience) && @person.default_phone.present? %>
   <%= phone_link(@person.default_phone.number, class: "btn btn-sm btn-secondary") %>
   <% end %>
 
