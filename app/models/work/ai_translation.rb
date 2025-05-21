@@ -4,5 +4,6 @@
 module Work
   class AiTranslation < Work::Base
     belongs_to :text
+    delegate :content, to: :text
   end
 end
