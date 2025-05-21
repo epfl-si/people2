@@ -122,6 +122,24 @@ class ProfilesController < ApplicationController
     render partial: "profiles/name_change/form"
   end
 
+  def name_change_update
+    success = case params[:type]
+              when "official"
+                @profile.update(official_name: params[:official_name])
+              when "usual"
+                @profile.update(usual_name: params[:usual_name])
+              else
+                false
+              end
+
+    if success
+      flash.now[:notice] = t("profiles.name_change.flash.success")
+    else
+      flash.now[:error] = t("profiles.name_change.flash.error")
+    end
+
+    render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash")
+  end
 
   private
 
