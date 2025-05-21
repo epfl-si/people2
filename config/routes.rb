@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     member do
       patch :set_favorite_picture
       get 'name_change/select', to: 'profiles#name_change_select', as: :name_change_select
+      get 'name_change/form', to: 'profiles#name_change_form', as: :name_change_form
     end
   end
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'

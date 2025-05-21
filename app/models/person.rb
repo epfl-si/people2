@@ -272,6 +272,14 @@ class Person
     accreditations.any?(&:student?)
   end
 
+  def doctoral?
+    accreditations.any?(&:doctoral?)
+  end
+
+  def staff?
+    accreditations.any?(&:staff?)
+  end
+
   # TODO: fix once the actual data is available in api
   def class_delegate?
     accreditations.any?(&:student?) && rand(1..10) == 1
