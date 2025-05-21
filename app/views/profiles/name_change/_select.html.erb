@@ -1,0 +1,9 @@
+<%= modal_dialog(t('profiles.name_change.select.title')) do %>
+  <div class="d-flex flex-column gap-3 my-3">
+    <%= link_to t('profiles.name_change.select.usual'), name_change_form_profile_path(@profile, type: "usual"),
+                data: { turbo_frame: :remote_modal }, class: "btn btn-outline-primary" %>
+    <%= link_to t('profiles.name_change.select.official'), name_change_form_profile_path(@profile, type: "official"),
+                data: { turbo_frame: :remote_modal }, class: "btn btn-outline-primary" %>
+  </div>
+<% end %>
+

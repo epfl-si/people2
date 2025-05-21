@@ -108,6 +108,10 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def name_change_select
+    render partial: "profiles/name_change/select"
+  end
+
   private
 
   def load_and_authorize_profile
