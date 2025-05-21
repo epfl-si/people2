@@ -1,18 +1,19 @@
 <% @accreds.each_with_index do |accred, indx| %>
   <%= ee_collapse(position_with_class_delegate(accred,@person.class_delegate?,@person.gender), {expanded: indx==0}) do -%>
-    <div class="row pt-2 pb-2">
-      <div class="col-md-5">
+    <div class="d-flex pt-2 pb-2">
+
+    <% unless accred.hidden_addr? || (a=@person.address(accred.unit_id)).nil? %>
+      <div class="flex-grow">
         <p itemprop="location" itemscope="" itemtype="http://schema.org/Place">
-          <% unless accred.hidden_addr? || (a=@person.address(accred.unit_id)).nil? %>
             <strong itemprop="name"><%= a.hierarchy %></strong>
             <br>
             <span itemprop="address">
               <%= address(a) %>
             </span>
-          <% end %>
         </p>
       </div>
-      <div class="col-md-7">
+    <% end %>
+      <div>
         <% unless accred.hidden_addr? || (phones=@person.visible_phones(accred.unit_id)).nil? %>
           <p>
             <% phones.each_with_index do |phone, phindx| %>
