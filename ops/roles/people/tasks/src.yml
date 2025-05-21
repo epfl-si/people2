@@ -53,6 +53,15 @@
     - people.src
     - people.run
 
+- name: Complete code with external depenencies
+  ansible.builtin.shell:
+    chdir: "{{ people.srcdir }}"
+    cmd: "make gems"
+  tags:
+    - people.src
+    - people.run
+
+
 - name: Build people app image
   containers.podman.podman_image:
     name: "people:{{ people_image_version }}"

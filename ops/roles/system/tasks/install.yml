@@ -25,6 +25,7 @@
   when: RUNENV != 'prod'
   with_items:
     - bind-utils
+    - make
     - net-tools
     - rsync
     - telnet

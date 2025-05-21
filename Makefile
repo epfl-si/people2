@@ -435,19 +435,19 @@ clean:
 # ------------------------------------------------------------------------------
 .PHONY: help
 help:
-	@cat Makefile | gawk '                           \
-		BEGIN{                                       \
-			print "Available rules:";                \
-		}                                            \
-		/^## ---+ /{                                 \
-			gsub(/^## -+ /,"", $$0);                 \
-			printf("\n\033[1m%s\033[0m\n", $$0);     \
-			next;                                    \
-		}                                            \
-		/^##/{                                       \
-			gsub("^##", "", $$0);                    \
-			i=$$0;                                   \
-			getline;                                 \
-			gsub(/:.*$$/, "", $$0);                  \
-			printf("%-16s  %s\n", $$0, i);           \
+	@cat Makefile | gawk '                      \
+		BEGIN{                                    \
+			print "Available rules:";               \
+		}                                         \
+		/^## ---+ /{                              \
+			gsub(/^## -+ /,"", $$0);                \
+			printf("\n\033[1m%s\033[0m\n", $$0);    \
+			next;                                   \
+		}                                         \
+		/^##/{                                    \
+			gsub("^##", "", $$0);                   \
+			i=$$0;                                  \
+			getline;                                \
+			gsub(/:.*$$/, "", $$0);                 \
+			printf("%-16s  %s\n", $$0, i);          \
 		}'
