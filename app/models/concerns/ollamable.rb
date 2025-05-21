@@ -9,6 +9,8 @@ module Ollamable
     it: "italian",
     de: "german"
   }.freeze
+  AIMODEL = 'llama3.2'
+  CONFIDENCE = 0.2
 
   included do
     def self.ollamizes(*attributes)
@@ -38,7 +40,7 @@ module Ollamable
         options: { server_sent_events: true }
       )
       result = @ollama.generate({
-                                  model: 'llama3.2',
+                                  model: AIMODEL,
                                   prompt: prompt,
                                   stream: false
                                 })
@@ -54,29 +56,40 @@ module Ollamable
 
   # TODO: ask to give a confidence level and return nil if below a give threshold
   def ollama_detect_language(text)
+    t = Work::Text.for!(text)
+    return t.lang.to_sym unless t.lang.nil?
+
+    # No cached language detection available yet.
+
     q = "
       can you tell if the following text is in english
       or french (no need to provide explaination, just the language) ?
     "
     r = ollama_query("#{q}: #{text}")
-    case r
-    when /fr/i
-      :fr
-    when /^en|eng/i
-      :en
-    when /it/i
-      :it
-    when /ge/i
-      :de
-    end
+    l = case r
+        when /fr/i
+          :fr
+        when /^en|eng/i
+          :en
+        when /it/i
+          :it
+        when /ge/i
+          :de
+        end
+    # Save this request for future usage
+    t.ai_translations.create(
+      ai_model: "ollama/#{AIMODEL}",
+      lang: l,
+      confidence: CONFIDENCE
+    )
+    l
   end
 
   def ollama_translate(text, locale)
+    t = Work::Text.for!(text)
+    return t.lang.to_sym unless t.lang.nil?
+
     lang = LANGS[locale.to_sym]
-    # q = "
-    #   Please translate this in #{lang} (no need to comment,
-    #   just the translation please)
-    # "
     q = "your best translation of the following text to #{lang} without introduction or comment"
     ollama_query("#{q}:\n#{text}")
   end
