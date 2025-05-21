@@ -143,6 +143,12 @@ class ProfilesController < ApplicationController
 
   private
 
+  def only_one_name?(person)
+    first_names = person.name.official_first.to_s.split
+    last_names = person.name.official_last.to_s.split
+    first_names.size <= 1 && last_names.size <= 1
+  end
+
   def load_and_authorize_profile
     @profile ||= Profile.find(params[:id])
     authorize! @profile, to: :update?
