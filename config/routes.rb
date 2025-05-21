@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     resources :accreds, shallow: true, only: %i[index show update]
     member do
       patch :set_favorite_picture
+      get 'name_change/select', to: 'profiles#name_change_select', as: :name_change_select
     end
   end
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'
