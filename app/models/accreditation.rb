@@ -171,6 +171,14 @@ class Accreditation
     3 < @status_id && @status_id < 7
   end
 
+  def doctoral?
+    unit.hierarchy.split(" ")[2] == "EDOC"
+  end
+
+  def staff?
+    @status_id == 1
+  end
+
   def visible?
     visible_by?(AudienceLimitable::WORLD)
   end

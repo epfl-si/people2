@@ -1,0 +1,107 @@
+<% type = params[:type] %>
+<% is_usual = type == 'usual' %>
+<% only_one_name = @only_one_name %>
+
+<% title =
+  if is_usual && only_one_name
+    t('.title.usual_fallback')
+  elsif is_usual
+    t('.title.usual')
+  else
+    t('.title.official')
+  end
+%>
+
+<%= modal_dialog(title) do %>
+  <% if is_usual && only_one_name %>
+    <div class="mb-3">
+      <p class="text-muted">
+        <%= t('.fallback.title') %>
+      </p>
+      <p>
+        <%= t('.fallback.content_html') %>
+      </p>
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <%= button_tag t('.action.cancel'), type: "button", class: "btn btn-secondary", data: { action: "click->remote-modal#close" } %>
+      </div>
+    </div>
+
+  <% elsif is_usual %>
+    <div data-controller="name-builder"
+         data-name-builder-first-source-value="<%= @person.name.official_first %>"
+         data-name-builder-last-source-value="<%= @person.name.official_last %>"
+         data-name-builder-fallback-message="<%= t('.title.usual_fallback') %>">
+
+      <div class="mb-3">
+        <p class="text-muted"><%= t('.instruction.usual') %></p>
+      </div>
+
+      <%= form_with url: name_change_update_profile_path(@profile), method: :patch, data: { turbo_frame: :remote_modal } do |f| %>
+        <%= hidden_field_tag :type, type %>
+
+        <div class="row">
+          <div class="col">
+            <strong><%= t('.available_first_names') %></strong>
+            <div data-name-builder-target="firstSource" class="d-flex flex-wrap gap-2 mt-2"></div>
+          </div>
+          <div class="col">
+            <strong><%= t('.available_last_names') %></strong>
+            <div data-name-builder-target="lastSource" class="d-flex flex-wrap gap-2 mt-2"></div>
+          </div>
+        </div>
+
+        <hr class="my-3">
+
+        <div class="row">
+          <div class="col">
+            <label class="form-label"><%= t('.placeholder.usual_first') %></label>
+            <div class="form-control d-flex flex-wrap gap-2 align-items-center" data-name-builder-target="firstInputField" style="min-height: 2.5rem;"></div>
+            <%= hidden_field_tag :usual_first, "", data: { name_builder_target: "firstInput" } %>
+          </div>
+          <div class="col">
+            <label class="form-label"><%= t('.placeholder.usual_last') %></label>
+            <div class="form-control d-flex flex-wrap gap-2 align-items-center" data-name-builder-target="lastInputField" style="min-height: 2.5rem;"></div>
+            <%= hidden_field_tag :usual_last, "", data: { name_builder_target: "lastInput" } %>
+          </div>
+        </div>
+
+        <div class="form-group mt-4">
+          <%= label_tag :explanation, t('.label.explanation'), class: "form-label", autofocus: true %>
+          <%= text_area_tag :explanation, "", rows: 4, class: "form-control", data: { name_builder_target: "explanationInput", action: "input->name-builder#explanationChanged" } %>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <%= button_tag t('.action.cancel'), type: "button", class: "btn btn-secondary", data: { action: "click->remote-modal#close" } %>
+          <%= f.submit t('.action.submit'), class: "btn btn-primary", data: { name_builder_target: "submitButton" }, disabled: true %>
+        </div>
+      <% end %>
+
+      <hr class="my-4">
+      <p class="text-muted small">
+        <%= t('.help.custom_request_html') %>
+      </p>
+    </div>
+
+  <% else %>
+    <div class="mb-3">
+      <p class="text-muted">
+        <%= t('.instruction.official') %>
+      </p>
+      <hr>
+      <% if @accred.nil? %>
+        <p class="alert alert-warning", autofocus: true ><%= t('.status.unknown') %></p>
+      <% elsif @accred.student? && !@accred.doctoral? %>
+        <p class="alert alert-info"><strong><%= t('.status.student.title') %> :</strong> <%= t('.status.student.message') %></p>
+      <% elsif @accred.doctoral? %>
+        <p class="alert alert-info"><strong><%= t('.status.phd.title') %> :</strong> <%= t('.status.phd.message_html') %></p>
+      <% else %>
+        <p class="alert alert-info"><strong><%= t('.status.staff.title') %> :</strong> <%= t('.status.staff.message') %></p>
+      <% end %>
+      <hr>
+      <p class="text-muted small">
+        <%= t('.help.email_change_html') %>
+      </p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
