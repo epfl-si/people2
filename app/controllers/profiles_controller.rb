@@ -112,6 +112,15 @@ class ProfilesController < ApplicationController
     render partial: "profiles/name_change/select"
   end
 
+  def name_change_form
+    @type = params[:type]
+    @accred = Accreditation.for_profile(@profile).first
+    @only_one_name = only_one_name?(@profile.person)
+
+    render partial: "profiles/name_change/form"
+  end
+
+
   private
 
   def load_and_authorize_profile
