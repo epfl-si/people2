@@ -43,11 +43,9 @@ Rails.application.routes.draw do
     resources :publications, shallow: true
     resources :pictures, shallow: true
     resources :accreds, shallow: true, only: %i[index show update]
+    resources :usual_name_changes, only: %i[new create]
     member do
       patch :set_favorite_picture
-      get 'name_change/select', to: 'profiles#name_change_select', as: :name_change_select
-      get 'name_change/form', to: 'profiles#name_change_form', as: :name_change_form
-      patch 'name_change/update', to: 'profiles#name_change_update', as: :name_change_update
     end
   end
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'

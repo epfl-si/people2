@@ -1,2 +1,0 @@
-<% box = @profile.boxes.first %>
-<%= render box.to_partial_path, box: box %>
