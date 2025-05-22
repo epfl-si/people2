@@ -3,6 +3,45 @@ en:
     domain: people.epfl.ch
     long_name: online people directory
     name: people
+  profiles:
+    name_change:
+      email_change_html: >
+        Once the change is validated, you will also have the possibility to change your e-mail address.
+        <br> In case of problems, please contact : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+      flash:
+        success: "Name modified succesfully"
+        error: "Name could not be saved"
+      official:
+        instructions_html: >
+          You can ask to change your official name for example when changing the
+          spelling of a (first or last) name, affirming a gender identity,
+          following a marriage, divorce, adoption, or any other reason deemed
+          legitimate by the Civil Registry Office.
+          This request is <strong>subject to validation</strong>.
+        status:
+          unknown: "Impossible to determine your status"
+          student:
+            title: "Student"
+            message_html: >
+              contact the Student Services Desk with a copy of your identity
+              documents to request this change
+          phd:
+            title: "Graduate Student"
+            message_html: >
+              please first contact the HR representative of your lab. Once approved,
+              send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+              to ensure the change is reflected in the academic database.
+          staff:
+            title: "Personnel EPFL"
+            message_html: >
+              If you have a work contract, the request must be approved by the
+              HR representative of your faculty or vice presidency.
+      select:
+        title: "Change your name"
+        usual: "Change your usual name"
+        official: "Changer your official name"
+      usual:
+        fallback_title: "In your case the usual name can ony have its current value"
   socials:
     form:
       identifier_label:
@@ -12,12 +51,75 @@ en:
   visibility:
     show: "Show"
     hide: "Hide"
+  usual_name_changes:
+    new:
+      fallback:
+        title: >
+          Your first and last names are composed of a single word. Therefore
+          it is not possible to create any other combination for your usual name.
+        content_html: >
+          For any issue, please contact the equal opportunity office:
+          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+      instructions: >
+        Please choose below from your existing names or surnames the one
+        you want to display
+    form:
+      fallback_title: "Usual name can only have single value"
+      available_first: "Available first names:"
+      available_last: "Available last names:"
+      submit: "Send the request"
+      placeholder:
+        usual_first: "Prénom d’usage souhaitée"
+        usual_last: "Nom d’usage souhaitée"
+
+        instructions: >
+        available_first_names:
+        available_last_names:
 
 fr:
   app:
     domain: people.epfl.ch
     long_name: online people directory
     short_name: people
+  profiles:
+    name_change:
+      email_change_html: >
+        Une fois le changement validé, vous pourrez également modifier votre adresse e-mail.
+        <br> En cas de problème, contactez : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+      flash:
+        success: "Nom modifié avec succès."
+        error: "Échec de la mise à jour du nom."
+      official:
+        instructions_html: >
+          Vous pouvez demander une modification de votre nom officiel dans les cas suivants :
+          changement d’orthographe d’un prénom ou nom, affirmation d’identité de genre, mariage, divorce, adoption,
+          ou toute autre situation reconnue par l’Office d’état civil.
+          Cette demande est soumise à validation.
+        status:
+          unknown: "Impossible de déterminer votre statut."
+          student:
+            title: "Étudiant·e"
+            message_html: >
+              Vous devez vous adresser au Guichet étudiant avec une copie de vos papiers d’identité pour demander ce changement.
+          phd:
+            title: "Doctorant·e"
+            message_html: >
+              Veuillez d’abord contacter le représentant RH de votre laboratoire. Une fois la demande validée,
+              envoyez un e-mail à <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a> pour que le changement soit pris en compte dans la base académique.
+          staff:
+            title: "Personnel EPFL"
+            message_html: >
+              La demande doit être validée par la/le responsable RH de votre faculté ou vice-présidence.
+              Les changements sont ensuite effectués dans les systèmes.
+      select:
+        title: "Changer votre nom"
+        usual: "Changer le nom d’usage"
+        official: "Changer le nom officiel"
+      usual:
+        fallback_title: "Nom d’usage non modifiable"
+        instructions: "Vous pouvez composer votre nom d’usage à partir des prénoms et noms officiels enregistrés."
+        available_first_names: "Prénoms disponibles :"
+        available_last_names: "Noms disponibles :"
   socials:
     form:
       identifier_label:
@@ -27,6 +129,25 @@ fr:
   visibility:
     show: "Montré"
     hide: "Caché"
+  usual_name_changes:
+    new:
+      fallback:
+        title: >
+          Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré. Il est donc impossible de composer un nom d’usage personnalisé.
+        content_html: >
+          Pour toute demande particulière, veuillez contacter le Bureau de l’égalité :
+          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+      instructions: >
+        Vous pouvez composer votre nom d’usage à partir des prénoms et
+        noms officiels enregistrés.
+    form:
+      fallback_title: "Nom d’usage non modifiable"
+      available_first: "Prénoms disponibles :"
+      available_last: "Noms disponibles :"
+      submit: "Send the request"
+      placeholder:
+        usual_first: "Prénom d’usage souhaitée"
+        usual_last: "Nom d’usage souhaitée"
 it:
   app:
     domain: people.epfl.ch

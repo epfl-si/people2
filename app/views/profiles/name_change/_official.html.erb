@@ -1,0 +1,19 @@
+<div class="mb-3">
+  <p class="text-muted">
+    <%= t('.instructions_html') %>
+  </p>
+  <hr>
+    <p class="alert alert-info">
+  <% if @profile.doctoral? %>
+    <strong><%= t('.status.phd.title') %> :</strong> <%= t('.status.phd.message_html') %>
+  <% elsif @profile.student? %>
+    <strong><%= t('.status.student.title') %> :</strong> <%= t('.status.student.message_html') %>
+  <% else %>
+    <strong><%= t('.status.staff.title') %> :</strong> <%= t('.status.staff.message_html') %>
+  <% end %>
+    </p>
+  <hr>
+  <p class="text-muted small">
+    <%= t('profiles.name_change.email_change_html') %>
+  </p>
+</div>
