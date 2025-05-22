@@ -18,7 +18,8 @@ class ProfilesController < ApplicationController
     if params[:details]
       render 'edit_details'
     elsif params[:name]
-      render 'edit_name'
+      @type = params[:type]
+      render 'profiles/name_change/edit'
     elsif params[:languages]
       render 'edit_languages'
     else
@@ -47,7 +48,7 @@ class ProfilesController < ApplicationController
     case part
     when "languages"
       update_languages
-    when "name"
+    when "inclusivity"
       raise NotImplementedError
     else
       update_base
@@ -108,44 +109,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def name_change_select
-    render partial: "profiles/name_change/select"
-  end
-
-  def name_change_form
-    @type = params[:type]
-    @accred = Accreditation.for_profile(@profile).first
-    @only_one_name = only_one_name?(@profile.person)
-
-    render partial: "profiles/name_change/form"
-  end
-
-  def name_change_update
-    success = case params[:type]
-              when "official"
-                @profile.update(official_name: params[:official_name])
-              when "usual"
-                @profile.update(usual_name: params[:usual_name])
-              else
-                false
-              end
-
-    if success
-      flash.now[:notice] = t("profiles.name_change.flash.success")
-    else
-      flash.now[:error] = t("profiles.name_change.flash.error")
-    end
-
-    render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash")
-  end
-
   private
-
-  def only_one_name?(person)
-    first_names = person.name.official_first.to_s.split
-    last_names = person.name.official_last.to_s.split
-    first_names.size <= 1 && last_names.size <= 1
-  end
 
   def load_and_authorize_profile
     @profile ||= Profile.find(params[:id])
