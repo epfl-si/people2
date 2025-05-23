@@ -311,14 +311,14 @@ reseed:
 	make nukedb
 	make nukestorage
 	rm -f
-	rm -f db/people_schema.rb
-	rm -f db/schema.rb
 	sleep 2
 	make seed
 
 fastreseed:
-	make nukedb
+	echo "DROP DATABASE IF EXISTS people" | $(SQL)
+	echo "CREATE DATABASE people;" | $(SQL)
 	sleep 2
+	docker compose exec webapp bin/rails db:migrate
 	docker compose exec webapp bin/rails db:seed
 
 # ## load changed schema and seed
@@ -333,6 +333,8 @@ nukedb:
 	echo "CREATE DATABASE people;" | $(SQL)
 	echo "DROP DATABASE IF EXISTS people_work" | $(SQL)
 	echo "CREATE DATABASE people_work;" | $(SQL)
+	# rm -f db/people_schema.rb
+	# rm -f db/work_schema.rb
 
 ## delete keycloak database and recreate it
 rekc:
@@ -346,6 +348,26 @@ rekc:
 kconfig: up
 	@/bin/bash -c 'while curl -I https://keycloak.dev.jkldsa.com/admin/master/console 2>/dev/null | grep -q "HTTP/2 502" ; do echo "waiting for kc to be alive (interrupt if it continues for more than ~40 secs)"; sleep 5; done'
 	cd ops && ./possible.sh --dev -t keycloak.config
+
+## ------------------------------------------------------- backup/restore dev db
+
+## backup dev databases for a faster reseed
+db_backup: db_backup_people db_backup_work
+
+## restore dev databases for a faster reseed
+db_restore: db_restore_people db_restore_work
+
+db_backup_people:
+	$(SQLDUMP) people | gzip > tmp/dbdumps/people.sql.gz
+
+db_backup_work:
+	$(SQLDUMP) people_work | gzip > tmp/dbdumps/work.sql.gz
+
+db_restore_people:
+	zcat tmp/dbdumps/people.sql.gz | $(SQL) people
+
+db_restore_work:
+	zcat tmp/dbdumps/people.sql.gz | $(SQL) people_work
 
 ## --------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder
