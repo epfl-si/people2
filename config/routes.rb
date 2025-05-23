@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     resources :publications, shallow: true
     resources :pictures, shallow: true
     resources :accreds, shallow: true, only: %i[index show update]
+    resources :usual_name_changes, only: %i[new create]
     member do
       patch :set_favorite_picture
     end

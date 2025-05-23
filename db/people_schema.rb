@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_13_073721) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_21_212825) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -418,6 +418,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_073721) do
     t.index ["sciper"], name: "index_users_on_sciper", unique: true
   end
 
+  create_table "usual_name_changes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "official_first", null: false
+    t.string "official_last", null: false
+    t.string "old_first"
+    t.string "old_last"
+    t.string "new_first"
+    t.string "new_last"
+    t.bigint "profile_id", null: false
+    t.boolean "done", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_usual_name_changes_on_profile_id"
+  end
+
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "item_type", limit: 191, null: false
     t.bigint "item_id", null: false
@@ -447,4 +461,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_073721) do
   add_foreign_key "sessions", "users"
   add_foreign_key "teacherships", "courses"
   add_foreign_key "teacherships", "profiles"
+  add_foreign_key "usual_name_changes", "profiles"
 end

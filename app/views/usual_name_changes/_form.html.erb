@@ -1,0 +1,38 @@
+<%= render "shared/form_errors", item: @unc if @unc.errors.any? %>
+<%= form_with(
+  model: @unc,
+  url: profile_usual_name_changes_path(@unc.profile),
+  local: false,
+  class: "instaform",
+  data: {
+      controller: "name-builder",
+      "name-builder-first-source-value": @unc.official_first,
+      "name-builder-last-source-value": @unc.official_last,
+      "name-builder-fallback-message": t('.fallback_title')
+  }
+) do |form| %>
+  <div class="row">
+    <div class="col">
+      <strong><%= t('.available_first') %></strong>
+      <div data-name-builder-target="firstSource" class="d-flex flex-wrap gap-2 mt-2"></div>
+    </div>
+    <div class="col">
+      <strong><%= t('.available_last') %></strong>
+      <div data-name-builder-target="lastSource" class="d-flex flex-wrap gap-2 mt-2"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <label class="form-label"><%= t('.placeholder.usual_first') %></label>
+      <div class="form-control d-flex flex-wrap gap-2 align-items-center" data-name-builder-target="firstInputField" style="min-height: 2.5rem;"></div>
+      <%= form.hidden_field :new_first, value: "", data: { name_builder_target: "firstInput" } %>
+    </div>
+    <div class="col">
+      <label class="form-label"><%= t('.placeholder.usual_last') %></label>
+      <div class="form-control d-flex flex-wrap gap-2 align-items-center" data-name-builder-target="lastInputField" style="min-height: 2.5rem;"></div>
+      <%= form.hidden_field :new_last, value: "", data: { name_builder_target: "lastInput" } %>
+    </div>
+  </div>
+  <%= form_actions(form, @unc, submit_label: t(".submit")) %>
+<% end %>
