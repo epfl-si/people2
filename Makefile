@@ -310,6 +310,7 @@ nukestorage:
 reseed:
 	make nukedb
 	make nukestorage
+	rm -f
 	rm -f db/people_schema.rb
 	rm -f db/schema.rb
 	sleep 2
@@ -328,8 +329,10 @@ fastreseed:
 
 ## delete the people database
 nukedb:
-	echo "DROP DATABASE people" | $(SQL)
+	echo "DROP DATABASE IF EXISTS people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
+	echo "DROP DATABASE IF EXISTS people_work" | $(SQL)
+	echo "CREATE DATABASE people_work;" | $(SQL)
 
 ## delete keycloak database and recreate it
 rekc:
