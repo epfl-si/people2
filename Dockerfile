@@ -5,8 +5,9 @@
 # RUN yarn
 # RUN rm -f bootstrap-variables.scss && yarn dist
 # RUN grep -E -v "^@include" assets/config/bootstrap-variables.scss > bootstrap-variables.scss
+ARG RUBY_VERSION=3.3.8
 
-FROM registry.docker.com/library/ruby:3.2.3-bullseye
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim
 
 ARG RAILS_ENV=development
 ARG APP_HOME=/srv/app
@@ -57,12 +58,13 @@ RUN mkdir -p /srv/app $OFFLINE_CACHEDIR  && \
 RUN apt-get update && apt-get install --no-install-recommends -y \
 	build-essential \
 	git \
-	mariadb-client \
 	curl \
 	libvips \
 	pkg-config \
 	ldap-utils \
-	&& rm -rf /var/lib/apt/lists /var/cache/apt/archives
+	libmariadb-dev-compat libmariadb-dev \
+  libz-dev libssl-dev libffi-dev libyaml-dev \
+  && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
 WORKDIR /rails
