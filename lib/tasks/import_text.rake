@@ -10,15 +10,17 @@ namespace :legacy do
   task fetch_all_texts: :environment do
     roba = [
       { model: Legacy::Award, props: [:title] },
-      { model: Legacy::Box, props: %i[content label] },
+      { model: Legacy::Box, props: %i[ok_content label] },
       { model: Legacy::Education, props: [:title] },
-      { model: Legacy::Achievement, props: [:description] },
       # { model: Legacy::Achievement, props: [:description] },
       { model: Legacy::Experience, props: [:title] }
     ].freeze
     done = Work::Text.all.pluck(:signature).index_with { |_k| true }
+    st = Work::Sciper.migranda.count
+    sd = 0
     Work::Sciper.migranda.pluck(:sciper).each do |sciper|
-      puts sciper
+      sd += 1
+      printf "%06<sd>d / %06<st>d : %<sciper>s\n", sd: sd, st: st, sciper: sciper
       roba.each do |k|
         k[:model].where(sciper: sciper).find_each do |r|
           k[:props].each do |p|

@@ -18,5 +18,15 @@ module Legacy
     def visible?
       box_show == '1'
     end
+
+    def free_text?
+      sys.blank?
+    end
+
+    def ok_content
+      # for infoscience boxes, the content is just a cache of the infoscience export
+      # therefore we are interested only in content from free text boxes
+      free_text? ? content : nil
+    end
   end
 end

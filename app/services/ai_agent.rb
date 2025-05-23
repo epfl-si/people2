@@ -29,7 +29,7 @@ class AiAgent
       messages: [
         {
           role: :user,
-          content: "#{q}\n#{message}"
+          content: "#{q}\n#{message.truncate(400)}"
         }
       ],
       model: "meta-llama/Llama-3.1-8B-Instruct-bfloat16"
