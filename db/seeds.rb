@@ -2,16 +2,10 @@
 
 # Remember to make reseed in order to refresh
 
-SEEDS_DIR = ENV.fetch('SEEDS_PATH', 'db/seeds/data')
-DEV_SEEDS_DIR = ENV.fetch('DEV_SEEDS_PATH', 'db/seeds_dev/data')
-LANGS = %w[en fr].freeze
+ENV['FIXTURES_DIR'] = "../../db/seeds/fixtures"
+Rake.application['db:fixtures:load'].invoke
 
-if Rails.env.development?
-  Dir[Rails.root.join('db/seeds_dev/*.rb').to_s].sort.each do |seed|
-    load seed
-  end
-end
-
-Dir[Rails.root.join('db/seeds/*.rb').to_s].sort.each do |seed|
+dir = Rails.env.development? ? "seeds_dev" : "seeds"
+Dir[Rails.root.join("db/#{dir}/*.rb").to_s].sort.each do |seed|
   load seed
 end
