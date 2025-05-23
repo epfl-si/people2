@@ -12,16 +12,22 @@
 		<%# end %>
 	</dd>
 
-  <dt><%= t "profile.official_name" %></dt>
-  <dd><span><%= profile.person.name.official_display %></span></dd>
+	<% official = profile.person.name.official_display %>
+	<% usual = profile.person.name.display %>
 
-  <% if profile.person.name.customizable? %>
-  <dt><%= t "profile.usual_name" %></dt>
-  <dd>
-    <span><%= profile.person.name.display %></span>
-    <%= link_to icon('edit-3'), edit_profile_path(profile, name: true), data: {turbo_stream: true} %>
-  </dd>
-  <% end %>
+	<dt><%= t "profile.official_name" %></dt>
+	<dd>
+	  <span><%= official %></span>
+		<%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: {turbo_stream: true} %>
+	</dd>
+
+	<% if profile.person.name.customizable? && usual != official %>
+	  <dt><%= t "profile.usual_name" %></dt>
+		<dd>
+			<span><%= usual %></span>
+			<%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "usual"), data: {turbo_stream: true} %>
+	  </dd>
+	<% end %>
 
   <dt><%= t "profile.nationality" %></dt>
   <% if (profile.t_nationality).present? %>

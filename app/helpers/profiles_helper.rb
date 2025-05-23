@@ -236,18 +236,17 @@ module ProfilesHelper
     ]
   end
 
-  def form_actions(form, item, without_cancel: false, label: nil, &block)
+  def form_actions(form, item, without_cancel: false, label: nil, submit_label: nil, &block)
     item.class.name.underscore
     c = []
     c << capture(&block) if block_given?
+    submit_label ||= item.new_record? ? t("generic.form.create", label: label) : t("generic.form.update", label: label)
+
     unless without_cancel
-      c << tag.button(t("action.dismiss"), class: "btn btn-cancel", "data-action": "click->dismissable#dismiss")
+      c << tag.button(t("action.dismiss"), class: "btn btn-cancel",
+                                           "data-action": "click->dismissable#dismiss")
     end
-    c << if item.new_record?
-           form.submit(t("generic.form.create", label: label), class: "btn-confirm")
-         else
-           form.submit(t("generic.form.update", label: label), class: "btn-confirm")
-         end
+    c << form.submit(submit_label, class: "btn-confirm")
     tag.div(class: "form-actions") do
       safe_join(c)
     end
@@ -331,7 +330,7 @@ module ProfilesHelper
     link_to content, uri, data: { turbo_frame: :remote_modal }
   end
 
-  def modal_dialog(title, &block)
+  def modal_dialog(title, _id = :remote_modal, &block)
     content = capture(&block)
     button = tag.button(type: "button", class: "close", data: { action: "click->remote-modal#close" }) do
       tag.span("&times;".html_safe, "aria-hidden": true)

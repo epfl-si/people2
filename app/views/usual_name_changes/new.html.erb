@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "usual_name_change" do %>
+<% if @unc.present? %>
+  <p class="text-muted">
+    <%= t('.instructions') %>
+  </p>
+  <%= turbo_frame_tag "usual_name_change_form" do %>
+    <%= render "form" %>
+  <% end %>
+<% else %>
+  <p class="text-muted">
+    <%= t('.fallback.title') %>
+  </p>
+  <p>
+    <%= t('.fallback.content_html') %>
+  </p>
+<% end %>
+<% end %>

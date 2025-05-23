@@ -18,7 +18,8 @@ class ProfilesController < ApplicationController
     if params[:details]
       render 'edit_details'
     elsif params[:name]
-      render 'edit_name'
+      @type = params[:type]
+      render 'profiles/name_change/edit'
     elsif params[:languages]
       render 'edit_languages'
     else
@@ -47,7 +48,7 @@ class ProfilesController < ApplicationController
     case part
     when "languages"
       update_languages
-    when "name"
+    when "inclusivity"
       raise NotImplementedError
     else
       update_base
