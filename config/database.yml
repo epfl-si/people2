@@ -6,7 +6,7 @@ development:
     username: people
     password: mariadb
     database: cv
-    migrations_paths: db/migrate_cv
+    replica: true
   people:
     adapter: mysql2
     host: mariadb
@@ -15,10 +15,12 @@ development:
     database: people
     migrations_paths: db/migrate
   work:
-    adapter: sqlite3
-    database: storage/work.sqlite3
+    adapter: mysql2
+    host: mariadb
+    username: people
+    password: mariadb
+    database: people_work
     migrations_paths: db/migrate_work
-    schema_dump: false
 test:
   people:
     adapter: mysql2
@@ -35,13 +37,6 @@ test:
 
 # 12 factor in production
 production:
-  people:
-    adapter: mysql2
-    database: <%= ENV.fetch('DATABASE_NAME', 'please_do_not_die') %>
-    host:     <%= ENV.fetch('DATABASE_HOST', 'please_do_not_die') %>
-    username: <%= ENV.fetch('DATABASE_USER', 'please_do_not_die') %>
-    password: <%= ENV.fetch('DATABASE_PASSWORD', 'please_do_not_die') %>
-    migrations_paths: db/migrate
   cv:
     adapter: mysql2
     host:     <%= ENV.fetch('CV_DATABASE_HOST', 'please_do_not_die') %>
@@ -50,12 +45,16 @@ production:
     migrations_paths: db/migrate_cv
     database: cv
     replica: true
+  people:
+    adapter: mysql2
+    database: <%= ENV.fetch('DATABASE_NAME', 'please_do_not_die') %>
+    host:     <%= ENV.fetch('DATABASE_HOST', 'please_do_not_die') %>
+    username: <%= ENV.fetch('DATABASE_USER', 'please_do_not_die') %>
+    password: <%= ENV.fetch('DATABASE_PASSWORD', 'please_do_not_die') %>
+    migrations_paths: db/migrate
   work:
     adapter: sqlite3
     database: storage/work.sqlite3
     migrations_paths: db/migrate_work
     schema_dump: false
 # ---------------------------------------------------------- External/Legacy DBs
-
-
-
