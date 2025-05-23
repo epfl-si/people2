@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.2.3"
+ruby "3.3.8"
 
 # ---------------------------------------------------- Standard (from rails new)
 
@@ -13,7 +13,7 @@ gem "rails", "~> 8.0.1"
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1"
+# gem "sqlite3", ">= 2.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -98,9 +98,12 @@ gem "action_policy"
 gem 'async'
 gem 'cld'
 
+gem 'csv'
+
 # Database adapters
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
 # gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
+
 gem 'mysql2'
 
 gem 'net-ldap'
