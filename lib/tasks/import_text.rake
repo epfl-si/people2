@@ -13,6 +13,7 @@ namespace :legacy do
       { model: Legacy::Box, props: %i[content label] },
       { model: Legacy::Education, props: [:title] },
       { model: Legacy::Achievement, props: [:description] },
+      # { model: Legacy::Achievement, props: [:description] },
       { model: Legacy::Experience, props: [:title] }
     ].freeze
     done = Work::Text.all.pluck(:signature).index_with { |_k| true }

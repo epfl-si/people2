@@ -38,7 +38,7 @@ class LegacyProfileImportJob < ApplicationJob
   end
 
   def perform(scipers)
-    achie_cats = SelectableProperty.achievement_category.index_by(&:label)
+    SelectableProperty.achievement_category.index_by(&:label)
     award_cats = SelectableProperty.award_category.index_by(&:label)
     award_orig = SelectableProperty.award_origin.index_by(&:label)
 
@@ -268,26 +268,26 @@ class LegacyProfileImportJob < ApplicationJob
         end
       end
 
-      if cv.achievements.count.positive?
-        b = IndexBox.from_model(mboxes['achievements'])
-        b.profile = profile
-        b.save
-        cv.achievements.order(:ordre).each do |le|
-          lang = le.description_lang? || fallback_lang if detect_lang_with_ai
-          e = profile.achievements.new(
-            year: le.year,
-            visibility: AudienceLimitable::VISIBLE
-          )
-          e.send("description_#{lang}=", le.description)
-          e.url = le.url if le.url.present?
-          cat = le.category.present? ? achie_cats[le.category] : achie_cats["other"]
-          e.category = cat
-          unless e.save
-            errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-            Rails.logger.debug "Skipping invalid achievement #{le.id} (sciper: #{profile.sciper}): #{errs}"
-          end
-        end
-      end
+      # if cv.achievements.count.positive?
+      #   b = IndexBox.from_model(mboxes['achievements'])
+      #   b.profile = profile
+      #   b.save
+      #   cv.achievements.order(:ordre).each do |le|
+      #     lang = le.description_lang? || fallback_lang if detect_lang_with_ai
+      #     e = profile.achievements.new(
+      #       year: le.year,
+      #       visibility: AudienceLimitable::VISIBLE
+      #     )
+      #     e.send("description_#{lang}=", le.description)
+      #     e.url = le.url if le.url.present?
+      #     cat = le.category.present? ? achie_cats[le.category] : achie_cats["other"]
+      #     e.category = cat
+      #     unless e.save
+      #       errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+      #       Rails.logger.debug "Skipping invalid achievement #{le.id} (sciper: #{profile.sciper}): #{errs}"
+      #     end
+      #   end
+      # end
 
       next unless cv.awards.count.positive?
 
