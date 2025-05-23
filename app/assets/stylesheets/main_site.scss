@@ -24,6 +24,10 @@ h2.section_title {
   margin-top: 1rem;
 }
 
+#ext_data_links {
+  font-size: 75%;
+  text-align: right;
+}
 #admin-data dl {
   font-size: 75%;
 }
@@ -63,6 +67,6 @@ button.close {
   color: #fff;
   font: fixed;
   margin-bottom: 4px;
-  // height: 32px;  
+  // height: 32px;
   z-index: 100;
 }
