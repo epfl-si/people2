@@ -252,24 +252,25 @@ mbox_field:
   locked_title: true
   show_title: true
   position: 1
-mbox_achievements:
-  label: achievements
-  section: research
-  kind: IndexBox
-  subkind: Achievement
-  title_en: "Annual Achievements"
-  title_fr: "Réalisations annuelles"
-  title_it: "Risultati dell'anno"
-  title_de: "Jährliche Erfolge"
-  description_en: "Annual Achievements"
-  description_fr: "Annual Achievements"
-  description_it: "Annual Achievements"
-  description_de: "Annual Achievements"
-  max_copies: 1
-  standard: false
-  locked_title: true
-  show_title: true
-  position: 2
+# No longer needed. We keep the code for the moment in case it strikes back.
+# mbox_achievements:
+#   label: achievements
+#   section: research
+#   kind: IndexBox
+#   subkind: Achievement
+#   title_en: "Annual Achievements"
+#   title_fr: "Réalisations annuelles"
+#   title_it: "Risultati dell'anno"
+#   title_de: "Jährliche Erfolge"
+#   description_en: "Annual Achievements"
+#   description_fr: "Annual Achievements"
+#   description_it: "Annual Achievements"
+#   description_de: "Annual Achievements"
+#   max_copies: 1
+#   standard: false
+#   locked_title: true
+#   show_title: true
+#   position: 2
 mbox_researchfree:
   label: researchfree
   section: research
