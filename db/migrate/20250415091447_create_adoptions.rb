@@ -11,7 +11,7 @@ class CreateAdoptions < ActiveRecord::Migration[8.0]
       t.boolean :with_legacy_profile, default: false
       t.boolean :accepted, default: false
 
-      t.add_index :email, unique: true
+      t.index ["email"], name: "index_adoption_on_email"
       t.timestamps
     end
   end

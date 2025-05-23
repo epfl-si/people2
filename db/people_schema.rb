@@ -85,17 +85,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_212825) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "file"
-    t.string "en"
-    t.string "fr"
-    t.string "it"
-    t.string "de"
-    t.boolean "done"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "adoptions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "sciper"
     t.string "email"
@@ -105,6 +94,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_212825) do
     t.boolean "accepted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_adoption_on_email"
     t.index ["sciper"], name: "unique_scipers", unique: true
   end
 
@@ -337,13 +327,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_212825) do
     t.string "title_it"
     t.string "title_de"
     t.string "label"
-    t.string "zone"
+    t.string "zone", default: "main"
+    t.string "edit_zone", default: "main"
     t.integer "position", null: false
     t.boolean "show_title"
     t.boolean "create_allowed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "edit_zone", default: "main"
   end
 
   create_table "selectable_properties", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
