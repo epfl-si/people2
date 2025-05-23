@@ -56,6 +56,24 @@ mbox_mission:
   locked_title: true
   show_title: true
   position: 2
+mbox_award:
+  label: award
+  section: contact
+  kind: IndexBox
+  subkind: Award
+  title_en: "Awards"
+  title_fr: "Recompenses"
+  title_it: "Riconoscimenti"
+  title_de: "Auszeichnungen"
+  description_en: "Awards Box"
+  description_fr: "Awards Box"
+  description_it: "Awards Box"
+  description_de: "Awards Box"
+  max_copies: 1
+  standard: false
+  locked_title: true
+  show_title: true
+  position: 3
 mbox_contactfree:
   label: contactfree
   section: contact
@@ -69,7 +87,7 @@ mbox_contactfree:
   standard: false
   locked_title: false
   show_title: true
-  position: 3
+  position: 4
 
 # ------------------------------------------------- Biography section
 mbox_biography:
@@ -162,24 +180,6 @@ mbox_experience:
   locked_title: true
   show_title: true
   position: 5
-mbox_award:
-  label: award
-  section: bio
-  kind: IndexBox
-  subkind: Award
-  title_en: "Awards"
-  title_fr: "Recompenses"
-  title_it: "Riconoscimenti"
-  title_de: "Auszeichnungen"
-  description_en: "Awards Box"
-  description_fr: "Awards Box"
-  description_it: "Awards Box"
-  description_de: "Awards Box"
-  max_copies: 1
-  standard: false
-  locked_title: true
-  show_title: true
-  position: 6
 mbox_biofree:
   label: biofree
   section: bio

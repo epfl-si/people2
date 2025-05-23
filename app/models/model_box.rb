@@ -5,7 +5,7 @@ class ModelBox < ApplicationRecord
   translates :title, :description
   belongs_to :section, class_name: 'Section'
   has_many :boxes, class_name: "Box", dependent: :nullify
-  positioned on: %i[section_id locale]
+  positioned on: %i[section_id]
   serialize  :data, coder: YAML
   validates :label, uniqueness: true
   validates :title_en, presence: true, if: -> { locked_title? }

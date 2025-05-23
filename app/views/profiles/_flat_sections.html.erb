@@ -1,0 +1,9 @@
+<% sections.each do |section| %>
+  <% id = "section_#{section.label}" %>
+  <section id="section_#{section.label}">
+    <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(profile, section), loading: :lazy do %>
+      <%= render 'shared/spinner' %>
+    <% end %>
+  </section>
+  <hr>
+<% end %>
