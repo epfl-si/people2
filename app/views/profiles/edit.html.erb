@@ -75,13 +75,12 @@
 <hr>
 <section id="contact_boxes_section">
   <h3><%= t '.title.boxes_contact' %></h3>
-  <%= render "sections", sections: @contact_sections, profile: @profile %>
+  <%= render "flat_sections", sections: @contact_sections, profile: @profile %>
 </section>
 
-<hr>
 <section id="boxes_section" >
   <h3><%= t '.title.boxes_main' %></h3>
-  <%= render "sections", sections: @sections, profile: @profile %>
+  <%= render "tabbed_sections", sections: @sections, profile: @profile %>
 </section>
 <%= turbo_frame_tag :remote_modal %>
 </div><% #tr_switchable %>
