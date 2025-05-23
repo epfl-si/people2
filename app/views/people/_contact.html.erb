@@ -13,11 +13,9 @@
   <% end %>
 
 </p>
-<p>
-  <small>
-    <%= link_to t(".nav.vcard"), person_path(format: "vcf") %>
-    <%= link_to t(".nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
-  </small>
+<p id='ext_data_links'>
+  <%= link_to t(".nav.vcard"), person_path(format: "vcf") %><br>
+  <%= link_to t(".nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
 </p>
 </div>
 <% if @profile.t_nationality.present? && @profile.nationality_visible_by?(@audience) %>
