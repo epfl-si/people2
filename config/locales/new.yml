@@ -21,7 +21,7 @@ en:
           spelling of a (first or last) name, affirming a gender identity,
           following a marriage, divorce, adoption, or any other reason deemed
           legitimate by the Civil Registry Office.
-          This request is <strong>subject to validation</strong>.
+          This request is <strong>subject to valixdation</strong>.
         status:
           unknown: "Impossible to determine your status"
           student:
