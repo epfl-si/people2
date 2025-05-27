@@ -6,9 +6,9 @@
     state: directory
     mode: "u+rwx,g+rwx,o+rwx"
   with_items:
-    - "{{ people.prometheus.data }}"
-    - "{{ people.prometheus.config }}"
-    - "{{ people.grafana.data }}"
+    - "{{ prometheus.data }}"
+    - "{{ prometheus.config }}"
+    - "{{ grafana.data }}"
     - "{{ people.grafana.config }}"
 
 - name: Ensure prometheus configuration file
@@ -45,8 +45,8 @@
     name: prometheus
     image: "prometheus:{{ prometheus_version }}"
     volumes:
-      - "{{ people.prometheus.config }}:/etc/prometheus"
-      - "{{ people.prometheus.data }}:/prometheus"
+      - "{{ prometheus.config }}:/etc/prometheus"
+      - "{{ prometheus.data }}:/prometheus"
     labels:
       traefik.http.routers.peometheus.rule: "Host(`{{ hosts.prometheus }}`)"
       traefik.http.routers.peometheus.tls: "{{ tls_in_labels }}"

@@ -1,4 +1,5 @@
-- name: Déploiement global
+
+- name: People openshit deployment
   hosts: prod
   gather_facts: false
   roles:

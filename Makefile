@@ -449,6 +449,9 @@ prod_deploy:
 ## Build, tag and deploy app to production
 prod: prod_push prod_deploy
 
+prod_shell:
+	oc rsh $$(oc get pods | grep "people-webapp" | grep Running | gsed -E 's/\s+.*$$//')
+
 # ------------------------------------------------------------------------------
 .PHONY: clean
 clean:

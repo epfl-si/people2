@@ -1,3 +1,5 @@
+---
+
 - name: Créer la Route OpenShift pour exposer l'application people-webapp
   kubernetes.core.k8s:
     state: present
@@ -6,7 +8,7 @@
       kind: Route
       metadata:
         name: people-webapp
-        namespace: "{{ app_namespace }}"
+        namespace: "{{ namespace }}"
         labels:
           app: people
           route: private
@@ -19,3 +21,23 @@
           targetPort: http
         tls:
           termination: edge
+
+- name: Expose the people_webapp on port 8080 via ClusterIP service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: people
+        namespace: "{{ namespace }}"
+        labels:
+          app: people
+      spec:
+        selector:
+          app: people
+        ports:
+          - name: http
+            protocol: TCP
+            port: 8080
+            targetPort: 8080

@@ -1,24 +1,29 @@
 people:
+  api_url: "{{ EPFLAPI_BACKEND_URL | default('https://api.epfl.ch/v1') }}"
   branch: "{{ PEOPLE_BRANCH | default('master') }}"
+  camipro_host: "{{ CAMIPRO_PHOTO_HOST | default('camipro-photos.epfl.ch') }}"
+  enable_adoption: "{{ ENABLE_ADOPTION | default(false) }}"
   enable_api_cache: "{{ ENABLE_API_CACHE | default(false) }}"
   enable_webmock: "{{ ENABLE_WEBMOCK | default(false) }}"
   env: "{{ RAILS_ENV | default('development') }}"
   filecache: "{{ DATA_BASEDIR }}/people/filecache"
+  isa_url: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
+  legacy_server_url: "{{ LEGACY_SERVER_URL | default('https://personnes.epfl.ch') }}"
   ollama_url: "{{ OLLAMA_URL | default('http://' ~ hosts.docker ~ ':11434') }}"
+  openai_url: "{{ OPENAI_URL | default('https://inference-dev.rcp.epfl.ch/v1') }}"
   redis: "{{ (SELECT_CACHE == 'local_redis') | ternary('redis://cache:6379/0', REDIS_URL) }}"
   repo: "https://github.com/epfl-si/people2.git"
   srcdir: "{{ PEOPLE_SRCDIR }}"
   storage: "{{ DATA_BASEDIR }}/people/storage"
   use_local_elements: "{{ USE_LOCAL_ELEMENTS | default(false) }}"
-  legacy_server_url: "{{ LEGACY_SERVER_URL | default('https://personnes.epfl.ch') }}"
-  enable_adoption: "{{ ENABLE_ADOPTION | default(false) }}"
-  mariadb:
-    data: "{{ DATA_BASEDIR }}/people/mariadb/data"
-    init: "{{ DATA_BASEDIR }}/people/mariadb/init"
-  prometheus:
-    data: "{{ DATA_BASEDIR }}/people/prometheus/data"
-    config: "{{ DATA_BASEDIR }}/people/prometheus/config"
-  grafana:
-    data: "{{ DATA_BASEDIR }}/people/grafana/data"
-    config: "{{ DATA_BASEDIR }}/people/grafana/data"
-    src_config: "demo-monitoring/grafana"
+
+mariadb:
+  data: "{{ DATA_BASEDIR }}/people/mariadb/data"
+  init: "{{ DATA_BASEDIR }}/people/mariadb/init"
+prometheus:
+  data: "{{ DATA_BASEDIR }}/people/prometheus/data"
+  config: "{{ DATA_BASEDIR }}/people/prometheus/config"
+grafana:
+  data: "{{ DATA_BASEDIR }}/people/grafana/data"
+  config: "{{ DATA_BASEDIR }}/people/grafana/data"
+  src_config: "demo-monitoring/grafana"

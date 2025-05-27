@@ -47,11 +47,11 @@
     env:
       MARIADB_ROOT_PASSWORD: "{{ _secrets.mariadb.root_password }}"
     volumes:
-      - "{{ people.mariadb.data }}:/var/lib/mysql"
-      - "{{ people.mariadb.init }}:/docker-entrypoint-initdb.d"
+      - "{{ mariadb.data }}:/var/lib/mysql"
+      - "{{ mariadb.init }}:/docker-entrypoint-initdb.d"
     restart_policy: always
     state: started
-    network: 
+    network:
       # - mariadb
       - traefik
     # generate_systemd: false

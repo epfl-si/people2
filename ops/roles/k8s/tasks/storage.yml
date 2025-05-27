@@ -1,0 +1,52 @@
+
+- name: Ensure PVC for redis
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-redis
+        namespace: "{{ namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: "{{ redis.disk }}Gi"
+        storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
+# # Storage for mariadb is directly created by the operator
+# - name: Ensure PVC for mariadb
+#   kubernetes.core.k8s:
+#     state: present
+#     definition:
+#       apiVersion: v1
+#       kind: PersistentVolumeClaim
+#       metadata:
+#         name: people-mariadb
+#         namespace: "{{ namespace }}"
+#       spec:
+#         accessModes: [ReadWriteMany]
+#         resources:
+#           requests:
+#             storage: "{{ mariadb.disk }}Gi"
+#         storageClassName: ocs-storagecluster-cephfs
+#         volumeMode: Filesystem
+
+- name: Create storage PVC for /srv/app/storage
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-storage
+        namespace: "{{ namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: 1Mi
+        storageClassName: ""
+        volumeMode: Filesystem

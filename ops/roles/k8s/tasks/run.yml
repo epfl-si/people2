@@ -1,0 +1,82 @@
+---
+
+- name: Ensure people-webapp service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: people
+        namespace: "{{ namespace }}"
+        labels:
+          app: people
+      spec:
+        selector:
+          app: people
+        ports:
+          - protocol: TCP
+            port: 8080
+            targetPort: 8080
+
+- name: Deploy the people_webapp
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: people-webapp
+        namespace: "{{ namespace }}"
+        labels:
+          app: people
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: people
+        template:
+          metadata:
+            labels:
+              app: people
+              version: "v1.03"
+          spec:
+            serviceAccountName: puller
+            containers:
+              - name: people
+                image: "{{ people.image }}"
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 8080
+                  - containerPort: 9394
+                    name: metrics
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "256Mi"
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-app-secrets
+                env:
+                  - name: ENABLE_METRICS
+                    value: "true"
+                    # config for thruster (https://github.com/basecamp/thruster/)
+                  - name: HTTP_PORT
+                    value: "8080"
+                  - name: TARGET_PORT
+                    value: "3000"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+                    subPath: people_storage
+                  - name: pids-path
+                    mountPath: /rails/tmp
+            volumes:
+              - name: pids-path
+                emptyDir:
+                  sizeLimit: 100Mi
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
