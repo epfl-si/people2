@@ -1,4 +1,6 @@
 en:
+  action:
+    preview: Preview
   app:
     domain: people.epfl.ch
     long_name: online people directory
@@ -72,9 +74,9 @@ en:
         available_first_names:
         available_last_names:
 
-
-
 fr:
+  action:
+    preview: Preview
   app:
     domain: people.epfl.ch
     long_name: online people directory
