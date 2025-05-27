@@ -8,96 +8,147 @@ it:
     native: {}
   no_attribute_for_locale: ''
   no_title_for_locale: ''
+  translated_label: "%{label} in %{language}"
   messages:
-    function_change_explain: ''
+    empty_orcid_help: ''
+    function_change_explain: 'Questo cambiamento richiede una validazione: completi
+      e sottometta il seguente formulario'
+    function_change_exists: ''
   generic:
     form:
-      cancel: ''
-      texfield_for: ''
+      cancel: Annulla
+      submit: ''
+      update: ''
+      texfield_for: "%{attr}"
   nav:
     app_with_version: ''
+    issues: ''
+    version: ''
   action:
-    add: ''
-    add_record: ''
-    confirm: ''
+    add: Aggiungi un nuovo blocco
+    add_record: Aggiungi un nuovo %{name}
+    confirm: Conferma
+    delete: ''
     edit_profile: ''
     more: ''
     search: ''
     search_people: ''
+    show_hide_search_form: ''
+    sign_in: ''
+    sign_out: ''
   dev:
-    action: {}
+    action:
+      abandon: ''
+      adopt: ''
+      revert: ''
   error:
     one: ''
     record:
+      zero: ''
       one: ''
-      other: ''
+      other: Ci sono %{count} errori. Per favore, corregga i campi in errore
   flash:
     error:
       create: ''
       update: ''
       remove: ''
-      accred: {}
+      accred:
+        cannot_hide_all: Non è possibile nascondere tutte le affiliazioni
       box:
-        create: ''
+        cannot_delete: ''
+        create: Qualcosa ha impedito che questo blocco venisse creato
       function_change:
         create: ''
       profile: {}
     notice:
       create: ''
+      update: ''
+      remove: ''
     success:
+      create: ''
+      update: ''
+      remove: ''
       box:
-        deleted: ''
-        create: ''
+        deleted: Blocco eliminato
+        create: Blocco aggiunto con successo
       function_change:
-        create: ''
+        create: La domanda di modifica è stata inviata agli accreditatori selezionati
       profile:
-        update: ''
+        update: Pagina aggiornata
   visibility:
     authenticated: ''
     draft: ''
     editor: ''
     hidden_address: ''
+    intranet: ''
+    intranet_access: ''
     label:
       public: ''
-      intranet: ''
+      intranet: Intranet, visibile solo dalla rete dell'EPFL
       auth: ''
       draft: ''
       hidden: ''
     short_label:
-      intranet: ''
+      intranet: Solo dalla rete dell'EPFL
+      auth: Autorizzato
       draft: Bozza
       hidden: ''
     labels:
       published: ''
       draft: Bozza
       hidden: ''
-      intranet: ''
+      public: ''
+      intranet: Intranet (solo dalla rete dell'
       authenticated: ''
     short_labels:
       published: ''
       draft: Bozza
       hidden: ''
-      intranet: ''
+      public: ''
+      intranet: Intranet
     public: " pubblico"
     public_access: " pubblico"
     visible: Visibile
+    visible_address: ''
   errors:
     messages:
+      blank: ''
+      required: ''
+      taken: ''
+      invalid: ''
+      greater_than: ''
+      less_than: ''
+      untranslatable: ''
       incorrect_type: ''
-      cannot_hide_all_accreds: ''
+      cannot_hide_all_accreds: Almeno un'afiliazione deve rimanere pubblicamente visibile
   activerecord:
     models:
+      achievement: ''
+      award: ''
+      box: ''
+      education: ''
       experience: ''
+      function_change: ''
+      infoscience: ''
+      picture: ''
+      profile: ''
       publication: Pubblicazione
+      rich_text_box: ''
+      social: ''
     errors:
       messages:
+        record_invalid: ''
         restrict_dependent_destroy:
-          has_one: ''
-          has_many: ''
+          has_one: Non è stato possibile eliminare questo dato perché %{record} ne
+            dipende
+          has_many: Non è stato possibile eliminare questo dato perché altri %{record}
+            ne dipendono
   activemodel:
     errors:
       models:
         name:
           attributes:
-            usual_first: {}
-            usual_last: {}
+            usual_first:
+              not_in_official: ''
+            usual_last:
+              not_in_official: ''

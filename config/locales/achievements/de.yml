@@ -3,6 +3,8 @@ de:
   activerecord:
     attributes:
       achievement:
+        category: ''
+        description: ''
         url: url
         year: Jahr
   helpers:
@@ -10,6 +12,8 @@ de:
       achievement: {}
   achievements:
     form:
+      category: ''
+      description: ''
       url: url
       year: Jahr
       help:

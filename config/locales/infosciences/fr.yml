@@ -11,9 +11,12 @@ fr:
           attributes:
             url:
               invalid_format: 'Erreur de saisie: l''URL doit commencer par https://infoscience-exports.epfl.ch/....'
+              taken: Item (url) already exists
   helpers:
     placeholder:
       infoscience: {}
   infosciences:
     form:
       title: Titre
+      url: Url issue de infoscience-exports
+      create: Enregistrer

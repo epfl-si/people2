@@ -3,15 +3,21 @@ fr:
   activerecord:
     attributes:
       award:
+        category: Catégorie
+        issuer: attribué par
+        origin: Origine
         title: Titre
         url: url
-        year: Annee
+        year: Année
   helpers:
     placeholder:
       award: {}
   awards:
     form:
+      category: Catégorie
+      issuer: attribué par
+      origin: Origine
       title: Titre
       url: url
-      year: Annee
+      year: Année
       help: {}

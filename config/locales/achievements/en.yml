@@ -3,10 +3,10 @@ en:
   activerecord:
     attributes:
       achievement:
-        category: category
-        description: description
+        category: Category
+        description: Description
         url: url
-        year: year
+        year: Year
   helpers:
     placeholder:
       achievement:
@@ -25,10 +25,10 @@ en:
         url: https://doi.org/10.1021/acs.est.2c05777
   achievements:
     form:
-      category: category
-      description: description
+      category: Category
+      description: Description
       url: url
-      year: year
+      year: Year
       help:
         category: Dropdown menu for achievement category
         rules: 'Yearly achievements are to be added until end of April for them to

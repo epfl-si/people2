@@ -2,14 +2,19 @@
 fr:
   activerecord:
     attributes:
-      social: {}
+      social:
+        tag: Type
+        value: valeur
     errors:
       models:
         social:
           attributes:
             tag:
+              blank: Champ obligatoire
               invalid: L'ID est erronée
-            value: {}
+            value:
+              blank: Champs obligatoire
+              incorrect_format: La valeur n'est pas correcte
   helpers:
     placeholder:
       social: {}
@@ -17,6 +22,7 @@ fr:
     add:
       add: Ajouter un profil de réseau social ou un identifiant de recherche
     form:
+      value: Identifiiant
       identifier_label:
         facebook: Profil Facebook
         github: Nom d'utilisateur Github
@@ -24,10 +30,14 @@ fr:
         instagram: Instagram ID
         linkedin: 'Linkedin ID '
         mastodon: Nom d'utilsateur sur Mastodon (sans le @)
+        muskidiocy: ''
         orcid: ORCID ID
         scopus: 'Scopus ID '
+        stack_overflow: Nom d'utilisateur Stack Overflow
+        wos: Publons - Web of Science ID
       new: Nouveau %{label}
-    index: {}
+    index:
+      title: Réseaux sociaux
     action:
       add_social: Ajouter un lien vers un réseau social
       more: En savoir plus

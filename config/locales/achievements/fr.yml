@@ -3,14 +3,18 @@ fr:
   activerecord:
     attributes:
       achievement:
+        category: Catégorie
+        description: Description
         url: url
-        year: Annee
+        year: Année
   helpers:
     placeholder:
       achievement: {}
   achievements:
     form:
+      category: Catégorie
+      description: Description
       url: url
-      year: Annee
+      year: Année
       help:
         category: Menu déroulant

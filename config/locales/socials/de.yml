@@ -2,14 +2,19 @@
 de:
   activerecord:
     attributes:
-      social: {}
+      social:
+        tag: ''
+        value: ''
     errors:
       models:
         social:
           attributes:
             tag:
+              blank: ''
               invalid: ''
-            value: {}
+            value:
+              blank: ''
+              incorrect_format: ''
   helpers:
     placeholder:
       social: {}
@@ -17,6 +22,7 @@ de:
     add:
       add: ''
     form:
+      value: ''
       identifier_label:
         facebook: ''
         github: ''
@@ -24,10 +30,14 @@ de:
         instagram: ''
         linkedin: ''
         mastodon: ''
+        muskidiocy: ''
         orcid: ''
         scopus: ''
+        stack_overflow: ''
+        wos: ''
       new: ''
-    index: {}
+    index:
+      title: ''
     action:
       add_social: ''
       more: ''

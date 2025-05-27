@@ -5,47 +5,43 @@ en:
     expertise: Expertises
     nationality: Nationality
     official_name: Official Name
-    personal_web_url: personal web page url
-    personal_phone: personal phone number
+    personal_web_url: Personal web page url
+    personal_phone: Personal phone number
     usual_name: Usual Name
   activerecord:
     attributes:
       profile:
-        available_languages: Available Languages
+        available_languages: Select available languages
         expertise: Expertises
         nationality: Nationality
         official_name: Official Name
-        personal_web_url: personal web page url
-        personal_phone: personal phone number
+        personal_web_url: Personal website url
+        personal_phone: Personal phone number
         usual_name: Usual Name
-        expertise_en: expertise (keywords, EN)
-        expertise_fr: expertise (keywords, FR)
-        expertise_it: expertise (keywords, IT)
-        expertise_de: expertise (keywords, DE)
-        nationality_en: nationality (EN)
-        nationality_fr: nationality (FR)
-        nationality_it: nationality (IT)
-        nationality_de: nationality (DE)
-        en_enabled: profile available in english
-        fr_enabled: profile available in french
-        it_enabled: profile available in italian
-        de_enabled: profile available in german
+        expertise_en: Expertise (keywords only)
+        expertise_fr: Expertise (keywords only)
+        expertise_it: Expertise (keywords only)
+        expertise_de: Expertise (keywords only)
+        nationality_en: Nationality
+        nationality_fr: Nationality
+        nationality_it: Nationality
+        nationality_de: Nationality
+        en_enabled: Profile available in english
+        fr_enabled: Profile available in french
+        it_enabled: Profile available in italian
+        de_enabled: Profile available in german
     errors:
       models:
         profile:
           attributes:
             expertise_en:
-              too_long: is supposed to be a short list of keywords. Please keep it
-                below %{count} characters
+              too_long: 'Keywords only: please keep it below %{count} characters'
             expertise_fr:
-              too_long: is supposed to be a short list of keywords. Please keep it
-                below %{count} characters
+              too_long: 'Keywords only: please keep it below %{count} characters'
             expertise_ir:
-              too_long: is supposed to be a short list of keywords. Please keep it
-                below %{count} characters
+              too_long: 'Keywords only: please keep it below %{count} characters'
             expertise_de:
-              too_long: is supposed to be a short list of keywords. Please keep it
-                below %{count} characters
+              too_long: 'Keywords only: please keep it below %{count} characters'
   helpers:
     placeholder:
       profile:
@@ -64,40 +60,40 @@ en:
   profiles:
     edit:
       title:
-        boxes_main: Main content
-        boxes_contact: Contact Blocks Edition
-        details: My personal datas
+        boxes_main: My curriculum
+        boxes_contact: My professionnal datas
+        details: My official datas
         editing_languages: This profile is bilingual
         edit_language: Choose profile language(s)
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
     form:
       available_languages: Available Languages
-      expertise: expertise (few keywords)
-      nationality: nationality
+      expertise: Expertise (keywords only)
+      nationality: Nationality
       official_name: Official Name
-      personal_web_url: personal web page url
-      personal_phone: personal phone number
+      personal_web_url: Personal web page url
+      personal_phone: Personal phone number
       usual_name: Usual Name
-      expertise_en: expertise (few keywords in english)
-      expertise_fr: expertise (few keywords in french)
-      expertise_it: expertise (few keywords in italian)
-      expertise_de: expertise (few keywords in german)
-      nationality_en: nationality in english
-      nationality_fr: nationality in french
-      nationality_it: nationality in italian
-      nationality_de: nationality in german
-      en_enabled: profile available in english
-      fr_enabled: profile available in french
-      it_enabled: profile available in italian
-      de_enabled: profile available in german
-      expertise_help: few keywords describing your expertise
+      expertise_en: Expertise (keywords only)
+      expertise_fr: Expertise (keywords only)
+      expertise_it: Expertise (keywords only)
+      expertise_de: Expertise (keywords only)
+      nationality_en: Nationality
+      nationality_fr: Nationality
+      nationality_it: Nationality
+      nationality_de: Nationality
+      en_enabled: Profile available in english
+      fr_enabled: Profile available in french
+      it_enabled: Profile available in italian
+      de_enabled: Profile available in german
+      expertise_help: Expertise (keywords only)
       action:
-        submit: save profile details
+        submit: Save
     languages_form:
-      translations: provided translations
-      en_enabled: profile will be visible in english
-      fr_enabled: profile will be visible in french
-      it_enabled: profile will be visible in italian
-      de_enabled: profile will be visible in german
+      translations: Provide a translation
+      en_enabled: Profile available in english
+      fr_enabled: Profile available in french
+      it_enabled: Profile available in italian
+      de_enabled: Profile available in german
       action:
-        submit: save languages selection
+        submit: Save

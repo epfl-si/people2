@@ -39,22 +39,28 @@ test:
 production:
   cv:
     adapter: mysql2
-    host:     <%= ENV.fetch('CV_DATABASE_HOST', 'please_do_not_die') %>
-    username: <%= ENV.fetch('CV_DATABASE_USER', 'please_do_not_die') %>
-    password: <%= ENV.fetch('CV_DATABASE_PASSWORD', 'please_do_not_die') %>
+    database: <%= ENV.fetch('DB_LEGACY_NAME', 'cv') %>
+    username: <%= ENV.fetch('DB_LEGACY_USER', 'please_do_not_die') %>
+    password: <%= ENV.fetch('DB_LEGACY_PASSWORD', 'please_do_not_die') %>
+    host:     <%= ENV.fetch('DB_LEGACY_HOST', 'please_do_not_die') %>
+    port:     <%= ENV.fetch('DB_LEGACY_PORT', '3306') %>
     migrations_paths: db/migrate_cv
-    database: cv
     replica: true
   people:
     adapter: mysql2
-    database: <%= ENV.fetch('DATABASE_NAME', 'please_do_not_die') %>
-    host:     <%= ENV.fetch('DATABASE_HOST', 'please_do_not_die') %>
-    username: <%= ENV.fetch('DATABASE_USER', 'please_do_not_die') %>
-    password: <%= ENV.fetch('DATABASE_PASSWORD', 'please_do_not_die') %>
+    database: <%= ENV.fetch('DB_MAIN_NAME', 'people_prod') %>
+    username: <%= ENV.fetch('DB_MAIN_USER', 'please_do_not_die') %>
+    password: <%= ENV.fetch('DB_MAIN_PASSWORD', 'please_do_not_die') %>
+    host:     <%= ENV.fetch('DB_MAIN_HOST', 'please_do_not_die') %>
+    port:     <%= ENV.fetch('DB_MAIN_PORT', '3306') %>
     migrations_paths: db/migrate
   work:
-    adapter: sqlite3
-    database: storage/work.sqlite3
+    adapter: mysql2
+    database: <%= ENV.fetch('DB_WORK_NAME', 'work') %>
+    username: <%= ENV.fetch('DB_WORK_USER', 'please_do_not_die') %>
+    password: <%= ENV.fetch('DB_WORK_PASSWORD', 'please_do_not_die') %>
+    host:     <%= ENV.fetch('DB_WORK_HOST', 'mariadb') %>
+    port:     <%= ENV.fetch('DB_WORK_PORT', '3306') %>
     migrations_paths: db/migrate_work
     schema_dump: false
 # ---------------------------------------------------------- External/Legacy DBs

@@ -14,18 +14,17 @@ en:
   no_title_for_locale: Missing title in %{language}
   translated_label: "%{label} in %{language}"
   messages:
-    empty_orcid_help: link will appear as soon as your ORCID account is synchronized
-    function_change_explain: 'Change requests validation: please complete and submit
-      the form'
-    function_change_exists: There is already a request for changing this job function.
-      We prefer to avoid spamming the accreditors. Please try to contact your accreditor
-      by phone or to contact the service desk asking to discard the old request.
+    empty_orcid_help: The link will appear as soon as your ORCID account is synchronized
+    function_change_explain: To change your position (title), please contact one of
+      your accreditors listed below, who is authorized to approve the request
+    function_change_exists: A change request has already been submitted. Please contact
+      directly your accreditor
   generic:
     form:
       cancel: Cancel
       create: Create Record
-      submit: Submit
-      update: Submit Changes
+      submit: Send
+      update: Saved
       texfield_for: "%{attr}"
   nav:
     app_with_version: EPFL People v. %{version}
@@ -35,7 +34,7 @@ en:
     add: Add a text bloc
     add_record: Add another %{name}
     confirm: Please comfirm
-    delete: delete
+    delete: Delete
     edit: edit
     edit_profile: Edit profile
     hide_search_form: Hide the search form
@@ -43,20 +42,19 @@ en:
     search: Search
     search_people: Search for a person
     show_hide_search_form: Show / hide the search form
-    sign_in: Sign in
-    sign_out: Sign out
+    sign_in: Log in
+    sign_out: Log out
   dev:
     action:
-      abandon: abandon
-      adopt: adopt
+      abandon: Cancellation
+      adopt: I confirm
       revert: revert
   error:
     one: Error
     other: Errors
     record:
-      zero: Something prevented this form from being recorded (should not happen,
-        please contact the service desk)
-      one: Please fix the errors below to continue
+      zero: Something went wrong, please try later (or contact 1234@epfl.ch)
+      one: 'Update failed: please fix the errors below to continue'
       other: "%{count} Please fix the errors below to continue"
   flash:
     error:
@@ -66,7 +64,7 @@ en:
       accred:
         cannot_hide_all: Cannot hide all accreditations to general public
       box:
-        cannot_delete: Standard and boxes with content cannot be deleted
+        cannot_delete: This bloc cannot be deleted
         create: Bloc could not be created
       function_change:
         create: Unable to submit this request. Please try again later or contact 1234@epfl.ch
@@ -74,19 +72,19 @@ en:
         update: Error while updating the base profile
     notice:
       create: Recorded
-      update: Record updated
-      remove: Record deleted
+      update: Updated
+      remove: Deleted
     success:
-      create: Record created
-      update: Record updated
-      remove: Record deleted
+      create: Added
+      update: Updated
+      remove: Deleted
       box:
         deleted: Bloc deleted
         create: Bloc added
       function_change:
         create: Change request forwarded to the selected accreditors
       profile:
-        update: Page succesfully updated
+        update: Updated
   visibility:
     authenticated: EPFL users only
     authenticated_access: user
@@ -95,13 +93,13 @@ en:
     editor_access: full
     hidden: hidden
     hidden_address: Postal address missing
-    intranet: intranet only
-    intranet_access: intranet
+    intranet: intranet EPFL only
+    intranet_access: intranet EPFL
     label:
       visible: Visible
       public: Public, visible to anyone on the internet
       intranet: Intranet, visible only within the EPFL internal network
-      auth: Visible only to the EPFL people
+      auth: Intranet, visible only to the EPFL people
       draft: Private, only the profile owner can view this
       hidden: Private
     short_label:
@@ -115,48 +113,48 @@ en:
       published: Published
       draft: Draft
       hidden: Private
-      public: World visible
+      public: Public, visible to anyone on the internet
       intranet: Intranet (EPFL only)
       authenticated: EPFL people only
     short_labels:
       published: Published
       draft: Draft
       hidden: Private
-      public: World
+      public: WWW
       intranet: Intranet
       authenticated: Users
     public: public
     public_access: public
     visible: visible
-    visible_address: address
+    visible_address: Postal address
   errors:
     messages:
       blank: must be provided
-      required: is required
-      taken: has already been taken (must be unique)
-      invalid: have an incorrect format
+      required: 'Mandatory '
+      taken: Existing item (no duplicata)
+      invalid: is incorrect
       greater_than: must be greater than %{count}
       less_than: must be smaller than %{count}
-      untranslatable: at least one translation must be present
+      untranslatable: One translation mandatory
       incorrect_type: Invalid value
       cannot_hide_all_accreds: At least one affiliation must remain public
   activerecord:
     models:
-      achievement: annual achievement
-      award: award
-      box: box
-      education: education
+      achievement: Annual achievement
+      award: Award
+      box: Bloc
+      education: Education
       experience: Work experiences
-      function_change: position change request
+      function_change: Position change request (accred)
       infoscience: infoscience publication link
-      picture: picture
-      profile: profile
-      publication: publication
-      rich_text_box: rich_text_box
-      social: research id / social link
+      picture: Your picture
+      profile: Profile
+      publication: Publication
+      rich_text_box: Text bloc
+      social: Social Media Links & Research ID
     errors:
       messages:
-        record_invalid: 'Validation failed: %{errors}'
+        record_invalid: 'Something went wrong: %{errors}'
         restrict_dependent_destroy:
           has_one: Cannot delete data because a dependent %{record} exists
           has_many: Cannot delete data because dependent %{record} exist
@@ -166,8 +164,7 @@ en:
         name:
           attributes:
             usual_first:
-              not_in_official: Should be composed of names included in the official
-                first name.
+              not_in_official: Use only a first name that appears in the officials
+                names
             usual_last:
-              not_in_official: Should be composed of names included in the official
-                last name.
+              not_in_official: Use only a name that appears in your officials names

@@ -2,21 +2,27 @@
 it:
   activerecord:
     attributes:
-      social: {}
+      social:
+        tag: ''
+        value: ''
     errors:
       models:
         social:
           attributes:
             tag:
+              blank: ''
               invalid: ''
-            value: {}
+            value:
+              blank: ''
+              incorrect_format: ''
   helpers:
     placeholder:
       social: {}
   socials:
     add:
-      add: ''
+      add: Aggiungi un'altra identità sociale
     form:
+      value: ''
       identifier_label:
         facebook: ''
         github: ''
@@ -24,10 +30,14 @@ it:
         instagram: ''
         linkedin: ''
         mastodon: ''
+        muskidiocy: ''
         orcid: ''
         scopus: ''
+        stack_overflow: ''
+        wos: ''
       new: ''
-    index: {}
+    index:
+      title: ''
     action:
-      add_social: ''
+      add_social: Aggiungi un'altra identità sociale
       more: ''
