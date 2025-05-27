@@ -3,9 +3,16 @@ fr:
   activerecord:
     attributes:
       education:
+        director: Directeur
+        field: champ
+        school: Ecole
         title: Titre
+        year_begin: de (année)
+        year_end: à (année)
   error:
     education:
+      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou signaler au
+        1234@epfl.ch)
       one: Merci de corriger les champs en erreur
       other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
   helpers:
@@ -13,4 +20,10 @@ fr:
       education: {}
   educations:
     form:
+      director: Directeur
+      field: champ
+      school: Ecole
       title: Titre
+      year_begin: de (année)
+      year_end: à (année)
+      period: période (en années)

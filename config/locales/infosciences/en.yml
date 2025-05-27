@@ -3,7 +3,7 @@ en:
   activerecord:
     attributes:
       infoscience:
-        title: title
+        title: Title
         url: url
     errors:
       models:
@@ -11,7 +11,7 @@ en:
           attributes:
             url:
               invalid_format: 'Input error: URL must start with https://infoscience-exports.epfl.ch/....'
-              taken: You already have a paper listing with that url
+              taken: L'entrée (url) existe déjà
   helpers:
     placeholder:
       infoscience:
@@ -22,6 +22,6 @@ en:
         url: https://infoscience-exports.epfl.ch/123456
   infosciences:
     form:
-      title: title
-      url: infoscience exports url
-      create: submit to create infoscience block
+      title: Title
+      url: infoscience-exports url
+      create: Save

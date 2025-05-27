@@ -2,22 +2,33 @@
 fr:
   publication:
     authors: Auteur(s)
+    journal: Journal
     title: Titre
-    year: Annee
+    url: URL
+    year: Année
   activerecord:
     attributes:
       publication:
         authors: Auteur(s)
+        journal: Journal
         title: Titre
-        year: année
+        url: URL
+        year: Année
     errors:
       models:
         publication:
           attributes:
-            year: {}
+            year:
+              not_a_number: n'est pas un nombre
   helpers:
     placeholder:
       publication: {}
   publications:
-    editable_publication: {}
-    form: {}
+    editable_publication:
+      link: Voir cette publication
+    form:
+      authors: Auteur(s)
+      journal: Titre du journal
+      title: Titre de la publication
+      url: Url de la publication
+      year: Année de publication

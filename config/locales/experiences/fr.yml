@@ -3,7 +3,12 @@ fr:
   activerecord:
     attributes:
       experience:
+        description: Description
+        location: Lieu
+        period: période (en années)
         title: Titre
+        year_begin: de (année)
+        year_end: à (année)
     errors:
       models:
         experience:
@@ -15,4 +20,9 @@ fr:
       experience: {}
   experiences:
     form:
+      description: Description
+      location: Entreprise, lieu ou institution
+      period: Période (en années)
       title: Titre
+      year_begin: de (année)
+      year_end: à (année)

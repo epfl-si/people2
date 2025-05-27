@@ -3,12 +3,12 @@ en:
   activerecord:
     attributes:
       award:
-        category: category
+        category: Category
         issuer: granted by
-        origin: origin
-        title: title
+        origin: Origin
+        title: Title
         url: url
-        year: year
+        year: Year
   helpers:
     placeholder:
       award:
@@ -20,12 +20,12 @@ en:
         url: https://www.nobelprize.org/
   awards:
     form:
-      category: category
+      category: Category
       issuer: granted by
-      origin: origin
-      title: title
+      origin: Origin
+      title: Title
       url: url
-      year: year
+      year: Year
       help:
         category: Dropdown menu for award category
         origin: Dropdown menu for selecting the origin of the award

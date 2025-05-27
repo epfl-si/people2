@@ -11,10 +11,11 @@ it:
       linkedin: ''
       twitter: ''
       youtube: ''
-    accessibility: ''
+    accessibility: Accessibilità
     legal: ''
     data_protection: ''
     copy: ''
-    back_to_the_top: ''
+    back_to_the_top: Torna a inizio pagina
   function_changes:
-    form: {}
+    form:
+      function: ''

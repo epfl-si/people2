@@ -14,18 +14,17 @@ fr:
   no_title_for_locale: Titre manquant en %{language}
   translated_label: "%{label} en %{language}"
   messages:
-    empty_orcid_help: le lien apparaîtra dès que votre compte ORCID sera synchronisé
-    function_change_explain: 'Soumis à validation: prière de compléter et soumettre
-      le formulaire.'
-    function_change_exists: There is already a request for changing this job function.
-      We prefer to avoid spamming the accreditors. Please try to contact your accreditor
-      by phone or to contact the service desk asking to discard the old request.
+    empty_orcid_help: Le lien apparaîtra dès la synchronisation de votre compte ORCID
+    function_change_explain: Pour changer sa fonction (titre), prière de contacter
+      un de vos accréditeurs ci-dessous, en mesure de valider la demande
+    function_change_exists: Une demande de modification a déjà été soumise. Veuillez
+      contacter directement votre accréditeur
   generic:
     form:
       cancel: Annuler
       create: Créer un enregistrement
-      submit: Soumettre
-      update: Soumettre les modifications
+      submit: Envoyer
+      update: Enregistré
       texfield_for: "%{attr}"
   nav:
     app_with_version: EPFL People v. %{version}
@@ -35,7 +34,7 @@ fr:
     add: Ajouter un bloc
     add_record: Ajouter un(e) autre %{name}
     confirm: Confirmer votre choix
-    delete: supprimer
+    delete: Supprimer
     edit: modifier
     edit_profile: Modifier le profil
     hide_search_form: Masquer le formulaire de recherche
@@ -47,16 +46,16 @@ fr:
     sign_out: Se déconnecter
   dev:
     action:
-      abandon: abandonner
-      adopt: adopter
+      abandon: Annuler
+      adopt: Je valide
       revert: annuler
   error:
     one: Erreur
     other: Erreurs
     record:
-      zero: Une erreur a empêché l'enregistrement du formulaire (ne devrait pas se
-        produire, veuillez contacter le support)
-      one: Echec de mise à jour. Merci de corriger les champs en erreur
+      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou signaler au
+        1234@epfl.ch)
+      one: 'Echec de mise à jour: merci de corriger les champs en erreur'
       other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
   flash:
     error:
@@ -66,8 +65,7 @@ fr:
       accred:
         cannot_hide_all: Impossible de masquer toutes les accréditations au public
       box:
-        cannot_delete: Les boîtes standards et celles contenant du contenu ne peuvent
-          pas être supprimées
+        cannot_delete: Ce bloc ne peux pas être supprimé
         create: Impossible de créer le bloc
       function_change:
         create: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard
@@ -76,19 +74,19 @@ fr:
         update: Erreur lors de la mise à jour du profil de base
     notice:
       create: Enregistré
-      update: Enregistrement mis à jour
-      remove: Enregistrement supprimé
+      update: Mis à jour
+      remove: Supprimé
     success:
-      create: Enregistrement créé
-      update: Enregistrement mis à jour
-      remove: Enregistrement supprimé
+      create: Ajouté
+      update: Mis à jour
+      remove: Supprimé
       box:
         deleted: Bloc supprimé
         create: Bloc ajouté
       function_change:
         create: Demande de modification transmise aux accréditeurs séléctionnés
       profile:
-        update: Page mise à jour avec succès
+        update: Mise à jour
   visibility:
     authenticated: Utilisateurs EPFL uniquement
     authenticated_access: utilisateur
@@ -97,13 +95,13 @@ fr:
     editor_access: complet
     hidden: caché
     hidden_address: Adresse postale manquante
-    intranet: intranet uniquement
-    intranet_access: intranet
+    intranet: intranet EPFL uniquement
+    intranet_access: intranet EPFL
     label:
       visible: Visible
       public: Public, Visible par tout le monde sur Internet
       intranet: Intranet, visible uniquement sur le réseau interne de l'EPFL
-      auth: Visible uniquement par la communauté EPFL
+      auth: Intranet, visible uniquement par la communauté EPFL
       draft: Privé, visible uniquement par la/le propriétaire du profil
       hidden: Privé
     short_label:
@@ -117,48 +115,48 @@ fr:
       published: Publié
       draft: Brouillon
       hidden: Privé
-      public: Visible mondialement
+      public: Public, visible par tout le monde sur Internet
       intranet: Intranet (EPFL uniquement)
       authenticated: Communauté EPFL uniquement
     short_labels:
       published: Publié
       draft: Brouillon
       hidden: Privé
-      public: Monde
+      public: WWW
       intranet: Intranet
       authenticated: Utilisateurs
     public: public
     public_access: public
     visible: visible
-    visible_address: adresse
+    visible_address: Adresse postale
   errors:
     messages:
       blank: doit être renseigné
-      required: est requis
-      taken: a déjà été pris (doit être unique)
-      invalid: a un format incorrect
+      required: Obligatoire
+      taken: Elément existant (non dublicable)
+      invalid: n'est pas correct
       greater_than: doit être supérieur à %{count}
       less_than: doit être inférieur à %{count}
-      untranslatable: au moins une traduction doit être présente
+      untranslatable: Une traduction minimum
       incorrect_type: La valeur n'est pas correcte
       cannot_hide_all_accreds: Au moins un rattachement doit rester public
   activerecord:
     models:
-      achievement: réalisation annuelle
-      award: distinction
-      box: boîte
-      education: formation
+      achievement: Accomplissement annuel
+      award: Distinction
+      box: Bloc
+      education: Formation
       experience: Expériences professionnelles
-      function_change: changement de fonction
-      infoscience: lien vers publication infoscience
-      picture: image
-      profile: profil
-      publication: publication
-      rich_text_box: boîte de texte
-      social: identifiant de recherche / lien social
+      function_change: Demande de changement de fonction (accred)
+      infoscience: lien vers les publications infoscience
+      picture: Votre photo
+      profile: Profil
+      publication: Publication
+      rich_text_box: Bloc de texte
+      social: Profils de réseau social &  identifiants de recherche
     errors:
       messages:
-        record_invalid: 'Échec de la validation : %{errors}'
+        record_invalid: 'Une erreur s''est produite : %{errors}'
         restrict_dependent_destroy:
           has_one: Impossible de supprimer la donnée car une %{record} dépend d'elle
           has_many: Impossible de supprimer la donnée car des %{record} dépendent
@@ -169,7 +167,7 @@ fr:
         name:
           attributes:
             usual_first:
-              not_in_official: Doit être composé de prénoms inclus dans le prénom
-                officiel.
+              not_in_official: Utiliser uniquement un prénom figurant dans les prénoms
+                officiels
             usual_last:
-              not_in_official: Doit être composé de noms inclus dans le nom officiel.
+              not_in_official: Utiliser uniquement un nom figurant dans les noms officiels

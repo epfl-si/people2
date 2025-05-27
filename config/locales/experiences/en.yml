@@ -3,10 +3,10 @@ en:
   activerecord:
     attributes:
       experience:
-        description: description
-        location: location
+        description: Description
+        location: Location
         period: period (years)
-        title: title
+        title: Title
         year_begin: from year
         year_end: to year
     errors:
@@ -25,9 +25,9 @@ en:
         title_de: CEO
   experiences:
     form:
-      description: description
-      location: company or location or institution
-      period: period (years)
-      title: title
+      description: Description
+      location: Company, location or institution
+      period: Period (years)
+      title: Title
       year_begin: from year
       year_end: to year

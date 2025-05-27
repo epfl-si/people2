@@ -17,4 +17,5 @@ de:
     copy: ''
     back_to_the_top: ''
   function_changes:
-    form: {}
+    form:
+      function: ''

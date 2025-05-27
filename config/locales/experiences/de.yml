@@ -3,7 +3,12 @@ de:
   activerecord:
     attributes:
       experience:
+        description: ''
+        location: ''
+        period: ''
         title: Titel
+        year_begin: ''
+        year_end: ''
     errors:
       models:
         experience:
@@ -15,4 +20,9 @@ de:
       experience: {}
   experiences:
     form:
+      description: ''
+      location: ''
+      period: ''
       title: Titel
+      year_begin: ''
+      year_end: ''

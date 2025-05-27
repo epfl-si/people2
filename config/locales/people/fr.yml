@@ -1,26 +1,43 @@
 ---
 fr:
   person:
-    photo: Profile photo
+    firstname: prénom
+    function: Fonction (selon accred)
+    lastname: nom de famille
+    email: Adresse mail
+    nationality: Nationalité
+    official_firstname: Prénom officiel
+    official_lastname: Nom de famille officiel
+    phone: No de téléphone principal
+    photo: Photo de profil
     title: Titre
+    usual_firstname: Prénom usuel
+    usual_lastname: Prénom usuel
+    website: Adresse du site web personnel
   people:
     adopt:
       confirm: Mettre en ligne la nouvelle version de mon profil
+      explain: 'Nouvelle version du profil: cliquer pour l''activer (opération irréversible)'
     admin_data:
       title: Données administratives
       sciper: Numéro SCIPER
       sap: SAP ID
+      username: Nom d'utilisateur
       gid: GID
+      uid: UID
       home: Home directory
       shell: Shell
     contact:
       nationality_label: Nationalité
       nav:
         atari: Données administratives
-    show: {}
+        vcard: vCard
+    show:
+      teaching: Enseignement
     teaching:
       title:
         courses: Cours
-        current_phd: Doctorants·es actuels·les
+        current_phd: Doctorant·es actuel·les
         past_phd: 'A dirigé les thèses EPFL de '
+        teaching: Enseignement & PhD
         past_phd_students: 'A dirigé les thèses EPFL de '

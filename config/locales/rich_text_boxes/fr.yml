@@ -3,10 +3,12 @@ fr:
   activerecord:
     attributes:
       rich_text_box:
+        content: contenu
         title: Titre
   helpers:
     placeholder:
       rich_text_box: {}
   rich_text_boxes:
     form:
+      content: contenu
       title: Titre

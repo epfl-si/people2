@@ -1,23 +1,34 @@
 ---
 it:
   publication:
-    authors: ''
+    authors: Autore/i
+    journal: ''
     title: Titolo
+    url: ''
     year: Anno
   activerecord:
     attributes:
       publication:
-        authors: ''
+        authors: Autore/i
+        journal: ''
         title: Titolo
+        url: ''
         year: Anno
     errors:
       models:
         publication:
           attributes:
-            year: {}
+            year:
+              not_a_number: ''
   helpers:
     placeholder:
       publication: {}
   publications:
-    editable_publication: {}
-    form: {}
+    editable_publication:
+      link: ''
+    form:
+      authors: ''
+      journal: ''
+      title: ''
+      url: ''
+      year: ''

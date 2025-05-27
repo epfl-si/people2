@@ -2,22 +2,33 @@
 de:
   publication:
     authors: ''
+    journal: ''
     title: Titel
+    url: ''
     year: Jahr
   activerecord:
     attributes:
       publication:
         authors: ''
+        journal: ''
         title: Titel
+        url: ''
         year: Jahr
     errors:
       models:
         publication:
           attributes:
-            year: {}
+            year:
+              not_a_number: ''
   helpers:
     placeholder:
       publication: {}
   publications:
-    editable_publication: {}
-    form: {}
+    editable_publication:
+      link: ''
+    form:
+      authors: ''
+      journal: ''
+      title: ''
+      url: ''
+      year: ''

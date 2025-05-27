@@ -2,7 +2,7 @@
 fr:
   accreds:
     index:
-      title: Mes rattachements
+      title: Mes rattachements (accreditation)
   footer:
     follow:
       us: Suivez l'EPFL sur les réseaux sociaux
@@ -18,4 +18,4 @@ fr:
     back_to_the_top: Retour en haut de page
   function_changes:
     form:
-      function: new position
+      function: Nouvelle fonction
