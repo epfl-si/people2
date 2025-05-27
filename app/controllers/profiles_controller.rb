@@ -47,6 +47,8 @@ class ProfilesController < ApplicationController
     case part
     when "languages"
       update_languages
+    when "inclusivity"
+      update_inclusivity
     when "name"
       raise NotImplementedError
     else
@@ -123,6 +125,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
+      :show_inclusivity,
       :nationality_fr, :nationality_en, :nationality_it, :nationality_de,
       :expertise_fr, :expertise_en, :expertise_it, :expertise_de,
       :personal_web_url,
@@ -130,5 +133,16 @@ class ProfilesController < ApplicationController
       :personal_phone_visibility, :personal_web_url_visibility,
       :nationality_visibility, :expertise_visibility, :photo_visibility
     )
+  end
+
+  def update_inclusivity
+    if @profile.update(profile_params)
+      respond_to do |format|
+        format.turbo_stream { render "inclusivity/update" }
+      end
+    else
+      flash.now[:error] = ".update"
+      render :edit_details, status: :unprocessable_entity
+    end
   end
 end
