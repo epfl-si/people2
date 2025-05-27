@@ -1,6 +1,7 @@
 #footer {
   position: relative;
 }
+
 #version {
   font-size: 50%;
   text-shadow: 0.5px 0.5px 0 #999;
@@ -8,15 +9,13 @@
   right: 2rem;
   bottom: 0.5rem;
 }
-.btn-link {
-    padding: 0;
-    span.label {
-        padding: 0 0.4rem 0.4rem 0;
-    }
-}
 
-h1, h2, h3 {
-  text-transform: capitalize;
+.btn-link {
+  padding: 0;
+
+  span.label {
+    padding: 0 0.4rem 0.4rem 0;
+  }
 }
 
 // https://www.sitepoint.com/style-html-details-element/
