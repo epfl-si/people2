@@ -53,7 +53,7 @@ fr:
         details: Mes informations officielles
         editing_languages: Ce profil est bilingue
         edit_language: Définir la langue(s) du profil
-        editing: Editer
+        editing: 'Edition du profil de %{name} (sciper: %{sciper})'
     form:
       available_languages: Langues à choix
       expertise: Expertise (mots-clefs uniquement)
