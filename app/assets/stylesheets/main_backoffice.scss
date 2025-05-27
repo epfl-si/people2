@@ -318,9 +318,28 @@ details {
 }
 
 #editor {
-  max-height: 85vh;
-  overflow: scroll;
+  position: fixed;
+  top: 30vh;
+  left: 25vw;
+  width: 50vw;
+  min-width: 600px;
+  z-index: 100;
+  padding: 0;
+  border-radius: 0.5em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
+/* #editor_content {
+  padding: 0;
+}
+
+#editor_content:not(:empty) {
+  width: 100%;
+  border: 1px #f00 solid;
+  padding: 0.5em;
+} */
+
 
 // ---------------------------------------------------------- visibility popover
 .gcpopover {
