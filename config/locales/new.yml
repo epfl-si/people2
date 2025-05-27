@@ -4,6 +4,10 @@ en:
     long_name: online people directory
     name: people
   profiles:
+    inclusivity: "Inclusivity"
+    hide_gender:
+      enabled: "Yes"
+      disabled: "No"
     name_change:
       email_change_html: >
         Once the change is validated, you will also have the possibility to change your e-mail address.
@@ -67,12 +71,9 @@ en:
         usual_first: "Prénom d’usage souhaitée"
         usual_last: "Nom d’usage souhaitée"
 
-
         instructions: >
         available_first_names:
         available_last_names:
-
-
 
 fr:
   app:
@@ -80,6 +81,10 @@ fr:
     long_name: online people directory
     short_name: people
   profiles:
+    inclusivity: "Inclusivité"
+    hide_gender:
+      enabled: "Oui"
+      disabled: "Non"
     name_change:
       email_change_html: >
         Une fois le changement validé, vous pourrez également modifier votre adresse e-mail.
@@ -141,6 +146,7 @@ fr:
       placeholder:
         usual_first: "Prénom d’usage souhaitée"
         usual_last: "Nom d’usage souhaitée"
+
 it:
   app:
     domain: people.epfl.ch
