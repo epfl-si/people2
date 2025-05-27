@@ -7,6 +7,11 @@ en:
     form:
       identifier_label:
         bluesky: Bluesky username
+  profile:
+    inclusivity: "Inclusivity"
+  visibility:
+    show: "Show"
+    hide: "Hide"
 
 fr:
   app:
@@ -17,7 +22,11 @@ fr:
     form:
       identifier_label:
         bluesky: Bluesky
-
+  profile:
+    inclusivity: "Inclusivité"
+  visibility:
+    show: "Montré"
+    hide: "Caché"
 it:
   app:
     domain: people.epfl.ch
