@@ -4,6 +4,10 @@ en:
     long_name: online people directory
     name: people
   profiles:
+    inclusivity: "Inclusivity"
+  visibility:
+    show: "Show"
+    hide: "Hide"
     name_change:
       email_change_html: >
         Once the change is validated, you will also have the possibility to change your e-mail address.
@@ -46,11 +50,6 @@ en:
     form:
       identifier_label:
         bluesky: Bluesky username
-  profile:
-    inclusivity: "Inclusivity"
-  visibility:
-    show: "Show"
-    hide: "Hide"
   usual_name_changes:
     new:
       fallback:
@@ -82,6 +81,10 @@ fr:
     long_name: online people directory
     short_name: people
   profiles:
+    inclusivity: "Inclusivité"
+  visibility:
+    show: "Montré"
+    hide: "Caché"
     name_change:
       email_change_html: >
         Une fois le changement validé, vous pourrez également modifier votre adresse e-mail.
@@ -124,11 +127,6 @@ fr:
     form:
       identifier_label:
         bluesky: Bluesky
-  profile:
-    inclusivity: "Inclusivité"
-  visibility:
-    show: "Montré"
-    hide: "Caché"
   usual_name_changes:
     new:
       fallback:
@@ -148,6 +146,7 @@ fr:
       placeholder:
         usual_first: "Prénom d’usage souhaitée"
         usual_last: "Nom d’usage souhaitée"
+
 it:
   app:
     domain: people.epfl.ch

@@ -50,8 +50,6 @@ class ProfilesController < ApplicationController
       update_languages
     when "inclusivity"
       update_inclusivity
-    when "inclusivity"
-      update_inclusivity
     when "name"
       raise NotImplementedError
     else
