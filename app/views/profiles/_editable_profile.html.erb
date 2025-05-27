@@ -23,6 +23,14 @@
   </dd>
   <% end %>
 
+  <dt><%= t("profile.inclusivity") %></dt>
+  <dd class="rpush">
+    <%= turbo_frame_tag dom_id(@profile, :show_inclusivity), class: "ms-3" do %>
+      <%= render "inclusivity/inclusivity_toggle", profile: @profile %>
+    <% end %>
+  </dd>
+
+
   <dt><%= t "profile.nationality" %></dt>
   <% if (profile.t_nationality).present? %>
 	  <dd class="rpush">
