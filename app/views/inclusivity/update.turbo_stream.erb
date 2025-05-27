@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@profile, :show_inclusivity) do %>
+  <%= render "inclusivity/toggle", profile: @profile %>
+<% end %>
