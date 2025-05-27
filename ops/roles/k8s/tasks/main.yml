@@ -1,5 +1,23 @@
 ---
 
+# Reminder: include_tasks vs import_tasks
+# import => the tasks in the imported file are copied here => they inherit the tags of the importing task
+# include => the tasls frp, tje included are executed as an independent file => tags need to be
+
+
+- include_vars: main.yml
+  tags: always
+
+- name: Debug secrets
+  ansible.builtin.debug:
+    var: _secrets
+  tags: debug
+
+- name: Debug people var
+  ansible.builtin.debug:
+    var: people
+  tags: debug
+
 - name: Ensure openshift connection
   tags:
     - always
@@ -14,20 +32,56 @@
   args:
     executable: /bin/bash
   delegate_to: localhost
+  changed_when: false
 
-
-
+# base tasks that probably need to be run just once
 - import_tasks: init.yml
-  tags: [init]
+  tags:
+    - init
 
-- import_tasks: webapp.yml
-  tags: [webapp]
+- import_tasks: storage.yml
+  tags:
+    - init
+    - init.storage
 
-- import_tasks: redis.yml
-  tags: [redis]
+- import_tasks: env.yml
+  tags:
+    - config
+    - config.env
 
-- import_tasks: monitoring.yml
-  tags: [monitoring]
+- import_tasks: run_mariadb.yml
+  tags:
+    - run
+    - run.db
+    - run.mariadb
+
+- import_tasks: config_mariadb.yml
+  tags:
+    - config
+    - config.db
+    - config.mariadb
+
+- import_tasks: run_redis.yml
+  tags:
+    - run
+    - run.redis
+
+- name: People admin
+  tags:
+    - never
+  import_tasks:
+    file: admin.yml
+
+- import_tasks: run.yml
+  tags:
+    - run
+    - run.app
+
+# - import_tasks: monitoring.yml
+#   tags:
+#     - config
+#     - config.monitoring
 
 - import_tasks: route.yml
-  tags: [route]
+  tags:
+    - route

@@ -1,3 +1,4 @@
+
 - name: Deploy Redis (Valkey) instance
   kubernetes.core.k8s:
     state: present
@@ -6,7 +7,7 @@
       kind: Deployment
       metadata:
         name: people-redis
-        namespace: "{{ app_namespace }}"
+        namespace: "{{ namespace }}"
         labels:
           app: people
           component: redis
@@ -27,20 +28,20 @@
               - name: quay-pull-secret
             containers:
               - name: redis
-                image: "{{ redis_image }}"
-                command: ["valkey-server", "--maxmemory", "32mb"]
+                image: "{{ redis.image }}"
+                command: ["valkey-server", "--maxmemory", "{{ redis.memory }}mb", "--save", "{{ redis.save.time }}", "{{ redis.save.data }}"]
                 ports:
-                  - containerPort: 6379
+                  - containerPort: 6379 # ANSIBLE+K8S=PURE SHIT! "{{ redis.port | int }}"
                 resources:
                   requests:
-                    cpu: "100m"
-                    memory: "64Mi"
+                    cpu: "100m" # WTF is this unit ?
+                    memory: "{{ redis.memory }}Mi"
                   limits:
-                    cpu: "200m"
-                    memory: "128Mi"
+                    cpu: "200m" # WTF is this unit ?
+                    memory: "{{ redis.alloc_memory }}Mi"
                 volumeMounts:
                   - name: redis-volume
-                    mountPath: /srv/filecache
+                    mountPath: /data
             volumes:
               - name: redis-volume
                 persistentVolumeClaim:
@@ -53,15 +54,15 @@
       apiVersion: v1
       kind: Service
       metadata:
-        name: people-redis
-        namespace: "{{ app_namespace }}"
+        name: "{{ redis.service }}"
+        namespace: "{{ namespace }}"
         labels:
           app: people
           component: redis
       spec:
         ports:
-          - port: 6379
-            targetPort: 6379
+          - port: 6379 # ANSIBLE+K8S=PURE SHIT! "{{ redis.port | int }}"
+            targetPort: 6379 # ANSIBLE+K8S=PURE SHIT! "{{ redis.port | int }}"
         selector:
           app: people
           component: redis

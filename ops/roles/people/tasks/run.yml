@@ -62,21 +62,25 @@
       # --> epflapi.yml
       ATELA_KEY: "{{ _secrets.people.atela_key }}"
       CAMIPRO_PHOTO_KEY: "{{ _secrets.people.camipro_photo_key }}"
-      CAMIPRO_PHOTO_HOST: "{{ CAMIPRO_PHOTO_HOST | default('camipro-photos.epfl.ch') }}"
+      CAMIPRO_PHOTO_HOST: "{{ people.camipro_host }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
-      EPFLAPI_BACKEND_URL: "{{ EPFLAPI_BACKEND_URL | default('https://api.epfl.ch/v1') }}"
-      EPFLAPI_PASSWORD: "{{ _secrets.people.epflapi_password }}"
+      EPFLAPI_BACKEND_URL: "{{ people.api_url }}"
+      EPFLAPI_PASSWORD: "{{ _secrets.api.password }}"
       ISA_URL: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
       OFFLINE_CACHEDIR: "/srv/filecache"
 
       # # --> ollama.yml
       OLLAMA_URL: "{{ people.ollama_url }}"
 
+      # OpenAI
+      OPENAI_API_KEY: "{{ _secrets.inference.key }}"
+      OPENAI_BASE_URL: "{{ people.openai_url }}"
+
       # --> oidc.yml
-      ENTRA_TENANT_ID: "{{ _secrets.people.entra_oidc.tenant_id }}"
-      ENTRA_CLIENT_ID: "{{ _secrets.people.entra_oidc.client_id }}"
-      ENTRA_SECRET: "{{ _secrets.people.entra_oidc.secret }}"
+      ENTRA_TENANT_ID: "{{ _secrets.entra_oidc.tenant_id }}"
+      ENTRA_CLIENT_ID: "{{ _secrets.entra_oidc.client_id }}"
+      ENTRA_SECRET: "{{ _secrets.entra_oidc.secret }}"
       USE_KEYCLOAK: no
 
     volumes: "{{ all_volumes }}"

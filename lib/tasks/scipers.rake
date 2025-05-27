@@ -21,7 +21,8 @@ namespace :legacy do
     api_scipers = APIAuthGetter.call(
       authid: "botweb",
       status: "active",
-      type: "property"
+      type: "property",
+      force: true # we want to seed with freshest possible data
     ).map { |a| a["persid"].to_i }.uniq
 
     migrated = (api_scipers - legacy_scipers).map do |s|

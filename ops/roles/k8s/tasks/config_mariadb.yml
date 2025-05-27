@@ -1,0 +1,87 @@
+---
+
+- name: "Work database user"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: User
+      metadata:
+        name: "{{ _secrets.db.work.username }}"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        name: "{{ _secrets.db.work.username }}"
+        mariaDbRef:
+          name: mariadb
+        rootPasswordSecretKeyRef:
+          name: mariadb-secrets
+          key: ROOT_PASSWORD
+          generate: false
+        passwordSecretKeyRef:
+          name: mariadb-secrets
+          key: work_password
+        # This field defaults to 10
+        maxUserConnections: 20
+        host: "%"
+        # Delete the resource in the database whenever the CR gets deleted.
+        # Alternatively, you can specify Skip in order to omit deletion.
+        cleanupPolicy: Delete
+        requeueInterval: 60s
+        retryInterval: 20s
+
+
+- name: "Work database"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: Database
+      metadata:
+        name: "{{ _secrets.db.work.dbname }}"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        name: "{{ _secrets.db.work.dbname }}"
+        characterSet: utf8mb4
+        collate: utf8mb4_unicode_ci
+        mariaDbRef:
+          name: mariadb
+        rootPasswordSecretKeyRef:
+          name: mariadb-secrets
+          key: ROOT_PASSWORD
+          generate: false
+        cleanupPolicy: Skip
+        requeueInterval: 30s
+        retryInterval: 5s
+
+
+- name: "Grant access to Work database to the app user"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: Grant
+      metadata:
+        name: "{{ _secrets.db.work.username }}-on-{{ _secrets.db.work.dbname }}"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        username: "{{ _secrets.db.work.username }}"
+        host: "%"
+        database: "{{ _secrets.db.work.dbname }}"
+        table: "*"
+        privileges:
+           - "ALL PRIVILEGES"
+           # - "SELECT"
+           # - "INSERT"
+           # - "UPDATE"
+        mariaDbRef:
+          name: mariadb
+        rootPasswordSecretKeyRef:
+          name: mariadb-secrets
+          key: ROOT_PASSWORD
+          generate: false
+        cleanupPolicy: Skip
+        requeueInterval: 30s
+        retryInterval: 5s

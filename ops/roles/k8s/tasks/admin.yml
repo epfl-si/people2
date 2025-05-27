@@ -1,0 +1,94 @@
+---
+# - name: Delete old database migration Job if it exists
+#   kubernetes.core.k8s:
+#     state: absent
+#     kind: Job
+#     namespace: "{{ namespace }}"
+#     name: people-webapp-migrate
+#   ignore_errors: true
+
+- name:  Create a Kubernetes Job to run bin/rails db:migrate
+  tags:
+    - admin.migrate
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: people-migrate
+        namespace: "{{ namespace }}"
+      spec:
+        backoffLimit: 0
+        # Remove completed job after 240 seconds => we can re-create it without getting error
+        ttlSecondsAfterFinished: 240
+        template:
+          metadata:
+            labels:
+              job: people-migrate
+          spec:
+            restartPolicy: Never
+            serviceAccountName: puller
+            containers:
+              - name: migrate
+                image: "{{ people.image }}"
+                command: ["bin/rails", "db:migrate"]
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-admin-secrets
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "256Mi"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+            volumes:
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
+
+- name:  Create a Kubernetes Job to run bin/rails db:seed
+  tags:
+    - admin.seed
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: people-seed
+        namespace: "{{ namespace }}"
+      spec:
+        backoffLimit: 0
+        # Remove completed job after 240 seconds => we can re-create it without getting error
+        ttlSecondsAfterFinished: 240
+        template:
+          metadata:
+            labels:
+              job: people-seed
+          spec:
+            restartPolicy: Never
+            serviceAccountName: puller
+            containers:
+              - name: migrate
+                image: "{{ people.image }}"
+                command: ["bin/rails", "db:seed"]
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-admin-secrets
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "256Mi"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+            volumes:
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage

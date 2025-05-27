@@ -20,6 +20,7 @@ all:
 
   vars:
     RUNENV: testnext
+    RAILS_ENV: development
     DOMAINS:
       - fsd.team
     CERTS_SRC: /keybase/team/epfl_idevfsd/certs/
