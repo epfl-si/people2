@@ -51,6 +51,8 @@ class ProfilesController < ApplicationController
     when "inclusivity"
       update_inclusivity
     when "inclusivity"
+      update_inclusivity
+    when "name"
       raise NotImplementedError
     else
       update_base
