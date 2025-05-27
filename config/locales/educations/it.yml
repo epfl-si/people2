@@ -3,14 +3,26 @@ it:
   activerecord:
     attributes:
       education:
+        director: ''
+        field: ''
+        school: ''
         title: Titolo
+        year_begin: ''
+        year_end: ''
   error:
     education:
+      zero: ''
       one: ''
-      other: ''
+      other: Ci sono %{count} errori. Per favore, corregga i campi in errore
   helpers:
     placeholder:
       education: {}
   educations:
     form:
+      director: ''
+      field: ''
+      school: ''
       title: Titolo
+      year_begin: ''
+      year_end: ''
+      period: ''

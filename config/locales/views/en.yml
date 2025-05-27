@@ -2,7 +2,7 @@
 en:
   accreds:
     index:
-      title: My affiliations
+      title: My affiliations (accreditation)
   footer:
     follow:
       us: Follow EPFL on social medias
@@ -18,4 +18,4 @@ en:
     back_to_the_top: Back to the top
   function_changes:
     form:
-      function: new position
+      function: New position

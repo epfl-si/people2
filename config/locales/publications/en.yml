@@ -2,18 +2,18 @@
 en:
   publication:
     authors: Autor(s)
-    journal: journal
-    title: title
+    journal: Journal
+    title: Title
     url: URL
-    year: year
+    year: Year
   activerecord:
     attributes:
       publication:
         authors: Autor(s)
-        journal: journal
-        title: title
+        journal: Journal
+        title: Title
         url: URL
-        year: year
+        year: Year
     errors:
       models:
         publication:
@@ -32,8 +32,8 @@ en:
     editable_publication:
       link: View the publication
     form:
-      authors: authors
-      journal: journal name
-      title: publication title
-      url: publication URL
-      year: publication year
+      authors: Author(s)
+      journal: Journal title
+      title: Publication title
+      url: Publication URL
+      year: Publication year

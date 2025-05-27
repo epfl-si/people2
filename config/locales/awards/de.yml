@@ -3,6 +3,9 @@ de:
   activerecord:
     attributes:
       award:
+        category: ''
+        issuer: ''
+        origin: ''
         title: Titel
         url: url
         year: Jahr
@@ -11,6 +14,9 @@ de:
       award: {}
   awards:
     form:
+      category: ''
+      issuer: ''
+      origin: ''
       title: Titel
       url: url
       year: Jahr

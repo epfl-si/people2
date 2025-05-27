@@ -2,7 +2,10 @@
 it:
   activerecord:
     attributes:
-      picture: {}
+      picture:
+        selected: ''
+        camipro: ''
+        failed_attempts: ''
     errors:
       models:
         picture:
@@ -12,8 +15,13 @@ it:
   pictures:
     currently_selected_picture: ''
     form:
+      selected: ''
+      camipro: ''
+      failed_attempts: ''
       browse_image_file: ''
+      max_photos_reached: ''
       no_photofile_selected: ''
+      upload_image: ''
     pictures:
       title: ''
       currently_selected: ''

@@ -3,18 +3,18 @@ en:
   activerecord:
     attributes:
       social:
-        tag: type
+        tag: Type
         value: value
     errors:
       models:
         social:
           attributes:
             tag:
-              blank: Type cannot be blank
+              blank: Mandatory field
               invalid: Invalid social ID
             value:
-              blank: Value cannot be blank
-              incorrect_format: Value format is incorrect
+              blank: Mandatory field
+              incorrect_format: Invalid value
   helpers:
     placeholder:
       social:
@@ -24,7 +24,7 @@ en:
       add: Add Social Media Link or Research ID
     form:
       tag: social type
-      value: identifier
+      value: Identifier
       identifier_label:
         facebook: Facebook ID
         github: GitHub Username
@@ -32,11 +32,11 @@ en:
         instagram: Instagram ID
         linkedin: 'Linkedin ID '
         mastodon: Mastodon Username (without @)
-        muskidiocy: Twitter Username
+        muskidiocy: X Username
         orcid: ORCID ID
         scopus: 'Scopus ID '
         stack_overflow: Stack Overflow Username
-        wos: Web of Science Author ID
+        wos: Publons - Web of Science ID
       new: New %{label}
     index:
       title: Social Links

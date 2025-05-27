@@ -5,44 +5,83 @@ fr:
     expertise: Expertises
     nationality: Nationalité
     official_name: Nom officiel
+    personal_web_url: Adresse du site web personnel
+    personal_phone: Numéro de téléphone personnel
+    usual_name: Nom d'usage
   activerecord:
     attributes:
       profile:
-        available_languages: Langues à choix
+        available_languages: Choisir les langues du profil
         expertise: Expertises
         nationality: Nationalité
         official_name: Nom officiel
-        en_enabled: profile disponible en anglais
-        fr_enabled: profile disponible en français
-        it_enabled: Profil disponible en italien.
-        de_enabled: profile disponible en allemand
+        personal_web_url: Adresse du site web personnel
+        personal_phone: Numéro de téléphone personnel
+        usual_name: Nom d'usage
+        expertise_en: Expertise (mots-clefs uniquement)
+        expertise_fr: Expertise (mots-clefs uniquement)
+        expertise_it: Expertise (mots-clefs uniquement)
+        expertise_de: Expertise (mots-clefs uniquement)
+        nationality_en: Nationalité
+        nationality_fr: Nationalité
+        nationality_it: Nationalité
+        nationality_de: Nationalité
+        en_enabled: Profil disponible en anglais
+        fr_enabled: Profil disponible en français
+        it_enabled: Profil disponible en italien
+        de_enabled: Profil disponible en allemand
     errors:
       models:
         profile:
           attributes:
-            expertise_en: {}
-            expertise_fr: {}
-            expertise_ir: {}
-            expertise_de: {}
+            expertise_en:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            expertise_fr:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            expertise_ir:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            expertise_de:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
   helpers:
     placeholder:
       profile: {}
   profiles:
     edit:
       title:
-        boxes_main: Bloc principaux
-        boxes_contact: Edition des blocs de contacts
-        details: Mes informations personnelles
+        boxes_main: Mon curriculum
+        boxes_contact: Mes informations professionnelles
+        details: Mes informations officielles
         editing_languages: Ce profil est bilingue
         edit_language: Définir la langue(s) du profil
         editing: Editer
     form:
       available_languages: Langues à choix
+      expertise: Expertise (mots-clefs uniquement)
+      nationality: Nationalité
       official_name: Nom officiel
-      en_enabled: profile disponible en anglais
-      fr_enabled: profile disponible en français
-      it_enabled: Profil disponible en italien.
-      de_enabled: profile disponible en allemand
-      action: {}
+      personal_web_url: Adresse du site web personnel
+      personal_phone: Numéro de téléphone personnel
+      usual_name: Non d'usage
+      expertise_en: Expertise (mots-clefs uniquement)
+      expertise_fr: Expertise (mots-clefs uniquement)
+      expertise_it: Expertise (mots-clefs uniquement)
+      expertise_de: Expertise (mots-clefs uniquement)
+      nationality_en: Nationalité
+      nationality_fr: Nationalité
+      nationality_it: Nationalité
+      nationality_de: Nationalité
+      en_enabled: Profil disponible en anglais
+      fr_enabled: Profil disponible en français
+      it_enabled: Profil disponible en italien
+      de_enabled: Profil disponible en allemand
+      expertise_help: Expertise (mots-clefs uniquement)
+      action:
+        submit: Enregistrer
     languages_form:
-      action: {}
+      translations: Fournir une traduction
+      en_enabled: Profil disponible en anglais
+      fr_enabled: Profil disponible en français
+      it_enabled: Profil disponible en italien
+      de_enabled: Profil disponible en allemand
+      action:
+        submit: Enregister

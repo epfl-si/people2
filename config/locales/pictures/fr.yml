@@ -2,18 +2,26 @@
 fr:
   activerecord:
     attributes:
-      picture: {}
+      picture:
+        selected: sélectionné
+        camipro: Camipro
+        failed_attempts: Nombre d'erreur pour récupérer la photo CAMIPRO
     errors:
       models:
         picture:
           attributes:
             base:
-              undeletable: Impossible de supprimer la photo CAMIPRO
+              undeletable: La photo CAMIPRO n'est pas supprimable
   pictures:
     currently_selected_picture: Photo affichée
     form:
+      selected: sélectionné
+      camipro: Camipro
+      failed_attempts: Nombre d'erreur pour récupérer la photo CAMIPRO
       browse_image_file: Télécharger une nouvelle photo
+      max_photos_reached: Nombre maximum de photo atteint
       no_photofile_selected: Aucune photo sélectionnée
+      upload_image: Télécharger une photo
     pictures:
       title: Ma photo
-      currently_selected: Photo sélectionnée
+      currently_selected: Photo affichée

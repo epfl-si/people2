@@ -103,7 +103,9 @@ class ApplicationService
 
   def fetch_http(uri = @url)
     Rails.logger.debug("app_service: fetching #{uri}")
-    return do_fetch_http(uri) unless Rails.application.config_for(:epflapi).offline_dev_caching
+    unless Rails.env.development? && Rails.application.config_for(:epflapi).offline_dev_caching
+      return do_fetch_http(uri)
+    end
 
     key = Digest::SHA256.hexdigest @url.to_s
     fpath = File.join(Rails.application.config_for(:epflapi).offline_cachedir, "#{key}.marshal")

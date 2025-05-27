@@ -4,24 +4,24 @@ en:
     attributes:
       picture:
         selected: selected
-        camipro: camipro
-        failed_attempts: number of failed attempts of fetching the camipro picture
+        camipro: Camipro
+        failed_attempts: Number of failed attempts of fetching the CAMIPRO picture
     errors:
       models:
         picture:
           attributes:
             base:
-              undeletable: The CAMIPRO photo cannot be deleted
+              undeletable: CAMIPRO picture cannot be deleted
   pictures:
     currently_selected_picture: Displayed picture
     form:
       selected: selected
-      camipro: camipro
-      failed_attempts: number of failed attempts of fetching the camipro picture
+      camipro: Camipro
+      failed_attempts: Number of failed attempts of fetching the CAMIPRO picture
       browse_image_file: Upload a new picture
-      max_photos_reached: You have reached the maximum number of allowed photos.
+      max_photos_reached: Maximum number of pictures reached
       no_photofile_selected: No picture selected
-      upload_image: Upload the image
+      upload_image: Upload a picture
     pictures:
       title: My picture
-      currently_selected: Selected picture
+      currently_selected: Displayed picture

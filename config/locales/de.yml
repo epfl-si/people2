@@ -8,27 +8,42 @@ de:
     native: {}
   no_attribute_for_locale: ''
   no_title_for_locale: ''
+  translated_label: ''
   messages:
+    empty_orcid_help: ''
     function_change_explain: ''
+    function_change_exists: ''
   generic:
     form:
       cancel: ''
-      texfield_for: ''
+      submit: ''
+      update: ''
+      texfield_for: "%{attr}"
   nav:
     app_with_version: ''
+    issues: ''
+    version: ''
   action:
     add: ''
     add_record: ''
     confirm: ''
+    delete: ''
     edit_profile: ''
     more: ''
     search: ''
     search_people: ''
+    show_hide_search_form: ''
+    sign_in: ''
+    sign_out: ''
   dev:
-    action: {}
+    action:
+      abandon: ''
+      adopt: ''
+      revert: ''
   error:
     one: ''
     record:
+      zero: ''
       one: ''
       other: ''
   flash:
@@ -36,15 +51,22 @@ de:
       create: ''
       update: ''
       remove: ''
-      accred: {}
+      accred:
+        cannot_hide_all: ''
       box:
+        cannot_delete: ''
         create: ''
       function_change:
         create: ''
       profile: {}
     notice:
       create: ''
+      update: ''
+      remove: ''
     success:
+      create: ''
+      update: ''
+      remove: ''
       box:
         deleted: ''
         create: ''
@@ -57,6 +79,8 @@ de:
     draft: ''
     editor: ''
     hidden_address: ''
+    intranet: ''
+    intranet_access: ''
     label:
       public: ''
       intranet: ''
@@ -65,32 +89,54 @@ de:
       hidden: ''
     short_label:
       intranet: ''
+      auth: ''
       draft: Entwurf
       hidden: ''
     labels:
       published: ''
       draft: Entwurf
       hidden: ''
+      public: ''
       intranet: ''
       authenticated: ''
     short_labels:
       published: ''
       draft: Entwurf
       hidden: ''
+      public: ''
       intranet: ''
     public: öffentlich
     public_access: öffentlich
     visible: Sichtbar
+    visible_address: ''
   errors:
     messages:
+      blank: ''
+      required: ''
+      taken: ''
+      invalid: ''
+      greater_than: ''
+      less_than: ''
+      untranslatable: ''
       incorrect_type: ''
       cannot_hide_all_accreds: ''
   activerecord:
     models:
+      achievement: ''
+      award: ''
+      box: ''
+      education: ''
       experience: ''
+      function_change: ''
+      infoscience: ''
+      picture: ''
+      profile: ''
       publication: Veröffentlichung
+      rich_text_box: ''
+      social: ''
     errors:
       messages:
+        record_invalid: ''
         restrict_dependent_destroy:
           has_one: ''
           has_many: ''
@@ -99,5 +145,7 @@ de:
       models:
         name:
           attributes:
-            usual_first: {}
-            usual_last: {}
+            usual_first:
+              not_in_official: ''
+            usual_last:
+              not_in_official: ''

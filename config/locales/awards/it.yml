@@ -3,6 +3,9 @@ it:
   activerecord:
     attributes:
       award:
+        category: ''
+        issuer: ''
+        origin: ''
         title: Titolo
         url: url
         year: Anno
@@ -11,6 +14,9 @@ it:
       award: {}
   awards:
     form:
+      category: ''
+      issuer: ''
+      origin: ''
       title: Titolo
       url: url
       year: Anno

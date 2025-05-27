@@ -11,9 +11,12 @@ de:
           attributes:
             url:
               invalid_format: ''
+              taken: ''
   helpers:
     placeholder:
       infoscience: {}
   infosciences:
     form:
       title: Titel
+      url: ''
+      create: ''

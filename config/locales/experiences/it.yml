@@ -3,16 +3,26 @@ it:
   activerecord:
     attributes:
       experience:
+        description: ''
+        location: ''
+        period: ''
         title: Titolo
+        year_begin: ''
+        year_end: ''
     errors:
       models:
         experience:
           attributes:
             base:
-              missing_year: ''
+              missing_year: Prego indicare sia la data di inizio che quella di fine
   helpers:
     placeholder:
       experience: {}
   experiences:
     form:
+      description: ''
+      location: ''
+      period: ''
       title: Titolo
+      year_begin: ''
+      year_end: ''

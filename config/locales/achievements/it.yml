@@ -3,6 +3,8 @@ it:
   activerecord:
     attributes:
       achievement:
+        category: ''
+        description: ''
         url: url
         year: Anno
   helpers:
@@ -10,6 +12,8 @@ it:
       achievement: {}
   achievements:
     form:
+      category: ''
+      description: ''
       url: url
       year: Anno
       help:

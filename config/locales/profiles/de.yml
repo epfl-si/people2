@@ -5,6 +5,9 @@ de:
     expertise: ''
     nationality: ''
     official_name: ''
+    personal_web_url: ''
+    personal_phone: ''
+    usual_name: ''
   activerecord:
     attributes:
       profile:
@@ -12,6 +15,17 @@ de:
         expertise: ''
         nationality: ''
         official_name: ''
+        personal_web_url: ''
+        personal_phone: ''
+        usual_name: ''
+        expertise_en: ''
+        expertise_fr: ''
+        expertise_it: ''
+        expertise_de: ''
+        nationality_en: ''
+        nationality_fr: ''
+        nationality_it: ''
+        nationality_de: ''
         en_enabled: Profile verfügbar in Englisch.
         fr_enabled: Profile verfügbar auf Französisch.
         it_enabled: Profil verfügbar auf italienisch.
@@ -20,10 +34,14 @@ de:
       models:
         profile:
           attributes:
-            expertise_en: {}
-            expertise_fr: {}
-            expertise_ir: {}
-            expertise_de: {}
+            expertise_en:
+              too_long: ''
+            expertise_fr:
+              too_long: ''
+            expertise_ir:
+              too_long: ''
+            expertise_de:
+              too_long: ''
   helpers:
     placeholder:
       profile: {}
@@ -38,11 +56,32 @@ de:
         editing: ''
     form:
       available_languages: Verfügbare Sprachen
+      expertise: ''
+      nationality: ''
       official_name: ''
+      personal_web_url: ''
+      personal_phone: ''
+      usual_name: ''
+      expertise_en: ''
+      expertise_fr: ''
+      expertise_it: ''
+      expertise_de: ''
+      nationality_en: ''
+      nationality_fr: ''
+      nationality_it: ''
+      nationality_de: ''
       en_enabled: Profile verfügbar in Englisch.
       fr_enabled: Profile verfügbar auf Französisch.
       it_enabled: Profil verfügbar auf italienisch.
       de_enabled: Bild verfügbar auf Deutsch
-      action: {}
+      expertise_help: ''
+      action:
+        submit: ''
     languages_form:
-      action: {}
+      translations: ''
+      en_enabled: ''
+      fr_enabled: ''
+      it_enabled: ''
+      de_enabled: ''
+      action:
+        submit: ''
