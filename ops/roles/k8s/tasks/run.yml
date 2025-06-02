@@ -44,6 +44,7 @@
             serviceAccountName: puller
             containers:
               - name: people
+                command: ["./bin/thrust", "./bin/rails", "server"]
                 image: "{{ people.image }}"
                 imagePullPolicy: Always
                 ports:
@@ -69,6 +70,8 @@
                     value: "8080"
                   - name: TARGET_PORT
                     value: "3000"
+                  - name: THRUST_DEBUG
+                    value: "1"
                 volumeMounts:
                   - name: storage-volume
                     mountPath: /rails/storage
