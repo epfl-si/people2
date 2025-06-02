@@ -1,5 +1,9 @@
 ---
 
+- name: Debug people version
+  ansible.builtin.debug:
+    var: people_version
+
 - name: Ensure people-webapp service
   kubernetes.core.k8s:
     state: present

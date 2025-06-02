@@ -92,6 +92,7 @@ class ProfilesController < ApplicationController
 
   def update_inclusivity
     if @profile.update(profile_params)
+      ProfilePatchJob.perform_later("sciper" => @profile.sciper, "inclusivity" => @profile.inclusivity ? "yes" : "no")
       respond_to do |format|
         format.turbo_stream { render "inclusivity/update" }
       end
