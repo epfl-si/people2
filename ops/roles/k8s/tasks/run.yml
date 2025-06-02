@@ -52,10 +52,10 @@
                     name: metrics
                 resources:
                   limits:
-                    memory: "256Mi"
+                    memory: "4096Mi"
                   requests:
                     cpu: "100m"
-                    memory: "256Mi"
+                    memory: "2048Mi"
                 envFrom:
                   - configMapRef:
                       name: people-app-config
@@ -109,14 +109,14 @@
             containers:
               - name: people
                 image: "{{ people.image }}"
-                command: ["./bin/rails", "jobs"]
+                command: ["./bin/jobs"]
                 imagePullPolicy: Always
                 resources:
                   limits:
-                    memory: "256Mi"
+                    memory: "2048Mi"
                   requests:
                     cpu: "1m"
-                    memory: "256Mi"
+                    memory: "1024Mi"
                 envFrom:
                   - configMapRef:
                       name: people-app-config

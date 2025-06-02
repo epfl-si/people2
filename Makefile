@@ -444,7 +444,7 @@ prod_push: prod_build
 
 ## Redeploy app to prod cluter
 prod_deploy:
-	cd ops && ./possible.sh --prod -t webapp
+	cd ops && ./possible.sh --prod -t run.app
 
 ## Build, tag and deploy app to production
 prod: prod_push prod_deploy
