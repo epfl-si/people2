@@ -49,6 +49,8 @@ class ProfilesController < ApplicationController
     when "languages"
       update_languages
     when "inclusivity"
+      update_inclusivity
+    when "name"
       raise NotImplementedError
     else
       update_base
@@ -88,6 +90,17 @@ class ProfilesController < ApplicationController
   #   end
   # end
 
+  def update_inclusivity
+    if @profile.update(profile_params)
+      respond_to do |format|
+        format.turbo_stream { render "inclusivity/update" }
+      end
+    else
+      flash.now[:error] = ".update"
+      render :inclusivity_section, status: :unprocessable_entity
+    end
+  end
+
   # PATCH /profile/:id/set_favorite_picture/picture_id
   def set_favorite_picture
     @picture = @profile.pictures.find(params[:picture_id])
@@ -124,6 +137,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
+      :inclusivity,
       :nationality_fr, :nationality_en, :nationality_it, :nationality_de,
       :expertise_fr, :expertise_en, :expertise_it, :expertise_de,
       :personal_web_url,
