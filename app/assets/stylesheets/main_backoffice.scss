@@ -130,6 +130,10 @@ summary .rpush {
   width: calc(100% - 25px);
 }
 
+.definition-list-grid-large {
+  grid-template-columns: minmax(min-content, 30%) 1fr;
+}
+
 // ---------------------------------------------------------------------- form
 // ---- Forms for editing instances of the models depending on profile
 

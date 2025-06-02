@@ -5,8 +5,12 @@ en:
     domain: people.epfl.ch
     long_name: online people directory
     name: people
+  inclusivity:
+    enabled: "Yes"
+    disabled: "No"
+  profile:
+    inclusivity: "Show job names in inclusive form (french version)"
   profiles:
-    inclusivity: "Inclusivity"
     hide_gender:
       enabled: "Yes"
       disabled: "No"
@@ -52,6 +56,7 @@ en:
     form:
       identifier_label:
         bluesky: Bluesky username
+  undefined: Not specified
   usual_name_changes:
     new:
       fallback:
@@ -84,6 +89,11 @@ fr:
     domain: people.epfl.ch
     long_name: online people directory
     short_name: people
+  inclusivity:
+    enabled: "Oui"
+    disabled: "Non"
+  profile:
+    inclusivity: "Afficher la forme inclusive des fonctions"
   profiles:
     inclusivity: "Inclusivité"
     hide_gender:
@@ -131,6 +141,7 @@ fr:
     form:
       identifier_label:
         bluesky: Bluesky
+  undefined: Not specified
   usual_name_changes:
     new:
       fallback:

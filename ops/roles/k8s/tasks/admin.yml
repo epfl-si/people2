@@ -33,6 +33,9 @@
               - name: migrate
                 image: "{{ people.image }}"
                 command: ["bin/rails", "db:migrate"]
+                env:
+                  - name: SECRET_KEY_BASE_DUMMY
+                    value: "1"
                 envFrom:
                   - configMapRef:
                       name: people-app-config
@@ -40,7 +43,7 @@
                       name: people-admin-secrets
                 resources:
                   requests:
-                    cpu: "100m"
+                    cpu: "10m"
                     memory: "256Mi"
                 volumeMounts:
                   - name: storage-volume
