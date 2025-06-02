@@ -51,6 +51,8 @@
                   - containerPort: 9394
                     name: metrics
                 resources:
+                  limits:
+                    memory: "256Mi"
                   requests:
                     cpu: "100m"
                     memory: "256Mi"
@@ -67,6 +69,59 @@
                     value: "8080"
                   - name: TARGET_PORT
                     value: "3000"
+                volumeMounts:
+                  - name: storage-volume
+                    mountPath: /rails/storage
+                    subPath: people_storage
+                  - name: pids-path
+                    mountPath: /rails/tmp
+            volumes:
+              - name: pids-path
+                emptyDir:
+                  sizeLimit: 100Mi
+              - name: storage-volume
+                persistentVolumeClaim:
+                  claimName: people-storage
+
+- name: Deploy the job supervisor
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: people-jobs
+        namespace: "{{ namespace }}"
+        labels:
+          app: people
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: people
+        template:
+          metadata:
+            labels:
+              app: people
+              version: "v1.03"
+          spec:
+            serviceAccountName: puller
+            containers:
+              - name: people
+                image: "{{ people.image }}"
+                command: ["./bin/rails", "jobs"]
+                imagePullPolicy: Always
+                resources:
+                  limits:
+                    memory: "256Mi"
+                  requests:
+                    cpu: "1m"
+                    memory: "256Mi"
+                envFrom:
+                  - configMapRef:
+                      name: people-app-config
+                  - secretRef:
+                      name: people-app-secrets
                 volumeMounts:
                   - name: storage-volume
                     mountPath: /rails/storage

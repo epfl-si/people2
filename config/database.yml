@@ -14,13 +14,20 @@ development:
     password: mariadb
     database: people
     migrations_paths: db/migrate
+  queue:
+    adapter: mysql2
+    host: mariadb
+    username: people
+    password: mariadb
+    database: people_queue
+    migrations_paths: db/queue_migrate
   work:
     adapter: mysql2
     host: mariadb
     username: people
     password: mariadb
     database: people_work
-    migrations_paths: db/migrate_work
+    migrations_paths: db/work_migrate
 test:
   people:
     adapter: mysql2
@@ -54,13 +61,21 @@ production:
     host:     <%= ENV.fetch('DB_MAIN_HOST', 'please_do_not_die') %>
     port:     <%= ENV.fetch('DB_MAIN_PORT', '3306') %>
     migrations_paths: db/migrate
+  queue:
+    adapter: mysql2
+    database: <%= ENV.fetch('DB_QUEUE_NAME', 'people_prod_queue') %>
+    username: <%= ENV.fetch('DB_QUEUE_USER', 'please_do_not_die') %>
+    password: <%= ENV.fetch('DB_QUEUE_PASSWORD', 'please_do_not_die') %>
+    host:     <%= ENV.fetch('DB_QUEUE_HOST', 'mariadb') %>
+    port:     <%= ENV.fetch('DB_QUEUE_PORT', '3306') %>
+    migrations_paths: db/queue_migrate
   work:
     adapter: mysql2
-    database: <%= ENV.fetch('DB_WORK_NAME', 'work') %>
+    database: <%= ENV.fetch('DB_WORK_NAME', 'people_prod_work') %>
     username: <%= ENV.fetch('DB_WORK_USER', 'please_do_not_die') %>
     password: <%= ENV.fetch('DB_WORK_PASSWORD', 'please_do_not_die') %>
     host:     <%= ENV.fetch('DB_WORK_HOST', 'mariadb') %>
     port:     <%= ENV.fetch('DB_WORK_PORT', '3306') %>
-    migrations_paths: db/migrate_work
+    migrations_paths: db/work_migrate
     schema_dump: false
 # ---------------------------------------------------------- External/Legacy DBs

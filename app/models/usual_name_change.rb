@@ -3,6 +3,7 @@
 class UsualNameChange < ApplicationRecord
   belongs_to :profile
   before_validation :ensure_new_names
+  after_create :sync_with_source
   validates :official_first, presence: true
   validates :official_last, presence: true
   validate :first_is_compatible_with_official
@@ -14,8 +15,8 @@ class UsualNameChange < ApplicationRecord
     return nil unless name.customizable?
 
     new(
-      old_first: name.usual_first,
-      old_last: name.usual_last,
+      old_first: name.usual_first || name.official_first,
+      old_last: name.usual_last || name.official_last,
       official_first: name.official_first,
       official_last: name.official_last,
       profile: profile
@@ -41,5 +42,10 @@ class UsualNameChange < ApplicationRecord
   def ensure_new_names
     self.new_first = official_first if new_first.blank?
     self.new_last = official_last if new_last.blank?
+  end
+
+  def sync_with_source
+    ProfilePatchJob.perform_later("sciper" => profile.sciper, "firstnameusual" => new_first,
+                                  "lastnameusual" => new_last)
   end
 end

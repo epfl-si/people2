@@ -8,8 +8,8 @@ class UsualNameChangesController < ApplicationController
 
   def create
     @unc = UsualNameChange.for(@profile)
-    # if @unc.update(new_first: "Ciccio Pasticcio")
-    if @unc.update(unc_params)
+
+    if @unc&.update(unc_params)
       flash.now[:success] = ".usual_name_change.create"
     else
       render turbo_stream: turbo_stream.update("usual_name_change_form", partial: "form")
