@@ -31,6 +31,30 @@
         retryInterval: 20s
 
 
+- name: "Queue database"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: Database
+      metadata:
+        name: "queue"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        name: "{{ _secrets.db.queue.dbname }}"
+        characterSet: utf8mb4
+        collate: utf8mb4_unicode_ci
+        mariaDbRef:
+          name: mariadb
+        rootPasswordSecretKeyRef:
+          name: mariadb-secrets
+          key: ROOT_PASSWORD
+          generate: false
+        cleanupPolicy: Skip
+        requeueInterval: 30s
+        retryInterval: 5s
+
 - name: "Work database"
   kubernetes.core.k8s:
     state: present
@@ -38,7 +62,7 @@
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: Database
       metadata:
-        name: "{{ _secrets.db.work.dbname }}"
+        name: "work"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
@@ -55,6 +79,35 @@
         requeueInterval: 30s
         retryInterval: 5s
 
+- name: "Grant access to Queue database to the app user"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: Grant
+      metadata:
+        name: "{{ _secrets.db.queue.username }}-on-queue"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        username: "{{ _secrets.db.queue.username }}"
+        host: "%"
+        database: "{{ _secrets.db.queue.dbname }}"
+        table: "*"
+        privileges:
+           - "ALL PRIVILEGES"
+           # - "SELECT"
+           # - "INSERT"
+           # - "UPDATE"
+        mariaDbRef:
+          name: mariadb
+        rootPasswordSecretKeyRef:
+          name: mariadb-secrets
+          key: ROOT_PASSWORD
+          generate: false
+        cleanupPolicy: Skip
+        requeueInterval: 30s
+        retryInterval: 5s
 
 - name: "Grant access to Work database to the app user"
   kubernetes.core.k8s:
@@ -63,7 +116,7 @@
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: Grant
       metadata:
-        name: "{{ _secrets.db.work.username }}-on-{{ _secrets.db.work.dbname }}"
+        name: "{{ _secrets.db.work.username }}-on-work"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
