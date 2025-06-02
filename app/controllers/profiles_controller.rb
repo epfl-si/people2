@@ -97,7 +97,7 @@ class ProfilesController < ApplicationController
       end
     else
       flash.now[:error] = ".update"
-      render :edit_details, status: :unprocessable_entity
+      render :inclusivity_section, status: :unprocessable_entity
     end
   end
 
@@ -137,7 +137,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :show_inclusivity,
+      :inclusivity,
       :nationality_fr, :nationality_en, :nationality_it, :nationality_de,
       :expertise_fr, :expertise_en, :expertise_it, :expertise_de,
       :personal_web_url,

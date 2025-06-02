@@ -1,19 +1,25 @@
-<%= form_with(
-      model: profile,
-      url: profile_path(profile, part: :inclusivity),
-      method: :patch,
-      data: { controller: "auto-submit" },
-      class: "d-inline-block"
-    ) do |form| %>
+<turbo-frame id="inclusivity-section">
+  <%= form_with(
+        model: profile,
+        url: profile_path(profile, part: :inclusivity),
+        method: "patch",
+        remote: true,
+        data: {
+          controller: "auto-submit",
+          action: "change->auto-submit#submit"
+        },
+        class: "d-inline-block"
+      ) do |form| %>
 
-  <div class="form-check form-check-inline">
-    <%= form.radio_button :show_inclusivity, true, id: dom_id(profile, "show_inclusivity_true"), class: "form-check-input" %>
-    <%= form.label :show_inclusivity, t("visibility.show"), for: dom_id(profile, "show_inclusivity_true"), class: "form-check-label" %>
-  </div>
+    <div class="form-check form-check-inline">
+      <%= form.radio_button :inclusivity, true, id: dom_id(profile, "inclusivity_true"), class: "form-check-input" %>
+      <%= form.label :inclusivity, t("visibility.show"), for: dom_id(profile, "inclusivity_true"), class: "form-check-label" %>
+    </div>
 
-  <div class="form-check form-check-inline">
-    <%= form.radio_button :show_inclusivity, false, id: dom_id(profile, "show_inclusivity_false"), class: "form-check-input" %>
-    <%= form.label :show_inclusivity, t("visibility.hide"), for: dom_id(profile, "show_inclusivity_false"), class: "form-check-label" %>
-  </div>
+    <div class="form-check form-check-inline">
+      <%= form.radio_button :inclusivity, false, id: dom_id(profile, "inclusivity_false"), class: "form-check-input" %>
+      <%= form.label :inclusivity, t("visibility.hide"), for: dom_id(profile, "inclusivity_false"), class: "form-check-label" %>
+    </div>
 
-<% end %>
+  <% end %>
+</turbo-frame>
