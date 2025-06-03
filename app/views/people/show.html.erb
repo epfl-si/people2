@@ -54,8 +54,7 @@
 
     </div>
     <div class="people-contacts col-md-6 col-lg-8">
-      <h1 class="mb-2"><%= @person.name.display %></h1>
-      <h3 class="mb-4"><%= @accreds.first.position.t_label %></h3>
+      <h1 class="mb-3"><%= @person.name.display %></h1>
       <%= render "contact" %>
       <%= render "accreds" %>
       <% @contact_zone_bbs&.each do |section, boxes| %>
