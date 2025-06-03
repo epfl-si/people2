@@ -5,7 +5,7 @@
 		<% end %>
 	<% end %>
 
-	<div class="list-group-item" %>
+	<div class="list-group-item list-group-item-borderless" %>
 		<%= turbo_frame_tag "new_award_form" do %>
 		  <%= add_record_button(new_profile_award_path(@profile), name: "award") %>
 		<% end %>
