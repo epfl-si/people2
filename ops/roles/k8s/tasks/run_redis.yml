@@ -33,12 +33,12 @@
                 ports:
                   - containerPort: 6379 # ANSIBLE+K8S=PURE SHIT! "{{ redis.port | int }}"
                 resources:
-                  requests:
-                    cpu: "100m" # WTF is this unit ?
-                    memory: "{{ redis.memory }}Mi"
                   limits:
-                    cpu: "200m" # WTF is this unit ?
-                    memory: "{{ redis.alloc_memory }}Mi"
+                    cpu: "{{ limits.cpu.max }}"
+                    memory: "{{ limits.memory.max }}"
+                  requests:
+                    cpu: "{{ limits.cpu.min }}"
+                    memory: "{{ limits.memory.min }}"
                 volumeMounts:
                   - name: redis-volume
                     mountPath: /data

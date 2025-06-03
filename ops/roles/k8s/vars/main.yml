@@ -12,6 +12,14 @@ quay_pull_config:
 mariadb:
   disk: 5 # Gb
 
+limits:
+  cpu:
+    min: "10m"
+    max: "4"
+  memory:
+    min: "1Mi"
+    max: "8192Mi"
+
 redis:
   # Note that redis image is configured to mirror the official one
   image: quay-its.epfl.ch/svc0033/valkey

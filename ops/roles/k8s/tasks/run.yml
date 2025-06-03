@@ -57,10 +57,11 @@
                     name: metrics
                 resources:
                   limits:
-                    memory: "4096Mi"
+                    cpu: "{{ limits.cpu.max }}"
+                    memory: "{{ limits.memory.max }}"
                   requests:
-                    cpu: "100m"
-                    memory: "2048Mi"
+                    cpu: "{{ limits.cpu.min }}"
+                    memory: "{{ limits.memory.min }}"
                 envFrom:
                   - configMapRef:
                       name: people-app-config
@@ -120,10 +121,11 @@
                 imagePullPolicy: Always
                 resources:
                   limits:
-                    memory: "2048Mi"
+                    cpu: "{{ limits.cpu.max }}"
+                    memory: "{{ limits.memory.max }}"
                   requests:
-                    cpu: "1m"
-                    memory: "1024Mi"
+                    cpu: "{{ limits.cpu.min }}"
+                    memory: "{{ limits.memory.min }}"
                 envFrom:
                   - configMapRef:
                       name: people-app-config
