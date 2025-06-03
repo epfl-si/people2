@@ -19,11 +19,12 @@
                 storage: "{{ mariadb.disk }}Gi"
             storageClassName: ocs-storagecluster-cephfs
         resources:
-          requests:
-            cpu: 50m
-            memory: 750Mi
           limits:
-            memory: 1Gi
+            cpu: "{{ limits.cpu.max }}"
+            memory: "{{ limits.memory.max }}"
+          requests:
+            cpu: "{{ limits.cpu.min }}"
+            memory: "{{ limits.memory.min }}"
         rootPasswordSecretKeyRef:
           name: mariadb-secrets
           key: ROOT_PASSWORD
