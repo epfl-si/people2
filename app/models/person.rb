@@ -83,10 +83,26 @@ class Person
     for_scipers(scipers)
   end
 
+  # TODO: keep only this version once migration is done
+  # def profile!
+  #   unless defined?(@profile)
+  #     @profile = Profile.for_sciper(sciper)
+  #     @profile = Profile.new_with_defaults(sciper) if @profile.nil? && can_have_profile?
+  #   end
+  #   @profile
+  # end
+
   def profile!
     unless defined?(@profile)
       @profile = Profile.for_sciper(sciper)
-      @profile = Profile.new_with_defaults(sciper) if @profile.nil? && can_have_profile?
+      if @profile.nil? && can_have_profile?
+        if Rails.configuration.enable_adoption
+          LegacyProfileImportJob.perform_now(sciper)
+          @profile = Profile.for_sciper(sciper)
+        else
+          @profile = Profile.new_with_defaults(sciper)
+        end
+      end
     end
     @profile
   end

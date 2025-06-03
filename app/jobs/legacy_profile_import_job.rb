@@ -86,6 +86,13 @@ class LegacyProfileImportJob < ApplicationJob
       # ---------------------------------------------------------------- Accreds
       import_accreds(profile)
 
+      # ------------------------------------------------------------------ Photo
+      if cv.photo_ext == "1"
+        q = profile.pictures.create
+        q.fetch_from_legacy!
+        profile.update(selected_picture: q)
+      end
+
       # ---------------------------------------------------------- Special Boxes
 
       # Expertise is the only rich text  box whose content is in the cv table

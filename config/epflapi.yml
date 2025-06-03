@@ -24,6 +24,7 @@ epflapi_config: &epflapi_config
 
   # Legacy cgi-bin
   legacy_url: <%= ENV.fetch("LEGACY_SERVER_URL", "https://personnes.epfl.ch") %>/cgi-bin/updateCagaio
+  legacy_photo_url: <%= ENV.fetch("LEGACY_SERVER_URL", "https://personnes.epfl.ch") %>/cgi-bin/wsgetPhotoNext
 
   # CAMIPRO
   camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY", nil) %>
