@@ -132,15 +132,13 @@ about:
 
 ## build the web app docker image (set REBUNDLE=yes for refreshing Gemfile.lock)
 build: envcheck $(ELE_FILES) VERSION gems
-	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
 	docker compose build
-	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
 
 ## build image discarding all cached layers
 rebuild: envcheck VERSION
-	[ "$(REBUNDLE)" == "yes" ] && rm -f Gemfile.lock
+	rm -f Gemfile.lock
 	docker compose build --no-cache
-	[ "$(REBUNDLE)" == "yes" ] && docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
+	docker run --rm people2023-webapp /bin/cat /rails/Gemfile.lock > Gemfile.lock
 
 envcheck: .env .git/hooks/pre-commit
 
