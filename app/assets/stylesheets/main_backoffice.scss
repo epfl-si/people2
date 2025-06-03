@@ -323,10 +323,13 @@ details {
 
 #editor {
   position: fixed;
-  top: 30vh;
-  left: 25vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 50vw;
   min-width: 600px;
+  max-height: 70vh;
+  overflow: scroll;
   z-index: 100;
   padding: 0;
   border-radius: 0.5em;
