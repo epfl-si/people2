@@ -413,7 +413,7 @@ nata_reinit: dcup
 	ssh peonext 'rm -rf data/people/storage/*'
 	docker compose exec webapp tar cvf - storage | ssh peonext "tar -xvf - -C data/people"
 	$(SQLDUMP) people | ssh peonext "./bin/peopledb"
-	$(SQLDUMP) work | ssh peonext "./bin/workdb"
+	$(SQLDUMP) people_work | ssh peonext "./bin/workdb"
 	make nata_patch
 
 nata_reinit_legacy: dcup
