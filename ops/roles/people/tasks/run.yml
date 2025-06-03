@@ -99,3 +99,83 @@
       traefik.http.services.people.loadbalancer.server.port: "{{ ports.people }}"
       traefik.http.routers.people.middlewares: peoblock
       traefik.http.middlewares.peoblock.basicauth.users: "{{ _secrets.people.auth.user }}:{{ _secrets.people.auth.pass | password_hash('md5') }}"
+
+
+
+- name: Ensure people jobs supervisor is running
+  vars:
+    dev_volumes:
+      - "{{ people.srcdir }}:/srv/app"
+    mandatory_volumes:
+      - "{{ people.storage }}:/srv/app/storage"
+      - "{{ people.filecache }}:/srv/filecache"
+    all_volumes: '{{ mandatory_volumes + dev_volumes if people.env == "development" else mandatory_volumes }}'
+  containers.podman.podman_container:
+    name: peojobs
+    image: "people:{{ people_image_version }}"
+    command: ["./bin/jobs"]
+    env:
+      # ------------------------------ deployment-independent mandatory ENV vars
+      RAILS_ENV: "{{ people.env }}"
+      SUPERUSERS: "{{ _secrets.people.superusers }}"
+
+      # -------------------------------------------------- with ok default value
+      # APP_HOSTNAME: people.epfl.ch
+      APP_HOSTNAME: "{{ hosts.people }}"
+      # ENABLE_DIRECT_UPLOADS: false
+      # HIDE_ENS_ACCREDDS: true
+      # INTRANET_RE: '^128\.17[89]'
+      # RAILS_LOG_LEVEL: info in prod
+      # if REDIS_CACHE is defined then redis is used otherwise default to memory
+      # note that in dev cache is enabled only if presence of tmp/caching-dev.txt
+      REDIS_CACHE: "{{ people.redis }}"
+      # SEEDS_PATH: db/seeds/data
+      # USE_LOCAL_ELEMENTS: false
+      USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
+
+      # ----------------------------------------------------------- dev specific
+      # DEV_SEEDS_PATH: db/seeds_dev/data
+      FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
+      RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(hosts.people, '') }}"
+      SHOW_ERROR_PAGES: "{{ SHOW_ERROR_PAGES | default('no') }}"
+
+      # ---------------------------------------------------- transition specific
+      ENABLE_ADOPTION: "{{ people.enable_adoption }}"
+      LEGACY_SERVER_URL: "{{ people.legacy_server_url }}"
+      # LEGACY_PAGES_CACHE: 2days
+
+      # ----------------------------- read in yml files (will go to config maps)
+
+      # --> epflapi.yml
+      ATELA_KEY: "{{ _secrets.atela_key }}"
+      CAMIPRO_PHOTO_KEY: "{{ _secrets.camipro_photo_key }}"
+      CAMIPRO_PHOTO_HOST: "{{ people.camipro_host }}"
+      ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
+      ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
+      EPFLAPI_BACKEND_URL: "{{ people.api_url }}"
+      EPFLAPI_PASSWORD: "{{ _secrets.api.password }}"
+      ISA_URL: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
+      OFFLINE_CACHEDIR: "/srv/filecache"
+
+      # # --> ollama.yml
+      OLLAMA_URL: "{{ people.ollama_url }}"
+
+      # OpenAI
+      OPENAI_API_KEY: "{{ _secrets.inference.key }}"
+      OPENAI_BASE_URL: "{{ people.openai_url }}"
+
+      # --> oidc.yml
+      ENTRA_TENANT_ID: "{{ _secrets.entra_oidc.tenant_id }}"
+      ENTRA_CLIENT_ID: "{{ _secrets.entra_oidc.client_id }}"
+      ENTRA_SECRET: "{{ _secrets.entra_oidc.secret }}"
+      USE_KEYCLOAK: no
+
+    volumes: "{{ all_volumes }}"
+    restart_policy: always
+    state: started
+    network:
+      - traefik
+      # - redis
+      # - mariadb
+    # generate_systemd: false
+    # restart_sec: 10
