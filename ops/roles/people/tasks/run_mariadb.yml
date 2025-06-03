@@ -2,12 +2,20 @@
 
 - name: Ensure db initalisation files
   ansible.builtin.copy:
-    dest: "{{ people.mariadb.init }}/dbs_and_users.sql"
+    dest: "{{ mariadb.init }}/dbs_and_users.sql"
     content: |
       -- New people database
       CREATE USER '{{ _secrets.people.db_user }}'@'%' IDENTIFIED BY '{{ _secrets.people.db_password }}';
       CREATE DATABASE people;
       GRANT ALL PRIVILEGES ON people.* TO '{{ _secrets.people.db_user }}'@'%';
+
+      -- Queue database
+      CREATE DATABASE people_queue;
+      GRANT ALL PRIVILEGES ON people_queue.* TO '{{ _secrets.people.db_user }}'@'%';
+
+      -- Work database
+      CREATE DATABASE people_work;
+      GRANT ALL PRIVILEGES ON people_work.* TO '{{ _secrets.people.db_user }}'@'%';
 
       -- Legacy people cv database
       CREATE DATABASE cv;

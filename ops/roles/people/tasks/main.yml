@@ -9,10 +9,10 @@
   tags: always
 
 
-# - name: debug vars
-#   ansible.builtin.debug:
-#     var: people
-#   tags: debug
+- name: debug vars
+  ansible.builtin.debug:
+    var: grafana
+  tags: debug
 
 - name: Setup base for people
   tags:
@@ -28,7 +28,7 @@
     file: run_whoami.yml
 
 # This defines the people_image_version fact. Therefore it needs to be
-# executed also for people.run tag. 
+# executed also for people.run tag.
 # For updating the src code and building, use the people.src tag
 - name: Source Code to Docker Image
   tags:
@@ -88,4 +88,3 @@
   import_tasks:
     file: demo_monitoring.yml
   when: ENABLE_DEMO_MONITORING
-

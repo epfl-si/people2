@@ -60,8 +60,8 @@
       # ----------------------------- read in yml files (will go to config maps)
 
       # --> epflapi.yml
-      ATELA_KEY: "{{ _secrets.people.atela_key }}"
-      CAMIPRO_PHOTO_KEY: "{{ _secrets.people.camipro_photo_key }}"
+      ATELA_KEY: "{{ _secrets.atela_key }}"
+      CAMIPRO_PHOTO_KEY: "{{ _secrets.camipro_photo_key }}"
       CAMIPRO_PHOTO_HOST: "{{ people.camipro_host }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"

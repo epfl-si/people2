@@ -9,11 +9,11 @@
     - "{{ prometheus.data }}"
     - "{{ prometheus.config }}"
     - "{{ grafana.data }}"
-    - "{{ people.grafana.config }}"
+    - "{{ grafana.config }}"
 
 - name: Ensure prometheus configuration file
   ansible.builtin.copy:
-    dest: "{{ people.prometheus.config }}/prometheus.yml"
+    dest: "{{ prometheus.config }}/prometheus.yml"
     content: |
       # For a more complete config example:
       # https://github.com/prometheus/prometheus/blob/release-3.3/config/testdata/conf.good.yml
@@ -29,8 +29,8 @@
 
 - name: Ensure grafana configuration files
   ansible.builtin.copy:
-    src: "{{ people.grafana.src_config }}/"
-    dest: "{{ people.grafana.config }}/"
+    src: "{{ grafana.src_config }}/"
+    dest: "{{ grafana.config }}/"
 
 - name: Ensure prometheus image
   containers.podman.podman_image:
@@ -60,8 +60,8 @@
     name: grafana
     image: "grafana:{{ grafana_version }}"
     volumes:
-      - "{{ people.grafana.config }}:/etc/grafana"
-      - "{{ people.grafana.data }}:/var/lib/grafana"
+      - "{{ grafana.config }}:/etc/grafana"
+      - "{{ grafana.data }}:/var/lib/grafana"
     labels:
       traefik.http.routers.peofana.rule: "Host(`{{ hosts.grafana }}`)"
       traefik.http.routers.peofana.tls: "{{ tls_in_labels }}"
