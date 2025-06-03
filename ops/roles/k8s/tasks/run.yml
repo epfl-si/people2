@@ -43,7 +43,7 @@
           metadata:
             labels:
               app: people
-              version: "v1.03"
+              version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
             containers:
@@ -111,7 +111,7 @@
           metadata:
             labels:
               app: people
-              version: "v1.03"
+              version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
             containers:
