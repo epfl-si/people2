@@ -74,8 +74,8 @@
                     value: "8080"
                   - name: TARGET_PORT
                     value: "3000"
-                  - name: THRUST_DEBUG
-                    value: "1"
+                  # - name: THRUST_DEBUG
+                  #   value: "1"
                 volumeMounts:
                   - name: storage-volume
                     mountPath: /rails/storage
@@ -114,7 +114,7 @@
           spec:
             serviceAccountName: puller
             containers:
-              - name: people
+              - name: jobs
                 image: "{{ people.image }}"
                 command: ["./bin/jobs"]
                 imagePullPolicy: Always
