@@ -82,6 +82,17 @@ class Picture < ApplicationRecord
     destroy
   end
 
+  def fetch_from_legacy!
+    return if camipro?
+    raise "Picture::fetch_from_legacy! only allowed during migration" unless Rails.configuration.enable_adoption
+
+    cfg = Rails.application.config_for(:epflapi)
+    token = Base64.encode64("#{cfg.username}:#{cfg.password}")
+    sciper = profile.sciper
+    url = URI("#{cfg.legacy_photo_url}?token=#{token}&app=peoplenext&sciper=#{sciper}")
+    image.attach(io: url.open, filename: "#{sciper}.jpg")
+  end
+
   private
 
   def refuse_destroy_if_camipro
