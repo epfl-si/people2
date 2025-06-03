@@ -4,21 +4,25 @@
 </h3>
 <dl class="definition-list definition-list-grid definition-list-grid-large">
 
-	<dt><%= t "profile.available_languages" %></dt>
+	<dt>
+		<%= t "profile.available_languages" %>
+		<%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
+      	  <%= icon('edit-3') %>
+    	<% end %>
+	</dt>
 	<dd>
 		<%= profile.translations.map{|l| t("lang.#{l}")}.join(", ") %>
-		<%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
-      		<%= icon('edit-3') %>
-    	<% end %>
 	</dd>
 
 	<% official = profile.person.name.official_display %>
 	<% usual = profile.person.name.display %>
 
-	<dt><%= t "profile.official_name" %></dt>
+	<dt>
+		<%= t "profile.official_name" %>
+		<%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: {turbo_stream: true} %>
+	</dt>
 	<dd>
 	  <span><%= official %></span>
-		<%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: {turbo_stream: true} %>
 	</dd>
 
 	<% if profile.person.name.customizable? && usual != official %>
