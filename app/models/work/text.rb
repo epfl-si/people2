@@ -25,7 +25,7 @@ module Work
     # If not present, the object with given content is created. This way we
     # collect a list of untranslated models that we can send to the AI in blocks
     def self.for!(text)
-      self.for(text) || new(content: text)
+      self.for(text) || create(content: text)
     end
 
     def lang

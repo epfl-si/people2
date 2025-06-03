@@ -6,6 +6,9 @@
   <%= turbo_stream.remove "add_#{@box.section.label}_box" %>
 <% end %>
 <%= turbo_stream.prepend "#{@box.section.label}_boxes" do %>
-  <%= render @box.to_partial_path, box: @box %>
+  <details open>
+    <summary><%= render "boxes/editable_box", box: @box %></summary>
+    <%= render @box.to_partial_path, box: @box %>
+  </details>
 <% end %>
 <%= dismiss_common_editor %>
