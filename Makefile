@@ -427,6 +427,8 @@ nata_reinit_legacy: dcup
 ## ---------------------------------------------------- Prod openshit deployment
 APP_NAME ?= people
 QUAY_REPO=quay-its.epfl.ch/svc0033/$(APP_NAME)
+OCNAMESPACE=svc0033p-people
+OCPOD_APP=$(shell oc get pods -l role=app --no-headers -o name --field-selector=status.phase==Running | tail -n 1)
 
 # Chemin vers le Dockerfile
 DOCKERFILE=../../../Dockerfile
@@ -448,8 +450,25 @@ prod_deploy:
 ## Build, tag and deploy app to production
 prod: prod_push prod_deploy
 
+## Open a shell on running application pod
 prod_shell:
-	oc rsh $$(oc get pods | grep "people-webapp" | grep Running | gsed -E 's/\s+.*$$//')
+	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP)
+
+## Open a rails console on running application pod
+prod_console:
+	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) ./bin/rails console
+
+## Print logs from production application containers
+prod_logs:
+	oc logs -f -n $(OCNAMESPACE) -l role=app
+
+OCMAINDBNAME=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.dbname')
+OCMAINDBHOST=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.server')
+OCMAINDBUSER=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.username')
+OCMAINDBPASS=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.password')
+## Open sql shell on main application database
+prod_db:
+	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) mariadb -h $(OCMAINDBHOST) -u $(OCMAINDBUSER) --password=$(OCMAINDBPASS) $(OCMAINDBNAME)
 
 # ------------------------------------------------------------------------------
 .PHONY: clean
