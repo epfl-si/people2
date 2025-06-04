@@ -266,8 +266,7 @@ class LegacyProfileImportJob < ApplicationJob
             visibility: AudienceLimitable::VISIBLE
           )
           e.send("title_#{lang}=", le.title)
-          e.send("field_#{lang}=", le.field) if le.field.present?
-          e.location = le.univ if le.director.univ?
+          e.location = le.univ if le.univ?
           unless e.save
             errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
             Rails.logger.debug "Skipping invalid experience #{le.id} (sciper: #{profile.sciper}): #{errs}"
