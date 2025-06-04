@@ -1,27 +1,29 @@
 <turbo-frame id="profile_picture">
-<div class="rpush">
-<h3><%= t '.title' %></h3>
-<%= render 'shared/item_visibility', item: profile, property: 'photo' %>
-</div>
-<div class="row">
-	<div class='col-sm-3'>
-		<div class="card">
-		  <picture>
-				<%= profile_photo(profile.photo!, variant: :medium, class: 'img-fluid') %>
-		  </picture>
-		  <div class="card-body">
-		  	<%= tag.p t('.currently_selected') %>
-		  </div>
+<div class="edit_picture">
+	<div class="rpush">
+	<h3><%= t '.title' %></h3>
+	<%= render 'shared/item_visibility', item: profile, property: 'photo' %>
+	</div>
+	<div class="row">
+		<div class='col-sm-3'>
+			<div class="card">
+			  <picture>
+					<%= profile_photo(profile.photo!, variant: :medium, class: 'img-fluid') %>
+			  </picture>
+			  <div class="card-body">
+			  	<%= tag.p t('.currently_selected') %>
+			  </div>
+			</div>
+		</div>
+		<div class='col-sm-9'>
+			<div id="available-pictures" class="row row-cols-xm-2 row-cols-sm-3 row-cols-md-4">
+				<% pictures.select{|p| !p.selected?}.each do |picture| %>
+				<%= render 'pictures/picture', picture: picture %>
+				<% end %>
+			</div>
 		</div>
 	</div>
-	<div class='col-sm-9'>
-		<div id="available-pictures" class="row row-cols-xm-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6">
-			<% pictures.select{|p| !p.selected?}.each do |picture| %>
-			<%= render 'pictures/picture', picture: picture %>
-			<% end %>
-		</div>
-	</div>
-</div>
 
-<%= render 'pictures/form', profile: profile %>
+	<%= render 'pictures/form', profile: profile %>
+</div>
 </turbo-frame>
