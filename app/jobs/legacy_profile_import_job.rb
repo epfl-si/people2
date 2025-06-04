@@ -179,7 +179,7 @@ class LegacyProfileImportJob < ApplicationJob
       # Index boxes are in a single language. For now, we use the
       # profile's forced language or FR.
       # Or may be we could count how many boxes are in the two languages and
-      # chose the oen where there are more as the preferred...
+      # chose the one where there are most as the preferred...
       # The best would be to have the lang detected by AI but it is quite slow
 
       if cv.defaultcv.present?
