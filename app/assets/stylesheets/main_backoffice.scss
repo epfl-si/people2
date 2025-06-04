@@ -20,6 +20,7 @@
 @function theme-color($name) {
   @return map.get($theme-colors, $name);
 }
+
 @import "elements/bootstrap-variables";
 
 @import "fonts";
@@ -67,6 +68,7 @@ $font-size-xxs: 0.6rem;
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -76,10 +78,12 @@ $font-size-xxs: 0.6rem;
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
 }
+
 // ----
 
 span.visibility {
@@ -88,6 +92,7 @@ span.visibility {
   @extend .tag-primary;
   font-size: $font-size-xxs;
   margin-top: 0.1em;
+
   svg {
     margin-right: spacer(1);
   }
@@ -104,16 +109,22 @@ span.visibility {
 
 #pictures_section {
   min-height: 400px;
+  padding: 1em;
+}
+
+.edit_picture {
   border: 1px solid #c1c1c1;
   padding: 1em;
 }
 
 .add-box-buttons {
   margin-bottom: 1em;
+
   form {
     display: inline;
     padding: 0;
   }
+
   .iconlabel {
     margin-left: 0.5em;
   }
@@ -140,18 +151,22 @@ summary .rpush {
 .instaform {
   background-color: #fff;
   padding: 0.5rem;
+
   .form-group {
     display: flex;
     flex-direction: column;
+
     label {
       margin-bottom: 0.25rem;
       font-size: 0.75em;
     }
+
     input[type="number"] {
       display: inline-block;
       width: min-content;
     }
   }
+
   .field_with_errors {
     .form-control {
       border-color: #ff0000;
@@ -200,6 +215,7 @@ summary .rpush {
 .upload {
   border: 0px;
 }
+
 // ----
 .upload .btn {
   margin-bottom: 0.5rem;
@@ -209,32 +225,40 @@ summary .rpush {
 .sortable-mv {
   display: inline-block;
 }
+
 .sortable-ok {
   display: none;
   color: #7ed321;
 }
+
 .sortable-ko {
   display: none;
   color: #ff0000;
 }
+
 .sortable-done {
   .sortable-mv {
     display: none;
   }
+
   .sortable-ok {
     display: inline-block;
   }
+
   .sortable-ko {
     display: none;
   }
 }
+
 .sortable-error {
   .sortable-mv {
     display: none;
   }
+
   .sortable-ok {
     display: none;
   }
+
   .sortable-ko {
     display: inline-block;
   }
@@ -256,6 +280,7 @@ details {
   summary {
     // height: 4em;
     margin-bottom: 0.5lh;
+
     h2 {
       margin-bottom: 0;
     }
@@ -264,6 +289,7 @@ details {
 
 // ------------------------------------------------- translation switching magic
 #tr_switchable {
+
   .tr_target_en,
   .tr_target_fr,
   .tr_target_it,
@@ -313,6 +339,7 @@ details {
   display: flex;
   flex-direction: column;
   align-items: flex-center;
+
   nav {
     display: flex;
     justify-content: center;
@@ -348,10 +375,12 @@ details {
 // ---------------------------------------------------------- visibility popover
 .gcpopover {
   display: inline-block;
+
   .visibility-button {
     display: flex;
     flex-direction: column;
     align-items: flex-center;
+
     // @extend .tag;
     // @extend .tag-sm;
     // @extend .tag-primary;
@@ -359,6 +388,7 @@ details {
       font-size: $font-size-xxs;
     }
   }
+
   .visibility-container {
     z-index: 100;
     position: absolute;
@@ -369,6 +399,7 @@ details {
 
     .visibility-radios {
       border-bottom: 1px solid #d9d9d9;
+
       label {
         padding: 0.05em 0.2em;
         display: inline-block;
@@ -376,21 +407,26 @@ details {
         cursor: pointer;
         border-bottom: 2px solid #fff;
         border-radius: 15%;
+
         span {
           transition: transform 0.2s ease-in-out;
         }
+
         span:hover {
           top: -0.5ex;
           transform: scale(1.25);
           color: var(--red);
         }
       }
+
       input[type="radio"] {
         display: none;
       }
-      input[type="radio"]:checked + label {
+
+      input[type="radio"]:checked+label {
         box-shadow: inset 0 0 2px #666;
         border-bottom: 2px solid var(--red);
+
         span {
           color: var(--red-dark);
         }
@@ -411,6 +447,7 @@ details {
   justify-content: flex-start;
   align-items: center;
   font-size: 120%;
+
   span.text {
     display: none;
     font-size: 60%;
@@ -418,8 +455,10 @@ details {
     // margin-top: -1ex;
     position: relative;
   }
+
   .visibility-radios {
     border-bottom: 1px solid #d9d9d9;
+
     label {
       padding: 0.05em 0.2em;
       display: inline-block;
@@ -427,21 +466,26 @@ details {
       cursor: pointer;
       border-bottom: 2px solid #fff;
       border-radius: 15%;
+
       span {
         transition: transform 0.2s ease-in-out;
       }
+
       span:hover {
         top: -0.5ex;
         transform: scale(1.25);
         color: var(--red);
       }
     }
+
     input[type="radio"] {
       display: none;
     }
-    input[type="radio"]:checked + label {
+
+    input[type="radio"]:checked+label {
       box-shadow: inset 0 0 2px #666;
       border-bottom: 2px solid var(--red);
+
       span {
         color: var(--red-dark);
       }
