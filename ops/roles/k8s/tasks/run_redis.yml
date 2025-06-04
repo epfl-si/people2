@@ -21,6 +21,7 @@
           metadata:
             labels:
               app: people
+              role: redis
               component: redis
           spec:
             serviceAccountName: puller

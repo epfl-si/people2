@@ -55,6 +55,8 @@ all:
     # ---                                                                 people
     DATA_BASEDIR: /home/fsd/data
 
+    LEGACY_SERVER_URL: "https://test-people.epfl.ch"
+
     OIDC_REALM: rails
     OIDC_IDENTIFIER: hello_rails
     OIDC_HOSTNAME: peoak.fsd.team

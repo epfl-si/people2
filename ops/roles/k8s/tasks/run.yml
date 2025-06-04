@@ -43,6 +43,7 @@
           metadata:
             labels:
               app: people
+              role: app
               version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
@@ -111,6 +112,7 @@
           metadata:
             labels:
               app: people
+              role: jobs
               version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
