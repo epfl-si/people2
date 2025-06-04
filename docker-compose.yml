@@ -98,7 +98,7 @@ services:
     # command:
     #   - ./bin/dev
     command: bin/rails server -p 3000 -b 0.0.0.0
-    environment:
+    environment: &webappenv
       KILLPID: ${KILLPID:-no}
 
       # ------------------------------ deployment-independent mandatory ENV vars
@@ -197,6 +197,16 @@ services:
       - default
     tty: true
     stdin_open: true
+
+  jobs:
+    image: people2023-webapp
+    env_file: .env
+    command: ./bin/jobs
+    environment: *webappenv
+    ports: []
+    volumes:
+      - ./:/srv/app
+      - storage:/srv/app/storage
 
   prometheus:
     image: prom/prometheus:latest

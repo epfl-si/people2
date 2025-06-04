@@ -462,10 +462,10 @@ prod_console:
 prod_logs:
 	oc logs -f -n $(OCNAMESPACE) -l role=app
 
-OCMAINDBNAME=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.dbname')
-OCMAINDBHOST=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.server')
-OCMAINDBUSER=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.username')
-OCMAINDBPASS=$(shell cat kb/ops/secrets.yml | ./bin/yq '.production.db.main_adm.password')
+OCMAINDBNAME=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.dbname')
+OCMAINDBHOST=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.server')
+OCMAINDBUSER=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.username')
+OCMAINDBPASS=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.password')
 ## Open sql shell on main application database
 prod_db:
 	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) mariadb -h $(OCMAINDBHOST) -u $(OCMAINDBUSER) --password=$(OCMAINDBPASS) $(OCMAINDBNAME)
