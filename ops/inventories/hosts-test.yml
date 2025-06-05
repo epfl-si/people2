@@ -39,6 +39,7 @@ all:
     # ---                                                                 system
     SELINUX: no
     FIREWALL: yes
+    NAS_ENABLED: yes
     USERS:
       - username: fsd
         comment: non root user for running applications
