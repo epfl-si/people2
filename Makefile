@@ -452,7 +452,7 @@ prod: prod_push prod_deploy
 
 ## Open a shell on running application pod
 prod_shell:
-	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP)
+	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) /bin/bash
 
 ## Open a rails console on running application pod
 prod_console:
