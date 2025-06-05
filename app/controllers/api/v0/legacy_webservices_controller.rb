@@ -76,7 +76,7 @@ module API
         # Optional parameters: position, struct, lang
         if pp['lang'].present?
           lang = pp['lang']
-          if Rails.configuration.available_languages.include?(lang)
+          if I18n.available_locales.include?(lang.to_sym)
             @lang = lang
           else
             @errors << "invalid language #{lang}"

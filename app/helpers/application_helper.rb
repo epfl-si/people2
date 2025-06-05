@@ -92,9 +92,9 @@ module ApplicationHelper
   end
 
   def language_switcher
-    res = Rails.configuration.available_languages.map do |loc|
+    res = I18n.available_locales.map do |loc|
       content_tag(:li) do
-        if I18n.locale.to_s == loc
+        if I18n.locale == loc
           content_tag(:span, loc.to_s.upcase, class: "active", aria: { label: t(loc) })
         else
           link_to loc.to_s.upcase, { lang: loc.to_s }, aria: { label: t(loc) }

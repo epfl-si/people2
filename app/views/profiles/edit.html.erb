@@ -7,9 +7,9 @@
   class="<%= translation_classlist(@profile) %>"
 >
 
-<div id="multilang_editor">
-  <nav id="edit_lang_switchers" class="justify-content-center">
-    <h5><%= t ".title.edit_language" %></h5>
+<nav id="multilang_editor">
+  <h5><%= t ".title.edit_language" %></h5>
+  <%#<nav id="edit_lang_switchers" class="justify-content-center">%>
 
     <% sl = current_work_translation(@profile) %>
     <% @profile.translations.each do |l| %>
@@ -23,11 +23,11 @@
         }
       ) %>
     <% end %>
-    <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
-      <%= icon('edit-3') %>
-    <% end %>
-  </nav>
-</div>
+  <%# </nav> %>
+  <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
+    <%= icon('edit-3') %>
+  <% end %>
+</nav>
 
 <section id="editor" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" tabindex="0">
   <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
