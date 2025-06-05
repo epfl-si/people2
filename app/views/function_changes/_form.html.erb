@@ -7,7 +7,7 @@
     <% end %>
   </ul>
 <% end %>
-<% translations = @accreditation.profile&.translations || Rails.configuration.available_languages %>
+<% translations = @accreditation.profile&.translations || I18n.available_locales %>
 <%= form_with(model: @function_change, url: "/accreditations/#{@accreditation.id}/function_changes", local: false, class: "instaform") do |form| %>
   <%= translated_text_fields(form, :function, translations: translations, label: ".function") %>
   <%= form_group do %>

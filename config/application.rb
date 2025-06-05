@@ -32,6 +32,8 @@ module People
     config.re_false = /^\s*(false|non?|n+|f+)\s*$/i
     config.encoding = 'utf-8'
     config.i18n.default_locale = :fr
+    config.i18n.available_locales = %i[en fr]
+
     # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.active_storage.draw_routes = true
     # TODO: reverto to default vips for image processing
@@ -76,8 +78,6 @@ module People
     # db/seed.rb: DEV_SEEDS_PATH, SEEDS_PATH
 
     routes.default_url_options[:host] = config.app_hostname
-
-    config.available_languages = %w[en fr]
 
     # This ~~is~~ was a cookie-free Web app!
     # Screw the EU, I don't see the difference between a cookie and an auth token.

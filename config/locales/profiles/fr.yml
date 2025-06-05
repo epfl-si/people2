@@ -52,8 +52,17 @@ fr:
         boxes_contact: Mes informations professionnelles
         details: Mes informations officielles
         editing_languages: Ce profil est bilingue
-        edit_language: Définir la langue(s) du profil
+        edit_language: "Editer pour"
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
+    edit_languages:
+      explain_html: |
+        Vous pouvez ici sélectionner les langues dans lesquelles votre profil
+        sera disponible et pour lesquelles vous tenterez de fournir des
+        traductions.<br/>
+        Le contenu qui n'est pas encore disponible dans la langue du lecteur
+        sera remplacé par le contenu correspondant dans l'une des langues
+        disponibles.
+      title: Traductions du profil
     form:
       available_languages: Langues à choix
       expertise: Expertise (mots-clefs uniquement)
@@ -78,7 +87,8 @@ fr:
       action:
         submit: Enregistrer
     languages_form:
-      translations: Fournir une traduction
+      translations: traductions du profil
+
       en_enabled: Profil disponible en anglais
       fr_enabled: Profil disponible en français
       it_enabled: Profil disponible en italien
