@@ -127,9 +127,8 @@ services:
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: true
-      LEGACY_BASE_URL: ${LEGACY_BASE_URL:-https://personnes.epfl.ch}
-      LEGACY_PATCH_URL: ${LEGACY_BASE_URL:-https://test-people.epfl.ch}
-      LEGACY_PHOTO_URL: ${LEGACY_BASE_URL:-https://personnes.epfl.ch}
+      LEGACY_RO_URL: ${LEGACY_RO_URL:-https://personnes.epfl.ch}
+      LEGACY_RW_URL: ${LEGACY_RW_URL:-https://test-people.epfl.ch}
       # LEGACY_PAGES_CACHE: 2days
 
       # ----------------------------- read in yml files (will go to config maps)

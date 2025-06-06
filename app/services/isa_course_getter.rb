@@ -7,7 +7,8 @@ class IsaCourseGetter < IsaService
 
     # TODO: waiting for Tim to adapt the ISA api. In the mean time I use the old people
     # @url ||= Rails.application.config_for(:epflapi).isa_url + "/courses/#{@id}"
-    @url = URI.parse("https://people.epfl.ch/cgi-bin/getCoursData")
+    cfg = Rails.application.config_for(:epflapi)
+    @url = URI.parse(cfg.legacy_course_url)
     @url.query = URI.encode_www_form(sciper: sciper)
   end
 end
