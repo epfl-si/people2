@@ -9,10 +9,11 @@ all:
     APP_HOSTNAME: "people-next.epfl.ch"
     ENABLE_ADOPTION: "true"
     # ISA_URL: https://isa.epfl.ch/services
-    # LEGACY_SERVER_URL: "https://personnes.epfl.ch"
     OC_CLUSTER: "https://api.ocpitsp0001.xaas.epfl.ch:6443"
     OC_NAMESPACE: svc0033p-people
     RUNENV: production
     RAILS_ENV: production
     USE_LOCAL_ELEMENTS: "yes"
-    LEGACY_SERVER_URL: "https://test-people.epfl.ch"
+    LEGACY_BASE_URL: "https://personnes.epfl.ch"
+    LEGACY_PATCH_URL: "https://test-people.epfl.ch"
+    LEGACY_PHOTO_URL: "https://personnes.epfl.ch"

@@ -108,8 +108,7 @@ class LegacyProfileImportJob < ApplicationJob
 
     # ------------------------------------------------------------------ Photo
     if cv.photo_ext == "1"
-      q = profile.pictures.create
-      q.fetch_from_legacy!
+      q = profile.pictures.create(source: "legacy")
       profile.update(selected_picture: q)
     end
 

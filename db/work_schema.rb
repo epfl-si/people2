@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_05_15_170336) do
-  create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
     t.string "en"
@@ -25,7 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_170336) do
     t.index ["key", "file"], name: "index_admin_translations_on_key_and_file", unique: true
   end
 
-  create_table "ai_translations", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "ai_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "text_id", null: false
     t.string "ai_model", null: false
     t.float "confidence"
@@ -39,7 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_170336) do
     t.index ["text_id"], name: "index_ai_translations_on_text_id"
   end
 
-  create_table "scipers", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "scipers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "sciper"
     t.integer "status", default: 0
     t.datetime "created_at", null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_170336) do
     t.index ["sciper"], name: "unique_scipers", unique: true
   end
 
-  create_table "texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "texts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "signature"
     t.text "content", size: :medium
     t.datetime "created_at", null: false
