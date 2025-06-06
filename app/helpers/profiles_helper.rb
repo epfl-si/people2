@@ -316,6 +316,7 @@ module ProfilesHelper
       content << form.radio_button(
         :visibility, o.value,
         id: id,
+        class: "radio-#{o.style}",
         data: (with_stimulus ? stim_data.merge(label_data) : label_data),
         checked: item.send(prop) == o.value
       )
