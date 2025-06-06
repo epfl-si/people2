@@ -14,6 +14,5 @@ all:
     RUNENV: production
     RAILS_ENV: production
     USE_LOCAL_ELEMENTS: "yes"
-    LEGACY_BASE_URL: "https://personnes.epfl.ch"
-    LEGACY_PATCH_URL: "https://test-people.epfl.ch"
-    LEGACY_PHOTO_URL: "https://personnes.epfl.ch"
+    LEGACY_RO_URL: "https://personnes.epfl.ch"
+    LEGACY_RW_URL: "https://test-people.epfl.ch"

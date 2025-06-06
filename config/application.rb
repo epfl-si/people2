@@ -66,7 +66,7 @@ module People
     config.force_audience = Rails.env.development? && ENV.fetch('FORCE_AUDIENCE', false)
     # TODO: remove next 3 lines after migration from legacy
     config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
-    config.legacy_base_url = ENV.fetch('LEGACY_BASE_URL', 'https://personnes.epfl.ch/')
+    config.legacy_base_url = ENV.fetch('LEGACY_RO_URL', 'https://personnes.epfl.ch/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 2.days)
 
     # There are other ENV vars read in the yml files

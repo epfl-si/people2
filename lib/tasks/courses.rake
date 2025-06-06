@@ -49,8 +49,8 @@ namespace :data do
         course.language_en = 'unknown'
         course.language_fr = 'inconnu'
       else
-        course.language_en = cc['lang']['en'].downcase
-        course.language_fr = cc['lang']['fr'].downcase
+        course.language_en = cc['lang']['en']&.downcase
+        course.language_fr = cc['lang']['fr']&.downcase
       end
       course.save!
 
