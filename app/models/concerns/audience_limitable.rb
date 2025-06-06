@@ -22,12 +22,12 @@ module AudienceLimitable
   OWNER = 3
   NOBPDY = 4
   ALL_VISIBILITY_OPTIONS = [
-    { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true },
-    { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false },
-    { label: 'intranet', icon: 'icon-epfl-corporate-logo', value: 1, box: true, item: false },
-    { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false },
-    { label: 'draft',    icon: 'edit-3',     value: 3, box: false, item: false },
-    { label: 'hidden',   icon: 'eye-off',    value: 4, box: true, item: true }
+    { label: 'visible',  icon: 'eye',        value: 0, box: false, item: true, style: "full" },
+    { label: 'public',   icon: 'globe',      value: 0, box: true,  item: false, style: "full" },
+    { label: 'intranet', icon: 'icon-epfl-corporate-logo', value: 1, box: true, item: false, style: "partial" },
+    { label: 'auth',     icon: 'user-check', value: 2, box: false, item: false, style: "partial" },
+    { label: 'draft',    icon: 'edit-3',     value: 3, box: false, item: false, style: "none" },
+    { label: 'hidden',   icon: 'eye-off',    value: 4, box: true, item: true, style: "none" }
   ].map { |h| OpenStruct.new(h) }.freeze
   BOX_VIS_OPTIONS  = ALL_VISIBILITY_OPTIONS.select(&:box)
   ITEM_VIS_OPTIONS = ALL_VISIBILITY_OPTIONS.select(&:item)
