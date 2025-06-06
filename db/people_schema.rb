@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_02_125722) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -268,10 +268,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_125722) do
 
   create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
-    t.boolean "camipro", default: false
     t.integer "failed_attempts", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source"
     t.index ["profile_id"], name: "index_pictures_on_profile_id"
   end
 
