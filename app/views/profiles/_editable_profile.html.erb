@@ -4,43 +4,6 @@
 </h3>
 <dl class="definition-list definition-list-grid definition-list-grid-large">
 
-	<dt>
-		<%= t "profile.available_languages" %>
-		<%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
-      	  <%= icon('edit-3') %>
-    	<% end %>
-	</dt>
-	<dd>
-		<%= profile.translations.map{|l| t("lang.#{l}")}.join(", ") %>
-	</dd>
-
-	<% official = profile.person.name.official_display %>
-	<% usual = profile.person.name.display %>
-
-	<dt>
-		<%= t "profile.official_name" %>
-		<%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: {turbo_stream: true} %>
-	</dt>
-	<dd>
-	  <span><%= official %></span>
-	</dd>
-
-	<% if profile.person.name.customizable? && usual != official %>
-	  <dt><%= t "profile.usual_name" %></dt>
-		<dd>
-			<span><%= usual %></span>
-			<%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "usual"), data: {turbo_stream: true} %>
-	  </dd>
-	<% end %>
-
-  <dt><%= t("profile.inclusivity") %></dt>
-  <dd class="rpush">
-    <%= turbo_frame_tag dom_id(@profile, :show_inclusivity), class: "ms-3" do %>
-      <%= render "inclusivity/inclusivity_toggle", profile: @profile %>
-    <% end %>
-  </dd>
-
-
   <dt><%= t "profile.nationality" %></dt>
   <% if (profile.t_nationality).present? %>
 	  <dd class="rpush">
