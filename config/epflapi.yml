@@ -23,8 +23,9 @@ epflapi_config: &epflapi_config
   max_scipers_per_request: <%= ENV.fetch("EPFLAPI_MAX_SCIPER_PER_REQUEST", 100) %>
 
   # Legacy cgi-bin
-  legacy_url: <%= ENV.fetch("LEGACY_SERVER_URL", "https://personnes.epfl.ch") %>/cgi-bin/updateCagaio
-  legacy_photo_url: <%= ENV.fetch("LEGACY_SERVER_URL", "https://personnes.epfl.ch") %>/cgi-bin/wsgetPhotoNext
+  legacy_person_update_url: <%= ENV.fetch("LEGACY_RW_URL", "https://test-people.epfl.ch") %>/cgi-bin/updateCagaio
+  legacy_photo_url: <%= ENV.fetch("LEGACY_RO_URL", "https://personnes.epfl.ch") %>/cgi-bin/wsgetPhoto
+  legacy_course_url: <%= ENV.fetch("LEGACY_RO_URL", "https://personnes.epfl.ch") %>/cgi-bin/getCoursData
 
   # CAMIPRO
   camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY", nil) %>

@@ -1,3 +1,4 @@
+---
 
 - name: Ensure PVC for redis
   kubernetes.core.k8s:
@@ -14,6 +15,43 @@
           requests:
             storage: "{{ redis.disk }}Gi"
         storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
+# NFS PV storage is created and mounted to cluster nodes by cluster admin.
+# Share details are visible in the XAAS portal as people_shared_nfs.
+# With the same NFS share we can create as many mounts as we need pointing to
+# subdirectories. Only, subdirs must be created from Giovanni's workstation
+# that can mount the share with root access. Usage in openshit:
+#
+# In deployment configuration:
+#  volumes:
+#    - name: storage-volume
+#      persistentVolumeClaim:
+#        claimName: people-storage
+#  and within the containers specification:
+#  containers:
+#    - name: people
+#      ...
+#      volumeMounts:
+#    -   name: storage-volume                      # same volume name above
+#        mountPath: /rails/storage
+#        subPath: prod_storage
+
+- name: Create storage PVC for application storage (uploaded files)
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: people-storage
+        namespace: "{{ namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: 1Mi
+        storageClassName: ""
         volumeMode: Filesystem
 
 # # Storage for mariadb is directly created by the operator
@@ -33,20 +71,3 @@
 #             storage: "{{ mariadb.disk }}Gi"
 #         storageClassName: ocs-storagecluster-cephfs
 #         volumeMode: Filesystem
-
-- name: Create storage PVC for /srv/app/storage
-  kubernetes.core.k8s:
-    state: present
-    definition:
-      apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: people-storage
-        namespace: "{{ namespace }}"
-      spec:
-        accessModes: [ReadWriteMany]
-        resources:
-          requests:
-            storage: 1Mi
-        storageClassName: ""
-        volumeMode: Filesystem

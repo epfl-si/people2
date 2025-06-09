@@ -6,7 +6,7 @@ class IsaCatalogGetter < IsaService
   attr_reader :url
 
   def initialize(args = {})
-    years = args.delete(:sciper) || current_academic_year
+    years = args.delete(:years) || current_academic_year
     @url = URI.join(Rails.application.config_for(:epflapi).isa_url, "/services/catalog/", years)
   end
 

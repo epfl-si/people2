@@ -27,6 +27,7 @@
     - bind-utils
     - make
     - net-tools
+    - nfs-utils
     - rsync
     - telnet
 

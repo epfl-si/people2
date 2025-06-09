@@ -179,7 +179,7 @@ class Profile < ApplicationRecord
   def cache_camipro_picture!
     return if camipro_picture_id.present?
 
-    cpp = pictures.create!(camipro: true)
+    cpp = pictures.create!(source: "camipro")
     cpp.fetch
     self.camipro_picture_id = cpp.id
     self.selected_picture_id ||= cpp.id

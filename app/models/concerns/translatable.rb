@@ -44,7 +44,7 @@ module Translatable
 
     def self.translates_rich_text(*attributes)
       attributes.each do |attribute|
-        Rails.configuration.available_languages.each { |l| has_rich_text "#{attribute}_#{l}" }
+        I18n.available_locales.each { |l| has_rich_text "#{attribute}_#{l}" }
         define_method("t_#{attribute}") do |primary_locale = nil, fallback_locale = nil|
           translated_body_for(attribute, primary_locale, fallback_locale)
         end

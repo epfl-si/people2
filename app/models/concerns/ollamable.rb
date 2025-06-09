@@ -9,6 +9,7 @@ module Ollamable
     it: "italian",
     de: "german"
   }.freeze
+  LANG_CODES = LANGS.keys.map(&:to_s).freeze
   AIMODEL = 'llama3.2'
   CONFIDENCE = 0.2
 

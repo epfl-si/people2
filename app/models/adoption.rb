@@ -41,12 +41,12 @@ class Adoption < ApplicationRecord
 
   def fetch_legacy_content(locale)
     headers = { Host: 'people.epfl.ch' }
-    uri = URI.join(Rails.configuration.legacy_server_url, path)
+    uri = URI.join(Rails.configuration.legacy_base_url, path)
     uri.query = "lang=#{locale}"
     body = Net::HTTP.get(uri, headers)
     body.gsub(
       Regexp.new('(src|href)="/(private/common|images|js|css)/'),
-      "\\1=\"#{Rails.configuration.legacy_server_url}/\\2/"
+      "\\1=\"#{Rails.configuration.legacy_base_url}/\\2/"
     ).gsub(
       Regexp.new('href="/([a-z0-9.]+)/edit'),
       "href=\"/people/#{sciper}/profile/new"

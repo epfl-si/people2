@@ -2,10 +2,9 @@
   <div class="list-group-item">
     <div class="row">
       <div class="col-md-8">
-        <h4 class="h5 mb-0"><%= experience.t_title %></h4>
+        <%= tag_for_localized_attr "h4", experience, :title, class: "h5 mb-0" %>
+        <%= tag_for_localized_attr "p", experience, :description, class: "mb-1 small" %>
         <p class="text-muted small mb-0">
-          <%= experience.t_description.present? ? truncate(experience.t_description.to_plain_text, length: 160) : "no description" %>
-          <br>
           <%= [experience.year_begin, experience.year_end].compact.join("–") %>
           <%= experience.location %>
         </p>
@@ -19,5 +18,3 @@
     </div>
   </div>
 <% end %>
-
-

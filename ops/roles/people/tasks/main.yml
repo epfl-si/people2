@@ -34,6 +34,7 @@
   tags:
     - people.src
     - people.run
+    - people.run.app
   include_tasks:
     file: src.yml
 

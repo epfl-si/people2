@@ -32,6 +32,8 @@ module People
     config.re_false = /^\s*(false|non?|n+|f+)\s*$/i
     config.encoding = 'utf-8'
     config.i18n.default_locale = :fr
+    config.i18n.available_locales = %i[en fr]
+
     # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.active_storage.draw_routes = true
     # TODO: reverto to default vips for image processing
@@ -64,7 +66,7 @@ module People
     config.force_audience = Rails.env.development? && ENV.fetch('FORCE_AUDIENCE', false)
     # TODO: remove next 3 lines after migration from legacy
     config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
-    config.legacy_server_url = ENV.fetch('LEGACY_SERVER_URL', 'https://personnes.epfl.ch/')
+    config.legacy_base_url = ENV.fetch('LEGACY_RO_URL', 'https://personnes.epfl.ch/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 2.days)
 
     # There are other ENV vars read in the yml files
@@ -76,8 +78,6 @@ module People
     # db/seed.rb: DEV_SEEDS_PATH, SEEDS_PATH
 
     routes.default_url_options[:host] = config.app_hostname
-
-    config.available_languages = %w[en fr]
 
     # This ~~is~~ was a cookie-free Web app!
     # Screw the EU, I don't see the difference between a cookie and an auth token.

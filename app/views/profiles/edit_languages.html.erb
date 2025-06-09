@@ -1,5 +1,6 @@
-<%= modal_dialog("Edit Languages") do %>
-<%= render "languages_form", profile: @profile %>
+<%= modal_dialog(t(".title")) do %>
+	<p><%= t('.explain_html') %></p>
+	<%= render "languages_form", profile: @profile %>
 <% end %>
 <%= modal_dialog("Edit Profile Details") do %>
 <%= render "form", profile: @profile %>

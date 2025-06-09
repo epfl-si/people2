@@ -43,7 +43,8 @@
           metadata:
             labels:
               app: people
-              version: "v1.03"
+              role: app
+              version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
             containers:
@@ -80,13 +81,16 @@
                 volumeMounts:
                   - name: storage-volume
                     mountPath: /rails/storage
-                    subPath: people_storage
-                  - name: pids-path
-                    mountPath: /rails/tmp
+                    subPath: prod_storage
+                  - name: storage-volume
+                    mountPath: /trash
+                    subPath: prod_trash
+                  # - name: pids-path
+                  #   mountPath: /rails/tmp
             volumes:
-              - name: pids-path
-                emptyDir:
-                  sizeLimit: 100Mi
+              # - name: pids-path
+              #   emptyDir:
+              #     sizeLimit: 100Mi
               - name: storage-volume
                 persistentVolumeClaim:
                   claimName: people-storage
@@ -111,7 +115,8 @@
           metadata:
             labels:
               app: people
-              version: "v1.03"
+              role: jobs
+              version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
             containers:
@@ -134,13 +139,8 @@
                 volumeMounts:
                   - name: storage-volume
                     mountPath: /rails/storage
-                    subPath: people_storage
-                  - name: pids-path
-                    mountPath: /rails/tmp
+                    subPath: prod_storage
             volumes:
-              - name: pids-path
-                emptyDir:
-                  sizeLimit: 100Mi
               - name: storage-volume
                 persistentVolumeClaim:
                   claimName: people-storage

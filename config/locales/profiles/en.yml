@@ -64,8 +64,16 @@ en:
         boxes_contact: My professionnal datas
         details: My official datas
         editing_languages: This profile is bilingual
-        edit_language: Choose profile language(s)
+        edit_language: Editing for
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
+    edit_languages:
+      explain_html: |
+        Here you can select the languages in which your profile will be made
+        available and for which you will try to provide translations.
+        <br/>
+        Content that is not yet available in the reader language will be replaced
+        by the corresponding content in one of the available languages.
+      title: Profile translations
     form:
       available_languages: Available Languages
       expertise: Expertise (keywords only)
@@ -90,7 +98,7 @@ en:
       action:
         submit: Save
     languages_form:
-      translations: Provide a translation
+      translations: Profile translations
       en_enabled: Profile available in english
       fr_enabled: Profile available in french
       it_enabled: Profile available in italian

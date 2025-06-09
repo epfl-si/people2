@@ -75,7 +75,7 @@ module ProfilesHelper
 
   def translated_text_fields(
     form, attr, label: nil, help: nil,
-    translations: Rails.configuration.available_languages
+    translations: I18n.available_locales
   )
     content = []
     btlabel = t(label || ".#{attr}")
@@ -148,7 +148,7 @@ module ProfilesHelper
 
   def translated_rich_text_areas(
     form, attr, label: nil, help: nil,
-    translations: Rails.configuration.available_languages
+    translations: I18n.available_locales
   )
     content = []
     btlabel = t(label || ".#{attr}")
@@ -182,7 +182,7 @@ module ProfilesHelper
     elsif item.respond_to?("profile")
       item.profile.translations
     else
-      Rails.configuration.available_languages
+      I18n.available_locales
     end
   end
 
