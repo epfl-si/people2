@@ -62,17 +62,19 @@ en:
       title:
         boxes_main: My curriculum
         boxes_contact: My professionnal datas
-        details: My official datas
+        details: Optional personal data
         editing_languages: This profile is bilingual
         edit_language: Editing for
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
     edit_languages:
       explain_html: |
         Here you can select the languages in which your profile will be made
-        available and for which you will try to provide translations.
+        available and for which you will <strong>try to provide translations.</strong>
         <br/>
-        Content that is not yet available in the reader language will be replaced
-        by the corresponding content in one of the available languages.
+        When some information is not yet available in the reader's language,
+        it will be replaced by the corresponding content in one of the available
+        languages. Therefore it is mandatory to provide the translation in at
+        least one of the languages selected below.
       title: Profile translations
     form:
       available_languages: Available Languages

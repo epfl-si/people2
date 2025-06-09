@@ -50,7 +50,7 @@ fr:
       title:
         boxes_main: Mon curriculum
         boxes_contact: Mes informations professionnelles
-        details: Mes informations officielles
+        details: Données personnelles facultatives
         editing_languages: Ce profil est bilingue
         edit_language: "Editer pour"
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
@@ -62,6 +62,8 @@ fr:
         Le contenu qui n'est pas encore disponible dans la langue du lecteur
         sera remplacé par le contenu correspondant dans l'une des langues
         disponibles.
+        Il est donc obligatoire de fournir la traduction dans au moins une des
+        langues sélectionnées ci-dessous.
       title: Traductions du profil
     form:
       available_languages: Langues à choix
