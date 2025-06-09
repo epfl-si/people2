@@ -7,6 +7,7 @@
   class="<%= translation_classlist(@profile) %>"
 >
 
+<% if @profile.translations.count > 1 %>
 <nav id="multilang_editor">
   <h5><%= t ".title.edit_language" %></h5>
   <% sl = current_work_translation(@profile) %>
@@ -22,6 +23,7 @@
     ) %>
   <% end %>
 </nav>
+<% end %>
 
 <section id="editor" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" tabindex="0">
   <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
