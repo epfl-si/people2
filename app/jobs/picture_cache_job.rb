@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CamiproPictureCacheJob < ApplicationJob
+class PictureCacheJob < ApplicationJob
   queue_as :default
 
   def perform(id)

@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# minimal jq for yaml. It just read stdin and output the value of the provided key
+require 'json'
+require 'open3'
+require 'yaml'
+
+yml=STDIN.read
+data = YAML.load(yml, aliases: true)
+jq = ['jq', *ARGV]
+stdout_str, stderr_str, status = Open3.capture3(*jq, stdin_data: data.to_json)
+puts stdout_str

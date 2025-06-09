@@ -12,3 +12,9 @@ keycloak_version: "25.0.0"
 prometheus_version: "v3.3.0"
 grafana_version: "11.6.1"
 people_version: "{{ lookup('file', '../../../VERSION') }}"
+
+nas:
+  server: nas-app-ma-nfs2.epfl.ch
+  share: /svc0033_people_shared_app
+  mountpoint: /mnt/storage
+  enabled: "{{ NAS_ENABLED | default(false) }}"

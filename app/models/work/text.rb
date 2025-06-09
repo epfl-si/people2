@@ -25,7 +25,7 @@ module Work
     # If not present, the object with given content is created. This way we
     # collect a list of untranslated models that we can send to the AI in blocks
     def self.for!(text)
-      self.for(text) || new(content: text)
+      self.for(text) || create(content: text)
     end
 
     def lang
@@ -43,7 +43,7 @@ module Work
     end
 
     def ai_lang
-      ai_translations.sort(&:confidence).first&.lang
+      ai_translations.order('confidence DESC').first&.lang
     end
 
     def text_content
@@ -53,7 +53,11 @@ module Work
     private
 
     def cld
-      @cld ||= CLD.detect_language(text_content)
+      @cld ||= begin
+        l = CLD.detect_language(text_content)
+        l[:reliable] = l[:reliable] && Ollamable::LANG_CODES.include?(l[:code])
+        l
+      end
     end
 
     def ensure_signature

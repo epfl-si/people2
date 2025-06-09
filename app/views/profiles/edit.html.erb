@@ -7,24 +7,21 @@
   class="<%= translation_classlist(@profile) %>"
 >
 
-<div id="multilang_editor">
-  <nav id="edit_lang_switchers" class="justify-content-center">
-    <h5><%= t ".title.edit_language" %></h5>
-
-    <% sl = current_work_translation(@profile) %>
-    <% @profile.translations.each do |l| %>
-      <%= button_tag(
-        t("lang.#{l}"),
-        class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
-        data: {
-          "action": "language#setEnabledLanguage",
-          "language-target": "button",
-          "langcls": "tr_enable_#{l}",
-        }
-      ) %>
-    <% end %>
-  </nav>
-</div>
+<nav id="multilang_editor">
+  <h5><%= t ".title.edit_language" %></h5>
+  <% sl = current_work_translation(@profile) %>
+  <% @profile.translations.each do |l| %>
+    <%= button_tag(
+      t("lang.#{l}"),
+      class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
+      data: {
+        "action": "language#setEnabledLanguage",
+        "language-target": "button",
+        "langcls": "tr_enable_#{l}",
+      }
+    ) %>
+  <% end %>
+</nav>
 
 <section id="editor" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" tabindex="0">
   <%= turbo_frame_tag "editor_content", "data-dismissable-target": "content" %>
@@ -71,6 +68,7 @@
 </section>
 
 <hr>
+
 <section id="contact_boxes_section">
   <h3><%= t '.title.boxes_contact' %></h3>
   <%= render "flat_sections", sections: @contact_sections, profile: @profile %>
@@ -80,5 +78,6 @@
   <h3><%= t '.title.boxes_main' %></h3>
   <%= render "tabbed_sections", sections: @sections, profile: @profile %>
 </section>
+
 <%= turbo_frame_tag :remote_modal %>
 </div><% #tr_switchable %>

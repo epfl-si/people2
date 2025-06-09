@@ -41,6 +41,13 @@
   import_tasks:
     file: config_podman.yml
 
+- name: Setup shared storage
+  tags:
+    - system.config
+    - system.config.storage
+  import_tasks:
+    file: storage.yml
+
 # - name: Reset system
 #   tags:
 #     - never
@@ -51,4 +58,3 @@
 #       tags:
 #         - never
 #         - reset
-

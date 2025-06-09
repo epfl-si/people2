@@ -7,6 +7,8 @@
 #     name: people-webapp-migrate
 #   ignore_errors: true
 
+# TODO: this is probably no longer needed because we now have admin db secrets
+#       by default, and hence the app startup script will run migration automatically
 - name:  Create a Kubernetes Job to run bin/rails db:migrate
   tags:
     - admin.migrate
@@ -40,11 +42,14 @@
                   - configMapRef:
                       name: people-app-config
                   - secretRef:
-                      name: people-admin-secrets
+                      name: people-app-secrets
                 resources:
+                  limits:
+                    cpu: "{{ limits.cpu.max }}"
+                    memory: "{{ limits.memory.max }}"
                   requests:
-                    cpu: "10m"
-                    memory: "256Mi"
+                    cpu: "{{ limits.cpu.min }}"
+                    memory: "{{ limits.memory.min }}"
                 volumeMounts:
                   - name: storage-volume
                     mountPath: /rails/storage

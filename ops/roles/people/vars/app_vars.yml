@@ -8,7 +8,9 @@ people:
   env: "{{ RAILS_ENV | default('development') }}"
   filecache: "{{ DATA_BASEDIR }}/people/filecache"
   isa_url: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
-  legacy_server_url: "{{ LEGACY_SERVER_URL | default('https://personnes.epfl.ch') }}"
+  legacy_ro_url: "{{ LEGACY_RO_URL | default('https://personnes.epfl.ch') }}"
+  legacy_rw_url: "{{ LEGACY_RW_URL | default('https://test-people.epfl.ch') }}"
+
   ollama_url: "{{ OLLAMA_URL | default('http://' ~ hosts.docker ~ ':11434') }}"
   openai_url: "{{ OPENAI_URL | default('https://inference-dev.rcp.epfl.ch/v1') }}"
   redis: "{{ (SELECT_CACHE == 'local_redis') | ternary('redis://cache:6379/0', REDIS_URL) }}"

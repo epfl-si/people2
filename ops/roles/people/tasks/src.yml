@@ -31,6 +31,7 @@
   tags:
     - people.src
     - people.run
+    - people.run.app
 
 - name: Create VERSION file
   ansible.builtin.copy:
@@ -45,6 +46,7 @@
   tags:
     - people.src
     - people.run
+    - people.run.app
 
 - name: Debug image version
   ansible.builtin.debug:
@@ -52,6 +54,7 @@
   tags:
     - people.src
     - people.run
+    - people.run.app
 
 - name: Complete code with external depenencies
   ansible.builtin.shell:

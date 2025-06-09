@@ -17,7 +17,7 @@ class APIPersonUpdater
     params = data.slice("firstnameusual", "lastnameusual", "inclusivity")
 
     cfg = Rails.application.config_for(:epflapi)
-    uri = URI("#{cfg.legacy_url}/#{sciper}")
+    uri = URI("#{cfg.legacy_person_update_url}/#{sciper}")
     # uri.query = URI.encode_www_form(params)
     req = Net::HTTP::Put.new(uri)
     req.basic_auth(cfg.username, cfg.password)

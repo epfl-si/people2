@@ -27,7 +27,7 @@
   containers.podman.podman_container:
     name: peoapp
     image: "people:{{ people_image_version }}"
-    env:
+    env: &webappenv
       # ------------------------------ deployment-independent mandatory ENV vars
       RAILS_ENV: "{{ people.env }}"
       SUPERUSERS: "{{ _secrets.people.superusers }}"
@@ -54,7 +54,8 @@
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: "{{ people.enable_adoption }}"
-      LEGACY_SERVER_URL: "{{ people.legacy_server_url }}"
+      LEGACY_RO_URL: "{{ people.legacy_ro_url }}"
+      LEGACY_RW_URL: "{{ people.legacy_rw_url }}"
       # LEGACY_PAGES_CACHE: 2days
 
       # ----------------------------- read in yml files (will go to config maps)
@@ -99,3 +100,28 @@
       traefik.http.services.people.loadbalancer.server.port: "{{ ports.people }}"
       traefik.http.routers.people.middlewares: peoblock
       traefik.http.middlewares.peoblock.basicauth.users: "{{ _secrets.people.auth.user }}:{{ _secrets.people.auth.pass | password_hash('md5') }}"
+
+
+
+- name: Ensure people jobs supervisor is running
+  vars:
+    dev_volumes:
+      - "{{ people.srcdir }}:/srv/app"
+    mandatory_volumes:
+      - "{{ people.storage }}:/srv/app/storage"
+      - "{{ people.filecache }}:/srv/filecache"
+    all_volumes: '{{ mandatory_volumes + dev_volumes if people.env == "development" else mandatory_volumes }}'
+  containers.podman.podman_container:
+    name: peojobs
+    image: "people:{{ people_image_version }}"
+    command: ["./bin/jobs"]
+    env: *webappenv
+    volumes: "{{ all_volumes }}"
+    restart_policy: always
+    state: started
+    network:
+      - traefik
+      # - redis
+      # - mariadb
+    # generate_systemd: false
+    # restart_sec: 10

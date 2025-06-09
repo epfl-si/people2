@@ -2,7 +2,7 @@
   <div class="list-group-item">
     <div class="row">
       <div class="col-md-8">
-        <h4 class="h5 mb-0"><%= achievement.t_description %></h4>
+        <%= tag_for_localized_attr "h4", achievement, :description, class: "h5 mb-0" %>
         <p class="text-muted small mb-0">
           <%= achievement.year %> – <%= achievement.url %>
         </p>

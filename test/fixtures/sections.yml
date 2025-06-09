@@ -31,6 +31,17 @@ bio:
   show_title: false
   create_allowed: true
   position: 1
+awards:
+  title_en: "Awards"
+  title_fr: "Recompenses"
+  title_it: "Riconoscimenti"
+  title_de: "Auszeichnungen"
+  zone: "main"
+  edit_zone: "main"
+  label: "awards"
+  show_title: false
+  create_allowed: true
+  position: 2
 pub:
   title_en: "Publications"
   title_fr: "Publications"
@@ -41,7 +52,7 @@ pub:
   label: "pub"
   show_title: false
   create_allowed: true
-  position: 2
+  position: 3
 research:
   title_en: "Research"
   title_fr: "Recherche"
@@ -52,7 +63,7 @@ research:
   label: "research"
   show_title: true
   create_allowed: true
-  position: 3
+  position: 4
 teaching:
   title_en: "Teaching"
   title_fr: "Enseignement"
@@ -63,4 +74,4 @@ teaching:
   label: "teaching"
   show_title: true
   create_allowed: true
-  position: 4
+  position: 5

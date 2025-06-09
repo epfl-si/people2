@@ -39,6 +39,7 @@ all:
     # ---                                                                 system
     SELINUX: no
     FIREWALL: yes
+    NAS_ENABLED: yes
     USERS:
       - username: fsd
         comment: non root user for running applications
@@ -54,6 +55,9 @@ all:
 
     # ---                                                                 people
     DATA_BASEDIR: /home/fsd/data
+
+    LEGACY_RO_URL: "https://personnes.epfl.ch"
+    LEGACY_RW_URL: "https://test-people.epfl.ch"
 
     OIDC_REALM: rails
     OIDC_IDENTIFIER: hello_rails

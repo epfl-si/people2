@@ -1,0 +1,10 @@
+---
+
+- name: Mount an NFS volume
+  ansible.posix.mount:
+    src: "{{ nas.server }}:{{ nas.share }}"
+    path: "{{ nas.mountpoint }}"
+    opts: rw,sync,hard
+    state: mounted
+    fstype: nfs
+  when: nas.enabled

@@ -35,7 +35,8 @@ class Picture < ApplicationRecord
 
   after_commit :check_attachment
 
-  scope :camipro, -> { where(camipro: true) }
+  scope :camipro, -> { where(source: 'camipro') }
+  scope :legacy, -> { where(source: 'legacy') }
 
   # -------------------------------------------------------------------- camipro
 
@@ -47,6 +48,16 @@ class Picture < ApplicationRecord
     baseurl + "&hash=#{digest}"
   end
 
+  def self.legacy_url(sciper)
+    cfg = Rails.application.config_for(:epflapi)
+    token = Base64.encode64("#{cfg.username}:#{cfg.password}")
+    "#{cfg.legacy_photo_url}?token=#{token}&app=peoplenext&sciper=#{sciper}"
+  end
+
+  def camipro?
+    source == 'camipro'
+  end
+
   def visible_image
     if cropped_image&.attached?
       cropped_image
@@ -55,42 +66,35 @@ class Picture < ApplicationRecord
     end
   end
 
+  def fspath
+    ActiveStorage::Blob.service.path_for(image.key)
+  end
+
   def selected?
     id == profile.selected_picture_id
   end
 
   def fetch!
-    return unless camipro?
+    return if source.blank?
 
     sciper = profile.sciper
-    url = URI.parse(Picture.camipro_url(sciper))
+    url = URI.parse(Picture.send("#{source}_url", sciper))
     image.attach(io: url.open, filename: "#{sciper}.jpg")
   end
 
   def fetch
-    return unless camipro?
+    return if source.blank?
 
-    CamiproPictureCacheJob.perform_later(id) if failed_attempts < MAX_ATTEMPTS
+    PictureCacheJob.perform_later(id) if failed_attempts < MAX_ATTEMPTS
   end
 
   def check_attachment
-    fetch if camipro? && image.blank?
+    fetch if source.present? && image.blank?
   end
 
   def force_destroy
-    self.camipro = false
+    self.source = nil
     destroy
-  end
-
-  def fetch_from_legacy!
-    return if camipro?
-    raise "Picture::fetch_from_legacy! only allowed during migration" unless Rails.configuration.enable_adoption
-
-    cfg = Rails.application.config_for(:epflapi)
-    token = Base64.encode64("#{cfg.username}:#{cfg.password}")
-    sciper = profile.sciper
-    url = URI("#{cfg.legacy_photo_url}?token=#{token}&app=peoplenext&sciper=#{sciper}")
-    image.attach(io: url.open, filename: "#{sciper}.jpg")
   end
 
   private
