@@ -331,7 +331,6 @@ class Person
   end
 
   def courses
-    Course.joins(:teacherships)
-          .where(teacherships: { sciper: sciper })
+    Course.joins(:teacherships).where(teacherships: { sciper: sciper })
   end
 end
