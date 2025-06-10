@@ -6,6 +6,17 @@ require Rails.root.join('app/services/api_base_getter').to_s
 require Rails.root.join('app/services/api_accreds_getter').to_s
 
 namespace :data do
+  desc 'Refresh courses for new semester'
+  task refresh_courses: %i[nuke_courses courses] do
+  end
+
+  desc 'Destroy courses from database'
+  task nuke_courses: :environment do
+    # File.delete('tmp/courses.json') if File.exist?('tmp/courses.json')
+    Teachership.destroy_all
+    Course.destroy_all
+  end
+
   desc 'Download the list of ISA courses and fill the local DB as cache'
   task courses: :environment do
     courses_file = Rails.root.join("tmp/courses.json")
@@ -20,16 +31,19 @@ namespace :data do
       File.write(courses_file, courses.to_json)
     end
 
-    Teachership.destroy_all
-    Course.destroy_all
-
-    profiles_by_sciper = Profile.all.group_by(&:sciper).transform_values { |v| v[0] }
-
     acad = Course.current_academic_year
+
+    # profiles_by_sciper = Profile.all.group_by(&:sciper).transform_values { |v| v[0] }
+    # profile_ids_by_sciper = Profile.select(:id, :sciper).group_by(&:sciper).transform_values { |v| v.first.id }
+    # TODO: check if this actually reduce memory usage
+    profiles_by_sciper = Profile.select(:id, :sciper).map { |v| [v.sciper, v.id] }.to_h
+
+    cdone = Course.select('code').map { |c| [c.code, true] }.to_h
 
     courses.each do |cdata|
       next if cdata['courseCode'].nil? || cdata['courseCode'] == "Unspecified Code"
       next unless cdata['curricula'].any? { |h| h['acad']['code'] == acad }
+      next if cdone.key?(cdata['courseCode'])
 
       cc = cdata['subject']
       tt = cdata['professors']
@@ -58,15 +72,16 @@ namespace :data do
         sciper = t['sciper']
 
         if profiles_by_sciper.key?(sciper)
-          profile = profiles_by_sciper[sciper]
+          profile_id = profiles_by_sciper[sciper]
         else
           puts "Profile for sciper #{sciper} not found: creating a new default one (should not happen in DEV)"
           profile = Profile.create_with_defaults(sciper)
-          profiles_by_sciper[sciper] = profile
+          profile_id = profile.id
+          profiles_by_sciper[sciper] = profile_id
         end
         Teachership.create!(
           course: course,
-          teacher: profile,
+          profile_id: profile_id,
           sciper: sciper,
           role: t['role']['fr'],
           kind: t['type']

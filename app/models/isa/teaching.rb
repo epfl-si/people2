@@ -17,6 +17,20 @@ module Isa
       @title = c['X_MATIERE']
       @url = c['X_URL']
     end
+
+    def edu_url(locale)
+      # TODO: check with William in order to have exactly the same algorithm
+      #       to build the url from title+code. In particular, when
+      #       1. code or title is absent
+      #       2. the title is not present in the selected locale
+      #       Iteally, William should include the url in the data so we don't
+      #       have to play the cat and mouse game
+      return nil if @code.blank? || @title.blank?
+
+      t = I18n.transliterate(@title).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
+      c = @code.upcase.sub('(', "-").sub(')', '')
+      "https://edu.epfl.ch/coursebook/#{locale}/#{t}-#{c}"
+    end
   end
 
   # class CourseGroup
@@ -88,15 +102,23 @@ module Isa
       @sciper = sciper
       @ta = load_ta(sciper)
       @phd = load_phd(sciper)
-      # @lectures = load_lectures(sciper)
+      @lectures = load_lectures(sciper)
+      @lectures_by_code = @lectures.group_by(&:code)
 
-      return unless @ta.nil? || @phd.nil?
+      return unless @ta.present? || @phd.present? || @lectures.present?
 
       Rails.logger.warn("failed to fetch ISA teaching data for sciper #{sciper}")
     end
 
     def courses
       @lectures.uniq(&:title)
+    end
+
+    def best_course_description_for(codes)
+      cc = codes.map { |code| @lectures_by_code[code] }.flatten.compact
+      return nil if cc.blank?
+
+      cc.map(&:description).compact.max_by(&:length)
     end
 
     def grouped_courses
