@@ -32,14 +32,8 @@ namespace :data do
     end
 
     acad = Course.current_academic_year
-
-    # profiles_by_sciper = Profile.all.group_by(&:sciper).transform_values { |v| v[0] }
-    # profile_ids_by_sciper = Profile.select(:id, :sciper).group_by(&:sciper).transform_values { |v| v.first.id }
-    # TODO: check if this actually reduce memory usage
-    profiles_by_sciper = Profile.select(:id, :sciper).map { |v| [v.sciper, v.id] }.to_h
-
     cdone = Course.select('code').map { |c| [c.code, true] }.to_h
-
+    profiles_by_sciper = nil
     courses.each do |cdata|
       next if cdata['courseCode'].nil? || cdata['courseCode'] == "Unspecified Code"
       next unless cdata['curricula'].any? { |h| h['acad']['code'] == acad }
@@ -48,8 +42,12 @@ namespace :data do
       cc = cdata['subject']
       tt = cdata['professors']
 
-      # In dev we only keep the course for profile we have in the DB
+      # In dev and during adoption we only keep the course for profile we have in the DB
       if Rails.env.development?
+        # profiles_by_sciper = Profile.all.group_by(&:sciper).transform_values { |v| v[0] }
+        # profile_ids_by_sciper = Profile.select(:id, :sciper).group_by(&:sciper).transform_values { |v| v.first.id }
+        # TODO: check if this actually reduce memory usage
+        profiles_by_sciper |= Profile.select(:id, :sciper).map { |v| [v.sciper, v.id] }.to_h
         tt = tt.select { |t| profiles_by_sciper.key?(t['sciper']) }
         next if tt.empty?
       end
@@ -71,17 +69,8 @@ namespace :data do
       tt.each do |t|
         sciper = t['sciper']
 
-        if profiles_by_sciper.key?(sciper)
-          profile_id = profiles_by_sciper[sciper]
-        else
-          puts "Profile for sciper #{sciper} not found: creating a new default one (should not happen in DEV)"
-          profile = Profile.create_with_defaults(sciper)
-          profile_id = profile.id
-          profiles_by_sciper[sciper] = profile_id
-        end
         Teachership.create!(
           course: course,
-          profile_id: profile_id,
           sciper: sciper,
           role: t['role']['fr'],
           kind: t['type']
