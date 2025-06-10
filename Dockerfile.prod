@@ -18,6 +18,7 @@ WORKDIR /rails
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
       curl \
+      ldap-utils \
       libjemalloc2 \
       libvips \
       mariadb-client \
