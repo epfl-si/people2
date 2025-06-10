@@ -445,10 +445,17 @@ prod_push: prod_build
 
 ## Redeploy app to prod cluter
 prod_deploy:
-	cd ops && ./possible.sh --prod -t run.app
+	cd ops && ./possible.sh --prod -t config.env -t run.app
+
+## Redeploy app to prod cluter with next config (names changed in test)
+next_deploy:
+	cd ops && ./possible.sh --next -t config.env -t run.app
 
 ## Build, tag and deploy app to production
 prod: prod_push prod_deploy
+
+## Build, tag and deploy app to production with next config (names changed in test)
+next: prod_push next_deploy
 
 ## Open a shell on running application pod
 prod_shell:
