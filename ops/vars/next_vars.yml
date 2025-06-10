@@ -1,0 +1,14 @@
+---
+
+ports:
+  people: 8080
+  redis: 6379
+
+hosts:
+  people: "{{ PEOPLE_HOSTNAME | default('people-next.epfl.ch') }}"
+  # docker: "{{ DOCKER_IP | default('127.0.0.1') }}"
+  # traefik_console: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
+  # whoami: "{{ WHOAMI_HOSTNAME | default('peoami.fsd.team') }}"
+  # keycloak: "{{ OIDC_HOSTNAME | default('peoak.fsd.team') }}"
+  # grafana: "{{ GRAFANA_HOSTNAME | default('peofana.fsd.team') }}"
+  # prometheus: "{{ PROMETHEUS_HOSTNAME | default('peotheus.fsd.team') }}"

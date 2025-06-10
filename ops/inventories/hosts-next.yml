@@ -7,7 +7,7 @@ all:
     inventory_environment: "prod"
 
     APP_HOSTNAME: "people-next.epfl.ch"
-    ENABLE_ADOPTION: "true"
+    ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
     OC_CLUSTER: "https://api.ocpitsp0001.xaas.epfl.ch:6443"
     OC_NAMESPACE: svc0033p-people
@@ -16,4 +16,5 @@ all:
     USE_LOCAL_ELEMENTS: "yes"
     LEGACY_RO_URL: "https://personnes.epfl.ch"
     LEGACY_RW_URL: "https://test-people.epfl.ch"
-    EPFLAPI_BACKEND_URL: "https://api-test.epfl.ch/v1"
+    EPFLAPI_BACKEND_URL: "https://api.epfl.ch/v1"
+    # EPFLAPI_BACKEND_URL: "https://api-test.epfl.ch/v1"

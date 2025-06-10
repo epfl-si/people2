@@ -1,0 +1,5 @@
+---
+
+release:
+  config: "{{ people.config | to_json | md5 }}"
+  secret: "{{ people.secrets | to_json | md5 }}"

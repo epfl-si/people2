@@ -8,6 +8,17 @@
 - include_vars: main.yml
   tags: always
 
+- include_vars: config.yml
+  tags: always
+
+# - include_vars: release.yml
+#   tags: always
+
+- name: Debug release
+  ansible.builtin.debug:
+    var: people_config_signature
+  tags: debug
+
 - name: Debug secrets
   ansible.builtin.debug:
     var: _secrets
