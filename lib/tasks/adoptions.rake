@@ -12,7 +12,7 @@ namespace :legacy do
     ldpath = Rails.root.join("tmp/ldap_scipers_emails.txt")
     # TODO: replace with Net::LDAP or install ldapsearch in the container
     unless File.exist?(ldpath)
-      cmd = "ldapsearch -x -h ldap.epfl.ch -b 'o=epfl,c=ch'"
+      cmd = "ldapsearch -x -H ldap://ldap.epfl.ch:389 -b 'o=epfl,c=ch'"
       cmd += " '(&(objectClass=person)(!(ou=services)))'"
       cmd += " uniqueidentifier mail displayName"
       cmd += " | grep -E '^(dn|mail|uniqueIdentifier|displayName):|^$' > #{ldpath}"
