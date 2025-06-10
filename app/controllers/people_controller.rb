@@ -50,11 +50,6 @@ class PeopleController < ApplicationController
 
   private
 
-  # TODO
-  def migrated?(_sciper_or_name)
-    rand(1..10) < 6
-  end
-
   def set_show_data
     # ActiveSupport::Notifications.instrument('set_base_data') do
     # end
