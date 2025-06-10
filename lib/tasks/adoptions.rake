@@ -21,7 +21,7 @@ namespace :legacy do
 
     had_profile = Legacy::Cv.all.pluck(:sciper).uniq.index_with { |_k| true }
     scipers_todo = (
-      Work::Sciper.with_profile.pluck(:sciper) - Adoption.all.pluck(:sciper)
+      Work::Sciper.migranda.pluck(:sciper) - Adoption.all.pluck(:sciper)
     ).uniq.index_with { |_k| true }
     puts "Adoption count before: #{Adoption.count}"
 
