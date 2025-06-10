@@ -41,6 +41,8 @@
             app: people
         template:
           metadata:
+            annotations:
+              config_signature: "{{ people_config_signature }} {{ people_secrets_signature }}"
             labels:
               app: people
               role: app
@@ -113,6 +115,8 @@
             app: people
         template:
           metadata:
+            annotations:
+              config_signature: "{{ people_config_signature }} {{ people_secrets_signature }}"
             labels:
               app: people
               role: jobs
