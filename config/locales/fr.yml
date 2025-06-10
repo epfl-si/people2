@@ -24,7 +24,7 @@ fr:
       cancel: Annuler
       create: Créer un enregistrement
       submit: Envoyer
-      update: Enregistré
+      update: Enregistrer
       texfield_for: "%{attr}"
   nav:
     app_with_version: EPFL People v. %{version}
