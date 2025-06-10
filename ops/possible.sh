@@ -55,6 +55,10 @@ while [ "$#" -gt 0 ]; do
             inventory_mode="prod"
             shift
             ;;
+        --next)
+            inventory_mode="next"
+            shift
+            ;;
         --qual)
             inventory_mode="qual"
             shift

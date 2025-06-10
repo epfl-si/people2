@@ -1,0 +1,6 @@
+
+- name: People openshit deployment
+  hosts: next
+  gather_facts: false
+  roles:
+    - role: k8s
