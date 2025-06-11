@@ -4,6 +4,8 @@ class Adoption < ApplicationRecord
   validates :sciper, uniqueness: true
   validates :email, uniqueness: { allow_blank: true }
   scope :accepted, -> { where(accepted: true) }
+  scope :pending, -> { where(accepted: false) }
+  after_update :update_sciper_status
 
   def self.for_sciper_or_name(v)
     s = v.is_a?(Integer) || v =~ /^\d{6}$/ ? { sciper: v } : { email: "#{v}@epfl.ch" }
@@ -38,6 +40,12 @@ class Adoption < ApplicationRecord
   end
 
   private
+
+  def update_sciper_status
+    s = Sciper.find(sciper)
+    s.status = Sciper::STATUS_MIGRATED
+    s.save!
+  end
 
   def fetch_legacy_content(locale)
     headers = { Host: 'people.epfl.ch' }

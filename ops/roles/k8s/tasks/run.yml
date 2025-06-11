@@ -60,7 +60,7 @@
                     name: metrics
                 resources:
                   limits:
-                    cpu: "{{ limits.cpu.max }}"
+                    # cpu: "{{ limits.cpu.max }}"
                     memory: "{{ limits.memory.max }}"
                   requests:
                     cpu: "{{ limits.cpu.min }}"
@@ -130,7 +130,7 @@
                 imagePullPolicy: Always
                 resources:
                   limits:
-                    cpu: "{{ limits.cpu.max }}"
+                    # cpu: "{{ limits.cpu.max }}"
                     memory: "{{ limits.memory.max }}"
                   requests:
                     cpu: "{{ limits.cpu.min }}"
