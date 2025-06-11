@@ -16,7 +16,7 @@ def ldap_by_sciper
     system(cmd)
   end
   mui = /^uniqueIdentifier: ([0-9]+)$/
-  mma = /^mail: ([a-z.]+@epfl\.ch)$/
+  mma = /^mail: ([a-z\-.]+@epfl\.ch)$/
   mnn = /^displayName:(:?) (.+)$/
   mdn = /^dn: (.+)$/
 
