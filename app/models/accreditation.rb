@@ -212,7 +212,8 @@ class Accreditation
     order <=> other.order
   end
 
+  # TODO: this is an orrible hack. We definitly need to find a more solid solution
   def possibly_teacher?
-    position.present? && position.possibly_teacher?
+    unit.id == 16 || position.present? && position.possibly_teacher?
   end
 end
