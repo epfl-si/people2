@@ -141,7 +141,7 @@ class ProfilesController < ApplicationController
       :inclusivity,
       :nationality_fr, :nationality_en, :nationality_it, :nationality_de,
       :expertise_fr, :expertise_en, :expertise_it, :expertise_de,
-      :personal_web_url,
+      :personal_web_url, :personal_phone,
       :en_enabled, :fr_enabled, :it_enabled, :de_enabled,
       :personal_phone_visibility, :personal_web_url_visibility,
       :nationality_visibility, :expertise_visibility, :photo_visibility
