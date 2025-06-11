@@ -47,7 +47,7 @@ namespace :data do
         # profiles_by_sciper = Profile.all.group_by(&:sciper).transform_values { |v| v[0] }
         # profile_ids_by_sciper = Profile.select(:id, :sciper).group_by(&:sciper).transform_values { |v| v.first.id }
         # TODO: check if this actually reduce memory usage
-        profiles_by_sciper |= Profile.select(:id, :sciper).map { |v| [v.sciper, v.id] }.to_h
+        profiles_by_sciper ||= Profile.select(:id, :sciper).all.map { |v| [v.sciper, v.id] }.to_h
         tt = tt.select { |t| profiles_by_sciper.key?(t['sciper']) }
         next if tt.empty?
       end
