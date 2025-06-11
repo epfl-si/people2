@@ -13,8 +13,8 @@ namespace :data do
   desc 'Destroy courses from database'
   task nuke_courses: :environment do
     # File.delete('tmp/courses.json') if File.exist?('tmp/courses.json')
-    Teachership.destroy_all
-    Course.destroy_all
+    Teachership.in_batches(of: 1000).destroy_all
+    Course.in_batches(of: 1000).destroy_all
   end
 
   desc 'Download the list of ISA courses and fill the local DB as cache'

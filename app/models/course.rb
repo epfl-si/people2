@@ -6,7 +6,6 @@ class Course < ApplicationRecord
 
   # has_and_belongs_to_many :teachers, join_table: "teacherships", foreign_key: "profile_id"
   has_many :teacherships, class_name: "Teachership", dependent: :destroy
-  has_many :teachers, through: :teacherships
 
   def self.current_academic_year(d = Time.zone.today)
     y = d.year
