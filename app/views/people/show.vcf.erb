@@ -1,0 +1,16 @@
+BEGIN:VCARD
+VERSION:3.0
+FN;charset=UTF-8:<%= @person.name.display %>
+N;charset=UTF-8:<%= @person.name.display_last %>;<%= @person.name.display_first %>;;;
+ADR;WORK;PREF:;;<%= @person.default_address.lines.join(";") %>
+LABEL;WORK;PREF;charset=UTF-8:<%= @person.default_address.lines.join(";") %>
+<% if @person.public_email.present? %>
+EMAIL;TYPE=INTERNET:<%= @person.public_email %>
+<% end %>
+URL:https://people.epfl.ch/<%= @person.email_user %>
+TITLE;charset=UTF-8:<%= @person.main_position.t_label%>
+<% if @person.phone_visible_by?(@audience) && @person.default_phone.present? %>
+TEL;TYPE=WORK:<%= @person.default_phone.number %>
+<% end %>
+ORG:EPFL
+END:VCARD
