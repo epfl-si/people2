@@ -32,6 +32,7 @@ namespace :legacy do
       data = Work::Sciper.where(sciper: ss).map do |s|
         {
           accepted: false,
+          sciper: s.sciper,
           email: s.email,
           fullname: s.name
         }

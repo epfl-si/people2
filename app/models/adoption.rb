@@ -42,8 +42,8 @@ class Adoption < ApplicationRecord
   private
 
   def update_sciper_status
-    s = Sciper.find(sciper)
-    s.status = Sciper::STATUS_MIGRATED
+    s = Work::Sciper.find(sciper)
+    s.status = Work::Sciper::STATUS_MIGRATED
     s.save!
   end
 
