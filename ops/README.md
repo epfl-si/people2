@@ -30,15 +30,15 @@ A secondary reverse proxy could be added, running as root to manage SSL certific
 
 Before deploying, ensure you have access to the following services:
 
-- **Keybase**  
-  Required to retrieve application and admin secrets. You must have access to:  
-  `/keybase/team/epfl_people.prod/ops/secrets-prod.yml`  
+- **Keybase**
+  Required to retrieve application and admin secrets. You must have access to:
+  `/keybase/team/epfl_people.prod/ops/secrets-prod.yml`
   `/keybase/team/epfl_people.prod/ops/secrets-admin.yml`
 
-- **OpenShift 4 cluster access (EPFL)**  
+- **OpenShift 4 cluster access (EPFL)**
   You must have permissions to deploy to your namespace and access OpenShift routes, services, pods, and logs via `oc` CLI or the OpenShift web console.
 
-- **Quay.io or quay-its.epfl.ch**  
+- **Quay.io or quay-its.epfl.ch**
   Required to pull container images (`people_webapp`, `valkey`) and access image tags.
 
 ## What’s Deployed Where?
@@ -97,7 +97,7 @@ Sets up required base components:
   - **Port:** `metrics` (9394)
   - **Path:** `/metrics`
   - **Interval:** every `30s`
-  
+
 ### Usage
 
 #### Standard test deployment:
@@ -161,7 +161,7 @@ Check all available tags with:
 
 #### Tagging Conventions
 
-- Every role has a corresponding tag in the playbook.  
+- Every role has a corresponding tag in the playbook.
   Example: `./possible.sh --test -t system` runs all tasks of the `system` role.
 - The `main.yml` in each role is a manifest and imports grouped task files:
   1. _setup_
@@ -184,10 +184,10 @@ Check all available tags with:
 
 ## Useful Addresses
 
-- `128.178.1.17` → Developer workstation  
-- `128.178.224.34`, `128.178.224.35` → Legacy VMs (dinfo11, dinfo12)  
-- `10.95.96.153` → peonext (test deployment)  
-- `10.98.72.0/21` → OpenShift cluster node range  
+- `128.178.1.17` → Developer workstation
+- `128.178.224.34`, `128.178.224.35` → Legacy VMs (dinfo11, dinfo12)
+- `10.95.96.153` → peonext (test deployment)
+- `10.98.72.0/21` → OpenShift cluster node range
 - `10.98.72.140–142` → Cluster egress IPs (for external requests)
 
 ---
@@ -233,3 +233,21 @@ clean:
 - `VERSION` auto-populates from the latest `git tag`.
 
 Ensure you are authenticated with Docker to `quay-its.epfl.ch` and have permission to push to the `svc0033` namespace.
+
+## Final Migration to Production
+
+ - [] Set version 1.0.0 in `VERSION` file, `make tag`, and `git push` (optional);
+ - [] `make prod_push` to build the final docker image and push it to Quay;
+ - [] Clean the production database: `./bin/nuke_prod.sh`;
+ - [] Deploy the app to production: `make prod_deploy`;
+ - [] Run migrations and seed data: this is not yet fully automatic:
+   - [] `make prod_shell`
+   - [] `./bin/rails db:migrate`
+   - [] `./bin/rails db:seed`
+   - [] `./bin/rails data:refresh_courses`
+   - [] `./bin/rails legacy:adoptions`
+   - [] `./bin/rails legacy:seed_eligible_scipers`
+   - [] `./bin/rails legacy:fetch_all_texts`
+   - [] `./bin/rails legacy:txt_lang_detect`
+   - [] `./bin/rails legacy:txt_translate`
+ - [] change the DNS: `people.epfl.ch` should point to ??
