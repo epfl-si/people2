@@ -35,7 +35,10 @@ class Person
     data = if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
              APIPersonGetter.call!(persid: sciper_or_email, single: true, force: force)
            else
-             APIPersonGetter.call!(email: sciper_or_email, single: true, force: force)
+             # APIPersonGetter.call!(email: sciper_or_email, single: true, force: force)
+             r = APIPersonGetter.call!(email: sciper_or_email, single: false, force: force)
+             r.select { |v| v['email'] == "#{sciper_or_email}@epfl.ch" }
+             r.first
            end
     new(data)
   end
