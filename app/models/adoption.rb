@@ -23,6 +23,27 @@ class Adoption < ApplicationRecord
 
   # Fetch html profile from legacy server and
   def content(locale, force: false)
+    profile = Profile.for_sciper(sciper)
+    r = Regexp.new('href="/([a-z0-9\-.]+)/edit')
+    if profile.present?
+      legacy_content(locale, force: force).gsub(r, "href=\"/profiles/#{profile.id}/edit\"")
+    else
+      legacy_content(locale, force: force).gsub(r, "href=\"/people/#{sciper}/profiles/new\"")
+    end
+  end
+
+  # edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper)
+
+  private
+
+  def update_sciper_status
+    s = Work::Sciper.find(sciper)
+    s.status = Work::Sciper::STATUS_MIGRATED
+    s.save!
+  end
+
+  # Fetch html profile from legacy server and
+  def legacy_content(locale, force: false)
     ck = "#{cache_key}/#{locale}"
     if Rails.configuration.legacy_pages_cache.positive?
       if force
@@ -39,14 +60,6 @@ class Adoption < ApplicationRecord
     end
   end
 
-  private
-
-  def update_sciper_status
-    s = Work::Sciper.find(sciper)
-    s.status = Work::Sciper::STATUS_MIGRATED
-    s.save!
-  end
-
   def fetch_legacy_content(locale)
     headers = { Host: 'people.epfl.ch' }
     uri = URI.join(Rails.configuration.legacy_base_url, path)
@@ -55,9 +68,6 @@ class Adoption < ApplicationRecord
     body.gsub(
       Regexp.new('(src|href)="/(private/common|images|js|css)/'),
       "\\1=\"#{Rails.configuration.legacy_base_url}/\\2/"
-    ).gsub(
-      Regexp.new('href="/([a-z0-9.]+)/edit'),
-      "href=\"/people/#{sciper}/profile/new"
     )
   end
 end
