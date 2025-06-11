@@ -14,16 +14,6 @@
   	<dd><span><%= t "undefined" %></span></dd>
 	<% end %>
 
-  <dt><%= t "profile.expertise" %></dt>
-  <% if (profile.t_expertise).present? %>
-	  <dd class="rpush">
-	  	<%= profile.t_expertise %>
-	  	<%= render 'shared/item_visibility', item: profile, property: 'expertise' %>
-	  </dd>
-  <% else %>
-  	<dd><span><%= t "undefined" %></span></dd>
-	<% end %>
-
   <dt><%= t "profile.personal_web_url" %></dt>
   <% if (d=profile.personal_web_url).present? %>
 	  <dd class="rpush">

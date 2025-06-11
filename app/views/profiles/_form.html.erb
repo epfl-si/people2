@@ -10,8 +10,8 @@
 <% end %>
 <% translations = profile.translations %>
 <%= form_with(model: profile, local: false, class: "instaform") do |form| %>
-  <%= translated_text_fields(form, :expertise, translations: translations) %>
   <%= translated_text_fields(form, :nationality, translations: translations) %>
 	<%= single_text_field(form, :personal_web_url) %>
+	<%= single_text_field(form, :personal_phone) %>
   <%= form_actions(form, profile) %>
 <% end %>
