@@ -5,42 +5,126 @@ require Rails.root.join('app/services/application_service').to_s
 require Rails.root.join('app/services/api_base_getter').to_s
 require Rails.root.join('app/services/api_accreds_getter').to_s
 
+def ldap_by_sciper
+  ldpath = Rails.root.join("tmp/ldap_scipers_emails.txt")
+  # TODO: replace with Net::LDAP or install ldapsearch in the container
+  unless File.exist?(ldpath)
+    cmd = "ldapsearch -x -H ldap://ldap.epfl.ch:389 -b 'o=epfl,c=ch'"
+    cmd += " '(&(objectClass=person)(!(ou=services)))'"
+    cmd += " uniqueidentifier mail displayName"
+    cmd += " | grep -E '^(dn|mail|uniqueIdentifier|displayName):|^$' > #{ldpath}"
+    system(cmd)
+  end
+  mui = /^uniqueIdentifier: ([0-9]+)$/
+  mma = /^mail: ([a-z.]+@epfl\.ch)$/
+  mnn = /^displayName:(:?) (.+)$/
+  mdn = /^dn: (.+)$/
+
+  data = {}
+  r = OpenStruct.new
+  s = nil
+  File.foreach(ldpath).with_index do |l, _nl|
+    l.chomp!
+    if l.empty? && s.present?
+      data[s.to_i] = r if s.present?
+      r = OpenStruct.new
+      next
+    elsif (m = mui.match(l))
+      s = r.sciper = m[1]
+    elsif (m = mma.match(l))
+      r.email = m[1]
+    elsif (m = mnn.match(l))
+      r.fullname = m[1].blank? ? m[2] : Base64.decode64(m[2]).force_encoding("UTF-8")
+    elsif (m = mdn.match(l))
+      r.dn = m[1]
+    end
+  end
+  data
+end
+
 namespace :legacy do
-  desc 'Drop all scipers from Work::Sciper table and reload from legacy and up-to-date presence'
-  task seed_eligible_scipers: :environment do
-    # Remove all the scipers
+  desc 'Reload the scipers table with fresh data'
+  task reload_scipers: %i[nuke_scipers scipers] do
+  end
+
+  desc 'Nuke scipers from Work::Sciper table'
+  task nuke_scipers: :environment do
     Work::Sciper.in_batches(of: 1000).delete_all
+  end
+
+  desc 'Update the Scipers table with currently valid scipers'
+  task scipers: :environment do
+    all_people = ldap_by_sciper
+
+    # all the officially existing scipers
+    all_scipers = all_people.keys
+
+    # all the scipers in the DB
+    scipers_in_db = Work::Sciper.all.pluck(:sciper)
+
+    scipers_todo = all_scipers - scipers_in_db
+
+    # scipers that currently have a legacy profile
     legacy_scipers = Legacy::Cv.connection.select_all("
       SELECT DISTINCT sciper FROM common
       UNION
       SELECT DISTINCT sciper FROM cv
       UNION
       SELECT DISTINCT sciper FROM accreds
-    ").to_a.map { |v| v["sciper"].to_i }
+    ").to_a.map { |v| v["sciper"].to_i }.uniq.intersection(scipers_todo)
 
-    api_scipers = APIAuthGetter.call(
+    # all scipers eligible to have a profile
+    profilable_scipers = APIAuthGetter.call(
       authid: "botweb",
       status: "active",
       type: "property",
       force: true # we want to seed with freshest possible data
-    ).map { |a| a["persid"].to_i }.uniq
+    ).map { |a| a["persid"].to_i }.uniq.intersection(scipers_todo)
 
-    migrated = (api_scipers - legacy_scipers).map do |s|
-      { sciper: s, status: Work::Sciper::STATUS_MIGRATED }
+    # those that are not in legacy are considered as already migrated
+    migrated = (profilable_scipers - legacy_scipers).map do |s|
+      r = all_people[s]
+      {
+        sciper: s,
+        status: Work::Sciper::STATUS_MIGRATED,
+        email: r.email,
+        name: r.fullname,
+      }
     end
 
-    migranda = (api_scipers.intersection legacy_scipers).map do |s|
-      { sciper: s, status: Work::Sciper::STATUS_WITH_LEGACY_PROFILE }
+    # those that do have a legacy profile will have to be migrated
+    migranda = (profilable_scipers.intersection legacy_scipers).map do |s|
+      r = all_people[s]
+      {
+        sciper: s,
+        status: Work::Sciper::STATUS_WITH_LEGACY_PROFILE,
+        email: r.email,
+        name: r.fullname,
+      }
     end
 
+    noprofile = (scipers_todo - profilable_scipers).map do |s|
+      r = all_people[s]
+      {
+        sciper: s,
+        status: Work::Sciper::STATUS_NO_PROFILE,
+        email: r.email,
+        name: r.fullname,
+      }
+    end
+
+    puts "No. total valid scipers:           #{all_scipers.count}"
+    puts "No. total scipers already in DB:   #{scipers_in_db.count}"
     puts "No. unique scipers in legacy db:   #{legacy_scipers.count}"
-    puts "No. uinique eligible scipers:      #{api_scipers.count}"
-    puts "No. common scipers (migranda):     #{migranda.count}"
-    puts "No. scipers not needing migration: #{migrated.count}"
+    puts "No. unique eligible scipers:       #{profilable_scipers.count}"
+    puts "No. migranda to add:               #{migranda.count}"
+    puts "No. migrated to add:               #{migrated.count}"
+    puts "No. no profile to add:             #{noprofile.count}"
 
     # rubocop:disable Rails/SkipsModelValidations
     Work::Sciper.insert_all(migranda)
     Work::Sciper.insert_all(migrated)
+    Work::Sciper.insert_all(noprofile)
     # rubocop:enable Rails/SkipsModelValidations
   end
 
