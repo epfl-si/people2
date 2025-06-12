@@ -31,16 +31,40 @@ class Person
                      })
   end
 
-  def self.find(sciper_or_email, force: false)
-    data = if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
-             APIPersonGetter.call!(persid: sciper_or_email, single: true, force: force)
-           else
-             # APIPersonGetter.call!(email: sciper_or_email, single: true, force: force)
-             r = APIPersonGetter.call!(email: sciper_or_email, single: false, force: force)
-             r.select { |v| v['email'] == "#{sciper_or_email}@epfl.ch" }
-             r.first
-           end
+  def self.find_by_sciper(sciper, force: false)
+    data = APIPersonGetter.call!(persid: sciper, single: true, force: force)
+    raise ActiveRecord::RecordNotFound if data.nil?
+
     new(data)
+  end
+
+  def self.find_by_email(email, force: false)
+    # This adds a request to the local DB but reduces cache memory usage
+    e = "#{email}@epfl.ch"
+    s = Work::Sciper.where(email: e).first
+    if s.present?
+      find_by_sciper(s.sciper, force: force)
+    else
+      data = APIPersonGetter.call!(email: email, single: false, force: force).select { |v| v['email'] == e }.first
+      raise ActiveRecord::RecordNotFound if data.nil?
+
+      r = new(r)
+      Work::Sciper.create(
+        sciper: r.sciper,
+        status: Work::Sciper::STATUS_AUTOMATIC,
+        email: e,
+        name: r.name.display
+      )
+      r
+    end
+  end
+
+  def self.find(sciper_or_email, force: false)
+    if sciper_or_email.is_a?(Integer) || sciper_or_email =~ /^\d{6}$/
+      find_by_sciper(sciper_or_email, force: force)
+    else
+      find_by_email(sciper_or_email, force: force)
+    end
   end
 
   def self.for_scipers(scipers)
