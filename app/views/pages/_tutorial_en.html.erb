@@ -1,0 +1,57 @@
+<h2>Testing Phase</h2>
+<p>
+Thank you for taking part to the testing phase of the new people application.
+Here are few information that you may want to read before starting.
+</p><p class="alert alert-info">
+To access your profile, please add your <em>sciper</em> number or your email
+username as usual to the base URL, <em>e.g.</em>:<br/>
+<tt>https://people-next.epfl.ch/SCIPER</tt>
+</p>
+<h3>Adoption</h3>
+<p>
+Currently the legacy people application is still running and serving the
+usual <tt>people.epfl.ch</tt> domain.
+</p><p>
+  When this new version will become the default, there will be a <strong>transition
+  period</strong> when this new application will respond to the <tt>people.epfl.ch</tt>
+  domain and will act as a proxy and serve by default the exact
+  <strong>same page</strong> as the legacy application. The only difference
+  will be that the <strong>edit</strong> link will bring the page where you
+  can edit your <strong>new profile.</strong>
+</p><p>
+  We simulate here this transition period (only from a different domain).
+</p><p>
+  We did our best to import the old one, but please check it our and take
+  the occasion to make it richer. Take your time because, in the meantime,
+  the old pagewill still be served.
+</p><p>
+  To check how the new profile will look, you can click on the
+  <strong>Preview</strong> link located at the top right corner of the page.
+</p><p>
+  In the preview page, you will be presented with a button that will let
+  you adopt your new profile and get rid of the old one once for all.
+</p><p class="alert alert-warning">
+Note taht, during this test your profile might be reset
+anytime as we are also testing our migration scripts. Feel free to play around
+and experiment with the content: your profile will be in any case reset one last
+time when the application will switch to production.
+</p>
+
+
+<h3>Visibility</h3>
+<p>
+For this first release, we have tried to mimic the old application as much
+as possible. There is one aspect that is changed and worth mentioning:
+how you can manage the visibility of the various parts of your profile.
+</p>
+<p>
+  The profile is composed of boxes. As in the old application you can
+  choose to make them visible or not but, now you can also chose to make
+  it visible only to visitors from the EPFL network.
+</p><p>
+  In addition to this, you can also set the visibility of the single
+  elements contained in the boxes. In this case, visibility is binary
+  and secondary to the visibility of the containing box. Therefore,
+  if the element is set as visible but the box is hidden, the element
+  itself will be hidden.
+</p>
