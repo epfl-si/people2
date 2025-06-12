@@ -10,7 +10,7 @@ fr:
       en: English
       it: Italiano
       de: Deutch
-  no_attribute_for_locale: "%{attribute} en %{language} n'est pas renseigné"
+  no_attribute_for_locale: "%{attribute} en %{language} manquant"
   no_title_for_locale: Titre manquant en %{language}
   translated_label: "%{label} en %{language}"
   messages:
@@ -33,6 +33,7 @@ fr:
   action:
     add: Ajouter un bloc
     add_record: Ajouter un(e) autre %{name}
+    cancel: Annuler
     confirm: Confirmer votre choix
     delete: Supprimer
     edit: modifier
@@ -41,9 +42,11 @@ fr:
     more: En savoir plus
     search: Chercher
     search_people: Chercher une personne
+    send: Envoyer
     show_hide_search_form: Afficher / masquer le formulaire de recherche
     sign_in: Se connecter
     sign_out: Se déconnecter
+    submit: Envoyer la demande
   dev:
     action:
       abandon: Annuler

@@ -33,6 +33,7 @@ en:
   action:
     add: Add a text bloc
     add_record: Add another %{name}
+    cancel: Cancel
     confirm: Please comfirm
     delete: Delete
     edit: edit
@@ -41,9 +42,11 @@ en:
     more: More informations
     search: Search
     search_people: Search for a person
+    send: Send
     show_hide_search_form: Show / hide the search form
     sign_in: Log in
     sign_out: Log out
+    submit: Submit the request
   dev:
     action:
       abandon: Cancellation

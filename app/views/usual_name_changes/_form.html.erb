@@ -34,5 +34,5 @@
       <%= form.hidden_field :new_last, value: "", data: { name_builder_target: "lastInput" } %>
     </div>
   </div>
-  <%= form_actions(form, @unc, submit_label: t(".submit")) %>
+  <%= form_actions(form, @unc, submit_label: t("action.submit"), cancel_label: t("action.cancel")) %>
 <% end %>
