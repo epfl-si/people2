@@ -28,7 +28,7 @@ class Adoption < ApplicationRecord
     if profile.present?
       legacy_content(locale, force: force).gsub(r, "href=\"/profiles/#{profile.id}/edit\"")
     else
-      legacy_content(locale, force: force).gsub(r, "href=\"/people/#{sciper}/profiles/new\"")
+      legacy_content(locale, force: force).gsub(r, "href=\"/people/#{sciper}/profile/new\"")
     end
   end
 
