@@ -4,7 +4,7 @@ fr:
     available_languages: Langues à choix
     expertise: Expertises
     nationality: Nationalité
-    official_name: Nom officiel
+    official_name: Nom
     personal_web_url: Adresse du site web personnel
     personal_phone: Numéro de téléphone personnel
     usual_name: Nom d'usage
@@ -50,26 +50,23 @@ fr:
       title:
         boxes_main: Mon curriculum
         boxes_contact: Mes informations professionnelles
-        details: Données personnelles facultatives
+        details: Mes données personnelles (facultatif)
         editing_languages: Ce profil est bilingue
-        edit_language: "Editer pour"
+        edit_language: "Editer mon profil en"
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
     edit_languages:
       explain_html: |
-        Vous pouvez ici sélectionner les langues dans lesquelles votre profil
-        sera disponible et pour lesquelles vous tenterez de fournir des
-        traductions.<br/>
-        Le contenu qui n'est pas encore disponible dans la langue du lecteur
-        sera remplacé par le contenu correspondant dans l'une des langues
-        disponibles.
-        Il est donc obligatoire de fournir la traduction dans au moins une des
-        langues sélectionnées ci-dessous.
+        Vous pouvez sélectionner ici les langues dans lesquelles votre profil
+        sera disponible. Pour chaque langue choisie, vous devrez fournir une
+        traduction.<br/>
+        En l’absence de traduction pour une langue donnée, le contenu existant
+        sera utilisé par défaut.
       title: Traductions du profil
     form:
       available_languages: Langues à choix
       expertise: Expertise (mots-clefs uniquement)
       nationality: Nationalité
-      official_name: Nom officiel
+      official_name: Nom
       personal_web_url: Adresse du site web personnel
       personal_phone: Numéro de téléphone personnel
       usual_name: Non d'usage

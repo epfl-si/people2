@@ -18,10 +18,10 @@ fr:
       selected: sélectionné
       camipro: Camipro
       failed_attempts: Nombre d'erreur pour récupérer la photo CAMIPRO
-      browse_image_file: Télécharger une nouvelle photo
+      browse_image_file: Selectionner le fichier
       max_photos_reached: Nombre maximum de photo atteint
       no_photofile_selected: Aucune photo sélectionnée
-      upload_image: Télécharger une photo
+      upload_image: Télécharger
     pictures:
       title: Ma photo
       currently_selected: Photo affichée
