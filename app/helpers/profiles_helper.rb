@@ -242,15 +242,16 @@ module ProfilesHelper
     ]
   end
 
-  def form_actions(form, item, without_cancel: false, label: nil, submit_label: nil, &block)
+  def form_actions(form, item, without_cancel: false, label: nil, submit_label: nil, cancel_label: nil, &block)
     item.class.name.underscore
     c = []
     c << capture(&block) if block_given?
     submit_label ||= item.new_record? ? t("generic.form.create", label: label) : t("generic.form.update", label: label)
+    cancel_label ||= t("action.dismiss")
 
     unless without_cancel
-      c << tag.button(t("action.dismiss"), class: "btn btn-cancel",
-                                           "data-action": "click->dismissable#dismiss")
+      c << tag.button(cancel_label, class: "btn btn-cancel",
+                                    "data-action": "click->dismissable#dismiss")
     end
     c << form.submit(submit_label, class: "btn-confirm")
     tag.div(class: "form-actions") do

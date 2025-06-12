@@ -18,10 +18,10 @@ en:
       selected: selected
       camipro: Camipro
       failed_attempts: Number of failed attempts of fetching the CAMIPRO picture
-      browse_image_file: Upload a new picture
+      browse_image_file: Select picture file
       max_photos_reached: Maximum number of pictures reached
       no_photofile_selected: No picture selected
-      upload_image: Upload a picture
+      upload_image: Upload
     pictures:
       title: My picture
       currently_selected: Displayed picture

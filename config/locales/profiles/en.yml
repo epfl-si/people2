@@ -4,7 +4,7 @@ en:
     available_languages: Available languages
     expertise: Expertises
     nationality: Nationality
-    official_name: Official Name
+    official_name: Name
     personal_web_url: Personal web page url
     personal_phone: Personal phone number
     usual_name: Usual Name
@@ -51,9 +51,9 @@ en:
       title:
         boxes_main: My curriculum
         boxes_contact: My professionnal datas
-        details: Optional personal data
+        details: My personal data (optional)
         editing_languages: This profile is bilingual
-        edit_language: Editing for
+        edit_language: Editing my profile in
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
     edit_languages:
       explain_html: |
@@ -69,7 +69,7 @@ en:
       available_languages: Available Languages
       expertise: Expertise (keywords only)
       nationality: Nationality
-      official_name: Official Name
+      official_name: Name
       personal_web_url: Personal web page url
       personal_phone: Personal phone number
       usual_name: Usual Name

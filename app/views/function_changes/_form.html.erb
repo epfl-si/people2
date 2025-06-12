@@ -20,5 +20,5 @@
       <%= form.collection_check_boxes(:accreditor_scipers, @accreditors, :sciper, :display) %>
     </div>
   <% end %>
-  <%= form_actions(form, @function_change) %>
+  <%= form_actions(form, @function_change, cancel_label: t("action.cancel"), submit_label: t("action.send")) %>
 <% end %>
