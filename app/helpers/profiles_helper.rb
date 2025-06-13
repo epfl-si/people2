@@ -18,12 +18,15 @@ module ProfilesHelper
     safe_join c
   end
 
-  def single_text_field(form, attr, label: nil, help: nil, extracls: "", tabindex: nil)
+  def single_text_field(form, attr, label: nil, help: nil, extracls: "", tabindex: nil, show_label: true)
     a = attr.to_sym
     tlabel = label || ".#{attr}"
     ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
+
+    label_html = show_label ? form.label(t(tlabel)) : "".html_safe
+
     form_group(help: help, extracls: extracls) do
-      form.label(t(tlabel)) +
+      label_html +
         form.text_field(
           a, placeholder: true, class: "form-control", "aria-describedby": ahelp, tabindex: tabindex
         )
@@ -75,7 +78,7 @@ module ProfilesHelper
 
   def translated_text_fields(
     form, attr, label: nil, help: nil,
-    translations: I18n.available_locales
+    translations: I18n.available_locales, show_label: true
   )
     content = []
     btlabel = t(label || ".#{attr}")
@@ -86,10 +89,13 @@ module ProfilesHelper
       # Translated label for language l
       tlabel = t("translated_label", language: tlang, label: btlabel)
       ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-      label = form.label(tlabel)
+
+      label_html = show_label ? form.label(tlabel) : "".html_safe
+
       text_field = form.text_field(tattr, placeholder: true, class: "form-control", "aria-describedby": ahelp)
+
       content << form_group(help: help, extracls: "tr_target_#{l}") do
-        label + text_field
+        label_html + text_field
       end
     end
     safe_join(content)
