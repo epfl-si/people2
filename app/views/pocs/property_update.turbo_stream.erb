@@ -1,0 +1,6 @@
+<%= turbo_stream.replace(dom_id(@model, "prop_#{@attribute}")) do %>
+  <%= render 'property', model: @model, attribute: @attribute %>
+<% end %>
+<% if @model.errors.empty? %>
+  <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>
+<% end %>

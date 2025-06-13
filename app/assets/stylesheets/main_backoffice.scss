@@ -203,6 +203,15 @@ summary .rpush {
     }
   }
 
+  ul.inline-errors {
+    margin-top: -0.5rem;
+    color: #f00;
+    font-size: 70%;
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+  }
+
   // ----------------------------------------------------------- fix trix editor
   .rich_text_input {
     padding: 0.5rem;

@@ -1,0 +1,29 @@
+<%= turbo_frame_tag dom_id(model, "prop_#{attribute}") do %>
+<%= form_with(
+  model: model, url: "/pocs/property/#{model.class.name}/#{model.id}", local: false,
+  class: "instaform instaform-auto",
+  data: { controller: 'auto-submit' }
+) do |form| %>
+
+  <%#= single_text_field(form, attribute, data: { action: 'blur->auto-submit#submit' }) %>
+
+  <%= form_group do %>
+    <% tlabel = t("#{model.class.name.pluralize.parameterize}.form.#{attribute}") %>
+    <%= form.label(tlabel) %>
+    <%= form.text_field(
+      attribute,
+      placeholder: true,
+      class: "form-control",
+      "aria-describedby": t("generic.form.texfield_for", attr: t(tlabel)),
+      data: { action: 'blur->auto-submit#submit' }
+    ) %>
+  	<% unless model.errors.empty? %>
+      <ul class="inline-errors">
+        <% model.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>
+<% end %>

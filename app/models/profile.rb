@@ -55,6 +55,8 @@ class Profile < ApplicationRecord
   has_many :teacherships, class_name: "Teachership", dependent: :destroy
   has_many :courses, through: :teacherships
 
+  validates :personal_web_url, length: { minimum: 5 }
+
   # TODO: add all presence validations. Translated properties should be present
   #       in at leat one of the languages when property is visible
   validates :sciper, uniqueness: true
