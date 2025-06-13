@@ -57,11 +57,58 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def update_base
-    return if @profile.update(profile_params)
+  FIELD_TO_TURBO_FRAME = {
+    "nationality" => "profile_field_nationality",
+    "expertise" => "profile_field_expertise",
+    "personal_web_url" => "profile_field_personal_web_url",
+    "personal_phone" => "profile_field_personal_phone"
+  }.freeze
 
-    flash.now[:error] = ".profile.update"
-    render 'edit_details', status: :unprocessable_entity
+  def update_base
+    focus_field = params[:focus_field] || params[:part]
+    frame_id = FIELD_TO_TURBO_FRAME[focus_field]
+
+    updated = @profile.update(profile_params)
+
+    respond_to do |format|
+      if updated && @profile.errors.empty?
+        # Sucess
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            frame_id,
+            partial: "profiles/fields/field_#{focus_field}",
+            locals: { profile: @profile }
+          )
+        end
+      else
+        # Validation error
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            frame_id,
+            partial: "profiles/fields/field_error",
+            locals: { profile: @profile, focus_field: focus_field }
+          ), status: :unprocessable_entity
+        end
+      end
+    end
+  end
+
+  def reset_field
+    focus_field = params[:focus_field]
+    frame_id = FIELD_TO_TURBO_FRAME[focus_field]
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          frame_id,
+          partial: "profiles/fields/field_#{focus_field}",
+          locals: { profile: @profile }
+        )
+      end
+
+      # fallback
+      format.html { redirect_to edit_profile_path(@profile) }
+    end
   end
 
   # When profile's available languages are changed, we should
@@ -139,6 +186,7 @@ class ProfilesController < ApplicationController
   def profile_params
     params.require(:profile).permit(
       :inclusivity,
+      :t_nationality, :t_expertise, :personal_web_url, :personal_phone,
       :nationality_fr, :nationality_en, :nationality_it, :nationality_de,
       :expertise_fr, :expertise_en, :expertise_it, :expertise_de,
       :personal_web_url, :personal_phone,
