@@ -97,6 +97,8 @@ Rails.application.routes.draw do
     root 'pages#homepage'
   else
     get '/pocs/turboru', to: 'pocs#turboru'
+    get '/pocs/properties', to: 'pocs#properties'
+    patch '/pocs/property/:model/:id', to: "pocs#property_update"
     get '/homepage', to: 'pages#homepage'
     root 'pages#devindex'
   end
