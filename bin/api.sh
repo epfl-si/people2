@@ -42,6 +42,11 @@ case $1 in
   data="$2"
   shift 2
   ;;
+-v)
+  verbose=1
+  echo "Using base $BASE"
+  shift 1
+  ;;
 *)
   url="$1"
   shift 1
