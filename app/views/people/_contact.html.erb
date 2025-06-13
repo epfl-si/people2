@@ -4,11 +4,11 @@
   <%= link_to @person.public_email, "mailto:#{@person.public_email}", class: "btn btn-sm btn-primary" %>
   <% end %>
 
-  <% if @person.phone_visible_by?(@audience) && @person.default_phone.present? %>
+  <% if @person.phone_visible_by?(Current.audience) && @person.default_phone.present? %>
   <%= phone_link(@person.default_phone.number, class: "btn btn-sm btn-secondary") %>
   <% end %>
 
-  <% if @profile.present? && @profile.personal_web_url? && @profile.personal_web_url_visible_by?(@audience) %>
+  <% if @profile.present? && @profile.personal_web_url? && @profile.personal_web_url_visible_by?(Current.audience) %>
     <%= link_to(@profile.personal_web_url, @profile.personal_web_url, class: "btn btn-sm btn-secondary") %>
   <% end %>
 
@@ -18,7 +18,7 @@
   <%= link_to t(".nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
 </p>
 </div>
-<% if @profile.t_nationality.present? && @profile.nationality_visible_by?(@audience) %>
+<% if @profile.t_nationality.present? && @profile.nationality_visible_by?(Current.audience) %>
 <p>
   <%= t ".nationality_label" %>: <%= @profile.t_nationality %>
 </p>

@@ -154,7 +154,13 @@ class Person
 
   def admin_data
     @admin_data ||= OpenStruct.new(
-      @account.to_h.merge(@automap.to_h).merge(@camipro.to_h).merge({ sciper: sciper })
+      @account.to_h.merge(@automap.to_h).merge(
+        {
+          sciper: sciper,
+          sapid: @data["sapid"],
+          nebis: @data["nebis"],
+        }
+      )
     )
   end
 

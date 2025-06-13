@@ -21,8 +21,10 @@
 
     <div class="main-container pt-5 pb-5">
       <main id="main" class="content" role="main" >
+        <div class="container">
         <%= yield %>
-      </main>      
+        </div>
+      </main>
 
       <%= render "layouts/elements/footer" %>
 
@@ -30,5 +32,3 @@
     <%= render "layouts/elements/foot" %>
   </body>
 </html>
-
-

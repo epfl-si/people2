@@ -2,7 +2,6 @@
 
 class ApplicationController < ActionController::Base
   around_action :switch_locale
-  before_action :register_client_origin
 
   include Authentication
 
@@ -20,21 +19,25 @@ class ApplicationController < ActionController::Base
   end
 
   def compute_audience(sciper)
-    @audience = if authenticated?
-                  if Current.user.sciper == sciper
-                    AudienceLimitable::OWNER
-                  else
-                    AudienceLimitable::AUTENTICATED
-                  end
-                elsif @is_intranet_client
-                  AudienceLimitable::INTRANET
-                else
-                  AudienceLimitable::WORLD
-                end
-    return unless (fe = Rails.configuration.force_audience)
+    # keepting @audience because Current is not visible from the console thread
+    @audience =
+      if authenticated?
+        if Current.user.sciper == sciper
+          AudienceLimitable::OWNER
+        else
+          AudienceLimitable::AUTENTICATED
+        end
+      elsif intranet_client?
+        AudienceLimitable::INTRANET
+      else
+        AudienceLimitable::WORLD
+      end
+    Current.original_audience = @audience
+    Current.audience = @audience
+    return @audience unless (fe = Rails.configuration.force_audience)
 
-    @original_audience = @audience
     @audience = [[AudienceLimitable::WORLD, fe.to_i].max, AudienceLimitable::OWNER].min
+    Current.audience = @audience
   end
 
   private
@@ -90,8 +93,8 @@ class ApplicationController < ActionController::Base
 
   # TODO: This is not the correct way of finding internal clients. The reliable
   # way is to check if X-EPFL-Internal header is set in the request.
-  def register_client_origin
-    @is_intranet_client = Rails.configuration.intranet_re.match?(request.remote_ip)
+  def intranet_client?
+    Rails.configuration.intranet_re.match?(request.remote_ip)
   end
 
   def current_user

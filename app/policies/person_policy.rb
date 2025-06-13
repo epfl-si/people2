@@ -14,4 +14,8 @@ class PersonPolicy < ApplicationPolicy
   def show_atari?
     user.present?
   end
+
+  def show_personal_data?
+    owner_or_su?
+  end
 end
