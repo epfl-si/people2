@@ -50,7 +50,9 @@
       <% @side_zone_bbs.each do |section, boxes| %>
         <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
       <% end %>
-
+      <% if allowed_to?(:show_personal_data?, @person) %>
+        <%= render partial: "personal_data" %>
+      <% end %>
     </div>
     <div class="people-contacts col-md-6 col-lg-8">
       <h1 class="mb-3"><%= @person.name.display %></h1>
