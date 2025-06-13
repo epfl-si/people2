@@ -42,21 +42,6 @@ en:
               too_long: 'Keywords only: please keep it below %{count} characters'
             expertise_de:
               too_long: 'Keywords only: please keep it below %{count} characters'
-  helpers:
-    placeholder:
-      profile:
-        personal_web_url: https://ciccio.com
-        personal_phone: "+41 7891234"
-        expertise: Software Wizard
-        expertise_en: physics, solid state, computational
-        expertise_fr: architecture, bâtiments, theatres
-        expertise_it: metallurgia, tribologia
-        expertise_de: TODO
-        nationality: swisse
-        nationality_en: swiss
-        nationality_fr: suiss
-        nationality_it: svizzera
-        nationality_de: schweizer
   profiles:
     edit:
       title:
