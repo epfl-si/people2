@@ -9,7 +9,7 @@ EMAIL;TYPE=INTERNET:<%= @person.public_email %>
 <% end %>
 URL:https://people.epfl.ch/<%= @person.email_user %>
 TITLE;charset=UTF-8:<%= @person.main_position.t_label%>
-<% if @person.phone_visible_by?(@audience) && @person.default_phone.present? %>
+<% if @person.phone_visible_by?(Current.audience) && @person.default_phone.present? %>
 TEL;TYPE=WORK:<%= @person.default_phone.number %>
 <% end %>
 ORG:EPFL

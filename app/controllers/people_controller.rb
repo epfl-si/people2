@@ -34,6 +34,11 @@ class PeopleController < ApplicationController
     end
   end
 
+  # GET /people/SCIPER/admin_data
+  def admin_data
+    @person = Person.find(params[:sciper])
+  end
+
   # TODO: remove after migration from legacy
   if Rails.configuration.enable_adoption
     def preview
@@ -56,15 +61,16 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:sciper_or_name])
     raise ActiveRecord::RecordNotFound if @person.blank?
 
-    @accreds = @person.accreditations.select { |a| a.visible_by?(AudienceLimitable::WORLD) }.sort
+    @sciper = @person&.sciper
+    compute_audience(@sciper)
+
+    @accreds = @person.accreditations.select { |a| a.visible_by?(Current.audience) }.sort
     raise ActiveRecord::RecordNotFound if @accreds.empty?
 
-    @sciper = @person&.sciper
     # @profile will be null if @person is not allowed to have a profile
     @profile = @person&.profile!
 
-    compute_audience(@sciper)
-    @admin_data = @audience > 1 ? @person.admin_data : nil
+    @admin_data = Current.audience > AudienceLimitable::WORLD ? @person.admin_data : nil
 
     Current.gender = @person.gender
 
@@ -92,13 +98,13 @@ class PeopleController < ApplicationController
 
     return unless @profile
 
-    @profile_picture = @profile.photo(@audience).image if @profile.photo&.image&.attached?
+    @profile_picture = @profile.photo(Current.audience).image if @profile.photo&.image&.attached?
     # @profile_picture = @profile.photo.image if @profile.show_photo && @profile.photo.image.attached?
-    @visible_socials = @profile.socials.for_audience(@audience)
+    @visible_socials = @profile.socials.for_audience(Current.audience)
 
     # get sections that contain at least one box in the chosen locale
-    unsorted_boxes = @profile.boxes.for_audience(@audience).includes(:section).select do |b|
-      b.content_for?(@audience)
+    unsorted_boxes = @profile.boxes.for_audience(Current.audience).includes(:section).select do |b|
+      b.content_for?(Current.audience)
     end
     @boxes = unsorted_boxes.sort do |a, b|
       [a.section.position, a.position] <=> [b.section.position, b.position]

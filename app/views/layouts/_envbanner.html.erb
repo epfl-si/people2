@@ -57,10 +57,10 @@ $('#console').ready(function() {
     &#9679;
     <%= authenticated? ? "signed in as #{Current.user.name} #{Current.user.superuser? ? '(superuser)' : ''}" : "NOT signed-in" %>
     &#9679;
-    <% if @audience.present? %>
-      <%= @original_audience.present? ?
-        "Access: #{visibility_access(@original_audience)} -> #{visibility_access(@audience)}" :
-        "Access: #{visibility_access(@audience)}"
+    <% if Current.audience.present? %>
+      <%= Current.original_audience.present? ?
+        "Access: #{visibility_access(Current.original_audience)} -> #{visibility_access(Current.audience)}" :
+        "Access: #{visibility_access(Current.audience)}"
       %>
       &#9679;
     <% end %>
