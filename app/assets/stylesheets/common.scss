@@ -46,6 +46,18 @@ details:hover {
   background-color: $gray-200;
 }
 
+details.minimal {
+  font-size: 70%;
+  /* margin-top: 1rem; */
+  background-color: #fff;
+  summary {
+    padding: 2px;
+  }
+  summary:hover {
+    background-color: $gray-100;
+  }
+}
+
 .btn-mini {
   padding: .187rem .38rem;
   font-size: .6rem;
