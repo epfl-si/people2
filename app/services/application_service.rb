@@ -10,6 +10,7 @@ class ApplicationService
 
   def initialize(args = {}) end
 
+  # call returns nil if no results
   def self.call(args = {})
     # debugger
     ttl = args.delete(:ttl)
@@ -21,6 +22,7 @@ class ApplicationService
     end
   end
 
+  # call! raise exception in case of no results or errors
   def self.call!(args = {})
     ttl = args.delete(:ttl)
     force = args.delete(:force) || false
@@ -54,10 +56,13 @@ class ApplicationService
         Rails.cache.delete(cache_key)
       end
       Rails.logger.debug("Fetching cache for key: #{cache_key}")
-      Rails.cache.fetch(cache_key, expires_in: ttl) do
+      res = Rails.cache.fetch(cache_key, expires_in: ttl) do
         Rails.logger.debug("Cache miss for key: #{cache_key}")
         dofetch
       end
+      # we do not cache nil values because they might indicate a temporary failure
+      Rails.cache.delete(cache_key) if res.nil?
+      res
     else
       dofetch
     end
