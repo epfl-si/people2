@@ -1,0 +1,29 @@
+en:
+  helpers:
+    placeholder: &placeholders
+      profile:
+        personal_phone: "+41 79 123 45 67"
+        personal_web_url: "https://John.Doe.ch"
+        nationality_fr: "Suisse et Allemande"
+        nationality_en: "Swiss and German"
+        nationality_de: "Schweizerisch und Deutsch"
+        nationality_it: "Svizzera e tedesca"
+        expertise_fr: "Conseil et développement IT"
+        expertise_en: "IT Consulting and Development"
+        expertise_de: "IT-Beratung und Entwicklung"
+        expertise_it: "Consulenza IT e sviluppo"
+
+it:
+  helpers:
+    placeholder: 
+      <<: *placeholders
+
+fr:
+  helpers:
+    placeholder:
+      <<: *placeholders
+
+de:
+  helpers:
+    placeholder:
+      <<: *placeholders

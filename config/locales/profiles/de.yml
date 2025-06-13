@@ -42,9 +42,6 @@ de:
               too_long: ''
             expertise_de:
               too_long: ''
-  helpers:
-    placeholder:
-      profile: {}
   profiles:
     edit:
       title:
