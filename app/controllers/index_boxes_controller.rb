@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class IndexBoxesController < BoxesController
-  # Use callbacks to share common setup or constraints between actions.
-  def set_box
+  def load_and_authorize_box
     @box = IndexBox.includes(:profile).find(params[:id])
+    authorize! @box, to: :update?
   end
 
   def box_symbol

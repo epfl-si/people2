@@ -2,8 +2,8 @@
 
 class SocialsController < ApplicationController
   include SocialsHelper
-  before_action :set_profile, only: %i[index create new]
-  before_action :set_social, only: %i[show edit update destroy]
+  before_action :load_and_authorize_profile, only: %i[index create new]
+  before_action :load_and_authorize_social, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/socials or /profile/profile_id/socials.json
   def index
@@ -20,33 +20,6 @@ class SocialsController < ApplicationController
       new_step2(tag)
     else
       new_step1
-    end
-  end
-
-  def new_step1
-    set_socials
-    render :new_step1
-  end
-
-  def new_step2(tag)
-    unless Social.tag?(tag)
-      # TODO: return useful error to user
-      raise "Invalid social tag"
-    end
-
-    @social = Social.new(tag: tag)
-    if @social.automatic?
-      @social.profile = @profile
-      if @social.save
-        set_socials
-        flash.now[:success] = ".create"
-        render :create
-      else
-        flash.now[:error] = ".create"
-        render :new_step2, status: :unprocessable_entity
-      end
-    else
-      render :new_step2
     end
   end
 
@@ -87,22 +60,46 @@ class SocialsController < ApplicationController
 
   private
 
+  def new_step1
+    set_socials
+    render :new_step1
+  end
+
+  def new_step2(tag)
+    unless Social.tag?(tag)
+      # TODO: return useful error to user
+      raise "Invalid social tag"
+    end
+
+    @social = Social.new(tag: tag)
+    if @social.automatic?
+      @social.profile = @profile
+      if @social.save
+        set_socials
+        flash.now[:success] = ".create"
+        render :create
+      else
+        flash.now[:error] = ".create"
+        render :new_step2, status: :unprocessable_entity
+      end
+    else
+      render :new_step2
+    end
+  end
+
   def social_params
     params.require(:social).permit(:tag, :value, :visibility)
   end
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
   def set_socials
     @socials = @profile.socials.order(:position)
+    load_and_authorize_social
     @tag_selector = Social.remaining(@socials).map { |s| [s[:label], s[:tag]] }
   end
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_social
+  def load_and_authorize_social
     @social = Social.includes(:profile).find(params[:id])
-    @profile = @social.profile
+    authorize! @social, to: :update?
   end
 end

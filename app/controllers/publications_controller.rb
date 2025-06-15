@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PublicationsController < ApplicationController
-  before_action :set_profile, only: %i[index create new]
-  before_action :set_publication, only: %i[show edit update destroy]
+  before_action :load_and_authorize_profile, only: %i[index create new]
+  before_action :load_and_authorize_publication, only: %i[show edit update destroy]
 
   def index
     @publications = @profile.publications.order(:position)
@@ -41,12 +41,9 @@ class PublicationsController < ApplicationController
 
   private
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
-  def set_publication
+  def load_and_authorize_publication
     @publication = Publication.includes(:profile).find(params[:id])
+    authorize! @publication, to: :update?
   end
 
   def publication_params

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ExperiencesController < ApplicationController
-  before_action :set_profile, only: %i[index create new]
-  before_action :set_experience, only: %i[show edit update destroy]
+  before_action :load_and_authorize_profile, only: %i[index create new]
+  before_action :load_and_authorize_experience, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/experiences or /profile/profile_id/experiences.json
   def index
@@ -56,13 +56,10 @@ class ExperiencesController < ApplicationController
                                              locals: { experience: @experience })
   end
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
   # Use callbacks to share common setup or constraints between actions.
-  def set_experience
+  def load_and_authorize_experience
     @experience = Experience.includes(:profile).find(params[:id])
+    authorize! @experience, to: :update?
   end
 
   # Only allow a list of trusted parameters through.
