@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class AccredsController < ApplicationController
-  before_action :set_profile, only: %i[index]
-  before_action :set_accred, only: %i[show edit update]
+  before_action :load_and_authorize_profile, only: %i[index]
+  before_action :load_and_authorize_accred, only: %i[show edit update]
 
   # GET /profile/profile_id/accreds or /profile/profile_id/accreds.json
   def index
@@ -36,18 +36,13 @@ class AccredsController < ApplicationController
 
   private
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_accred
+  def load_and_authorize_accred
     @accred = Accred.includes(:profile).find(params[:id])
-    @accreds_count = Accred.where(profile_id: @accred.profile_id).count
     @profile = @accred.profile
+    @accreds_count = Accred.where(profile_id: @accred.profile_id).count
+    authorize! @accred, to: :update?
   end
 
-  # Only allow a list of trusted parameters through.
   def accred_params
     params.require(:accred).permit(
       :position,

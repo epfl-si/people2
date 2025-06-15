@@ -3,9 +3,12 @@
 class VisibilityController < ApplicationController
   # PATCH/PUT /visibility/accred/1
   def update
-    klass = params[:model].camelize
-    # TODO: restrict allowed values of klass
-    @item = Kernel.const_get(klass).find params[:id]
+    # klass = params[:model].camelize
+    # # TODO: restrict allowed values of klass
+    # @item = Kernel.const_get(klass).find params[:id]
+    klass = params[:model].classify.constantize
+    @item = klass.find params[:id]
+    authorize! @item, to: :update?
     if (@property = params[:property]).present?
       @item.send("#{@property}_visibility=", params[:visibility])
     else

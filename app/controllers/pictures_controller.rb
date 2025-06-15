@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PicturesController < ApplicationController
-  before_action :set_picture, only: %i[show edit update destroy]
-  before_action :set_profile, only: %i[index create]
+  before_action :load_and_authorize_profile, only: %i[index create]
+  before_action :load_and_authorize_picture, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/pictures or /profile/profile_id/pictures.json
   def index
@@ -97,13 +97,9 @@ class PicturesController < ApplicationController
 
   private
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
-  def set_picture
+  def load_and_authorize_picture
     @picture = Picture.includes(:profile).find(params[:id])
-    @profile = @picture.profile
+    authorize! @picture, to: :update?
   # TODO: we can probably avoid this. More test in the crop feature needed.
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Picture not found" }, status: :not_found

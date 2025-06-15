@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class AwardsController < ApplicationController
-  before_action :set_profile, only: %i[index create new]
-  before_action :set_award, only: %i[show edit update destroy]
+  before_action :load_and_authorize_profile, only: %i[index create new]
+  before_action :load_and_authorize_award, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/awards or /profile/profile_id/awards.json
   def index
@@ -55,13 +55,10 @@ class AwardsController < ApplicationController
                                              locals: { award: @award })
   end
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
   # Use callbacks to share common setup or constraints between actions.
-  def set_award
+  def load_and_authorize_award
     @award = Award.includes(:profile).find(params[:id])
+    authorize! @award, to: :update?
   end
 
   # Only allow a list of trusted parameters through.

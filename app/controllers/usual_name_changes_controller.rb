@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsualNameChangesController < ApplicationController
-  before_action :set_profile
+  before_action :load_and_authorize_profile
   def new
     @unc = UsualNameChange.for(@profile)
   end
@@ -17,10 +17,6 @@ class UsualNameChangesController < ApplicationController
   end
 
   private
-
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
 
   def unc_params
     params.require(:usual_name_change).permit(:new_first, :new_last)

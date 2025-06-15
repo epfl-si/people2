@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class InfosciencesController < ApplicationController
-  before_action :set_profile, only: %i[index create new]
-  before_action :set_infoscience, only: %i[show edit update destroy]
+  before_action :load_and_authorize_profile, only: %i[index create new]
+  before_action :load_and_authorize_infoscience, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/infosciences or /profile/profile_id/infosciences.json
   def index
@@ -56,13 +56,10 @@ class InfosciencesController < ApplicationController
                                              locals: { infoscience: @infoscience })
   end
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
   # Use callbacks to share common setup or constraints between actions.
-  def set_infoscience
+  def load_and_authorize_infoscience
     @infoscience = Infoscience.includes(:profile).find(params[:id])
+    authorize! @infoscience, to: :update?
   end
 
   # Only allow a list of trusted parameters through.

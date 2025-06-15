@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FunctionChangesController < ApplicationController
-  before_action :set_accreditation
+  before_action :load_and_authorize_accreditation
   before_action :set_accreditors
 
   # GET    /accreditations/:accreditation_id/function_changes/new
@@ -39,8 +39,9 @@ class FunctionChangesController < ApplicationController
 
   private
 
-  def set_accreditation
+  def load_and_authorize_accreditation
     @accreditation = Accreditation.find(params[:accreditation_id])
+    authorize! @accreditation, to: :update?
   end
 
   def set_accreditors
