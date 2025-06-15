@@ -42,6 +42,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def load_and_authorize_profile
+    @profile ||= Profile.find(params[:profile_id])
+    authorize! @profile, to: :update?
+  end
+
   # This is for situation that should not arrive. In case, we want to provide
   # meaningful output in all formats.
   def unexpected(message)

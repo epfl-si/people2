@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class EducationsController < ApplicationController
-  before_action :set_profile, only: %i[index create new]
-  before_action :set_education, only: %i[show edit update destroy]
+  before_action :load_and_authorize_profile, only: %i[index create new]
+  before_action :load_and_authorize_education, only: %i[show edit update destroy]
 
   # GET /profile/profile_id/educations or /profile/profile_id/educations.json
   def index
@@ -49,13 +49,10 @@ class EducationsController < ApplicationController
 
   private
 
-  def set_profile
-    @profile = Profile.find(params[:profile_id])
-  end
-
   # Use callbacks to share common setup or constraints between actions.
-  def set_education
+  def load_and_authorize_education
     @education = Education.includes(:profile).find(params[:id])
+    authorize! @education, to: :update?
   end
 
   # Only allow a list of trusted parameters through.

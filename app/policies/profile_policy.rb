@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ProfilePolicy < ApplicationPolicy
-  def show?
-    true
-  end
+  # def show?
+  #   true
+  # end
 
   def update?
     # `user` is a performing subject,

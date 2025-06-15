@@ -2,8 +2,9 @@
 
 class RichTextBoxesController < BoxesController
   # Use callbacks to share common setup or constraints between actions.
-  def set_box
+  def load_and_authorize_box
     @box = RichTextBox.includes(:profile).find(params[:id])
+    authorize! @box, to: :update?
   end
 
   def box_symbol
