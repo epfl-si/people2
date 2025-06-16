@@ -1,47 +1,62 @@
 <h3>
-	<%= t 'profiles.edit.title.details' %>
-	<%= link_to icon('edit-3'), edit_profile_path(profile, details: true), data: {turbo_stream: true} %>
+  <%= t 'profiles.edit.title.details' %>
+  <%= link_to icon('edit-3'), edit_profile_path(profile, details: true), data: { turbo_stream: true } %>
 </h3>
-<dl class="definition-list definition-list-grid definition-list-grid-large">
 
-  <dt><%= t "profile.nationality" %></dt>
-  <% if (profile.t_nationality).present? %>
-	  <dd class="rpush">
-	  	<%= all_lang_span(profile, "nationality") %>
-	  	<%= render 'shared/item_visibility', item: profile, property: 'nationality' %>
-	  </dd>
-  <% else %>
-  	<dd><span><%= t "undefined" %></span></dd>
-	<% end %>
+<% if profile.errors.any? %>
+  <div style="color: red">
+    <h2><%= t("error.profile", count: profile.errors.count) %></h2>
+    <ul>
+      <% profile.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>  
+<% end %>
 
-  <dt><%= t "profile.expertise" %></dt>
-  <% if (profile.t_expertise).present? %>
-	  <dd class="rpush">
-	  	<%= profile.t_expertise %>
-	  	<%= render 'shared/item_visibility', item: profile, property: 'expertise' %>
-	  </dd>
-  <% else %>
-  	<dd><span><%= t "undefined" %></span></dd>
-	<% end %>
+<dl id="profile_field_inclusivity" class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
+  <dt><%= t "profile.available_languages" %></dt>
+  <dd>
+    <%= profile.translations.map { |l| t("lang.#{l}") }.join(", ") %>
+    <%= remote_modal_for(edit_profile_path(@profile, languages: true)) do %>
+      <%= icon('edit-3') %>
+    <% end %>
+  </dd>
 
-  <dt><%= t "profile.personal_web_url" %></dt>
-  <% if (d=profile.personal_web_url).present? %>
-	  <dd class="rpush">
-	  	<span><%= d %></span>
-	  	<%= render 'shared/item_visibility', item: profile, property: 'personal_web_url' %>
-	  </dd>
-  <% else %>
-  	<dd><span><%= t "undefined" %></span></dd>
-	<% end %>
+  <% official = profile.person.name.official_display %>
+  <% usual = profile.person.name.display %>
 
-  <dt><%= t "profile.personal_phone" %></dt>
-  <% if (d=profile.personal_phone).present? %>
-	  <dd class="rpush">
-	  	<span><%= d %></span>
-	  	<%= render 'shared/item_visibility', item: profile, property: 'phone' %>
-	  </dd>
-  <% else %>
-	  <dd><span><%= t "undefined" %></span></dd>
-	<% end %>
+  <dt><%= t "profile.official_name" %></dt>
+  <dd>
+    <span><%= official %></span>
+    <%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: { turbo_stream: true } %>
+  </dd>
 
+  <% if profile.person.name.customizable? && usual != official %>
+    <dt><%= t "profile.usual_name" %></dt>
+    <dd>
+      <span><%= usual %></span>
+      <%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "usual"), data: { turbo_stream: true } %>
+    </dd>
+  <% end %>
+
+  <dt><%= t("profile.inclusivity") %></dt>
+  <dd class="rpush">
+    <%= turbo_frame_tag dom_id(@profile, :show_inclusivity) do %>
+      <%= render "inclusivity/inclusivity_toggle", profile: @profile %>
+    <% end %>
+  </dd>
 </dl>
+
+<%= turbo_frame_tag "profile_field_nationality" do %>
+  <%= render "profiles/fields/field_nationality", profile: @profile %>
+<% end %>
+
+
+<%= turbo_frame_tag "profile_field_personal_web_url" do %>
+  <%= render "profiles/fields/field_personal_web_url", profile: @profile %>
+<% end %>
+
+<%= turbo_frame_tag "profile_field_personal_phone" do %>
+  <%= render "profiles/fields/field_personal_phone", profile: @profile %>
+<% end %>

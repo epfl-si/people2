@@ -1,0 +1,28 @@
+
+    <dl class="definition-list definition-list-grid definition-list-grid-large">
+      <dt><%= t "profile.nationality" %></dt>
+      <dd class="rpush mb-0 pb-0">
+        <%= form_with(
+          model: profile,
+          url: profile_path(profile, part: :nationality),
+          method: :patch,
+          data: {
+            controller: "auto-submit",
+            action: "change->auto-submit#submit"
+          },
+          class: "d-inline"
+        ) do |form| %>
+          <%= hidden_field_tag :focus_field, "nationality" %>
+          <%= translated_text_fields(form, :nationality, translations: profile.translations, show_label: false) %>
+
+          <% if profile.errors[:nationality].any? %>
+            <div class="text-danger mt-1">
+              <%= profile.errors[:nationality].join(", ") %>
+            </div>
+          <% end %>
+        <% end %>
+
+        <%= render 'shared/item_visibility', item: profile, property: 'nationality' %>
+      </dd>
+    </dl>
+
