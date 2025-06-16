@@ -42,6 +42,10 @@ en:
               too_long: 'Keywords only: please keep it below %{count} characters'
             expertise_de:
               too_long: 'Keywords only: please keep it below %{count} characters'
+            personal_web_url:
+              invalid_url: "The URL must start with http:// or https://."
+            personal_phone:
+              invalid_phone: "The phone number must be valid (e.g. +41 79 123 45 67)."
   profiles:
     edit:
       title:
