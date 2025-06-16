@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     resources :usual_name_changes, only: %i[new create]
     member do
       patch :set_favorite_picture
+      patch :reset_field
     end
   end
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'
