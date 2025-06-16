@@ -93,7 +93,6 @@ class SocialsController < ApplicationController
 
   def set_socials
     @socials = @profile.socials.order(:position)
-    load_and_authorize_social
     @tag_selector = Social.remaining(@socials).map { |s| [s[:label], s[:tag]] }
   end
 
