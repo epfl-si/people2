@@ -1,3 +1,3 @@
 <%= turbo_stream.replace "profile_picture" do %>
-  <%= render partial: "pictures/crop", locals: { picture: @picture, profile: @profile } %>
+  <%= render partial: "pictures/crop", locals: { picture: @picture, profile: @picture.profile } %>
 <% end %>
