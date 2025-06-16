@@ -1,0 +1,56 @@
+<% focus_field ||= nil %>
+<% field_errors = [] %>
+<% field_errors = profile.errors[focus_field] if focus_field.present? %>
+
+<% if focus_field.present? && field_errors.any? %>
+    <%= form_with(model: profile,
+                  url: profile_path(profile, part: focus_field),
+                  method: :patch) do |form| %>
+      <%= hidden_field_tag :focus_field, focus_field %>
+
+
+      <div class="alert alert-danger mb-3">
+        <%= field_errors.join(", ") %>
+      </div>
+
+      <% if focus_field == 'expertise' %>
+        <h5 class="text-danger mb-2"><%= t "profile.expertise" %></h5>
+        <div class="mb-3 border border-danger rounded p-3">
+          <%= translated_text_fields(form, :expertise, translations: profile.translations, show_label: false) %>
+        </div>
+      <% elsif focus_field == 'nationality' %>
+        <h5 class="text-danger mb-2"><%= t "profile.nationality" %></h5>
+        <div class="mb-3 border border-danger rounded p-3">
+          <%= translated_text_fields(form, :nationality, translations: profile.translations, show_label: false) %>
+        </div>
+      <% elsif focus_field == 'personal_web_url' %>
+        <h5 class="text-danger mb-2"><%= t "profile.personal_web_url" %></h5>
+        <div class="mb-3 border border-danger rounded p-3">
+          <%= single_text_field(form, :personal_web_url, show_label: false) %>
+        </div>
+      <% elsif focus_field == 'personal_phone' %>
+        <h5 class="text-danger mb-2"><%= t "profile.personal_phone" %></h5>
+        <div class="mb-3 border border-danger rounded p-3">
+          <%= single_text_field(form, :personal_phone, show_label: false) %>
+        </div>
+      <% else %>
+        <p class="text-danger">
+          <%= t("profiles.fields.field_error.unknown_field", field: focus_field) %>
+        </p>
+      <% end %>
+
+<div class="mt-4 d-flex justify-content-center gap-2">
+  <%= form.submit t("action.confirm"), class: "btn btn-primary" %>
+
+  <%= button_to t("action.cancel"),
+                reset_field_profile_path(profile, focus_field: focus_field),
+                method: :patch,
+                data: { turbo_frame: "profile_field_#{focus_field}" },
+                class: "btn btn-secondary" %>
+</div>
+
+
+    <% end %>
+
+
+<% end %>

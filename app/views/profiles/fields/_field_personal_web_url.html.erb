@@ -1,0 +1,26 @@
+  <dl class="definition-list definition-list-grid definition-list-grid-large">
+    <dt class="mb-0 pb-0"><%= t "profile.personal_web_url" %></dt>
+    <dd class="rpush m-0">
+      <%= form_with(
+        model: profile,
+        url: profile_path(profile, part: :personal_web_url),
+        method: :patch,
+        data: {
+          controller: "auto-submit",
+          action: "change->auto-submit#submit"
+        },
+        class: "d-inline"
+      ) do |form| %>
+        <%= hidden_field_tag :focus_field, "personal_web_url" %>
+        <%= single_text_field(form, :personal_web_url, show_label: false) %>
+
+        <% if profile.errors[:personal_web_url].any? %>
+          <div class="text-danger mt-1">
+            <%= profile.errors[:personal_web_url].join(", ") %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= render 'shared/item_visibility', item: profile, property: 'personal_web_url' %>
+    </dd>
+  </dl>
