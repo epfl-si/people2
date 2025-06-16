@@ -68,13 +68,11 @@ class ProfilesController < ApplicationController
     focus_field = params[:focus_field] || params[:part]
     frame_id = FIELD_TO_TURBO_FRAME[focus_field]
 
-    updated = @profile.update(profile_params)
-
     respond_to do |format|
-      if updated && @profile.errors.empty?
-        # Sucess
+      if @profile.update(profile_params)
+        # Success
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
+          render turbo_stream: turbo_stream.update(
             frame_id,
             partial: "profiles/fields/field_#{focus_field}",
             locals: { profile: @profile }
@@ -83,7 +81,7 @@ class ProfilesController < ApplicationController
       else
         # Validation error
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
+          render turbo_stream: turbo_stream.update(
             frame_id,
             partial: "profiles/fields/field_error",
             locals: { profile: @profile, focus_field: focus_field }
@@ -99,7 +97,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
+        render turbo_stream: turbo_stream.update(
           frame_id,
           partial: "profiles/fields/field_#{focus_field}",
           locals: { profile: @profile }
