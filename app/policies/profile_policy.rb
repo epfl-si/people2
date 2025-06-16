@@ -11,4 +11,8 @@ class ProfilePolicy < ApplicationPolicy
     # in order fastest -> slowest
     owner_or_su? || admin_for?(record)
   end
+
+  def manage_photos?
+    owner?
+  end
 end

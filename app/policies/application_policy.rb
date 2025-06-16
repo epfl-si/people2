@@ -23,11 +23,17 @@ class ApplicationPolicy < ActionPolicy::Base
     end
   end
 
-  def owner_or_su?
+  def owner?
     return false if user.blank?
     return false if (rs = sciper_for(record)).nil?
 
-    (user.sciper.to_i == rs.to_i) || user.superuser?
+    user.sciper.to_i == rs.to_i
+  end
+
+  def owner_or_su?
+    return false if user.blank?
+
+    owner? || user.superuser?
   end
 
   def admin_for?(record)

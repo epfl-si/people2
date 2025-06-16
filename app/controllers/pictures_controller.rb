@@ -97,6 +97,11 @@ class PicturesController < ApplicationController
 
   private
 
+  def load_and_authorize_profile
+    super
+    authorize! @profile, to: :manage_photos?
+  end
+
   def load_and_authorize_picture
     @picture = Picture.includes(:profile).find(params[:id])
     authorize! @picture, to: :update?
