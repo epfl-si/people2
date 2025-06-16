@@ -48,8 +48,6 @@
   <h2><%= t ".title.editing", name: @person.name.display, sciper: @person.sciper %></h2>
 </section>
 
-<% if allowed_to?(:manage_photos?, @profile) %>
-
 <section id="pictures_section">
   <%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
 </section>
