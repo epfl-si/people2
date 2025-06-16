@@ -1,0 +1,13 @@
+<section id="boxes_section">
+  <h3><%= t '.title.boxes_main' %></h3>
+
+  <%= render "shared/tabs_with_frames", tabs: @sections.map.with_index { |section, index|
+    id = "section_#{section.label}"
+    {
+      id: id,
+      label: section.t_title,
+      frame_id: "#{section.label}_section",
+      src: profile_section_boxes_path(@profile, section)
+    }
+  } %>
+</section>
