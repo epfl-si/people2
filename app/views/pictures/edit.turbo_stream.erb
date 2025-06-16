@@ -1,5 +1,5 @@
 <%= turbo_stream.update 'profile_picture' do %>
-  <div id="<%= dom_id(@picture) %>"> 
+  <div id="<%= dom_id(@picture) %>">
     <% image_url = @picture.image.attached? ? url_for(@picture.image) : "" %>
     <% cropped_image_url = @picture.cropped_image.attached? ? url_for(@picture.cropped_image) : "" %>
 
@@ -18,8 +18,8 @@
         <div class="crop-actions">
           <%= form_with model: @picture, url: picture_path(@picture), method: :put, data: { crop_target: "form", turbo_frame: "profile_picture" }, local: true do |f| %>
             <%= f.file_field :cropped_image, data: {crop_target: "file"}, style: 'display: none;' %>
-            <%= link_to(t('action.cancel'), profile_pictures_path(@profile), class: "btn btn-secondary", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
-            <%= f.button "Confirm", class: "btn btn-primary" %> 
+            <%= link_to(t('action.cancel'), profile_pictures_path(@picture.profile), class: "btn btn-secondary", method: :get, data: {turbo_stream: true, turbo_method:'get'}) %>
+            <%= f.button "Confirm", class: "btn btn-primary" %>
           <% end %>
         </div>
       </div>
