@@ -390,16 +390,9 @@ turbo-frame#editor_content hr {
   display: none !important;
 }
 
-/* #editor_content {
-  padding: 0;
+#editor_content {
+  padding: 10px;
 }
-
-#editor_content:not(:empty) {
-  width: 100%;
-  border: 1px #f00 solid;
-  padding: 0.5em;
-} */
-
 
 // ---------------------------------------------------------- visibility popover
 .gcpopover {
