@@ -76,7 +76,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # profile#show using _legacy_ layout
   get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
 
@@ -85,6 +84,10 @@ Rails.application.routes.draw do
     get '/:sciper_or_name/preview',
         to: 'people#preview',
         as: 'preview',
+        constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
+    # compatibility with legacy routes
+    get '/:sciper_or_name/vcard',
+        to: redirect("/%{sciper_or_name}.vcf"),
         constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
   end
 

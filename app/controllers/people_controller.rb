@@ -14,6 +14,10 @@ class PeopleController < ApplicationController
       if m.present?
         respond_to do |format|
           format.html { render plain: m.content(I18n.locale) }
+          format.vcf do
+            set_base_data
+            render layout: false
+          end
         end
         # render plain: content
         # # render body: content
@@ -55,9 +59,7 @@ class PeopleController < ApplicationController
 
   private
 
-  def set_show_data
-    # ActiveSupport::Notifications.instrument('set_base_data') do
-    # end
+  def set_base_data
     @person = Person.find(params[:sciper_or_name])
     raise ActiveRecord::RecordNotFound if @person.blank?
 
@@ -81,6 +83,10 @@ class PeopleController < ApplicationController
 
     # take into account profile's enaled languages
     Current.translations = @profile.translations
+  end
+
+  def set_show_data
+    set_base_data
 
     # teachers are supposed to all have a profile
     @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
