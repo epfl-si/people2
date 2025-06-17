@@ -177,7 +177,7 @@ class ProfilesController < ApplicationController
 
   def load_person
     load_and_authorize_profile
-    @person = Person.find(@profile.sciper, force: true)
+    @person = Person.find(@profile.sciper)
     @name = @person.name
   end
 
