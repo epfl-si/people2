@@ -7,6 +7,10 @@ class Adoption < ApplicationRecord
   scope :pending, -> { where(accepted: false) }
   after_update :update_sciper_status
 
+  def self.clear_cache
+    Rails.cache.delete_matched("adoptions/*")
+  end
+
   def self.for_sciper_or_name(v)
     s = v.is_a?(Integer) || v =~ /^\d{6}$/ ? { sciper: v } : { email: "#{v}@epfl.ch" }
     where(s)
