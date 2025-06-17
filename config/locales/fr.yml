@@ -44,6 +44,7 @@ fr:
     show_hide_search_form: Afficher / masquer le formulaire de recherche
     sign_in: Se connecter
     sign_out: Se déconnecter
+    cancel: Annuler
   dev:
     action:
       abandon: Annuler
