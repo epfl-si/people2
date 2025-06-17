@@ -217,21 +217,20 @@ module ProfilesHelper
 
   def common_editor(title: nil, &block)
     c = []
-    c << tag.hr
     c << tag.h3(title) if title.present?
     c << tag.div(capture(&block))
     c1 = tag.div(class: "container") do
       safe_join(c)
     end
     safe_join [
-      turbo_stream.update("editor_content") { c1 },
+      turbo_stream.update("editor") { tag.div(c1, id: "editor_content") },
       turbo_stream.replace("flash-messages", partial: "shared/flash")
     ]
   end
 
   def dismiss_common_editor
     safe_join [
-      turbo_stream.update("editor_content") { "" },
+      turbo_stream.update("editor") { "" },
       turbo_stream.replace("flash-messages", partial: "shared/flash")
     ]
   end
