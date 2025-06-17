@@ -1,26 +1,26 @@
+<dl class="definition-list definition-list-grid definition-list-grid-large">
+  <dt class="mb-0 pb-0"><%= t "profile.personal_phone" %></dt>
+  <dd class="rpush mb-0 pb-0">
+    <%= form_with(
+      model: profile,
+      url: profile_path(profile, part: :personal_phone),
+      method: :patch,
+      data: {
+        controller: "auto-submit",
+        action: "change->auto-submit#submit"
+      },
+      class: "d-inline"
+    ) do |form| %>
+      <%= hidden_field_tag :focus_field, "personal_phone" %>
+      <%= single_text_field(form, :personal_phone, show_label: false) %>
 
-    <dl class="definition-list definition-list-grid definition-list-grid-large">
-      <dt class="mb-0 pb-0"><%= t "profile.personal_phone" %></dt>
-      <dd class="rpush mb-0 pb-0">
-        <%= form_with(
-          model: profile,
-          url: profile_path(profile, part: :personal_phone),
-          method: :patch,
-          data: {
-            controller: "auto-submit",
-            action: "change->auto-submit#submit"
-          },
-          class: "d-inline"
-        ) do |form| %>
-          <%= hidden_field_tag :focus_field, "personal_phone" %>
-          <%= single_text_field(form, :personal_phone, show_label: false) %>
+      <% if profile.errors[:personal_phone].any? %>
+        <div class="text-danger mt-1">
+          <%= profile.errors[:personal_phone].join(", ") %>
+        </div>
+      <% end %>
+    <% end %>
 
-          <% if profile.errors[:personal_phone].any? %>
-            <div class="text-danger mt-1">
-              <%= profile.errors[:personal_phone].join(", ") %>
-            </div>
-          <% end %>
-        <% end %>
-        <%= render 'shared/item_visibility', item: profile, property: 'personal_phone' %>
-      </dd>
-    </dl>
+    <%= render 'shared/item_visibility', item: profile, property: 'personal_phone' %>
+  </dd>
+</dl>
