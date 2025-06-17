@@ -1,5 +1,5 @@
-<span class="rpush">
-<%= tag_for_localized_attr "h2", box, "title" %>
+<span class="rpush box-title-centered">
+<%= tag_for_localized_attr "h4", box, "title"%>
 <div>
 <%= link_to icon_text('trash-2', t('action.delete')), box_path(box), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete', turbo_confirm: t('action.confirm')} if box.user_destroyable? %>
 <%= render "shared/item_visibility", item: box, extra_class: []%>
