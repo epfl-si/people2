@@ -1,6 +1,5 @@
 <h3>
   <%= t 'profiles.edit.title.details' %>
-  <%= link_to icon('edit-3'), edit_profile_path(profile, details: true), data: { turbo_stream: true } %>
 </h3>
 
 <% if profile.errors.any? %>
@@ -11,7 +10,7 @@
         <li><%= error.full_message %></li>
       <% end %>
     </ul>
-  </div>  
+  </div>
 <% end %>
 
 <dl id="profile_field_inclusivity" class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
