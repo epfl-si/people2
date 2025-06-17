@@ -39,14 +39,15 @@
         </p>
       <% end %>
 
-<div class="mt-4 d-flex justify-content-center gap-2">
+<div class="mt-4 d-flex justify-content-center gap-2 mb-3">
   <%= form.submit t("action.confirm"), class: "btn btn-primary" %>
 
+<%= turbo_frame_tag "profile_field_#{focus_field}" do %>
   <%= button_to t("action.cancel"),
                 reset_field_profile_path(profile, focus_field: focus_field),
                 method: :patch,
-                data: { turbo_frame: "profile_field_#{focus_field}" },
                 class: "btn btn-secondary" %>
+<% end %>
 </div>
 
 
