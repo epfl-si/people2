@@ -1,0 +1,29 @@
+<div class="tabs-container">
+  <% tabs.each_with_index do |tab, i| %>
+    <input type="radio" id="<%= tab[:id] %>" name="tabs-group" <%= 'checked' if i == 0 %>>
+  <% end %>
+
+  <div data-sticky-tabs-target="sentinel" style="height: 1px;"></div>
+
+  <div class="tabs-nav sticky-tabs" data-controller="sticky-tabs" data-sticky-tabs-target="tabs">
+    <% tabs.each do |tab| %>
+      <label class="tab-label" for="<%= tab[:id] %>"><%= tab[:label] %></label>
+    <% end %>
+  </div>
+
+  <div class="tabs-contents">
+    <% tabs.each do |tab| %>
+      <div class="tab-content">
+        <% if tab[:partial] %>
+          <%= render partial: tab[:partial], locals: tab[:locals] || {} %>
+        <% elsif tab[:frame_id] && tab[:src] %>
+          <%= turbo_frame_tag(tab[:frame_id], src: tab[:src], loading: :lazy) do %>
+            <%= render 'shared/spinner' %>
+          <% end %>
+        <% else %>
+          <%= tab[:content] || "<p>No content</p>" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
