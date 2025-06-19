@@ -63,50 +63,27 @@
   </div><!-- people basic infos -->
 
   <% # section tab links %>
-  <% if @main_zone_bbs.present? || @ta.present? %>
-    <ul class="nav nav-tabs mt-5" role="tablist">
-      <% active="active" %>
-      <% @main_zone_bbs.each do |section, boxes| %>
-        <% id="section_#{section.label}" %>
-        <li class="nav-item">
-          <%= link_to(
-                section.t_title, "#"+id,
-                id: "#{id}-tab", role: "tab", class: "nav-link #{active}",
-                data: {toggle: "tab"},
-                aria: {controls: id, selected: active ? "true" : "false"}
-              )
-          %>
-        </li>
-        <% active=false %>
-      <% end %>
+<% if @main_zone_bbs.present? || @ta.present? %>
+  <%= render "shared/tabs", tabs: (
+    @main_zone_bbs.map.with_index { |(section, boxes), i|
+      {
+        id: "section_#{section.label}",
+        label: section.t_title,
+        name: "show-tabs-#{@profile.id}",
+        partial: "section",
+        locals: {
+          section: section,
+          boxes: boxes,
+          sortable: false
+        }
+      }
+    } + (@ta.present? ? [{
+      id: "section_teaching",
+      label: t(".teaching"),
+      name: "show-tabs-#{@profile.id}",
+      partial: "teaching"
+    }] : [])
+  ) %>
+<% end %>
 
-      <% if @ta.present? %>
-        <% id="section_teaching" %>
-        <li class="nav-item">
-          <%= link_to(
-                t(".teaching"), "#"+id,
-                id: "#{id}-tab", role: "tab", class: "nav-link",
-                data: {toggle: "tab"},
-                aria: {controls: id, selected: active ? "true" : "false"}
-              )
-          %>
-        </li>
-      <% end %>
-    </ul>
-    <div class="tab-content p-3">
-      <% active="active" %>
-      <% @main_zone_bbs.each do |section, boxes| %>
-        <% id="section_#{section.label}" %>
-        <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-          <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
-        </div>
-        <% active = nil %>
-      <% end %>
-      <% if @ta.present? %>
-        <% id="section_teaching" %>
-        <div class="tab-pane fade show <%= active %>"  id="<%= id %>" role="tabpanel" aria-labelledby="<%= id %>-tab">
-        <%= render "teaching" %>
-        </div>
-      <% end %>
-    </div>
-  <% end # if main_zone_bbs.present? %>
+</div>
