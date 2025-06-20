@@ -1,15 +1,14 @@
-<% 
-  prop = (property ||= nil).present? ? "#{property}_visibility" : "visibility" 
+<%
+  prop = (property ||= nil).present? ? "#{property}_visibility" : "visibility"
 %>
 <%= tag.div(
     id: dom_id(item, prop),
     class: "gc-visibility-container",
   ) do %>
   <%= form_with(
-     class: ["visibility-radios"],
      method: "patch",
      url: visibility_path(model: item.class.name.underscore, id: item.id),
-     remote: true, 
+     remote: true,
      data: {controller: 'auto-submit'},
   ) do |form| %>
     <%= visibility_selector(form, item, property: property) %>

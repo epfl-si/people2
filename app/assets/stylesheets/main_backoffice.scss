@@ -438,19 +438,16 @@ details {
 
 // ---------------------------------------------------------- giova's visibility
 .gc-visibility-container {
-  margin-left: 1em;
-  background-color: #fff;
-  padding: 4px 4px 0 4px;
-  border-radius: 5px;
   box-sizing: border-box;
   display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  font-size: 120%;
 
   span.text {
-    display: none;
+    /* display: none; */
+    opacity: 0;
+    visibility: hidden;
     font-size: 60%;
     // line-height: 60%;
     // margin-top: -1ex;
@@ -458,6 +455,11 @@ details {
   }
 
   .visibility-radios {
+    margin-left: 1em;
+    background-color: #fff;
+    padding: 4px 4px 0 4px;
+    border-radius: 5px;
+    font-size: 120%;
 
     label {
       padding: 0.05em 0.2em;
@@ -520,6 +522,96 @@ details {
         color: #000000;
       }
     }
+  }
+}
+
+/*
+.gc-visibility-container:hover {
+  span.text {
+    opacity: 100;
+    visibility: visible;
+  }
+}
+*/
+
+.visibility-tag {
+  font-size: x-small;
+  height: 4ex;
+  .gc-visibility-container {
+    display: none;
+  }
+}
+
+.visibility-tag:hover{
+  .gc-visibility-container {
+    display: inline-flex;
+    z-index: 50;
+  }
+}
+
+// --------------------------------------------------------------- binary switch
+
+.binary-switch {
+  --bs-width: 30px;
+  --bs-height: 15px;
+  --bs-thumb-size: calc(var(--bs-height) - 4px);
+  --bs-thumb-offset: 2px;
+  --bs-thumb-translate: calc(var(--bs-width) - var(--bs-thumb-size) - 2 * var(--bs-thumb-offset));
+
+  --bs-color-off: #ccc;
+  --bs-color-on: #4caf50;
+  --bs-color-thumb: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .checkbox {
+    display: none;
+  }
+
+  // here the label is actually the checkbox
+  label {
+    position: relative;
+    width: var(--bs-width);
+    height: var(--bs-height);
+    background-color: var(--bs-color-off);
+    border-radius: calc(var(--bs-height) / 2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  label::before {
+    content: "";
+    position: absolute;
+    width: var(--bs-thumb-size);
+    height: var(--bs-thumb-size);
+    top: var(--bs-thumb-offset);
+    left: var(--bs-thumb-offset);
+    background-color: var(--bs-color-thumb);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+
+  .checkbox:checked + label {
+    background-color: var(--bs-color-on);
+  }
+
+  .checkbox:checked + label::before {
+    transform: translateX(var(--bs-thumb-translate));
+  }
+
+  .bslabel {
+    margin-top: -2ex;
+    font-size: 30%;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.binary-switch:hover {
+  .bslabel {
+    opacity: 100;
+    visibility: visible;
   }
 }
 

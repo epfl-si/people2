@@ -5,8 +5,8 @@ class Accred < ApplicationRecord
 
   include Translatable
   include AudienceLimitable
-  audience_limit(:box)
-  audience_limit_property('address', strategy: :item)
+  audience_limit(:audience)
+  audience_limit_property('address', strategy: :visibility)
 
   translates :unit
   serialize :role, coder: Position
@@ -47,5 +47,12 @@ class Accred < ApplicationRecord
 
     errors.add(:visible, ".accred.cannot_hide_all")
     false
+  end
+
+  def short_address
+    person = profile.person
+    # r = person.room(unit_id)
+    a = person.address(unit_id)
+    a.present? ? a.lines[1..].join(" • ") : nil
   end
 end

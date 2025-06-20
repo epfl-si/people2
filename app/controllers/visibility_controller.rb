@@ -26,8 +26,8 @@ class VisibilityController < ApplicationController
             else
               ".update"
             end
-          # Revert model to previous state
-          @item = Kernel.const_get(klass).find params[:id]
+          # Revert model to previous state ???
+          # @item = klass.find params[:id]
         end
       end
     end

@@ -83,17 +83,23 @@ it:
     intranet: ''
     intranet_access: ''
     label:
+      enabled: acceso
+      disabled: spento
       public: ''
       intranet: Intranet, visibile solo dalla rete dell'EPFL
       auth: ''
       draft: ''
       hidden: ''
     short_label:
+      enabled: On
+      disabled: Off
       intranet: Solo dalla rete dell'EPFL
       auth: Autorizzato
       draft: Bozza
       hidden: ''
     labels:
+      enabled: acceso
+      disabled: spento
       published: ''
       draft: Bozza
       hidden: ''
@@ -101,11 +107,22 @@ it:
       intranet: Intranet (solo dalla rete dell'
       authenticated: ''
     short_labels:
+      disabled: On
+      enabled: Off
       published: ''
       draft: Bozza
       hidden: ''
       public: ''
       intranet: Intranet
+    tag:
+      enabled: "%{item} visible"
+      disabled: "%{item} hidden"
+      visible: "%{item} visible"
+      public: "%{item} publicly visible"
+      intranet: "%{item} visible only from EPFL network"
+      auth: "%{item} visible by authenticated users only"
+      draft: "%{item} only visible by profile owner"
+      hidden: "%{item} hidden"
     public: " pubblico"
     public_access: " pubblico"
     visible: Visibile

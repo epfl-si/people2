@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_19_132831) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.text "description_it"
     t.text "description_de"
     t.string "url"
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_achievements_on_category_id"
@@ -118,7 +118,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.integer "year"
     t.string "url"
     t.integer "position", null: false
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_awards_on_category_id"
@@ -139,7 +139,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.string "title_de"
     t.boolean "show_title", default: true
     t.boolean "locked_title", default: false
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.integer "position", null: false
     t.text "data"
     t.datetime "created_at", null: false
@@ -178,7 +178,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.integer "year_begin"
     t.integer "year_end"
     t.integer "position", null: false
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_educations_on_profile_id_and_position", unique: true
@@ -225,7 +225,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.string "title_de"
     t.string "url"
     t.integer "position"
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_infosciences_on_profile_id"
@@ -316,7 +316,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.integer "year"
     t.integer "position", null: false
     t.string "journal", null: false
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_publications_on_profile_id"
@@ -362,7 +362,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_191215) do
     t.string "tag"
     t.string "value"
     t.integer "position", default: 0
-    t.integer "visibility", default: 4
+    t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_socials_on_profile_id"

@@ -93,14 +93,18 @@ fr:
   visibility:
     authenticated: Utilisateurs EPFL uniquement
     authenticated_access: utilisateur
+    disabled: Désactivé
     draft: Privé
     editor: Privé
     editor_access: complet
+    enabled: Activé
     hidden: caché
     hidden_address: Adresse postale manquante
     intranet: intranet EPFL uniquement
     intranet_access: intranet EPFL
     label:
+      disabled: Désactivé
+      enabled: Activé
       visible: Visible
       public: Public, Visible par tout le monde sur Internet
       intranet: Intranet, visible uniquement sur le réseau interne de l'EPFL
@@ -108,6 +112,8 @@ fr:
       draft: Privé, visible uniquement par la/le propriétaire du profil
       hidden: Privé
     short_label:
+      enabled: On
+      disabled: Off
       visible: Visible
       public: Public
       intranet: Intranet (EPFL only)
@@ -115,6 +121,8 @@ fr:
       draft: Brouillon
       hidden: Privé
     labels:
+      disabled: Désactivé
+      enabled: Activé
       published: Publié
       draft: Brouillon
       hidden: Privé
@@ -122,12 +130,23 @@ fr:
       intranet: Intranet (EPFL uniquement)
       authenticated: Communauté EPFL uniquement
     short_labels:
+      disabled: On
+      enabled: Off
       published: Publié
       draft: Brouillon
       hidden: Privé
       public: WWW
       intranet: Intranet
       authenticated: Utilisateurs
+    tag:
+      enabled: "%{item} activé"
+      disabled: "%{item} désactivé"
+      visible: "%{item} visible"
+      public: "%{item} publicly visible"
+      intranet: "%{item} visible only from EPFL network"
+      auth: "%{item} visible by authenticated users only"
+      draft: "%{item} only visible by profile owner"
+      hidden: "%{item} hidden"
     public: public
     public_access: public
     visible: visible

@@ -82,17 +82,24 @@ de:
     intranet: ''
     intranet_access: ''
     label:
+      enabled: Enabled
+      disabled: Disabled
       public: ''
       intranet: ''
       auth: ''
       draft: ''
       hidden: ''
     short_label:
+      enabled: On
+      disabled: Off
+      visible: Visible
       intranet: ''
       auth: ''
       draft: Entwurf
       hidden: ''
     labels:
+      disabled: Disabled
+      enabled: Enabled
       published: ''
       draft: Entwurf
       hidden: ''
@@ -100,11 +107,22 @@ de:
       intranet: ''
       authenticated: ''
     short_labels:
+      disabled: On
+      enabled: Off
       published: ''
       draft: Entwurf
       hidden: ''
       public: ''
       intranet: ''
+    tag:
+      enabled: "%{item} visible"
+      disabled: "%{item} hidden"
+      visible: "%{item} visible"
+      public: "%{item} publicly visible"
+      intranet: "%{item} visible only from EPFL network"
+      auth: "%{item} visible by authenticated users only"
+      draft: "%{item} only visible by profile owner"
+      hidden: "%{item} hidden"
     public: öffentlich
     public_access: öffentlich
     visible: Sichtbar

@@ -1,0 +1,15 @@
+<%
+  if property.present?
+    o = item.send("#{property}_visibility_option")
+    ta = item.class.human_attribute_name(property)
+  else
+    o = item.send("visibility_option")
+    ta = item.model_name.human
+  end
+%>
+<div class="visibility-tag">
+  <span class="visibility">
+    <%= icon_text(o.icon, t("visibility.tag.#{o.label}", item: ta)) %>
+  </span>
+  <%= render "shared/item_visibility", item: item, property: property %>
+</div>
