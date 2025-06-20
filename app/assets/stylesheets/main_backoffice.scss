@@ -145,6 +145,23 @@ summary .rpush {
   grid-template-columns: minmax(min-content, 30%) 1fr;
 }
 
+#profile_field_inclusivity {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+}
+
+#profile_field_nationality,
+#profile_field_expertise,
+#profile_field_personal_web_url,
+#profile_field_personal_phone {
+  dl.definition-list {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+}
+
 // ---------------------------------------------------------------------- form
 // ---- Forms for editing instances of the models depending on profile
 
@@ -366,7 +383,11 @@ details {
   padding: 0;
   border-radius: 0.5em;
   background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 8px 16px;
+}
+
+turbo-frame#editor_content hr {
+  display: none !important;
 }
 
 #editor_content {

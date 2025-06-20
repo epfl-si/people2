@@ -42,9 +42,10 @@ fr:
               too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             expertise_de:
               too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
-  helpers:
-    placeholder:
-      profile: {}
+            personal_web_url:
+              invalid_url: "L’URL doit commencer par http:// ou https://."
+            personal_phone:
+              invalid_phone: "Le numéro doit être valide (ex. +41 79 123 45 67)."
   profiles:
     edit:
       title:

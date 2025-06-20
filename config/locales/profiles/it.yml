@@ -42,9 +42,10 @@ it:
               too_long: ''
             expertise_de:
               too_long: ''
-  helpers:
-    placeholder:
-      profile: {}
+            personal_web_url:
+              invalid_url: "L'URL deve iniziare con http:// o https://."
+            personal_phone:
+              invalid_phone: "Il numero deve essere valido (es. +41 79 123 45 67)."
   profiles:
     edit:
       title:

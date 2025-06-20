@@ -48,10 +48,6 @@
   <h2><%= t ".title.editing", name: @person.name.display, sciper: @person.sciper %></h2>
 </section>
 
-<section id="profile_options">
-  <%= render "profile_options", profile: @profile %>
-</section>
-
 <% if allowed_to?(:manage_photos?, @profile) %>
 <section id="pictures_section">
   <%= render 'pictures/pictures', profile: @profile, pictures: @profile.pictures %>
@@ -81,10 +77,19 @@
   <%= render "flat_sections", sections: @contact_sections, profile: @profile %>
 </section>
 
-<section id="boxes_section" >
+<section id="boxes_section">
   <h3><%= t '.title.boxes_main' %></h3>
-  <%= render "tabbed_sections", sections: @sections, profile: @profile %>
+  <%= render "shared/tabs", tabs: @sections.map.with_index { |section, i|
+    {
+      id: "section_#{section.label}",
+      label: section.t_title,
+      name: "edit-tabs-#{@profile.id}",
+      frame_id: "#{section.label}_section",
+      src: profile_section_boxes_path(@profile, section)
+    }
+  } %>
 </section>
+
 
 <%= turbo_frame_tag :remote_modal %>
 </div><% #tr_switchable %>
