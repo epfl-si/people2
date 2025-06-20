@@ -427,8 +427,6 @@ nata_reinit_legacy: dcup
 ## ---------------------------------------------------- Prod openshit deployment
 APP_NAME ?= people
 QUAY_REPO=quay-its.epfl.ch/svc0033/$(APP_NAME)
-OCNAMESPACE=svc0033p-people
-OCPOD_APP=$(shell oc get pods -l role=app --no-headers -o name --field-selector=status.phase==Running | tail -n 1)
 
 # Chemin vers le Dockerfile
 DOCKERFILE=../../../Dockerfile
@@ -459,15 +457,16 @@ next: prod_push next_deploy
 
 ## Open a shell on running application pod
 prod_shell:
-	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) /bin/bash
+	./bin/oc.sh --prod shell
 
 ## Open a rails console on running application pod
 prod_console:
-	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) ./bin/rails console
+	./bin/oc.sh --prod console
 
 ## Print logs from production application containers
 prod_logs:
-	oc logs -f -n $(OCNAMESPACE) -l role=app
+	./bin/oc.sh --prod logs
+
 
 OCMAINDBNAME=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.dbname')
 OCMAINDBHOST=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.server')
