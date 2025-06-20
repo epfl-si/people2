@@ -302,14 +302,39 @@ module ProfilesHelper
     end
   end
 
-  def visibility_selector(form, item, property: nil, with_stimulus: true)
-    # item = form.object
+  def visibility_binary_selector(form, item, property: nil, with_stimulus: true)
     prop = property.nil? ? "visibility" : "#{property}_visibility"
+    stim_data = { action: 'input->auto-submit#submit' }
+
+    o = item.send("#{prop}_option")
+    id = "#{dom_id(item, prop.to_sym)}_#{o.value}"
+    title = t "visibility.label.#{o.label}"
+    label_data = { label: title }
+    tag.div(class: "binary-switch") do
+      content = []
+      content << form.hidden_field(:property, value: property) if property.present?
+      content << form.hidden_field(:visibility, value: o.next)
+      content << form.checkbox(
+        :enabled,
+        id: id,
+        class: "checkbox",
+        checked: o.lit,
+        data: (with_stimulus ? stim_data.merge(label_data) : label_data)
+      )
+      content << tag.label(for: id)
+      content << tag.span(t("visibility.label.#{o.label}"), class: "bslabel")
+      safe_join(content)
+    end
+  end
+
+  def visibility_multiple_selector(form, item, property: nil, with_stimulus: true)
+    prop = property.nil? ? "visibility" : "#{property}_visibility"
+    options = item.send("#{prop}_options")
     id0 = dom_id(item, prop.to_sym)
     stim_data = { action: 'input->auto-submit#submit' }
     content = []
     content << form.hidden_field(:property, value: property) if property.present?
-    item.send("#{prop}_options").each do |o|
+    options.each do |o|
       id = "#{id0}_#{o.value}"
       title = t "visibility.label.#{o.label}"
       label_data = { label: title }
@@ -324,6 +349,32 @@ module ProfilesHelper
     end
     content = safe_join(content)
     tag.div(content, class: "visibility-radios")
+  end
+
+  def visibility_selector(form, item, property: nil, with_stimulus: true)
+    # item = form.object
+    prop = property.nil? ? "visibility" : "#{property}_visibility"
+    options = item.send("#{prop}_options")
+    if options.count == 2
+      visibility_binary_selector(form, item, property: property, with_stimulus: with_stimulus)
+    else
+      visibility_multiple_selector(form, item, property: property, with_stimulus: with_stimulus)
+    end
+  end
+
+  def visibility_tag(item, property: nil)
+    if property.present?
+      o = item.send("#{property}_visibility_option")
+      ta = item.class.human_attribute_name(property)
+    else
+      o = item.send("visibility_option")
+      ta = item.model_name.human
+    end
+    prop = property.nil? ? "visibility" : "#{property}_visibility"
+    o = item.send("#{prop}_option")
+    tag.span(class: 'visibility') do
+      icon_text(o.icon, t("visibility.tag.#{o.label}", item: ta))
+    end
   end
 
   def remote_modal_for(uri, &block)

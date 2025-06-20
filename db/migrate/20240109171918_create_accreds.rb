@@ -7,7 +7,7 @@ class CreateAccreds < ActiveRecord::Migration[7.0]
       t.integer :unit_id
       t.integer :position, null: false
       t.string  :sciper
-      t.integer :visibility, default: AudienceLimitable::VISIBLE
+      t.integer :visibility, default: AudienceLimitable::WORLD
       t.integer :address_visibility, default: AudienceLimitable::VISIBLE
       t.string  :unit_fr
       t.string  :unit_en
