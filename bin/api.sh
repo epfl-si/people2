@@ -5,7 +5,7 @@
 
 . ./.env
 . ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
-BASE=${API_BASEURL:-https://api.epfl.ch/v1}
+BASE=${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
 
 # ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)
 # AUTH="-H 'authorization: Basic ${ENCPAS}'"
