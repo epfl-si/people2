@@ -48,7 +48,7 @@ class Person
       data = APIPersonGetter.call!(email: email, single: false, force: force).select { |v| v['email'] == e }.first
       raise ActiveRecord::RecordNotFound if data.nil?
 
-      r = new(r)
+      r = new(data)
       Work::Sciper.create(
         sciper: r.sciper,
         status: Work::Sciper::STATUS_AUTOMATIC,
