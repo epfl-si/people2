@@ -12,6 +12,8 @@ eagerLoadControllersFrom("controllers", application)
 
 import Popover from "@stimulus-components/popover"
 import AutoSubmit from "@stimulus-components/auto-submit"
+import StickyTabsController from "./sticky_tabs_controller"
 
 application.register('popover', Popover)
 application.register('auto-submit', AutoSubmit)
+application.register("sticky-tabs", StickyTabsController)
