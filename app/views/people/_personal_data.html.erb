@@ -1,0 +1,17 @@
+<% if allowed_to?(:show_personal_data?, @person) %>
+<details class="minimal">
+  <summary><%= t ".title.personal_data" %></summary>
+	<dl class="definition-list definition-list-grid data-list">
+		<dt><%= t ".admin_data.sciper" %></dt>
+		<dd><%= @admin_data.sciper %></dd>
+		<dt><%= t ".admin_data.username" %></dt>
+		<dd><%= @admin_data.username %></dd>
+		<dt><%= t ".admin_data.gid" %></dt>
+		<dd><%= @admin_data.gid %></dd>
+		<dt><%= t ".admin_data.sapid" %></dt>
+		<dd><%= @person.admin_data.sapid %></dd>
+		<dt><%= t ".admin_data.nebis" %></dt>
+		<dd><%= @person.admin_data.nebis %></dd>
+	</dl>
+</details>
+<% end %>
