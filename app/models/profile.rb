@@ -25,8 +25,8 @@ class Profile < ApplicationRecord
   audience_limit_property "personal_phone"
   audience_limit_property "personal_web_url"
 
-  validates :personal_web_url, format: { with: %r{\A(http|https)://[^\s]+\z}, message: :invalid_url }
-  validates :personal_phone, format: { with: /\A(\+|00)?[0-9\s\-.()]+\z/, message: :invalid_phone }
+  validates :personal_web_url, format: { with: %r{\A(http|https)://[^\s]+\z}, message: :invalid_url, allow_blank: true }
+  validates :personal_phone, format: { with: /\A(\+|00)?[0-9\s\-.()]+\z/, message: :invalid_phone, allow_blank: true }
   has_many :boxes, dependent: :destroy
   has_many :model_boxes, through: :boxes, source: :model
   # has_many :section_boxes, ->(section) { where(section_id: section.id) }, class_name: 'Box'
