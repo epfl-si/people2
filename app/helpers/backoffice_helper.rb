@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module BackofficeHelper
-
-  def form_group(help: nil, extracls: "", &block)
+  def form_group(help: nil, **opts, &block)
     c = []
     c << tag.div(class: "form-group #{opts[:extracls]}") do
       capture(&block)
