@@ -37,5 +37,9 @@ en:
         year: Publication year
 
   publications:
+    edit:
+      form_title: "Editing Publication"
+    new:
+      form_title: "Creating a new Publication"
     editable_publication:
       link: View the publication

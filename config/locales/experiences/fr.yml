@@ -27,5 +27,9 @@ fr:
         year_end: à (année)
 
   experiences:
+    edit:
+      form_title: "Editing Work Experience"
+    new:
+      form_title: "Creating a Work Experience"
     form:
       period: Période (en années)

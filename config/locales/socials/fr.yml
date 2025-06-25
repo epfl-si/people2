@@ -26,6 +26,10 @@ fr:
   socials:
     add:
       add: Ajouter un profil de réseau social ou un identifiant de recherche
+    edit:
+      form_title: "Editing Research ID"
+    new:
+      form_title: "Creating a new Research ID"
     form:
       value: Identifiiant
       identifier_label:

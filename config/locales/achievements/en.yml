@@ -24,6 +24,10 @@ en:
           wurde in Economis, Forbes und anderen Medien vorgestellt
         url: https://doi.org/10.1021/acs.est.2c05777
   achievements:
+    edit:
+      form_title: "Editing Achievement"
+    new:
+      form_title: "Creating a new Achievement"
     form:
       category: Category
       description: Description

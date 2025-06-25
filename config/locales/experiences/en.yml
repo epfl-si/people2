@@ -31,5 +31,9 @@ en:
         year_begin: from year
         year_end: to year
   experiences:
+    edit:
+      form_title: "Editing Work Experience"
+    new:
+      form_title: "Creating a Work Experience"
     form:
       period: Period (years)

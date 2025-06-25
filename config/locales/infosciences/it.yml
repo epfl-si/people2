@@ -20,5 +20,9 @@ it:
         title: Title
         url: infoscience-exports url
   infosciences:
+    edit:
+      form_title: ''
+    new:
+      form_title: ''
     form:
       create: Save

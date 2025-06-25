@@ -21,5 +21,9 @@ fr:
         url: url
         year: Année
   awards:
+    edit:
+      form_title: "Editing Award"
+    new:
+      form_title: "Creating a new Award"
     form:
       help: {}
