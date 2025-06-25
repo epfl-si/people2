@@ -32,7 +32,7 @@ SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
 SQLDUMP=docker compose exec -T mariadb mariadb-dump --password=mariadb
 
 ## ---------------------------------------------------------- Run/stop local app
-.PHONY: css dev up reload kc down fulldown tunnel_up tunnel_down
+.PHONY: css dev up reload kc down fulldown traefik tunnel_up tunnel_down
 
 ## start the dev env with sass builder and app server (try to emulate ./bin/dev)
 dev: up
@@ -42,7 +42,7 @@ dev: up
 css:
 	bin/rails dartsass:watch
 ## start the dev tunnel and start all the servers
-up: tunnel_up dcup
+up: traefik tunnel_up dcup
 
 ## restart the webapp container
 reload: envcheck
@@ -62,6 +62,9 @@ fulldown:
 	docker compose --profile test down
 	docker compose --profile kc   down
 	docker compose down
+
+traefik:
+	@if [ -n "$(TRAEFIK_PATH)" ] ; then cd "$(TRAEFIK_PATH)" && make up ; fi
 
 tunnel_up:
 	./bin/tunneld.sh -m local start
