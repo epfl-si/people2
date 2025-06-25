@@ -32,5 +32,9 @@ it:
         year: Publication year
 
   publications:
+    edit:
+      form_title: ''
+    new:
+      form_title: ''
     editable_publication:
       link: View the publication

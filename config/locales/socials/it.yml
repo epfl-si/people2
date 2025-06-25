@@ -25,6 +25,10 @@ it:
   socials:
     add:
       add: Aggiungi un'altra identità sociale
+    edit:
+      form_title: ''
+    new:
+      form_title: ''
     form:
       identifier_label:
         facebook: ''

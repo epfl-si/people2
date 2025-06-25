@@ -21,5 +21,9 @@ fr:
         url: Url issue de infoscience-exports
 
   infosciences:
+    edit:
+      form_title: "Editing Infoscience export link"
+    new:
+      form_title: "Creating Infoscience export link"
     form:
       create: Enregistrer
