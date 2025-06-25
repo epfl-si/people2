@@ -21,6 +21,8 @@ services:
   # details on the startup sequence of Keycloak (and the
   # --import-realm flag) in ./keycloak/README.md
   keycloak:
+    profiles:
+      - full
     image: quay.io/keycloak/keycloak:25.0.0
     command:
       - start-dev
@@ -46,6 +48,8 @@ services:
       - default
 
   elements:
+    profiles:
+      - full
     build:
       context: vendor
       dockerfile: elements.Dockerfile
@@ -210,6 +214,9 @@ services:
       - storage:/srv/app/storage
 
   prometheus:
+    profiles:
+      - full
+      - monitoring
     image: prom/prometheus:latest
     volumes:
       - ./config/dev-prometheus.yml:/etc/prometheus/prometheus.yml
@@ -224,6 +231,9 @@ services:
       - default
 
   grafana:
+    profiles:
+      - full
+      - monitoring
     image: grafana/grafana:latest
     volumes:
       - ./ops/roles/people/files/demo-monitoring/grafana:/etc/grafana
@@ -276,6 +286,8 @@ services:
       - default
 
   phpmyadmin:
+    profiles:
+      - full
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_HOST=mariadb
@@ -308,6 +320,9 @@ services:
   # TODO: add also firefox as an option (see https://nicolasiensen.github.io/2022-03-11-running-rails-system-tests-with-docker/)
   # https://github.com/SeleniumHQ/docker-selenium
   selenium:
+    profiles:
+      - test
+      - full
     image: selenium/standalone-chrome:112.0
     shm_size: "2gb"
     profiles:
