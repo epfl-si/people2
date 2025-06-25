@@ -18,12 +18,14 @@ fr:
   helpers:
     placeholder:
       education: {}
+    label:
+      education:
+        director: Directeur
+        field: champ
+        school: Ecole
+        title: Titre
+        year_begin: de (année)
+        year_end: à (année)
   educations:
     form:
-      director: Directeur
-      field: champ
-      school: Ecole
-      title: Titre
-      year_begin: de (année)
-      year_end: à (année)
       period: période (en années)

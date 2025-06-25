@@ -12,12 +12,14 @@ fr:
   helpers:
     placeholder:
       award: {}
+    label:
+      award:
+        category: Catégorie
+        issuer: attribué par
+        origin: Origine
+        title: Titre
+        url: url
+        year: Année
   awards:
     form:
-      category: Catégorie
-      issuer: attribué par
-      origin: Origine
-      title: Titre
-      url: url
-      year: Année
       help: {}

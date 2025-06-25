@@ -14,7 +14,7 @@ class EducationsController < ApplicationController
 
   # GET /profile/profile_id/educations/new
   def new
-    @education = Education.new
+    @education = @profile.educations.new
   end
 
   # GET /educations/1/edit

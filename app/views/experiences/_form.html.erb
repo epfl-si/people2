@@ -1,23 +1,13 @@
 <%= form_with(model: [profile, experience], local: false, class: "instaform") do |form| %>
-  <% translations = (profile ||= experience.profile).translations %>
   <%= render "shared/form_errors", item: experience if experience.errors.any? %>
 
-  <%= translated_text_fields(form, :title, translations: translations) %>
-  <%= single_text_field(form, :location) %>
+  <%= translated_text_fields(form, :title, required: true) %>
+  <%= single_text_field(form, :location, required: true) %>
 
-  <%= range_number_field(form, :year_begin, :year_end, '.period', min: 1950, max: Date.today.year) %>
+  <%= range_number_field(form, :year_begin, :year_end, label: '.period', min: 1950, max: Date.today.year, required: true) %>
 
-  <%= translated_rich_text_areas(form, :description, translations: translations, label: ".description") %>
+  <%= translated_rich_text_areas(form, :description) %>
 
   <%= form_actions form, experience %>
 
 <% end %>
-
-
-
-
-
-
-
-
-

@@ -18,11 +18,14 @@ de:
   helpers:
     placeholder:
       social: {}
+    label:
+      social:
+        tag: social type
+        value: Identifier
   socials:
     add:
       add: ''
     form:
-      value: ''
       identifier_label:
         facebook: ''
         github: ''

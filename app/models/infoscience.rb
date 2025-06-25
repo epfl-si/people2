@@ -17,9 +17,8 @@ class Infoscience < ApplicationRecord
   # https://infoscience-exports.epfl.ch/[0-9]+
   URLRE1 = Regexp.new('^\s*(https://infoscience-exports\.epfl\.ch/[0-9]+)')
 
+  validates :url, uniqueness: true, presence: true
   validate :url_format
-
-  validates :url, uniqueness: true
 
   delegate :sciper, to: :profile
 

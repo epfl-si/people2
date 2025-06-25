@@ -1,7 +1,6 @@
 <%= form_with(model: [profile, infoscience], local: false, class: "instaform") do |form| %>
-  <% translations = (profile ||= infoscience.profile).translations %>
   <%= render "shared/form_errors", item: infoscience if infoscience.errors.any? %>
-  <%= translated_text_fields(form, :title, translations: translations, label: ".title") %>
-  <%= single_text_field(form, :url, label: ".url") %>
+  <%= translated_text_fields(form, :title) %>
+  <%= single_text_field(form, :url, required: true) %>
   <%= form_actions(form, infoscience) %>
 <% end %>

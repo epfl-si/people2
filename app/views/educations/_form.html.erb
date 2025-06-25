@@ -1,14 +1,13 @@
 <%= form_with(model: [profile, education], local: false, class: "instaform") do |form| %>
-  <% translations = (profile ||= education.profile).translations %>
   <%= render "shared/form_errors", item: education if education.errors.any? %>
 
-  <%= translated_text_fields(form, :title, translations: translations) %>
-  <%= translated_text_fields(form, :field, translations: translations) %>
+  <%= translated_text_fields(form, :title, required: true) %>
+  <%= translated_text_fields(form, :field) %>
 
-  <%= single_text_field(form, :director, label: ".director") %>
-  <%= single_text_field(form, :school, label: ".school") %>
+  <%= single_text_field(form, :director) %>
+  <%= single_text_field(form, :school) %>
 
-  <%= range_number_field(form, :year_begin, :year_end, '.period', min: 1950, max: Date.today.year) %>
+  <%= range_number_field(form, :year_begin, :year_end, label: '.period', min: 1950, max: Date.today.year, required: true) %>
 
   <%= form_actions form, education %>
 <% end %>

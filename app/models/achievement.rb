@@ -13,6 +13,8 @@ class Achievement < ApplicationRecord
   translates :description
   positioned on: :profile
 
+  validates :t_description, translatability: true
+
   # No need to validate as the year is programmatically set
   # validates :year,
   #           presence: true,

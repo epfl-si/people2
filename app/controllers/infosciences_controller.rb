@@ -15,7 +15,7 @@ class InfosciencesController < ApplicationController
 
   # GET /profile/profile_id/infosciences/new
   def new
-    @infoscience = Infoscience.new
+    @infoscience = @profile.infosciences.new
   end
 
   # GET /infosciences/1/edit

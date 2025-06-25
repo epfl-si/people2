@@ -11,7 +11,7 @@ class PublicationsController < ApplicationController
   def show; end
 
   def new
-    @publication = Publication.new
+    @publication = @profile.publications.new
   end
 
   def edit; end

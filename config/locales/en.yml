@@ -26,6 +26,9 @@ en:
       submit: Send
       update: Save
       texfield_for: "%{attr}"
+      translated_textfield_for: "%{attr} in %{language}"
+      mandatory: "mandatory field: this field must be provided"
+      tmandatory: "this field must be provided in at least one of the languages chosen for your profile"
   nav:
     app_with_version: EPFL People v. %{version}
     issues: issues

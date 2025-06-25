@@ -10,17 +10,15 @@
   <%= render "shared/form_errors", item: social if social.errors.any? %>
   <%= form.hidden_field(:tag) if social.new_record? %>
 
-  <%= form_group do %>
-    <%= form.label(t(".identifier_label.#{social.tag}")) %>
-    <%= form.text_field(
-      :value,
-      placeholder: social.specs&.placeholder,
-      data: {
-        "socials-target" => "valueField",
-        action: "input->socials#onValueChange"
-      }
-    ) %>
-  <% end %>
+  <%= single_text_field(
+    form, :value,
+    required: true,
+    placeholder: social.specs&.placeholder,
+    data: {
+      "socials-target" => "valueField",
+      action: "input->socials#onValueChange"
+    }
+  ) %>
   <p>
     <%= icon("corner-down-right") %>
     <%= link_to social.url, social.url, target: "_blank", data: {socials_target: "urlPreview"} %>

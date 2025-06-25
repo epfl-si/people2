@@ -26,6 +26,7 @@ fr:
       submit: Envoyer
       update: Enregistrer
       texfield_for: "%{attr}"
+      translated_textfield_for: "%{attr} en %{language}"
   nav:
     app_with_version: EPFL People v. %{version}
     issues: problèmes

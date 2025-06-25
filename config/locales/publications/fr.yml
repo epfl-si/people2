@@ -23,12 +23,14 @@ fr:
   helpers:
     placeholder:
       publication: {}
+    label:
+      publication:
+        authors: Auteur(s)
+        journal: Titre du journal
+        title: Titre de la publication
+        url: Url de la publication
+        year: Année de publication
+
   publications:
     editable_publication:
       link: Voir cette publication
-    form:
-      authors: Auteur(s)
-      journal: Titre du journal
-      title: Titre de la publication
-      url: Url de la publication
-      year: Année de publication

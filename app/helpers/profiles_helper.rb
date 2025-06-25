@@ -1,111 +1,177 @@
 # frozen_string_literal: true
 
 module ProfilesHelper
-  def profile_text_field(form, attr, placeholder)
-    lb = form.label form.object.class.send(:human_attribute_name, attr), class: "col-sm-3  col-form-label"
-    fd = tag.div(class: "col-sm-9") do
-      form.text_field attr, class: "form-control", placeholder: placeholder
-    end
-    lb + fd
-  end
-
-  def form_group(help: nil, extracls: "", &block)
+  def form_group(help: nil, **opts, &block)
     c = []
-    c << tag.div(class: "form-group #{extracls}") do
+    c << tag.div(class: "form-group #{opts[:extracls]}") do
       capture(&block)
     end
     c << tag.small(help, class: "form-text text-muted") if help.present?
     safe_join c
   end
 
-  def single_text_field(form, attr, label: nil, help: nil, extracls: "", tabindex: nil, show_label: true)
+  def single_text_field(form, attr, label: nil, help: nil, show_label: true, **opts)
     a = attr.to_sym
-    tlabel = label || ".#{attr}"
-    ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
+    opts[:required]
 
-    label_html = show_label ? form.label(t(tlabel)) : "".html_safe
-
-    form_group(help: help, extracls: extracls) do
-      label_html +
-        form.text_field(
-          a, placeholder: true, class: "form-control", "aria-describedby": ahelp, tabindex: tabindex
-        )
-    end
+    # Normally, it is not necessary to send the translated label to the label
+    # helper because it can do it by itself if the corresponding translation
+    # (helpers.label.obj_name.attribute) is provided. But we want to use the
+    # lable also in the aria-described-by. Therefore, we precompute it.
+    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+    tlabel = "#{tlabel} *" if opts[:required]
+    c = []
+    c << form.label(attr, tlabel) if show_label
+    c << form.text_field(
+      a, opts.merge(placeholder: true, class: "form-control", "aria-describedby": ahelp)
+    )
+    form_group(help: help, **opts) { safe_join(c) }
   end
 
-  def single_number_field(form, attr, min: nil, max: nil, label: nil, help: nil, extracls: "")
+  def single_rich_text_area(form, attr, label: nil, help: nil, show_label: true, **opts)
+    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    help || t("generic.form.texfield_for", attr: tlabel)
+    opts[:required]
+    tlabel = "#{tlabel} *" if opts[:required]
+    c = []
+    c << form.label(attr, tlabel) if show_label
+    c << rich_text_input(form, attr)
+    form_group(help: help, **opts) { safe_join(c) }
+  end
+
+  def single_number_field(form, attr, min: nil, max: nil, label: nil, help: nil, **opts)
     a = attr.to_sym
-    tlabel = label || ".#{attr}"
-    ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
-    form_group(help: help, extracls: extracls) do
-      form.label(t(tlabel)) +
-        form.number_field(
-          a, min: min, max: max, class: "form-control", "aria-describedby": ahelp
-        )
-    end
+    required = opts[:required]
+    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+    tlabel = safe_join([tlabel, mandatory]) if required
+    c = []
+    c << form.label(attr, tlabel)
+    c << form.number_field(
+      a, opts.merge(min: min, max: max, class: "form-control", "aria-describedby": ahelp)
+    )
+    form_group(help: help, **opts) { safe_join(c) }
   end
 
   def range_number_field(
     form,
     attr_a, attr_b,
-    label,
-    min: nil, max: nil,
     help: nil,
-    extracls: ""
+    label: "period",
+    min: nil, max: nil,
+    **opts
   )
     a = attr_a.to_sym
     b = attr_b.to_sym
-
-    form_group(help: help, extracls: extracls) do
-      form.label(t(label)) +
-        tag.div do
-          form.number_field(a, min: min, max: max, class: "form-control") +
-            "&nbsp;&mdash;&nbsp;".html_safe +
-            form.number_field(b, min: min, max: max, class: "form-control")
-        end
-    end
+    required = opts[:required]
+    tlabel = t(label)
+    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+    tlabel = safe_join([tlabel, mandatory]) if required
+    f = [
+      form.number_field(a, min: min, max: max, class: "form-control", "aria-describedby": ahelp),
+      sanitize("&nbsp;&mdash;&nbsp;"),
+      form.number_field(b, min: min, max: max, class: "form-control", "aria-describedby": ahelp)
+    ]
+    c = []
+    c << form.label(attr_a, tlabel)
+    c << tag.div { safe_join(f) }
+    form_group(help: help, **opts) { safe_join(c) }
   end
 
-  def single_url_field(form, attr, label: nil, help: nil, extracls: "")
+  def single_url_field(form, attr, label: nil, help: nil, **opts)
     sattr = attr.to_sym
-    tlabel = label || ".#{attr}"
-    ahelp = help || t("generic.form.texfield_for", attr: t(tlabel))
-    form_group(help: help, extracls: extracls) do
-      form.label(t(tlabel)) +
-        form.url_field(sattr, class: "form-control", "aria-describedby": ahelp)
-    end
+    required = opts[:required]
+    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+    tlabel = safe_join([tlabel, mandatory]) if required
+    c = []
+    c << form.label(tlabel)
+    c << form.url_field(sattr, class: "form-control", "aria-describedby": ahelp)
+    form_group(help: help, **opts) { safe_join(c) }
+  end
+
+  def property_select(form, prop, collection, label: nil, help: nil, **opts)
+    attr = "#{prop}_id".to_sym
+    required = opts[:required]
+    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{prop}")
+    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+    tlabel = safe_join([tlabel, mandatory]) if required
+    c = []
+    c << form.label(attr, tlabel)
+    c << form.collection_select(attr, collection, :id, :t_name, "aria-describedby": ahelp)
+    form_group(help: help, **opts) { safe_join(c) }
   end
 
   def translated_text_fields(
-    form, attr, label: nil, help: nil,
-    translations: I18n.available_locales, show_label: true
+    form, attr, label: nil, help: nil, show_label: true, **opts
   )
+    translations = translations_for(form.object)
+    btlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+
+    monolang = (translations.count == 1)
+    required = monolang ? opts[:required] : opts.delete(:required)
+
     content = []
-    btlabel = t(label || ".#{attr}")
     translations.each do |l|
       tlang = t("lang.#{l}")
       # Attribute for language l
       tattr = "#{attr}_#{l}"
       # Translated label for language l
       tlabel = t("translated_label", language: tlang, label: btlabel)
-      ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-
-      label_html = show_label ? form.label(tlabel) : "".html_safe
-
-      text_field = form.text_field(tattr, placeholder: true, class: "form-control", "aria-describedby": ahelp)
-
-      content << form_group(help: help, extracls: "tr_target_#{l}") do
-        label_html + text_field
-      end
+      ahelp = help || t("generic.form.translated_texfield_for", language: tlang, attr: tlabel)
+      tlabel = safe_join([tlabel, mandatory(translated: !monolang)]) if required
+      c = []
+      c << form.label(tattr, tlabel) if show_label
+      c << form.text_field(tattr, opts.merge(placeholder: true, class: "form-control", "aria-describedby": ahelp))
+      content << form_group(help: help, extracls: "tr_target_#{l}", **opts) { safe_join(c) }
     end
     safe_join(content)
   end
 
+  def translated_rich_text_areas(form, attr, label: nil, help: nil, show_label: true, **opts)
+    translations = translations_for(form.object)
+    btlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+
+    content = []
+    translations.each do |l|
+      tlang = t("lang.#{l}")
+      tattr = "#{attr}_#{l}"
+      tlabel = t("translated_label", language: tlang, label: btlabel)
+      c = []
+      c << form.label(tlabel) if show_label
+      c << rich_text_input(form, tattr)
+      content << form_group(help: help, extracls: "tr_target_#{l}", **opts) { safe_join(c) }
+    end
+    safe_join(content)
+  end
+
+  # TODO: it would be nice to have a popover explaining the meaning of the *, **
+  # def popover_text(content, text)
+  #   c = []
+  #   c << tag.span(text, class: 'popover-anchor')
+  #   c << tag.span(content, popover: true)
+  #   safe_join(c)
+  # end
+  #
+  # def mandatory(translated: false)
+  #   if translated
+  #     popover_text(t("generic.form.mandatory"), "**")
+  #   else
+  #     popover_text(t("generic.form.mandatory"), "*")
+  #   end
+  # end
+  def mandatory(translated: false)
+    sanitize(translated ? "&nbsp; **" : "&nbsp; *")
+  end
+
   def translations_for(obj)
-    if obj.respond_to?("profile")
+    if obj.respond_to?("translations")
+      obj.translations
+    elsif obj.respond_to?("profile")
       obj.send("profile").translations
     else
-      Rails.available_languages
+      I18n.available_locales
     end
   end
 
@@ -143,34 +209,6 @@ module ProfilesHelper
             "rich_text_input disable-trix-file-attachment"
           end
     tag.div form.rich_text_area(attr), class: cls
-  end
-
-  def single_rich_text_area(form, attr, label: nil, extracls: "")
-    attr.to_sym
-    form_group(extracls: extracls) do
-      form.label(t(label || ".#{attr}")) + rich_text_input(form, attr)
-    end
-  end
-
-  def translated_rich_text_areas(
-    form, attr, label: nil, help: nil,
-    translations: I18n.available_locales
-  )
-    content = []
-    btlabel = t(label || ".#{attr}")
-    translations.each do |l|
-      tlang = t("lang.#{l}")
-      tattr = "#{attr}_#{l}"
-      # Attribute for language l
-      # Translated label for language l
-      tlabel = t("translated_label", language: tlang, label: btlabel)
-      label = form.label(tlabel)
-      tarea = rich_text_input(form, tattr)
-      content << form_group(help: help, extracls: "tr_target_#{l}") do
-        label + tarea
-      end
-    end
-    safe_join(content)
   end
 
   def attribute_switch(form, attr, label: nil)
@@ -391,7 +429,7 @@ module ProfilesHelper
   def modal_dialog(title, _id = :remote_modal, &block)
     content = capture(&block)
     button = tag.button(type: "button", class: "close", data: { action: "click->remote-modal#close" }) do
-      tag.span("&times;".html_safe, "aria-hidden": true)
+      tag.span(sanitize("&times;"), "aria-hidden": true)
     end
 
     turbo_frame_tag :remote_modal do

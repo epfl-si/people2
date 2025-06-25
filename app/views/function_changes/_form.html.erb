@@ -7,9 +7,8 @@
     <% end %>
   </ul>
 <% end %>
-<% translations = @accreditation.profile&.translations || I18n.available_locales %>
 <%= form_with(model: @function_change, url: "/accreditations/#{@accreditation.id}/function_changes", local: false, class: "instaform") do |form| %>
-  <%= translated_text_fields(form, :function, translations: translations, label: ".function") %>
+  <%= translated_text_fields(form, :function, label: ".function") %>
   <%= form_group do %>
     <%= form.label FunctionChange.human_attribute_name(:reason) %>
     <%= form.text_area :reason %>

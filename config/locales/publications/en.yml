@@ -28,12 +28,14 @@ en:
         authors: John Doe, Jane Smith
         year: '2024'
         journal: Journal of Science
+    label:
+      publication:
+        authors: Author(s)
+        journal: Journal title
+        title: Publication title
+        url: Publication URL
+        year: Publication year
+
   publications:
     editable_publication:
       link: View the publication
-    form:
-      authors: Author(s)
-      journal: Journal title
-      title: Publication title
-      url: Publication URL
-      year: Publication year
