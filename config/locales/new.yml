@@ -10,6 +10,9 @@ en:
     disabled: "No"
   profile:
     inclusivity: "Show job names in inclusive form (french version)"
+  function_changes:
+    new:
+      form_title: "Function change request"
   profiles:
     hide_gender:
       enabled: "Yes"
@@ -105,6 +108,9 @@ fr:
     disabled: "Non"
   profile:
     inclusivity: "Afficher la forme inclusive des fonctions"
+  function_changes:
+    new:
+      form_title: "Demande de changement de fonction"
   profiles:
     inclusivity: "Inclusivité"
     hide_gender:

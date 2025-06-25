@@ -23,6 +23,10 @@ de:
         tag: social type
         value: Identifier
   socials:
+    edit:
+      form_title: ''
+    new:
+      form_title: ''
     add:
       add: ''
     form:

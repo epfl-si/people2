@@ -36,5 +36,10 @@ en:
         year_begin: from year
         year_end: to year
   educations:
+    directedby: "Directed by"
+    edit:
+      form_title: "Editing Education"
+    new:
+      form_title: "Creating a new Education"
     form:
       period: period (years)

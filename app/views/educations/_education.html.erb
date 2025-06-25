@@ -2,8 +2,8 @@
   <div class="col-md-8">
     <div class="d-md-flex">
       <h4 class="h5 mb-0 mr-1"><%= education.t_title %></h4>
-      <span class="d-none d-md-block ml-1 mr-1 font-weight-bold">|</span> 
-      <span> <%= education.t_field %></span> 
+      <span class="d-none d-md-block ml-1 mr-1 font-weight-bold">|</span>
+      <span> <%= education.t_field %></span>
     </div>
 
     <p class="text-muted small mb-0">
@@ -11,7 +11,7 @@
       <%= education.school %>
       <% if education.director.present? %>
         <br>
-        <%= t("education.directedby")%>
+        <%= t("educations.directedby")%>
         <%= education.director %>
       <% end %>
     </p>

@@ -26,5 +26,9 @@ de:
         year_begin: from year
         year_end: to year
   experiences:
+    edit:
+      form_title: ''
+    new:
+      form_title: ''
     form:
       period: Period (years)

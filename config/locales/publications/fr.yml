@@ -32,5 +32,9 @@ fr:
         year: Année de publication
 
   publications:
+    edit:
+      form_title: "Editing Publication"
+    new:
+      form_title: "Creating a new Publication"
     editable_publication:
       link: Voir cette publication
