@@ -18,11 +18,14 @@ fr:
   helpers:
     placeholder:
       experience: {}
+    label:
+      experience:
+        description: Description
+        location: Entreprise, lieu ou institution
+        title: Titre
+        year_begin: de (année)
+        year_end: à (année)
+
   experiences:
     form:
-      description: Description
-      location: Entreprise, lieu ou institution
       period: Période (en années)
-      title: Titre
-      year_begin: de (année)
-      year_end: à (année)

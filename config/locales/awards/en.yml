@@ -18,14 +18,16 @@ en:
         title_it: Premio Nobel
         title_de: Nobelpreis
         url: https://www.nobelprize.org/
+    label:
+      award:
+        category: Category
+        issuer: granted by
+        origin: Origin
+        title: Title
+        url: url
+        year: Year
   awards:
     form:
-      category: Category
-      issuer: granted by
-      origin: Origin
-      title: Title
-      url: url
-      year: Year
       help:
         category: Dropdown menu for award category
         origin: Dropdown menu for selecting the origin of the award

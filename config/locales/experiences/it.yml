@@ -18,11 +18,13 @@ it:
   helpers:
     placeholder:
       experience: {}
+    label:
+      experience:
+        description: Description
+        location: Company, location or institution
+        title: Title
+        year_begin: from year
+        year_end: to year
   experiences:
     form:
-      description: ''
-      location: ''
-      period: ''
-      title: Titolo
-      year_begin: ''
-      year_end: ''
+      period: Period (years)

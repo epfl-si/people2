@@ -18,11 +18,14 @@ it:
   helpers:
     placeholder:
       social: {}
+    label:
+      social:
+        tag: social type
+        value: Identifier
   socials:
     add:
       add: Aggiungi un'altra identità sociale
     form:
-      value: ''
       identifier_label:
         facebook: ''
         github: ''

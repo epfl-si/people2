@@ -15,8 +15,10 @@ it:
   helpers:
     placeholder:
       infoscience: {}
+    label:
+      infoscience:
+        title: Title
+        url: infoscience-exports url
   infosciences:
     form:
-      title: Titolo
-      url: ''
-      create: ''
+      create: Save

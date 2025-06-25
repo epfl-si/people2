@@ -14,7 +14,7 @@ class AwardsController < ApplicationController
 
   # GET /profile/profile_id/awards/new
   def new
-    @award = Award.new
+    @award = @profile.awards.new
   end
 
   # GET /awards/1/edit

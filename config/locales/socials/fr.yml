@@ -18,6 +18,11 @@ fr:
   helpers:
     placeholder:
       social: {}
+    label:
+      social:
+        tag: Reseau
+        value: Identifiiant
+
   socials:
     add:
       add: Ajouter un profil de réseau social ou un identifiant de recherche

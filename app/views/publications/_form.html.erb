@@ -1,9 +1,9 @@
 <%= form_with(model: [@profile, @publication], local: false, class: "instaform") do |form| %>
   <%= render "shared/form_errors", item: @publication if @publication.errors.any? %>
 
-  <%= single_text_field(form, :title) %>
+  <%= single_text_field(form, :title, required: true) %>
   <%= single_text_field(form, :journal) %>
-  
+
   <%= single_number_field(form, :year, min: 1950, max: DateTime.now.year) %>
 
   <%= single_text_field(form, :authors) %>

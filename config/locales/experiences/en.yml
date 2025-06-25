@@ -23,11 +23,13 @@ en:
         title_fr: PDG
         title_it: AD
         title_de: CEO
+    label:
+      experience:
+        description: Description
+        location: Company, location or institution
+        title: Title
+        year_begin: from year
+        year_end: to year
   experiences:
     form:
-      description: Description
-      location: Company, location or institution
       period: Period (years)
-      title: Title
-      year_begin: from year
-      year_end: to year

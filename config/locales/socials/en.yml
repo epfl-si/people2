@@ -19,12 +19,14 @@ en:
     placeholder:
       social:
         value: Enter your identifier
+    label:
+      social:
+        tag: social type
+        value: Identifier
   socials:
     add:
       add: Add Social Media Link or Research ID
     form:
-      tag: social type
-      value: Identifier
       identifier_label:
         facebook: Facebook ID
         github: GitHub Username

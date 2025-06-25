@@ -15,7 +15,7 @@ class ExperiencesController < ApplicationController
 
   # GET /profile/profile_id/experiences/new
   def new
-    @experience = Experience.new
+    @experience = @profile.experiences.new
   end
 
   # GET /experiences/1/edit

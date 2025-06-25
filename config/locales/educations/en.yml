@@ -27,12 +27,14 @@ en:
         field_de: Festkörperphysik
         director: John Doe
         school: Princeton University
+    label:
+      education:
+        director: Director
+        field: Field
+        school: School
+        title: Title
+        year_begin: from year
+        year_end: to year
   educations:
     form:
-      director: Director
-      field: field
-      school: School
-      title: Title
-      year_begin: from year
-      year_end: to year
       period: period (years)

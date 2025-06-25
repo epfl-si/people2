@@ -23,12 +23,14 @@ it:
   helpers:
     placeholder:
       publication: {}
+    label:
+      publication:
+        authors: Author(s)
+        journal: Journal title
+        title: Publication title
+        url: Publication URL
+        year: Publication year
+
   publications:
     editable_publication:
-      link: ''
-    form:
-      authors: ''
-      journal: ''
-      title: ''
-      url: ''
-      year: ''
+      link: View the publication

@@ -1,16 +1,11 @@
 <%= form_with(model: [profile, achievement], local: false, class: "instaform") do |form| %>
-  <% translations = (profile ||= achievement.profile).translations %>
   <%= render "shared/form_errors", item: achievement if achievement.errors.any? %>
 
   <p><%= t ".help.rules" %>.</p>
 
-  <%= translated_text_fields(form, :description, translations: translations) %>
+  <%= translated_text_fields(form, :description, required: true) %>
   <%= single_text_field(form, :url) %>
-
-  <%= form_group do %>
-    <%= form.label t('.category') %>
-    <%= form.collection_select :category_id, Achievement.categories, :id, :t_name, "aria-describedby": t(".help.category") %>
-  <% end %>
+  <%= property_select(form, :category, Achievement.categories, required: true) %>
 
   <%= form_actions(form, achievement) %>
 <% end %>

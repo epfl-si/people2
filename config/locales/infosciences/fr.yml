@@ -15,8 +15,11 @@ fr:
   helpers:
     placeholder:
       infoscience: {}
+    label:
+      infoscience:
+        title: Titre
+        url: Url issue de infoscience-exports
+
   infosciences:
     form:
-      title: Titre
-      url: Url issue de infoscience-exports
       create: Enregistrer

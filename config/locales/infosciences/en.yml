@@ -15,13 +15,11 @@ en:
   helpers:
     placeholder:
       infoscience:
-        title_en: Publications from infosciences database
-        title_fr: Publications
-        title_it: Pubblicazioni da infosciences
-        title_de: TODO
         url: https://infoscience-exports.epfl.ch/123456
+    label:
+      infoscience:
+        title: Title
+        url: infoscience-exports url
   infosciences:
     form:
-      title: Title
-      url: infoscience-exports url
       create: Save

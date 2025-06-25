@@ -19,6 +19,9 @@ de:
       submit: ''
       update: ''
       texfield_for: "%{attr}"
+      translated_textfield_for: "%{attr} in %{language}"
+      mandatory: "mandatory field: this field must be provided"
+      tmandatory: "this field must be provided in at least one of the languages chosen for your profile"
   nav:
     app_with_version: ''
     issues: ''
