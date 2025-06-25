@@ -27,6 +27,10 @@ en:
         url: url
         year: Year
   awards:
+    edit:
+      form_title: "Editing Award"
+    new:
+      form_title: "Creating a new Award"
     form:
       help:
         category: Dropdown menu for award category

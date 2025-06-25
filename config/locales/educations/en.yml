@@ -36,5 +36,9 @@ en:
         year_begin: from year
         year_end: to year
   educations:
+    edit:
+      form_title: "Editing Education"
+    new:
+      form_title: "Creating a new Education"
     form:
       period: period (years)

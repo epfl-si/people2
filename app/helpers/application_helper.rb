@@ -121,31 +121,6 @@ module ApplicationHelper
     end
   end
 
-  def common_editor(title: nil, &block)
-    dismiss_button = tag.button("✕",
-                                type: "button",
-                                class: "btn btn-link text-danger fs-4 p-0 ms-2 float-end",
-                                data: { action: "click->dismissable#dismiss" },
-                                aria: { label: I18n.t("action.cancel") })
-
-    c = []
-    c << tag.div(class: "d-flex align-items-center justify-content-between mb-2") do
-      safe_join([tag.h3(title), dismiss_button])
-    end
-
-    c << tag.div(capture(&block))
-
-    c1 = tag.div(class: "container") do
-      safe_join(c)
-    end
-
-    safe_join [
-      turbo_stream.update("editor") { tag.div(c1, id: "editor_content") },
-      turbo_stream.replace("flash-messages", partial: "shared/flash")
-    ]
-  end
-
-
   # https://medium.com/@fabriciobonjorno/toast-with-stimulus-and-customized-error-messages-easily-and-quickly-0ff5e455ec80
   def errors_for(form, field)
     tag.p(form.object.errors[field].try(:first), class: 'text-danger ms-2 fw-medium')

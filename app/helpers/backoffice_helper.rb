@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-module ProfilesHelper
-  def form_group(help: nil, **opts, &block)
+module BackofficeHelper
+
+  def form_group(help: nil, extracls: "", &block)
     c = []
     c << tag.div(class: "form-group #{opts[:extracls]}") do
       capture(&block)
@@ -257,6 +258,34 @@ module ProfilesHelper
     # this is if we want to have the current locale or the first of the list
     t = current_work_translation(item)
     "tr_enable_#{t}"
+  end
+
+  def common_editor(title: nil, &block)
+    c1 = []
+    # TODO: not nice to have an empty h3 but without it the close button will no
+    #       longer stay on the right. No time to fight with CSS and fix this now
+    c1 << tag.h3(title) # if title.present?
+    c1 << tag.button(
+      "✕",
+      type: "button",
+      class: "btn btn-link text-danger fs-4 p-0 ms-2 float-end",
+      data: { action: "click->dismissable#dismiss" },
+      aria: { label: I18n.t("action.cancel") }
+    )
+
+    c = []
+    c << tag.div(class: "d-flex align-items-center justify-content-between mb-2") do
+      safe_join(c1)
+    end
+    c << tag.div(capture(&block))
+    c = tag.div(class: "container") do
+      safe_join(c)
+    end
+
+    safe_join [
+      turbo_stream.update("editor") { tag.div(c, id: "editor_content") },
+      turbo_stream.replace("flash-messages", partial: "shared/flash")
+    ]
   end
 
   def dismiss_common_editor
