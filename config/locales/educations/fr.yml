@@ -27,6 +27,7 @@ fr:
         year_begin: de (année)
         year_end: à (année)
   educations:
+    directedby: "Dirigée par"
     edit:
       form_title: "Editing Education"
     new:
