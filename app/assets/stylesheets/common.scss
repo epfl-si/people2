@@ -2,6 +2,19 @@
   min-height: 80vh;
 }
 
+.header-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 8px 16px;
+}
+
+.header-fixed + .main-container {
+  padding-top: 50px;
+}
+
 #footer {
   position: relative;
 }

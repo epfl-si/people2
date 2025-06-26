@@ -55,6 +55,8 @@ en:
     edit_profile: Edit profile
     hide_search_form: Hide the search form
     more: More informations
+    preview: Preview
+    preview_in: View profile in %{lang}
     search: Search
     search_people: Search for a person
     send: Send

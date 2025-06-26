@@ -12,9 +12,17 @@
     <%= yield :head %>
   </head>
 
+<% if content_for?(:body_tag) %>
+  <%= yield :body_tag %>
+<% else %>
   <body>
+<% end %>
     <%= render 'layouts/envbanner' if !Rails.env.production? %>
-    <%= render "layouts/elements/header_minimal" %>
+    <% if content_for?(:header) %>
+      <%= yield :header %>
+    <% else %>
+      <%= render "layouts/elements/header_minimal" %>
+    <% end %>
     <div class="main-container">
 
       <%= yield :breadcrumbs %>
