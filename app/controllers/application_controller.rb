@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
     l = I18n.locale
 
     tt = profile.translations
-    redirect_back_or_to(root_url(lang: tt.first)) unless tt.include?(l)
+    redirect_to url_for(params.permit!.to_h.merge(lang: tt.first)) unless tt.include?(l)
     Current.available_locales = tt
   end
 
