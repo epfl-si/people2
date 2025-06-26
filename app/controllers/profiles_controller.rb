@@ -24,6 +24,7 @@ class ProfilesController < ApplicationController
       render 'edit_languages'
     else
 
+      force_profile_locale(@profile)
       # TODO: remove after migration from legacy
       @adoption = Adoption.where(sciper: @profile.sciper).first if Rails.configuration.enable_adoption
 
@@ -166,6 +167,10 @@ class ProfilesController < ApplicationController
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def request_default_locale
+    @profile&.translations&.first
   end
 
   private

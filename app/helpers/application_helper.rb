@@ -93,6 +93,7 @@ module ApplicationHelper
 
   def language_switcher
     res = I18n.available_locales.map do |loc|
+    res = Current.available_locales.map do |loc|
       content_tag(:li) do
         if I18n.locale == loc
           content_tag(:span, loc.to_s.upcase, class: "active", aria: { label: t(loc) })
