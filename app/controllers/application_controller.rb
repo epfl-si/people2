@@ -78,10 +78,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def force_profile_locale(profile = @profile)
+    return if profile.blank?
+
+    l = I18n.locale
+
+    tt = profile.translations
+    redirect_back_or_to(root_url(lang: tt.first)) unless tt.include?(l)
+    Current.available_locales = tt
+  end
+
   def switch_locale(&action)
-    locale = params[:lang] || locale_from_http_header || I18n.default_locale
+    locale = params[:lang] || locale_from_http_header || request_default_locale || I18n.default_locale
+    Current.available_locales = I18n.available_locales
     Current.primary_lang = locale
-    Current.fallback_lang = I18n.default_locale
+    Current.fallback_lang = request_default_locale || I18n.default_locale
     Current.gender = nil
     I18n.with_locale(locale, &action)
   end
@@ -94,6 +105,11 @@ class ApplicationController < ActionController::Base
     return unless l.present? && I18n.available_locales.include?(l = l.to_sym)
 
     l
+  end
+
+  # override if default locale needs to change (e.g. during profile editing)
+  def request_default_locale
+    nil
   end
 
   # TODO: This is not the correct way of finding internal clients. The reliable
