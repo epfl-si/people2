@@ -5,6 +5,11 @@ fr:
     en: anglais
     it: italien
     de: allemand
+    menu:
+      fr: FR
+      en: EN
+      it: IT
+      de: DE
     native:
       fr: Français
       en: English

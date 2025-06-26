@@ -92,13 +92,12 @@ module ApplicationHelper
   end
 
   def language_switcher
-    res = I18n.available_locales.map do |loc|
     res = Current.available_locales.map do |loc|
       content_tag(:li) do
         if I18n.locale == loc
-          content_tag(:span, loc.to_s.upcase, class: "active", aria: { label: t(loc) })
+          content_tag(:span, t("lang.menu.#{loc}"), class: "active", aria: { label: t("lang.#{loc}") })
         else
-          link_to loc.to_s.upcase, { lang: loc.to_s }, aria: { label: t(loc) }
+          link_to t("lang.menu.#{loc}"), { lang: loc.to_s }, aria: { label: t("lang.#{loc}") }
         end
       end
     end
