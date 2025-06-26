@@ -52,6 +52,8 @@ fr:
     edit_profile: Modifier le profil
     hide_search_form: Masquer le formulaire de recherche
     more: En savoir plus
+    preview: Preview
+    preview_in: Voir mon profil en %{lang}
     search: Chercher
     search_people: Chercher une personne
     send: Envoyer

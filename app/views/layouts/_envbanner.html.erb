@@ -1,8 +1,8 @@
 <style type="text/css">
   #envbanner {
     font-size: 12px;
-    position: static;
-    top: 0;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     padding: 2px 1em;
     background-color: #274C03;
@@ -10,6 +10,7 @@
     font: fixed;
     margin-bottom: 4px;
     height: 32px;
+    z-index: 50;
   }
 </style>
 <% if Rails.env.development? %>

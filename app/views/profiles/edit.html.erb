@@ -1,4 +1,5 @@
-<div
+<% content_for :body_tag do %>
+<body
   id="tr_switchable"
   data-controller="language"
   data-language-full-value="<%= translation_classlist(@profile) %>"
@@ -6,44 +7,55 @@
   data-language-inactive-value="btn btn-sm btn-secondary"
   class="<%= translation_classlist(@profile) %>"
 >
-
-<% if @profile.translations.count > 1 %>
-<nav id="multilang_editor">
-  <h5><%= t ".title.edit_language" %></h5>
-  <% sl = current_work_translation(@profile) %>
-  <% @profile.translations.each do |l| %>
-    <%= button_tag(
-      t("lang.#{l}"),
-      class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
-      data: {
-        "action": "language#setEnabledLanguage",
-        "language-target": "button",
-        "langcls": "tr_enable_#{l}",
-      }
-    ) %>
-  <% end %>
-</nav>
 <% end %>
 
-
-<section id="editorold" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" data-dismissable-target="content" tabindex="0">
-</section>
-
-<% # TODO: remove after migration from legacy %>
-<% if Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
-<% content_for :menu do %>
-  <%= link_to(
-    icon_text('check-circle', t('action.preview')),
-    preview_path(sciper_or_name: @person.email_user),
-    class: "btn btn-link", target: '_blank'
-  ) %>
+<% content_for :header do %>
+<header role="banner" class="header header-light header-fixed">
+	<div class="header-light-content">
+		<a class="logo" href="https://www.epfl.ch">
+			<img src="<%= belurl 'svg/epfl-logo.svg' %>" alt="Logo EPFL, Ecole polytechnique fédérale de Lausanne" class="img-fluid">
+		</a>
+		<h1 class="site-title">
+			<a href="/"><%= t 'app.long_name' %></a>
+		</h1>
+		<!-- language switcher, two elements -->
+		<nav class="nav-lang nav-lang-short ml-auto pr-lg-5">
+      <ul>
+        <% # TODO: remove after migration from legacy %>
+        <% ado = Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
+        <% if @profile.translations.count > 1 %>
+          <li id="multilang_editor">
+            <h5><%= t ".title.editing_language" %></h5>
+            <% sl = current_work_translation(@profile) %>
+            <% @profile.translations.each do |l| %>
+              <%= button_tag(
+                t("lang.version.#{l}"),
+                class: l==sl ? "btn btn-sm btn-primary" : "btn btn-sm btn-secondary",
+                data: {
+                  "action": "language#setEnabledLanguage",
+                  "language-target": "button",
+                  "langcls": "tr_enable_#{l}",
+                }
+              ) %>
+            <% end %>
+          </li>
+        <% end %>
+        <% @profile.translations.each do |l| %>
+          <li>
+            <%= link_to(
+              icon_text('check-circle', t('action.preview_in', lang: t("lang.#{l}"))),
+              ado ? preview_path(sciper_or_name: @person.email_user, lang: l) : person_path(sciper_or_name: @person.email_user, lang: l),
+              class: "btn btn-link", target: '_blank'
+            ) %>
+          </li>
+        <% end %>
+        <%#= render 'layouts/elements/user' %>
+        <%#= language_switcher %>
+      </ul>
+		</nav>
+	</div>
+</header>
 <% end %>
-<% end %>
-
-<% fake_breadcrumbs [
-  t("action.edit_profile"),
-  link_to(@person.name.display, person_path(sciper_or_name: @person.email_user))
-] %>
 
 <section id="name_section">
   <h2><%= t ".title.editing", name: @person.name.display, sciper: @person.sciper %></h2>
@@ -102,5 +114,3 @@
     "dismissable-target": "content"
   }
 ) %>
-
-</div><% #tr_switchable %>
