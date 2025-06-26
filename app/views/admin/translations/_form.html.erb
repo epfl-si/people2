@@ -11,10 +11,10 @@
     </div>
   <% end %>
 
-  <%= single_text_field(form, :en) %>
-  <%= single_text_field(form, :fr, tabindex: 0) %>
-  <%= single_text_field(form, :it) %>
-  <%= single_text_field(form, :de) %>
+  <%= single_text_field(form, :en, label: "lang.en") %>
+  <%= single_text_field(form, :fr, tabindex: 0, label: "lang.fr") %>
+  <%= single_text_field(form, :it, label: "lang.it") %>
+  <%= single_text_field(form, :de, label: "lang.de") %>
   <%= form_group do %>
     <%= form.label :done %>
     <%= form.checkbox :done %>

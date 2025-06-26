@@ -11,7 +11,7 @@ module Admin
     DL = ALL_LANGS.first
     establish_connection :work
 
-    scope :forui, -> { where.not("key LIKE '%.placeholder.%' OR key LIKE '%lang.native.%'") }
+    scope :forui, -> { where.not("`key` LIKE '%.placeholder.%' OR `key` LIKE '%lang.native.%'") }
     scope :todo, ->  { where(done: false) }
     validates :key, presence: true, uniqueness: { scope: :file }
 

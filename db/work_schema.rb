@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_11_135326) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_26_115626) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
-    t.string "en"
-    t.string "fr"
-    t.string "it"
-    t.string "de"
+    t.string "en", limit: 1000
+    t.string "fr", limit: 1000
+    t.string "it", limit: 1000
+    t.string "de", limit: 1000
     t.boolean "done", default: false
     t.boolean "auto", default: false
     t.datetime "created_at", null: false
