@@ -370,7 +370,8 @@ details {
   }
 }
 
-#editor {
+#editor_content {
+  padding: 10px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -379,19 +380,10 @@ details {
   min-width: 600px;
   max-height: 70vh;
   overflow: scroll;
-  z-index: 100;
-  padding: 0;
   border-radius: 0.5em;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 8px 16px;
-}
-
-turbo-frame#editor_content hr {
-  display: none !important;
-}
-
-#editor_content {
-  padding: 10px;
+  z-index: 100;
 }
 
 // ---------------------------------------------------------- visibility popover

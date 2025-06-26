@@ -25,7 +25,8 @@
 </nav>
 <% end %>
 
-<section id="editor" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" data-dismissable-target="content" tabindex="0">
+
+<section id="editorold" data-controller="dismissable" data-action = "keydown.esc->dismissable#dismiss" data-dismissable-target="content" tabindex="0">
 </section>
 
 <% # TODO: remove after migration from legacy %>
@@ -92,4 +93,14 @@
 
 
 <%= turbo_frame_tag :remote_modal %>
+<%= turbo_frame_tag(
+  "editor",
+  tabindex: 0,
+  data: {
+    controller: "dismissable",
+    action: "keydown.esc->dismissable#dismiss",
+    "dismissable-target": "content"
+  }
+) %>
+
 </div><% #tr_switchable %>
