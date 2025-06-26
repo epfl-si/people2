@@ -1,20 +1,22 @@
 <tr id="<%= dom_id(translation) %>" data-controller="trform">
   <td>
-    <%= translation.key %>
+    <%= translation.key.truncate(40, omission: " • #{translation.key.last(20)}") %>
     <div
       id="<%= dom_id(translation, "form") %>"
       data-trform-target="form"
       data-action="keydown.esc->trform#hide_form"
       class="tr-form tr-hidden"
     >
-      <p>Editing <%= translation.key %></p>
+      <p>Editing key: <tt><%= translation.key %></tt></p>
       <%= render "form", admin_translation: translation %>
     </div>
   </td>
-  <td data-action="click->trform#show_form"><%= translation.en.truncate(40) %></td>
-  <td data-action="click->trform#show_form"><%= translation.fr&.truncate(20) %></td>
-  <td data-action="click->trform#show_form"><%= translation.it&.truncate(20) %></td>
-  <td data-action="click->trform#show_form"><%= translation.de&.truncate(20) %></td>
+  <td data-action="click->trform#show_form">
+    <strong><%= translation.en.truncate(120) %></strong><br/>
+    <%= translation.fr&.truncate(120) %><br/>
+    <%= translation.it&.truncate(120) %><br/>
+    <%= translation.de&.truncate(120) %>
+  </td>
   <td><%= icon(translation.done? ? 'check-square' : 'square') %></td>
   <td><%= translation.updated_at&.strftime('%Y-%m-%d %H:%M') %></td>
   <td>
