@@ -25,6 +25,20 @@
     - VERSION
   notify: reload-people
 
+- name: Run Migration
+  tags:
+    - people.src.patch
+  containers.podman.podman_container_exec:
+    name: peoapp
+    command: ./bin/rails db:migrate
+
+- name: Load new UI translations from source files
+  tags:
+    - people.src.patch
+  containers.podman.podman_container_exec:
+    name: peoapp
+    command: ./bin/rails admin:load_translations
+
 - name: Nuke dev database for the app
   tags:
     - people.db.reseed

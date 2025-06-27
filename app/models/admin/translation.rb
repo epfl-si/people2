@@ -33,10 +33,14 @@ module Admin
       save
     end
 
-    def self.reload_source_files
+    def self.load_source_files
       d = Rails.root.join('config/locales').to_s
       ds = d.size
+      nki = 0
+      nkt = 0
+      nf = 0
       IO.popen("find #{d} -name '#{DL}.yml'").readlines(chomp: true).each do |path|
+        nf += 1
         filename = path[ds..]
         ek = where(file: filename).pluck(:key).uniq.index_with { |_k| true }
 
@@ -52,6 +56,8 @@ module Admin
         ref.flat_keys.each do |k|
           v = ref.deep_get(k)
           next if v.blank?
+
+          nkt += 1
           next if ek[k]
 
           params = {
@@ -64,9 +70,11 @@ module Admin
           OTHER_LANGS.each do |l|
             params[l] = other[l].deep_get(k)
           end
+          nki += 1
           create!(params)
         end
       end
+      Rails.logger.info "Imported #{nf} translation files: #{nki} / #{nkt} keys"
     end
 
     def self.dump_translations
