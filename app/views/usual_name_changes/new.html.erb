@@ -3,6 +3,10 @@
   <p class="text-muted">
     <%= t('.instructions_html') %>
   </p>
+  <%= link_to t(".switch_to_official_request", default: "Demander une modification officielle"),
+            new_profile_name_change_request_path(@profile),
+            data: { turbo_stream: true },
+            class: "btn btn-danger" %>
   <%= turbo_frame_tag "usual_name_change_form" do %>
     <%= render "form" %>
   <% end %>
