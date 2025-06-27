@@ -12,6 +12,10 @@ en:
         title_fr: Ma boite de contennu libre
         title_it: Il mio contenuto libero
         title_de: My rich text box
+    label:
+      rich_text_box:
+        title: Title
+        content: Content
   rich_text_boxes:
     form:
       content: content

@@ -8,6 +8,10 @@ fr:
   helpers:
     placeholder:
       rich_text_box: {}
+    label:
+      rich_text_box:
+        title: Titre
+        content: Contenu
   rich_text_boxes:
     form:
       content: contenu

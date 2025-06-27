@@ -8,13 +8,12 @@
   </ul>
 <% end %>
 <%= form_with(model: @function_change, url: "/accreditations/#{@accreditation.id}/function_changes", local: false, class: "instaform") do |form| %>
-  <%= translated_text_fields(form, :function, label: ".function") %>
+  <%= single_text_field(form, :function_en, required: true) %>
+  <%= single_text_field(form, :function_fr, required: true) %>
+  <%= single_text_area(form, :reason, required: true) %>
+
   <%= form_group do %>
-    <%= form.label FunctionChange.human_attribute_name(:reason) %>
-    <%= form.text_area :reason %>
-  <% end %>
-  <%= form_group do %>
-    <%= form.label FunctionChange.human_attribute_name(:accreditors) %>
+    <%= form_label(form, :accreditors, required: true) %>
     <div class="form-checkboxes">
       <%= form.collection_check_boxes(:accreditor_scipers, @accreditors, :sciper, :display) %>
     </div>
