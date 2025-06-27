@@ -3,7 +3,7 @@
 	<div class="row">
 		<% selector.each do |(label,value)| %>
 	    <%= link_to(
-	    	icon_text("plus-circle", label),
+	    	icon_text("plus", label),
 	    	new_profile_social_path(@profile, tag: value),
 	      class: "btn btn-secondary btn-sm ml-1 mt-1", method: :get,
 	      data: { turbo_stream: true, turbo_method: 'get' }
