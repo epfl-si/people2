@@ -312,12 +312,12 @@ module BackofficeHelper
   def add_record_button(url, name: nil)
     tag.div(class: "row justify-content-center") do
       if name.nil?
-        link_to icon_text('plus-circle', t('action.add')), url, class: "btn btn-secondary btn-sm",
-                                                                data: { turbo_stream: true }
+        link_to icon_text('plus', t('action.add')), url, class: "btn btn-secondary btn-sm",
+                                                         data: { turbo_stream: true }
       else
         link_to(
           icon_text(
-            'plus-circle',
+            'plus',
             t('action.add_record', name: t("activerecord.models.#{name}"))
           ),
           url,
