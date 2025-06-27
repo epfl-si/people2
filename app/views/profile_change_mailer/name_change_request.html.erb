@@ -1,0 +1,18 @@
+<% person = @name_change_request.person %>
+
+<p>Bonjour,</p>
+
+<p>L'utilisateur <strong><%= person.name.first %> <%= person.name.last %></strong> 
+(sciper <strong><%= person.sciper %></strong>) a soumis une demande de changement de nom usuel.</p>
+
+<p>
+  <strong>Prénom actuel :</strong> <%= person.name.first %><br>
+  <strong>Nom actuel :</strong> <%= person.name.last %><br>
+  <strong>Nouveau prénom usuel demandé :</strong> <%= @name_change_request.new_first %><br>
+  <strong>Nouveau nom usuel demandé :</strong> <%= @name_change_request.new_last %>
+</p>
+
+<p><strong>Motivation :</strong> <%= @name_change_request.reason %></p>
+
+<p>Merci de traiter cette demande selon la procédure habituelle.<br/>
+Cordialement,</p>
