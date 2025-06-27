@@ -1,0 +1,208 @@
+en:
+  action:
+    preview: Preview
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+    name: people
+  inclusivity:
+    enabled: "Yes"
+    disabled: "No"
+  profile:
+    inclusivity: "Show job names in inclusive form (french version)"
+  function_changes:
+    new:
+      form_title: "Function change request"
+  profiles:
+    hide_gender:
+      enabled: "Yes"
+      disabled: "No"
+    name_change:
+      email_change_html: >
+        Once the change is validated, you will also have the possibility to change your e-mail address.
+        <br> In case of problems, please contact : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+      flash:
+        success: "Name modified succesfully"
+        error: "Name could not be saved"
+      official:
+        instructions_html: >
+          You can ask to change your official name only if a corresponding change
+          was recorded at the Civil Registry Office due for example to a
+          corrected spelling of your first or last name, when affirming a gender
+          identity, following a marriage, divorce, adoption, or any other reason
+          deemed legitimate by the Civil Registry Office.<br/>
+          Please send your request including a copy of an official document
+          attesting the change to your HR responsible for it to be validated.
+        status:
+          unknown: "Impossible to determine your status"
+          student:
+            title: "Student"
+            message_html: >
+              contact the Student Services Desk with a copy of your identity
+              documents to request this change
+          phd:
+            title: "Graduate Student"
+            message_html: >
+              please first contact the HR representative of your lab. Once approved,
+              send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+              to ensure the change is reflected in the academic database.
+          staff:
+            title: "Personnel EPFL"
+            message_html: >
+              If you have a work contract, the request must be approved by the
+              HR representative of your faculty or vice presidency.
+      select:
+        title: "Change your name"
+        usual: "Change your usual name"
+        official: "Changer your official name"
+      usual:
+        fallback_title: "In your case the usual name can ony have its current value"
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky username
+  undefined: Not provided
+  usual_name_changes:
+    new:
+      fallback:
+        title: >
+          Your first and last names are composed of a single word. Therefore
+          it is not possible to create any other combination for your usual name.
+        content_html: >
+          If you wish to obtain an usual name that is not assembled from parts
+          that are present in your official name, please contact the
+          Office for Equal Opportunities (EGA) at
+          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
+          motivating your choice.
+      instructions_html: >
+        Please choose below from your existing names or surnames the one
+        you want to display.<br/>
+        If you wish to obtain an usual name that is not assembled from parts
+        that are present in your official name, please click the special request button below
+
+    form:
+      fallback_title: "Usual name can only have single value"
+      available_first: "Available first names:"
+      available_last: "Available last names:"
+      submit: "Send the request"
+      placeholder:
+        usual_first: "Prénom d’usage souhaitée"
+        usual_last: "Nom d’usage souhaitée"
+
+        instructions: >
+        available_first_names:
+        available_last_names:
+
+fr:
+  action:
+    preview: Preview
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+    short_name: people
+  inclusivity:
+    enabled: "Oui"
+    disabled: "Non"
+  profile:
+    inclusivity: "Afficher la forme inclusive des fonctions"
+  function_changes:
+    new:
+      form_title: "Demande de changement de fonction"
+  profiles:
+    inclusivity: "Inclusivité"
+    hide_gender:
+      enabled: "Oui"
+      disabled: "Non"
+    name_change:
+      email_change_html: >
+        Une fois le changement validé, vous pourrez également modifier votre adresse e-mail.
+        <br> En cas de problème, contactez : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+      flash:
+        success: "Nom modifié avec succès."
+        error: "Échec de la mise à jour du nom."
+      official:
+        instructions_html: >
+          Veuillez choisir ci-dessous parmi vos prénoms et noms officiels ceux que vous souhaitez afficher.<br/>
+          Si vous souhaitez utiliser un nom d’usage qui ne correspond pas à une combinaison de ces éléments,
+          veuillez cliquer sur le bouton de demande spéciale ci-dessous.
+        status:
+          unknown: "Impossible de déterminer votre statut."
+          student:
+            title: "Étudiant·e"
+            message_html: >
+              Vous devez vous adresser au Guichet étudiant avec une copie de vos papiers d’identité pour demander ce changement.
+          phd:
+            title: "Doctorant·e"
+            message_html: >
+              Veuillez d’abord contacter le représentant RH de votre laboratoire. Une fois la demande validée,
+              envoyez un e-mail à <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a> pour que le changement soit pris en compte dans la base académique.
+          staff:
+            title: "Personnel EPFL"
+            message_html: >
+              La demande doit être validée par la/le responsable RH de votre faculté ou vice-présidence.
+              Les changements sont ensuite effectués dans les systèmes.
+      select:
+        title: "Changer votre nom"
+        usual: "Changer le nom d’usage"
+        official: "Changer le nom officiel"
+      usual:
+        fallback_title: "Nom d’usage non modifiable"
+        instructions_html: >
+          Vous pouvez composer votre nom d’usage à partir des prénoms et noms
+          officiels enregistrés.<br/>
+          Si vous désirez afficher un prénom ou un nom d’usage ne figurant pas
+          dans vos documents officiels, prière de contacter le bureau EGA à
+          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
+          avec les informations nécessaires.
+        available_first_names: "Prénoms disponibles :"
+        available_last_names: "Noms disponibles :"
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
+  undefined: Manquant
+  usual_name_changes:
+    new:
+      fallback:
+        title: >
+          Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré. Il est donc impossible de composer un nom d’usage personnalisé.
+        content_html: >
+          Si vous désirez afficher un prénom ou un nom d’usage ne figurant pas
+          dans vos documents officiels, prière de contacter le bureau EGA à
+          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
+          avec les informations nécessaires.
+      instructions_html: >
+        Vous pouvez composer votre nom d’usage à partir des prénoms et
+        noms officiels enregistrés.<br/>
+        Si vous désirez afficher un prénom ou un nom d’usage ne figurant pas
+        dans vos documents officiels, prière de contacter le bureau EGA à
+        <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
+        avec les informations nécessaires.
+    form:
+      fallback_title: "Nom d’usage non modifiable"
+      available_first: "Prénoms disponibles :"
+      available_last: "Noms disponibles :"
+      submit: "Send the request"
+      placeholder:
+        usual_first: "Prénom d’usage souhaitée"
+        usual_last: "Nom d’usage souhaitée"
+
+it:
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+    short_name: people
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
+
+de:
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+    short_name: people
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
