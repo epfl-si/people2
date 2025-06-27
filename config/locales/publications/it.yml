@@ -30,7 +30,6 @@ it:
         title: Publication title
         url: Publication URL
         year: Publication year
-
   publications:
     edit:
       form_title: ''

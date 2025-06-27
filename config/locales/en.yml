@@ -10,6 +10,16 @@ en:
       en: English
       it: Italiano
       de: Deutch
+    version:
+      en: English version
+      fr: French version
+      it: Italian version
+      de: German version
+    menu:
+      fr: FR
+      en: EN
+      it: IT
+      de: DE
   no_attribute_for_locale: "%{attribute} in %{language} is not provided"
   no_title_for_locale: Missing title in %{language}
   translated_label: "%{label} in %{language}"
@@ -22,13 +32,14 @@ en:
   generic:
     form:
       cancel: Cancel
-      create: Create Record
+      create: Save
       submit: Send
       update: Save
       texfield_for: "%{attr}"
       translated_textfield_for: "%{attr} in %{language}"
-      mandatory: "mandatory field: this field must be provided"
-      tmandatory: "this field must be provided in at least one of the languages chosen for your profile"
+      mandatory: 'mandatory field: this field must be provided'
+      tmandatory: this field must be provided in at least one of the languages chosen
+        for your profile
   nav:
     app_with_version: EPFL People v. %{version}
     issues: issues
@@ -51,9 +62,11 @@ en:
     sign_in: Log in
     sign_out: Log out
     submit: Submit the request
+    preview: Preview
+    preview_in: View profile in %{lang}
   dev:
     action:
-      abandon: Cancellation
+      abandon: Revert to legacy profile
       adopt: I confirm
       revert: revert
   error:
@@ -80,11 +93,11 @@ en:
     notice:
       create: Recorded
       update: Updated
-      remove: Deleted
+      remove: Record have been deleted
     success:
       create: Added
       update: Updated
-      remove: Deleted
+      remove: Record have been deleted
       box:
         deleted: Bloc deleted
         create: Bloc added
@@ -114,8 +127,8 @@ en:
       draft: Private, only the profile owner can view this
       hidden: Private
     short_label:
-      enabled: On
-      disabled: Off
+      enabled: Enabled
+      disabled: false
       visible: Visible
       public: Public
       intranet: Intranet (EPFL uniquement)
@@ -132,8 +145,8 @@ en:
       intranet: Intranet (EPFL only)
       authenticated: EPFL people only
     short_labels:
-      disabled: On
-      enabled: Off
+      disabled: Disabled
+      enabled: false
       published: Published
       draft: Draft
       hidden: Private

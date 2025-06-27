@@ -3,8 +3,8 @@ it:
   activerecord:
     attributes:
       achievement:
-        category: ''
-        description: ''
+        category: Categoria
+        description: Descrizione
         url: url
         year: Anno
   helpers:
@@ -16,8 +16,8 @@ it:
     new:
       form_title: ''
     form:
-      category: ''
-      description: ''
+      category: Categoria
+      description: Descrizione
       url: url
       year: Anno
       help:

@@ -43,9 +43,9 @@ en:
             expertise_de:
               too_long: 'Keywords only: please keep it below %{count} characters'
             personal_web_url:
-              invalid_url: "The URL must start with http:// or https://."
+              invalid_url: The URL must start with http:// or https://.
             personal_phone:
-              invalid_phone: "The phone number must be valid (e.g. +41 79 123 45 67)."
+              invalid_phone: The phone number must be valid (e.g. +41 79 123 45 67).
   profiles:
     edit:
       title:
@@ -55,6 +55,7 @@ en:
         editing_languages: This profile is bilingual
         edit_language: Editing my profile in
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
+        editing_language: Editing
     edit_languages:
       explain_html: |
         Here you can select the languages in which your profile will be made

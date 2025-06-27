@@ -26,7 +26,7 @@ it:
         year_begin: from year
         year_end: to year
   educations:
-    directedby: "Con la supervisione di"
+    directedby: Con la supervisione di
     edit:
       form_title: ''
     new:

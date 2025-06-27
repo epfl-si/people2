@@ -1,0 +1,31 @@
+---
+de:
+  action: {}
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+  inclusivity: {}
+  profile: {}
+  function_changes:
+    new: {}
+  profiles:
+    hide_gender: {}
+    name_change:
+      flash: {}
+      official:
+        status:
+          student: {}
+          phd: {}
+          staff: {}
+      select: {}
+      usual: {}
+  socials:
+    form:
+      identifier_label:
+        bluesky: Bluesky
+  usual_name_changes:
+    new:
+      fallback: {}
+    form:
+      placeholder:
+        instructions: ''

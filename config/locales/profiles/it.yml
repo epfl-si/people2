@@ -43,9 +43,9 @@ it:
             expertise_de:
               too_long: ''
             personal_web_url:
-              invalid_url: "L'URL deve iniziare con http:// o https://."
+              invalid_url: L'URL deve iniziare con http:// o https://.
             personal_phone:
-              invalid_phone: "Il numero deve essere valido (es. +41 79 123 45 67)."
+              invalid_phone: Il numero deve essere valido (es. +41 79 123 45 67).
   profiles:
     edit:
       title:
@@ -55,6 +55,7 @@ it:
         editing_languages: ''
         edit_language: ''
         editing: ''
+    edit_languages: {}
     form:
       available_languages: Langue Disponibili
       expertise: ''
