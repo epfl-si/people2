@@ -1,0 +1,25 @@
+<div id="usual_name_change">
+  <h5><%= t("profiles.name_change.request_title") %></h5>
+
+  <%= form_with model: name_change_request, url: profile_name_change_requests_path, local: false do |f| %>
+    <%= single_text_field(f, :new_first) %>
+    <%= single_text_field(f, :new_last) %>
+
+    <%= form_group do %>
+      <%= f.label NameChangeRequest.human_attribute_name(:accreditor_scipers), class: "form-label" %>
+      <% if accreditors.present? %>
+        <div class="form-checkboxes">
+          <%= f.collection_check_boxes(:accreditor_scipers, accreditors, :sciper, :display) %>
+        </div>
+      <% else %>
+        <div class="alert alert-warning mt-2">
+          <%= t("profiles.name_change.no_accreditor_found") %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= single_text_field(f, :reason) %>
+
+    <%= f.submit t("profiles.name_change.submit"), class: "btn btn-primary" %>
+  <% end %>
+</div>
