@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "usual_name_change" do %>
+<% if @usual_name_change.present? %>
+  <%= turbo_frame_tag "usual_name_change_form" do %>
+    <%= render "form" %>
+  <% end %>
+<% else %>
+  <p>
+    <%= t('.fallback.content_html') %>
+  </p>
+<% end %>
+<% end %>
