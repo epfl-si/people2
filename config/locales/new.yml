@@ -78,10 +78,7 @@ en:
         Please choose below from your existing names or surnames the one
         you want to display.<br/>
         If you wish to obtain an usual name that is not assembled from parts
-        that are present in your official name, please contact the
-        Office for Equal Opportunities (EGA) at
-        <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
-        motivating your choice.
+        that are present in your official name, please click the special request button below
 
     form:
       fallback_title: "Usual name can only have single value"
@@ -125,13 +122,9 @@ fr:
         error: "Échec de la mise à jour du nom."
       official:
         instructions_html: >
-          La modification de votre nom officiel ne peut être demandée que si un
-          changement a été effectué auprès d’un Office d’Etat civil (changement
-          d’orthographe d’un prénom ou nom, mariage, divorce, etc.).<br/>
-          Prière de transmettre directement votre demande pour validation auprès
-          de votre responsable RH, avec une copie des documents faisant
-          foi (pièce d'identité, document d'état civil...).
-          Cette demande est soumise à validation.
+          Veuillez choisir ci-dessous parmi vos prénoms et noms officiels ceux que vous souhaitez afficher.<br/>
+          Si vous souhaitez utiliser un nom d’usage qui ne correspond pas à une combinaison de ces éléments,
+          veuillez cliquer sur le bouton de demande spéciale ci-dessous.
         status:
           unknown: "Impossible de déterminer votre statut."
           student:
