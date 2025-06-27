@@ -422,6 +422,12 @@ nata_reinit: dcup
 nata_reinit_legacy: dcup
 	$(SQLDUMP) cv | ssh peonext "./bin/legacydb"
 
+## Download the interface translations and update the corresponding source files
+nata_trans:
+	curl -o /tmp/aaa.zip -H "Authorization: Basic $$(echo -n $(TRANS_USER):$(TRANS_PASS) | base64)" "https://$(TRANS_HOST)/admin/translations.zip"
+	tar xvf /tmp/aaa.zip -C config
+	rm /tmp/aaa.zip
+
 # ## reseed the database on the test server for Natalie
 # nata_reseed: test_patch
 # 	cd ops && ./possible.sh --test -t people.db.reseed
