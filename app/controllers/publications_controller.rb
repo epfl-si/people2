@@ -11,7 +11,7 @@ class PublicationsController < ApplicationController
   def show; end
 
   def new
-    @publication = @profile.publications.new
+    @publication = @profile.publications.new(year: Time.zone.today.year, authors: @profile.name.display)
   end
 
   def edit; end
