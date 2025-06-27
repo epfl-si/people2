@@ -1,0 +1,23 @@
+---
+en:
+  activerecord:
+    attributes:
+      function_change:
+        function: role
+        function_en: role in english
+        function_fr: role in french
+        function_it: role in italian
+        function_de: role in german
+        reason: reason
+        accreditor_scipers: accreditors
+  helpers:
+    placeholder:
+      function_change:
+    label:
+      function_change:
+        function_en: desired position name in english
+        function_fr: desired position name in french
+        function_it: desired position name in italian
+        function_de: desired position name in german
+        reason: please provide a reason for your request
+        accreditors: select one or more accreditor by clicking the list below

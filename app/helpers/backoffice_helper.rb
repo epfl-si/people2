@@ -10,30 +10,44 @@ module BackofficeHelper
     safe_join c
   end
 
-  def single_text_field(form, attr, label: nil, help: nil, show_label: true, **opts)
-    a = attr.to_sym
-    opts[:required]
+  def label_and_help(form, attr, label: nil, help: nil, **opts)
+    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
+    tlabel = "#{tlabel} *" if opts[:required]
+    [tlabel, ahelp]
+  end
 
+  def single_text_field(form, attr, label: nil, help: nil, show_label: true, **opts)
     # Normally, it is not necessary to send the translated label to the label
     # helper because it can do it by itself if the corresponding translation
     # (helpers.label.obj_name.attribute) is provided. But we want to use the
     # lable also in the aria-described-by. Therefore, we precompute it.
-    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
-    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-    tlabel = "#{tlabel} *" if opts[:required]
+    tlabel, ahelp = label_and_help(form, attr, label: label, help: help, **opts)
     c = []
     c << form.label(attr, tlabel) if show_label
     c << form.text_field(
-      a, opts.merge(placeholder: true, class: "form-control", "aria-describedby": ahelp)
+      attr, opts.merge(placeholder: true, class: "form-control", "aria-describedby": ahelp)
     )
     form_group(help: help, **opts) { safe_join(c) }
   end
 
+  def single_text_area(form, attr, label: nil, help: nil, show_label: true, **opts)
+    tlabel, ahelp = label_and_help(form, attr, label: label, help: help, **opts)
+    c = []
+    c << form.label(attr, tlabel) if show_label
+    c << form.text_area(
+      attr, opts.merge(class: "form-control", "aria-describedby": ahelp)
+    )
+    form_group(help: help, **opts) { safe_join(c) }
+  end
+
+  def form_label(form, attr, label: nil, **opts)
+    tlabel, = label_and_help(form, attr, label: label, **opts)
+    form.label(attr, tlabel)
+  end
+
   def single_rich_text_area(form, attr, label: nil, help: nil, show_label: true, **opts)
-    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
-    help || t("generic.form.texfield_for", attr: tlabel)
-    opts[:required]
-    tlabel = "#{tlabel} *" if opts[:required]
+    tlabel, = label_and_help(form, attr, label: label, help: help, **opts)
     c = []
     c << form.label(attr, tlabel) if show_label
     c << rich_text_input(form, attr)
@@ -41,15 +55,11 @@ module BackofficeHelper
   end
 
   def single_number_field(form, attr, min: nil, max: nil, label: nil, help: nil, **opts)
-    a = attr.to_sym
-    required = opts[:required]
-    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
-    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-    tlabel = safe_join([tlabel, mandatory]) if required
+    tlabel, ahelp = label_and_help(form, attr, label: label, help: help, **opts)
     c = []
     c << form.label(attr, tlabel)
     c << form.number_field(
-      a, opts.merge(min: min, max: max, class: "form-control", "aria-describedby": ahelp)
+      attr, opts.merge(min: min, max: max, class: "form-control", "aria-describedby": ahelp)
     )
     form_group(help: help, **opts) { safe_join(c) }
   end
@@ -62,16 +72,11 @@ module BackofficeHelper
     min: nil, max: nil,
     **opts
   )
-    a = attr_a.to_sym
-    b = attr_b.to_sym
-    required = opts[:required]
-    tlabel = t(label)
-    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-    tlabel = safe_join([tlabel, mandatory]) if required
+    tlabel, ahelp = label_and_help(form, attr_a, label: label, help: help, **opts)
     f = [
-      form.number_field(a, min: min, max: max, class: "form-control", "aria-describedby": ahelp),
+      form.number_field(attr_a, min: min, max: max, class: "form-control", "aria-describedby": ahelp),
       sanitize("&nbsp;&mdash;&nbsp;"),
-      form.number_field(b, min: min, max: max, class: "form-control", "aria-describedby": ahelp)
+      form.number_field(attr_b, min: min, max: max, class: "form-control", "aria-describedby": ahelp)
     ]
     c = []
     c << form.label(attr_a, tlabel)
@@ -80,23 +85,16 @@ module BackofficeHelper
   end
 
   def single_url_field(form, attr, label: nil, help: nil, **opts)
-    sattr = attr.to_sym
-    required = opts[:required]
-    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
-    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-    tlabel = safe_join([tlabel, mandatory]) if required
+    tlabel, ahelp = label_and_help(form, attr, label: label, help: help, **opts)
     c = []
     c << form.label(tlabel)
-    c << form.url_field(sattr, class: "form-control", "aria-describedby": ahelp)
+    c << form.url_field(attr, class: "form-control", "aria-describedby": ahelp)
     form_group(help: help, **opts) { safe_join(c) }
   end
 
   def property_select(form, prop, collection, label: nil, help: nil, **opts)
     attr = "#{prop}_id".to_sym
-    required = opts[:required]
-    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{prop}")
-    ahelp = help || t("generic.form.texfield_for", attr: tlabel)
-    tlabel = safe_join([tlabel, mandatory]) if required
+    tlabel, ahelp = label_and_help(form, prop, label: label, help: help, **opts)
     c = []
     c << form.label(attr, tlabel)
     c << form.collection_select(attr, collection, :id, :t_name, "aria-describedby": ahelp)
