@@ -4,7 +4,7 @@ it:
     attributes:
       picture:
         selected: ''
-        camipro: ''
+        camipro: Camipro
         failed_attempts: ''
     errors:
       models:
@@ -16,7 +16,7 @@ it:
     currently_selected_picture: ''
     form:
       selected: ''
-      camipro: ''
+      camipro: Camipro
       failed_attempts: ''
       browse_image_file: ''
       max_photos_reached: ''

@@ -27,9 +27,9 @@ en:
     add:
       add: Add Social Media Link or Research ID
     edit:
-      form_title: "Editing Research ID"
+      form_title: Editing Research ID
     new:
-      form_title: "Creating a new Research ID"
+      form_title: Creating a new Research ID
     form:
       identifier_label:
         facebook: Facebook ID

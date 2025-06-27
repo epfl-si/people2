@@ -10,6 +10,16 @@ fr:
       en: English
       it: Italiano
       de: Deutch
+    version:
+      en: versione en anglais
+      fr: versione en français
+      it: versione en italien
+      de: versione en allemand
+    menu:
+      fr: FR
+      en: EN
+      it: IT
+      de: DE
   no_attribute_for_locale: "%{attribute} en %{language} manquant"
   no_title_for_locale: Titre manquant en %{language}
   translated_label: "%{label} en %{language}"
@@ -22,7 +32,7 @@ fr:
   generic:
     form:
       cancel: Annuler
-      create: Créer un enregistrement
+      create: Enregistrer
       submit: Envoyer
       update: Enregistrer
       texfield_for: "%{attr}"
@@ -49,9 +59,11 @@ fr:
     sign_in: Se connecter
     sign_out: Se déconnecter
     submit: Envoyer la demande
+    preview: Preview
+    preview_in: Voir mon profil en %{lang}
   dev:
     action:
-      abandon: Annuler
+      abandon: Retourne au profile legacy
       adopt: Je valide
       revert: annuler
   error:
@@ -80,11 +92,11 @@ fr:
     notice:
       create: Enregistré
       update: Mis à jour
-      remove: Supprimé
+      remove: L'enregistrement a été supprimer
     success:
       create: Ajouté
       update: Mis à jour
-      remove: Supprimé
+      remove: L'enregistrement a été supprimer
       box:
         deleted: Bloc supprimé
         create: Bloc ajouté
@@ -105,8 +117,8 @@ fr:
     intranet: intranet EPFL uniquement
     intranet_access: intranet EPFL
     label:
-      disabled: Désactivé
       enabled: Activé
+      disabled: Désactivé
       visible: Visible
       public: Public, Visible par tout le monde sur Internet
       intranet: Intranet, visible uniquement sur le réseau interne de l'EPFL
@@ -114,8 +126,8 @@ fr:
       draft: Privé, visible uniquement par la/le propriétaire du profil
       hidden: Privé
     short_label:
-      enabled: On
-      disabled: Off
+      enabled: Activé
+      disabled: false
       visible: Visible
       public: Public
       intranet: Intranet (EPFL only)
@@ -132,8 +144,8 @@ fr:
       intranet: Intranet (EPFL uniquement)
       authenticated: Communauté EPFL uniquement
     short_labels:
-      disabled: On
-      enabled: Off
+      disabled: Désactivé
+      enabled: false
       published: Publié
       draft: Brouillon
       hidden: Privé

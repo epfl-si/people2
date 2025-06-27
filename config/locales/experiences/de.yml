@@ -3,7 +3,7 @@ de:
   activerecord:
     attributes:
       experience:
-        description: ''
+        description: Beschreibung
         location: ''
         period: ''
         title: Titel
@@ -20,7 +20,7 @@ de:
       experience: {}
     label:
       experience:
-        description: Description
+        description: Beschreibung
         location: Company, location or institution
         title: Title
         year_begin: from year

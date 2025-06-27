@@ -17,13 +17,14 @@ it:
   generic:
     form:
       cancel: Annulla
+      create: Registra
       submit: ''
       update: ''
       texfield_for: "%{attr}"
       translated_textfield_for: "%{attr} in %{language}"
-      mandatory: "mandatory field: this field must be provided"
-      tmandatory: "this field must be provided in at least one of the languages chosen for your profile"
-
+      mandatory: 'mandatory field: this field must be provided'
+      tmandatory: this field must be provided in at least one of the languages chosen
+        for your profile
   nav:
     app_with_version: ''
     issues: ''
@@ -31,8 +32,10 @@ it:
   action:
     add: Aggiungi un nuovo blocco
     add_record: Aggiungi un nuovo %{name}
+    cancel: Annulla
     confirm: Conferma
-    delete: ''
+    delete: Elimina
+    dismiss: Annulla
     edit_profile: ''
     more: ''
     search: ''
@@ -42,20 +45,21 @@ it:
     sign_out: ''
   dev:
     action:
-      abandon: ''
-      adopt: ''
+      abandon: Ritorna al vecchio profilo
+      adopt: Confermo
       revert: ''
   error:
     one: ''
+    other: Errori
     record:
       zero: ''
       one: ''
       other: Ci sono %{count} errori. Per favore, corregga i campi in errore
   flash:
     error:
-      create: ''
-      update: ''
-      remove: ''
+      create: Errore durante la creazione del dato
+      update: Un errore ha impedito l'aggiornamento del dato
+      remove: Un errore si è prodotto nel cancellare il dato
       accred:
         cannot_hide_all: Non è possibile nascondere tutte le affiliazioni
       box:
@@ -67,11 +71,11 @@ it:
     notice:
       create: ''
       update: ''
-      remove: ''
+      remove: Il dato è stato cancellato
     success:
       create: ''
       update: ''
-      remove: ''
+      remove: Il dato è stato cancellato
       box:
         deleted: Blocco eliminato
         create: Blocco aggiunto con successo
@@ -81,8 +85,11 @@ it:
         update: Pagina aggiornata
   visibility:
     authenticated: ''
+    disabled: spento
     draft: ''
     editor: ''
+    enabled: acceso
+    hidden: nascosto
     hidden_address: ''
     intranet: ''
     intranet_access: ''
@@ -95,15 +102,15 @@ it:
       draft: ''
       hidden: ''
     short_label:
-      enabled: On
-      disabled: Off
+      enabled: acceso
+      disabled: false
       intranet: Solo dalla rete dell'EPFL
       auth: Autorizzato
       draft: Bozza
       hidden: ''
     labels:
-      enabled: acceso
       disabled: spento
+      enabled: acceso
       published: ''
       draft: Bozza
       hidden: ''
@@ -111,8 +118,8 @@ it:
       intranet: Intranet (solo dalla rete dell'
       authenticated: ''
     short_labels:
-      disabled: On
-      enabled: Off
+      disabled: spento
+      enabled: false
       published: ''
       draft: Bozza
       hidden: ''
@@ -145,8 +152,8 @@ it:
   activerecord:
     models:
       achievement: ''
-      award: ''
-      box: ''
+      award: Riconoscimento
+      box: Blocco
       education: ''
       experience: ''
       function_change: ''

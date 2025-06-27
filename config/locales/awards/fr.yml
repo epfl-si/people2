@@ -22,8 +22,8 @@ fr:
         year: Année
   awards:
     edit:
-      form_title: "Editing Award"
+      form_title: Editing Award
     new:
-      form_title: "Creating a new Award"
+      form_title: Creating a new Award
     form:
       help: {}

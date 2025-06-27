@@ -23,12 +23,12 @@ de:
         tag: social type
         value: Identifier
   socials:
+    add:
+      add: ''
     edit:
       form_title: ''
     new:
       form_title: ''
-    add:
-      add: ''
     form:
       identifier_label:
         facebook: ''

@@ -4,7 +4,7 @@ de:
     attributes:
       achievement:
         category: ''
-        description: ''
+        description: Beschreibung
         url: url
         year: Jahr
   helpers:
@@ -17,7 +17,7 @@ de:
       form_title: ''
     form:
       category: ''
-      description: ''
+      description: Beschreibung
       url: url
       year: Jahr
       help:

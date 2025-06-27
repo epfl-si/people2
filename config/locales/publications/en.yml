@@ -35,11 +35,10 @@ en:
         title: Publication title
         url: Publication URL
         year: Publication year
-
   publications:
     edit:
-      form_title: "Editing Publication"
+      form_title: Editing Publication
     new:
-      form_title: "Creating a new Publication"
+      form_title: Creating a new Publication
     editable_publication:
       link: View the publication

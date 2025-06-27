@@ -16,12 +16,14 @@ de:
   generic:
     form:
       cancel: ''
+      create: ''
       submit: ''
       update: ''
       texfield_for: "%{attr}"
       translated_textfield_for: "%{attr} in %{language}"
-      mandatory: "mandatory field: this field must be provided"
-      tmandatory: "this field must be provided in at least one of the languages chosen for your profile"
+      mandatory: 'mandatory field: this field must be provided'
+      tmandatory: this field must be provided in at least one of the languages chosen
+        for your profile
   nav:
     app_with_version: ''
     issues: ''
@@ -29,8 +31,10 @@ de:
   action:
     add: ''
     add_record: ''
+    cancel: ''
     confirm: ''
     delete: ''
+    dismiss: ''
     edit_profile: ''
     more: ''
     search: ''
@@ -45,15 +49,16 @@ de:
       revert: ''
   error:
     one: ''
+    other: Fehler
     record:
       zero: ''
       one: ''
       other: ''
   flash:
     error:
-      create: ''
+      create: Fehler beim Erstellen der Daten
       update: ''
-      remove: ''
+      remove: Beim Löschen der Daten ist ein Fehler aufgetreten
       accred:
         cannot_hide_all: ''
       box:
@@ -79,8 +84,11 @@ de:
         update: ''
   visibility:
     authenticated: ''
+    disabled: Disabled
     draft: ''
     editor: ''
+    enabled: Enabled
+    hidden: ''
     hidden_address: ''
     intranet: ''
     intranet_access: ''
@@ -93,8 +101,8 @@ de:
       draft: ''
       hidden: ''
     short_label:
-      enabled: On
-      disabled: Off
+      enabled: Enabled
+      disabled: false
       visible: Visible
       intranet: ''
       auth: ''
@@ -110,8 +118,8 @@ de:
       intranet: ''
       authenticated: ''
     short_labels:
-      disabled: On
-      enabled: Off
+      disabled: Disabled
+      enabled: false
       published: ''
       draft: Entwurf
       hidden: ''

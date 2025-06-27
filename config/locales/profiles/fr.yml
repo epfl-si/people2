@@ -43,9 +43,9 @@ fr:
             expertise_de:
               too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             personal_web_url:
-              invalid_url: "L’URL doit commencer par http:// ou https://."
+              invalid_url: L’URL doit commencer par http:// ou https://.
             personal_phone:
-              invalid_phone: "Le numéro doit être valide (ex. +41 79 123 45 67)."
+              invalid_phone: Le numéro doit être valide (ex. +41 79 123 45 67).
   profiles:
     edit:
       title:
@@ -53,8 +53,9 @@ fr:
         boxes_contact: Mes informations professionnelles
         details: Mes données personnelles (facultatif)
         editing_languages: Ce profil est bilingue
-        edit_language: "Editer mon profil en"
+        edit_language: Editer mon profil en
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
+        editing_language: Saisir la
     edit_languages:
       explain_html: |
         Vous pouvez sélectionner ici les langues dans lesquelles votre profil
@@ -88,7 +89,6 @@ fr:
         submit: Enregistrer
     languages_form:
       translations: traductions du profil
-
       en_enabled: Profil disponible en anglais
       fr_enabled: Profil disponible en français
       it_enabled: Profil disponible en italien

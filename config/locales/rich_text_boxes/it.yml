@@ -3,7 +3,7 @@ it:
   activerecord:
     attributes:
       rich_text_box:
-        content: ''
+        content: contenuto
         title: Titolo
   helpers:
     placeholder:
