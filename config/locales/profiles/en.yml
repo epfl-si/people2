@@ -66,6 +66,8 @@ en:
         languages. Therefore it is mandatory to provide the translation in at
         least one of the languages selected below.
       title: Profile translations
+    inline_languages_form:
+      title: My profile in
     form:
       available_languages: Available languages
       expertise: Expertise (keywords only)
