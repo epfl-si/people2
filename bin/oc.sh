@@ -19,26 +19,15 @@ oc4 () {
 }
 
 ocpod_app () {
-  oc get pods -n $OCNAMESPACE -l role=app --no-headers -o name --field-selector=status.phase==Running | tail -n 1
-}
-
-shell () {
-  oc rsh -n $OCNAMESPACE $(ocpod_app) /bin/bash
-}
-
-console () {
-echo "CLUSTER_URL: $CLUSTER_URL"
-echo "OCNAMESPACE: $OCNAMESPACE"
-  # echo "in console: OCNAMESPACE=$OCNAMESPACE    pod=$(ocpod_app)"
-  return
-  oc rsh -n $OCNAMESPACE $(ocpod_app) ./bin/rails console
+  oc -n $OCNAMESPACE get pods -l role=app --no-headers -o name --field-selector=status.phase==Running | tail -n 1
 }
 
 logs () {
-  oc logs -f -n $OCNAMESPACE -l role=app
+  oc -n $OCNAMESPACE logs -f -l role=app
 }
 
 cmd=""
+fun=""
 while [ $# -gt 0 ] ; do
 case $1 in
 --test)
@@ -50,14 +39,31 @@ case $1 in
   # prod is the default: non need to set anything
   shift 1
   ;;
+shell)
+  cmd=/bin/bash
+  shift 1
+  ;;
+console)
+  cmd="./bin/rails console"
+  shift 1
+  ;;
+logs)
+  fun=logs
+  shift 1
+  ;;
 *)
-  cmd="$1"
+  cmd="$cmd $1"
   shift 1
   ;;
 esac
 done
 
-[ -n "$cmd" ] || die "please provide one of the following commands as cmdline arg: console logs shell"
-
-oc4
-$cmd
+if [ -n "$fun" ] ; then
+  $fun
+else
+  if [ -n "$cmd" ] ; then
+    oc -n $OCNAMESPACE rsh $(ocpod_app) $cmd
+  else
+    die "please provide a command to be executed one the application pod or one of the following function names as cmdline arg: console logs shell"
+  fi
+fi
