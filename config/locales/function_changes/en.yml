@@ -11,8 +11,7 @@ en:
         reason: reason
         accreditor_scipers: accreditors
   helpers:
-    placeholder:
-      function_change:
+    placeholder: {}
     label:
       function_change:
         function_en: desired position name in english

@@ -13,7 +13,7 @@ fr:
             base:
               undeletable: La photo CAMIPRO n'est pas supprimable
   pictures:
-    currently_selected_picture: Photo affichée
+    currently_selected_picture: 'Photo selectionné '
     form:
       selected: sélectionné
       camipro: Camipro
@@ -24,4 +24,4 @@ fr:
       upload_image: Télécharger
     pictures:
       title: Ma photo
-      currently_selected: Photo affichée
+      currently_selected: Photo selectionnée
