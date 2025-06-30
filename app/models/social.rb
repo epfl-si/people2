@@ -125,7 +125,7 @@ class Social < ApplicationRecord
     {
       tag: 'bluesky',
       # img: 'mastodon.png',
-      url_pattern: 'https://bsky.app/profile/XXX.bsky.social',
+      url_pattern: 'https://bsky.app/profile/XXX',
       placeholder: 'username',
       label: 'Bluesky',
       automatic: false,

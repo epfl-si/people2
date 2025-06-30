@@ -31,6 +31,8 @@ class SocialsController < ApplicationController
   # POST /profile/profile_id/socials or /profile/profile_id/socials.json
   def create
     @social = @profile.socials.new(social_params)
+    sanitize_social_value!(@social)
+
     if @social.save
       set_socials
       flash.now[:success] = ".create"
@@ -43,6 +45,7 @@ class SocialsController < ApplicationController
   # PATCH/PUT /socials/1 or /socials/1.json
   def update
     if @social.update(social_params)
+      sanitize_social_value!(@social)
       flash.now[:success] = ".update"
     else
       flash.now[:error] = ".update"
@@ -89,6 +92,21 @@ class SocialsController < ApplicationController
 
   def social_params
     params.require(:social).permit(:tag, :value, :visibility)
+  end
+
+  def sanitize_social_value!(social)
+    return if social.value.blank?
+
+    begin
+      uri = URI.parse(social.value.strip)
+      social.value = if uri.scheme && uri.host
+                       uri.path.sub(%r{^/}, '').split('/').first
+                     else
+                       social.value.strip
+                     end
+    rescue URI::InvalidURIError
+      social.value = social.value.strip
+    end
   end
 
   def set_socials
