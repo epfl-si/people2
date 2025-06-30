@@ -1,0 +1,10 @@
+---
+de:
+  activerecord:
+    attributes:
+      function_change:
+        accreditor_scipers: ''
+  helpers:
+    placeholder: {}
+    label:
+      function_change: {}

@@ -14,7 +14,7 @@ fr:
     edit:
       form_title: Editing Achievement
     new:
-      form_title: Creating a new Achievement
+      form_title: Ajouter un nouveau succès
     form:
       category: Catégorie
       description: Description

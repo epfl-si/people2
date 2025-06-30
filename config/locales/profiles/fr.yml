@@ -52,10 +52,10 @@ fr:
         boxes_main: Mon curriculum
         boxes_contact: Mes informations professionnelles
         details: Mes données personnelles (facultatif)
-        edit_language: "Editer mon profil en"
         editing_languages: Ce profil est bilingue
-        editing_language: Saisir la
+        edit_language: Editer mon profil en
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
+        editing_language: Saisir la
     edit_languages:
       explain_html: |
         Vous pouvez sélectionner ici les langues dans lesquelles votre profil

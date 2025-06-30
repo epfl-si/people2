@@ -14,10 +14,13 @@ it:
       flash: {}
       official:
         status:
-          student: {}
+          student:
+            message_html: ''
           phd: {}
           staff: {}
-      select: {}
+      select:
+        usual: ''
+        official: ''
       usual: {}
   socials:
     form:

@@ -9,10 +9,9 @@ fr:
         function_it: fonction en italien
         function_de: fonction en allemand
         reason: reason
-        accreditor_scipers: accreditors
+        accreditor_scipers: accréditeurs
   helpers:
-    placeholder:
-      function_change:
+    placeholder: {}
     label:
       function_change:
         function_en: nouvelle fonction en anglais
