@@ -64,6 +64,8 @@ fr:
         En l’absence de traduction pour une langue donnée, le contenu existant
         sera utilisé par défaut.
       title: Traductions du profil
+    inline_languages_form:
+      title: Ma page people en
     form:
       available_languages: Langues à choix
       expertise: Expertise (mots-clefs uniquement)

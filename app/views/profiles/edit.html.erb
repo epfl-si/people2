@@ -2,16 +2,37 @@
 <body id="tr_switchable" class="tr_enable_<%= I18n.locale %>">
 <% end %>
 
-<% # TODO: remove after migration from legacy %>
-<% ado = Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
-<% content_for :menu do %>
-  <li>
-    <%= link_to(
-      icon_text("monitor", t('action.preview')),
-      ado ? preview_path(sciper_or_name: @person.email_user, lang: I18n.locale) : person_path(sciper_or_name: @person.email_user, lang: I18n.locale),
-      target: '_blank'
-    ) %>
-  </li>
+<% content_for :header do %>
+<header role="banner" class="header header-light header-fixed">
+	<div class="header-light-content">
+		<a class="logo" href="https://www.epfl.ch">
+			<img src="<%= belurl 'svg/epfl-logo.svg' %>" alt="Logo EPFL, Ecole polytechnique fédérale de Lausanne" class="img-fluid">
+		</a>
+		<h1 class="site-title mr-5">
+			<a href="/"><%= t 'app.long_name' %></a>
+		</h1>
+		<%= render "inline_languages_form", profile: @profile %>
+		<div class="nav-row ml-auto">
+      <% ado = Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
+      <% if @profile.translations.count > 1 %>
+        <% sl = I18n.locale %>
+        <% @profile.translations.each do |l| %>
+          <% if l == sl %>
+            <span class="btn btn-sm btn-primary"><%= t "lang.native.#{l}" %></span>
+          <% else %>
+            <%= link_to t("lang.native.#{l}"), { lang: l.to_s }, class: "btn btn-sm btn-secondary", aria: { label: t("lang.native.#{l}") } %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= link_to(
+        icon_text("monitor", t('action.preview')),
+        ado ? preview_path(sciper_or_name: @person.email_user, lang: I18n.locale) : person_path(sciper_or_name: @person.email_user, lang: I18n.locale),
+        target: '_blank',
+        class: "btn btn-sm btn-secondary"
+      ) %>
+		</div>
+	</div>
+</header>
 <% end %>
 
 <section id="name_section">
