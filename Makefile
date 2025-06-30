@@ -483,7 +483,7 @@ OCMAINDBUSER=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db
 OCMAINDBPASS=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.password')
 ## Open sql shell on main application database
 prod_db:
-	oc rsh -n $(OCNAMESPACE) $(OCPOD_APP) mariadb -h $(OCMAINDBHOST) -u $(OCMAINDBUSER) --password=$(OCMAINDBPASS) $(OCMAINDBNAME)
+	./bin/oc.sh --prod mariadb -h $(OCMAINDBHOST) -u $(OCMAINDBUSER) --password=$(OCMAINDBPASS) $(OCMAINDBNAME)
 
 # ------------------------------------------------------------------------------
 .PHONY: clean
