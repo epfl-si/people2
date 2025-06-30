@@ -52,6 +52,14 @@ module Admin
       end
     end
 
+    def apply
+      if Admin::Translation.update_translation_files
+        flash.now[:success] = ".apply_translations"
+      else
+        flash.now[:error] = ".apply_translations"
+      end
+    end
+
     private
 
     # TODO: use rubyzip for a more elegant code

@@ -114,6 +114,21 @@ module Admin
       end
       basedir
     end
+
+    def self.update_translation_files
+      sdir = dump_translations.to_s
+      ddir = Rails.root.join('config/locales').to_s
+      IO.popen("find #{sdir} -name '*.yml'").readlines(chomp: true).each do |spath|
+        dpath = spath.sub(sdir, ddir)
+        dir = File.dirname(dpath)
+        FileUtils.mkdir_p(dir)
+        FileUtils.cp(spath, dpath)
+      end
+      true
+    rescue StandardError => e
+      Rails.logger.error(e.to_s)
+      false
+    end
   end
 end
 
