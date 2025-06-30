@@ -53,7 +53,7 @@ en:
         boxes_contact: My professionnal datas
         details: My personal data (optional)
         editing_languages: This profile is bilingual
-        edit_language: Editing my profile in
+        edit_language: "Editing my profile in:"
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
         editing_language: Editing
     edit_languages:
@@ -67,7 +67,7 @@ en:
         least one of the languages selected below.
       title: Profile translations
     inline_languages_form:
-      title: My profile in
+      title: "My profile in:"
     form:
       available_languages: Available languages
       expertise: Expertise (keywords only)

@@ -1,7 +1,7 @@
 <%= form_with(model: profile) do |form| %>
 	<%= hidden_field_tag("part", "languages") %>
   <div class="custom-controls-inline">
-    <%= t(".title") %>:
+    <span class="small"><%= t(".title") %></span>
     <% I18n.available_locales.each do |l| %>
       <div class="custom-control custom-checkbox">
         <%= form.checkbox "#{l}_enabled", class: "custom-control-input", id: "lang_switch_#{l}" %>

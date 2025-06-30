@@ -12,9 +12,10 @@
 			<a href="/"><%= t 'app.long_name' %></a>
 		</h1>
 		<%= render "inline_languages_form", profile: @profile %>
-		<div class="nav-row ml-auto">
+		<div class="custom-controls-inline ml-auto mr-5">
       <% ado = Rails.configuration.enable_adoption && @adoption.present? && !@adoption.accepted? %>
       <% if @profile.translations.count > 1 %>
+        <span class="small"><%= t(".title.edit_language") %></span>
         <% sl = I18n.locale %>
         <% @profile.translations.each do |l| %>
           <% if l == sl %>
