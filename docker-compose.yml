@@ -50,11 +50,10 @@ services:
   elements:
     profiles:
       - full
+      - elements
     build:
       context: vendor
       dockerfile: elements.Dockerfile
-    profiles:
-      - elements
     volumes:
       - ./vendor/elements/assets:/elements/assets
     command: "yarn start"
@@ -325,8 +324,6 @@ services:
       - full
     image: selenium/standalone-chrome:112.0
     shm_size: "2gb"
-    profiles:
-      - test
     labels:
       - traefik.docker.network=traefik
       - traefik.http.services.peoselen.loadbalancer.server.port=7900
