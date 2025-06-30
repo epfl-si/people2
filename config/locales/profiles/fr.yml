@@ -53,7 +53,7 @@ fr:
         boxes_contact: Mes informations professionnelles
         details: Mes données personnelles (facultatif)
         editing_languages: Ce profil est bilingue
-        edit_language: Editer mon profil en
+        edit_language: "Editer mon profil en :"
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
         editing_language: Saisir la
     edit_languages:
@@ -65,7 +65,7 @@ fr:
         sera utilisé par défaut.
       title: Traductions du profil
     inline_languages_form:
-      title: Ma page people en
+      title: "Mon profil en :"
     form:
       available_languages: Langues à choix
       expertise: Expertise (mots-clefs uniquement)
