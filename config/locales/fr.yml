@@ -20,11 +20,6 @@ fr:
       fr: versione en français
       it: versione en italien
       de: versione en allemand
-    menu:
-      fr: FR
-      en: EN
-      it: IT
-      de: DE
   no_attribute_for_locale: "%{attribute} en %{language} manquant"
   no_title_for_locale: Titre manquant en %{language}
   translated_label: "%{label} en %{language}"
@@ -48,7 +43,7 @@ fr:
     version: v. %{version}
   action:
     add: Ajouter un bloc
-    add_record: Ajouter un(e) autre %{name}
+    add_record: Ajouter %{name}
     cancel: Annuler
     confirm: Confirmer votre choix
     delete: Supprimer
@@ -66,8 +61,6 @@ fr:
     sign_in: Se connecter
     sign_out: Se déconnecter
     submit: Envoyer la demande
-    preview: Preview
-    preview_in: Voir mon profil en %{lang}
   dev:
     action:
       abandon: Retourne au profile legacy
@@ -87,7 +80,7 @@ fr:
       update: Erreur lors de la mise à jour de la donnée
       remove: Erreur lors de la suppression de la donnée
       accred:
-        cannot_hide_all: Impossible de masquer toutes les accréditations au public
+        cannot_hide_all: UNE affiliation au minimum doit rester disponible publiquement
       box:
         cannot_delete: Ce bloc ne peux pas être supprimé
         create: Impossible de créer le bloc

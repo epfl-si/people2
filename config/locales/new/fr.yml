@@ -38,10 +38,8 @@ fr:
           unknown: Impossible de déterminer votre statut.
           student:
             title: Étudiant·e
-            message_html: 'Vous devez vous adresser au Guichet étudiant avec une copie
-              de vos papiers d’identité pour demander ce changement.
-
-              '
+            message_html: Prière de contacter le Guichet étudiant en présentant une
+              copie de vos pièces d’identité afin de demander cette modification.
           phd:
             title: Doctorant·e
             message_html: 'Veuillez d’abord contacter le représentant RH de votre
@@ -58,8 +56,8 @@ fr:
               '
       select:
         title: Changer votre nom
-        usual: Changer le nom d’usage
-        official: Changer le nom officiel
+        usual: Changer votre nom d’usage
+        official: Changer votre nom officiel
       usual:
         fallback_title: Nom d’usage non modifiable
   socials:

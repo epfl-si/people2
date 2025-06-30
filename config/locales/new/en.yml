@@ -41,10 +41,8 @@ en:
           unknown: Impossible to determine your status
           student:
             title: Student
-            message_html: 'contact the Student Services Desk with a copy of your identity
+            message_html: contact the Student Services Desk with a copy of your identity
               documents to request this change
-
-              '
           phd:
             title: Graduate Student
             message_html: 'please first contact the HR representative of your lab.

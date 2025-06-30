@@ -8,6 +8,8 @@ it:
   helpers:
     placeholder:
       rich_text_box: {}
+    label:
+      rich_text_box: {}
   rich_text_boxes:
     form:
       content: ''
