@@ -24,4 +24,6 @@ en:
       upload_image: Upload
     pictures:
       title: My picture
-      currently_selected: Selected picture
+      currently_selected: Displayed picture
+    picture:
+      set_as_profile_picture: Select
