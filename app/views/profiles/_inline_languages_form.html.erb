@@ -1,0 +1,13 @@
+<%= form_with(model: profile) do |form| %>
+	<%= hidden_field_tag("part", "languages") %>
+  <div class="custom-controls-inline">
+    <%= t(".title") %>:
+    <% I18n.available_locales.each do |l| %>
+      <div class="custom-control custom-checkbox">
+        <%= form.checkbox "#{l}_enabled", class: "custom-control-input", id: "lang_switch_#{l}" %>
+        <%= tag.label t("lang.native.#{l}"), class: "custom-control-label", for: "lang_switch_#{l}" %>
+      </div>
+    <% end %>
+  	<%= form.submit t('action.go'), class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>
