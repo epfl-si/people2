@@ -20,11 +20,6 @@ en:
       fr: French version
       it: Italian version
       de: German version
-    menu:
-      fr: FR
-      en: EN
-      it: IT
-      de: DE
   no_attribute_for_locale: "%{attribute} in %{language} is not provided"
   no_title_for_locale: Missing title in %{language}
   translated_label: "%{label} in %{language}"
@@ -69,12 +64,10 @@ en:
     sign_in: Log in
     sign_out: Log out
     submit: Submit the request
-    preview: Preview
-    preview_in: View profile in %{lang}
   dev:
     action:
       abandon: Revert to legacy profile
-      adopt: I confirm
+      adopt: Adopt it!
       revert: revert
   error:
     one: Error
@@ -85,11 +78,12 @@ en:
       other: "%{count} Please fix the errors below to continue"
   flash:
     error:
+      apply_translations: Error while applying translations
       create: Error creating data
       update: Error updating data
       remove: Error deleting data
       accred:
-        cannot_hide_all: Cannot hide all accreditations to general public
+        cannot_hide_all: At least ONE affiliation must remain publicly available.
       box:
         cannot_delete: This bloc cannot be deleted
         create: Bloc could not be created
@@ -102,6 +96,7 @@ en:
       update: Updated
       remove: Record have been deleted
     success:
+      apply_translations: Translations applied
       create: Added
       update: Updated
       remove: Record have been deleted

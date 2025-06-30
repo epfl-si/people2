@@ -5,7 +5,9 @@ de:
     en: ''
     it: ''
     de: ''
+    menu: {}
     native: {}
+    version: {}
   no_attribute_for_locale: ''
   no_title_for_locale: ''
   translated_label: ''

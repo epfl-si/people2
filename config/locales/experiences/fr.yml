@@ -14,7 +14,7 @@ fr:
         experience:
           attributes:
             base:
-              missing_year: Date de début ET de fin obligatoires
+              missing_year: Dates de début ET de fin obligatoires
   helpers:
     placeholder:
       experience: {}
