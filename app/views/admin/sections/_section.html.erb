@@ -1,0 +1,11 @@
+<tr>
+  <td><%= section.label %></td>
+  <td><%= section.zone %></td>
+  <td><%= section.edit_zone %></td>
+  <td><%= section.model_boxes.count %></td>
+  <td>
+    <%= link_to icon("info"), admin_section_path(section) %>
+    |
+    <%= link_to icon("edit"), edit_admin_section_path(section) %>
+  </td>
+</tr>

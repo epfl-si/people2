@@ -1,0 +1,15 @@
+<table class="table table-sortable" data-tablesaw-sortable>
+  <thead>
+    <tr>
+      <th data-tablesaw-sortable-col>Kind</th>
+      <th data-tablesaw-sortable-col>Subkind</th>
+      <th data-tablesaw-sortable-col>Section</th>
+      <th data-tablesaw-sortable-col>Label</th>
+      <th data-tablesaw-sortable-col>Title</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "admin/model_boxes/model_box", collection:  boxes %>
+  </tbody>
+</table>
