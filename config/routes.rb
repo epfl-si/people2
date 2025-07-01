@@ -98,12 +98,15 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get '/', to: 'dashboards#index', as: 'dashboard'
     resources :model_boxes, except: %i[new create destroy]
     resources :sections, except: %i[new create destroy]
-    resources :translations, except: %i[new create destroy]
-    patch 'translations/:id/autotranslate', to: 'translations#autotranslate', as: 'translation_autotranslate'
-    patch 'translations/:id/propagate', to: 'translations#propagate', as: 'translation_propagate'
-    get 'apply_translations', to: 'translations#apply', as: 'apply_translations'
+    if Rails.env.development?
+      resources :translations, except: %i[new create destroy]
+      patch 'translations/:id/autotranslate', to: 'translations#autotranslate', as: 'translation_autotranslate'
+      patch 'translations/:id/propagate', to: 'translations#propagate', as: 'translation_propagate'
+      get 'apply_translations', to: 'translations#apply', as: 'apply_translations'
+    end
   end
 
   if Rails.env.production?

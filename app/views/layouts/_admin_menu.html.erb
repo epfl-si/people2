@@ -1,0 +1,32 @@
+<% content_for :menu do %>
+  <li>
+    <% if controller_name == 'dashboards' %>
+      <span clss="active">Dashboard</span>
+    <% else %>
+      <%= link_to "Dashboard", admin_dashboard_path %>
+    <% end %>
+  </li>
+  <li>
+    <% if controller_name == 'model_boxes' %>
+      <span class="active">Boxes</span>
+    <% else %>
+      <%= link_to "Boxes", admin_model_boxes_path %>
+    <% end %>
+  </li>
+  <li>
+    <% if controller_name == 'sections' %>
+      <span class="active">Sections</span>
+    <% else %>
+      <%= link_to "Sections", admin_sections_path %>
+    <% end %>
+  </li>
+  <% if Rails.env.development? %>
+    <li>
+      <% if controller_name == 'translations' %>
+        <span class="active">Translations</span>
+      <% else %>
+        <%= link_to "Translations", admin_translations_path %>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>

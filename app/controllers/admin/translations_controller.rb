@@ -6,7 +6,7 @@ module Admin
   class TranslationsController < BaseController
     before_action :set_admin_translation, only: %i[show edit update autotranslate propagate]
 
-    allow_unauthenticated_access
+    # allow_unauthenticated_access
 
     # GET /admin/translations or /admin/translations.json
     def index
