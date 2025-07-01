@@ -125,7 +125,7 @@ span.visibility {
   padding: 1em;
 }
 
-.add-box-buttons {
+.add-buttons {
   .btn-push {
     position: relative;
     border: none;
@@ -768,3 +768,16 @@ dialog {
     background-color: #f00;
   }
 }
+//  leonardo's paranoia check 
+/* body::before {
+  content: "CSS TABS LOADED";
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: limegreen;
+  color: white;
+  padding: 0.5rem;
+  z-index: 9999;
+  font-size: 14px;
+}
+*/
