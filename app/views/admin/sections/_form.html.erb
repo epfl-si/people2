@@ -1,0 +1,54 @@
+<%= form_with(model: [:admin, section], class: "instaform") do |form| %>
+  <p>
+    Boxes are grouped in sections.
+  </p>
+
+  <% if section.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(box.errors.count, "error") %> prohibited this box from being saved:</h2>
+
+      <ul>
+        <% section.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="d-flex">
+    <%= form_group do %>
+      <%= form.label "View Zone" %>
+      <%= form.select :zone, Section::VIEW_ZONES, {}, {class: "custom-select"} %>
+    <% end %>
+    <%= form_group do %>
+      <%= form.label "Edit Zone" %>
+      <%= form.select :edit_zone, Section::EDIT_ZONES, {}, {class: "custom-select"} %>
+    <% end %>
+  </div>
+
+  <div class="custom-controls-inline">
+    <div class="custom-control custom-checkbox">
+      <%= form.checkbox :show_title, class: "custom-control-input", id: "cb_standard" %>
+      <%= tag.label "Visible title", class: "custom-control-label", for: "cb_standard" %>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <%= form.checkbox :create_allowed, class: "custom-control-input", id: "cb_show_title" %>
+      <%= tag.label "Box creation allowed", class: "custom-control-label", for: "cb_show_title" %>
+    </div>
+  </div>
+
+  <%= single_text_field(form, :title_en) %>
+  <%= single_text_field(form, :title_fr) %>
+  <%#= single_text_field(form, :title_it) %>
+  <%#= single_text_field(form, :title_de) %>
+
+  <%= single_rich_text_area(form, :help_en) %>
+  <%= single_rich_text_area(form, :help_fr) %>
+  <%#= single_rich_text_area(form, :help_it) %>
+  <%#= single_rich_text_area(form, :help_de) %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

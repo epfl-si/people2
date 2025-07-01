@@ -1,0 +1,40 @@
+<h2><tt><%= @section.label %></tt> | Section</h2>
+
+<p><%= link_to(icon_text("edit", "edit"), edit_admin_section_path(@section)) %></p>
+
+<dl class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
+  <dt>Display zones</dt>
+  <dd><tt><%= @section.zone %> (show) / <%= @section.edit_zone %> (edit)</tt></dd>
+
+  <dt>Visible title</dt>
+  <dd><%= @section.show_title ? 'Yes' : 'No' %></dd>
+
+  <dt>Box creation allowed</dt>
+  <dd><%= @section.create_allowed ? 'Yes' : 'No' %></dd>
+
+  <% if @section.show_title %>
+    <dt>Title in english</dt>
+    <dd><%= @section.title_en %></dd>
+
+    <dt>Title in french</dt>
+    <dd><%= @section.title_fr %></dd>
+  <% end %>
+</dl>
+
+<div class="d-flex">
+  <% if @section.help_en.present? %>
+    <div>
+      <h3>Help (english)</h3>
+      <%= @section.help_en %>
+    </div>
+  <% end %>
+  <% if @section.help_fr.present? %>
+    <div>
+      <h3>Help (french)</h3>
+      <%= @section.help_fr %>
+    </div>
+  <% end %>
+</div>
+
+<h3 class="mt-5">Model Boxes</h3>
+<%= render 'admin/model_boxes/model_boxes', boxes: @section.model_boxes %>

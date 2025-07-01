@@ -1,10 +1,15 @@
 <%= turbo_frame_tag "#{@section.label}_section" do %>
 
+<div class='d-flex justify-content-between'>
+<div>
 <% if @optional_boxes.present? %>
   <%= turbo_frame_tag "add_#{@section.label}_box" do %>
     <%= render "boxes/add", profile: @profile, section: @section, boxes: @optional_boxes %>
   <% end %>
 <% end %>
+</div>
+<%= link_to icon('help-circle'), help_section_path(@section), method: :get, data: {turbo_stream: true, turbo_method:'get'} %>
+</div>
 
 <%= turbo_frame_tag "#{@section.label}_boxes", src: nil, target: nil, data: {controller: "sortable"} do %>
   <% if @boxes.present? %>

@@ -1,4 +1,12 @@
 <%= form_with(model: [:admin, box], class: "instaform") do |form| %>
+  <p>
+    A <em>standard</em> box is created by default for all profiles. The other
+    are optional.
+  </p>
+  <p>
+    Each box can be added a maximum number of times in a given section
+  </p>
+
   <% if box.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(box.errors.count, "error") %> prohibited this box from being saved:</h2>
@@ -11,20 +19,33 @@
     </div>
   <% end %>
 
-  <%= form_group do %>
-    <%= form.label :standard %>
-    <%= form.checkbox :standard %>
-  <% end %>
+  <div class="d-flex">
+    <%= form_group do %>
+      <%= form.label "Section" %>
+      <%= form.collection_select(:section_id, Section.all, :id, :t_title, {}, {class: "custom-select"}) %>
+    <% end %>
+    <%= form_group do %>
+      <%= form.label "Max copies" %>
+      <%= form.select :max_copies, [1,2,3,4], {}, {class: "custom-select"} %>
+    <% end %>
+  </div>
 
-  <%= form_group do %>
-    <%= form.label :show_title %>
-    <%= form.checkbox :show_title %>
-  <% end %>
+  <div class="custom-controls-inline">
+    <div class="custom-control custom-checkbox">
+      <%= form.checkbox :standard, class: "custom-control-input", id: "cb_standard" %>
+      <%= tag.label "standard", class: "custom-control-label", for: "cb_standard" %>
+    </div>
 
-  <%= form_group do %>
-    <%= form.label :locked_title %>
-    <%= form.checkbox :locked_title %>
-  <% end %>
+    <div class="custom-control custom-checkbox">
+      <%= form.checkbox :show_title, class: "custom-control-input", id: "cb_show_title" %>
+      <%= tag.label "visible title", class: "custom-control-label", for: "cb_show_title" %>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <%= form.checkbox :locked_title, class: "custom-control-input", id: "cb_locked_title" %>
+      <%= tag.label "freeze title", class: "custom-control-label", for: "cb_locked_title" %>
+    </div>
+  </div>
 
   <%= single_text_field(form, :title_en) %>
   <%= single_text_field(form, :title_fr) %>
@@ -40,6 +61,7 @@
   <%= single_rich_text_area(form, :help_fr) %>
   <%#= single_rich_text_area(form, :help_it) %>
   <%#= single_rich_text_area(form, :help_de) %>
+
   <div>
     <%= form.submit %>
   </div>

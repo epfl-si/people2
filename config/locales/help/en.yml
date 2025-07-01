@@ -1,0 +1,14 @@
+en:
+  help:
+    helps:
+      help:
+        help: Help
+        help_for: 'About %{title}'
+    title:
+      multilang: Profile localization
+    content:
+      multilang_html: |
+        <p>
+        You can chose if you want your profile to be <em>multilanguage</em> or
+        to make it available only in a single language of your choice.
+        </p>
