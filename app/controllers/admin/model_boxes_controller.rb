@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class ModelBoxesController < ApplicationController
+  class ModelBoxesController < BaseController
     def index
       @boxes = ModelBox.all
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class SectionsController < ApplicationController
+  class SectionsController < BaseController
     def index
       @sections = Section.all
     end
