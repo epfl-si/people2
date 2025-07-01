@@ -31,6 +31,7 @@ class SocialsController < ApplicationController
   # POST /profile/profile_id/socials or /profile/profile_id/socials.json
   def create
     @social = @profile.socials.new(social_params)
+
     if @social.save
       set_socials
       flash.now[:success] = ".create"
