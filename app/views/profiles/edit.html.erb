@@ -93,3 +93,11 @@
     "dismissable-target": "content"
   }
 ) %>
+<%= turbo_frame_tag(
+  "help",
+  data: {
+    controller: "dismissable",
+    action: "keydown.esc->dismissable#dismiss",
+    "dismissable-target": "content"
+  }
+) %>

@@ -1,0 +1,53 @@
+<h2><tt><%= @box.label %></tt> | Model Box</h2>
+
+<p><%= link_to(icon_text("edit", "edit"), edit_admin_model_box_path(@box)) %></p>
+
+<dl class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
+  <dt>Kind</dt>
+  <dd><tt><%= @box.kind %> / <%= @box.subkind %></tt></dd>
+
+  <dt>Section</dt>
+  <dd>
+    <%#= link_to(@box.section.label, admin_section_path(@box.section) %>
+    <%= @box.section.label %>
+  </dd>
+
+  <dt>Max Copies</dt>
+  <dd><%= @box.max_copies %></dd>
+
+
+  <dt>Standard</dt>
+  <dd><%= @box.standard ? 'Yes' : 'No' %></dd>
+
+  <dt>Title:</dt>
+  <dd><%= @box.show_title ? 'visible' : 'hidden' %>, <%= @box.locked_title ? 'locked' : 'editable' %></dd>
+
+  <dt>Desc. in english</dt>
+  <dd><%= @box.description_en %></dd>
+
+  <dt>Desc. in french</dt>
+  <dd><%= @box.description_fr %></dd>
+
+  <% if @box.show_title %>
+    <dt>Title in english</dt>
+    <dd><%= @box.title_en %></dd>
+
+    <dt>Title in french</dt>
+    <dd><%= @box.title_fr %></dd>
+  <% end %>
+</dl>
+
+<div class="flex">
+  <% if @box.help_en.present? %>
+    <div>
+      <h3>Help (english)</h3>
+      <%= @box.help_en %>
+    </div>
+  <% end %>
+  <% if @box.help_fr.present? %>
+    <div>
+      <h3>Help (french)</h3>
+      <%= @box.help_fr %>
+    </div>
+  <% end %>
+</div>

@@ -54,6 +54,7 @@ en:
     edit: edit
     edit_profile: Edit profile
     go: Confirm
+    help: help
     hide_search_form: Hide the search form
     more: More informations
     preview: Preview
@@ -108,6 +109,10 @@ en:
         create: Change request forwarded to the selected accreditors
       profile:
         update: Updated
+  shared:
+    help:
+      help: Help
+      help_for: Help for
   visibility:
     authenticated: EPFL users only
     authenticated_access: user

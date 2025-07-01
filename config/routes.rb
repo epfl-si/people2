@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       patch :reset_field
     end
   end
+  get 'boxes/:id/help', to: 'boxes#help', as: 'box_help'
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'
   get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
 
@@ -92,6 +93,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :model_boxes, except: %i[new create destroy]
     resources :translations, except: %i[new create destroy]
     patch 'translations/:id/autotranslate', to: 'translations#autotranslate', as: 'translation_autotranslate'
     patch 'translations/:id/propagate', to: 'translations#propagate', as: 'translation_propagate'
