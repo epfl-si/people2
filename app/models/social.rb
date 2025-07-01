@@ -174,6 +174,7 @@ class Social < ApplicationRecord
 
   belongs_to :profile, class_name: "Profile", inverse_of: :socials
 
+  before_validation :sanitize_value
   before_save :fetch_value, if: -> { automatic? }
 
   validates :value, presence: true, unless: -> { automatic? }
@@ -230,6 +231,26 @@ class Social < ApplicationRecord
   end
 
   private
+
+  def sanitize_value
+    return if value.blank?
+
+    begin
+      uri = URI.parse(value.strip)
+      self.value = if uri.scheme && uri.host
+                     %w[user authorId authorID].each do |param|
+                       v = uri.query&.match(/#{param}=([^&]+)/)&.captures&.first
+                       return self.value = v if v.present?
+                     end
+                     parts = uri.path.sub(%r{^/}, '').split('/')
+                     parts.last.presence || value.strip
+                   else
+                     value.strip
+                   end
+    rescue URI::InvalidURIError
+      self.value = value.strip
+    end
+  end
 
   def fetch_value
     m = "fetch_#{tag}"
