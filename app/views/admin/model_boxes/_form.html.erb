@@ -1,0 +1,46 @@
+<%= form_with(model: [:admin, box], class: "instaform") do |form| %>
+  <% if box.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(box.errors.count, "error") %> prohibited this box from being saved:</h2>
+
+      <ul>
+        <% box.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_group do %>
+    <%= form.label :standard %>
+    <%= form.checkbox :standard %>
+  <% end %>
+
+  <%= form_group do %>
+    <%= form.label :show_title %>
+    <%= form.checkbox :show_title %>
+  <% end %>
+
+  <%= form_group do %>
+    <%= form.label :locked_title %>
+    <%= form.checkbox :locked_title %>
+  <% end %>
+
+  <%= single_text_field(form, :title_en) %>
+  <%= single_text_field(form, :title_fr) %>
+  <%#= single_text_field(form, :title_it) %>
+  <%#= single_text_field(form, :title_de) %>
+
+  <%= single_text_field(form, :description_en) %>
+  <%= single_text_field(form, :description_fr) %>
+  <%#= single_text_field(form, :description_it) %>
+  <%#= single_text_field(form, :description_de) %>
+
+  <%= single_rich_text_area(form, :help_en) %>
+  <%= single_rich_text_area(form, :help_fr) %>
+  <%#= single_rich_text_area(form, :help_it) %>
+  <%#= single_rich_text_area(form, :help_de) %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

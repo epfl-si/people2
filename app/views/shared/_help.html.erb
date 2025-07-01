@@ -1,0 +1,13 @@
+<div id="help_content">
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    <% if @title.present? %>
+      <h3><%= t(".help_for", title: @title) %></h3>
+    <% else %>
+      <h3><%= t(".help") %></h3>
+    <% end %>
+    <button type='button' class='btn btn-link text-danger fs-4 p-0 ms-2 float-end' data-action="click->dismissable#dismiss">✕</button>
+  </div>
+  <div class="container">
+    <%= @help %>
+  </div>
+</div>

@@ -14,6 +14,13 @@ class BoxesController < ApplicationController
   # GET /boxes/1 or /boxes/1.json
   def show; end
 
+  def help
+    box = Box.find(params[:id])
+    @title = box.model.t_title(I18n.locale)
+    @help = box.model.t_help(I18n.locale)
+    render 'shared/help'
+  end
+
   # GET /boxes/new
   # This action is called when we create boxes that can be edited right away
   # as it is the case for text boxes.

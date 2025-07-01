@@ -12,6 +12,7 @@ class ModelBox < ApplicationRecord
   validates :title_fr, presence: true, if: -> { locked_title? }
   validates :title_it, presence: true, if: -> { locked_title? }
   validates :title_de, presence: true, if: -> { locked_title? }
+  translates_rich_text :help
 
   after_save :sync!
 

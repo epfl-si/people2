@@ -1,0 +1,12 @@
+<tr>
+  <td><%= model_box.kind %></td>
+  <td><%= model_box.subkind %></td>
+  <td><%= model_box.section.label %></td>
+  <td><%= model_box.label %></td>
+  <td><%= model_box.title_en %></td>
+  <td>
+    <%= link_to icon("info"), admin_model_box_path(model_box) %>
+    |
+    <%= link_to icon("edit"), edit_admin_model_box_path(model_box) %>
+  </td>
+</tr>

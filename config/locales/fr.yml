@@ -51,6 +51,7 @@ fr:
     edit: modifier
     edit_profile: Modifier le profil
     go: Confirm
+    help: help
     hide_search_form: Masquer le formulaire de recherche
     more: En savoir plus
     preview: Preview
@@ -105,6 +106,10 @@ fr:
         create: Demande de modification transmise aux accréditeurs séléctionnés
       profile:
         update: Mise à jour
+  shared:
+    help:
+      help: Aide
+      help_for: Aide pou
   visibility:
     authenticated: Utilisateurs EPFL uniquement
     authenticated_access: utilisateur
