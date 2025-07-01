@@ -310,20 +310,20 @@ module BackofficeHelper
   end
 
   def add_record_button(url, name: nil)
-    tag.div(class: "row justify-content-center") do
-      if name.nil?
-        link_to icon_text('plus-circle', t('action.add')), url, class: "btn btn-secondary btn-sm",
-                                                                data: { turbo_stream: true }
-      else
-        link_to(
-          icon_text(
-            'plus-circle',
-            t('action.add_record', name: t("activerecord.models.#{name}"))
-          ),
-          url,
-          class: "btn btn-secondary btn-sm",
-          data: { turbo_stream: true }
-        )
+    tag.div(class: "row justify-content-center add-buttons") do
+      label_text = name.nil? ? t('action.add') : t('action.add_record', name: t("activerecord.models.#{name}"))
+
+      link_to url,
+              method: :get,
+              data: { turbo_stream: true, turbo_method: 'get' },
+              class: "btn-push" do
+        safe_join([
+                    tag.span("", class: "btn-push-shadow"),
+                    tag.span("", class: "btn-push-edge"),
+                    tag.span(class: "btn-push-front text") do
+                      safe_join([icon("plus"), " ", label_text])
+                    end
+                  ])
       end
     end
   end

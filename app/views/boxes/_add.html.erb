@@ -1,5 +1,6 @@
-<nav class="add-box-buttons">
+<nav class="add-buttons">
   <% (boxes || []).each do |mb| %>
+
     <%
     # if box is a container like IndexBox, then we are forced to create it
     # before adding content to it. => boxes#create
@@ -7,22 +8,32 @@
     <% if mb.container? %>
       <%= form_with(model: [profile, Box.new(model: mb)], local: false, class: "instaform") do |form| %>
         <%= form.hidden_field :model_box_id %>
-        <%= form.button type: :submit, class: "btn btn-secondary btn-sm", style: "display: inline;" do %>
-          <%= icon_text('plus-circle', mb.t_description) %>
+        <%= form.button type: :submit, class: "btn-push" do %>
+          <span class="btn-push-shadow"></span>
+          <span class="btn-push-edge"></span>
+          <span class="btn-push-front text">
+            <%= icon("plus") %> <%= mb.t_description %>
+          </span>
         <% end %>
       <% end %>
+
     <% else %>
+
       <%
       # if instead the content of the box is in the box itself like for RichTextBox,
       # then we show boxes#new as we would do for a standard CRUD
       %>
-      <%= link_to(
-        icon_text('plus-circle', mb.t_description),
-        new_profile_box_path(profile, model_box_id: mb.id),
-        class: "btn btn-secondary btn-sm",
-        method: :get,
-        data: {turbo_stream: true, turbo_method:'get'}
-      ) %>
+      <%= link_to new_profile_box_path(profile, model_box_id: mb.id),
+                  method: :get,
+                  data: { turbo_stream: true, turbo_method: 'get' },
+                  class: "btn-push" do %>
+        <span class="btn-push-shadow"></span>
+        <span class="btn-push-edge"></span>
+        <span class="btn-push-front text">
+          <%= icon("plus") %> <%= mb.t_description %>
+        </span>
+      <% end %>
     <% end %>
   <% end %>
+  <hr>
 </nav>

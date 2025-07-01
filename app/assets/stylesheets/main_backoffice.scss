@@ -125,16 +125,95 @@ span.visibility {
   padding: 1em;
 }
 
-.add-box-buttons {
-  margin-bottom: 1em;
-
-  form {
-    display: inline;
+.add-buttons {
+  .btn-push {
+    position: relative;
+    border: none;
+    background: transparent;
     padding: 0;
+    cursor: pointer;
+    outline-offset: 3px;
+    transition: filter 200ms;
+    user-select: none;
+    display: inline-block;
+    margin-right: 0.5em;
+    font-size: 0.875rem; // ~14px
   }
 
-  .iconlabel {
-    margin-left: 0.5em;
+  .btn-push-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: hsl(0deg 0% 0% / 0.2);
+    transform: translateY(1px);
+    transition: transform 400ms cubic-bezier(.3, .7, .4, 1);
+  }
+
+  .btn-push-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(
+      to left,
+      rgb(128, 0, 0) 0%,
+      rgb(255, 0, 0) 8%,
+      rgb(255, 0, 0) 92%,
+      rgb(128, 0, 0) 100%
+    );
+  }
+
+  .btn-push-front {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    position: relative;
+    padding: 6px 16px;
+    border-radius: 8px;
+    color: white;
+    background: rgb(255, 0, 0);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transform: translateY(-2px);
+    transition: transform 400ms cubic-bezier(.3, .7, .4, 1);
+
+    svg.icon {
+      width: 1.80em;
+      height: 1.80em;
+    }
+  }
+
+  .btn-push:hover {
+    filter: brightness(108%);
+  }
+
+  .btn-push:hover .btn-push-front {
+    transform: translateY(-3px);
+    transition: transform 200ms cubic-bezier(.3, .7, .4, 1.5);
+  }
+
+  .btn-push:active .btn-push-front {
+    transform: translateY(0);
+    transition: transform 34ms;
+  }
+
+  .btn-push:hover .btn-push-shadow {
+    transform: translateY(2px);
+    transition: transform 200ms cubic-bezier(.3, .7, .4, 1.5);
+  }
+
+  .btn-push:active .btn-push-shadow {
+    transform: translateY(0.5px);
+    transition: transform 34ms;
+  }
+
+  .btn-push:focus:not(:focus-visible) {
+    outline: none;
   }
 }
 
@@ -689,3 +768,16 @@ dialog {
     background-color: #f00;
   }
 }
+//  leonardo's paranoia check 
+/* body::before {
+  content: "CSS TABS LOADED";
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: limegreen;
+  color: white;
+  padding: 0.5rem;
+  z-index: 9999;
+  font-size: 14px;
+}
+*/
