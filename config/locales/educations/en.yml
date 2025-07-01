@@ -4,8 +4,8 @@ en:
     attributes:
       education:
         director: Director
-        field: field
-        school: School
+        field: Description
+        school: Issued by (institution)
         title: Title
         year_begin: from year
         year_end: to year
@@ -30,8 +30,8 @@ en:
     label:
       education:
         director: Director
-        field: Field
-        school: School
+        field: Description
+        school: Institution name
         title: Title
         year_begin: from year
         year_end: to year
@@ -40,6 +40,6 @@ en:
     edit:
       form_title: Editing Education
     new:
-      form_title: Creating a new Education
+      form_title: Add an education
     form:
       period: period (years)

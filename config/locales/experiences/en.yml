@@ -34,6 +34,6 @@ en:
     edit:
       form_title: Editing Work Experience
     new:
-      form_title: Creating a Work Experience
+      form_title: Add a work experience
     form:
       period: Period (years)

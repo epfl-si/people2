@@ -4,7 +4,7 @@ fr:
     available_languages: Langues à choix
     expertise: Expertises
     nationality: Nationalité
-    official_name: Nom
+    official_name: Prénom & nom
     personal_web_url: Adresse du site web personnel
     personal_phone: Numéro de téléphone personnel
     usual_name: Nom d'usage
@@ -43,7 +43,7 @@ fr:
             expertise_de:
               too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             personal_web_url:
-              invalid_url: L’URL doit commencer par http:// ou https://.
+              invalid_url: L’URL doit commencer par https://...
             personal_phone:
               invalid_phone: Le numéro doit être valide (ex. +41 79 123 45 67).
   profiles:
@@ -53,9 +53,9 @@ fr:
         boxes_contact: Mes informations professionnelles
         details: Mes données personnelles (facultatif)
         editing_languages: Ce profil est bilingue
-        edit_language: "Editer mon profil en :"
+        edit_language: 'Modifier mon profil en :'
         editing: 'Edition du profil de %{name} (sciper: %{sciper})'
-        editing_language: Saisir la
+        editing_language: Modifier
     edit_languages:
       explain_html: |
         Vous pouvez sélectionner ici les langues dans lesquelles votre profil
@@ -65,7 +65,7 @@ fr:
         sera utilisé par défaut.
       title: Traductions du profil
     inline_languages_form:
-      title: "Mon profil en :"
+      title: 'Mon profil en :'
     form:
       available_languages: Langues à choix
       expertise: Expertise (mots-clefs uniquement)

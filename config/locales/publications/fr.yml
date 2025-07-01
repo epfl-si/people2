@@ -32,8 +32,8 @@ fr:
         year: Année de publication
   publications:
     edit:
-      form_title: Editing Publication
+      form_title: Modifier le bloc 'Publications'
     new:
-      form_title: Creating a new Publication
+      form_title: Ajouter une publication
     editable_publication:
       link: Voir cette publication

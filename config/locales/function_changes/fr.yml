@@ -4,8 +4,8 @@ fr:
     attributes:
       function_change:
         function: fonction
-        function_en: fonction en anglais
-        function_fr: fonction en français
+        function_en: Fonction (en anglais)
+        function_fr: Fonction (en français)
         function_it: fonction en italien
         function_de: fonction en allemand
         reason: reason
@@ -14,9 +14,9 @@ fr:
     placeholder: {}
     label:
       function_change:
-        function_en: nouvelle fonction en anglais
-        function_fr: nouvelle fonction en français
+        function_en: Nouveau nom de fonction (en anglais)
+        function_fr: Nouveau nom de fonction (en français)
         function_it: nouvelle fonction en italien
         function_de: nouvelle fonction en allemand
-        reason: merci de preciser la raison de cette demande
-        accreditors: choisissez un ou plus accrediteurs depui la liste suivante
+        reason: Merci de préciser la raison de cette demande
+        accreditors: Choisissez un ou plusieurs accrediteurs dans la liste ci-dessous

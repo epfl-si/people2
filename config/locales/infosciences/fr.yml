@@ -21,8 +21,8 @@ fr:
         url: Url issue de infoscience-exports
   infosciences:
     edit:
-      form_title: Editing Infoscience export link
+      form_title: Modifier le lien vers la collection Infoscience
     new:
-      form_title: Creating Infoscience export link
+      form_title: Ajouter un lien vers une collection Infoscience
     form:
       create: Enregistrer

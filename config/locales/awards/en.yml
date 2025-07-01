@@ -28,9 +28,9 @@ en:
         year: Year
   awards:
     edit:
-      form_title: Editing Award
+      form_title: Editing Awards
     new:
-      form_title: Creating a new Award
+      form_title: Add an award
     form:
       help:
         category: Dropdown menu for award category

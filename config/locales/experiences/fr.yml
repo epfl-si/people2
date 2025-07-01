@@ -29,6 +29,6 @@ fr:
     edit:
       form_title: Editing Work Experience
     new:
-      form_title: Creating a Work Experience
+      form_title: Ajouter une expérience professionnelle
     form:
       period: Période (en années)

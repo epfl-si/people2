@@ -26,14 +26,12 @@ fr:
         success: Nom modifié avec succès.
         error: Échec de la mise à jour du nom.
       official:
-        instructions_html: 'La modification de votre nom officiel ne peut être demandée
+        instructions_html: La modification de votre nom officiel ne peut être demandée
           que si un changement a été effectué auprès d’un Office d’Etat civil (changement
           d’orthographe d’un prénom ou nom, mariage, divorce, etc.).<br/> Prière de
           transmettre directement votre demande pour validation auprès de votre responsable
-          RH, avec une copie des documents faisant foi (pièce d''identité, document
-          d''état civil...). Cette demande est soumise à validation.
-
-          '
+          RH, avec une copie des documents faisant foi (pièce d'identité, document
+          d'état civil...). Cette demande est soumise à validation.
         status:
           unknown: Impossible de déterminer votre statut.
           student:
@@ -68,10 +66,8 @@ fr:
   usual_name_changes:
     new:
       fallback:
-        title: 'Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré.
+        title: Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré.
           Il est donc impossible de composer un nom d’usage personnalisé.
-
-          '
         content_html: 'Si vous désirez afficher un prénom ou un nom d’usage ne figurant
           pas dans vos documents officiels, prière de contacter le bureau EGA à <a
           href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
@@ -89,7 +85,7 @@ fr:
       fallback_title: Nom d’usage non modifiable
       available_first: 'Prénoms disponibles :'
       available_last: 'Noms disponibles :'
-      submit: Send the request
+      submit: Envoyer la demande
       placeholder:
         usual_first: Prénom d’usage souhaitée
         usual_last: Nom d’usage souhaitée

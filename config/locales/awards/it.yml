@@ -26,4 +26,6 @@ it:
     new:
       form_title: ''
     form:
-      help: {}
+      help:
+        category: ''
+        origin: ''

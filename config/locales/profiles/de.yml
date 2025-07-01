@@ -56,7 +56,10 @@ de:
         editing_languages: ''
         edit_language: ''
         editing: ''
+        editing_language: ''
     edit_languages: {}
+    inline_languages_form:
+      title: ''
     form:
       available_languages: Verfügbare Sprachen
       expertise: ''

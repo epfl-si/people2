@@ -24,6 +24,6 @@ en:
     edit:
       form_title: Editing Infoscience export link
     new:
-      form_title: Creating Infoscience export link
+      form_title: Add an Infoscience export link
     form:
       create: Save

@@ -13,7 +13,7 @@ en:
             base:
               undeletable: CAMIPRO picture cannot be deleted
   pictures:
-    currently_selected_picture: Selected picture
+    currently_selected_picture: Displayed picture
     form:
       selected: selected
       camipro: Camipro
@@ -24,6 +24,6 @@ en:
       upload_image: Upload
     pictures:
       title: My picture
-      currently_selected: Selected picture
+      currently_selected: Displayed picture
     picture:
       set_as_profile_picture: Select

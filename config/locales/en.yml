@@ -20,8 +20,8 @@ en:
       fr: French version
       it: Italian version
       de: German version
-  no_attribute_for_locale: "%{attribute} in %{language} is not provided"
-  no_title_for_locale: Missing title in %{language}
+  no_attribute_for_locale: Please add %{attribute} in %{language}
+  no_title_for_locale: Please add title in %{language}
   translated_label: "%{label} in %{language}"
   messages:
     empty_orcid_help: The link will appear as soon as your ORCID account is synchronized
@@ -38,8 +38,8 @@ en:
       texfield_for: "%{attr}"
       translated_textfield_for: "%{attr} in %{language}"
       mandatory: 'mandatory field: this field must be provided'
-      tmandatory: this field must be provided in at least one of the languages chosen
-        for your profile
+      tmandatory: Please complete this field in at least one of your selected profile
+        languages
   nav:
     app_with_version: EPFL People v. %{version}
     issues: issues
@@ -68,9 +68,9 @@ en:
     submit: Submit the request
   dev:
     action:
-      abandon: Revert to legacy profile
-      adopt: Adopt it!
-      revert: revert
+      abandon: Restore the old version of this profile
+      adopt: Make this version available online
+      revert: Revert
   error:
     one: Error
     other: Errors
@@ -165,8 +165,8 @@ en:
       enabled: "%{item} visible"
       disabled: "%{item} hidden"
       visible: "%{item} visible"
-      public: "%{item} publicly visible"
-      intranet: "%{item} visible only from EPFL network"
+      public: "%{item} publicly visible (internet)"
+      intranet: "%{item} visible only from EPFL network (intranet)"
       auth: "%{item} visible by authenticated users only"
       draft: "%{item} only visible by profile owner"
       hidden: "%{item} hidden"
@@ -182,21 +182,21 @@ en:
       invalid: is incorrect
       greater_than: must be greater than %{count}
       less_than: must be smaller than %{count}
-      untranslatable: One translation mandatory
+      untranslatable: mandatory
       incorrect_type: Invalid value
-      cannot_hide_all_accreds: At least one affiliation must remain public
+      cannot_hide_all_accreds: At least ONE affiliation must remain publicly available.
   activerecord:
     models:
       achievement: Annual achievement
-      award: Award
+      award: Awards
       box: Bloc
       education: Education
       experience: Work experiences
       function_change: Position change request (accred)
-      infoscience: infoscience publication link
+      infoscience: infoscience publications link
       picture: Your picture
       profile: Profile
-      publication: Publication
+      publication: Publications
       rich_text_box: Text bloc
       social: Social Media Links & Research ID
     errors:
@@ -211,7 +211,7 @@ en:
         name:
           attributes:
             usual_first:
-              not_in_official: Use only a first name that appears in the officials
+              not_in_official: Use only a first name that appears in yours officials
                 names
             usual_last:
               not_in_official: Use only a name that appears in your officials names
