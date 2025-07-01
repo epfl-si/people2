@@ -7,10 +7,9 @@
       <%= link_to icon('crop'), edit_picture_path(picture),
                   class: "btn btn-primary btn-sm btn-block",
                   data: { turbo_stream: true } %>
-      <%= link_to icon('heart'), set_favorite_picture_profile_path(picture.profile, picture_id: picture.id),
+      <%= link_to t('.set_as_profile_picture'), set_favorite_picture_profile_path(picture.profile, picture_id: picture.id),
                   class: "btn btn-primary btn-sm btn-block",
                   method: :patch, data: { turbo_stream: true, turbo_method: 'patch' } %>
-
       <% if picture.camipro? %>
         <span class='visibility'>
           camipro
