@@ -3,7 +3,7 @@
 # TODO: for nicer inline editing
 #   see https://andrewfoster.hashnode.dev/inline-editing-and-deleting-with-hotwire-part-2
 module Admin
-  class TranslationsController < ApplicationController
+  class TranslationsController < BaseController
     before_action :set_admin_translation, only: %i[show edit update autotranslate propagate]
 
     allow_unauthenticated_access
