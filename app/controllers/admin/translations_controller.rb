@@ -5,8 +5,9 @@
 module Admin
   class TranslationsController < BaseController
     before_action :set_admin_translation, only: %i[show edit update autotranslate propagate]
+    before_action :admin_only!, except: %i[index]
 
-    # allow_unauthenticated_access
+    skip_before_action :require_authentication, only: %i[index]
 
     # GET /admin/translations or /admin/translations.json
     def index
