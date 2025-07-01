@@ -28,15 +28,13 @@ en:
         success: Name modified succesfully
         error: Name could not be saved
       official:
-        instructions_html: 'You can ask to change your official name only if a corresponding
+        instructions_html: You can ask to change your official name only if a corresponding
           change was recorded at the Civil Registry Office due for example to a corrected
           spelling of your first or last name, when affirming a gender identity, following
           a marriage, divorce, adoption, or any other reason deemed legitimate by
           the Civil Registry Office.<br/> Please send your request including a copy
           of an official document attesting the change to your HR responsible for
           it to be validated.
-
-          '
         status:
           unknown: Impossible to determine your status
           student:
@@ -70,10 +68,8 @@ en:
   usual_name_changes:
     new:
       fallback:
-        title: 'Your first and last names are composed of a single word. Therefore
+        title: Your first and last names are composed of a single word. Therefore
           it is not possible to create any other combination for your usual name.
-
-          '
         content_html: 'If you wish to obtain an usual name that is not assembled from
           parts that are present in your official name, please contact the Office
           for Equal Opportunities (EGA) at <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>

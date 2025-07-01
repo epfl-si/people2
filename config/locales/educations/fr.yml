@@ -4,15 +4,15 @@ fr:
     attributes:
       education:
         director: Directeur
-        field: champ
-        school: Ecole
+        field: Description
+        school: Attribué par (institution)
         title: Titre
         year_begin: de (année)
         year_end: à (année)
   error:
     education:
-      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou signaler au
-        1234@epfl.ch)
+      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou le signaler
+        au 1234@epfl.ch)
       one: Merci de corriger les champs en erreur
       other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
   helpers:
@@ -21,16 +21,16 @@ fr:
     label:
       education:
         director: Directeur
-        field: champ
-        school: Ecole
+        field: Description
+        school: Nom de l'institution
         title: Titre
         year_begin: de (année)
         year_end: à (année)
   educations:
     directedby: Dirigée par
     edit:
-      form_title: Editing Education
+      form_title: Modifier le bloc 'Education'
     new:
-      form_title: Creating a new Education
+      form_title: Ajouter une formation (diplôme)
     form:
       period: période (en années)

@@ -20,13 +20,13 @@ fr:
       fr: versione en français
       it: versione en italien
       de: versione en allemand
-  no_attribute_for_locale: "%{attribute} en %{language} manquant"
-  no_title_for_locale: Titre manquant en %{language}
+  no_attribute_for_locale: Prière d'ajouter un %{attribute} en %{language}
+  no_title_for_locale: Prière d'ajouter un titre en %{language}
   translated_label: "%{label} en %{language}"
   messages:
     empty_orcid_help: Le lien apparaîtra dès la synchronisation de votre compte ORCID
-    function_change_explain: Pour changer sa fonction (titre), prière de contacter
-      un de vos accréditeurs ci-dessous, en mesure de valider la demande
+    function_change_explain: Pour changer votre fonction (titre), prière de contacter
+      un de vos accréditeurs ci-dessous, qui devra de valider la demande
     function_change_exists: Une demande de modification a déjà été soumise. Veuillez
       contacter directement votre accréditeur
   generic:
@@ -37,12 +37,14 @@ fr:
       update: Enregistrer
       texfield_for: "%{attr}"
       translated_textfield_for: "%{attr} en %{language}"
+      tmandatory: Veuillez remplir ce champ dans au moins une des langues sélectionnées
+        pour votre profil
   nav:
     app_with_version: EPFL People v. %{version}
     issues: problèmes
     version: v. %{version}
   action:
-    add: Ajouter un bloc
+    add: Ajouter un bloc de texte
     add_record: Ajouter %{name}
     cancel: Annuler
     confirm: Confirmer votre choix
@@ -65,15 +67,15 @@ fr:
     submit: Envoyer la demande
   dev:
     action:
-      abandon: Retourne au profile legacy
-      adopt: Je valide
-      revert: annuler
+      abandon: Reprendre l'ancienne version du profil
+      adopt: Mettre cette version en ligne
+      revert: Annuler
   error:
     one: Erreur
     other: Erreurs
     record:
-      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou signaler au
-        1234@epfl.ch)
+      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou le signaler
+        au 1234@epfl.ch)
       one: 'Echec de mise à jour: merci de corriger les champs en erreur'
       other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
   flash:
@@ -88,24 +90,24 @@ fr:
         create: Impossible de créer le bloc
       function_change:
         create: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard
-          ou contacter 1234@epfl.ch
+          ou contacter le 1234@epfl.ch
       profile:
         update: Erreur lors de la mise à jour du profil de base
     notice:
       create: Enregistré
       update: Mis à jour
-      remove: L'enregistrement a été supprimer
+      remove: L'enregistrement a été supprimé
     success:
       create: Ajouté
       update: Mis à jour
-      remove: L'enregistrement a été supprimer
+      remove: L'enregistrement a été supprimé
       box:
         deleted: Bloc supprimé
         create: Bloc ajouté
       function_change:
         create: Demande de modification transmise aux accréditeurs séléctionnés
       profile:
-        update: Mise à jour
+        update: Mis à jour
   shared:
     help:
       help: Aide
@@ -126,7 +128,7 @@ fr:
       enabled: Activé
       disabled: Désactivé
       visible: Visible
-      public: Public, Visible par tout le monde sur Internet
+      public: Public, visible par tout le monde sur Internet
       intranet: Intranet, visible uniquement sur le réseau interne de l'EPFL
       auth: Intranet, visible uniquement par la communauté EPFL
       draft: Privé, visible uniquement par la/le propriétaire du profil
@@ -161,12 +163,12 @@ fr:
     tag:
       enabled: "%{item} activé"
       disabled: "%{item} désactivé"
-      visible: "%{item} visible"
-      public: "%{item} publicly visible"
-      intranet: "%{item} visible only from EPFL network"
+      visible: "%{item} activé"
+      public: "%{item} visible publiquement (internet)"
+      intranet: "%{item} visible uniquement dans le réseau EPFL (intranet)"
       auth: "%{item} visible by authenticated users only"
-      draft: "%{item} only visible by profile owner"
-      hidden: "%{item} hidden"
+      draft: "%{item} visible uniquement par le propriétaire du profil"
+      hidden: "%{item} caché"
     public: public
     public_access: public
     visible: visible
@@ -179,21 +181,21 @@ fr:
       invalid: n'est pas correct
       greater_than: doit être supérieur à %{count}
       less_than: doit être inférieur à %{count}
-      untranslatable: Une traduction minimum
+      untranslatable: obligatoire
       incorrect_type: La valeur n'est pas correcte
-      cannot_hide_all_accreds: Au moins un rattachement doit rester public
+      cannot_hide_all_accreds: UNE affiliation au minimum doit rester disponible publiquement
   activerecord:
     models:
       achievement: Accomplissement annuel
-      award: Distinction
+      award: Prix & distinctions
       box: Bloc
       education: Formation
       experience: Expériences professionnelles
       function_change: Demande de changement de fonction (accred)
-      infoscience: lien vers les publications infoscience
+      infoscience: Lien vers les publications Infoscience
       picture: Votre photo
       profile: Profil
-      publication: Publication
+      publication: Publications
       rich_text_box: Bloc de texte
       social: Profils de réseau social &  identifiants de recherche
     errors:
@@ -209,7 +211,7 @@ fr:
         name:
           attributes:
             usual_first:
-              not_in_official: Utiliser uniquement un prénom figurant dans les prénoms
+              not_in_official: Utiliser uniquement un prénom figurant dans vos prénoms
                 officiels
             usual_last:
-              not_in_official: Utiliser uniquement un nom figurant dans les noms officiels
+              not_in_official: Utiliser uniquement un nom figurant dans vos noms officiels

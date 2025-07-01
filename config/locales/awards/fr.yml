@@ -22,8 +22,10 @@ fr:
         year: Année
   awards:
     edit:
-      form_title: Editing Award
+      form_title: Modifier le bloc 'Awards'
     new:
-      form_title: Creating a new Award
+      form_title: Ajouter un prix ou une distinction
     form:
-      help: {}
+      help:
+        category: Menu déroulant
+        origin: Menu déroulant

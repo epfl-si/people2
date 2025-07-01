@@ -1,4 +1,7 @@
+---
 it:
   help:
-    title:
-    content:
+    helps:
+      help: {}
+    title: {}
+    content: {}

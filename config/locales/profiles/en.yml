@@ -4,7 +4,7 @@ en:
     available_languages: Available languages
     expertise: Expertises
     nationality: Nationality
-    official_name: Name
+    official_name: Name & Surname
     personal_web_url: Personal web page url
     personal_phone: Personal phone number
     usual_name: Usual Name
@@ -43,17 +43,17 @@ en:
             expertise_de:
               too_long: 'Keywords only: please keep it below %{count} characters'
             personal_web_url:
-              invalid_url: The URL must start with http:// or https://.
+              invalid_url: The URL must start with https://...
             personal_phone:
               invalid_phone: The phone number must be valid (e.g. +41 79 123 45 67).
   profiles:
     edit:
       title:
         boxes_main: My curriculum
-        boxes_contact: My professionnal datas
+        boxes_contact: My professionnal data
         details: My personal data (optional)
         editing_languages: This profile is bilingual
-        edit_language: "Editing my profile in:"
+        edit_language: 'Editing my profile in:'
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'
         editing_language: Editing
     edit_languages:
@@ -67,7 +67,7 @@ en:
         least one of the languages selected below.
       title: Profile translations
     inline_languages_form:
-      title: "My profile in:"
+      title: 'My profile in:'
     form:
       available_languages: Available languages
       expertise: Expertise (keywords only)

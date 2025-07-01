@@ -13,6 +13,7 @@ de:
     name_change:
       flash: {}
       official:
+        instructions_html: ''
         status:
           student:
             message_html: ''
@@ -28,7 +29,9 @@ de:
         bluesky: Bluesky
   usual_name_changes:
     new:
-      fallback: {}
+      fallback:
+        title: ''
     form:
+      submit: ''
       placeholder:
         instructions: ''

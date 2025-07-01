@@ -14,9 +14,9 @@ en:
         title_de: My rich text box
     label:
       rich_text_box:
-        title: Title
+        title: title
         content: Content
   rich_text_boxes:
     form:
       content: content
-      title: Title
+      title: title

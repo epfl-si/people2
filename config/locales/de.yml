@@ -84,6 +84,8 @@ de:
         create: ''
       profile:
         update: ''
+  shared:
+    help: {}
   visibility:
     authenticated: ''
     disabled: Disabled
@@ -133,7 +135,7 @@ de:
       visible: "%{item} visible"
       public: "%{item} publicly visible"
       intranet: "%{item} visible only from EPFL network"
-      auth: "%{item} visible by authenticated users only"
+      auth: "%{item} visible by authenticated users oonly"
       draft: "%{item} only visible by profile owner"
       hidden: "%{item} hidden"
     public: öffentlich

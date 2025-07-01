@@ -10,9 +10,9 @@ fr:
       rich_text_box: {}
     label:
       rich_text_box:
-        title: Titre
+        title: titre
         content: Contenu
   rich_text_boxes:
     form:
       content: contenu
-      title: Titre
+      title: titre

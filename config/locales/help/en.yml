@@ -1,9 +1,10 @@
+---
 en:
   help:
     helps:
       help:
         help: Help
-        help_for: 'About %{title}'
+        help_for: About %{title}
     title:
       multilang: Profile localization
     content:

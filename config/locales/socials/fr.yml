@@ -28,7 +28,7 @@ fr:
     edit:
       form_title: Editing Research ID
     new:
-      form_title: Creating a new Research ID
+      form_title: Ajouter un identifiant de recherche
     form:
       identifier_label:
         facebook: Profil Facebook

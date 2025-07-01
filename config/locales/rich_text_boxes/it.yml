@@ -9,7 +9,8 @@ it:
     placeholder:
       rich_text_box: {}
     label:
-      rich_text_box: {}
+      rich_text_box:
+        title: ''
   rich_text_boxes:
     form:
       content: ''
