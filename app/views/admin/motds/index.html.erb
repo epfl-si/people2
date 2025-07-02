@@ -1,0 +1,12 @@
+<h1>Messages of the Day</h1>
+<p>
+  Short dismissable messages that are displayed on the bottom of the main pages
+  to communicate with users.
+</p>
+<p>
+  Messages will be visible as long as their expiration date is in the future.
+</p>
+
+<p><%= link_to(icon_text("edit", "new"), new_admin_motd_path) %></p>
+
+<%= render "motds", motds: @motds %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_19_132831) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_104701) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -266,6 +266,33 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_132831) do
     t.index ["section_id"], name: "index_model_boxes_on_section_id"
   end
 
+  create_table "motds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.string "level", default: "info"
+    t.date "expiration"
+    t.boolean "public"
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_motds_on_category_id"
+  end
+
+  create_table "name_change_requests", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.string "old_first"
+    t.string "old_last"
+    t.string "new_first"
+    t.string "new_last"
+    t.text "reason"
+    t.text "accreditor_scipers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_name_change_requests_on_profile_id"
+  end
+
   create_table "pictures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.integer "failed_attempts", default: 0
@@ -447,6 +474,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_132831) do
   add_foreign_key "infosciences", "profiles"
   add_foreign_key "items", "artists"
   add_foreign_key "model_boxes", "sections"
+  add_foreign_key "name_change_requests", "profiles"
   add_foreign_key "pictures", "profiles"
   add_foreign_key "publications", "profiles"
   add_foreign_key "sessions", "users"

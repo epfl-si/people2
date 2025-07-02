@@ -1,3 +1,5 @@
+<%= render "shared/motd", motds: Motd.for_frontend %>
+
 <% if @special_partial.present? || @special_message.present? %>
   <% content_for :special_message do %>
    <div id='special'>

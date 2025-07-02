@@ -1,0 +1,15 @@
+<table class="table table-sortable" data-tablesaw-sortable>
+  <thead>
+    <tr>
+      <th data-tablesaw-sortable-col>Category</th>
+      <th data-tablesaw-sortable-col>Scope</th>
+      <th data-tablesaw-sortable-col>Level</th>
+      <th data-tablesaw-sortable-col>Expiration</th>
+      <th data-tablesaw-sortable-col>Title</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "admin/motds/motd", collection: motds %>
+  </tbody>
+</table>
