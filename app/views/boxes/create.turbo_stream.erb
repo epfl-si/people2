@@ -6,9 +6,11 @@
   <%= turbo_stream.remove "add_#{@box.section.label}_box" %>
 <% end %>
 <%= turbo_stream.prepend "#{@box.section.label}_boxes" do %>
-  <details open>
-    <summary><%= render "boxes/editable_box", box: @box %></summary>
-    <%= render @box.to_partial_path, box: @box %>
-  </details>
+  <%= turbo_frame_tag dom_id(@box), "data-sortable-url" => box_path(@box, format: 'json') do %>
+    <details open>
+      <summary><%= render "boxes/editable_box", box: @box %></summary>
+      <%= render @box.to_partial_path, box: @box %>
+    </details>
+  <% end %>
 <% end %>
 <%= dismiss_common_editor %>
