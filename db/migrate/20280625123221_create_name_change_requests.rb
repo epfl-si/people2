@@ -9,7 +9,6 @@ class CreateNameChangeRequests < ActiveRecord::Migration[8.0]
       t.string :new_first
       t.string :new_last
       t.text :reason
-      t.text :accreditor_scipers
       t.timestamps
     end
   end

@@ -10,12 +10,12 @@ class ProfileChangeMailer < ApplicationMailer
 
   def name_change_request
     @request = params[:name_change_request]
-    sciper = params[:accreditor_sciper]
-
-    @accreditor = @request.available_accreditors[sciper]
     person = @request.profile.person
     subject_text = "Demande de changement de nom usuel – #{person.name.display} (#{person.sciper})"
 
-    mail(to: @accreditor.email, subject: subject_text)
+    mail(
+      to: ENV.fetch("NAME_CHANGE_REQUEST_EMAIL"),
+      subject: subject_text
+    )
   end
 end
