@@ -1,0 +1,20 @@
+<h2>Message Of The Day</h2>
+
+<nav><%= link_to(icon_text("edit", "edit"), edit_admin_motd_path(@motd)) %> | <%= link_to(icon_text("list", "back to the list"), admin_motds_path) %></nav>
+
+<dl class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
+  <dt>Status</dt>
+  <dd><%= @motd.visible? ? 'Visible' : 'Inactive' %></dd>
+
+  <dt>Scope</dt>
+  <dd><%= @motd.scope %></dd>
+
+  <dt>Level</dt>
+  <dd><%= @motd.level.capitalize %>: <span class="alert alert-<%= @motd.level %> ml-5"><%= @motd.title_en.truncate(30)%></span></dd>
+
+  <dt>Title in english</dt>
+  <dd><%= @motd.title_en %></dd>
+
+  <dt>Title in french</dt>
+  <dd><%= @motd.title_fr %></dd>
+</dl>

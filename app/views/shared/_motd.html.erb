@@ -1,0 +1,12 @@
+<% if motds.present? %>
+  <div id="motd">
+  <% motds.each do |m| %>
+    <div class="alert alert-<%= m.level %> alert-dismissible fade show" role="alert">
+      <%= m.t_title %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+  </div>
+<% end %>

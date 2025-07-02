@@ -1,0 +1,12 @@
+<tr>
+  <td><%= motd.t_category %></td>
+  <td><%= motd.scope %></td>
+  <td><%= motd.level.capitalize %></td>
+  <td><%= (e = motd.future_expiration) ? distance_of_time_in_words_to_now(e) : '–' %></td>
+  <td><%= motd.title_en %></td>
+  <td>
+    <%= link_to icon("info"), admin_motd_path(motd) %>
+    |
+    <%= link_to icon("edit"), edit_admin_motd_path(motd) %>
+  </td>
+</tr>

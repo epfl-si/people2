@@ -97,7 +97,8 @@ module BackofficeHelper
     tlabel, ahelp = label_and_help(form, prop, label: label, help: help, **opts)
     c = []
     c << form.label(attr, tlabel)
-    c << form.collection_select(attr, collection, :id, :t_name, "aria-describedby": ahelp)
+    c << form.collection_select(attr, collection, :id, :t_name, {},
+                                { "aria-describedby": ahelp, class: "custom-select" })
     form_group(help: help, **opts) { safe_join(c) }
   end
 

@@ -7,6 +7,13 @@
     <% end %>
   </li>
   <li>
+    <% if controller_name == 'motd' %>
+      <span class="active">MOTD</span>
+    <% else %>
+      <%= link_to "MOTD", admin_motds_path %>
+    <% end %>
+  </li>
+  <li>
     <% if controller_name == 'model_boxes' %>
       <span class="active">Boxes</span>
     <% else %>

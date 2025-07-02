@@ -1,3 +1,5 @@
+<%= render "shared/motd", motds: Motd.visible %>
+
 <% content_for :body_tag do %>
 <body id="tr_switchable" class="tr_enable_<%= I18n.locale %>">
 <% end %>

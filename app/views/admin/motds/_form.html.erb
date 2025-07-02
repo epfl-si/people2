@@ -1,0 +1,49 @@
+<%= form_with(model: [:admin, motd], class: "instaform") do |form| %>
+
+  <% if motd.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(motd.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+        <% motd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="d-flex">
+    <%= property_select(form, :category, Motd.categories, required: true) %>
+    <%= form_group do %>
+      <%= form.label "Level" %>
+      <%= form.select :level, %w[success info warning danger], {}, {class: "custom-select"} %>
+    <% end %>
+  </div>
+
+  <div class="custom-control custom-checkbox">
+    <%= form.checkbox :public, class: "custom-control-input", id: "cb_public" %>
+    <%= tag.label "Public page too", class: "custom-control-label", for: "cb_public" %>
+  </div>
+
+  <%= form_group do %>
+    <%= form.label(:expiration, "Expiration date") %>
+    <div class="d-flex">
+      <%= form.date_select(:expiration, {}, {class: "custom-select"}) %>
+    </div>
+  <% end %>
+
+  <%= single_text_field(form, :title_en) %>
+  <%= single_text_field(form, :title_fr) %>
+  <%#= single_text_field(form, :title_it) %>
+  <%#= single_text_field(form, :title_de) %>
+
+  <%# for the moment we just keep the title %>
+  <%#= single_rich_text_area(form, :help_en) %>
+  <%#= single_rich_text_area(form, :help_fr) %>
+  <%#= single_rich_text_area(form, :help_it) %>
+  <%#= single_rich_text_area(form, :help_de) %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
