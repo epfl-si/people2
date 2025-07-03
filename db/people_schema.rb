@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_02_104701) do
+ActiveRecord::Schema[8.0].define(version: 2028_06_25_123221) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -287,7 +287,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_104701) do
     t.string "new_first"
     t.string "new_last"
     t.text "reason"
-    t.text "accreditor_scipers"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_name_change_requests_on_profile_id"
