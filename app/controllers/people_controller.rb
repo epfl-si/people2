@@ -82,7 +82,7 @@ class PeopleController < ApplicationController
     #       that is not just a simple free text box with a title.
 
     # take into account profile's enaled languages
-    Current.translations = @profile.translations
+    Current.translations = @profile&.translations || I18n.available_locales
   end
 
   def set_show_data
