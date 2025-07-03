@@ -9,6 +9,10 @@ class SelectableProperty < ApplicationRecord
   # scope :award_origin, -> { where(property: 'award_origin') }
   # scope :achievement_category, -> { where(property: 'achievement_category') }
 
+  def title
+    "#{property.titleize} | #{label}"
+  end
+
   # TODO: we might need to refresh after save
   def self.all_by_property
     @all_by_property ||= all.group_by(&:property)
@@ -24,5 +28,9 @@ class SelectableProperty < ApplicationRecord
 
   def self.achievement_category
     all_by_property['achievement_category']
+  end
+
+  def self.motd_category
+    all_by_property['motd_category']
   end
 end
