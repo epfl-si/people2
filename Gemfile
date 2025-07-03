@@ -174,6 +174,8 @@ group :development do
   #       evaluate pricing and to generate the api key.
   # gem 'google-cloud-translate', '~> 3.2', '>= 3.2.2'
 
+  gem "mission_control-jobs"
+
   # Used to generate mock data:
   gem 'prime', '~> 0.1.2'
 

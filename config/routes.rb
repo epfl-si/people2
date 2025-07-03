@@ -114,6 +114,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 
   if Rails.env.production?
     root 'pages#homepage'
