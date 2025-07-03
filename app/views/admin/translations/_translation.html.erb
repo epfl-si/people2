@@ -20,10 +20,10 @@
   <td><%= icon(translation.done? ? 'check-square' : 'square') %></td>
   <td><%= translation.updated_at&.strftime('%Y-%m-%d %H:%M') %></td>
   <td>
-    <%= form_with(model: translation, url: admin_translation_autotranslate_path(translation), local: false) do |f| %>
+    <%= form_with(model: translation, url: autotranslate_admin_translation_path(translation), local: false) do |f| %>
       <%= f.submit "Auto", class: "btn btn-tertiary btn-sm" %>
     <% end %>
-    <%= form_with(model: translation, url: admin_translation_propagate_path(translation), local: false) do |f| %>
+    <%= form_with(model: translation, url: propagate_admin_translation_path(translation), local: false) do |f| %>
       <%= f.submit "Clone", class: "btn btn-tertiary btn-sm" %>
     <% end %>
 
