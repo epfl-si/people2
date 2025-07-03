@@ -6,7 +6,7 @@ fr:
         director: Directeur
         field: Description
         school: Attribué par (institution)
-        title: Titre
+        title: titre
         year_begin: de (année)
         year_end: à (année)
   error:
@@ -14,7 +14,7 @@ fr:
       zero: Une erreur s'est produite, veuillez réessayer plus tard (ou le signaler
         au 1234@epfl.ch)
       one: Merci de corriger les champs en erreur
-      other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
+      other: "%{count} Echec de mise à jour. Prière de corriger."
   helpers:
     placeholder:
       education: {}
@@ -23,7 +23,7 @@ fr:
         director: Directeur
         field: Description
         school: Nom de l'institution
-        title: Titre
+        title: titre
         year_begin: de (année)
         year_end: à (année)
   educations:

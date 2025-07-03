@@ -3,7 +3,7 @@ en:
   publication:
     authors: Autor(s)
     journal: Journal
-    title: Title
+    title: title
     url: URL
     year: Year
   activerecord:
@@ -11,7 +11,7 @@ en:
       publication:
         authors: Autor(s)
         journal: Journal
-        title: Title
+        title: title
         url: URL
         year: Year
     errors:

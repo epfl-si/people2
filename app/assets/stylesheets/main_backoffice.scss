@@ -594,9 +594,9 @@ details {
     }
 
     input.radio-partial:checked+label {
-      box-shadow: inset 0 0 2px #ff8400;
+      box-shadow: inset 0 0 2px #ff0000;
       border-width: 0.20em;
-      border-bottom-color: #ff8400;
+      border-bottom-color: #ff0000;
 
       span {
         color: #000000;
@@ -604,8 +604,8 @@ details {
     }
 
     input.radio-none:checked+label {
-      box-shadow: inset 0 0 2px #555d58;
-      border-bottom-color: #555d58;
+      box-shadow: inset 0 0 2px #ff0000;
+      border-bottom-color: #ff0000;
       border-width: 0.20em;
 
       span {

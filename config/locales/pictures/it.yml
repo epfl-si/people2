@@ -25,4 +25,5 @@ it:
     pictures:
       title: ''
       currently_selected: ''
-    picture: {}
+    picture:
+      set_as_profile_picture: ''

@@ -28,13 +28,12 @@ en:
         success: Name modified succesfully
         error: Name could not be saved
       official:
-        instructions_html: You can ask to change your official name only if a corresponding
-          change was recorded at the Civil Registry Office due for example to a corrected
-          spelling of your first or last name, when affirming a gender identity, following
-          a marriage, divorce, adoption, or any other reason deemed legitimate by
-          the Civil Registry Office.<br/> Please send your request including a copy
-          of an official document attesting the change to your HR responsible for
-          it to be validated.
+        instructions_html: A request to modify your official name can only be made
+          if a change has been officially recorded by a Civil Registry Office (such
+          as a change in the spelling of your name, marriage, divorce, etc.). Please
+          submit your request directly to your HR representative for validation, along
+          with the necessary supporting documents (ID, passeport ...). This request
+          is subject to approval.
         status:
           unknown: Impossible to determine your status
           student:

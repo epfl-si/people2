@@ -105,12 +105,17 @@ Rails.application.routes.draw do
     resources :selectable_properties, except: %i[new create destroy show]
     resources :motds
     if Rails.env.development?
-      resources :translations, except: %i[new create destroy]
-      patch 'translations/:id/autotranslate', to: 'translations#autotranslate', as: 'translation_autotranslate'
-      patch 'translations/:id/propagate', to: 'translations#propagate', as: 'translation_propagate'
-      get 'apply_translations', to: 'translations#apply', as: 'apply_translations'
+      resources :translations, except: %i[new create destroy] do
+        patch 'autotranslate', on: :member
+        patch 'propagate', on: :member
+        collection do
+          get 'apply'
+          get 'export'
+        end
+      end
     end
   end
+  mount MissionControl::Jobs::Engine, at: "/admin/jobs"
 
   if Rails.env.production?
     root 'pages#homepage'
