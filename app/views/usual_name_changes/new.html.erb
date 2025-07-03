@@ -1,15 +1,24 @@
 <%= turbo_frame_tag "usual_name_change" do %>
 <% if @unc.present? %>
-  <p class="text-muted">
-    <%= t('.instructions_html') %>
-  </p>
-  <%= link_to t(".switch_to_official_request", default: "Demander une modification officielle"),
-            new_profile_name_change_request_path(@profile),
-            data: { turbo_stream: true },
-            class: "btn btn-danger" %>
   <%= turbo_frame_tag "usual_name_change_form" do %>
     <%= render "form" %>
   <% end %>
+    <p>
+    <strong><%= t('.title') %></strong>
+  </p>
+    <p class="alert alert-info">
+    <% if @profile.doctoral? %>
+      <strong><%= t('.status.phd.title') %> :</strong> <%= t('.status.phd.message_html') %>
+    <% elsif @profile.student? %>
+      <strong><%= t('.status.student.title') %> :</strong> <%= t('.status.student.message_html') %>
+        <%= link_to t(".switch_to_official_request"),
+            new_profile_name_change_request_path(@profile),
+            data: { turbo_stream: true },
+            class: "btn btn-danger" %>
+    <% else %>
+      <strong><%= t('.status.staff.title') %> :</strong> <%= t('.status.staff.message_html') %>
+    <% end %>
+  </p>
 <% else %>
   <p>
     <%= t('.fallback.content_html') %>
