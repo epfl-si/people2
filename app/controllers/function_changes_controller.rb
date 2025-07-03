@@ -25,7 +25,7 @@ class FunctionChangesController < ApplicationController
     @function_change = FunctionChange.new(pp)
     if @function_change.save
       @function_change.selected_accreditors.each_key do |as|
-        FunctionChangeMailer.with(
+        ProfileChangeMailer.with(
           function_change: @function_change,
           accreditor_sciper: as
         ).accreditor_request.deliver_later

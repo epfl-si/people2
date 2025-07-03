@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class ProfileChangeMailer < ApplicationMailer
-  def function_change_request(profile, reason)
-    @profile = profile
-    @reason  = reason
-    recipients = profile.accreditors.map(&:email)
-    mail(to: recipients, subject: "Demande de changement de fonction pour #{profile.name}")
+  def accreditor_request
+    @function_change = params[:function_change]
+    @accreditor_sciper = params[:accreditor_sciper]
+    @accreditor = Person.find_by(sciper: @accreditor_sciper)
+
+    mail(
+      to: @accreditor.email.to_s,
+      subject: t("mailer.function_change.subject", name: @function_change.accreditation.person.display_name)
+    )
   end
 
   def name_change_request
