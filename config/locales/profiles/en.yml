@@ -51,7 +51,7 @@ en:
       title:
         boxes_main: My curriculum
         boxes_contact: My professionnal data
-        details: My personal data (optional)
+        details: My personal data
         editing_languages: This profile is bilingual
         edit_language: 'Editing my profile in:'
         editing: 'Editing %{name}''s profile (sciper: %{sciper})'

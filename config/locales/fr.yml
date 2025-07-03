@@ -25,8 +25,8 @@ fr:
   translated_label: "%{label} en %{language}"
   messages:
     empty_orcid_help: Le lien apparaîtra dès la synchronisation de votre compte ORCID
-    function_change_explain: Pour changer votre fonction (titre), prière de contacter
-      un de vos accréditeurs ci-dessous, qui devra de valider la demande
+    function_change_explain: Pour changer votre fonction, prière de contacter un de
+      vos accréditeurs ci-dessous, qui devra de valider la demande
     function_change_exists: Une demande de modification a déjà été soumise. Veuillez
       contacter directement votre accréditeur
   generic:
@@ -52,7 +52,7 @@ fr:
     dismiss: Annuler
     edit: modifier
     edit_profile: Modifier le profil
-    go: Confirm
+    go: Valider
     help: help
     hide_search_form: Masquer le formulaire de recherche
     more: En savoir plus
