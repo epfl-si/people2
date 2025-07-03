@@ -39,6 +39,7 @@ it:
     delete: Elimina
     dismiss: Annulla
     edit_profile: ''
+    go: ''
     more: ''
     search: ''
     search_people: ''

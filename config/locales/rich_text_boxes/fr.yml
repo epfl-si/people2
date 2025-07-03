@@ -4,7 +4,7 @@ fr:
     attributes:
       rich_text_box:
         content: contenu
-        title: Titre
+        title: titre
   helpers:
     placeholder:
       rich_text_box: {}
