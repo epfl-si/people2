@@ -5,17 +5,17 @@
 module Admin
   class TranslationsController < BaseController
     before_action :set_admin_translation, only: %i[show edit update autotranslate propagate]
-    before_action :admin_only!, except: %i[index]
+    before_action :admin_only!, except: %i[export]
 
-    skip_before_action :require_authentication, only: %i[index]
+    skip_before_action :require_authentication, only: %i[export]
 
     # GET /admin/translations or /admin/translations.json
     def index
+      @translations = Admin::Translation.forui.todo.order(:en) # .limit(40)
+    end
+
+    def export
       respond_to do |format|
-        format.html do
-          # TODO: stats per file
-          @translations = Admin::Translation.forui.todo.order(:en) # .limit(40)
-        end
         format.zip do
           export_archive
         end
