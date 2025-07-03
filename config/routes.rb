@@ -101,6 +101,7 @@ Rails.application.routes.draw do
     get '/', to: 'dashboards#index', as: 'dashboard'
     resources :model_boxes, except: %i[new create destroy]
     resources :sections, except: %i[new create destroy]
+    resources :selectable_properties, except: %i[new create destroy show]
     resources :motds
     if Rails.env.development?
       resources :translations, except: %i[new create destroy]

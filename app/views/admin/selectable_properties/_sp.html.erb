@@ -1,0 +1,11 @@
+<tr>
+  <td><%= sp.property.titleize %></td>
+  <td><%= sp.label %></td>
+  <td>
+    <%= sp.name_en %><br/>
+    <%= sp.name_fr %>
+  </td>
+  <td>
+    <%= link_to icon("edit"), edit_admin_selectable_property_path(sp) %>
+  </td>
+</tr>
