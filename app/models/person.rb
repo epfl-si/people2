@@ -126,6 +126,7 @@ class Person
         if Rails.configuration.enable_adoption
           LegacyProfileImportJob.perform_now(sciper)
           @profile = Profile.for_sciper(sciper)
+          @profile ||= Profile.new_with_defaults(sciper)
         else
           @profile = Profile.new_with_defaults(sciper)
         end

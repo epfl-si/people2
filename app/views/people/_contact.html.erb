@@ -18,7 +18,7 @@
   <%= link_to t(".nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
 </p>
 </div>
-<% if @profile.t_nationality.present? && @profile.nationality_visible_by?(Current.audience) %>
+<% if @profile&.t_nationality.present? && @profile&.nationality_visible_by?(Current.audience) %>
 <p>
   <%= t ".nationality_label" %>: <%= @profile.t_nationality %>
 </p>
