@@ -3,7 +3,7 @@ en:
   activerecord:
     attributes:
       infoscience:
-        title: Title
+        title: title
         url: url
     errors:
       models:
@@ -18,7 +18,7 @@ en:
         url: https://infoscience-exports.epfl.ch/123456
     label:
       infoscience:
-        title: Title
+        title: title
         url: infoscience-exports url
   infosciences:
     edit:

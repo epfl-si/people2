@@ -424,7 +424,7 @@ nata_reinit_legacy: dcup
 
 ## Download the interface translations and update the corresponding source files
 nata_trans:
-	curl -o /tmp/aaa.zip -H "Authorization: Basic $$(echo -n $(TRANS_USER):$(TRANS_PASS) | base64)" "https://$(TRANS_HOST)/admin/translations.zip"
+	curl -o /tmp/aaa.zip -H "Authorization: Basic $$(echo -n $(TRANS_USER):$(TRANS_PASS) | base64)" "https://$(TRANS_HOST)/admin/translations/export.zip"
 	tar xvf /tmp/aaa.zip -C config
 	rm /tmp/aaa.zip
 

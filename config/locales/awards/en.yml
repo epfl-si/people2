@@ -6,7 +6,7 @@ en:
         category: Category
         issuer: granted by
         origin: Origin
-        title: Title
+        title: title
         url: url
         year: Year
   helpers:
@@ -23,7 +23,7 @@ en:
         category: Category
         issuer: granted by
         origin: Origin
-        title: Title
+        title: title
         url: url
         year: Year
   awards:

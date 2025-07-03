@@ -6,7 +6,7 @@ fr:
         category: Catégorie
         issuer: attribué par
         origin: Origine
-        title: Titre
+        title: titre
         url: url
         year: Année
   helpers:
@@ -17,12 +17,12 @@ fr:
         category: Catégorie
         issuer: attribué par
         origin: Origine
-        title: Titre
+        title: titre
         url: url
         year: Année
   awards:
     edit:
-      form_title: Modifier le bloc 'Awards'
+      form_title: Modifier le bloc 'Prix et distinctions'
     new:
       form_title: Ajouter un prix ou une distinction
     form:

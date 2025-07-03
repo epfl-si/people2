@@ -79,6 +79,9 @@ module People
 
     routes.default_url_options[:host] = config.app_hostname
 
+    config.mission_control.jobs.base_controller_class = "Admin::BaseController"
+    config.mission_control.jobs.http_basic_auth_enabled = false
+
     # This ~~is~~ was a cookie-free Web app!
     # Screw the EU, I don't see the difference between a cookie and an auth token.
     # config.middleware.delete ActionDispatch::Cookies

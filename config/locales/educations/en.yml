@@ -6,7 +6,7 @@ en:
         director: Director
         field: Description
         school: Issued by (institution)
-        title: Title
+        title: title
         year_begin: from year
         year_end: to year
   error:
@@ -32,7 +32,7 @@ en:
         director: Director
         field: Description
         school: Institution name
-        title: Title
+        title: title
         year_begin: from year
         year_end: to year
   educations:

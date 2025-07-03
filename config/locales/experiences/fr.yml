@@ -6,7 +6,7 @@ fr:
         description: Description
         location: Lieu
         period: période (en années)
-        title: Titre
+        title: titre
         year_begin: de (année)
         year_end: à (année)
     errors:
@@ -22,12 +22,12 @@ fr:
       experience:
         description: Description
         location: Entreprise, lieu ou institution
-        title: Titre
+        title: titre
         year_begin: de (année)
         year_end: à (année)
   experiences:
     edit:
-      form_title: Editing Work Experience
+      form_title: Modifier le bloc 'Expériences professionnelles'
     new:
       form_title: Ajouter une expérience professionnelle
     form:

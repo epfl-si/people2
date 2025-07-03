@@ -26,7 +26,7 @@ fr:
     add:
       add: Ajouter un profil de réseau social ou un identifiant de recherche
     edit:
-      form_title: Editing Research ID
+      form_title: Modifier un identifiant de recherche
     new:
       form_title: Ajouter un identifiant de recherche
     form:

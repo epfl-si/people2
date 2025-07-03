@@ -6,7 +6,7 @@ en:
         description: Description
         location: Location
         period: period (years)
-        title: Title
+        title: title
         year_begin: from year
         year_end: to year
     errors:
@@ -27,7 +27,7 @@ en:
       experience:
         description: Description
         location: Company, location or institution
-        title: Title
+        title: title
         year_begin: from year
         year_end: to year
   experiences:

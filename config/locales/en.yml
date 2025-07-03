@@ -25,8 +25,8 @@ en:
   translated_label: "%{label} in %{language}"
   messages:
     empty_orcid_help: The link will appear as soon as your ORCID account is synchronized
-    function_change_explain: To change your position (title), please contact one of
-      your accreditors listed below, who is authorized to approve the request
+    function_change_explain: To change your position, please contact one of your accreditors
+      listed below, who is authorized to approve the request
     function_change_exists: A change request has already been submitted. Please contact
       directly your accreditor
   generic:

@@ -25,4 +25,5 @@ fr:
     pictures:
       title: Ma photo
       currently_selected: Photo affichée
-    picture: {}
+    picture:
+      set_as_profile_picture: Choisir
