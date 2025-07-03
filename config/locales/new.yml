@@ -64,22 +64,6 @@ en:
   undefined: Not provided
   usual_name_changes:
     new:
-      fallback:
-        title: >
-          Your first and last names are composed of a single word. Therefore
-          it is not possible to create any other combination for your usual name.
-        content_html: >
-          If you wish to obtain an usual name that is not assembled from parts
-          that are present in your official name, please contact the
-          Office for Equal Opportunities (EGA) at
-          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
-          motivating your choice.
-      instructions_html: >
-        Please choose below from your existing names or surnames the one
-        you want to display.<br/>
-        If you wish to obtain an usual name that is not assembled from parts
-        that are present in your official name, please click the special request button below
-
     form:
       fallback_title: "Usual name can only have single value"
       available_first: "Available first names:"
@@ -147,13 +131,6 @@ fr:
         official: "Changer le nom officiel"
       usual:
         fallback_title: "Nom d’usage non modifiable"
-        instructions_html: >
-          Vous pouvez composer votre nom d’usage à partir des prénoms et noms
-          officiels enregistrés.<br/>
-          Si vous désirez afficher un prénom ou un nom d’usage ne figurant pas
-          dans vos documents officiels, prière de contacter le bureau EGA à
-          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
-          avec les informations nécessaires.
         available_first_names: "Prénoms disponibles :"
         available_last_names: "Noms disponibles :"
   socials:
@@ -166,18 +143,6 @@ fr:
       fallback:
         title: >
           Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré. Il est donc impossible de composer un nom d’usage personnalisé.
-        content_html: >
-          Si vous désirez afficher un prénom ou un nom d’usage ne figurant pas
-          dans vos documents officiels, prière de contacter le bureau EGA à
-          <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
-          avec les informations nécessaires.
-      instructions_html: >
-        Vous pouvez composer votre nom d’usage à partir des prénoms et
-        noms officiels enregistrés.<br/>
-        Si vous désirez afficher un prénom ou un nom d’usage ne figurant pas
-        dans vos documents officiels, prière de contacter le bureau EGA à
-        <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
-        avec les informations nécessaires.
     form:
       fallback_title: "Nom d’usage non modifiable"
       available_first: "Prénoms disponibles :"

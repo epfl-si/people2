@@ -1,0 +1,53 @@
+de:
+  profiles:
+    name_change:
+      request_title: "Anfrage zur Änderung des Rufnamens senden"
+      new_first: "Neuer Vorname"
+      new_last: "Neuer Nachname"
+      reason: "Grund für die Anfrage"
+      reason_hint: "Z. B.: Ich möchte, dass mein Rufname auf internen Plattformen erscheint."
+      submit: "Anfrage senden"
+      no_accreditor_found: "Keine zuständige Akkreditierungsstelle gefunden."
+      sent_title: "Anfrage gesendet"
+      sent_message: "Ihre Anfrage zur Änderung des Rufnamens wurde erfolgreich gesendet und wird bald bearbeitet."
+      flash_success: "Ihre Anfrage zur Änderung des Rufnamens wurde erfolgreich gesendet und wird bald bearbeitet."
+  usual_name_changes:
+    new:
+      title: "Personalisierte Anfrage für den Rufnamen"
+      switch_to_official_request: "Personalisierte Namensanfrage stellen"
+      status:
+        student:
+          title: "Studierende"
+          message_html: >
+            Klicken Sie auf die Schaltfläche unten, um die Anfrage zu stellen.<br/>
+            Ihre Anfrage wird anschließend vom Gleichstellungsbüro (VPH-WINC-EGA) geprüft.<br/>
+            <strong>Kontaktaufnahme und Validierung:</strong><br/>
+            Das EGA-Team wird sich mit Ihnen in Verbindung setzen, um einen persönlichen Termin zu vereinbaren.
+            Danach erhalten Sie eine offizielle Rückmeldung (positiv oder negativ).<br/>
+        phd:
+          title: "Doktorierende"
+          message_html: >
+            Kontaktieren Sie zunächst Ihre HR-Ansprechperson im Labor zur Validierung.<br/>
+            Danach senden Sie bitte eine E-Mail an <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>,
+            damit die Änderung in den akademischen Datenbanken übernommen wird.<br/>
+            Bei Fragen kontaktieren Sie bitte das EGA-Team unter:
+            <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+        staff:
+          title: "EPFL-Personal"
+          message_html: >
+            Ihre Anfrage muss von der HR-Person Ihrer Fakultät oder Vizepräsidentschaft validiert werden.<br/>
+            Die für Ihre Akkreditierung zuständige Person (ACCRED) wird die Änderungen im System vornehmen.<br/>
+            Bei Fragen kontaktieren Sie bitte das EGA-Team: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+  helpers:
+    label:
+      name_change_request:
+        new_first: "Neuer Vorname"
+        new_last: "Neuer Nachname"
+        reason: "Grund für die Anfrage"
+
+  activerecord:
+    attributes:
+      name_change_request:
+        new_first: "Cecilia"
+        new_last: "Payne-Gaposchkin"
+        reason: "Grund für die Anfrage"
