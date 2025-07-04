@@ -1,16 +1,33 @@
 <div id="new-picture-form" data-controller="image-cropper">
   <% if profile.pictures.count < Rails.application.config_for(:limits).max_profile_pictures %>
-  <%= form_with(model: [profile, Picture.new], local: false) do |form| %>
-    <div class="upload">
-      <%= form.label :image, class: "btn btn-secondary btn-sm icon-right" do %>
-        <%= t '.browse_image_file' %><%= icon("upload") %>
-      <% end %>
-      <%= form.file_field :image, class: "upload-input", onchange: "this.nextElementSibling.nextElementSibling.textContent = this.previousElementSibling.title = this.files[0].name; this.nextElementSibling.removeAttribute('disabled');" %>
-      <%= form.submit t(".upload_image"), disabled: true, class: "btn btn-primary btn-sm btn-upload" %>
-      <div class="upload-preview"></div>
-    </div>
+    <%= form_with(model: [profile, Picture.new], local: false) do |form| %>
+      <div class="upload">
+        <div id="upload-group">
+          <label class="btn btn-secondary btn-sm icon-right" id="file-label">
+            <%= t '.browse_image_file' %><%= icon("upload") %>
+            <%= form.file_field :image,
+                                class: "upload-input d-none",
+                                onchange: "
+                                  const file = this.files[0];
+                                  if (!file) return;
+                                  document.getElementById('file-label').style.display = 'none';
+                                  document.getElementById('submit-upload').style.display = 'inline-block';
+                                  document.getElementById('file-name').textContent = file.name;
+                                " %>
+          </label>
+        </div>
+
+        <p id="file-name" class="text-muted mt-2"></p>
+
+        <%= form.submit t('.upload_image'),
+                        class: "btn btn-primary btn-sm btn-upload",
+                        id: "submit-upload",
+                        style: "display: none;" %>
+
+        <div class="upload-preview"></div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="upload"><p><%= t '.max_photos_reached' %></p></div>
   <% end %>
-<% else %>
-<div class="upload"><p><%= t '.max_photos_reached' %></p></div>
-<% end %>
 </div>
