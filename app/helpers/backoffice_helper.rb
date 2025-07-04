@@ -281,6 +281,7 @@ module BackofficeHelper
     end
 
     safe_join [
+      tag.div("", id: "editor_overlay", class: "modal-overlay"),
       turbo_stream.update("editor") { tag.div(c, id: "editor_content") },
       turbo_stream.replace("flash-messages", partial: "shared/flash")
     ]
