@@ -128,6 +128,8 @@ gem 'openai', path: 'vendor/gems/openai-ruby'
 
 gem 'ostruct'
 
+gem "mission_control-jobs"
+
 # PaperTrail for tracking changes to models
 # https://github.com/paper-trail-gem/paper_trail
 gem 'paper_trail', '~> 16'
@@ -173,8 +175,6 @@ group :development do
   # TODO: I wanted to give google translate a try but I cannot figure out how to
   #       evaluate pricing and to generate the api key.
   # gem 'google-cloud-translate', '~> 3.2', '>= 3.2.2'
-
-  gem "mission_control-jobs"
 
   # Used to generate mock data:
   gem 'prime', '~> 0.1.2'
