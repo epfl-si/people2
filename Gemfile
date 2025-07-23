@@ -105,6 +105,13 @@ gem 'cld'
 
 gem 'csv'
 
+# Whilel waiting for an official solution, we use lograge to enable structured
+# logging.
+# https://github.com/roidrage/lograge
+# https://github.com/rails/rails/issues/50452
+# https://github.com/rails/rails/pull/55334
+gem "lograge"
+
 # Database adapters
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this
 # gem 'activerecord-oracle_enhanced-adapter', '~> 7.0.0'
@@ -171,6 +178,9 @@ group :development do
   gem 'bundler-audit'
 
   gem 'faker'
+
+  # Tried it but not very helpful. Keeping it for the moment for future memory
+  # gem 'log_bench'
 
   # TODO: I wanted to give google translate a try but I cannot figure out how to
   #       evaluate pricing and to generate the api key.

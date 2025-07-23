@@ -85,6 +85,12 @@ logs:
 llogs:
 	docker compose logs --since 10s -f
 
+# ## show TUI for reading structured logs (not very usefull IMHO but nice)
+# slogs:
+# 	docker compose exec -it webapp bundle exec log_bench log/structured.log
+slogs:
+	docker compose exec -it webapp tail -f log/structured.log
+
 ## show the status of running containers
 ps:
 	docker compose ps

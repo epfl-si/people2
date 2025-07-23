@@ -57,6 +57,15 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Logger
+  config.logger = ActiveSupport::Logger.new($stdout)
+  config.log_tags = [:request_id]
+
+  config.lograge.enabled = true
+  config.lograge.keep_original_rails_log = true
+  # In dev we keep both logs just to check how the structured one looks like
+  config.lograge.logger = ActiveSupport::Logger.new Rails.root.join("log/structured.log")
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
