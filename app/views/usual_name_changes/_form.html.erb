@@ -26,12 +26,12 @@
 
     <div class="row">
       <div class="col">
-        <label class="form-label"><%= t('.placeholder.usual_first') %></label>
+        <%= form_label(form, :usual_first) %>
         <div class="form-control d-flex flex-wrap gap-2 align-items-center" data-name-builder-target="firstInputField" style="min-height: 2.5rem;"></div>
         <%= form.hidden_field :new_first, value: "", data: { name_builder_target: "firstInput" } %>
       </div>
       <div class="col">
-        <label class="form-label"><%= t('.placeholder.usual_last') %></label>
+        <%= form_label(form, :usual_last) %>
         <div class="form-control d-flex flex-wrap gap-2 align-items-center" data-name-builder-target="lastInputField" style="min-height: 2.5rem;"></div>
         <%= form.hidden_field :new_last, value: "", data: { name_builder_target: "lastInput" } %>
       </div>
