@@ -289,6 +289,7 @@ module BackofficeHelper
 
   def dismiss_common_editor
     safe_join [
+      turbo_stream.remove("editor_overlay"),
       turbo_stream.update("editor") { "" },
       turbo_stream.replace("flash-messages", partial: "shared/flash")
     ]
