@@ -80,14 +80,14 @@ en:
         is not assembled from parts that are present in your official name, please
         contact the Office for Equal Opportunities (EGA) at <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
         motivating your choice.
-
         '
     form:
       fallback_title: Usual name can only have single value
       available_first: 'Available first names:'
       available_last: 'Available last names:'
       submit: Send the request
-      placeholder:
-        usual_first: Prénom d’usage souhaitée
-        usual_last: Nom d’usage souhaitée
-        instructions: ''
+  helpers:
+    label:
+      usual_name_change:
+        usual_first: Preferred first name
+        usual_last: Preferred family name
