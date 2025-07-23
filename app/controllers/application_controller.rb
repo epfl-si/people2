@@ -40,6 +40,10 @@ class ApplicationController < ActionController::Base
     Current.audience = @audience
   end
 
+  def current_user
+    Current.user
+  end
+
   private
 
   def load_and_authorize_profile
@@ -115,10 +119,10 @@ class ApplicationController < ActionController::Base
   # TODO: This is not the correct way of finding internal clients. The reliable
   # way is to check if X-EPFL-Internal header is set in the request.
   def intranet_client?
-    Rails.configuration.intranet_re.match?(request.remote_ip)
-  end
-
-  def current_user
-    Current.user
+    if headers.key? 'X-EPFL-Internal'
+      headers['X-EPFL-Internal'] == "TRUE"
+    else
+      Rails.configuration.intranet_re.match?(request.remote_ip)
+    end
   end
 end

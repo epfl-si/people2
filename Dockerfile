@@ -63,7 +63,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	pkg-config \
 	ldap-utils \
 	libmariadb-dev-compat libmariadb-dev \
-  libz-dev libssl-dev libffi-dev libyaml-dev \
+  libz-dev libssl-dev libffi-dev libyaml-dev libncurses-dev \
   && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -94,7 +94,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Entrypoint prepares the database.
 ENTRYPOINT ["/bin/bash", "/srv/app/bin/docker-entrypoint"]
 
-run apt-get update && apt-get install --no-install-recommends -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
 	redis && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000 9394
