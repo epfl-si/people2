@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  # expect a type Legacy::PostalAddress as input
+  def address(a)
+    tag.p(itemtype: "http://schema.org/Place") do
+      safe_join(
+        [
+          tag.strong(a.hierarchy, itemprop: "name"),
+          tag.br,
+          tag.span(safe_join(a.postal, tag.br), itemprop: "address")
+        ]
+      )
+    end
+  end
+
   # TODO: cleanup and use tag helpers consistently
   # forms for input phone: +41216937526, 0041216937526, 0216937526, 7526
   def phone_link(phone, opts = {})
