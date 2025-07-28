@@ -22,7 +22,7 @@ module WithSelectableProperties
                   inclusion: { in: send("#{prop}_ids"), message: :incorrect_type }
 
         define_method("t_#{prop}") do |_locale = I18n.locale|
-          send(sprop).t_name
+          send(prop).t_name
         end
       end
     end

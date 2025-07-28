@@ -1,11 +1,12 @@
 <table class="table table-sortable" data-tablesaw-sortable>
   <thead>
     <tr>
+      <th>Props</th>
       <th data-tablesaw-sortable-col>Kind</th>
       <th data-tablesaw-sortable-col>Subkind</th>
       <th data-tablesaw-sortable-col>Section</th>
-      <th data-tablesaw-sortable-col>Label</th>
-      <th data-tablesaw-sortable-col>Title</th>
+      <th>Label</th>
+      <th>Title</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -13,3 +14,11 @@
     <%= render partial: "admin/model_boxes/model_box", collection:  boxes %>
   </tbody>
 </table>
+
+<p class="small">
+  <%= icon('paperclip') %> standard / <%= icon('circle') %> optional
+  <br/>
+  <%= icon('eye') %> visible visible / <%= icon('eye-off') %> hidden title
+  <br/>
+  <%= icon('lock') %> locked title / <%= icon('edit-3') %> editable title
+</p>
