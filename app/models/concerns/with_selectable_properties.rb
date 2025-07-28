@@ -8,15 +8,13 @@ module WithSelectableProperties
   extend ActiveSupport::Concern
   included do
     def self.with_selectable_properties(*attributes)
+      cname = name.underscore
       attributes.each do |prop|
-        sprop = prop.to_s
-        cname = to_s.downcase
-
-        self.class.send(:define_method, sprop.pluralize) do
-          SelectableProperty.where(property: "#{cname}_#{sprop}")
+        define_singleton_method(sprop.pluralize) do
+          SelectableProperty.where(property: "#{cname}_#{prop}")
         end
-        self.class.send(:define_method, "#{sprop}_ids") do
-          SelectableProperty.where(property: "#{cname}_#{sprop}").map(&:id)
+        define_singleton_method("#{sprop}_ids") do
+          SelectableProperty.where(property: "#{cname}_#{prop}").map(&:id)
         end
 
         belongs_to prop, class_name: "SelectableProperty"
