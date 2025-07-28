@@ -14,6 +14,10 @@ class Address
     @from_default = data['fromdefault'].to_i != 0
   end
 
+  def postal
+    @lines[1..]
+  end
+
   def default?
     @from_default
   end

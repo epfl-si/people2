@@ -3,15 +3,7 @@
     <div class="d-flex pt-2 pb-2">
 
     <% unless accred.hidden_addr? || (a=@person.address(accred.unit_id)).nil? %>
-      <div class="flex-grow">
-        <p itemprop="location" itemscope="" itemtype="http://schema.org/Place">
-            <strong itemprop="name"><%= a.hierarchy %></strong>
-            <br>
-            <span itemprop="address">
-              <%= address(a) %>
-            </span>
-        </p>
-      </div>
+      <div class="flex-grow"><%= address(a) %></div>
     <% end %>
       <div>
         <% unless accred.hidden_addr? || (phones=@person.visible_phones(accred.unit_id)).nil? %>
@@ -40,4 +32,3 @@
     </div>
   <% end %>
 <% end %>
-

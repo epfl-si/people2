@@ -9,13 +9,6 @@ module LegacyHelper
     ].compact.join(', ').html_safe
   end
 
-  # expect a type Legacy::PostalAddress as input
-  def address(a)
-    # rubocop:disable Rails/OutputSafety
-    a.lines.map { |l| h l }.join('<br>').html_safe
-    # rubocop:enable Rails/OutputSafety
-  end
-
   def hierarchy_links(y)
     y.split(' ').map do |l|
       link_to(l, "https://search.epfl.ch/?filter=unit&acro=#{l}")
