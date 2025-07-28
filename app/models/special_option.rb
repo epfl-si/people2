@@ -2,6 +2,10 @@
 
 class SpecialOption < ApplicationRecord
   serialize :data, coder: YAML
+  before_validation :ensure_identifiers
+
+  validates :sciper, presence: true
+  validates :ns, presence: true
 
   def self.for_sciper_or_name(v)
     s = v.is_a?(Integer) || v =~ /^\d{6}$/ ? { sciper: v } : { ns: v }
@@ -12,9 +16,38 @@ class SpecialOption < ApplicationRecord
     self.class.name.gsub(/^Special/, '').downcase.to_sym
   end
 
-  # TODO: should we reload after save ?
+  # NOTE: since these are vary rare cases that almost never change, I wanted to
+  # avoid to load from the DB at each request or, even worse, for each profile
+  # The idea was to momoize the class variable for the lifetime of the application
+  # and refresh it with an after_save callback. The problem is that this won't
+  # work with multiple app instances as in production.
+  # Therefore, for the moment I do it request-wide so that we avoid repeating
+  # the request foreach profile when we have many (e.g. wsgetpeople). Probably
+  # useless because AR might already detect repeated requests.
+  # Another alternative is to add a `has_special_options` column in the profile
+  # so we avoid the request that we know will return empty. This would mean that
+  # only people aligible to have a profile can have special options which is not
+  # the case with the current implementation.
+  # @all_options ||= all.group_by(&:sciper)
+  # @all_options[sciper.to_s]
   def self.for(sciper)
-    @all_options ||= all.group_by(&:sciper)
-    @all_options[sciper]
+    Current.special_options ||= all.group_by(&:sciper)
+    Current.special_options[sciper.to_s]
+  end
+
+  private
+
+  def ensure_identifiers
+    return false if sciper.blank? && ns.blank?
+
+    begin
+      p = Person.find(sciper || ns)
+    rescue ActiveRecord::RecordNotFound
+      return false
+    end
+
+    self.ns = p.email_user
+    self.sciper = p.sciper
+    true
   end
 end
