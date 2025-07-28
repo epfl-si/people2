@@ -58,6 +58,8 @@ logs)
 esac
 done
 
+oc4
+
 if [ -n "$fun" ] ; then
   $fun
 else
