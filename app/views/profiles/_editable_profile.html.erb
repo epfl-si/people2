@@ -38,7 +38,21 @@
       <%= render "inclusivity/inclusivity_toggle", profile: @profile %>
     <% end %>
   </dd>
+
+  <dt><%= t "person.email" %></dt>
+  <dd>
+    <small>
+      <% unless profile.public_email == profile.email %>
+        <%= profile.public_email %>
+        &rarr;
+      <% end %>
+      <%= profile.email %>
+    </small>
+    <%= link_to icon('edit-3'), "https://ewa.epfl.ch/tools/default.aspx", target: "blank" %>
+  </dd>
+
 </dl>
+
 
 <%= turbo_frame_tag "profile_field_nationality" do %>
   <%= render "profiles/fields/field_nationality", profile: @profile %>

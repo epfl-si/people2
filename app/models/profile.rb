@@ -104,7 +104,7 @@ class Profile < ApplicationRecord
     where(sciper: sciper).first
   end
 
-  delegate :doctoral?, :gender, :name, :staff?, :student?, to: :person
+  delegate :doctoral?, :gender, :name, :staff?, :student?, :email, :public_email, to: :person
 
   # I have tried to put all these flags into a single
   def translations
