@@ -10,10 +10,10 @@ module WithSelectableProperties
     def self.with_selectable_properties(*attributes)
       cname = name.underscore
       attributes.each do |prop|
-        define_singleton_method(sprop.pluralize) do
+        define_singleton_method(prop.to_s.pluralize) do
           SelectableProperty.where(property: "#{cname}_#{prop}")
         end
-        define_singleton_method("#{sprop}_ids") do
+        define_singleton_method("#{prop}_ids") do
           SelectableProperty.where(property: "#{cname}_#{prop}").map(&:id)
         end
 
