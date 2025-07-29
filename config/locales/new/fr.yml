@@ -74,6 +74,13 @@ fr:
           avec les informations nécessaires.
 
           '
+      instructions_html: 'Vous pouvez composer votre nom d’usage à partir des prénoms
+        et noms officiels enregistrés.<br/> Si vous désirez afficher un prénom ou
+        un nom d’usage ne figurant pas dans vos documents officiels, prière de contacter
+        le bureau EGA à <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
+        avec les informations nécessaires.
+
+        '
     form:
       fallback_title: Nom d’usage non modifiable
       available_first: 'Prénoms disponibles :'
@@ -82,5 +89,5 @@ fr:
   helpers:
     label:
       usual_name_change:
-        usual_first: Prénom d’usage souhaitée
-        usual_last: Nom d’usage souhaitée
+        usual_first: Prénom d’usage à afficher
+        usual_last: Nom d’usage à afficher

@@ -1,53 +1,57 @@
+---
 it:
   profiles:
     name_change:
-      request_title: "Invia una richiesta di modifica del nome d’uso"
-      new_first: "Nuovo nome"
-      new_last: "Nuovo cognome"
-      reason: "Motivo della richiesta"
-      reason_hint: "Es. : Desidero che il mio nome d’uso appaia sulle piattaforme interne"
-      submit: "Invia la richiesta"
-      no_accreditor_found: "Nessun referente per l’accreditamento trovato."
-      sent_title: "Richiesta inviata"
-      sent_message: "La tua richiesta di modifica del nome d’uso è stata inviata con successo e sarà trattata a breve."
-      flash_success: "La tua richiesta di modifica del nome d’uso è stata inviata con successo e sarà trattata a breve."
+      request_title: Invia una richiesta di modifica del nome d’uso
+      new_first: Nuovo nome
+      new_last: Nuovo cognome
+      reason: Motivo della richiesta
+      reason_hint: 'Es. : Desidero che il mio nome d’uso appaia sulle piattaforme
+        interne'
+      submit: Invia la richiesta
+      no_accreditor_found: Nessun referente per l’accreditamento trovato.
+      sent_title: Richiesta inviata
+      sent_message: La tua richiesta di modifica del nome d’uso è stata inviata con
+        successo e sarà trattata a breve.
+      flash_success: La tua richiesta di modifica del nome d’uso è stata inviata con
+        successo e sarà trattata a breve.
   usual_name_changes:
     new:
-      title: "Richiesta personalizzata di nome d’uso"
-      switch_to_official_request: "Effettuare una richiesta personalizzata del nome"
+      title: Richiesta personalizzata di nome d’uso
+      switch_to_official_request: Effettuare una richiesta personalizzata del nome
       status:
         student:
-          title: "Studenti e studentesse"
-          message_html: >
-            Per effettuare la richiesta, clicca sul pulsante qui sotto.<br/>
+          title: Studenti e studentesse
+          message_html: 'Per effettuare la richiesta, clicca sul pulsante qui sotto.<br/>
             La richiesta verrà esaminata dall’Ufficio dell’uguaglianza (VPH-WINC-EGA).<br/>
-            <strong>Contatto e validazione:</strong><br/>
-            Il team EGA ti contatterà per un appuntamento in presenza per discutere della tua richiesta.
-            Riceverai in seguito una risposta ufficiale, positiva o negativa.<br/>
+            <strong>Contatto e validazione:</strong><br/> Il team EGA ti contatterà
+            per un appuntamento in presenza per discutere della tua richiesta. Riceverai
+            in seguito una risposta ufficiale, positiva o negativa.<br/>
+
+            '
         phd:
-          title: "Dottorandi e dottorande"
-          message_html: >
-            Contatta prima il referente RH del tuo laboratorio per convalidare la richiesta.<br/>
-            Successivamente invia un’email a <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
-            affinché la modifica venga registrata nei database accademici.<br/>
-            Il team EGA è disponibile per eventuali problemi:
-            <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+          title: Dottorandi e dottorande
+          message_html: 'Contatta prima il referente RH del tuo laboratorio per convalidare
+            la richiesta.<br/> Successivamente invia un’email a <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+            affinché la modifica venga registrata nei database accademici.<br/> Il
+            team EGA è disponibile per eventuali problemi: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
         staff:
-          title: "Personale EPFL"
-          message_html: >
-            La tua richiesta deve essere convalidata dalla persona RH della tua facoltà o vicepresidenza.<br/>
-            La persona responsabile della tua accreditazione (ACCRED) effettuerà le modifiche nel sistema.<br/>
+          title: Personale EPFL
+          message_html: 'La tua richiesta deve essere convalidata dalla persona RH
+            della tua facoltà o vicepresidenza.<br/> La persona responsabile della
+            tua accreditazione (ACCRED) effettuerà le modifiche nel sistema.<br/>
             Il team EGA è disponibile per ogni necessità: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+
+            '
   helpers:
     label:
       name_change_request:
-        new_first: "Nuovo nome"
-        new_last: "Nuovo cognome"
-        reason: "Motivo della richiesta"
-
+        new_first: Nuovo nome
+        new_last: Nuovo cognome
+        reason: Motivo della richiesta
   activerecord:
     attributes:
       name_change_request:
-        new_first: "Cecilia"
-        new_last: "Payne-Gaposchkin"
-        reason: "Motivo della richiesta"
+        new_first: Cecilia
+        new_last: Payne-Gaposchkin
+        reason: Motivo della richiesta

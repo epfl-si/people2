@@ -44,7 +44,7 @@ fr:
     issues: problèmes
     version: v. %{version}
   action:
-    add: Ajouter un bloc de texte
+    add: Ajouter du contenu
     add_record: Ajouter %{name}
     cancel: Annuler
     confirm: Confirmer votre choix
@@ -183,7 +183,7 @@ fr:
       less_than: doit être inférieur à %{count}
       untranslatable: obligatoire
       incorrect_type: La valeur n'est pas correcte
-      cannot_hide_all_accreds: UNE affiliation au minimum doit rester disponible publiquement
+      cannot_hide_all_accreds: UNE fonction au minimum doit rester disponible publiquement
   activerecord:
     models:
       achievement: Accomplissement annuel

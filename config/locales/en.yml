@@ -45,7 +45,7 @@ en:
     issues: issues
     version: v. %{version}
   action:
-    add: Add a text bloc
+    add: Add a content bloc
     add_record: Add another %{name}
     cancel: Cancel
     confirm: Please comfirm
@@ -184,7 +184,7 @@ en:
       less_than: must be smaller than %{count}
       untranslatable: mandatory
       incorrect_type: Invalid value
-      cannot_hide_all_accreds: At least ONE affiliation must remain publicly available.
+      cannot_hide_all_accreds: At least ONE position must remain publicly available.
   activerecord:
     models:
       achievement: Annual achievement

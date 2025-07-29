@@ -11,8 +11,8 @@ fr:
     phone: No de téléphone principal
     photo: Photo de profil
     title: titre
-    usual_firstname: Prénom usuel
-    usual_lastname: Prénom usuel
+    usual_firstname: Prénom d'usage
+    usual_lastname: Prénom d'usage
     website: Adresse du site web personnel
   people:
     adopt:
