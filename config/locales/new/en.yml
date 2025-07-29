@@ -87,6 +87,9 @@ en:
       available_first: 'Available first names:'
       available_last: 'Available last names:'
       submit: Send the request
+      placeholder:
+        usual_first: Prénom d’usage souhaitée
+        usual_last: Nom d’usage souhaitée
   helpers:
     label:
       usual_name_change:
