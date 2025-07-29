@@ -31,7 +31,7 @@ module Admin
         :help_en, :help_fr, :help_it, :help_de,
         :description_fr, :description_en, :description_it, :description_de,
         :standard, :show_title, :locked_title,
-        :section, :max_copies
+        :section_id, :max_copies
       )
     end
   end
