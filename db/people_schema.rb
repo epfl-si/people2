@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2028_06_25_123221) do
+ActiveRecord::Schema[8.0].define(version: 2028_06_25_123222) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -181,6 +181,8 @@ ActiveRecord::Schema[8.0].define(version: 2028_06_25_123221) do
     t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_educations_on_category_id"
     t.index ["profile_id", "position"], name: "index_educations_on_profile_id_and_position", unique: true
     t.index ["profile_id"], name: "index_educations_on_profile_id"
   end

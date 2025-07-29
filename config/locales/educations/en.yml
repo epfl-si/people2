@@ -29,6 +29,7 @@ en:
         school: Princeton University
     label:
       education:
+        category: Type
         director: Director
         field: Description
         school: Institution name

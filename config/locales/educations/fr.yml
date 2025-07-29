@@ -20,6 +20,7 @@ fr:
       education: {}
     label:
       education:
+        category: Type
         director: Directeur
         field: Description
         school: Nom de l'institution

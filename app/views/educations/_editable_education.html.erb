@@ -7,7 +7,7 @@
           <%= tag_for_localized_attr "div", education, "field" %>
         </div>
         <p class="text-muted small mb-0">
-          <%= period_text(education.year_begin, education.year_end) %> <%= education.school %>
+          <%= period_text(education.year_begin, education.year_end) %>: <%= education.t_category %> / <%= education.school %>
           <br>
           <%= t("educations.directedby")%> <%= education.director.presence || t("general.not_available") %>
         </p>

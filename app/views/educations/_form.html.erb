@@ -1,6 +1,8 @@
 <%= form_with(model: [profile, education], local: false, class: "instaform") do |form| %>
   <%= render "shared/form_errors", item: education if education.errors.any? %>
 
+  <%= property_select(form, :category, Education.categories, required: true) %>
+
   <%= translated_text_fields(form, :title, required: true) %>
   <%= translated_text_fields(form, :field) %>
 
