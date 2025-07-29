@@ -1,53 +1,56 @@
+---
 en:
   profiles:
     name_change:
-      request_title: "Submit a request to change usual name"
-      new_first: "New first name"
-      new_last: "New last name"
-      reason: "Reason for the request"
-      reason_hint: "E.g.: I would like my usual first name to appear on internal platforms"
-      submit: "Submit request"
-      no_accreditor_found: "No accreditor found."
-      sent_title: "Request sent"
-      sent_message: "Your request to change your usual name has been successfully sent and will be processed shortly."
-      flash_success: "Your request to change your usual name has been successfully sent and will be processed shortly."
+      request_title: Submit a request to change usual name
+      new_first: New first name
+      new_last: New last name
+      reason: Reason for the request
+      reason_hint: 'E.g.: I would like my usual first name to appear on internal platforms'
+      submit: Submit request
+      no_accreditor_found: No accreditor found.
+      sent_title: Request sent
+      sent_message: Your request to change your usual name has been successfully sent
+        and will be processed shortly.
+      flash_success: Your request to change your usual name has been successfully
+        sent and will be processed shortly.
   usual_name_changes:
     new:
-      title: "Personalized usual name request"
-      switch_to_official_request: "Make a personalized name request"
+      title: Personalized usual name request
+      switch_to_official_request: Make a personalized name request
       status:
         student:
-          title: "Students"
-          message_html: >
-            To submit a request, click the button below.<br/>
-            Your request will then be reviewed by the Equal Opportunities Office (VPH-WINC-EGA).<br/>
-            <strong>Contact and validation:</strong><br/>
-            The EGA team will contact you to arrange an in-person meeting to discuss your request.
-            You will then receive an official response, either positive or negative.<br/>
+          title: Students
+          message_html: 'To submit a request, click the button below.<br/> Your request
+            will then be reviewed by the Equal Opportunities Office (VPH-WINC-EGA).<br/>
+            <strong>Contact and validation:</strong><br/> The EGA team will contact
+            you to arrange an in-person meeting to discuss your request. You will
+            then receive an official response, either positive or negative.<br/>
+
+            '
         phd:
-          title: "PhD Candidates"
-          message_html: >
-            First, contact the HR representative of your lab to validate your request.<br/>
-            Once validated, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
-            so that the change can be registered in the academic databases.<br/>
-            If needed, the EGA team is available at:
-            <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+          title: PhD Candidates
+          message_html: 'First, contact the HR representative of your lab to validate
+            your request.<br/> Once validated, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+            so that the change can be registered in the academic databases.<br/> If
+            needed, the EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
         staff:
-          title: "EPFL Staff"
-          message_html: >
-            Your request must be validated by the HR person of your faculty or vice presidency.<br/>
-            The person responsible for your accreditation (ACCRED) will carry out the changes in the system.<br/>
-            If needed, the EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+          title: EPFL Staff
+          message_html: 'Your request must be validated by the HR person of your faculty
+            or vice presidency.<br/> The person responsible for your accreditation
+            (ACCRED) will carry out the changes in the system.<br/> If needed, the
+            EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+
+            '
   helpers:
     label:
       name_change_request:
-        new_first: "New first name"
-        new_last: "New last name"
-        reason: "Reason for the request"
-
+        new_first: New first name
+        new_last: New last name
+        reason: Reason for the request
   activerecord:
     attributes:
       name_change_request:
-        new_first: "Cecilia"
-        new_last: "Payne-Gaposchkin"
-        reason: "Reason for the request"
+        new_first: Cecilia
+        new_last: Payne-Gaposchkin
+        reason: Reason for the request
