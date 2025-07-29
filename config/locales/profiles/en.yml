@@ -4,7 +4,8 @@ en:
     available_languages: Available languages
     expertise: Expertises
     nationality: Nationality
-    official_name: Name & Surname
+    name: Name
+    official_name: Official Name
     personal_web_url: Personal web page url
     personal_phone: Personal phone number
     usual_name: Usual Name
