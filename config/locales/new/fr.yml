@@ -86,6 +86,9 @@ fr:
       available_first: 'Prénoms disponibles :'
       available_last: 'Noms disponibles :'
       submit: Envoyer la demande
+      placeholder:
+        usual_first: Prénom d’usage souhaitée
+        usual_last: Nom d’usage souhaitée
   helpers:
     label:
       usual_name_change:

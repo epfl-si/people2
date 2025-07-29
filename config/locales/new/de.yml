@@ -33,6 +33,7 @@ de:
         title: ''
     form:
       submit: ''
+      placeholder: {}
   helpers:
     label:
       usual_name_change:
