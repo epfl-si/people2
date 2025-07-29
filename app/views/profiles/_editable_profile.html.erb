@@ -41,13 +41,11 @@
 
   <dt><%= t "person.email" %></dt>
   <dd>
-    <small>
-      <% unless profile.public_email == profile.email %>
-        <%= profile.public_email %>
-        &rarr;
-      <% end %>
-      <%= profile.email %>
-    </small>
+    <% unless profile.public_email == profile.email %>
+      <%= profile.public_email %>
+      &rarr;
+    <% end %>
+    <%= profile.email %>
     <%= link_to icon('edit-3'), "https://ewa.epfl.ch/tools/default.aspx", target: "blank" %>
   </dd>
 
