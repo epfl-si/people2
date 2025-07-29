@@ -4,7 +4,8 @@ fr:
     available_languages: Langues à choix
     expertise: Expertises
     nationality: Nationalité
-    official_name: Prénom & nom
+    name: Prénom & nom
+    official_name: Nom officiel
     personal_web_url: Adresse du site web personnel
     personal_phone: Numéro de téléphone personnel
     usual_name: Nom d'usage
