@@ -14,7 +14,8 @@ class EducationsController < ApplicationController
 
   # GET /profile/profile_id/educations/new
   def new
-    @education = @profile.educations.new
+    o = Education.categories.where(label: 'other').first
+    @education = @profile.educations.new(category: o)
   end
 
   # GET /educations/1/edit
@@ -59,7 +60,8 @@ class EducationsController < ApplicationController
   def education_params
     params.require(:education).permit(
       :title_en, :title_fr, :field_en, :field_fr, :director, :school,
-      :year_begin, :year_end, :position, :visibility, :description_fr, :description_en
+      :year_begin, :year_end, :position, :visibility, :description_fr, :description_en,
+      :category_id
     )
   end
 end

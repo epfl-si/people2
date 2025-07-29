@@ -19,6 +19,7 @@ it:
       education: {}
     label:
       education:
+        category: Type
         director: Director
         field: Field
         school: School

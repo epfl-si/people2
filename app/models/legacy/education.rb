@@ -33,5 +33,32 @@ module Legacy
         [yb, ye]
       end
     end
+
+    RE_PDO = Regexp.new("Post.*[Dd]oc")
+    RE_PHD = Regexp.new(
+      "Ph\.?[dD]\.?|Doctor of (Ph|Sc)|DPhil|(Docteur|Dr\.?) .* [sS]c(\.|iences)|Doctorat|Dr\."
+    )
+    RE_MAS = Regexp.new("MSc?|Ms\.Sc\.|Master|Graduate|MPhil|MAS?|DEA|M\.S\.")
+    RE_BAC = Regexp.new("Bachel|B\.?Sc|B\.?Arch|B\.?Eng|BA|B\.?S\.?|S\.B\.|Architecte EPFL|Dipl.*Ing")
+    RE_MAT = Regexp.new("Maturit|Baccala|High School")
+    RE_CFC = Regexp.new("CFC|Brevet f.*d.*ral")
+    def guess_category
+      case "#{title} #{field}"
+      when RE_PDO
+        "postdoc"
+      when RE_PHD
+        "phd"
+      when RE_MAS
+        "master"
+      when RE_BAC
+        "bachelor"
+      when RE_MAT
+        "matu"
+      when RE_CFC
+        "cfc"
+      else
+        "other"
+      end
+    end
   end
 end

@@ -45,6 +45,10 @@ class LegacyProfileImportJob < ApplicationJob
     @award_orig ||= SelectableProperty.award_origin.index_by(&:label)
   end
 
+  def education_cats
+    @education_cats ||= SelectableProperty.education_category.index_by(&:label)
+  end
+
   def achievement_cats
     @achievement_cats ||= SelectableProperty.achievement_category.index_by(&:label)
   end
@@ -262,6 +266,8 @@ class LegacyProfileImportJob < ApplicationJob
           year_end: le.year_end,
           visibility: AudienceLimitable::VISIBLE
         )
+        c = education_cats[le.guess_category] || education_cats["other"]
+        e.category = c
         e.send("title_#{lang}=", le.title)
         e.send("field_#{lang}=", le.field) if le.field.present?
         e.director = le.director if le.director.present?

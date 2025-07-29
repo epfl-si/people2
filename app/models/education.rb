@@ -4,6 +4,8 @@ class Education < ApplicationRecord
   include AudienceLimitable
   include Translatable
   include IndexBoxable
+  include WithSelectableProperties
+  with_selectable_properties :category
 
   belongs_to :profile
   positioned on: :profile

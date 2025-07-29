@@ -13,7 +13,7 @@ class SelectableProperty < ApplicationRecord
     "#{property.titleize} | #{label}"
   end
 
-  # TODO: we might need to refresh after save
+  # TODO: get rid of this "preventive optimization" shit
   def self.all_by_property
     @all_by_property ||= all.group_by(&:property)
   end
@@ -32,5 +32,9 @@ class SelectableProperty < ApplicationRecord
 
   def self.motd_category
     all_by_property['motd_category']
+  end
+
+  def self.education_category
+    all_by_property['education_category']
   end
 end
