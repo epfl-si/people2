@@ -5,11 +5,12 @@ en:
       help:
         help: Help
         help_for: About %{title}
-    title:
-      multilang: Profile localization
-    content:
-      multilang_html: |
-        <p>
-        You can chose if you want your profile to be <em>multilanguage</em> or
-        to make it available only in a single language of your choice.
-        </p>
+    ui:
+      multilang:
+        title: Profile localization
+        content_heml: |
+          <p>You can chose if you want your profile to be <em>multilanguage</em> or
+          to make it available only in a single language of your choice.
+          </p><p>When you chose to have it <em>multilanguage</em>, please make sure that
+          all translatable elements are present in <strong>at least</strong> one
+          of the languages.</p>

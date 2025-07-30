@@ -1,0 +1,69 @@
+---
+fr:
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first:
+              not_in_official: Utiliser uniquement un prénom figurant dans vos prénoms
+                officiels
+            usual_last:
+              not_in_official: Utiliser uniquement un nom figurant dans vos noms officiels
+  activerecord:
+    errors:
+      messages:
+        blank: doit être renseigné
+        cannot_hide_all_accreds: UNE fonction au minimum doit rester disponible publiquement
+        greater_than: doit être supérieur à %{count}
+        incorrect_type: La valeur n'est pas correcte
+        invalid: n'est pas correct
+        less_than: doit être inférieur à %{count}
+        record_invalid: 'Une erreur s''est produite : %{errors}'
+        required: Obligatoire
+        restrict_dependent_destroy:
+          has_one: Impossible de supprimer la donnée car une %{record} dépend d'elle
+          has_many: Impossible de supprimer la donnée car des %{record} dépendent d'elle
+        taken: Elément existant (non dublicable)
+        untranslatable: obligatoire
+      models:
+        experience:
+          attributes:
+            base:
+              missing_year: Dates de début ET de fin obligatoires
+        infoscience:
+          attributes:
+            url:
+              invalid_format: 'Erreur de saisie: l''URL doit commencer par https://infoscience-exports.epfl.ch/....'
+              taken: L'entrée (url) existe déjà
+        picture:
+          attributes:
+            base:
+              undeletable: La photo CAMIPRO n'est pas supprimable
+        profile:
+          attributes:
+            expertise_en:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            expertise_fr:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            expertise_ir:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            expertise_de:
+              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+            personal_web_url:
+              invalid_url: L’URL doit commencer par https://...
+            personal_phone:
+              invalid_phone: Le numéro doit être valide (ex. +41 79 123 45 67).
+        publication:
+          attributes:
+            year:
+              not_a_number: n'est pas un nombre
+  error:
+    one: Erreur
+    other: Erreurs
+    record:
+      zero: >
+        Une erreur s'est produite, veuillez réessayer plus tard (ou le signaler
+        au 1234@epfl.ch)
+      one: Merci de corriger les champs en erreur
+      other: "Echec de mise à jour. Prière de corriger les %{count} erreurs suivantes"

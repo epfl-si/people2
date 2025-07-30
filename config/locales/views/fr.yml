@@ -3,6 +3,40 @@ fr:
   accreds:
     index:
       title: Mes fonctions et rattachements (accréditation)
+  achievements:
+    edit:
+      form_title: Editing Achievement
+    new:
+      form_title: Ajouter un nouveau succès
+    form:
+      category: Catégorie
+      description: Description
+      url: url
+      year: Année
+      help:
+        category: Menu déroulant
+  awards:
+    edit:
+      form_title: Modifier le bloc 'Prix et distinctions'
+    new:
+      form_title: Ajouter un prix ou une distinction
+    form:
+      help:
+        category: Menu déroulant
+        origin: Menu déroulant
+  educations:
+    directedby: Dirigée par
+    edit:
+      form_title: Modifier le bloc 'Education'
+    new:
+      form_title: Ajouter une formation (diplôme)
+    form:
+      period: période (en années)
+  experiences:
+    edit:
+      form_title: Modifier le bloc 'Expériences professionnelles'
+    new:
+      form_title: Ajouter une expérience professionnelle
   footer:
     follow:
       us: Suivez l'EPFL sur les réseaux sociaux
@@ -18,4 +52,193 @@ fr:
     back_to_the_top: Retour en haut de page
   function_changes:
     form:
-      function: Nouvelle fonction
+      explain: >
+        Pour changer votre fonction, prière de contacter un de
+        vos accréditeurs ci-dessous, qui devra de valider la demande
+    new:
+      form_title: "Demande de changement de fonction"
+  inclusivity:
+    inclusivity_toggle:
+      enabled: "Oui"
+      disabled: "Non"
+  infosciences:
+    edit:
+      form_title: Modifier le lien vers la collection Infoscience
+    new:
+      form_title: Ajouter un lien vers une collection Infoscience
+  people:
+    adopt:
+      confirm: Mettre en ligne la nouvelle version de mon profil
+      explain: 'Nouvelle version du profil: cliquer pour l''activer (opération irréversible)'
+    admin_data:
+      title: Données administratives
+      sciper: Numéro SCIPER
+      sap: SAP ID
+      username: Nom d'utilisateur
+      gid: GID
+      uid: UID
+      home: Home directory
+      shell: Shell
+    contact:
+      nationality_label: Nationalité
+      nav:
+        atari: Données administratives
+        vcard: vCard
+    show:
+      title:
+        teaching: Enseignement
+    teaching:
+      title:
+        courses: Cours
+        current_phd: Doctorant·es actuel·les
+        past_phd: A dirigé les thèses EPFL de
+        teaching: Enseignement & PhD
+        past_phd_students: A dirigé les thèses EPFL de
+  pictures:
+    form:
+      selected: sélectionné
+      camipro: Camipro
+      failed_attempts: Nombre d'erreur pour récupérer la photo CAMIPRO
+      browse_image_file: Selectionner une photo
+      max_photos_reached: Nombre maximum de photo atteint
+      no_photofile_selected: Aucune photo sélectionnée
+      upload_image: Télécharger
+    picture:
+      set_as_profile_picture: Choisir
+    pictures:
+      title: Ma photo
+      currently_selected: Photo affichée
+  profiles:
+    edit:
+      title:
+        boxes_main: Mon curriculum
+        boxes_contact: Mes informations professionnelles
+        details: Mes données personnelles
+        editing_languages: Ce profil est bilingue
+        edit_language: 'Modifier mon profil en :'
+        editing: 'Edition du profil de %{name} (sciper: %{sciper})'
+        editing_language: Modifier
+    edit_languages:
+      explain_html: |
+        Vous pouvez sélectionner ici les langues dans lesquelles votre profil
+        sera disponible. Pour chaque langue choisie, vous devrez fournir une
+        traduction.<br/>
+        En l’absence de traduction pour une langue donnée, le contenu existant
+        sera utilisé par défaut.
+      title: Traductions du profil
+    inline_languages_form:
+      title: 'Mon profil en :'
+    languages_form:
+      translations: Traductions du profil
+      en_enabled: Profil disponible en anglais
+      fr_enabled: Profil disponible en français
+      it_enabled: Profil disponible en italien
+      de_enabled: Profil disponible en allemand
+      action:
+        submit: Enregister
+    name_change:
+      edit:
+        select:
+          title: "Changer votre nom"
+          usual: "Changer le nom d’usage"
+          official: "Changer le nom officiel"
+      official:
+        instructions_html: >
+          La demande de modification de votre nom officiel n’est
+          possible que si un changement a été officiellement enregistré auprès d’un
+          Office de l’État civil (changement d’orthographe, mariage, divorce, ...).
+          Merci d’adresser directement votre demande à votre responsable RH pour validation,
+          en y joignant les justificatifs nécessaires (pièce d’identité, document
+          d’état civil, etc.). Cette demande reste soumise à approbation.
+        status:
+          student:
+            title: "Étudiant·e"
+            message_html: >
+              Vous devez vous adresser au Guichet étudiant avec une copie de vos papiers d’identité pour demander ce changement.
+          phd:
+            title: "Doctorant·e"
+            message_html: >
+              Veuillez d’abord contacter le représentant RH de votre laboratoire. Une fois la demande validée,
+              envoyez un e-mail à <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a> pour que le changement soit pris en compte dans la base académique.
+          staff:
+            title: "Personnel EPFL"
+            message_html: >
+              La demande doit être validée par la/le responsable RH de votre faculté ou vice-présidence.
+              Les changements sont ensuite effectués dans les systèmes.
+      usual:
+        fallback_title: "Nom d’usage non modifiable"
+        available_first_names: "Prénoms disponibles :"
+        available_last_names: "Noms disponibles :"
+      todo:
+        request_title: Envoyer une demande de changement de nom d'usage
+        new_first: Nouveau prénom
+        new_last: Nouveau nom
+        reason: Motif de la demande
+        reason_hint: 'Ex. : Souhait de faire apparaître mon prénom usuel sur les plateformes
+          internes'
+        submit: Envoyer la demande
+        no_accreditor_found: Aucun·e accréditrice·teur trouvé·e.
+        sent_title: Demande envoyée
+        sent_message: Votre demande de changement de nom usuel a bien été envoyée et
+          sera traitée prochainement.
+        flash_success: Votre demande de changement de nom usuel a bien été envoyée et
+          sera traitée prochainement.
+        email_change_html: >
+          Une fois le changement validé, vous pourrez également modifier votre adresse e-mail.
+          <br> En cas de problème, contactez : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.
+        flash:
+          success: "Nom modifié avec succès."
+          error: "Échec de la mise à jour du nom."
+  socials:
+    add:
+      add: Ajouter un profil de réseau social ou un identifiant de recherche
+    form:
+      new: Nouveau %{label}
+      edit: Edition du %{label}
+    # action:
+    #   add_social: Ajouter un lien vers un réseau social
+    #   more: En savoir plus
+  usual_name_changes:
+    form:
+      available_first: 'Prénoms disponibles :'
+      available_last: 'Noms disponibles :'
+      instructions_html: >
+        Vous pouvez composer votre nom d’usage à partir des prénoms
+        et noms officiels enregistrés.
+      fallback_title: "Nom d’usage non modifiable"
+      submit: "Send the request"
+    new:
+      fallback:
+        title: >
+          Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré.
+          Il est donc impossible de composer un nom d’usage personnalisé.
+        content_html: >
+          Si vous désirez afficher un prénom ou un nom d’usage ne figurant
+          pas dans vos documents officiels, prière de contacter le bureau EGA à <a
+          href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
+          avec les informations nécessaires.
+      title_custom: Demande personnalisée de nom usuel
+      title_standard: Personalisation self-service de nom usuel
+      switch_to_official_request: Faire une demande personnalisée de nom
+      status:
+        student:
+          title: Étudiantes et étudiants
+          message_html: 'Pour effectuer la demande, cliquez sur le bouton ci-dessous.<br/>
+            Ensuite, votre demande sera examinée par l’équipe du Bureau de l’égalité
+            (VPH-WINC-EGA).<br/> <strong>Prise de contact et validation :</strong><br/>
+            L’équipe EGA vous contactera pour un rendez-vous en présentiel afin de
+            discuter de votre demande. Vous recevrez ensuite une réponse officielle,
+            positive ou négative.'
+        phd:
+          title: Doctorantes et doctorants
+          message_html: 'Contactez d’abord la personne RH de votre laboratoire pour
+            valider la demande.<br/> Une fois cette étape effectuée, envoyez un e-mail
+            à <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a> pour
+            que le changement soit pris en compte dans les bases de données académiques.<br/>
+            L’équipe EGA est à disposition en cas de besoin : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
+        staff:
+          title: Personnel EPFL
+          message_html: 'Votre demande doit être validée par la personne RH de votre
+            faculté ou vice-présidence.<br/> La personne responsable de votre accréditation
+            (ACCRED) effectuera les changements dans le système.<br/> L’équipe EGA
+            est à disposition en cas de besoin : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'

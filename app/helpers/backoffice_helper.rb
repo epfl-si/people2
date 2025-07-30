@@ -11,7 +11,8 @@ module BackofficeHelper
   end
 
   def label_and_help(form, attr, label: nil, help: nil, **opts)
-    tlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    oattr = "#{form.object.model_name.element}.#{attr}"
+    tlabel = label ? t(label) : t("attr_labels.#{oattr}", default: t("activerecord.attributes.#{oattr}"))
     ahelp = help || t("generic.form.texfield_for", attr: tlabel)
     tlabel = "#{tlabel} *" if opts[:required]
     [tlabel, ahelp]
@@ -106,8 +107,9 @@ module BackofficeHelper
     form, attr, label: nil, help: nil, show_label: true, **opts
   )
     translations = translations_for(form.object)
-    btlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
 
+    oattr = "#{form.object.model_name.element}.#{attr}"
+    btlabel = label ? t(label) : t("helpers.label.#{oattr}", default: t("activerecord.attributes.#{oattr}"))
     monolang = (translations.count == 1)
     required = monolang ? opts[:required] : opts.delete(:required)
 
@@ -117,8 +119,8 @@ module BackofficeHelper
       # Attribute for language l
       tattr = "#{attr}_#{l}"
       # Translated label for language l
-      tlabel = t("translated_label", language: tlang, label: btlabel)
-      ahelp = help || t("generic.form.translated_texfield_for", language: tlang, attr: tlabel)
+      tlabel = t("generic.form.translated_label", language: tlang, label: btlabel)
+      ahelp = help || t("generic.form.translated_textfield_for", language: tlang, attr: tlabel)
       tlabel = safe_join([tlabel, mandatory(translated: !monolang)]) if required
       c = []
       c << form.label(tattr, tlabel) if show_label
@@ -130,13 +132,14 @@ module BackofficeHelper
 
   def translated_rich_text_areas(form, attr, label: nil, help: nil, show_label: true, **opts)
     translations = translations_for(form.object)
-    btlabel = t(label || "helpers.label.#{form.object.model_name.element}.#{attr}")
+    oattr = "#{form.object.model_name.element}.#{attr}"
+    btlabel = label ? t(label) : t("helpers.label.#{oattr}", default: t("activerecord.attributes.#{oattr}"))
 
     content = []
     translations.each do |l|
       tlang = t("lang.#{l}")
       tattr = "#{attr}_#{l}"
-      tlabel = t("translated_label", language: tlang, label: btlabel)
+      tlabel = t("generic.form.translated_label", language: tlang, label: btlabel)
       c = []
       c << form.label(tlabel) if show_label
       c << rich_text_input(form, tattr)
@@ -179,7 +182,7 @@ module BackofficeHelper
     if v.blank?
       a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
       l = t("lang.#{locale}")
-      v = t("no_attribute_for_locale", attribute: a, language: l)
+      v = t("generic.no_attribute_for_locale", attribute: a, language: l)
     end
     v
   end
@@ -193,7 +196,7 @@ module BackofficeHelper
       if v.blank?
         a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
         l = t("lang.#{l}")
-        v = t("no_attribute_for_locale", attribute: a, language: l)
+        v = t("generic.no_attribute_for_locale", attribute: a, language: l)
         params[:class] << " user_translation_missing"
       end
       content_tag(tag_name, v, params)
@@ -314,7 +317,12 @@ module BackofficeHelper
 
   def add_record_button(url, name: nil)
     tag.div(class: "row justify-content-center add-buttons") do
-      label_text = name.nil? ? t('action.add') : t('action.add_record', name: t("activerecord.models.#{name}"))
+      label_text = if name.nil?
+                     t('action.add_record')
+                   else
+                     t('action.add_named_record',
+                       name: t("activerecord.models.#{name}"))
+                   end
 
       link_to url,
               method: :get,

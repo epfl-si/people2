@@ -2,6 +2,46 @@
 en:
   helpers:
     placeholder:
+      achievement:
+        description_en: Our work on the effect of air composition and aerosol pH on
+          the persistence of airborne respiratory viruses was featured in the Economis,
+          Forbes and other outlets
+        description_fr: Nos travaux sur l'effet de la composition de l'air et du pH
+          des aérosols sur la persistance des virus respiratoires aéroportés ont été
+          présentés dans Economis, Forbes et d'autres médias
+        description_it: Il nostro lavoro sull'effetto della composizione dell'aria
+          e del pH degli aerosol sulla persistenza dei virus respiratori aerei è stato
+          presentato su Economis, Forbes e altre testate
+        description_de: Unsere Arbeit über die Auswirkungen der Luftzusammensetzung
+          und des pH-Werts von Aerosolen auf die Persistenz luftgetragener Atemwegsviren
+          wurde in Economis, Forbes und anderen Medien vorgestellt
+        url: https://doi.org/10.1021/acs.est.2c05777
+      award:
+        issuer: Royal Swedish Academy of Sciences
+        title_en: Nobel Prize
+        title_fr: Prix Nobel
+        title_it: Premio Nobel
+        title_de: Nobelpreis
+        url: https://www.nobelprize.org/
+      education:
+        director: Enrico Fermi
+        school: EPFL
+        title_en: Nuclear Structure Studies with Radioactive Ion Beams
+        title_fr: Études de la structure nucléaire avec des faisceaux d'ions radioactifs
+        title_it: Studi sulla struttura nucleare con fasci di ioni radioattivi
+        title_de: Kernstrukturuntersuchungen mit radioaktiven Ionenstrahlen
+        field_en: Nuclear Physics
+        field_fr: Physique nucleaire
+        field_it: Fisica nucleare
+        field_de: Kernphysik
+      experience:
+        location: Apple inc.
+        title_en: CEO
+        title_fr: PDG
+        title_it: AD
+        title_de: CEO
+      infoscience:
+        url: https://infoscience-exports.epfl.ch/123456
       profile:
         personal_phone: "+41 79 123 45 67"
         personal_web_url: https://John.Doe.ch
@@ -13,3 +53,16 @@ en:
         expertise_en: IT Consulting and Development
         expertise_de: IT-Beratung und Entwicklung
         expertise_it: Consulenza IT e sviluppo
+      publication:
+        title: Research Paper Title
+        url: https://example.com
+        authors: John Doe, Jane Smith
+        year: '2024'
+        journal: Journal of Science
+      rich_text_box:
+        title_en: My rich text box
+        title_fr: Ma boite de contennu libre
+        title_it: Il mio contenuto libero
+        title_de: My rich text box
+      social:
+        value: Enter your identifier or the full url

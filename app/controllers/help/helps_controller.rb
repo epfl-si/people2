@@ -20,8 +20,8 @@ module Help
 
     def ui
       label = params[:label]
-      @title = t("help.title.#{label}")
-      @help  = t("help.content.#{label}_html")
+      @title = t("help.ui.#{label}.title")
+      @help  = t("help.ui.#{label}.content_html")
       render 'show'
     end
   end

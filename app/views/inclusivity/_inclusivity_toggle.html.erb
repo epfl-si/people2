@@ -13,12 +13,12 @@
 
     <div class="form-check form-check-inline">
       <%= form.radio_button :inclusivity, true, id: dom_id(profile, "inclusivity_true"), class: "form-check-input" %>
-      <%= form.label :inclusivity, t("inclusivity.enabled"), for: dom_id(profile, "inclusivity_true"), class: "form-check-label" %>
+      <%= form.label :inclusivity, t(".enabled"), for: dom_id(profile, "inclusivity_true"), class: "form-check-label" %>
     </div>
 
     <div class="form-check form-check-inline">
       <%= form.radio_button :inclusivity, false, id: dom_id(profile, "inclusivity_false"), class: "form-check-input" %>
-      <%= form.label :inclusivity, t("inclusivity.disabled"), for: dom_id(profile, "inclusivity_false"), class: "form-check-label" %>
+      <%= form.label :inclusivity, t(".disabled"), for: dom_id(profile, "inclusivity_false"), class: "form-check-label" %>
     </div>
 
   <% end %>

@@ -2,6 +2,15 @@
 fr:
   help:
     helps:
-      help: {}
-    title: {}
-    content: {}
+      help:
+        help: Help
+        help_for: À propos de %{title}
+    ui:
+      multilang:
+        title: la localisation de votre profil
+        content_html: |
+          <p>Vous pouvez choisir si vous souhaitez que votre profil soit
+          <em>multilingue</em> ou uniquement disponible dans une seule langue
+          de votre choix.</p><p>Lorsque vous choisissez d'avoir une version
+          <em>multilingue</em>, assurez-vous que tous les éléments traduisibles
+          sont présents dans <strong>au moins</strong> une des langues.</p>

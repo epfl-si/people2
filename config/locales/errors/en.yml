@@ -1,0 +1,67 @@
+---
+en:
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first:
+              not_in_official: Use only a first name that appears in yours officials
+                names
+            usual_last:
+              not_in_official: Use only a name that appears in your officials names
+  activerecord:
+    errors:
+      messages:
+        blank: must be provided
+        cannot_hide_all_accreds: At least ONE position must remain publicly available.
+        greater_than: must be greater than %{count}
+        incorrect_type: Invalid value
+        invalid: is incorrect
+        less_than: must be smaller than %{count}
+        record_invalid: 'Something went wrong: %{errors}'
+        restrict_dependent_destroy:
+          has_one: Cannot delete data because a dependent %{record} exists
+          has_many: Cannot delete data because dependent %{record} exist
+        required: 'Mandatory '
+        taken: Existing item (no duplicata)
+        untranslatable: mandatory
+      models:
+        experience:
+          attributes:
+            base:
+              missing_year: Both start and end dates are mandatory
+        infoscience:
+          attributes:
+            url:
+              invalid_format: 'Input error: URL must start with https://infoscience-exports.epfl.ch/....'
+              taken: The same URL is already present in the DB
+        picture:
+          attributes:
+            base:
+              undeletable: CAMIPRO picture cannot be deleted
+        profile:
+          attributes:
+            expertise_en:
+              too_long: 'Keywords only: please keep it below %{count} characters'
+            expertise_fr:
+              too_long: 'Keywords only: please keep it below %{count} characters'
+            expertise_ir:
+              too_long: 'Keywords only: please keep it below %{count} characters'
+            expertise_de:
+              too_long: 'Keywords only: please keep it below %{count} characters'
+            personal_web_url:
+              invalid_url: The URL must start with https://...
+            personal_phone:
+              invalid_phone: The phone number must be valid (e.g. +41 79 123 45 67).
+        publication:
+          attributes:
+            year:
+              not_a_number: is not a number
+  error:
+    one: Error
+    other: Errors
+    record:
+      zero: Something went wrong, please try later (or contact 1234@epfl.ch)
+      one: 'Update failed: please fix the errors below to continue'
+      other: "%{count} Please fix the errors below to continue"

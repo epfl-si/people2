@@ -1,5 +1,48 @@
 ---
 fr:
+  action:
+    add_block: Ajouter du contenu
+    add_record: Ajouter un element
+    add_named_record: Ajouter %{name}
+    cancel: Annuler
+    confirm: Confirmer votre choix
+    delete: Supprimer
+    dismiss: Annuler
+    edit: modifier
+    edit_profile: Modifier le profil
+    go: Valider
+    help: help
+    hide_search_form: Masquer le formulaire de recherche
+    more: En savoir plus
+    preview: Preview
+    preview_in: Voir mon profil en %{lang}
+    search: Chercher
+    search_people: Chercher une personne
+    send: Envoyer
+    show_hide_search_form: Afficher / masquer le formulaire de recherche
+    sign_in: Se connecter
+    sign_out: Se déconnecter
+    submit: Envoyer la demande
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+    name: people
+  dev:
+    action:
+      abandon: Reprendre l'ancienne version du profil
+      adopt: Mettre cette version en ligne
+      revert: Annuler
+  generic:
+    form:
+      cancel: Annuler
+      create: Enregistrer
+      mandatory: champ requis
+      submit: Envoyer
+      texfield_for: "%{attr}"
+      tmandatory: Veuillez remplir ce champ dans au moins une des langues sélectionnées pour votre profil
+      translated_label: "%{label} en %{language}"
+      translated_textfield_for: "%{attr} en %{language}"
+      update: Enregistrer
   lang:
     fr: français
     en: anglais
@@ -20,198 +63,13 @@ fr:
       fr: versione en français
       it: versione en italien
       de: versione en allemand
-  no_attribute_for_locale: Prière d'ajouter un %{attribute} en %{language}
-  no_title_for_locale: Prière d'ajouter un titre en %{language}
-  translated_label: "%{label} en %{language}"
-  messages:
+  msg:
     empty_orcid_help: Le lien apparaîtra dès la synchronisation de votre compte ORCID
-    function_change_explain: Pour changer votre fonction, prière de contacter un de
-      vos accréditeurs ci-dessous, qui devra de valider la demande
     function_change_exists: Une demande de modification a déjà été soumise. Veuillez
       contacter directement votre accréditeur
-  generic:
-    form:
-      cancel: Annuler
-      create: Enregistrer
-      submit: Envoyer
-      update: Enregistrer
-      texfield_for: "%{attr}"
-      translated_textfield_for: "%{attr} en %{language}"
-      tmandatory: Veuillez remplir ce champ dans au moins une des langues sélectionnées
-        pour votre profil
+    no_attribute_for_locale: Prière d'ajouter un %{attribute} en %{language}
+    no_title_for_locale: Prière d'ajouter un titre en %{language}
   nav:
     app_with_version: EPFL People v. %{version}
     issues: problèmes
     version: v. %{version}
-  action:
-    add: Ajouter du contenu
-    add_record: Ajouter %{name}
-    cancel: Annuler
-    confirm: Confirmer votre choix
-    delete: Supprimer
-    dismiss: Annuler
-    edit: modifier
-    edit_profile: Modifier le profil
-    go: Valider
-    help: help
-    hide_search_form: Masquer le formulaire de recherche
-    more: En savoir plus
-    preview: Preview
-    preview_in: Voir mon profil en %{lang}
-    search: Chercher
-    search_people: Chercher une personne
-    send: Envoyer
-    show_hide_search_form: Afficher / masquer le formulaire de recherche
-    sign_in: Se connecter
-    sign_out: Se déconnecter
-    submit: Envoyer la demande
-  dev:
-    action:
-      abandon: Reprendre l'ancienne version du profil
-      adopt: Mettre cette version en ligne
-      revert: Annuler
-  error:
-    one: Erreur
-    other: Erreurs
-    record:
-      zero: Une erreur s'est produite, veuillez réessayer plus tard (ou le signaler
-        au 1234@epfl.ch)
-      one: 'Echec de mise à jour: merci de corriger les champs en erreur'
-      other: "%{count} Echec de mise à jour. Merci de corriger les champs en erreur"
-  flash:
-    error:
-      create: Erreur lors de la création de la donnée
-      update: Erreur lors de la mise à jour de la donnée
-      remove: Erreur lors de la suppression de la donnée
-      accred:
-        cannot_hide_all: UNE affiliation au minimum doit rester disponible publiquement
-      box:
-        cannot_delete: Ce bloc ne peux pas être supprimé
-        create: Impossible de créer le bloc
-      function_change:
-        create: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard
-          ou contacter le 1234@epfl.ch
-      profile:
-        update: Erreur lors de la mise à jour du profil de base
-    notice:
-      create: Enregistré
-      update: Mis à jour
-      remove: L'enregistrement a été supprimé
-    success:
-      create: Ajouté
-      update: Mis à jour
-      remove: L'enregistrement a été supprimé
-      box:
-        deleted: Bloc supprimé
-        create: Bloc ajouté
-      function_change:
-        create: Demande de modification transmise aux accréditeurs séléctionnés
-      profile:
-        update: Mis à jour
-  shared:
-    help:
-      help: Aide
-      help_for: Aide pou
-  visibility:
-    authenticated: Utilisateurs EPFL uniquement
-    authenticated_access: utilisateur
-    disabled: Désactivé
-    draft: Privé
-    editor: Privé
-    editor_access: complet
-    enabled: Activé
-    hidden: caché
-    hidden_address: Adresse postale manquante
-    intranet: intranet EPFL uniquement
-    intranet_access: intranet EPFL
-    label:
-      enabled: Activé
-      disabled: Désactivé
-      visible: Visible
-      public: Public, visible par tout le monde sur Internet
-      intranet: Intranet, visible uniquement sur le réseau interne de l'EPFL
-      auth: Intranet, visible uniquement par la communauté EPFL
-      draft: Privé, visible uniquement par la/le propriétaire du profil
-      hidden: Privé
-    short_label:
-      enabled: Activé
-      disabled: false
-      visible: Visible
-      public: Public
-      intranet: Intranet (EPFL only)
-      auth: Autorisé
-      draft: Brouillon
-      hidden: Privé
-    labels:
-      disabled: Désactivé
-      enabled: Activé
-      published: Publié
-      draft: Brouillon
-      hidden: Privé
-      public: Public, visible par tout le monde sur Internet
-      intranet: Intranet (EPFL uniquement)
-      authenticated: Communauté EPFL uniquement
-    short_labels:
-      disabled: Désactivé
-      enabled: false
-      published: Publié
-      draft: Brouillon
-      hidden: Privé
-      public: WWW
-      intranet: Intranet
-      authenticated: Utilisateurs
-    tag:
-      enabled: "%{item} activé"
-      disabled: "%{item} désactivé"
-      visible: "%{item} activé"
-      public: "%{item} visible publiquement (internet)"
-      intranet: "%{item} visible uniquement dans le réseau EPFL (intranet)"
-      auth: "%{item} visible by authenticated users only"
-      draft: "%{item} visible uniquement par le propriétaire du profil"
-      hidden: "%{item} caché"
-    public: public
-    public_access: public
-    visible: visible
-    visible_address: Adresse postale
-  errors:
-    messages:
-      blank: doit être renseigné
-      required: Obligatoire
-      taken: Elément existant (non dublicable)
-      invalid: n'est pas correct
-      greater_than: doit être supérieur à %{count}
-      less_than: doit être inférieur à %{count}
-      untranslatable: obligatoire
-      incorrect_type: La valeur n'est pas correcte
-      cannot_hide_all_accreds: UNE fonction au minimum doit rester disponible publiquement
-  activerecord:
-    models:
-      achievement: Accomplissement annuel
-      award: Prix & distinctions
-      box: Bloc
-      education: Formation
-      experience: Expériences professionnelles
-      function_change: Demande de changement de fonction (accred)
-      infoscience: Lien vers les publications Infoscience
-      picture: Votre photo
-      profile: Profil
-      publication: Publications
-      rich_text_box: Bloc de texte
-      social: Profils de réseau social &  identifiants de recherche
-    errors:
-      messages:
-        record_invalid: 'Une erreur s''est produite : %{errors}'
-        restrict_dependent_destroy:
-          has_one: Impossible de supprimer la donnée car une %{record} dépend d'elle
-          has_many: Impossible de supprimer la donnée car des %{record} dépendent
-            d'elle
-  activemodel:
-    errors:
-      models:
-        name:
-          attributes:
-            usual_first:
-              not_in_official: Utiliser uniquement un prénom figurant dans vos prénoms
-                officiels
-            usual_last:
-              not_in_official: Utiliser uniquement un nom figurant dans vos noms officiels

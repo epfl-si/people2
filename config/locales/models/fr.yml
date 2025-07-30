@@ -1,0 +1,132 @@
+---
+fr:
+  activerecord:
+    attributes:
+      achievement:
+        category: Catégorie
+        description: Description
+        url: url
+        year: Année
+      award:
+        category: Catégorie
+        issuer: attribué par
+        origin: Origine
+        title: Titre
+        url: url
+        year: Année
+      education:
+        category: Catégorie
+        director: Directeur
+        field: Description
+        school: Nom de l'institution
+        title: Titre
+        year_begin: de (année)
+        year_end: à (année)
+      experience:
+        description: Description
+        location: Lieu
+        period: période (en années)
+        title: titre
+        year_begin: de (année)
+        year_end: à (année)
+      function_change:
+        function: fonction
+        function_en: Fonction (en anglais)
+        function_fr: Fonction (en français)
+        function_it: fonction en italien
+        function_de: fonction en allemand
+        reason: reason
+        accreditor_scipers: accréditeurs
+      infoscience:
+        title: titre
+        url: Url issue de infoscience-exports
+      name_change_request:
+        new_first: Prénom
+        new_last: Nom
+        reason: Motivation
+      picture:
+        camipro: Camipro
+        failed_attempts: Nombre d'erreur pour récupérer la photo CAMIPRO
+        selected: sélectionné
+      profile:
+        available_languages: Choisir les langues du profil
+        expertise: Expertises
+        nationality: Nationalité
+        official_name: Nom officiel
+        personal_web_url: Adresse du site web personnel
+        personal_phone: Numéro de téléphone personnel
+        usual_name: Nom d'usage
+        expertise_en: Expertise (mots-clefs uniquement)
+        expertise_fr: Expertise (mots-clefs uniquement)
+        expertise_it: Expertise (mots-clefs uniquement)
+        expertise_de: Expertise (mots-clefs uniquement)
+        nationality_en: Nationalité
+        nationality_fr: Nationalité
+        nationality_it: Nationalité
+        nationality_de: Nationalité
+        en_enabled: Profil disponible en anglais
+        fr_enabled: Profil disponible en français
+        it_enabled: Profil disponible en italien
+        de_enabled: Profil disponible en allemand
+      publication:
+        authors: Auteur(s)
+        journal: Journal
+        title: titre
+        url: URL
+        year: Année
+      rich_text_box:
+        content: contenu
+        title: titre
+      social:
+        tag: Reseau
+        value: Identifiiant
+      usual_name_change:
+        usual_first: Prénom d’usage à afficher
+        usual_last: Nom d’usage à afficher
+    models:
+      achievement: Accomplissement annuel
+      award: Prix & distinctions
+      box: Bloc
+      education: Formation
+      experience: Expériences professionnelles
+      function_change: Demande de changement de fonction (accred)
+      infoscience: Lien vers les publications Infoscience
+      picture: Votre photo
+      profile: Profil
+      publication: Publications
+      rich_text_box: Bloc de texte
+      social: Profils de réseau social &  identifiants de recherche
+  attr_labels:
+    function_change:
+      function_en: Nouveau nom de fonction (en anglais)
+      function_fr: Nouveau nom de fonction (en français)
+      function_it: nouvelle fonction en italien
+      function_de: nouvelle fonction en allemand
+      reason: Merci de préciser la raison de cette demande
+      accreditors: Choisissez un ou plusieurs accrediteurs dans la liste ci-dessous
+    profile:
+      available_languages: Langues à choix
+      expertise: Expertises
+      inclusivity: Afficher la forme inclusive des fonctions
+      nationality: Nationalité
+      name: Prénom & nom
+      official_name: Prénom & nom officiels
+      personal_web_url: Adresse du site web personnel
+      personal_phone: Numéro de téléphone personnel
+      public_email: e-mail address
+      unique_name: Prénom & nom
+      usual_name: Nom d'usage
+    social:
+      tag:
+        bluesky: Bluesky
+        facebook: Profil Facebook
+        github: Nom d'utilisateur Github
+        googlescholar: Google Scholar ID
+        instagram: Instagram ID
+        linkedin: Linkedin ID
+        mastodon: Nom d'utilsateur sur Mastodon (sans le @)
+        muskidiocy: ''
+        orcid: ORCID ID
+        scopus: Scopus ID
+        stack_overflow: Nom d'utilisateur Stack Overflow
+        wos: Publons - Web of Science ID

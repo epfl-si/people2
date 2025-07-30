@@ -1,0 +1,33 @@
+---
+en:
+  flash:
+    error:
+      apply_translations: Error while applying translations
+      create: Error creating data
+      update: Error updating data
+      remove: Error deleting data
+      accred:
+        cannot_hide_all: At least ONE affiliation must remain publicly available.
+      box:
+        cannot_delete: This bloc cannot be deleted
+        create: Bloc could not be created
+      function_change:
+        create: Unable to submit this request. Please try again later or contact 1234@epfl.ch
+      profile:
+        update: Error while updating the base profile
+    notice:
+      create: Recorded
+      update: Updated
+      remove: Record have been deleted
+    success:
+      apply_translations: Translations applied
+      create: Added
+      update: Updated
+      remove: Record have been deleted
+      box:
+        deleted: Bloc deleted
+        create: Bloc added
+      function_change:
+        create: Change request forwarded to the selected accreditors
+      profile:
+        update: Updated

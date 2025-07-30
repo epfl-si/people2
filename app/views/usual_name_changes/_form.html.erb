@@ -1,4 +1,5 @@
 <turbo-frame id="name_change_editor">
+  <p><%= t('.instructions_html') %></p>
   <%= render "shared/form_errors", item: @unc if @unc.errors.any? %>
 
   <%= form_with(
@@ -10,7 +11,7 @@
       controller: "name-builder",
       "name-builder-first-source-value": @unc.official_first,
       "name-builder-last-source-value": @unc.official_last,
-      "name_change_editor-fallback-message": t('.fallback_title')
+      "name_change_editor-fallback-message": t('.title.fallback')
     }
   ) do |form| %>
     <div class="row">
@@ -37,6 +38,6 @@
       </div>
     </div>
 
-    <%= form_actions(form, @unc, submit_label: t("action.submit"), cancel_label: t("action.cancel")) %>
+    <%= form_actions(form, @unc, submit_label: t(".submit"), cancel_label: t("action.cancel")) %>
   <% end %>
 </turbo-frame>
