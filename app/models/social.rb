@@ -45,7 +45,7 @@ class Social < ApplicationRecord
       default_position: 0,
       icon: "icon-orcid",
       re: /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
-      help_on_empty: 'messages.empty_orcid_help',
+      help_on_empty: 'msg.empty_orcid_help',
       help_url: 'https://orcid-integration.epfl.ch/'
     },
     {

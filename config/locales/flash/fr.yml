@@ -1,0 +1,32 @@
+---
+fr:
+  flash:
+  error:
+    create: Erreur lors de la création de la donnée
+    update: Erreur lors de la mise à jour de la donnée
+    remove: Erreur lors de la suppression de la donnée
+    accred:
+      cannot_hide_all: UNE affiliation au minimum doit rester disponible publiquement
+    box:
+      cannot_delete: Ce bloc ne peux pas être supprimé
+      create: Impossible de créer le bloc
+    function_change:
+      create: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard
+        ou contacter le 1234@epfl.ch
+    profile:
+      update: Erreur lors de la mise à jour du profil de base
+  notice:
+    create: Enregistré
+    update: Mis à jour
+    remove: L'enregistrement a été supprimé
+  success:
+    create: Ajouté
+    update: Mis à jour
+    remove: L'enregistrement a été supprimé
+    box:
+      deleted: Bloc supprimé
+      create: Bloc ajouté
+    function_change:
+      create: Demande de modification transmise aux accréditeurs séléctionnés
+    profile:
+      update: Mis à jour

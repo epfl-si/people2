@@ -6,7 +6,7 @@
       s = @type == type
       acls = s ? 'active' : ''
       selected = s ? "true" : "false"
-      a = "profiles.name_change.select.#{type}"
+      a = ".select.#{type}"
     %>
     <li class="nav-item">
       <%= link_to t(a), "##{id}", id: "#{id}-tab",

@@ -3,6 +3,38 @@ en:
   accreds:
     index:
       title: My positions & affiliations (accreditation)
+  achievements:
+    edit:
+      form_title: Editing Achievement
+    new:
+      form_title: Creating a new Achievement
+    form:
+      help:
+        category: Dropdown menu for achievement category
+        rules: 'Yearly achievements are to be added until end of April for them to
+          appear in the previous year''s academic activity report'
+  awards:
+    edit:
+      form_title: Editing Awards
+    new:
+      form_title: Add an award
+    form:
+      help:
+        category: Dropdown menu for award category
+        origin: Dropdown menu for selecting the origin of the award
+  educations:
+    directedby: Directed by
+    edit:
+      form_title: Editing Education
+    new:
+      form_title: Add an education
+    form:
+      period: period (years)
+  experiences:
+    edit:
+      form_title: Editing Work Experience
+    new:
+      form_title: Add a work experience
   footer:
     follow:
       us: Follow EPFL on social medias
@@ -18,4 +50,186 @@ en:
     back_to_the_top: Back to the top
   function_changes:
     form:
-      function: New position
+      explain: >
+        To change your position, please contact one of your accreditors
+        listed below, who is authorized to approve the request
+    new:
+      form_title: Function change request
+  inclusivity:
+    inclusivity_toggle:
+      enabled: "Yes"
+      disabled: "No"
+  infosciences:
+    edit:
+      form_title: Editing Infoscience export link
+    new:
+      form_title: Add an Infoscience export link
+  people:
+    adopt:
+      confirm: Publish the new version of my profile
+      explain: 'New profile version: click to activate (irreversible operation)'
+    admin_data:
+      title: Administrative data
+      sciper: SCIPER Number
+      sap: SAP ID
+      username: Username
+      gid: GID
+      uid: UID
+      home: Home directory
+      shell: Shell
+    contact:
+      nationality_label: Nationality
+      nav:
+        atari: Administrative Data
+        vcard: vCard
+    show:
+      title:
+        teaching: Teaching
+    teaching:
+      title:
+        courses: Courses
+        current_phd: PhD Students
+        past_phd: Past EPFL PhD Students
+        teaching: Teaching & PhD
+        past_phd_students: Past EPFL PhD Students
+  pictures:
+    form:
+      selected: selected
+      camipro: Camipro
+      failed_attempts: Number of failed attempts of fetching the CAMIPRO picture
+      browse_image_file: Select picture file
+      max_photos_reached: Maximum number of pictures reached
+      no_photofile_selected: No picture selected
+      upload_image: Upload
+    picture:
+      set_as_profile_picture: Select
+    pictures:
+      title: My picture
+      currently_selected: Displayed picture
+
+  profiles:
+    edit:
+      title:
+        boxes_main: My curriculum
+        boxes_contact: My professionnal data
+        details: My personal data
+        editing_languages: This profile is bilingual
+        edit_language: 'Editing my profile in:'
+        editing: 'Editing %{name}''s profile (sciper: %{sciper})'
+        editing_language: Editing
+    edit_languages:
+      explain_html: |
+        Here you can select the languages in which your profile will be made
+        available and for which you will <strong>try to provide translations.</strong>
+        <br/>
+        When some information is not yet available in the reader's language,
+        it will be replaced by the corresponding content in one of the available
+        languages. Therefore it is mandatory to provide the translation in at
+        least one of the languages selected below.
+      title: Profile translations
+    inline_languages_form:
+      title: 'My profile in:'
+    languages_form:
+      translations: Profile translations
+      en_enabled: Profile available in english
+      fr_enabled: Profile available in french
+      it_enabled: Profile available in italian
+      de_enabled: Profile available in german
+      action:
+        submit: Save
+    name_change:
+      edit:
+        select:
+          title: "Change your name"
+          usual: "Change your usual name"
+          official: "Changer your official name"
+      official:
+        instructions_html: >
+          A request to modify your official name can only be made
+          if a change has been officially recorded by a Civil Registry Office (such
+          as a change in the spelling of your name, marriage, divorce, etc.). Please
+          submit your request directly to your HR representative for validation, along
+          with the necessary supporting documents (ID, passeport ...). This request
+          is subject to approval.
+        status:
+          student:
+            title: "Student"
+            message_html: >
+              contact the Student Services Desk with a copy of your identity
+              documents to request this change
+          phd:
+            title: "Graduate Student"
+            message_html: >
+              please first contact the HR representative of your lab. Once approved,
+              send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+              to ensure the change is reflected in the academic database.
+          staff:
+            title: "Personnel EPFL"
+            message_html: >
+              If you have a work contract, the request must be approved by the
+              HR representative of your faculty or vice presidency.
+      usual:
+        fallback_title: "In your case the usual name can ony have its current value"
+      todo:
+        request_title: Submit a request to change usual name
+        new_first: New first name
+        new_last: New last name
+        reason: Reason for the request
+        reason_hint: 'E.g.: I would like my usual first name to appear on internal platforms'
+        submit: Submit request
+        no_accreditor_found: No accreditor found.
+        sent_title: Request sent
+        sent_message: Your request to change your usual name has been successfully sent
+          and will be processed shortly.
+        flash_success: Your request to change your usual name has been successfully
+          sent and will be processed shortly.
+  socials:
+    add:
+      add: Add Social Media Link or Research ID
+    form:
+      new: New %{label}
+      edit: Editing %{label}
+    # action:
+    #   add_social: Add Social Media Link
+    #   more: More informations
+  usual_name_changes:
+    form:
+      available_first: 'Available first names:'
+      available_last: 'Available last names:'
+      instructions_html: >
+        Please choose below from your existing names or surnames
+        those that you want to display.
+      fallback: Usual name can only have single value
+      submit: "Send the request"
+    new:
+      fallback:
+        title: Your first and last names are composed of a single word. Therefore
+          it is not possible to create any other combination for your usual name.
+        content_html: >
+          If you wish to obtain an usual name that is not assembled from
+          parts that are present in your official name, please contact the Office
+          for Equal Opportunities (EGA) at <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
+          motivating your choice.
+      title_custom: Personalized usual name request
+      title_standard: Standard usual name request
+      switch_to_official_request: Make a personalized name request
+      status:
+        student:
+          title: Students
+          message_html: 'To submit a request, click the button below.<br/> Your request
+            will then be reviewed by the Equal Opportunities Office (VPH-WINC-EGA).<br/>
+            <strong>Contact and validation:</strong><br/> The EGA team will contact
+            you to arrange an in-person meeting to discuss your request. You will
+            then receive an official response, either positive or negative.'
+        phd:
+          title: PhD Candidates
+          message_html: 'First, contact the HR representative of your lab to validate
+            your request.<br/> Once validated, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+            so that the change can be registered in the academic databases.<br/> If
+            needed, the EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
+        staff:
+          title: EPFL Staff
+          message_html: 'Your request must be validated by the HR person of your faculty
+            or vice presidency.<br/> The person responsible for your accreditation
+            (ACCRED) will carry out the changes in the system.<br/> If needed, the
+            EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'

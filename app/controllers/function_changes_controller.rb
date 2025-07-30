@@ -7,7 +7,7 @@ class FunctionChangesController < ApplicationController
   # GET    /accreditations/:accreditation_id/function_changes/new
   def new
     if FunctionChange.where(accreditation_id: params[:accreditation_id]).count.positive?
-      notifier t("messages.function_change_exists")
+      notifier t("msg.function_change_exists")
       nil
     else
       @function_change = FunctionChange.new(accreditation_id: params[:accreditation_id])

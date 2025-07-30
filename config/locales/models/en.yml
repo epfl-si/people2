@@ -1,0 +1,132 @@
+---
+en:
+  activerecord:
+    attributes:
+      achievement:
+        category: Category
+        description: Description
+        url: url
+        year: Year
+      award:
+        category: Category
+        issuer: granted by
+        origin: Origin
+        title: title
+        url: url
+        year: Year
+      education:
+        category: Category
+        director: Director
+        field: Description
+        school: Issued by (institution)
+        title: title
+        year_begin: from year
+        year_end: to year
+      experience:
+        description: Description
+        location: Company, location or institution
+        period: period (years)
+        title: title
+        year_begin: from year
+        year_end: to year
+      function_change:
+        function: role
+        function_en: Position (in english)
+        function_fr: Position (in French)
+        function_it: role in italian
+        function_de: role in german
+        reason: reason
+        accreditor_scipers: accreditors
+      infoscience:
+        title: title
+        url: infoscience-exports url
+      name_change_request:
+        new_first: New first name
+        new_last: New last name
+        reason: Reason for the request
+      picture:
+        camipro: Camipro
+        failed_attempts: Number of failed attempts of fetching the CAMIPRO picture
+        selected: selected
+      profile:
+        available_languages: Select available languages
+        expertise: Expertises
+        nationality: Nationality
+        official_name: Official Name
+        personal_web_url: Personal website url
+        personal_phone: Personal phone number
+        usual_name: Usual Name
+        expertise_en: Expertise (keywords only)
+        expertise_fr: Expertise (keywords only)
+        expertise_it: Expertise (keywords only)
+        expertise_de: Expertise (keywords only)
+        nationality_en: Nationality
+        nationality_fr: Nationality
+        nationality_it: Nationality
+        nationality_de: Nationality
+        en_enabled: Profile available in english
+        fr_enabled: Profile available in french
+        it_enabled: Profile available in italian
+        de_enabled: Profile available in german
+      publication:
+        authors: Autor(s)
+        journal: Journal
+        title: title
+        url: URL
+        year: Year
+      rich_text_box:
+        content: content
+        title: title
+      social:
+        tag: Type
+        value: Identifier
+      usual_name_change:
+        usual_first: First name to display
+        usual_last: Family name to display
+    models:
+      achievement: Annual achievement
+      award: Awards
+      box: Block
+      education: Education
+      experience: Work experiences
+      function_change: Position change request (accred)
+      infoscience: Infoscience publications link
+      picture: Your picture
+      profile: Profile
+      publication: Publications
+      rich_text_box: Text bloc
+      social: Social Media Links & Research ID
+  attr_labels:
+    function_change:
+      function_en: New position name (in English)
+      function_fr: New position name (in French)
+      function_it: desired position name in italian
+      function_de: desired position name in german
+      reason: Please provide a reason for your request
+      accreditors: Select one or more accreditor by clicking the list below
+    profile:
+      available_languages: Available languages
+      expertise: Expertises
+      inclusivity: "Show job names in inclusive form (french version)"
+      nationality: Nationality
+      name: Name & Surname
+      official_name: Name & Surname
+      personal_web_url: Personal web page url
+      personal_phone: Personal phone number
+      public_email: e-mail address
+      unique_name: Name & Surname
+      usual_name: Usual Name
+    social:
+      tag:
+        bluesky: Bluesky username
+        facebook: Facebook ID
+        github: GitHub Username
+        googlescholar: Google Scholar ID
+        instagram: Instagram ID
+        linkedin: Linkedin ID
+        mastodon: Mastodon Username (without @)
+        muskidiocy: X Username
+        orcid: ORCID ID
+        scopus: Scopus ID
+        stack_overflow: Stack Overflow Username
+        wos: Publons - Web of Science ID

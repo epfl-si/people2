@@ -1,0 +1,42 @@
+---
+it:
+  activerecord:
+    attributes:
+      achievement:
+        category: Categoria
+        description: Descrizione
+        url: url
+        year: Anno
+      experience:
+        description: Descrizione
+        location: Company, location or institution
+        title: Title
+        year_begin: from year
+        year_end: to year
+      infoscience:
+        title: Titolo
+        url: url per infoscience-exports
+      picture:
+        selected: Scelta
+        camipro: Camipro
+        failed_attempts: Numero di tentativi falliti
+      profile:
+        available_languages: Langue Disponibili
+        nationality: Nazionalità
+        official_name: Nome ufficiale
+        en_enabled: profilo disponibile in inglese
+        fr_enabled: profilo disponibile in francese
+        it_enabled: Profilo disponibile in italiano.
+        de_enabled: profilo disponibile in tedesco
+      publication:
+        authors: Autor(i)
+        journal: Rivista
+        title: Titolo
+        url: URL
+        year: Anno
+      rich_text_box:
+        content: contenuto
+        title: Titolo
+      social:
+        tag: Tipo
+        value: valore

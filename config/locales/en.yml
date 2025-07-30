@@ -1,5 +1,48 @@
 ---
 en:
+  action:
+    add_block: Add a content block
+    add_record: Add a new record
+    add_named_record: Add another %{name}
+    cancel: Cancel
+    confirm: Please comfirm
+    delete: Delete
+    dismiss: Cancel
+    edit: edit
+    edit_profile: Edit profile
+    go: Confirm
+    help: help
+    hide_search_form: Hide the search form
+    more: More informations
+    preview: Preview
+    preview_in: View profile in %{lang}
+    search: Search
+    search_people: Search for a person
+    send: Send
+    show_hide_search_form: Show / hide the search form
+    sign_in: Log in
+    sign_out: Log out
+    submit: Submit the request
+  app:
+    domain: people.epfl.ch
+    long_name: online people directory
+    name: people
+  dev:
+    action:
+      abandon: Restore the old version of this profile
+      adopt: Make this version available online
+      revert: Revert
+  generic:
+    form:
+      cancel: Cancel
+      create: Save
+      mandatory: 'mandatory field: this field must be provided'
+      submit: Send
+      texfield_for: "%{attr}"
+      translated_label: "%{label} in %{language}"
+      translated_textfield_for: "%{attr} in %{language}"
+      tmandatory: Please complete this field in at least one of your selected profile languages
+      update: Save
   lang:
     fr: French
     en: English
@@ -20,198 +63,13 @@ en:
       fr: French version
       it: Italian version
       de: German version
-  no_attribute_for_locale: Please add %{attribute} in %{language}
-  no_title_for_locale: Please add title in %{language}
-  translated_label: "%{label} in %{language}"
-  messages:
+  msg:
     empty_orcid_help: The link will appear as soon as your ORCID account is synchronized
-    function_change_explain: To change your position, please contact one of your accreditors
-      listed below, who is authorized to approve the request
     function_change_exists: A change request has already been submitted. Please contact
       directly your accreditor
-  generic:
-    form:
-      cancel: Cancel
-      create: Save
-      submit: Send
-      update: Save
-      texfield_for: "%{attr}"
-      translated_textfield_for: "%{attr} in %{language}"
-      mandatory: 'mandatory field: this field must be provided'
-      tmandatory: Please complete this field in at least one of your selected profile
-        languages
+    no_attribute_for_locale: Please add %{attribute} in %{language}
+    no_title_for_locale: Please add title in %{language}
   nav:
     app_with_version: EPFL People v. %{version}
     issues: issues
     version: v. %{version}
-  action:
-    add: Add a content bloc
-    add_record: Add another %{name}
-    cancel: Cancel
-    confirm: Please comfirm
-    delete: Delete
-    dismiss: Cancel
-    edit: edit
-    edit_profile: Edit profile
-    go: Confirm
-    help: help
-    hide_search_form: Hide the search form
-    more: More informations
-    preview: Preview
-    preview_in: View profile in %{lang}
-    search: Search
-    search_people: Search for a person
-    send: Send
-    show_hide_search_form: Show / hide the search form
-    sign_in: Log in
-    sign_out: Log out
-    submit: Submit the request
-  dev:
-    action:
-      abandon: Restore the old version of this profile
-      adopt: Make this version available online
-      revert: Revert
-  error:
-    one: Error
-    other: Errors
-    record:
-      zero: Something went wrong, please try later (or contact 1234@epfl.ch)
-      one: 'Update failed: please fix the errors below to continue'
-      other: "%{count} Please fix the errors below to continue"
-  flash:
-    error:
-      apply_translations: Error while applying translations
-      create: Error creating data
-      update: Error updating data
-      remove: Error deleting data
-      accred:
-        cannot_hide_all: At least ONE affiliation must remain publicly available.
-      box:
-        cannot_delete: This bloc cannot be deleted
-        create: Bloc could not be created
-      function_change:
-        create: Unable to submit this request. Please try again later or contact 1234@epfl.ch
-      profile:
-        update: Error while updating the base profile
-    notice:
-      create: Recorded
-      update: Updated
-      remove: Record have been deleted
-    success:
-      apply_translations: Translations applied
-      create: Added
-      update: Updated
-      remove: Record have been deleted
-      box:
-        deleted: Bloc deleted
-        create: Bloc added
-      function_change:
-        create: Change request forwarded to the selected accreditors
-      profile:
-        update: Updated
-  shared:
-    help:
-      help: Help
-      help_for: Help for
-  visibility:
-    authenticated: EPFL users only
-    authenticated_access: user
-    disabled: Disabled
-    draft: Private
-    editor: Private
-    editor_access: full
-    enabled: Enabled
-    hidden: hidden
-    hidden_address: Postal address missing
-    intranet: intranet EPFL only
-    intranet_access: intranet EPFL
-    label:
-      enabled: Enabled
-      disabled: Disabled
-      visible: Visible
-      public: Public, visible to anyone on the internet
-      intranet: Intranet, visible only within the EPFL internal network
-      auth: Intranet, visible only to the EPFL people
-      draft: Private, only the profile owner can view this
-      hidden: Private
-    short_label:
-      enabled: Enabled
-      disabled: false
-      visible: Visible
-      public: Public
-      intranet: Intranet (EPFL uniquement)
-      auth: Authorized
-      draft: Draft
-      hidden: Private
-    labels:
-      disabled: Disabled
-      enabled: Enabled
-      published: Published
-      draft: Draft
-      hidden: Private
-      public: Public, visible to anyone on the internet
-      intranet: Intranet (EPFL only)
-      authenticated: EPFL people only
-    short_labels:
-      disabled: Disabled
-      enabled: false
-      published: Published
-      draft: Draft
-      hidden: Private
-      public: WWW
-      intranet: Intranet
-      authenticated: Users
-    tag:
-      enabled: "%{item} visible"
-      disabled: "%{item} hidden"
-      visible: "%{item} visible"
-      public: "%{item} publicly visible (internet)"
-      intranet: "%{item} visible only from EPFL network (intranet)"
-      auth: "%{item} visible by authenticated users only"
-      draft: "%{item} only visible by profile owner"
-      hidden: "%{item} hidden"
-    public: public
-    public_access: public
-    visible: visible
-    visible_address: Postal address
-  errors:
-    messages:
-      blank: must be provided
-      required: 'Mandatory '
-      taken: Existing item (no duplicata)
-      invalid: is incorrect
-      greater_than: must be greater than %{count}
-      less_than: must be smaller than %{count}
-      untranslatable: mandatory
-      incorrect_type: Invalid value
-      cannot_hide_all_accreds: At least ONE position must remain publicly available.
-  activerecord:
-    models:
-      achievement: Annual achievement
-      award: Awards
-      box: Bloc
-      education: Education
-      experience: Work experiences
-      function_change: Position change request (accred)
-      infoscience: infoscience publications link
-      picture: Your picture
-      profile: Profile
-      publication: Publications
-      rich_text_box: Text bloc
-      social: Social Media Links & Research ID
-    errors:
-      messages:
-        record_invalid: 'Something went wrong: %{errors}'
-        restrict_dependent_destroy:
-          has_one: Cannot delete data because a dependent %{record} exists
-          has_many: Cannot delete data because dependent %{record} exist
-  activemodel:
-    errors:
-      models:
-        name:
-          attributes:
-            usual_first:
-              not_in_official: Use only a first name that appears in yours officials
-                names
-            usual_last:
-              not_in_official: Use only a name that appears in your officials names

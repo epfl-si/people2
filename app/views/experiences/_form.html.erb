@@ -4,7 +4,7 @@
   <%= translated_text_fields(form, :title, required: true) %>
   <%= single_text_field(form, :location, required: true) %>
 
-  <%= range_number_field(form, :year_begin, :year_end, label: '.period', min: 1950, max: Date.today.year, required: true) %>
+  <%= range_number_field(form, :year_begin, :year_end, min: 1950, max: Date.today.year, required: true) %>
 
   <%= translated_rich_text_areas(form, :description) %>
 
