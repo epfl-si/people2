@@ -55,9 +55,9 @@ module Admin
 
     def apply
       if Admin::Translation.update_translation_files
-        flash.now[:success] = ".apply_translations"
+        turbo_flash(:success)
       else
-        flash.now[:error] = ".apply_translations"
+        turbo_flash(:error)
       end
     end
 

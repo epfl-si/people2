@@ -30,9 +30,10 @@ class FunctionChangesController < ApplicationController
           accreditor_sciper: as
         ).accreditor_request.deliver_later
       end
-      flash.now[:success] = ".function_change.create"
+      turbo_flash(:success)
     else
       @have_errors = true
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end

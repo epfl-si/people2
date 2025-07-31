@@ -6,7 +6,8 @@ class VisibilityController < ApplicationController
     # klass = params[:model].camelize
     # # TODO: restrict allowed values of klass
     # @item = Kernel.const_get(klass).find params[:id]
-    klass = params[:model].classify.constantize
+    m = params[:model]
+    klass = m.classify.constantize
     @item = klass.find params[:id]
     authorize! @item, to: :update?
     if (@property = params[:property]).present?
@@ -14,10 +15,23 @@ class VisibilityController < ApplicationController
     else
       @item.visibility = params[:visibility]
     end
+
     respond_to do |format|
       if @item.save
-        format.turbo_stream
-        flash.now[:success] = ".update"
+        format.turbo_stream do
+          flash.now[:success] = if @property.present?
+                                  I18n.t(
+                                    "flash.visibilities.update.property.success",
+                                    item: I18n.t("activerecord.models.#{m}"),
+                                    attr: I18n.t("activerecord.attributes.#{m}.#{@property}")
+                                  )
+                                else
+                                  I18n.t(
+                                    "flash.visibilities.update.record.success",
+                                    item: I18n.t("activerecord.models.#{m}")
+                                  )
+                                end
+        end
       else
         format.turbo_stream do
           flash.now[:error] =

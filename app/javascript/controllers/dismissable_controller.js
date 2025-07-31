@@ -10,9 +10,8 @@ export default class extends Controller {
 
   dismiss() {
     this.contentTarget.innerHTML = "";
-    const overlay = document.getElementById("editor_overlay")
-    if (overlay) {
-      overlay.remove()
-    }
+    // eventually remove the editor-overlay too
+    const overlay = document.getElementById("editor-overlay")
+    if (overlay) overlay.innerHTML = "";
   }
 }

@@ -34,9 +34,9 @@ class SocialsController < ApplicationController
 
     if @social.save
       set_socials
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".create"
+      turbo_flash(:error)
       render :new_step2, status: :unprocessable_entity
     end
   end
@@ -44,9 +44,9 @@ class SocialsController < ApplicationController
   # PATCH/PUT /socials/1 or /socials/1.json
   def update
     if @social.update(social_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:error)
       render :edit_step2, status: :unprocessable_entity
     end
   end
@@ -56,7 +56,7 @@ class SocialsController < ApplicationController
     @profile = @social.profile
     @social.destroy!
     set_socials
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private
@@ -77,10 +77,10 @@ class SocialsController < ApplicationController
       @social.profile = @profile
       if @social.save
         set_socials
-        flash.now[:success] = ".create"
+        turbo_flash(:success)
         render :create
       else
-        flash.now[:error] = ".create"
+        turbo_flash(:error)
         render :new_step2, status: :unprocessable_entity
       end
     else

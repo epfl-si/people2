@@ -20,13 +20,13 @@ class AccredsController < ApplicationController
     respond_to do |format|
       if @accred.update(accred_params)
         format.turbo_stream do
-          flash.now[:success] = ".update"
+          turbo_flash(:success)
           render :update
         end
         format.json { render :show, status: :ok, location: accred_path(@accred) }
       else
         format.turbo_stream do
-          flash.now[:error] = ".update"
+          turbo_flash(:error)
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, accreds: @accred }
         end
         format.json { render json: @accred.errors, status: :unprocessable_entity }

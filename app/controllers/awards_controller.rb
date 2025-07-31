@@ -24,9 +24,9 @@ class AwardsController < ApplicationController
   def create
     @award = @profile.awards.new(award_params)
     if @award.save
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:success] = ".create"
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end
@@ -34,9 +34,9 @@ class AwardsController < ApplicationController
   # PATCH/PUT /awards/1 or /awards/1.json
   def update
     if @award.update(award_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:error)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -44,7 +44,7 @@ class AwardsController < ApplicationController
   # DELETE /awards/1 or /awards/1.json
   def destroy
     @award.destroy!
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private

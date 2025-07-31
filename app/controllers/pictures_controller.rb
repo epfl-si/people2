@@ -38,13 +38,13 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.update(picture_params)
         format.turbo_stream do
-          flash.now[:success] = ".update"
+          turbo_flash(:success)
           render :update
         end
         format.json { render :show, status: :ok, location: @picture }
       else
         format.turbo_stream do
-          flash.now[:error] = ".update"
+          turbo_flash(:error)
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @picture }
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }
@@ -58,13 +58,13 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.destroy
         format.turbo_stream do
-          flash.now[:success] = ".remove"
+          turbo_flash(:success)
           render :destroy
         end
         format.json { head :no_content }
       else
         format.turbo_stream do
-          flash.now[:error] = ".remove"
+          turbo_flash(:error)
           render 'shared/flash'
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }
@@ -81,13 +81,13 @@ class PicturesController < ApplicationController
     respond_to do |format|
       if @picture.save
         format.turbo_stream do
-          flash.now[:success] = ".create"
+          turbo_flash(:success)
           render :create, locals: { profile: @profile, picture: @picture }
         end
         format.json { render :show, status: :created, location: @picture }
       else
         format.turbo_stream do
-          flash.now[:error] = ".create"
+          turbo_flash(:error)
           render :new, status: :unprocessable_entity, locals: { profile: @profile, picture: @picture }
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }

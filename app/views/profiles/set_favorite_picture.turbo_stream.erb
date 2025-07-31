@@ -3,3 +3,4 @@
 <%= render "pictures/pictures", profile: @profile, pictures: @pictures %>
 </section>
 <% end %>
+<%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

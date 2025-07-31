@@ -2,6 +2,8 @@
 en:
   activerecord:
     attributes:
+      accred:
+        address: Address
       achievement:
         category: Category
         description: Description
@@ -18,6 +20,7 @@ en:
         category: Category
         director: Director
         field: Description
+        period: period (years)
         school: Issued by (institution)
         title: title
         year_begin: from year
@@ -84,6 +87,7 @@ en:
         usual_first: First name to display
         usual_last: Family name to display
     models:
+      accred: Accreditation
       achievement: Annual achievement
       award: Awards
       box: Block

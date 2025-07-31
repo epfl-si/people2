@@ -18,6 +18,7 @@ fr:
         category: Catégorie
         director: Directeur
         field: Description
+        period: période (en années)
         school: Nom de l'institution
         title: Titre
         year_begin: de (année)
@@ -84,6 +85,7 @@ fr:
         usual_first: Prénom d’usage à afficher
         usual_last: Nom d’usage à afficher
     models:
+      accred: Accreditation
       achievement: Accomplissement annuel
       award: Prix & distinctions
       box: Bloc

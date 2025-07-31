@@ -28,8 +28,6 @@ en:
       form_title: Editing Education
     new:
       form_title: Add an education
-    form:
-      period: period (years)
   experiences:
     edit:
       form_title: Editing Work Experience
@@ -106,7 +104,6 @@ en:
     pictures:
       title: My picture
       currently_selected: Displayed picture
-
   profiles:
     edit:
       title:
@@ -183,6 +180,13 @@ en:
           and will be processed shortly.
         flash_success: Your request to change your usual name has been successfully
           sent and will be processed shortly.
+  publications:
+    edit:
+      form_title: Editing selected publication
+    new:
+      form_title: Add a new selected publication
+    editable_publication:
+      link: Check the URL
   socials:
     add:
       add: Add Social Media Link or Research ID
