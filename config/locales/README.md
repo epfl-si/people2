@@ -36,7 +36,9 @@ Contain the [standard](https://guides.rubyonrails.org/i18n.html#error-message-sc
 ruby hierarchy for error messages.
 
 ### flash
-Flash messages set by controllers
+Flash messages set by controllers. The keys are in the form
+`flash.CONTROLLER.ACTION.STATUS` where `STATUS` can be `error`, `success` or
+a custom value at least for turbo stream.
 
 ### placeholders
 As the name indicates, contains all the placeholders in the standard rails

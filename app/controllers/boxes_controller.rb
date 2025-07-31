@@ -49,14 +49,12 @@ class BoxesController < ApplicationController
 
     @box = Box.from_model(@mbox, box_params)
     @box.profile = @profile
-    @box.save
     if @box.save
       @section = @box.section
       @optional_boxes = @profile.available_optional_boxes(@section)
-      flash.now[:success] = ".box.create"
+      turbo_flash_render(:success)
     else
-      # TODO: check this
-      flash.now[:error] = ".box.create"
+      turbo_flash_render(:error)
       render :new, status: :unprocessable_entity
     end
   end
@@ -67,13 +65,13 @@ class BoxesController < ApplicationController
       Rails.logger.debug("update: box_params=#{box_params.inspect}")
       if @box.update(box_params)
         format.turbo_stream do
-          flash.now[:success] = ".update"
+          turbo_flash(:success)
           render :update
         end
         format.json { render :show, status: :ok, location: @box }
       else
         format.turbo_stream do
-          flash.now[:error] = ".update"
+          turbo_flash(:error)
           render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
         end
         format.json { render json: @box.errors, status: :unprocessable_entity }
@@ -87,16 +85,16 @@ class BoxesController < ApplicationController
       @profile = @box.profile
       respond_to do |format|
         if @box.destroy
-          flash.now[:success] = ".box.deleted"
+
           @section = @box.section
           @optional_boxes = @profile.available_optional_boxes(@section)
-          format.turbo_stream
+          format.turbo_stream do
+            turbo_flash(:success)
+          end
           format.json { head :no_content }
         else
-
           format.turbo_stream do
-            flash.now[:error] = ".remove"
-            turbo_stream.replace("flash-messages", partial: "shared/flash")
+            turbo_flash_render(:error)
           end
           format.json { render json: { error: msg }, status: :unprocessable_entity }
         end
@@ -104,8 +102,7 @@ class BoxesController < ApplicationController
     else
       respond_to do |format|
         format.turbo_stream do
-          flash.now[:error] = ".box.cannot_delete"
-          turbo_stream.replace("flash-messages", partial: "shared/flash")
+          turbo_flash_render(:error)
         end
         format.json { render json: { error: msg }, status: :unprocessable_entity }
       end

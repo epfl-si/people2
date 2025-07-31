@@ -10,8 +10,9 @@ class UsualNameChangesController < ApplicationController
     @unc = UsualNameChange.for(@profile)
 
     if @unc&.update(unc_params)
-      flash.now[:success] = ".usual_name_change.create"
+      turbo_flash(:success)
     else
+      turbo_flash(:error)
       render turbo_stream: turbo_stream.update("usual_name_change_form", partial: "form")
     end
   end

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   around_action :switch_locale
 
   include Authentication
+  include Flashable
 
   def self.unique_counter_value
     @indx ||= 0

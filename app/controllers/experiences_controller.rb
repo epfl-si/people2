@@ -25,9 +25,9 @@ class ExperiencesController < ApplicationController
   def create
     @experience = @profile.experiences.new(experience_params)
     if @experience.save
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:success] = ".create"
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,9 +35,9 @@ class ExperiencesController < ApplicationController
   # PATCH/PUT /experiences/1 or /experiences/1.json
   def update
     if @experience.update(experience_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:error)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +45,7 @@ class ExperiencesController < ApplicationController
   # DELETE /experiences/1 or /experiences/1.json
   def destroy
     @experience.destroy!
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private

@@ -12,21 +12,14 @@ fr:
               not_in_official: Utiliser uniquement un nom figurant dans vos noms officiels
   activerecord:
     errors:
-      messages:
-        blank: doit être renseigné
-        cannot_hide_all_accreds: UNE fonction au minimum doit rester disponible publiquement
-        greater_than: doit être supérieur à %{count}
-        incorrect_type: La valeur n'est pas correcte
-        invalid: n'est pas correct
-        less_than: doit être inférieur à %{count}
-        record_invalid: 'Une erreur s''est produite : %{errors}'
-        required: Obligatoire
-        restrict_dependent_destroy:
-          has_one: Impossible de supprimer la donnée car une %{record} dépend d'elle
-          has_many: Impossible de supprimer la donnée car des %{record} dépendent d'elle
-        taken: Elément existant (non dublicable)
-        untranslatable: obligatoire
       models:
+        function_change:
+          attributes:
+            accreditor_scipers:
+              invalid: Merci de selectionner au moins un des accrediteurs
+
+
+
         experience:
           attributes:
             base:
@@ -42,14 +35,16 @@ fr:
               undeletable: La photo CAMIPRO n'est pas supprimable
         profile:
           attributes:
+            expertise:
+              too_long: ': %{attribute} Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             expertise_en:
-              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+              too_long: ': Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             expertise_fr:
-              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+              too_long: ': Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             expertise_ir:
-              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+              too_long: ': Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             expertise_de:
-              too_long: 'Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
+              too_long: ': Uniquement des mots-clefs: ne pas dépasser %{count} caractères'
             personal_web_url:
               invalid_url: L’URL doit commencer par https://...
             personal_phone:
@@ -58,7 +53,29 @@ fr:
           attributes:
             year:
               not_a_number: n'est pas un nombre
+  errors:
+    messages:
+      blank: doit être renseigné
+      cannot_hide_all_accreds: UNE fonction au minimum doit rester disponible publiquement
+      greater_than: doit être supérieur à %{count}
+      incorrect_type: La valeur n'est pas correcte
+      invalid: n'est pas correct
+      less_than: doit être inférieur à %{count}
+      record_invalid: 'Une erreur s''est produite : %{errors}'
+      required: Obligatoire
+      restrict_dependent_destroy:
+        has_one: Impossible de supprimer la donnée car une %{record} dépend d'elle
+        has_many: Impossible de supprimer la donnée car des %{record} dépendent d'elle
+      taken: Elément existant (non dublicable)
+      untranslatable: obligatoire
+
   error:
+    function_change:
+      one: An error prevented your request to be sent
+      other: Few errors prevented your request to be sent
+
+
+
     one: Erreur
     other: Erreurs
     record:

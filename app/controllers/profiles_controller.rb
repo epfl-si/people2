@@ -73,20 +73,28 @@ class ProfilesController < ApplicationController
       if @profile.update(profile_params)
         # Success
         format.turbo_stream do
-          render turbo_stream: turbo_stream.update(
-            frame_id,
-            partial: "profiles/fields/field_#{focus_field}",
-            locals: { profile: @profile }
-          )
+          turbo_flash(:success, label: "#{focus_field}_success")
+          render turbo_stream: [
+            turbo_stream.update(
+              frame_id,
+              partial: "profiles/fields/field_#{focus_field}",
+              locals: { profile: @profile }
+            ),
+            turbo_stream.replace("flash-messages", partial: "shared/flash")
+          ]
         end
       else
         # Validation error
         format.turbo_stream do
-          render turbo_stream: turbo_stream.update(
-            frame_id,
-            partial: "profiles/fields/field_error",
-            locals: { profile: @profile, focus_field: focus_field }
-          ), status: :unprocessable_entity
+          turbo_flash(:error, label: "#{focus_field}_error")
+          render turbo_stream: [
+            turbo_stream.update(
+              frame_id,
+              partial: "profiles/fields/field_error",
+              locals: { profile: @profile, focus_field: focus_field }
+            ),
+            turbo_stream.replace("flash-messages", partial: "shared/flash")
+          ], status: :unprocessable_entity
         end
       end
     end
@@ -115,8 +123,10 @@ class ProfilesController < ApplicationController
   #  2. re-render all the partials where the list of profile languages is used
   # Therefore, it is much easier to just reload everything e buona notte
   def update_languages
-    unless @profile.update(profile_params)
-      flash[:error] = t("something whent wrong while saving your language selection")
+    if @profile.update(profile_params)
+      base_flash(:success, label: "languages_success")
+    else
+      base_flash(:error, label: "languages_error")
     end
     redirect_to edit_profile_path(@profile)
   end
@@ -138,12 +148,13 @@ class ProfilesController < ApplicationController
 
   def update_inclusivity
     if @profile.update(profile_params)
+      turbo_flash(:success, label: "inclusivity_success")
       ProfilePatchJob.perform_later("sciper" => @profile.sciper, "inclusivity" => @profile.inclusivity ? "yes" : "no")
       respond_to do |format|
         format.turbo_stream { render "inclusivity/update" }
       end
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:error, label: "inclusivity_error")
       render :inclusivity_section, status: :unprocessable_entity
     end
   end
@@ -155,13 +166,13 @@ class ProfilesController < ApplicationController
       if @profile.update(selected_picture: @picture)
         @pictures = @profile.pictures
         format.turbo_stream do
-          flash.now[:success] = ".update"
+          turbo_flash(:success)
           render :set_favorite_picture
         end
         format.json { render :show, status: :ok, location: @profile }
       else
         format.turbo_stream do
-          flash.now[:error] = ".update"
+          turbo_flash(:error)
           redirect_to :edit
         end
         format.json { render json: @profile.errors, status: :unprocessable_entity }

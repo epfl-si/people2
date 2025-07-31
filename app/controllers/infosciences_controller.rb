@@ -25,9 +25,9 @@ class InfosciencesController < ApplicationController
   def create
     @infoscience = @profile.infosciences.new(infoscience_params)
     if @infoscience.save
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:success] = ".create"
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,9 +35,9 @@ class InfosciencesController < ApplicationController
   # PATCH/PUT /infosciences/1 or /infosciences/1.json
   def update
     if @infoscience.update(infoscience_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:error)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +45,7 @@ class InfosciencesController < ApplicationController
   # DELETE /infosciences/1 or /infosciences/1.json
   def destroy
     @infoscience.destroy!
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private

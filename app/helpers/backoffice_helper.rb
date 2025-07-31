@@ -68,12 +68,14 @@ module BackofficeHelper
   def range_number_field(
     form,
     attr_a, attr_b,
+    attr: 'period',
     help: nil,
-    label: "period",
+    label: nil,
     min: nil, max: nil,
     **opts
   )
-    tlabel, ahelp = label_and_help(form, attr_a, label: label, help: help, **opts)
+    # tlabel, ahelp = label_and_help(form, attr_a, label: label, help: help, **opts)
+    tlabel, ahelp = label_and_help(form, attr, label: label, help: help, **opts)
     f = [
       form.number_field(attr_a, min: min, max: max, class: "form-control", "aria-describedby": ahelp),
       sanitize("&nbsp;&mdash;&nbsp;"),
@@ -182,7 +184,7 @@ module BackofficeHelper
     if v.blank?
       a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
       l = t("lang.#{locale}")
-      v = t("generic.no_attribute_for_locale", attribute: a, language: l)
+      v = t("msg.no_attribute_for_locale", attribute: a, language: l)
     end
     v
   end
@@ -196,7 +198,7 @@ module BackofficeHelper
       if v.blank?
         a = t("activerecord.attributes.#{obj.class.name.underscore}.#{attr}")
         l = t("lang.#{l}")
-        v = t("generic.no_attribute_for_locale", attribute: a, language: l)
+        v = t("msg.no_attribute_for_locale", attribute: a, language: l)
         params[:class] << " user_translation_missing"
       end
       content_tag(tag_name, v, params)
@@ -284,7 +286,8 @@ module BackofficeHelper
     end
 
     safe_join [
-      tag.div("", id: "editor_overlay", class: "modal-overlay"),
+      # tag.div("", id: "editor_overlay"),
+      turbo_stream.update("editor-overlay") { tag.div("&nbsp;") },
       turbo_stream.update("editor") { tag.div(c, id: "editor_content") },
       turbo_stream.replace("flash-messages", partial: "shared/flash")
     ]
@@ -292,7 +295,7 @@ module BackofficeHelper
 
   def dismiss_common_editor
     safe_join [
-      turbo_stream.remove("editor_overlay"),
+      turbo_stream.update("editor-overlay") { "" },
       turbo_stream.update("editor") { "" },
       turbo_stream.replace("flash-messages", partial: "shared/flash")
     ]

@@ -85,8 +85,9 @@
   } %>
 </section>
 
-
 <%= turbo_frame_tag :remote_modal %>
+
+<%= turbo_frame_tag "editor-overlay" %>
 <%= turbo_frame_tag(
   "editor",
   tabindex: 0,

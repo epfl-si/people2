@@ -1,32 +1,52 @@
 ---
 fr:
   flash:
-  error:
-    create: Erreur lors de la création de la donnée
-    update: Erreur lors de la mise à jour de la donnée
-    remove: Erreur lors de la suppression de la donnée
-    accred:
-      cannot_hide_all: UNE affiliation au minimum doit rester disponible publiquement
-    box:
-      cannot_delete: Ce bloc ne peux pas être supprimé
-      create: Impossible de créer le bloc
-    function_change:
-      create: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard
-        ou contacter le 1234@epfl.ch
-    profile:
-      update: Erreur lors de la mise à jour du profil de base
-  notice:
-    create: Enregistré
-    update: Mis à jour
-    remove: L'enregistrement a été supprimé
-  success:
-    create: Ajouté
-    update: Mis à jour
-    remove: L'enregistrement a été supprimé
-    box:
-      deleted: Bloc supprimé
-      create: Bloc ajouté
-    function_change:
-      create: Demande de modification transmise aux accréditeurs séléctionnés
-    profile:
-      update: Mis à jour
+    generic:
+      create:
+        error: "Erreur lors de la création de %{record}"
+        success: "%{record} enregistré"
+      destroy:
+        error: "Erreur lors de la suppression de %{record}"
+        success: "%{record} supprimé"
+      update:
+        error: "Erreur lors de la mise à jour de %{record}"
+        success: "%{record} successfully updated"
+    error: "Une erreur s'est produite"
+    success: "Done!"
+
+    adoptions:
+      update:
+        error: "Error while registering your willing to adopt the new profile. Please contact support."
+    function_changes:
+      create:
+        error: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard ou contacter le 1234@epfl.ch
+        success: Demande de modification transmise aux accréditeurs séléctionnés
+    profiles:
+      set_favorite_picture:
+        success: Selection for the picture to be displayed updated successfully
+        error: Error while updating the selection for the picture to be displayed
+      update:
+        expertise_success: Short expertise updated successfully
+        expertise_error: Error while updating your expertise
+        inclusivity_success: Inclusivity choice updated successfully
+        inclusivity_error: Failed to update your inclusivity choice
+        languages_success: Profile language selection updated
+        languages_error: Something whent wrong while saving your language selection
+        personal_phone_success: Personal phone updated successfully
+        personal_phone_error: Error while updating your personal phone
+        personal_web_url_success: Personal web updated successfully
+        personal_web_url_error: Error while updating your personal web
+        nationality_success: Nationality updated successfully
+        nationality_error: Error while updating your nationality
+    usual_name_changes:
+      create:
+        error: The request for usual name change could not be sent
+        success: Request for usual name change sent successfully
+    visibilities:
+      update:
+        record:
+          error: 'Error while updating %{item} visibility'
+          success: '%{item} visibility successfully updated'
+        property:
+          error: 'Error while updating %{attr} visibility for %{item}'
+          success: '%{attr} visibility for %{item} successfully updated'

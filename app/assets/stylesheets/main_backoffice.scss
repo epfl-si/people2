@@ -463,14 +463,16 @@ details {
   z-index: 110;
 }
 
-.modal-overlay {
+#editor-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
   z-index: 100;
+  div {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 
 // ---------------------------------------------------------- visibility popover
@@ -778,7 +780,7 @@ dialog {
     background-color: #f00;
   }
 }
-//  leonardo's paranoia check 
+//  leonardo's paranoia check
 /* body::before {
   content: "CSS TABS LOADED";
   position: fixed;

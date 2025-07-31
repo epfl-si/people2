@@ -25,9 +25,9 @@ class EducationsController < ApplicationController
   def create
     @education = @profile.educations.new(education_params)
     if @education.save
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".create"
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,9 +35,9 @@ class EducationsController < ApplicationController
   # PATCH/PUT /educations/1 or /educations/1.json
   def update
     if @education.update(education_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:success)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +45,7 @@ class EducationsController < ApplicationController
   # DELETE /educations/1 or /educations/1.json
   def destroy
     @education.destroy!
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private

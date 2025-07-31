@@ -19,24 +19,25 @@ class PublicationsController < ApplicationController
   def create
     @publication = @profile.publications.new(publication_params)
     if @publication.save
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".create"
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @publication.update(publication_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
+      turbo_flash(:error)
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @publication.destroy!
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private

@@ -12,21 +12,12 @@ en:
               not_in_official: Use only a name that appears in your officials names
   activerecord:
     errors:
-      messages:
-        blank: must be provided
-        cannot_hide_all_accreds: At least ONE position must remain publicly available.
-        greater_than: must be greater than %{count}
-        incorrect_type: Invalid value
-        invalid: is incorrect
-        less_than: must be smaller than %{count}
-        record_invalid: 'Something went wrong: %{errors}'
-        restrict_dependent_destroy:
-          has_one: Cannot delete data because a dependent %{record} exists
-          has_many: Cannot delete data because dependent %{record} exist
-        required: 'Mandatory '
-        taken: Existing item (no duplicata)
-        untranslatable: mandatory
       models:
+        function_change:
+          attributes:
+            accreditor_scipers:
+              invalid: Please select at least one of the accreditors below
+
         experience:
           attributes:
             base:
@@ -59,9 +50,27 @@ en:
             year:
               not_a_number: is not a number
   error:
+    function_change:
+      one: An error prevented your request to be sent
+      other: Few errors prevented your request to be sent
     one: Error
     other: Errors
     record:
       zero: Something went wrong, please try later (or contact 1234@epfl.ch)
       one: 'Update failed: please fix the errors below to continue'
       other: "%{count} Please fix the errors below to continue"
+  errors:
+    messages:
+      blank: must be provided
+      cannot_hide_all_accreds: At least ONE position must remain publicly available.
+      greater_than: must be greater than %{count}
+      incorrect_type: Invalid value
+      invalid: is incorrect
+      less_than: must be smaller than %{count}
+      record_invalid: 'Something went wrong: %{errors}'
+      restrict_dependent_destroy:
+        has_one: Cannot delete data because a dependent %{record} exists
+        has_many: Cannot delete data because dependent %{record} exist
+      required: 'Mandatory '
+      taken: Existing item (no duplicata)
+      untranslatable: mandatory

@@ -9,7 +9,7 @@
   <%= single_text_field(form, :director) %>
   <%= single_text_field(form, :school) %>
 
-  <%= range_number_field(form, :year_begin, :year_end, label: '.period', min: 1950, max: Date.today.year, required: true) %>
+  <%= range_number_field(form, :year_begin, :year_end, attr: 'period', min: 1950, max: Date.today.year, required: true) %>
 
   <%= form_actions form, education %>
 <% end %>

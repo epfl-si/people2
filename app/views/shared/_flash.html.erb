@@ -12,7 +12,7 @@
     end
   %>
     <div class="alert alert-<%= at %> alert-dismissible" data-controller="flash" role="alert">
-      <%= message.is_a?(Array) ? t(message, context: ["flash", type]).join(", ") : t(message) %>
+      <%= message %>
       <button type="button" class="close" data-action="flash#dismiss" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>

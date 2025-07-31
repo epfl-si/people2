@@ -25,9 +25,9 @@ class AchievementsController < ApplicationController
     @achievement = @profile.achievements.new(achievement_params)
 
     if @education.save
-      flash.now[:success] = ".create"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".create"
+      turbo_flash(:error)
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,9 +35,9 @@ class AchievementsController < ApplicationController
   # PATCH/PUT /achievements/1 or /achievements/1.json
   def update
     if @achievement.update(achievement_params)
-      flash.now[:success] = ".update"
+      turbo_flash(:success)
     else
-      flash.now[:error] = ".update"
+      turbo_flash(:error)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +45,7 @@ class AchievementsController < ApplicationController
   # DELETE /achievements/1 or /achievements/1.json
   def destroy
     @achievement.destroy!
-    flash.now[:success] = ".remove"
+    turbo_flash(:success)
   end
 
   private

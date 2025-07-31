@@ -47,6 +47,6 @@ class FunctionChange < ApplicationRecord
   def accreditors_correspondence
     return unless selected_accreditors.empty?
 
-    errors.add(:accreditor_scipers, "includes invalid data")
+    errors.add(:accreditor_scipers, :invalid)
   end
 end
