@@ -33,6 +33,11 @@ module Admin
       save
     end
 
+    def group
+      d = File.dirname(file).sub("/", "")
+      d.presence || "base"
+    end
+
     def self.load_source_files
       d = Rails.root.join('config/locales').to_s
       ds = d.size

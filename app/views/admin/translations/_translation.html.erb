@@ -1,4 +1,5 @@
 <tr id="<%= dom_id(translation) %>" data-controller="trform">
+  <td><%= translation.group %></td>
   <td>
     <%= translation.key.truncate(40, omission: " • #{translation.key.last(20)}") %>
     <div
@@ -27,6 +28,6 @@
       <%= f.submit "Clone", class: "btn btn-tertiary btn-sm" %>
     <% end %>
 
-    <%#= link_to("auto", admin_translation_autotranslate_path(translation), class: "btn btn-tertiary btn-sm", method: :put, data: { turbo_stream: true, turbo_method: 'put' }) %>
+    <%# = link_to("auto", admin_translation_autotranslate_path(translation), class: "btn btn-tertiary btn-sm", method: :put, data: { turbo_stream: true, turbo_method: 'put' }) %>
   </td>
 </tr>
