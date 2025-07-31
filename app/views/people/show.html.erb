@@ -46,25 +46,24 @@
   <% end %>
 <% end %>
 
-  <div class="row people-basic-info">
-    <div class="col-md-6 col-lg-4">
-      <%= profile_photo(@profile&.photo, class: 'mx-auto img-fluid bg-gray-100', variant: :large, size: 300) %>
-      <% @side_zone_bbs&.each do |section, boxes| %>
-        <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
-      <% end %>
+<div class="row people-basic-info">
+  <div class="col-md-6 col-lg-4">
+    <%= profile_photo(@profile&.photo, class: 'mx-auto img-fluid bg-gray-100', variant: :large, size: 300) %>
+    <% @side_zone_bbs&.each do |section, boxes| %>
+      <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
+    <% end %>
 
-    </div>
-    <div class="people-contacts col-md-6 col-lg-8">
-      <h1 class="mb-3"><%= @person.name.display %></h1>
-      <%= render "contact" %>
-      <%= render "accreds" %>
-      <% @contact_zone_bbs&.each do |section, boxes| %>
-        <%= render partial: "section", locals: {section: section, boxes: boxes} %>
-      <% end %>
-    </div>
-  </div><!-- people basic infos -->
+  </div>
+  <div class="people-contacts col-md-6 col-lg-8">
+    <h1 class="mb-3"><%= @person.name.display %></h1>
+    <%= render "contact" %>
+    <%= render "accreds" %>
+    <% @contact_zone_bbs&.each do |section, boxes| %>
+      <%= render partial: "section", locals: {section: section, boxes: boxes} %>
+    <% end %>
+  </div>
+</div><!-- people basic infos -->
 
-  <% # section tab links %>
 <% if @main_zone_bbs.present? || @ta.present? %>
   <%= render "shared/tabs", tabs: (
     @main_zone_bbs.map.with_index { |(section, boxes), i|
@@ -87,5 +86,3 @@
     }] : [])
   ) %>
 <% end %>
-
-</div>
