@@ -45,7 +45,7 @@ class Accred < ApplicationRecord
     return true unless visibility_changed? && !visible_by?(AudienceLimitable::WORLD)
     return true unless profile.accreds.for_audience(AudienceLimitable::WORLD).count < 2
 
-    errors.add(:visible, ".accred.cannot_hide_all")
+    errors.add(:visible, "errors.messages.cannot_hide_all_accreds")
     false
   end
 

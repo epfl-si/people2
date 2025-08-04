@@ -21,8 +21,17 @@ module Flashable
     end
   end
 
-  # TODO: the generic message might take the model name inferred from the controller name
+  # Build the flash message based on the following priority:
+  # 1. just return :tmessage which is asssumed to be already tranlsated if present
+  # 2. return the translation of :message if present
+  # with provided :label or the default one corresponding to the request state (:success or :error)
+  # 3. return a controller+action specific message
+  # 4. return a generic action specific message
+  # 5. return the generic message
   def t_flash_message(default_label, **opts)
+    return opts[:tmessage] if opts.key?(:tmessage)
+    return I18n.t(opts[:message]) if opts.key?(:message)
+
     l = opts[:label] || default_label
     r = opts[:record] || controller_name.classify
     tr = I18n.t(:"activerecord.models.#{r.underscore}", default: r.humanize)
@@ -31,11 +40,6 @@ module Flashable
     b = :"flash.generic.#{action_name}.#{default_label}"
     c = :"flash.generic.#{default_label}"
     I18n.t(a, default: I18n.t(b, record: tr, default: I18n.t(c)))
-    # defaults = [
-    #   :"flash.generic.#{action_name}.#{default_label}",
-    #   :"flash.generic.#{default_label}"
-    # ]
-    # I18n.t(a, defaults: defaults)
   end
 
   def base_flash(status, **opts)
