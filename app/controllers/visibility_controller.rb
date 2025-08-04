@@ -11,37 +11,34 @@ class VisibilityController < ApplicationController
     @item = klass.find params[:id]
     authorize! @item, to: :update?
     if (@property = params[:property]).present?
+      old_visibility = @item.send("#{@property}_visibility")
       @item.send("#{@property}_visibility=", params[:visibility])
     else
+      old_visibility = @item.visibility
       @item.visibility = params[:visibility]
     end
 
     respond_to do |format|
+      opts = { item: I18n.t("activerecord.models.#{m}") }
+      opts[:attr] = I18n.t("activerecord.attributes.#{m}.#{@property}") if @property.present?
+      tkey = "flash.visibilities.update.#{@property.present? ? 'property' : 'record'}"
       if @item.save
         format.turbo_stream do
-          flash.now[:success] = if @property.present?
-                                  I18n.t(
-                                    "flash.visibilities.update.property.success",
-                                    item: I18n.t("activerecord.models.#{m}"),
-                                    attr: I18n.t("activerecord.attributes.#{m}.#{@property}")
-                                  )
-                                else
-                                  I18n.t(
-                                    "flash.visibilities.update.record.success",
-                                    item: I18n.t("activerecord.models.#{m}")
-                                  )
-                                end
+          turbo_flash(:success, tmessage: I18n.t("#{tkey}.success", **opts))
         end
       else
         format.turbo_stream do
-          flash.now[:error] =
-            if @item.errors.present?
-              @item.errors.map(&:message)
-            else
-              ".update"
-            end
-          # Revert model to previous state ???
-          # @item = klass.find params[:id]
+          if @item.errors.present?
+            turbo_flash(:error, tmessage: @item.errors.map { |e| I18n.t(e.message) }.join(", "))
+          else
+            turbo_flash(:error, tmessage: I18n.t("#{tkey}.error", **opts))
+          end
+        end
+        # Revert model to previous state
+        if @property.present?
+          @item.send("#{@property}_visibility=", old_visibility)
+        else
+          @item.visibility = old_visibility
         end
       end
     end
