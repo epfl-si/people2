@@ -1,0 +1,9 @@
+<%= form_with(model: [unr.profile, unr], local: false, class: "instaform") do |form| %>
+  <%= render "shared/form_errors", item: unr if unr.errors.any? %>
+
+  <%= single_text_field(form, :new_first) %>
+  <%= single_text_field(form, :new_last) %>
+  <%= single_text_area(form, :reason) %>
+  <%= form_actions(form, unr, submit_label: t('action.submit')) %>
+
+<% end %>

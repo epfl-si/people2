@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :pictures, shallow: true
     resources :accreds, shallow: true, only: %i[index show update]
     resources :usual_name_changes, only: %i[new create]
-    resources :name_change_requests, only: %i[new create]
+    resources :usual_name_requests, only: %i[new create]
     member do
       patch :set_favorite_picture
       patch :reset_field

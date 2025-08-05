@@ -58,6 +58,8 @@
       LEGACY_RW_URL: "{{ people.legacy_rw_url }}"
       # LEGACY_PAGES_CACHE: 2days
 
+      NAME_CHANGE_REQUEST_EMAIL: "{{ people.name_change_request_email }}"
+
       # ----------------------------- read in yml files (will go to config maps)
 
       # --> epflapi.yml

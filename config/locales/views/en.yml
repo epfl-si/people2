@@ -49,9 +49,7 @@ en:
   function_changes:
     form:
       explain: 'To change your position, please contact one of your accreditors listed
-        below, who is authorized to approve the request
-
-        '
+        below, who is authorized to approve the request'
     new:
       form_title: Function change request
   inclusivity:
@@ -136,12 +134,8 @@ en:
       action:
         submit: Save
     name_change:
-      edit:
-        select:
-          title: Change your name
-          usual: Change your usual name
-          official: Changer your official name
       official:
+        title: Official Name Change
         instructions_html: A request to modify your official name can only be made
           if a change has been officially recorded by a Civil Registry Office (such
           as a change in the spelling of your name, marriage, divorce, etc.) . This
@@ -163,21 +157,7 @@ en:
             message_html: Please contact the <a href="mailto:rh@epfl.ch">HR team</a>
               with a copy of your ID. The update is then propagated to the IT systems.
       usual:
-        fallback_title: In your case the usual name can ony have its current value
-      todo:
-        request_title: Submit a request to change usual name
-        new_first: New first name
-        new_last: New last name
-        reason: Reason for the request
-        reason_hint: 'E.g.: I would like my usual first name to appear on internal
-          platforms'
-        submit: Submit request
-        no_accreditor_found: No accreditor found.
-        sent_title: Request sent
-        sent_message: Your request to change your usual name has been successfully
-          sent and will be processed shortly.
-        flash_success: Your request to change your usual name has been successfully
-          sent and will be processed shortly.
+        title: Usual Name Change
   publications:
     edit:
       form_title: Editing selected publication
@@ -195,40 +175,17 @@ en:
     form:
       available_first: 'Available first names:'
       available_last: 'Available last names:'
-      instructions_html: 'Please choose below from your existing names or surnames
-        those that you want to display.
-
-        '
-      fallback: Usual name can only have single value
-      submit: Send the request
     new:
-      fallback:
-        title: Your first and last names are composed of a single word. Therefore
-          it is not possible to create any other combination for your usual name.
-        content_html: If you wish to obtain an usual name that is not assembled from
-          parts that are present in your official name, please contact the Office
-          for Equal Opportunities (EGA) at <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
-          motivating your choice.
-      title_custom: Personalized usual name request
-      title_standard: Standard usual name request
-      switch_to_official_request: Make a personalized name request
-      status:
-        student:
-          title: Students
-          message_html: To submit a request, click the button below.<br/> Your request
-            will then be reviewed by the Equal Opportunities Office (VPH-WINC-EGA).<br/>
-            <strong>Contact and validation:</strong><br/> The EGA team will contact
-            you to arrange an in-person meeting to discuss your request. You will
-            then receive an official response, either positive or negative.
-        phd:
-          title: PhD Candidates
-          message_html: 'First, contact the <a href="mailto:rh@epfl.ch">HR team</a>
-            to validate your request.<br/> Once validated, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
-            so that the change can be registered in the academic databases.<br/> If
-            needed, the EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
-        staff:
-          title: EPFL Staff
-          message_html: 'Your request must be validated by the HR person of your faculty
-            or vice presidency.<br/> The person responsible for your accreditation
-            (ACCRED) will carry out the changes in the system.<br/> If needed, the
-            EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
+      instructions_html: 'Please choose below from your existing names or surnames
+        those that you want to display.'
+  usual_name_requests:
+    new:
+      instructions_one_option_html: >
+        In your case, the request for a new display name needs to be validate.
+        Please fill and submit the following form. The responsible person will
+        take care of your name change.
+      instructions_two_options_html: >
+        If you wish to obtain an usual name that is not assembled from
+        parts that are present in your official name, then your request needs
+        to be validated. Please fill and submit the following form.
+        The responsible person will take care of your name change.

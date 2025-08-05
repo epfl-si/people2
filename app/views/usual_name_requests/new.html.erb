@@ -1,0 +1,7 @@
+<%= turbo_frame_tag :usual_name_request do %>
+  <p><%= @profile.person.name.customizable? ? t('.instructions_two_options_html') : t('.instructions_one_option_html') %></p>
+
+  <%= turbo_frame_tag :usual_name_request_form do %>
+    <%= render "usual_name_requests/form", unr: @unr %>
+  <% end %>
+<% end %>

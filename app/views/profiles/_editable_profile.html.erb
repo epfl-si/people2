@@ -15,25 +15,17 @@
 
 <dl class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
 
-  <% if profile.person.name.customizable? %>
-    <dt><%= t "attr_labels.profile.official_name" %></dt>
-    <dd>
-      <span><%= profile.person.name.official_display %></span>
-      <%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: { turbo_stream: true } %>
-    </dd>
+  <dt><%= t "attr_labels.profile.official_name" %></dt>
+  <dd>
+    <span><%= profile.person.name.official_display %></span>
+    <%= link_to icon('edit-3'), edit_profile_path(profile, official_name: true), data: { turbo_stream: true } %>
+  </dd>
 
-    <dt><%= t "attr_labels.profile.usual_name" %></dt>
-    <dd>
-      <span><%= profile.person.name.display %></span>
-      <%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "usual"), data: { turbo_stream: true } %>
-    </dd>
-  <% else %>
-    <dt><%= t "attr_labels.profile.unique_name" %></dt>
-    <dd>
-      <span><%= profile.person.name.official_display %></span>
-      <%= link_to icon('edit-3'), edit_profile_path(profile, name: true, type: "official"), data: { turbo_stream: true } %>
-    </dd>
-  <% end %>
+  <dt><%= t "attr_labels.profile.usual_name" %></dt>
+  <dd>
+    <span><%= profile.person.name.display %></span>
+    <%= link_to icon('edit-3'), edit_profile_path(profile, usual_name: true), data: { turbo_stream: true } %>
+  </dd>
 
   <dt><%= t("attr_labels.profile.inclusivity") %></dt>
   <dd class="rpush">

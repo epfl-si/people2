@@ -43,6 +43,7 @@ people:
   isa_url: "{{ ISA_URL | default('https://isa.epfl.ch/services') }}"
   legacy_ro_url: "{{ LEGACY_BASE_URL | default('https://personnes.epfl.ch') }}"
   legacy_rw_url: "{{ LEGACY_PATCH_URL | default('https://test-people.epfl.ch') }}"
+  name_change_request_email: "{{ NAME_CHANGE_REQUEST_EMAIL | default('name.change@groupes.epfl.ch') }}"
   ollama_url: "{{ OLLAMA_URL | default('false') }}"
   openai_url: "{{ OPENAI_URL | default('https://inference-dev.rcp.epfl.ch/v1') }}"
   redis: "redis://{{ redis.service }}:{{ ports.redis }}/0"

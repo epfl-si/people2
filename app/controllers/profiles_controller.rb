@@ -17,9 +17,10 @@ class ProfilesController < ApplicationController
   def edit
     if params[:details]
       render 'edit_details'
-    elsif params[:name]
-      @type = params[:type]
-      render 'profiles/name_change/edit'
+    elsif params[:official_name]
+      render 'profiles/name_change/official'
+    elsif params[:usual_name]
+      render 'profiles/name_change/usual'
     elsif params[:languages]
       render 'edit_languages'
     else

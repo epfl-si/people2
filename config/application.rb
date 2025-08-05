@@ -68,6 +68,8 @@ module People
     config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false').match?(config.re_true)
     config.hide_teacher_accreds = ENV.fetch('HIDE_ENS_ACCREDDS', 'true').match?(config.re_true)
     config.force_audience = Rails.env.development? && ENV.fetch('FORCE_AUDIENCE', false)
+    config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', 'name.change@groupes.epfl.ch')
+
     # TODO: remove next 3 lines after migration from legacy
     config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
     config.legacy_base_url = ENV.fetch('LEGACY_RO_URL', 'https://personnes.epfl.ch/')
