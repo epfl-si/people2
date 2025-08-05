@@ -19,7 +19,7 @@
     <%= translation.de&.truncate(120) %>
   </td>
   <td><%= icon(translation.done? ? 'check-square' : 'square') %></td>
-  <td><%= translation.updated_at&.strftime('%Y-%m-%d %H:%M') %></td>
+  <td><%= translation.created_at&.strftime('%Y-%m-%d %H:%M') %></td>
   <td>
     <%= form_with(model: translation, url: autotranslate_admin_translation_path(translation), local: false) do |f| %>
       <%= f.submit "Auto", class: "btn btn-tertiary btn-sm" %>
