@@ -293,13 +293,13 @@ migrate: dcup
 ## retrive struct files from keybase
 structs:
 	rsync -av $(KBPATH)/structs/ tmp/structs/
+	docker compose exec webapp bin/rails legacy:struct
 
 ## run rails migration and seed with initial data
-seed: migrate structs webmocks
+seed: migrate structs scipers webmocks
 	docker compose exec webapp bin/rails db:seed
 	docker compose exec webapp bin/rails legacy:import
-	docker compose exec webapp bin/rails legacy:struct
-	docker compose exec webapp bin/rails data:courses
+	docker compose exec webapp bin/rails data:refresh_courses
 
 ## reload the list of all courses from ISA
 courses: dcup
@@ -307,9 +307,11 @@ courses: dcup
 
 ## seed the data for Work::Sciper
 scipers: dcup
-	docker compose exec webapp bin/rails legacy:seed_scipers
+	docker compose exec webapp bin/rails legacy:reload_scipers
 
 legaimport: dcup
+	docker compose exec webapp bin/rails legacy:fetch_all_texts
+	docker compose exec webapp bin/rails legacy:txt_lang_detect
 	docker compose exec webapp bin/rails legacy:import
 
 nukestorage:
@@ -319,7 +321,6 @@ nukestorage:
 reseed:
 	make nukedb
 	make nukestorage
-	rm -f
 	sleep 2
 	make seed
 
