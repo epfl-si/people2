@@ -11,7 +11,7 @@ module Admin
 
     # GET /admin/translations or /admin/translations.json
     def index
-      @translations = Admin::Translation.forui.todo.order(:en) # .limit(40)
+      @translations = Admin::Translation.forui.todo.order('created_at DESC', :en) # .limit(40)
     end
 
     def export

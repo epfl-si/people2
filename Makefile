@@ -346,6 +346,10 @@ nukedb:
 	# rm -f db/people_schema.rb
 	# rm -f db/work_schema.rb
 
+## reload UI translations from the code for /admin/translations
+reseed_translations:
+	docker compose exec webapp ./bin/rails admin:reseed_translations
+
 ## delete keycloak database and recreate it
 rekc:
 	docker compose stop keycloak
