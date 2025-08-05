@@ -2,6 +2,7 @@
 fr:
   activerecord:
     attributes:
+      accred: {}
       achievement:
         category: Catégorie
         description: Description
@@ -56,7 +57,7 @@ fr:
         official_name: Nom officiel
         personal_web_url: Adresse du site web personnel
         personal_phone: Numéro de téléphone personnel
-        usual_name: Nom d'usage
+        usual_name: Nom et prénom affichés et d'usage
         expertise_en: Expertise (mots-clefs uniquement)
         expertise_fr: Expertise (mots-clefs uniquement)
         expertise_it: Expertise (mots-clefs uniquement)

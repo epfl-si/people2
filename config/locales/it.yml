@@ -1,0 +1,14 @@
+---
+it:
+  action: {}
+  app: {}
+  dev:
+    action: {}
+  generic:
+    form: {}
+  lang:
+    menu: {}
+    native: {}
+    version: {}
+  msg: {}
+  nav: {}

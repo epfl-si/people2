@@ -41,7 +41,8 @@ en:
       texfield_for: "%{attr}"
       translated_label: "%{label} in %{language}"
       translated_textfield_for: "%{attr} in %{language}"
-      tmandatory: Please complete this field in at least one of your selected profile languages
+      tmandatory: Please complete this field in at least one of your selected profile
+        languages
       update: Save
   lang:
     fr: French

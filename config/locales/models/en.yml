@@ -58,7 +58,7 @@ en:
         official_name: Official Name
         personal_web_url: Personal website url
         personal_phone: Personal phone number
-        usual_name: Usual Name
+        usual_name: Displayed and usual Name and Surname
         expertise_en: Expertise (keywords only)
         expertise_fr: Expertise (keywords only)
         expertise_it: Expertise (keywords only)
@@ -111,7 +111,7 @@ en:
     profile:
       available_languages: Available languages
       expertise: Expertises
-      inclusivity: "Show job names in inclusive form (french version)"
+      inclusivity: Show job names in inclusive form (french version)
       nationality: Nationality
       name: Name & Surname
       official_name: Name & Surname

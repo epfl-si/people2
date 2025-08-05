@@ -2,28 +2,34 @@
 it:
   activerecord:
     attributes:
+      accred: {}
       achievement:
         category: Categoria
         description: Descrizione
         url: url
         year: Anno
+      award: {}
+      education: {}
       experience:
         description: Descrizione
         location: Company, location or institution
         title: Title
         year_begin: from year
         year_end: to year
+      function_change: {}
       infoscience:
         title: Titolo
         url: url per infoscience-exports
+      name_change_request: {}
       picture:
-        selected: Scelta
         camipro: Camipro
         failed_attempts: Numero di tentativi falliti
+        selected: Scelta
       profile:
         available_languages: Langue Disponibili
         nationality: Nazionalità
         official_name: Nome ufficiale
+        usual_name: ''
         en_enabled: profilo disponibile in inglese
         fr_enabled: profilo disponibile in francese
         it_enabled: Profilo disponibile in italiano.
@@ -40,3 +46,10 @@ it:
       social:
         tag: Tipo
         value: valore
+      usual_name_change: {}
+    models: {}
+  attr_labels:
+    function_change: {}
+    profile: {}
+    social:
+      tag: {}

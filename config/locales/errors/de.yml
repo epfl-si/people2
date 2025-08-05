@@ -1,0 +1,41 @@
+---
+de:
+  activemodel:
+    errors:
+      models:
+        name:
+          attributes:
+            usual_first: {}
+            usual_last: {}
+  activerecord:
+    errors:
+      models:
+        function_change:
+          attributes:
+            accreditor_scipers: {}
+        experience:
+          attributes:
+            base: {}
+        infoscience:
+          attributes:
+            url: {}
+        picture:
+          attributes:
+            base: {}
+        profile:
+          attributes:
+            expertise_en: {}
+            expertise_fr: {}
+            expertise_ir: {}
+            expertise_de: {}
+            personal_web_url: {}
+            personal_phone: {}
+        publication:
+          attributes:
+            year: {}
+  error:
+    function_change: {}
+    record: {}
+  errors:
+    messages:
+      restrict_dependent_destroy: {}

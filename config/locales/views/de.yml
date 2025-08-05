@@ -1,0 +1,81 @@
+---
+de:
+  accreds:
+    index: {}
+  achievements:
+    edit: {}
+    new: {}
+    form:
+      help: {}
+  awards:
+    edit: {}
+    new: {}
+    form:
+      help: {}
+  educations:
+    edit: {}
+    new: {}
+  experiences:
+    edit: {}
+    new: {}
+  footer:
+    follow: {}
+  function_changes:
+    form: {}
+    new: {}
+  inclusivity:
+    inclusivity_toggle: {}
+  infosciences:
+    edit: {}
+    new: {}
+  people:
+    adopt: {}
+    admin_data: {}
+    contact:
+      nav: {}
+    show:
+      title: {}
+    teaching:
+      title: {}
+  pictures:
+    form: {}
+    picture: {}
+    pictures: {}
+  profiles:
+    edit:
+      title: {}
+    edit_languages: {}
+    inline_languages_form: {}
+    languages_form:
+      action: {}
+    name_change:
+      edit:
+        select: {}
+      official:
+        instructions_html: ''
+        status:
+          student: {}
+          phd:
+            message_html: ''
+          staff:
+            message_html: ''
+      usual: {}
+      todo: {}
+  publications:
+    edit: {}
+    new: {}
+    editable_publication: {}
+  socials:
+    add: {}
+    form: {}
+  usual_name_changes:
+    form: {}
+    new:
+      fallback:
+        content_html: ''
+      status:
+        student: {}
+        phd:
+          message_html: ''
+        staff:
+          message_html: ''

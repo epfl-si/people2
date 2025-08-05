@@ -11,12 +11,12 @@ en:
       update:
         error: "%{record} could not be updated"
         success: "%{record} successfully updated"
-      error: "En error occurred"
-      success: "Done!"
-
+      error: En error occurred
+      success: Done!
     adoptions:
       update:
-        error: "Error while registering your willing to adopt the new profile. Please contact support."
+        error: Error while registering your willing to adopt the new profile. Please
+          contact support.
     function_changes:
       create:
         error: Change request could not be sent. Please retry later.
@@ -45,8 +45,8 @@ en:
     visibilities:
       update:
         record:
-          error: 'Error while updating %{item} visibility'
-          success: '%{item} visibility successfully updated'
+          error: Error while updating %{item} visibility
+          success: "%{item} visibility successfully updated"
         property:
-          error: 'Error while updating %{attr} visibility for %{item}'
-          success: '%{attr} visibility for %{item} successfully updated'
+          error: Error while updating %{attr} visibility for %{item}
+          success: "%{attr} visibility for %{item} successfully updated"

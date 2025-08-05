@@ -1,0 +1,10 @@
+---
+de:
+  visibility:
+    label: {}
+    short_label:
+      disabled: false
+    labels: {}
+    short_labels:
+      enabled: false
+    tag: {}
