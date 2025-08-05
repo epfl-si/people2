@@ -27,7 +27,7 @@ services:
     command:
       - start-dev
     environment:
-      KC_HOSTNAME: "https://keycloak.dev.jkldsa.com"
+      KC_HOSTNAME: "https://keycloak.${DOMAIN:-dev.jkldsa.com}"
       # KC_HOSTNAME_PORT: 443
       KC_HTTP_ENABLED: false
       KC_DB: mariadb
@@ -120,24 +120,25 @@ services:
       REDIS_CACHE: redis://cache:6379/0
       # SEEDS_PATH: db/seeds/data
       # USE_LOCAL_ELEMENTS: false
-      USE_LOCAL_ELEMENTS: true
+      USE_LOCAL_ELEMENTS: ${USE_LOCAL_ELEMENTS:-true}
 
       # ----------------------------------------------------------- dev specific
       # DEV_SEEDS_PATH: db/seeds_dev/data
-      FORCE_AUDIENCE: ${FORCE_AUDIENCE:-4}
-      RAILS_DEVELOPMENT_HOSTS: "people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}"
+      FORCE_AUDIENCE: ${FORCE_AUDIENCE:-false}
+      RAILS_DEVELOPMENT_HOSTS: ${RAILS_DEVELOPMENT_HOSTS:-people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}}
       SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-false}
 
       # ---------------------------------------------------- transition specific
-      ENABLE_ADOPTION: true
+      ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
       LEGACY_RO_URL: ${LEGACY_RO_URL:-https://personnes.epfl.ch}
       LEGACY_RW_URL: ${LEGACY_RW_URL:-https://test-people.epfl.ch}
       # LEGACY_PAGES_CACHE: 2days
 
+      HIDE_ENS_ACCREDDS: ${HIDE_ENS_ACCREDDS:-yes}
+
       # ----------------------------- read in yml files (will go to config maps)
 
       # --> epflapi.yml
-      ATELA_KEY: ${ATELA_KEY}
       CAMIPRO_PHOTO_KEY: ${CAMIPRO_PHOTO_KEY}
       CAMIPRO_PHOTO_HOST: ${CAMIPRO_PHOTO_HOST:-camipro-photos.epfl.ch}
       ENABLE_API_CACHE: "${ENABLE_API_CACHE:-false}"
