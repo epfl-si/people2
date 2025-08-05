@@ -11,8 +11,8 @@ fr:
       update:
         error: "Erreur lors de la mise à jour de %{record}"
         success: "%{record} successfully updated"
-    error: "Une erreur s'est produite"
-    success: "Done!"
+      error: "Une erreur s'est produite"
+      success: "Done!"
 
     adoptions:
       update:

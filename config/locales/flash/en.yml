@@ -11,8 +11,8 @@ en:
       update:
         error: "%{record} could not be updated"
         success: "%{record} successfully updated"
-    error: "En error occurred"
-    success: "Done!"
+      error: "En error occurred"
+      success: "Done!"
 
     adoptions:
       update:
