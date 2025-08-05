@@ -43,10 +43,6 @@ en:
       infoscience:
         title: title
         url: infoscience-exports url
-      name_change_request:
-        new_first: New first name
-        new_last: New last name
-        reason: Reason for the request
       picture:
         camipro: Camipro
         failed_attempts: Number of failed attempts of fetching the CAMIPRO picture
@@ -86,6 +82,10 @@ en:
       usual_name_change:
         usual_first: First name to display
         usual_last: Family name to display
+      usual_name_request:
+        new_first: New first name
+        new_last: New last name
+        reason: Reason for the request
     models:
       accred: Accreditation
       achievement: Annual achievement

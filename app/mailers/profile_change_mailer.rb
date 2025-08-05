@@ -12,8 +12,8 @@ class ProfileChangeMailer < ApplicationMailer
     )
   end
 
-  def name_change_request
-    @request = params[:name_change_request]
+  def usual_name_request
+    @request = params[:usual_name_request]
     person = @request.profile.person
     subject_text = "Demande de changement de nom usuel – #{person.name.display} (#{person.sciper})"
 

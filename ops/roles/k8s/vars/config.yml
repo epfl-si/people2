@@ -34,6 +34,8 @@ people_config:
   EPFLAPI_BACKEND_URL: "{{ people.api_url }}"
   ISA_URL: "{{ people.isa_url }}"
 
+  NAME_CHANGE_REQUEST_EMAIL: "{{ people.name_change_request_email }}"
+
   # Ollama / OpenAI
   OLLAMA_URL: "{{ people.ollama_url }}"
   OPENAI_API_KEY: "{{ _secrets.inference.key }}"

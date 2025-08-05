@@ -135,6 +135,7 @@ services:
       # LEGACY_PAGES_CACHE: 2days
 
       HIDE_ENS_ACCREDDS: ${HIDE_ENS_ACCREDDS:-yes}
+      # NAME_CHANGE_REQUEST_EMAIL: ${NAME_CHANGE_REQUEST_EMAIL:-name.change@groupes.epfl.ch}
 
       # ----------------------------- read in yml files (will go to config maps)
 

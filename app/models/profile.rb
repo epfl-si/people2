@@ -39,7 +39,8 @@ class Profile < ApplicationRecord
   has_many :experiences, dependent: :destroy
   has_many :infosciences, dependent: :destroy
   has_many :publications, dependent: :destroy
-  has_many :name_change_requests, dependent: :destroy
+  has_many :usual_name_changes, dependent: :destroy
+  has_many :usual_name_requests, dependent: :destroy
 
   accepts_nested_attributes_for :boxes, :socials, :awards, :educations, :experiences
 

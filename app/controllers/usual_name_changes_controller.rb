@@ -9,6 +9,7 @@ class UsualNameChangesController < ApplicationController
   def create
     @unc = UsualNameChange.for(@profile)
 
+    # if @unc&.update(new_first: "ciccio", new_last: "pasticcio")
     if @unc&.update(unc_params)
       turbo_flash(:success)
     else
