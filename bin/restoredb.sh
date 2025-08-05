@@ -2,7 +2,6 @@
 set -e
 # set -x
 . .env
-COMPOSE="${COMPOSE:-docker-compose.yml}"
 DATASRC="${DATASRC:-peo11}"
 
 DUMPDIR="${DUMPDIR:-tmp/dbdumps}"
@@ -11,7 +10,7 @@ ACCRED_TABLES="accreds accreds_properties classes deputations guests positions p
 BOTTIN_TABLES="annuaire_adrspost annuaire_persons annuaire_persphones annuaire_persrooms annuaire_phones rooms"
 CADI_TABLES="DBClients Manco WSAppsCallers WSAppsHosts WSClients WSServices batch_executions batch_params champs config datafields datatypes dbs delegates eventstypes filters operations pendingnotifications providers resources resources_types subscriptions tbls"
 DINFO_TABLES="SwitchAAIUsers accounts accred adrspost allunits annu delegues emails externalids fonds groups isa_codes locaux Personnel sciper unites_reorg21 unites unites1 isa_etu"
-CV_TABLES="" 
+CV_TABLES=""
 
 dbs=$(mktemp "/tmp/XXXXX")
 trap "rm -f $dbs" EXIT
@@ -27,7 +26,7 @@ fixdb() {
 
 db_secret() {
 	db=$1
-	col=$2	
+	col=$2
 	[ -s $dbs ] || scp $DATASRC:/opt/dinfo/etc/dbs.conf $dbs
 	s=$(gawk -v db="$db" -v col="$col"  '($1 == db){printf("%s", $col);}' $dbs)
 	echo "db_secret: db=$db  col=$col  -> $s" >&2
@@ -36,13 +35,13 @@ db_secret() {
 
 exec_mysql() {
 	db=$1
-	docker compose -f $COMPOSE exec -T mariadb mariadb -u root --password=mariadb -D $db
+	docker compose exec -T mariadb mariadb -u root --password=mariadb -D $db
 }
 
 
 restore() {
 	db=$1
-	case $db in 
+	case $db in
 	accred)
 		tables="$ACCRED_TABLES"; ;;
 	cadi)
@@ -73,7 +72,7 @@ restore() {
 	# add missing indexes
 	if [ "$db" == "cv" ] ; then
 		index="sciper"
-		for t in awards boxes edu parcours publications research_ids ; do 
+		for t in awards boxes edu parcours publications research_ids ; do
 			ic=$(echo "SELECT COUNT(1) IndexIsThere FROM INFORMATION_SCHEMA.STATISTICS WHERE table_schema='cv' AND table_name='$t' AND index_name='$index';"  |exec_mysql $db | tail -n 1)
 			if [ "$ic" == "0" ] ; then
 				echo "Table $db.$t: index for sciper needs to be added"

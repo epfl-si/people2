@@ -23,7 +23,6 @@ class ProfilesController < ApplicationController
     elsif params[:languages]
       render 'edit_languages'
     else
-
       force_profile_locale(@profile)
       # TODO: remove after migration from legacy
       @adoption = Adoption.where(sciper: @profile.sciper).first if Rails.configuration.enable_adoption

@@ -1,42 +1,78 @@
 # Developing
 
+In the current state of the application, development is meant to be done running
+the application in docker container. It is not the fastest (specially under MacOS),
+and sometimes most convinient choice in development but it simplyfies working
+with the various side services like keycloak, mariadb, redis etc.
+
 ## Pre-requisites
 
 You need the following installed on your system to run this application in development mode:
 
-- Ruby "3.2.3". We suggest to use [rbenv](https://github.com/rbenv/rbenv) for managing (`rbenv install 3.2.3`) the various ruby versions — 💡 Use [this PPA](https://launchpad.net/~instructure/+archive/ubuntu/ruby) to install it on older versions of Ubuntu Linux;
-- [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`);
+- Ruby "3.3.8". We suggest to use [rbenv](https://github.com/rbenv/rbenv) for managing (`rbenv install 3.3.8`) the various ruby versions — 💡 Use [this PPA](https://launchpad.net/~instructure/+archive/ubuntu/ruby) to install it on older versions of Ubuntu Linux;
 - Docker with the so-called [compose version 2](https://docs.docker.com/compose/)
   - there is a [switch](https://github.com/docker/compose/issues/1123#issuecomment-1129313318) to flip in Docker Desktop for Mac for this.
   - The project assumes a working `docker compose` command. The old (Python-based) `docker-compose` might still work.
-
-## Development Rig
-
-1. Run <pre>docker compose up</pre>💡 If you get an error about `'name' does not match any of the regexes: '^x-'`, or `(root) Additional property name is not allowed`, see previous paragraph.
-2. In another terminal, run <pre>./bin/dev</pre>
-
-`./bin/dev` starts up all the development things, with hot-rebuild everywhere: server-side with Puma and turbo-rails, as well as client-side with esbuild.
+- Common [dev traefik configuration](https://github.com/multiscan/dev_traefik). See instructions therein.
+- A secrets file defining the following environment variables (see `.env.sample` for more details):
+  `ATELA_KEY`, `CAMIPRO_PHOTO_KEY`, `DEV_ENTRA_TENANT_ID`, `DEV_ENTRA_CLIENT_ID`,
+  `DEV_ENTRA_SECRET`, `EPFLAPI_PASSWORD`, `OPENAI_API_KEY`, `ORACOURS_PWD`,
+  `TRANS_USER`, `TRANS_PASS`
+- [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`) and `yarn` needed for building EPFL elements.
 
 ## Configuration and Secrets
 
-In development mode, you may create a `.env` file to configure rendezvous points and secrets. Copy and modify the provided `.env.sample` file.
+The application secrets are supposed to be accessible as env. variables set by
+`$KBPATH/$SECRETS`, a bash script that is normally located in the project's
+keybase directory `$KBPATH=/keybase/team/epfl_people.prod`. Off-course this is
+just a path and could be anything else.
+
+Few other variables needed for the development environment are set in the local
+`.env`. Copy and modify the provided `.env.sample` file before starting anything.
+Most of the default values should be ok. Therefore, there should be not much do
+modify.
 
 In order to run `./bin/rails` commands directly from the console instead of docker,
-secrets must be loaded into env variables with the following command:
+secrets must be loaded into env variables with, _e.g., the following command:
 
 ```bash
-. ./.env ; cat .env $KBPATH/$SECRETS | awk '/^[A-Z]/{print "export ", $0;}' | source /dev/stdin 
+. ./.env ; cat .env $KBPATH/$SECRETS | awk '/^[A-Z]/{print "export ", $0;}' | source /dev/stdin
 ```
 
-## GraphiQL console
+The mostly used commands are wrapped as rules in the makefile which instanciates
+all the required env variables. See `make help` for a full listing of the
+available shortcuts.
 
-Navigate to https://localhost:3000/graphiql to see the GraphiQL console (not just GraphQL — emphasis on the “i”). Its is provided by the [`graphiql-rails` gem](https://rubygems.org/gems/graphql-rails); its purpose is to let you try out GraphQL queries and mutations (no “i” here) while you develop your app.
+## Database initialization
 
-💡 This console will only give you an error, until you click on the Login button to authenticate against the locally-running Keycloak (while in development mode); you can then run your GraphQL query again by clicking ▶. That feature doubles as the demo app for [the `@epfl-si/react-appauth` npm package](https://www.npmjs.com/package/@epfl-si/react-appauth), with which the Login button is built (and then injected into the “pristine” GraphiQL UI using some mild React-DOM trickery).
+For the application to run we need to initialize several databases because
+it still includes the code for migrating from the legacy application which
+requires various databases to work.
+ 1. restore the relevant parts of the legacy databases: `make restore`. For this
+    to work you need to have access to the legacy production server or to a
+    server that is allowed to access the various `dinfo` databases.
+    Setup a `peo11` endpoint in your `~/.ssh/config` file for the import script
+    to ssh into and dump the databases.
+    Ideally, we should prepare a set of fake data instead but it is quite
+    cumbersome.
+ 2. migrate and seed the local application database: `make seed`
+ 3. if for some reason you prefer to use the locak keycloak server: `make rekc`
+ 4. if you are working on the importation of legacy profiles, then you need to
+    prepare the data with `make legaimport` which will load all text entries
+    from the legacy user profiles and try to guess their languages using AI
 
 ## Debugging
 
-The new (Rails 7) way of debugging is through the `debug` gem. If you have the inner strength to scrut its inscrutable [documentation](https://github.com/ruby/debug), then more power to you. Otherwise:
+The way of debugging is through the `debug` gem. If you have the inner strength
+to scrut its inscrutable [documentation](https://github.com/ruby/debug), then more
+power to you.
+1. Put `debugger` in your source code where you want the debugger to break
+2. run `make debug` which will attach your terminal to the rails console where
+   the debugger will be visible.
+
+It would be nice to findout how to make the following work with rails running
+on the container instead of locally as `/bin/dev` but I never found the energies
+and the motivation (for me the cli is more than enough):
 
 1. Create a `.rdbgrc` file in your home directory¹ that contains a single line: <pre>open chrome</pre>
 2. Put `debugger` in your source code where you want the debugger to break
@@ -46,37 +82,32 @@ The new (Rails 7) way of debugging is through the `debug` gem. If you have the i
 
 ¹ What about Windows®, you ask?... Are you sure you are a real developer?
 
-## Cleaning Up
+## Application overview
+This is the public directory of people working and studying at the
+[EPFL](https://www.epfl.ch). It is a complete rewrite of a legacy application
+written in perl that have loyally and solidly served the EPFL for many years.
 
-To revert the development rig to its pristine state (wiping out `node_modules`, compiled JavaScript and caches):
+The application collects personal data from various internal sources and display
+it in customizable profile pages. The data is also served to other services
+within the school. Notably, it provides people listings to the the several
+instances of wordpress that make up the official EPFL website.
 
-```
-./bin/rake devel:clean
-```
+The two main external data sources are the following web services:
+ - `api.epfl.ch` for all official informations (name, status, positions);
+ - `isa.epfl.ch` for academic information regardin teachers: courses, PhD students etc.
 
-To purge the development database as well:
+The information taken from the official sources, is integrated with information
+optionally provided by the people and kept on the internal database.
 
-```
-./bin/rake devel:realclean
-```
-
-Should you wish to also purge the Keycloak state in MariaDB, say
-
-```
-docker compose down
-docker volume rm hellorails_mariadb
-```
-
-💡 When you restart Keycloak with `docker compose up`, you must restart the Rails server (`./bin/dev`) as well, otherwise it will try and fail to validate the OpenID-Connect tokens using the old public key it obtained from the former incarnation of Keycloak.
-
-# Starter Kit
-
-**This is not a real app.** If you clone and copy this repository into your project, consider
-
-- Truncating the Git history, keeping only the parent of the oldest commit whose message starts with `[helloworld]`,
-- Searching-n'replacing `HelloRails` (of which there is only a handful) in the source code,
-- Searching-n'replacing `hellorails` in the various `README.md` files and the development support configuration-as-code (i.e. [`docker-compose.yml`](./docker-compose.yml)),
-- Removing this whole here chapter in `README.md` (after reading it perhaps - It's up to you).
+The current implementation which tries to closely mimic its legacy ancestor.
+In particular, we tried to keep the idea of a profile page composed of several
+content **blocks**. We have tried to implement the blocks in a way that will
+allow new powerfull blocks to be added in the future. For the moment, we have
+just two types of blocks: _rich text boxes_ that are just a title with a free
+content in html format, and _index boxes_ that are containers of lists of
+records of the same model. Presently we have implemented models for listing
+the person's studies, work experiences, awards, selected publications, and links
+to various research or social network websites.
 
 ## Framework Picks
 
@@ -86,20 +117,29 @@ See [this comic](http://www.sandraandwoo.com/2013/02/07/0453-cassandra/) to find
 
 When it comes to modeling (as in the M of MVC) data into a relational database, Rails' ORM is tough to beat. For instance, Red Hat has an entire section of its business strategy which consists of writing and selling Rails front-ends to neckbeard-oriented systems — to wit: OKD for Kubernetes; Foreman for that whole IPMI / PXE / DHCP / TFTP / DNS hairball; and many more. Only occasionally will they use Django instead (e.g. Ansible Tower, possibly because Ansible itself is written in Python).
 
-### React (and TypeScript)
-
-We get it, you love Ruby and you hate JavaScript (otherwise, maybe you should have a look at [Meteor](https://www.meteor.com/) paired with some kind of TypeScript-friendly ORM like [Prisma](https://github.com/prisma/prisma)?). This is 2022 and it has probably become tough to argue with your boss that your project doesn't need JavaScript; a better strategy might be to suggest a modern, not-too-controversial framework with a gentle learning curve and plenty of help available online. React and TypeScript seem like as good choices as any. With some luck, TypeScript's learning path might bring you to venture past the old trope, “strong typing is for weak minds” and onto the enlightened path beyond.
-
-React being what it is though, JSX and all, it demands some kind of build process. This starter kit uses [esbuild](https://esbuild.github.io/) which is a fast and modern replacement for Webpack. The `jsbundling-rails` gem integrates esbuild into the run-time part of Rails' asset pipeline in a way that is easy to reason about (with cache keys in URLs and all).
-
 ### EPFL Elements
 The standard layout of EPFL. References:
  * [repository](https://github.com/epfl-si/elements)
  * [documentation](https://epfl-si.github.io/elements/#/)
  * [styleguide](https://github.com/epfl-si/epfl-theme-elements)
 
-### Oracle connector
-is quite cumbersome to install because it needs official binaries from oracle. For linux, see the `Dockerfile`. For osx, use brew to install the oracle client as explained [here](https://github.com/kubo/ruby-oci8/blob/master/docs/install-on-osx.md):
+This is meant to be served redy to use from an internal server. On the other
+hand, we need few files from its source for being able to produce a custom
+css stylesheet. Therefore, the project will be cloned in a user-defined directory.
+
+### Keycloak
+The starter-kit app comes bundled with [Keycloak](https://www.keycloak.org/)-in-a-container, configured “as-code” (see [keycloak/README.md](keycloak/README.md) for details). While Java is admittedly a debatable choice (even moreso for production), Keycloak is an OpenID implementation that comes complete with a GUI that will let you set up test users, groups and roles as you please. This provides a so-called **hermetic** developer experience: you can hack while riding the bus, and worry about integration with your “real” corporate OIDC impementation (or SAML, bridged with e.g. [SATOSA](https://github.com/IdentityPython/SATOSA)) at deployment time.
+
+Now the default is to use the new EntraID authentication system even for
+development as it is pubblicly available and does not restrict clients based
+on their IPs. Therefore, we might get rid of the keycloack part.
+
+### ~~Oracle connector~~
+No longer relevant as we got rid of all dependencies on external oracle DBs but
+we keep this for future memory just in case we need to revamp it.
+Oracle connector is quite cumbersome to install because it needs official binaries
+from oracle. For linux, see the `Dockerfile`. For osx, use brew to install the
+oracle client as explained [here](https://github.com/kubo/ruby-oci8/blob/master/docs/install-on-osx.md):
 
 ```
 brew tap InstantClientTap/instantclient
@@ -109,22 +149,6 @@ brew install instantclient-sqlplus
 gem install ruby-oci8
 ```
 
-### OpenID Connect
-
-It has become fashionable to split Web apps between front-end and back-end, if only to provide division of labor for those who hate JavaScript (see above). Security can become a problem at the interface between both.
-
-With OpenID Connect, which is kind of a successor-in-interest to the best parts of OAuth, we picked a modern and scalable system that supports even the most demanding requirements, such as
-
-- **extensible access control policies** from plain old ad-hoc access groups to roles (either simple or decorated with metadata that maps to your organization's permission hierarchy),
-- **pseudonymous access / audit logs:** thanks to the distinction between _ID tokens_ and _access tokens_ in OAuth, it is possible to set up your Keycloak, SATOSA or other OpenID-compatible server so that the front-end shows the logged user's first and last name, while the back-end only gets to know some ephemeral user identifier that will die with the session, and an app-specific set of permissions. (With little or no change required in your app of course.)
-
-### Keycloak
-
-The starter-kit app comes bundled with [Keycloak](https://www.keycloak.org/)-in-a-container, configured “as-code” (see [keycloak/README.md](keycloak/README.md) for details). While Java is admittedly a debatable choice (even moreso for production), Keycloak is an OpenID implementation that comes complete with a GUI that will let you set up test users, groups and roles as you please. This provides a so-called **hermetic** developer experience: you can hack while riding the bus, and worry about integration with your “real” corporate OIDC impementation (or SAML, bridged with e.g. [SATOSA](https://github.com/IdentityPython/SATOSA)) at deployment time.
-
-### GraphQL
-
-Once your front-end is authenticated, it will want to talk to the back-end. GraphQL is a more versatile approach than plain old REST, which future-proofs your app by alleviating some of the headaches of long-term schema maintenance, especially if more than one front-end exists to access your back-end (think mobile app). In development mode, your starter-kit app comes with a GraphQL console at the `/graphiql` URL.
 
 ### Relevant ENV variables for configuration
 
@@ -137,7 +161,7 @@ Common variables:
 Common secrets:
  - `CAMIPRO_PHOTO_KEY`: secret key for accessing the camipro photos server
  - `ORACOURS_PWD`: ${ORACOURS_PWD} password for the orable database containing the ISA courses
- - `ATELA_KEY`: ${ATELA_KEY} secret key for accessing `atela.epfl.ch` 
+ - `ATELA_KEY`: ${ATELA_KEY} secret key for accessing `atela.epfl.ch`
  - `EPFLAPI_PASSWORD`: ${EPFLAPI_PASSWORD} password for `api.epfl.ch`
 
 Development only variables:
@@ -145,11 +169,11 @@ Development only variables:
 
 ## Troubleshooting
 ##### Authentication fails in dev
-If you get the following error message in the app console: `ERROR -- omniauth: (oidc) Authentication failure! Not Found: OpenIDConnect::Discovery::DiscoveryFailed, Not Found` 
-then you probably nuked the keycloak server and forgot to provision it with 
+If you get the following error message in the app console: `ERROR -- omniauth: (oidc) Authentication failure! Not Found: OpenIDConnect::Discovery::DiscoveryFailed, Not Found`
+then you probably nuked the keycloak server and forgot to provision it with
 authentication data. In this case, `make kconfig` should do the job.
 
- 
+
 ## Opinions
 
 ### GraphQL and OpenID _only_, or: Web 1.0 CRUD (and REST) Considered Obsolete
@@ -164,7 +188,7 @@ In my opinion (giova), the development overhead introduced by the so called web 
  1. when the volumes are huge (e.g. facebook) and it it is less expensive to delegate as much computation as possible to the client;
  2. when one tries to emulate a desktop application that requires a lot of reactivity and real time rendering of the UI (e.g. google docs);
 
-Our tiny application people.epfl.ch serves at most few requests per second and is a read-only application for most of the data. The user editable part is quite limited and simple. Therefore, it does not match any of the above use cases. The amount of nice features provided natively by RoR that would have to be discarded for embracing the web 2.0 is not justified at all. 
+Our tiny application people.epfl.ch serves at most few requests per second and is a read-only application for most of the data. The user editable part is quite limited and simple. Therefore, it does not match any of the above use cases. The amount of nice features provided natively by RoR that would have to be discarded for embracing the web 2.0 is not justified at all.
 
 ## Migration
 
@@ -174,7 +198,7 @@ Current application offers two options for the profile picture:
  1. use remote camipro image (actually locally cached version of it);
  2. use one of the locally uploaded images;
 
-The GUI for selecting the image must be composed of three parts: 
+The GUI for selecting the image must be composed of three parts:
  1. toggle if picture should be visible or not;
  2. toggle if camipro picture is to be used (currently camipro photo is used if common.photo_ext is not 1);
  3. list selector for the uploaded images (currently this is decided by common.photo_ts)
@@ -182,7 +206,7 @@ The GUI for selecting the image must be composed of three parts:
 ### Multilanguage support
 Current version only support two languages: french and english. We start by doing the same with the idea of adding more languages in the future. The problem is how to make the UI usable.
 
-For two languages we decided to have each field repeated (e.g. instead of `title`, we have `title_en`, and `title_fr`) and statically visible in editing forms. Forms grow fat but the user gets immediate feedback about missing translations. This approach could be extended to 3, possibly 4 languages but for sure not more than 4. 
+For two languages we decided to have each field repeated (e.g. instead of `title`, we have `title_en`, and `title_fr`) and statically visible in editing forms. Forms grow fat but the user gets immediate feedback about missing translations. This approach could be extended to 3, possibly 4 languages but for sure not more than 4.
 More details in `Docs/multilanguage.md`.
 
 In any case, a backoffice translation service should be deployed with a validation/scoring system similar to the one we did for jilion.
