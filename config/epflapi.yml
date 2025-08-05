@@ -34,8 +34,6 @@ epflapi_config: &epflapi_config
   # ISA
   isa_url: <%= ENV.fetch("ISA_URL", 'https://isa.epfl.ch/') %>
   isa_no_check_ssl: <%= ENV.fetch("ISA_NO_CHECK_SSL", false) %>
-  isa_use_oracle: <%= ENV.fetch("ISA_USE_ORACLE", false) %>
-  isa_legacy_courses: <%= ENV.fetch("ISA_LEGACY_COURSES", true) %>
 
 # 12-factor trumps Rails dogma, see
 # https://nebulab.com/blog/12-factor-rails-settings

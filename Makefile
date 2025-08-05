@@ -4,6 +4,8 @@ SHELL=/bin/bash
 -include .env
 KEYBASE ?= /keybase
 KBPATH ?= $(KEYBASE)/team/epfl_people.prod
+SECRETS ?= secrets_prod.sh
+
 -include $(KBPATH)/$(SECRETS)
 
 COMPOSE_FILE ?= docker-compose.yml
@@ -15,7 +17,7 @@ ELE_DSTDIR = ./app/assets/stylesheets/elements
 ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variables.scss)
 
 
-REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
+# REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
 
 # NOCIMAGE ?= nicolaka/netshoot
 NOCIMAGE ?= jonlabelle/network-tools
@@ -139,7 +141,7 @@ about:
 ## ------------------------------------------------------------- Container image
 .PHONY: build rebuild
 
-## build the web app docker image (set REBUNDLE=yes for refreshing Gemfile.lock)
+## build the web app docker image
 build: envcheck $(ELE_FILES) VERSION gems
 	docker compose build
 
