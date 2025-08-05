@@ -1,0 +1,25 @@
+---
+it:
+  flash:
+    generic:
+      create:
+        error: ''
+        success: ''
+      destroy:
+        success: ''
+      update:
+        error: ''
+        success: ''
+    adoptions:
+      update: {}
+    function_changes:
+      create: {}
+    profiles:
+      set_favorite_picture: {}
+      update: {}
+    usual_name_changes:
+      create: {}
+    visibilities:
+      update:
+        record: {}
+        property: {}

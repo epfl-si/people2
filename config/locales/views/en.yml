@@ -11,8 +11,8 @@ en:
     form:
       help:
         category: Dropdown menu for achievement category
-        rules: 'Yearly achievements are to be added until end of April for them to
-          appear in the previous year''s academic activity report'
+        rules: Yearly achievements are to be added until end of April for them to
+          appear in the previous year's academic activity report
   awards:
     edit:
       form_title: Editing Awards
@@ -48,15 +48,16 @@ en:
     back_to_the_top: Back to the top
   function_changes:
     form:
-      explain: >
-        To change your position, please contact one of your accreditors
-        listed below, who is authorized to approve the request
+      explain: 'To change your position, please contact one of your accreditors listed
+        below, who is authorized to approve the request
+
+        '
     new:
       form_title: Function change request
   inclusivity:
     inclusivity_toggle:
-      enabled: "Yes"
-      disabled: "No"
+      enabled: 'Yes'
+      disabled: 'No'
   infosciences:
     edit:
       form_title: Editing Infoscience export link
@@ -137,47 +138,44 @@ en:
     name_change:
       edit:
         select:
-          title: "Change your name"
-          usual: "Change your usual name"
-          official: "Changer your official name"
+          title: Change your name
+          usual: Change your usual name
+          official: Changer your official name
       official:
-        instructions_html: >
-          A request to modify your official name can only be made
+        instructions_html: A request to modify your official name can only be made
           if a change has been officially recorded by a Civil Registry Office (such
-          as a change in the spelling of your name, marriage, divorce, etc.). Please
-          submit your request directly to your HR representative for validation, along
-          with the necessary supporting documents (ID, passeport ...). This request
-          is subject to approval.
+          as a change in the spelling of your name, marriage, divorce, etc.) . This
+          request is subject to approval.
         status:
           student:
-            title: "Student"
-            message_html: >
-              contact the Student Services Desk with a copy of your identity
+            title: Student
+            message_html: 'contact the Student Services Desk with a copy of your identity
               documents to request this change
+
+              '
           phd:
-            title: "Graduate Student"
-            message_html: >
-              please first contact the HR representative of your lab. Once approved,
-              send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+            title: Graduate Student
+            message_html: Please first contact the <a href="mailto:rh@epfl.ch">HR
+              team</a>. Once approved, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
               to ensure the change is reflected in the academic database.
           staff:
-            title: "Personnel EPFL"
-            message_html: >
-              If you have a work contract, the request must be approved by the
-              HR representative of your faculty or vice presidency.
+            title: Personnel EPFL
+            message_html: Please contact the <a href="mailto:rh@epfl.ch">HR team</a>
+              with a copy of your ID. The update is then propagated to the IT systems.
       usual:
-        fallback_title: "In your case the usual name can ony have its current value"
+        fallback_title: In your case the usual name can ony have its current value
       todo:
         request_title: Submit a request to change usual name
         new_first: New first name
         new_last: New last name
         reason: Reason for the request
-        reason_hint: 'E.g.: I would like my usual first name to appear on internal platforms'
+        reason_hint: 'E.g.: I would like my usual first name to appear on internal
+          platforms'
         submit: Submit request
         no_accreditor_found: No accreditor found.
         sent_title: Request sent
-        sent_message: Your request to change your usual name has been successfully sent
-          and will be processed shortly.
+        sent_message: Your request to change your usual name has been successfully
+          sent and will be processed shortly.
         flash_success: Your request to change your usual name has been successfully
           sent and will be processed shortly.
   publications:
@@ -193,24 +191,21 @@ en:
     form:
       new: New %{label}
       edit: Editing %{label}
-    # action:
-    #   add_social: Add Social Media Link
-    #   more: More informations
   usual_name_changes:
     form:
       available_first: 'Available first names:'
       available_last: 'Available last names:'
-      instructions_html: >
-        Please choose below from your existing names or surnames
+      instructions_html: 'Please choose below from your existing names or surnames
         those that you want to display.
+
+        '
       fallback: Usual name can only have single value
-      submit: "Send the request"
+      submit: Send the request
     new:
       fallback:
         title: Your first and last names are composed of a single word. Therefore
           it is not possible to create any other combination for your usual name.
-        content_html: >
-          If you wish to obtain an usual name that is not assembled from
+        content_html: If you wish to obtain an usual name that is not assembled from
           parts that are present in your official name, please contact the Office
           for Equal Opportunities (EGA) at <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>
           motivating your choice.
@@ -220,15 +215,15 @@ en:
       status:
         student:
           title: Students
-          message_html: 'To submit a request, click the button below.<br/> Your request
+          message_html: To submit a request, click the button below.<br/> Your request
             will then be reviewed by the Equal Opportunities Office (VPH-WINC-EGA).<br/>
             <strong>Contact and validation:</strong><br/> The EGA team will contact
             you to arrange an in-person meeting to discuss your request. You will
-            then receive an official response, either positive or negative.'
+            then receive an official response, either positive or negative.
         phd:
           title: PhD Candidates
-          message_html: 'First, contact the HR representative of your lab to validate
-            your request.<br/> Once validated, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
+          message_html: 'First, contact the <a href="mailto:rh@epfl.ch">HR team</a>
+            to validate your request.<br/> Once validated, send an email to <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
             so that the change can be registered in the academic databases.<br/> If
             needed, the EGA team is available at: <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
         staff:

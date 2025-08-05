@@ -3,23 +3,24 @@ fr:
   flash:
     generic:
       create:
-        error: "Erreur lors de la création de %{record}"
-        success: "%{record} enregistré"
+        error: Erreur lors de la création de %{record}
+        success: "%{record} créé"
       destroy:
-        error: "Erreur lors de la suppression de %{record}"
-        success: "%{record} supprimé"
+        error: Erreur lors de la suppression de %{record}
+        success: "%{record} a été supprimé"
       update:
-        error: "Erreur lors de la mise à jour de %{record}"
-        success: "%{record} successfully updated"
-      error: "Une erreur s'est produite"
-      success: "Done!"
-
+        error: Erreur lors de la mise à jour de %{record}
+        success: "%{record} a été mis à jour"
+      error: Une erreur s'est produite
+      success: Done!
     adoptions:
       update:
-        error: "Error while registering your willing to adopt the new profile. Please contact support."
+        error: Error while registering your willing to adopt the new profile. Please
+          contact support.
     function_changes:
       create:
-        error: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard ou contacter le 1234@epfl.ch
+        error: Cette demande n’a pas pu être transmise. Veuillez réessayer plus tard
+          ou contacter le 1234@epfl.ch
         success: Demande de modification transmise aux accréditeurs séléctionnés
     profiles:
       set_favorite_picture:
@@ -45,8 +46,8 @@ fr:
     visibilities:
       update:
         record:
-          error: 'Error while updating %{item} visibility'
-          success: '%{item} visibility successfully updated'
+          error: Error while updating %{item} visibility
+          success: "%{item} visibility successfully updated"
         property:
-          error: 'Error while updating %{attr} visibility for %{item}'
-          success: '%{attr} visibility for %{item} successfully updated'
+          error: Error while updating %{attr} visibility for %{item}
+          success: "%{attr} visibility for %{item} successfully updated"

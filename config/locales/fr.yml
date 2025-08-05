@@ -39,9 +39,10 @@ fr:
       mandatory: champ requis
       submit: Envoyer
       texfield_for: "%{attr}"
-      tmandatory: Veuillez remplir ce champ dans au moins une des langues sélectionnées pour votre profil
       translated_label: "%{label} en %{language}"
       translated_textfield_for: "%{attr} en %{language}"
+      tmandatory: Veuillez remplir ce champ dans au moins une des langues sélectionnées
+        pour votre profil
       update: Enregistrer
   lang:
     fr: français

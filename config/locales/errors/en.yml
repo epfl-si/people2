@@ -17,7 +17,6 @@ en:
           attributes:
             accreditor_scipers:
               invalid: Please select at least one of the accreditors below
-
         experience:
           attributes:
             base:
