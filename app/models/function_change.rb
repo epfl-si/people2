@@ -23,11 +23,26 @@ class FunctionChange < ApplicationRecord
   end
 
   def available_accreditors
-    accreditation.accreditors.index_by(&:sciper)
+    @available_accreditors ||= begin
+      # UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY UGLY
+      # See https://github.com/epfl-si/people2/issues/182
+      # For some reason (probably support/testing) all people belonging to a VP
+      # get all the members of the ITOP-WSRV group as accreditors. This makes
+      # the list of accreditors artificially long.
+      # We have two options:
+      #  1. memorize the list of scipers from ITOP-WSRV (configurable) and
+      #     exclude just them.
+      #  2. opt for a custom-configuration-less solution and take only the
+      #     direct accreditors and not accreditors by inheritance and, in
+      #     case there is none, we just take the full list just for safety
+      all_accreds = accreditation.accreditors
+      direct_accreds = all_accreds.select { |a| a["attribution"] == "role" }
+      direct_accreds.empty? ? all_accreds : direct_accreds
+    end
   end
 
   def selected_accreditors
-    available_accreditors.slice(*accreditor_scipers)
+    available_accreditors.index_by(&:sciper).slice(*accreditor_scipers)
   end
 
   def sciper

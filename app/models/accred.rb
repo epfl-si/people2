@@ -2,6 +2,7 @@
 
 class Accred < ApplicationRecord
   attr_reader :data
+  attr_writer :accreditation
 
   include Translatable
   include AudienceLimitable
@@ -24,6 +25,8 @@ class Accred < ApplicationRecord
     address_visibility: AudienceLimitable::WORLD,
   }.freeze
 
+  delegate :doctoral?, :staff?, :student?, to: :accreditation
+
   def self.for_sciper(sciper)
     where(sciper: sciper).order(:order)
   end
@@ -33,11 +36,20 @@ class Accred < ApplicationRecord
     # cron job syncing so we know that all profile.accreds are probably relevant
     # and pass through Accreditation only if profile.accreds is empty.
     accreditations = Accreditation.for_profile!(profile)
-    accreditations.map(&:prefs)
+    # accreditations.map(&:prefs)
+    accreditations.map do |a|
+      ap = a.prefs
+      ap.accreditation = a
+      ap
+    end
   end
 
   def accreditation_id
     "#{sciper}:#{unit_id}"
+  end
+
+  def accreditation
+    @accreditation ||= Accreditation.find(accreditation_id)
   end
 
   # TODO: to be rewritten in case we want to switch to :box visibility
