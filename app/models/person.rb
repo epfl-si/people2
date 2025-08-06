@@ -201,6 +201,10 @@ class Person
     end
   end
 
+  def phone(unit_id)
+    phones(unit_id).first
+  end
+
   # Updated visible_phones method
   def visible_phones(unit_id = nil)
     phones(unit_id)&.select(&:visible?) || []

@@ -51,8 +51,21 @@ class Accred < ApplicationRecord
 
   def short_address
     person = profile.person
-    # r = person.room(unit_id)
-    a = person.address(unit_id)
-    a.present? ? a.lines[1..].join(" • ") : nil
+    ad = person.address(unit_id)
+    return nil if ad.blank?
+
+    a.lines[1..].join(" • ")
+  end
+
+  def short_address_and_phone
+    person = profile.person
+    ad = person.address(unit_id)
+    return nil if ad.blank?
+
+    ph = person.phone(unit_id)
+    ll = []
+    ll += ad.lines[1..]
+    ll << ph.number if ph.present?
+    ll.join(" • ")
   end
 end
