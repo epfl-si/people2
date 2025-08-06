@@ -1,10 +1,12 @@
 <%= common_editor(title: t(".title")) do %>
 
-<%= turbo_frame_tag "usual_name_change", src: new_profile_usual_name_change_path(@profile), loading: :lazy do %>
-  <%= render 'shared/spinner' %>
-<% end %>
+<% if @profile.name.customizable? %>
+  <%= turbo_frame_tag "usual_name_change", src: new_profile_usual_name_change_path(@profile), loading: :lazy do %>
+    <%= render 'shared/spinner' %>
+  <% end %>
 
-<hr>
+  <hr>
+<% end %>
 
 <%= turbo_frame_tag "usual_name_request", src: new_profile_usual_name_request_path(@profile), loading: :lazy do %>
   <%= render 'shared/spinner' %>
