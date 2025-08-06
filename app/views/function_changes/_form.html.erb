@@ -15,7 +15,7 @@
   <%= form_group do %>
     <%= form_label(form, :accreditors, required: true) %>
     <div class="form-checkboxes">
-      <%= form.collection_check_boxes(:accreditor_scipers, @accreditors, :sciper, :display) %>
+      <%= form.collection_check_boxes(:accreditor_scipers, @function_change.available_accreditors, :sciper, :display) %>
     </div>
   <% end %>
   <%= form_actions(form, @function_change, cancel_label: t("action.cancel"), submit_label: t("action.send")) %>
