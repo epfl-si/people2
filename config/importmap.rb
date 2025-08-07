@@ -22,3 +22,4 @@ pin "sortablejs" # @1.15.2
 pin "trix"
 pin "@rails/actiontext", to: "actiontext.esm.js"
 pin "cropperjs" # @1.6.2
+pin "local-time" # @3.0.3

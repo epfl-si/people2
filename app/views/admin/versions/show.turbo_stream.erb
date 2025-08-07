@@ -1,0 +1,29 @@
+<%= turbo_stream.update "help" do %>
+<div id="help_content">
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    &nbsp;<button type='button' class='btn btn-link text-danger fs-4 p-0 ms-2 float-end' data-action="click->dismissable#dismiss">✕</button>
+  </div>
+  <div class="container">
+    <h3>Changes to <%= @version.item_type %> # <%= @version.item_id %></h3>
+    <dl class="definition-list definition-list-grid definition-list-grid-large">
+      <dt>Record Owner:  </dt><dd><%= @version.owner_name %></dd>
+      <dt>Change Author: </dt><dd><%= @version.author_name %></dd>
+    </dl>
+    <h4>Details</h4>
+    <% if @version.object_changes.nil? %>
+      <p>Changes are on related objects like rich texts and attachments. Not yet implemented.</p>
+    <% else %>
+      <dl class="definition-list definition-list-grid definition-list-grid-large">
+        <% @version.changes.each do |k, vv| %>
+          <dt><%= k %></dt>
+          <dd>
+            <%= vv[0] || 'empty' %>
+            <br>
+            <%= vv[1] || 'empty'%>
+          </dd>
+        <% end %>
+      </dl>
+    <% end %>
+  </div>
+</div>
+<% end %>

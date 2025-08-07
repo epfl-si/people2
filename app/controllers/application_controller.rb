@@ -45,6 +45,12 @@ class ApplicationController < ActionController::Base
     Current.user
   end
 
+  def info_for_paper_trail
+    # need to call authenticated? for the session to load
+    as = authenticated? ? current_user&.sciper : nil
+    { ip: request.remote_ip, author_sciper: as }
+  end
+
   private
 
   def load_and_authorize_profile

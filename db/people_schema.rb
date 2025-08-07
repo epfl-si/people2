@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2028_06_25_123222) do
+ActiveRecord::Schema[8.0].define(version: 2028_06_25_123223) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -458,6 +458,10 @@ ActiveRecord::Schema[8.0].define(version: 2028_06_25_123222) do
     t.string "whodunnit"
     t.text "object", size: :long
     t.datetime "created_at"
+    t.string "ip", limit: 16
+    t.string "author_sciper", limit: 8
+    t.string "subject_sciper", limit: 8
+    t.text "object_changes", size: :long
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 

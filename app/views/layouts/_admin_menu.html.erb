@@ -34,6 +34,14 @@
       <%= link_to "Sections", admin_sections_path %>
     <% end %>
   </li>
+  <li>
+    <% if controller_name == 'versions' %>
+      <span class="active">Change-Log</span>
+    <% else %>
+      <%= link_to "Change-Log", admin_versions_path %>
+    <% end %>
+  </li>
+
   <% if Rails.env.development? %>
     <li>
       <% if controller_name == 'translations' %>

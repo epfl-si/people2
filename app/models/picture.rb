@@ -5,7 +5,7 @@ require 'open-uri'
 
 class Picture < ApplicationRecord
   MAX_ATTEMPTS = 3
-
+  include Versionable
   before_destroy :refuse_destroy_if_camipro
 
   belongs_to :profile

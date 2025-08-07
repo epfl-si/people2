@@ -3,6 +3,7 @@
 class Box < ApplicationRecord
   include AudienceLimitable
   include Translatable
+  include Versionable
   audience_limit
   translates :title
   serialize  :data, coder: YAML
