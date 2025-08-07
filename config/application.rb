@@ -99,5 +99,12 @@ module People
     # end
 
     config.exceptions_app = routes
+
+    # TODO: check this in more detail. It is supposed to avoid the following error
+    # when using things like object.paper_trail.previous_version
+    # Tried to load unspecified class: ActiveSupport::TimeWithZone (Psych::DisallowedClass)
+    # Most probably a newer version of paper-trail will fix it.
+    # https://stackoverflow.com/questions/74312283/tried-to-load-unspecified-class-activesupporttimewithzone-psychdisallowed/75895483#comment133344484_74312283
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone]
   end
 end

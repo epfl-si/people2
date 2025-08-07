@@ -2,8 +2,9 @@
 
 class Experience < ApplicationRecord
   include AudienceLimitable
-  include Translatable
   include IndexBoxable
+  include Translatable
+  include Versionable
 
   belongs_to :profile
   # broadcasts_to :profile

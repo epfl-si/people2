@@ -1,0 +1,28 @@
+<h1>Most recent changes</h1>
+
+<table id="versions_table" class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Model</th>
+      <th>Event</th>
+      <th>Owner</th>
+      <th>Editor</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= turbo_frame_tag :versions_tbody do %>
+      <%= render partial: "version", collection: @versions %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= turbo_frame_tag(
+  "help",
+  data: {
+    controller: "dismissable",
+    action: "keydown.esc->dismissable#dismiss",
+    "dismissable-target": "content"
+  }
+) %>

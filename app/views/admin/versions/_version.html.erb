@@ -1,0 +1,10 @@
+<tr>
+  <td><%= time_tag version.created_at, "data-local": "time-ago", "data-format": "%B %e, %Y %l:%M%P" %></td>
+  <td><%= version.item_type %> <%= version.item_id %></td>
+  <td><%= version.event %></td>
+  <td><%= version.subject_sciper %></td>
+  <td><%= version.author_sciper || "console" %></td>
+  <td>
+    <%= link_to icon('plus-square'), admin_version_path(version), method: :get, data: {turbo_stream: true, turbo_method:'get'} %>
+  </td>
+</tr>

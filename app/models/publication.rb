@@ -4,6 +4,7 @@ class Publication < ApplicationRecord
   include AudienceLimitable
   include Translatable
   include IndexBoxable
+  include Versionable
   belongs_to :profile
   audience_limit
   positioned on: :profile

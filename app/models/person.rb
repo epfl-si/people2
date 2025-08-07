@@ -33,9 +33,23 @@ class Person
 
   def self.find_by_sciper(sciper, force: false)
     data = APIPersonGetter.call!(persid: sciper, single: true, force: force)
-    raise ActiveRecord::RecordNotFound if data.nil?
 
-    new(data)
+    # TODO: does this make sense ? The idea is that sometime the cache is invalid (nil)
+    # Therefore, we might be trying to build the object from invalid data.
+    # Why not trying to refresh the cache once and try again ?
+    if force
+      raise ActiveRecord::RecordNotFound if data.nil?
+
+      new(data)
+    elsif data.nil?
+      find_by_sciper(sciper, force: true)
+    else
+      begin
+        new(data)
+      rescue StandardError
+        find_by_sciper(sciper, force: true)
+      end
+    end
   end
 
   def self.find_by_email(email, force: false)

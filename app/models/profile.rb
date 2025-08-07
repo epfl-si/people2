@@ -16,6 +16,7 @@ class Profile < ApplicationRecord
 
   include AudienceLimitable
   include Translatable
+  include Versionable
   translates :nationality, :title, :expertise
   audience_limit_property "birthday"
   audience_limit_property "expertise"

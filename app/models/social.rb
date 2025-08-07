@@ -32,6 +32,7 @@
 
 class Social < ApplicationRecord
   include AudienceLimitable
+  include Versionable
   audience_limit
   AUTO_MAX_AGE = 180.days
   RESEARCH_IDS_LIST = [

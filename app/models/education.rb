@@ -4,6 +4,7 @@ class Education < ApplicationRecord
   include AudienceLimitable
   include Translatable
   include IndexBoxable
+  include Versionable
   include WithSelectableProperties
   with_selectable_properties :category
 
