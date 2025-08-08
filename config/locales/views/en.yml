@@ -48,8 +48,8 @@ en:
     back_to_the_top: Back to the top
   function_changes:
     form:
-      explain: 'To change your position, please contact one of your accreditors listed
-        below, who is authorized to approve the request'
+      explain: To change your position, please contact one of your accreditors listed
+        below, who is authorized to approve the request
     new:
       form_title: Function change request
   inclusivity:
@@ -176,16 +176,15 @@ en:
       available_first: 'Available first names:'
       available_last: 'Available last names:'
     new:
-      instructions_html: 'Please choose below from your existing names or surnames
-        those that you want to display.'
+      instructions_html: Please choose below from your existing names or surnames
+        those that you want to display.
   usual_name_requests:
     new:
-      instructions_one_option_html: >
-        In your case, the request for a new display name needs to be validate.
-        Please fill and submit the following form. The responsible person will
-        take care of your name change.
-      instructions_two_options_html: >
-        If you wish to obtain an usual name that is not assembled from
-        parts that are present in your official name, then your request needs
-        to be validated. Please fill and submit the following form.
-        The responsible person will take care of your name change.
+      instructions_one_option_html: The request for a new display name needs to be
+        validate. Please fill and submit the following form. The person in charge
+        will take care of your request.
+      instructions_two_options_html: The usual (first and/or last) name refers to
+        the first name and/or surname that a person chooses to use in daily life instead
+        of the one appearing on their official identity documents. The request for
+        modification is approved and processed by the Equality Office, according these
+        <a href=''https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/">criteria</a>.

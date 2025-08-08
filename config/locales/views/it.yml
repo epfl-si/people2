@@ -49,8 +49,6 @@ it:
     languages_form:
       action: {}
     name_change:
-      edit:
-        select: {}
       official:
         instructions_html: ''
         status:
@@ -59,8 +57,8 @@ it:
             message_html: ''
           staff:
             message_html: ''
-      usual: {}
-      todo: {}
+      usual:
+        title: ''
   publications:
     edit: {}
     new: {}
@@ -71,11 +69,8 @@ it:
   usual_name_changes:
     form: {}
     new:
-      fallback:
-        content_html: ''
-      status:
-        student: {}
-        phd:
-          message_html: ''
-        staff:
-          message_html: ''
+      instructions_html: ''
+  usual_name_requests:
+    new:
+      instructions_one_option_html: ''
+      instructions_two_options_html: ''

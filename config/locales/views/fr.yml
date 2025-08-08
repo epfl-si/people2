@@ -132,11 +132,6 @@ fr:
       action:
         submit: Enregister
     name_change:
-      edit:
-        select:
-          title: Changer votre nom
-          usual: Changer le nom d’usage
-          official: Changer le nom officiel
       official:
         instructions_html: La demande de modification de votre nom officiel n’est
           possible que si un changement a été officiellement enregistré auprès d’un
@@ -160,21 +155,7 @@ fr:
               RH</a> en joignant une copie de vos papiers d'identité. La mise à jour
               est ensuite reportée dans les systèmes informatiques.
       usual:
-        fallback_title: Nom d’usage non modifiable
-      todo:
-        request_title: Envoyer une demande de changement de nom d'usage
-        new_first: Nouveau prénom
-        new_last: Nouveau nom
-        reason: Motif de la demande
-        reason_hint: 'Ex. : Souhait de faire apparaître mon prénom usuel sur les plateformes
-          internes'
-        submit: Envoyer la demande
-        no_accreditor_found: Aucun·e accréditrice·teur trouvé·e.
-        sent_title: Demande envoyée
-        sent_message: Votre demande de changement de nom usuel a bien été envoyée
-          et sera traitée prochainement.
-        flash_success: Votre demande de changement de nom usuel a bien été envoyée
-          et sera traitée prochainement.
+        title: Affichage ou modification des (pré)noms d'usage
   publications:
     edit:
       form_title: Edition de la publication
@@ -192,43 +173,16 @@ fr:
     form:
       available_first: 'Prénoms disponibles :'
       available_last: 'Noms disponibles :'
-      instructions_html: 'Vous pouvez composer votre nom d’usage à partir des prénoms
-        et noms officiels enregistrés.
-
-        '
-      submit: Send the request
     new:
-      fallback:
-        title: 'Vous ne possédez qu’un seul prénom et un seul nom officiel enregistré.
-          Il est donc impossible de composer un nom d’usage personnalisé.
-
-          '
-        content_html: Si vous désirez afficher un prénom ou un nom d’usage ne figurant
-          pas dans vos documents officiels, prière de contacter le bureau EGA à <a
-          href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>,
-          avec les informations nécessaires.
-      title_custom: Demande personnalisée de nom usuel
-      title_standard: Personalisation self-service de nom usuel
-      switch_to_official_request: Faire une demande personnalisée de nom
-      status:
-        student:
-          title: Étudiantes et étudiants
-          message_html: Pour effectuer la demande, cliquez sur le bouton ci-dessous.<br/>
-            Ensuite, votre demande sera examinée par l’équipe du Bureau de l’égalité
-            (VPH-WINC-EGA).<br/> <strong>Prise de contact et validation :</strong><br/>
-            L’équipe EGA vous contactera pour un rendez-vous en présentiel afin de
-            discuter de votre demande. Vous recevrez ensuite une réponse officielle,
-            positive ou négative.
-        phd:
-          title: Doctorantes et doctorants
-          message_html: 'Contactez d’abord l''<a href="mailto:rh@epfl.ch">équipe RH</a>
-            pour valider la demande.<br/> Une fois cette étape effectuée, envoyez
-            un e-mail à <a href="mailto:sac-doctorants@epfl.ch">sac-doctorants@epfl.ch</a>
-            pour que le changement soit pris en compte dans les bases de données académiques.<br/>
-            L’équipe EGA est à disposition en cas de besoin : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
-        staff:
-          title: Personnel EPFL
-          message_html: 'Votre demande doit être validée par la personne RH de votre
-            faculté ou vice-présidence.<br/> La personne responsable de votre accréditation
-            (ACCRED) effectuera les changements dans le système.<br/> L’équipe EGA
-            est à disposition en cas de besoin : <a href="mailto:name.change@groupes.epfl.ch">name.change@groupes.epfl.ch</a>.'
+      instructions_html: Choisir parmi vos pré(noms) lequel reste affiché
+  usual_name_requests:
+    new:
+      instructions_one_option_html: La demande de nouveau nom d’usage doit être validée.
+        Veuillez remplir et soumettre les champs ci-dessous. La personne responsable
+        prendra en charge votre demande.
+      instructions_two_options_html: Le (pré)nom d’usage désigne le prénom et/ou le
+        nom de famille qu’une personne choisit d’utiliser dans sa vie quotidienne
+        à la place de ceux figurant sur ses documents d’identité officiels. La demande
+        de modification est validée et traitée par le Bureau de l'Égalité, selon <a
+        href=''https://www.epfl.ch/campus/community/fr/utiliser-un-prenom-dusage-a-lepfl/">ces
+        critères</a>.

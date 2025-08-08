@@ -31,8 +31,9 @@ fr:
         expertise_error: Error while updating your expertise
         inclusivity_success: Inclusivity choice updated successfully
         inclusivity_error: Failed to update your inclusivity choice
-        languages_success: Profile language selection updated
-        languages_error: Something whent wrong while saving your language selection
+        languages_success: Sélection des langues du profil mise à jour avec succès
+        languages_error: Une erreur s'est produite lors de l'enregistrement de votre
+          sélection de langue
         personal_phone_success: Personal phone updated successfully
         personal_phone_error: Error while updating your personal phone
         personal_web_url_success: Personal web updated successfully
@@ -46,8 +47,8 @@ fr:
     visibilities:
       update:
         record:
-          error: Error while updating %{item} visibility
-          success: "%{item} visibility successfully updated"
+          error: Erreur lors de la mise à jour de la visibilité pour %{item}
+          success: "%{item} : visibilité enregistrée correctement"
         property:
-          error: Error while updating %{attr} visibility for %{item}
-          success: "%{attr} visibility for %{item} successfully updated"
+          error: Erreur lors de la mise à jour de la visibilité de %{attr} pour %{item}
+          success: la visibilité de %{attr} pour %{item} enregistrée correctement

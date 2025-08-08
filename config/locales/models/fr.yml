@@ -2,7 +2,8 @@
 fr:
   activerecord:
     attributes:
-      accred: {}
+      accred:
+        address: Adresse
       achievement:
         category: Catégorie
         description: Description
@@ -16,12 +17,12 @@ fr:
         url: url
         year: Année
       education:
-        category: Catégorie
-        director: Directeur
+        category: Titre obtenu
+        director: Activités
         field: Description
         period: période (en années)
         school: Nom de l'institution
-        title: Titre
+        title: Sujet d'étude
         year_begin: de (année)
         year_end: à (année)
       experience:
@@ -42,10 +43,6 @@ fr:
       infoscience:
         title: titre
         url: Url issue de infoscience-exports
-      name_change_request:
-        new_first: Prénom
-        new_last: Nom
-        reason: Motivation
       picture:
         camipro: Camipro
         failed_attempts: Nombre d'erreur pour récupérer la photo CAMIPRO
@@ -83,10 +80,14 @@ fr:
         tag: Reseau
         value: Identifiiant
       usual_name_change:
-        usual_first: Prénom d’usage à afficher
-        usual_last: Nom d’usage à afficher
+        usual_first: Prénom à afficher
+        usual_last: Nom à afficher
+      usual_name_request:
+        new_first: Prénom d'usage souhaité
+        new_last: Nom d'usage souhaité
+        reason: Motif de la demande
     models:
-      accred: Accreditation
+      accred: Accréditation
       achievement: Accomplissement annuel
       award: Prix & distinctions
       box: Bloc
@@ -128,7 +129,7 @@ fr:
         instagram: Instagram ID
         linkedin: Linkedin ID
         mastodon: Nom d'utilsateur sur Mastodon (sans le @)
-        muskidiocy: ''
+        muskidiocy: Nom d'usage sur X
         orcid: ORCID ID
         scopus: Scopus ID
         stack_overflow: Nom d'utilisateur Stack Overflow
