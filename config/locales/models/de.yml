@@ -2,14 +2,18 @@
 de:
   activerecord:
     attributes:
-      accred: {}
+      accred:
+        address: ''
       achievement:
         category: Kategorie
         description: Beschreibung
         url: url
         year: Jahr
       award: {}
-      education: {}
+      education:
+        category: ''
+        director: ''
+        title: ''
       experience:
         description: Beschreibung
         title: Titel
@@ -17,7 +21,6 @@ de:
       infoscience:
         title: Titel
         url: infoscience-exports url
-      name_change_request: {}
       picture:
         camipro: Camipro
       profile:
@@ -31,10 +34,18 @@ de:
       rich_text_box:
         title: Titel
       social: {}
-      usual_name_change: {}
-    models: {}
+      usual_name_change:
+        usual_first: ''
+        usual_last: ''
+      usual_name_request:
+        new_first: ''
+        new_last: ''
+        reason: ''
+    models:
+      accred: ''
   attr_labels:
     function_change: {}
     profile: {}
     social:
-      tag: {}
+      tag:
+        muskidiocy: ''

@@ -3,7 +3,7 @@ fr:
   help:
     helps:
       help:
-        help: Help
+        help: Aide
         help_for: À propos de %{title}
     ui:
       multilang:

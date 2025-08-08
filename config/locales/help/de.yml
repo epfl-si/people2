@@ -2,6 +2,7 @@
 de:
   help:
     helps:
-      help: {}
+      help:
+        help: ''
     ui:
       multilang: {}

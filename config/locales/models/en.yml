@@ -17,12 +17,12 @@ en:
         url: url
         year: Year
       education:
-        category: Category
-        director: Director
+        category: Degree
+        director: Activities
         field: Description
         period: period (years)
         school: Issued by (institution)
-        title: title
+        title: Field of study
         year_begin: from year
         year_end: to year
       experience:
@@ -83,8 +83,8 @@ en:
         usual_first: First name to display
         usual_last: Family name to display
       usual_name_request:
-        new_first: New first name
-        new_last: New last name
+        new_first: Requested first name
+        new_last: Requested last name
         reason: Reason for the request
     models:
       accred: Accreditation

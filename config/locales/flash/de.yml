@@ -16,10 +16,16 @@ de:
       create: {}
     profiles:
       set_favorite_picture: {}
-      update: {}
+      update:
+        languages_success: ''
+        languages_error: ''
     usual_name_changes:
       create: {}
     visibilities:
       update:
-        record: {}
-        property: {}
+        record:
+          error: ''
+          success: ''
+        property:
+          error: ''
+          success: ''

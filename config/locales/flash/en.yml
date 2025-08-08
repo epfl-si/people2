@@ -30,7 +30,7 @@ en:
         expertise_error: Error while updating your expertise
         inclusivity_success: Inclusivity choice updated successfully
         inclusivity_error: Failed to update your inclusivity choice
-        languages_success: Profile language selection updated
+        languages_success: Profile language selection successfully updated
         languages_error: Something whent wrong while saving your language selection
         personal_phone_success: Personal phone updated successfully
         personal_phone_error: Error while updating your personal phone

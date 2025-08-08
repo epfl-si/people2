@@ -2,14 +2,18 @@
 it:
   activerecord:
     attributes:
-      accred: {}
+      accred:
+        address: ''
       achievement:
         category: Categoria
         description: Descrizione
         url: url
         year: Anno
       award: {}
-      education: {}
+      education:
+        category: ''
+        director: ''
+        title: ''
       experience:
         description: Descrizione
         location: Company, location or institution
@@ -20,7 +24,6 @@ it:
       infoscience:
         title: Titolo
         url: url per infoscience-exports
-      name_change_request: {}
       picture:
         camipro: Camipro
         failed_attempts: Numero di tentativi falliti
@@ -46,10 +49,18 @@ it:
       social:
         tag: Tipo
         value: valore
-      usual_name_change: {}
-    models: {}
+      usual_name_change:
+        usual_first: ''
+        usual_last: ''
+      usual_name_request:
+        new_first: ''
+        new_last: ''
+        reason: ''
+    models:
+      accred: ''
   attr_labels:
     function_change: {}
     profile: {}
     social:
-      tag: {}
+      tag:
+        muskidiocy: ''
