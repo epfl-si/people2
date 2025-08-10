@@ -1,14 +1,4 @@
-<%= turbo_frame_tag dom_id(infoscience), "data-sortable-url" => infoscience_path(infoscience, format: 'json') do %>
-  <div class="list-group-item">
-    <div class="row">
-      <div class="col-md-8">
-        <h4 class="h5 mb-0"><%= infoscience.t_title %></h4>
-        <pre><%= infoscience.url %></pre>
-      </div>
-      <div class="col-md-4 text-right">
-        <%= render "shared/item_actions", item: infoscience %>
-        <%= render 'shared/item_sortable' %>
-      </div>
-    </div>
-  </div>
+<%= item_index_box(infoscience) do %>
+  <h4 class="h5 mb-0"><%= infoscience.t_title %></h4>
+  <pre><%= infoscience.url %></pre>
 <% end %>

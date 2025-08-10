@@ -1,6 +1,7 @@
 <%= turbo_frame_tag dom_id(accred), "data-sortable-url" => accred_path(accred, format: 'json') do %>
-  <div class="list-group-item rpush">
-    <div>
+  <div class="list-group-item index-item-container">
+    <%= render("shared/item_sortable") if count > 1 %>
+    <div class="item-content ml-1">
       <h4 class="h5 mb-0">
         <%= accred.t_unit %>
       </h4>
@@ -15,11 +16,6 @@
         <%= link_to icon('edit-3'), "https://atela.epfl.ch/#/persons/#{@profile.sciper}", target: "blank" %>
       <% end %>
     </div>
-    <% if count > 1 %>
-      <div>
-        <%= render 'shared/item_visibility', item: accred %>
-        <%= render 'shared/item_sortable' %>
-      </div>
-    <% end %>
+    <%= render('shared/item_visibility', item: accred) if count > 1 %>
   </div>
 <% end %>
