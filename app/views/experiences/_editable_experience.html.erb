@@ -1,20 +1,8 @@
-<%= turbo_frame_tag dom_id(experience), "data-sortable-url" => experience_path(experience, format: 'json') do %>
-  <div class="list-group-item">
-    <div class="row">
-      <div class="col-md-8">
-        <%= tag_for_localized_attr "h4", experience, :title, class: "h5 mb-0" %>
-        <%= tag_for_localized_attr "p", experience, :description, class: "mb-1 small" %>
-        <p class="text-muted small mb-0">
-          <%= [experience.year_begin, experience.year_end].compact.join("–") %>
-          <%= experience.location %>
-        </p>
-      </div>
-      <div class="col-md-4 text-right">
-        <p>
-          <%= render "shared/item_actions", item: experience %>
-          <%= render 'shared/item_sortable' %>
-        </p>
-      </div>
-    </div>
-  </div>
+<%= item_index_box(experience) do %>
+  <%= tag_for_localized_attr "h4", experience, :title, class: "h5 mb-0" %>
+  <%= tag_for_localized_attr "p", experience, :description, class: "mb-1 small" %>
+  <p class="text-muted small mb-0">
+    <%= [experience.year_begin, experience.year_end].compact.join("–") %>
+    <%= experience.location %>
+  </p>
 <% end %>

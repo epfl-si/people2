@@ -1,23 +1,11 @@
-<%= turbo_frame_tag dom_id(education), "data-sortable-url" => education_path(education, format: 'json') do %>
-  <div class="list-group-item">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="d-flex align-items-center">
-          <%= tag_for_localized_attr "h4", education, "title", class: "h5 mb-0 mr-2" %>
-          <%= tag_for_localized_attr "div", education, "field" %>
-        </div>
-        <p class="text-muted small mb-0">
-          <%= period_text(education.year_begin, education.year_end) %>: <%= education.t_category %> / <%= education.school %>
-          <br>
-          <%= t("educations.directedby")%> <%= education.director.presence || t("general.not_available") %>
-        </p>
-      </div>
-      <div class="col-md-4 text-right">
-        <p>
-          <%= render "shared/item_actions", item: education %>
-          <%= render "shared/item_sortable" %>
-        </p>
-      </div>
-    </div>
+<%= item_index_box(education) do %>
+  <div class="d-flex align-items-center">
+    <%= tag_for_localized_attr "h4", education, "title", class: "h5 mb-0 mr-2" %>
+    <%= tag_for_localized_attr "div", education, "field" %>
   </div>
+  <p class="text-muted small mb-0">
+    <%= period_text(education.year_begin, education.year_end) %>: <%= education.t_category %> / <%= education.school %>
+    <br>
+    <%= t("educations.directedby")%> <%= education.director.presence || t("general.not_available") %>
+  </p>
 <% end %>

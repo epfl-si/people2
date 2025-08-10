@@ -1,27 +1,14 @@
-<%= turbo_frame_tag dom_id(social), "data-sortable-url" => education_path(social, format: 'json') do %>
-<div class="list-group-item">
-  <div class="row">
-    <div class="col-md-8">
-      <div class="d-flex align-items-center">
-        <h4 class="h5 mb-0 mr-2"><%= social.tag.capitalize %></h4>
-        <div>
-          <% if social.value.blank? && social.automatic? && social.help_on_empty %>
-            <p>
-              <%= t(social.help_on_empty) %>.
-              <%= link_to(t('action.more'), social.help_url, target: 'blank') if social.help_url %>
-            </p>
-          <% else %>
-            <span> | </span>
-            <%= link_to(social.value, social.url) %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 text-right">
+<%= item_index_box(social, skip_edit: social.automatic?, extra_class: "d-flex align-items-start") do %>
+  <h4 class="h5 mt-0 mb-0 mr-2"><%= social.tag.capitalize %></h4>
+  <div>
+    <% if social.value.blank? && social.automatic? && social.help_on_empty %>
       <p>
-        <%= render "shared/item_actions", item: social, skip_edit: social.automatic? %>
+        <%= t(social.help_on_empty) %>.
+        <%= link_to(t('action.more'), social.help_url, target: 'blank') if social.help_url %>
       </p>
-    </div>
+    <% else %>
+      <span> | </span>
+      <%= link_to(social.value, social.url) %>
+    <% end %>
   </div>
-</div>
 <% end %>

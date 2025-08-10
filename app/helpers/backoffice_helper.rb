@@ -448,6 +448,19 @@ module BackofficeHelper
     end
   end
 
+  def item_index_box(item, extra_class: '', skip_edit: false, &block)
+    turbo_frame_tag(dom_id(item), "data-sortable-url" => polymorphic_path(item, format: 'json')) do
+      tag.div(class: "list-group-item index-item-container") do
+        c = []
+        c << render("shared/item_sortable")
+        c << render("shared/item_visibility", item: item, extra_class: nil)
+        c << tag.div(capture(&block), class: "item-content #{extra_class}")
+        c << render("shared/item_actions", item: item, skip_edit: skip_edit)
+        safe_join(c)
+      end
+    end
+  end
+
   def remote_modal_for(uri, &block)
     content = capture(&block)
     link_to content, uri, data: { turbo_frame: :remote_modal }

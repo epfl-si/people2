@@ -538,6 +538,20 @@ details {
   }
 }
 
+// ------------------------------------------------------ item listing flexboxes
+.index-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .gc-visibility-container {
+    min-width: 4em;
+    padding-top: 0.5ex;
+  }
+  .item-content {
+    flex-grow: 1;
+  }
+
+}
 // ---------------------------------------------------------- giova's visibility
 .gc-visibility-container {
   box-sizing: border-box;
@@ -545,7 +559,6 @@ details {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   span.text {
     /* display: none; */
     opacity: 0;
