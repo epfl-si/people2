@@ -4,6 +4,6 @@
 <%= link_to icon('help-circle'), help_box_path(box), method: :get, data: {turbo_stream: true, turbo_method:'get'} %>
 <%= link_to icon_text('trash-2', t('action.delete')), box_path(box), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: true, turbo_method:'delete'} if box.user_destroyable? %>
 <%= render "shared/item_visibility", item: box, extra_class: []%>
-<%= render 'shared/item_sortable' %>
+<%#= render 'shared/item_sortable' %>
 </div>
 </span>
