@@ -60,7 +60,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	git \
 	curl \
 	libvips \
-	pkg-config \
+	libicu-dev \
+  pkg-config \
 	ldap-utils \
 	libmariadb-dev-compat libmariadb-dev \
   libz-dev libssl-dev libffi-dev libyaml-dev libncurses-dev \

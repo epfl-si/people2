@@ -41,6 +41,7 @@ RUN apt-get update -qq && \
       build-essential \
       git \
       libvips \
+      libicu-dev \
       default-libmysqlclient-dev \
       pkg-config \
     	libmariadb-dev-compat libmariadb-dev \
