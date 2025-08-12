@@ -298,6 +298,8 @@ structs:
 ## run rails migration and seed with initial data
 seed: migrate structs scipers webmocks
 	docker compose exec webapp bin/rails db:seed
+	rm -f tmp/ldap_scipers_emails.txt
+	docker compose exec webapp bin/rails legacy:reload_scipers
 	docker compose exec webapp bin/rails legacy:import
 	docker compose exec webapp bin/rails data:refresh_courses
 
@@ -310,7 +312,7 @@ scipers: dcup
 	docker compose exec webapp bin/rails legacy:reload_scipers
 
 legaimport: dcup
-	docker compose exec webapp bin/rails legacy:fetch_all_texts
+	docker compose exec webapp bin/rails legacy:load_texts
 	docker compose exec webapp bin/rails legacy:txt_lang_detect
 	docker compose exec webapp bin/rails legacy:import
 
@@ -318,9 +320,7 @@ nukestorage:
 	docker compose exec webapp /bin/bash -c "rm -rf storage/[0-9a-zA-Z][0-9a-zA-Z]"
 
 ## restart with a fresh new dev database for the webapp
-reseed:
-	make nukedb
-	make nukestorage
+reseed: nukedb nukestorage
 	sleep 2
 	make seed
 
@@ -349,6 +349,10 @@ nukedb:
 ## reload UI translations from the code for /admin/translations
 reseed_translations:
 	docker compose exec webapp ./bin/rails admin:reseed_translations
+
+## destroy and rebuild everything in the dev databases including the legacy data
+full_reseed: force_restore reseed reseed_translations
+	docker compose exec webapp ./bin/rails legacy:editing_stats | egrep "^(###|---)" | sed 's/^###//' > LATEST_LEGACY_STATS.txt
 
 ## delete keycloak database and recreate it
 rekc:
@@ -391,6 +395,10 @@ db_restore_work:
 ## restore the legacy databases (copy from the on-line DB server to local ones)
 restore:
 	./bin/restoredb.sh all
+
+## force restore the legacy database forcing refetch of dumps from prod server
+force_restore:
+	./bin/restoredb.sh all --force
 
 ## restore the legacy `accred` database only
 restore_accred:
