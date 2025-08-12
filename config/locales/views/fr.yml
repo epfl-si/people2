@@ -133,6 +133,7 @@ fr:
         submit: Enregister
     name_change:
       official:
+        title: Changement du prénom et nom officiel
         instructions_html: La demande de modification de votre nom officiel n’est
           possible que si un changement a été officiellement enregistré auprès d’un
           Office de l’État civil (changement d’orthographe, mariage, divorce, ...)..
@@ -174,7 +175,8 @@ fr:
       available_first: 'Prénoms disponibles :'
       available_last: 'Noms disponibles :'
     new:
-      instructions_html: Choisir parmi vos pré(noms) lequel reste affiché
+      instructions_html: Choisir parmi vos prénoms ou noms officiels lequel s'affiche
+        sur votre profil.
   usual_name_requests:
     new:
       instructions_one_option_html: La demande de nouveau nom d’usage doit être validée.

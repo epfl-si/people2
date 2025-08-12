@@ -1,10 +1,12 @@
 ---
 it:
   visibility:
-    label: {}
+    label:
+      hidden: ''
     short_label:
       disabled: false
-    labels: {}
+    labels:
+      hidden: ''
     short_labels:
       enabled: false
     tag:

@@ -119,7 +119,7 @@ en:
       personal_phone: Personal phone number
       public_email: e-mail address
       unique_name: Name & Surname
-      usual_name: Usual Name
+      usual_name: Display and update of usual name & surname
     social:
       tag:
         bluesky: Bluesky username

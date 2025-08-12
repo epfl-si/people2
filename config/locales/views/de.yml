@@ -50,6 +50,7 @@ de:
       action: {}
     name_change:
       official:
+        title: ''
         instructions_html: ''
         status:
           student: {}
