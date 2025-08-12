@@ -176,8 +176,8 @@ en:
       available_first: 'Available first names:'
       available_last: 'Available last names:'
     new:
-      instructions_html: Please choose below from your existing names or surnames
-        those that you want to display.
+      instructions_html: Please choose below from your official existing names or
+        surnames those that are displayed on your profile.
   usual_name_requests:
     new:
       instructions_one_option_html: The request for a new display name needs to be

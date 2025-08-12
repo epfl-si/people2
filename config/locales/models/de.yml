@@ -45,7 +45,8 @@ de:
       accred: ''
   attr_labels:
     function_change: {}
-    profile: {}
+    profile:
+      usual_name: ''
     social:
       tag:
         muskidiocy: ''

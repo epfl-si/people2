@@ -20,7 +20,7 @@ en:
       intranet: Intranet, visible only within the EPFL internal network
       auth: Intranet, visible only to the EPFL people
       draft: Private, only the profile owner can view this
-      hidden: Private
+      hidden: Hidden
     short_label:
       enabled: Enabled
       disabled: false
@@ -35,7 +35,7 @@ en:
       enabled: Enabled
       published: Published
       draft: Draft
-      hidden: Private
+      hidden: Hidden
       public: Public, visible to anyone on the internet
       intranet: Intranet (EPFL only)
       authenticated: EPFL people only

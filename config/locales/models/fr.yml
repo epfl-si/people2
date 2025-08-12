@@ -119,7 +119,7 @@ fr:
       personal_phone: Numéro de téléphone personnel
       public_email: e-mail address
       unique_name: Prénom & nom
-      usual_name: Nom d'usage
+      usual_name: Affichage et changement du prénom et nom d'usage
     social:
       tag:
         bluesky: Bluesky
