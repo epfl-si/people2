@@ -67,6 +67,7 @@ class Box < ApplicationRecord
     end
     self.show_title = mb.show_title
     self.locked_title = mb.locked_title
+    self.section_id = mb.section_id
     save!
   end
 
