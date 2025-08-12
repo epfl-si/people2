@@ -36,5 +36,7 @@
   <% end %>
 </div>
 
-<h3 class="mt-5">Model Boxes</h3>
-<%= render 'admin/model_boxes/model_boxes', boxes: @section.model_boxes %>
+<h3 class="mt-5">Model Boxes Order</h3>
+<%= turbo_frame_tag "model_boxes", src: admin_section_model_boxes_path(@section), loading: :lazy do %>
+  <%= render 'shared/spinner' %>
+<% end %>

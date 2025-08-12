@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "model_boxes" do %>
+<table class="table" >
+  <thead>
+    <tr>
+      <th>Props</th>
+      <th>Kind</th>
+      <th>Subkind</th>
+      <th>Label</th>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody data-controller="sortable">
+    <%= render partial: "admin/sections/model_boxes/model_box", collection: @boxes %>
+  </tbody>
+</table>
+
+<p class="small">
+  <%= icon('paperclip') %> standard / <%= icon('circle') %> optional
+  <br/>
+  <%= icon('eye') %> visible visible / <%= icon('eye-off') %> hidden title
+  <br/>
+  <%= icon('lock') %> locked title / <%= icon('edit-3') %> editable title
+</p>
+<% end %>

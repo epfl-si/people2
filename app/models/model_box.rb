@@ -14,7 +14,7 @@ class ModelBox < ApplicationRecord
   validates :title_de, presence: true, if: -> { locked_title? }
   translates_rich_text :help
 
-  after_save :sync!
+  after_save :schedule_sync
 
   scope :standard, -> { where(standard: true) }
   scope :optional, -> { where(standard: false) }
@@ -33,10 +33,15 @@ class ModelBox < ApplicationRecord
     box
   end
 
-  private
-
   def sync!
     Rails.logger.debug("Syncing ModelBox #{id}")
     boxes.each(&:sync!)
+  end
+
+  private
+
+  def schedule_sync
+    Rails.logger.debug("Schduling sync of ModelBox #{id}")
+    ModelBoxSyncJob.perform_later(id)
   end
 end

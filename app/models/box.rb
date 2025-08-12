@@ -67,7 +67,9 @@ class Box < ApplicationRecord
     end
     self.show_title = mb.show_title
     self.locked_title = mb.locked_title
+    # We can sync position and section now because boxes are no longer sortable by users
     self.section_id = mb.section_id
+    self.position = mb.position
     save!
   end
 
