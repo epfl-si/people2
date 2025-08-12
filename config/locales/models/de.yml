@@ -16,7 +16,8 @@ de:
         title: ''
       experience:
         description: Beschreibung
-        title: Titel
+        location: ''
+        title: ''
       function_change: {}
       infoscience:
         title: Titel

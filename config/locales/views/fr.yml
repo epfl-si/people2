@@ -179,9 +179,12 @@ fr:
         sur votre profil.
   usual_name_requests:
     new:
-      instructions_one_option_html: La demande de nouveau nom d’usage doit être validée.
-        Veuillez remplir et soumettre les champs ci-dessous. La personne responsable
-        prendra en charge votre demande.
+      instructions_one_option_html: Le (pré)nom d’usage désigne le prénom et/ou le
+        nom de famille qu’une personne choisit d’utiliser dans sa vie quotidienne
+        à la place de ceux figurant sur ses documents d’identité officiels.<br> La
+        demande de modification est validée et traitée par le Bureau de l'Égalité,
+        selon <a href=''https://www.epfl.ch/campus/community/fr/utiliser-un-prenom-dusage-a-lepfl/">ces
+        critères</a>.
       instructions_two_options_html: Le (pré)nom d’usage désigne le prénom et/ou le
         nom de famille qu’une personne choisit d’utiliser dans sa vie quotidienne
         à la place de ceux figurant sur ses documents d’identité officiels. La demande
