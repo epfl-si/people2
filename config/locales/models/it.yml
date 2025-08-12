@@ -16,8 +16,8 @@ it:
         title: ''
       experience:
         description: Descrizione
-        location: Company, location or institution
-        title: Title
+        location: ''
+        title: ''
         year_begin: from year
         year_end: to year
       function_change: {}

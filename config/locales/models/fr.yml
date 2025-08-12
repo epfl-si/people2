@@ -27,9 +27,9 @@ fr:
         year_end: à (année)
       experience:
         description: Description
-        location: Lieu
+        location: Entreprise, compagnie ou institution
         period: période (en années)
-        title: titre
+        title: Titre du poste
         year_begin: de (année)
         year_end: à (année)
       function_change:

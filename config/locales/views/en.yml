@@ -180,9 +180,11 @@ en:
         surnames those that are displayed on your profile.
   usual_name_requests:
     new:
-      instructions_one_option_html: The request for a new display name needs to be
-        validate. Please fill and submit the following form. The person in charge
-        will take care of your request.
+      instructions_one_option_html: The usual (first and/or last) name refers to the
+        first name and/or surname that a person chooses to use in daily life instead
+        of the one appearing on their official identity documents. <br>The request
+        for modification is approved and processed by the Equality Office, according
+        on these <a href=''https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/">criteria</a>.
       instructions_two_options_html: The usual (first and/or last) name refers to
         the first name and/or surname that a person chooses to use in daily life instead
         of the one appearing on their official identity documents. The request for
