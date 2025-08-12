@@ -6,8 +6,16 @@ require 'net/http'
 require "openai"
 
 namespace :legacy do
+  task reload_texts: %i[nuke_texts fetch_all_texts] do
+  end
+
+  desc 'Nuke collection of legacy texts from Work::Text table'
+  task nuke_texts: :environment do
+    Work::Text.in_batches(of: 1000).delete_all
+  end
+
   desc 'Copy to user_text table all the texts that need to be translated'
-  task fetch_all_texts: :environment do
+  task load_texts: :environment do
     roba = [
       { model: Legacy::Award, props: [:title] },
       { model: Legacy::Box, props: %i[ok_content label] },

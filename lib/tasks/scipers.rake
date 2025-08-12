@@ -34,7 +34,7 @@ def ldap_by_sciper
     elsif (m = mma.match(l))
       r.email = m[1]
     elsif (m = mnn.match(l))
-      r.fullname = m[1].blank? ? m[2] : Base64.decode64(m[2]).force_encoding("UTF-8")
+      r.fullname = m[1].blank? ? m[2] : Legacy.deshit(Base64.decode64(m[2]))
     elsif (m = mdn.match(l))
       r.dn = m[1]
     end
@@ -153,10 +153,10 @@ namespace :legacy do
 
   desc 'Legacy profile language and effective editing'
   task editing_stats: :environment do
-    n_persons = Work::Sciper.live.count
-    n_profile_enabled = Work::Sciper.with_profile.count
+    n_people = Work::Sciper.count
+    n_profile_enabled = n_people - Work::Sciper.noprofile.count
 
-    scipers = Work::Sciper.with_profile.map(&:sciper)
+    scipers = Work::Sciper.migranda.map(&:sciper)
     scipers_en = Legacy::Cv.select('sciper').where(sciper: scipers, defaultcv: "en").map(&:sciper)
     scipers_fr = Legacy::Cv.select('sciper').where(sciper: scipers, defaultcv: "fr").map(&:sciper)
     scipers_ml = scipers - scipers_en - scipers_fr
@@ -166,11 +166,11 @@ namespace :legacy do
     n_profiles_fr = scipers_fr.count
     n_profiles_ml = scipers_ml.count
 
-    fmt1 = "%60s: %6d\n"
-    fmt2 = "%60s: %6d -> %6d distinct profiles\n"
+    fmt1 = "### %60s: %6d\n"
+    fmt2 = "### %60s: %6d -> %6d distinct profiles\n"
 
     printf("\n----------------- Number of\n")
-    printf(fmt1, "persons", n_persons)
+    printf(fmt1, "people currently @ EPFL", n_people)
     printf(fmt1, "persons that can have a profile", n_profile_enabled)
     printf(fmt1, "profiles in people", n_profiles)
     printf(fmt1, "profiles with EN forced", n_profiles_en)
@@ -210,7 +210,7 @@ namespace :legacy do
     printf("\n----------------- Number of distinct multilingual scipers\n")
 
     dsci_a = Legacy::Box.with_content.free_text.select(:sciper).where(sciper: scipers_ml).distinct.map(&:sciper)
-    printf(fmt1, "with soemthing in a free content box", dsci_a.count)
+    printf(fmt1, "with something in a free content box", dsci_a.count)
 
     f = %w[edu_show photo_ts web_perso nat origine tel_prive]
     q = f.map { |s| "#{s} is not NULL and #{s} <> ''" }.join(" or ")

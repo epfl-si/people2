@@ -46,6 +46,21 @@ module Legacy
     "â€“" => "&amp;",
   }.freeze
 
+  POSSIBLE_ENCODINGS = [Encoding::UTF_8, Encoding::ISO_8859_1, Encoding::ASCII_8BIT, Encoding::Windows_1251].freeze
+
+  def self.last_resort_deshit(c)
+    Rails.logger.debug("String with failed CharlockHolmes (undetected of failed): #{c.truncate(120)}")
+    POSSIBLE_ENCODINGS.each do |enc|
+      return c.dup.force_encoding(enc).encode("UTF-8")
+    rescue Encoding::UndefinedConversionError, Encoding::InvalidByteSequenceError
+      next
+    end
+    # we could probably skip the next line but, since I spent a lot of time
+    # collecting as many shitty chars as possible from the legacy DB...
+    SHITMAP.each_pair { |k, v| c.gsub!(k, v) }
+    c.encode("UTF-8", invalid: :replace, undef: :replace)
+  end
+
   def self.deshit(text)
     return text unless text.is_a?(String)
 
@@ -55,9 +70,19 @@ module Legacy
     # Remove trailing br
     c.gsub!(/<br>\s*$/, "")
     c.gsub!(%r{</?div>}, "")
-    # Replace stupid special chars (hoping it works!)
-    SHITMAP.each_pair { |k, v| c.gsub!(k, v) }
-    c
+
+    d = CharlockHolmes::EncodingDetector.detect(c)
+    if d.nil?
+      # probably a more sensible choice would be to just discard the bad string
+      # and avoid filling the dabase with crap
+      last_resort_deshit(c)
+    else
+      begin
+        CharlockHolmes::Converter.convert c, d[:encoding], 'UTF-8'
+      rescue ArgumentError
+        last_resort_deshit(c)
+      end
+    end
   end
 
   class LegacyBase < ApplicationRecord

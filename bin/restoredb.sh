@@ -59,6 +59,10 @@ restore() {
 
 	dumpfile=$DUMPDIR/${db}_dump.sql.gz
 
+	if [ "$2" == "--force" ] ; then
+	  rm $dumpfile
+	fi
+
 	# dump="mysqldump -h $h -u $u -p'$p' $db $tables | gzip"
 	# ssh -C $DATASRC "mysqldump -h $h -u $u -p'$p' $db $tables | gzip"
 	if [ ! -f $dumpfile ] ; then
@@ -88,10 +92,15 @@ restore() {
 
 db=$1
 
+force=""
+if [ "$2" == "--force" ] ; then
+  force="--force"
+fi
+
 if [ "$db" == "all" ] ; then
 	for db in accred cadi cv dinfo ; do
-		restore $db
+		restore $db $force
 	done
 else
-	restore $db
+	restore $db $force
 fi
