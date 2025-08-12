@@ -1,53 +1,20 @@
-<% content_for :menu do %>
-  <li>
-    <% if controller_name == 'dashboards' %>
-      <span clss="active">Dashboard</span>
-    <% else %>
-      <%= link_to "Dashboard", admin_dashboard_path %>
-    <% end %>
-  </li>
-  <li>
-    <% if controller_name == 'selectable_properties' %>
-      <span class="active">SP</span>
-    <% else %>
-      <%= link_to "SP", admin_selectable_properties_path %>
-    <% end %>
-  </li>
-  <li>
-    <% if controller_name == 'motds' %>
-      <span class="active">MOTD</span>
-    <% else %>
-      <%= link_to "MOTD", admin_motds_path %>
-    <% end %>
-  </li>
-  <li>
-    <% if controller_name == 'model_boxes' %>
-      <span class="active">Boxes</span>
-    <% else %>
-      <%= link_to "Boxes", admin_model_boxes_path %>
-    <% end %>
-  </li>
-  <li>
-    <% if controller_name == 'sections' %>
-      <span class="active">Sections</span>
-    <% else %>
-      <%= link_to "Sections", admin_sections_path %>
-    <% end %>
-  </li>
-  <li>
-    <% if controller_name == 'versions' %>
-      <span class="active">Change-Log</span>
-    <% else %>
-      <%= link_to "Change-Log", admin_versions_path %>
-    <% end %>
-  </li>
-
-  <% if Rails.env.development? %>
+<% content_for :menu do
+  menu = [
+    ["Dashboard", admin_dashboard_path],
+    ["SP", admin_selectable_properties_path],
+    ["MOTD", admin_motds_path],
+    ["Boxes", admin_model_boxes_path],
+    ["Sections", admin_sections_path],
+    ["Change-Log", admin_versions_path],
+  ]
+  menu << ["Translations", admin_translations_path] if Rails.env.development?
+  menu.each do |title, path|
+%>
     <li>
-      <% if controller_name == 'translations' %>
-        <span class="active">Translations</span>
+      <% if current_page?(path) %>
+        <span class="active"><%= title %></span>
       <% else %>
-        <%= link_to "Translations", admin_translations_path %>
+        <%= link_to title, path %>
       <% end %>
     </li>
   <% end %>
