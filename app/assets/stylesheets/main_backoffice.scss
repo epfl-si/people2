@@ -48,6 +48,10 @@ $font-size-xxs: 0.6rem;
 }
 // ---------------------------------------------------------------------- styles
 
+section {
+  padding-top: 1lh;
+}
+
 #flash-messages {
   position: fixed;
   z-index: 100;

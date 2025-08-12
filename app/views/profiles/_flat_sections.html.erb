@@ -1,4 +1,12 @@
 <% sections.each do |section| %>
+  <div class="d-flex justify-content-between">
+    <% if section.t_title.present? %>
+      <h3><%= section.t_title %></h3>
+    <% end %>
+    <% if section.t_help.present? %>
+      <%= link_to icon('help-circle'), help_section_path(section), method: :get, data: {turbo_stream: true, turbo_method:'get'} %>
+    <% end %>
+  </div>
   <% id = "section_#{section.label}" %>
   <section id="section_#{section.label}">
     <%= turbo_frame_tag "#{section.label}_section", src: profile_section_boxes_path(profile, section), loading: :lazy do %>
