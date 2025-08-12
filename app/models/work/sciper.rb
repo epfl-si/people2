@@ -12,7 +12,10 @@ module Work
     STATUS_AUTOMATIC = 4
 
     self.primary_key = 'sciper'
+    # people @EPFL without botweb property = not allowed to have a profile
     scope :noprofile, -> { where(status: STATUS_NO_PROFILE) }
+    # migranda + migrated = all people that can have a profile
+    # migrated includes also people that never created a legacy profile
     scope :migranda, -> { where(status: STATUS_WITH_LEGACY_PROFILE) }
     scope :migrated, -> { where(status: STATUS_MIGRATED) }
   end

@@ -7,7 +7,12 @@
 
   <div class="tabs-nav sticky-tabs" data-controller="sticky-tabs" data-sticky-tabs-target="tabs">
     <% tabs.each do |tab| %>
-      <label class="tab-label" for="<%= tab[:id] %>"><%= tab[:label] %></label>
+      <label class="tab-label" for="<%= tab[:id] %>">
+        <%= tab[:label] %>
+        <% if tab[:help].present? %>
+          <%= link_to icon('help-circle'), tab[:help], method: :get, data: {turbo_stream: true, turbo_method:'get'} %>
+        <% end %>
+      </label>
     <% end %>
   </div>
 

@@ -68,19 +68,19 @@
 <hr>
 
 <section id="contact_boxes_section">
-  <h3><%= t '.title.boxes_contact' %></h3>
   <%= render "flat_sections", sections: @contact_sections, profile: @profile %>
 </section>
 
 <section id="boxes_section">
-  <h3><%= t '.title.boxes_main' %></h3>
+  <h2><%= t '.title.boxes_main' %></h2>
   <%= render "shared/tabs", tabs: @sections.map.with_index { |section, i|
     {
       id: "section_#{section.label}",
       label: section.t_title,
       name: "edit-tabs-#{@profile.id}",
       frame_id: "#{section.label}_section",
-      src: profile_section_boxes_path(@profile, section)
+      src: profile_section_boxes_path(@profile, section),
+      help: section.t_help.present? ? help_section_path(section) : nil
     }
   } %>
 </section>
