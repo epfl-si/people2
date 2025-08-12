@@ -1,6 +1,13 @@
 <%= turbo_frame_tag "#{@section.label}_section" do %>
 
-<%#= turbo_frame_tag "#{@section.label}_boxes", src: nil, target: nil, data: {controller: "sortable"} do %>
+<%
+# CAUTION:
+# if we re-enable sortability of containers, we have to find a way to make it
+# compatible with sorting inherited from modelboxes (see Box::sync method)
+# may e we should allow to sort only optional boxes and ensure their posision
+# always follow the on of standard boxes ?
+# = turbo_frame_tag "#{@section.label}_boxes", src: nil, target: nil, data: {controller: "sortable"} do
+%>
 <%= turbo_frame_tag "#{@section.label}_boxes" do %>
   <% if @boxes.present? %>
     <% @boxes.each do |box| %>

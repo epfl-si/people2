@@ -101,7 +101,9 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'dashboards#index', as: 'dashboard'
     resources :model_boxes, except: %i[new create destroy]
-    resources :sections, except: %i[new create destroy]
+    resources :sections, except: %i[new create destroy] do
+      resources :model_boxes, only: %i[index update], controller: 'sections/model_boxes'
+    end
     resources :selectable_properties, except: %i[new create destroy show]
     resources :motds
     if Rails.env.development?

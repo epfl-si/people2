@@ -1,0 +1,15 @@
+<tr data-sortable-url="<%= admin_section_model_box_path(model_box.section, model_box, format: 'json') %>">
+  <td>
+    <%= icon(model_box.standard ? 'paperclip' : 'circle') %>
+    <%= icon(model_box.show_title ? 'eye' : 'eye-off') %>
+    <%= icon(model_box.locked_title ? 'lock' : 'edit-3') %>
+  </td>
+  <td><%= model_box.kind %></td>
+  <td><%= model_box.subkind %></td>
+  <td><%= model_box.label %></td>
+  <td>
+      <%= model_box.title_en %>
+      <br/>
+      <%= model_box.title_fr %>
+  </td>
+</tr>
