@@ -172,6 +172,10 @@ gem "yabeda-prometheus-mmap"
 gem "yabeda-puma-plugin"
 gem "yabeda-rails"
 
+# Library for guessing the char encoding of strings. Should no longer be needed
+# once migration from legacy is done.
+gem "charlock_holmes"
+
 group :development do
   # security tools
   gem 'brakeman'
