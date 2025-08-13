@@ -2,6 +2,27 @@
 
 # Implement `./bin/rake devel:clean` and `./bin/rake devel:realclean`
 
+namespace :data do
+  desc 'Delete all user-related records. This is only meant for the very first deployment in production!!!!!!'
+  task hiroshima_and_nagasaki: :environment do
+    $stdout.puts "This is going to nuke all the profiles-relate data. Are you sure? (y/n)"
+    input = $stdin.gets.strip
+    if input == 'y'
+      $stdout.puts "Please enter the password to confirm"
+      input = $stdin.gets.strip
+      pass = BCrypt::Password.new("$2a$18$y41NDScNy7nuQWbM.U3eROwJGQplQNVYG3zvwpRBRQEi7ecXI/8Sy")
+      if pass == input
+        $stdout.puts "Ok. Are you really really sure? (y/n)"
+        input = $stdin.gets.strip
+        if input == 'y'
+          Work::Version.in_batches(of: 1000).delete_all
+          Profile.in_batches(of: 100).destroy_all
+        end
+      end
+    end
+  end
+end
+
 namespace :devel do
   desc 'Delete all generated files'
   task clean: :environment do

@@ -26,12 +26,16 @@ NOCIMAGE ?= jonlabelle/network-tools
 # resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs.
 DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.internal)
 
-KCDUMPFILE ?= tmp/dbdumps/keycloak.sql
+DUMPDIR ?= tmp/dbdumps
+
+KCDUMPFILE ?= $(DUMPDIR)/keycloak.sql
 
 export
 
-SQL=docker compose exec -T mariadb mariadb -u root --password=mariadb
-SQLDUMP=docker compose exec -T mariadb mariadb-dump --password=mariadb
+SQL = docker compose exec -T mariadb mariadb -u root --password=mariadb
+SQLDUMP = docker compose exec -T mariadb mariadb-dump --password=mariadb
+
+RAKE = docker compose exec webapp bin/rails
 
 ## ---------------------------------------------------------- Run/stop local app
 .PHONY: css dev up reload kc down fulldown traefik tunnel_up tunnel_down
@@ -78,7 +82,7 @@ dcup: envcheck $(ELE_FILES)
 	docker compose up --no-recreate -d
 
 ## -------------------------------------------------- Interaction with local app
-.PHONY: logs ps top console shell dbconsole debug redis dbstatus
+.PHONY: logs ps top console shell dbconsole debug redis dbstatus flush
 
 ## tail -f the logs
 logs:
@@ -124,7 +128,7 @@ redis:
 
 ## toggle Rails caching in dev (will persist reloads as it is just a file in tmp)
 devcache:
-	docker compose exec webapp bin/rails dev:cache
+	$(RAKE) dev:cache
 
 ## start a shell within a container including all usefull network tools
 noc:
@@ -137,6 +141,10 @@ dbstatus:
 ## show code stats and versions
 about:
 	./bin/rails about && ./bin/rails stats
+
+## flush cache from redis db
+flush:
+	docker compose exec cache redis-cli FLUSHALL
 
 ## ------------------------------------------------------------- Container image
 .PHONY: build rebuild
@@ -268,11 +276,8 @@ test-system: testup
 test-models:
 	docker compose exec webapp ./bin/rails test:models
 
-## ------------------------------------------------- Cache and off-line webmocks
-
-## flush cache from redis db
-flush:
-	docker compose exec cache redis-cli FLUSHALL
+## ---------------------------------------------- Off-line webmocks (deprecated)
+.PHONY: webmocks refresh_webmocks
 
 ## copy webmocks from keybase. This will enable the off-line use (set ENABLE_WEBMOCK=true in .env)
 webmocks:
@@ -283,61 +288,28 @@ refresh_webmocks:
 	@ENABLE_WEBMOCK=false WEBMOCKS=$(KBPATH)/webmocks URLS=$(KBPATH)/webmock_urls.txt APIPASS=$(EPFLAPI_PASSWORD) RAILS_ENV=development ./bin/rails data:webmocks
 	rsync -av --delete $(KBPATH)/webmocks/ test/fixtures/webmocks/
 
-## ----------------------------------------------- migration data/db maintenance
-.PHONY: migrate seed reseed nukedb restore_webmocks webmocks
+## ------------------------------------- DB and data initialization / management
+.PHONY: fastreseed courses migrate nukedb nukestorage reseed reseed_translations scipers seed structs
+
+
+## reload the list of all courses from ISA
+courses: dcup
+	$(RAKE) data:refresh_courses
+
+## restart with a fresh new dev database for the webapp (faster version: does not refresh work db)
+fastreseed:
+	echo "DROP DATABASE IF EXISTS people" | $(SQL)
+	echo "CREATE DATABASE people;" | $(SQL)
+	sleep 2
+	$(RAKE) db:migrate
+	$(RAKE) db:seed
+	make struct
 
 ## run rails migration
 migrate: dcup
 	docker compose exec webapp ./bin/rails db:migrate
 
-## retrive struct files from keybase
-structs:
-	rsync -av $(KBPATH)/structs/ tmp/structs/
-	docker compose exec webapp bin/rails legacy:struct
-
-## run rails migration and seed with initial data
-seed: migrate structs scipers webmocks
-	docker compose exec webapp bin/rails db:seed
-	rm -f tmp/ldap_scipers_emails.txt
-	docker compose exec webapp bin/rails legacy:reload_scipers
-	docker compose exec webapp bin/rails legacy:import
-	docker compose exec webapp bin/rails data:refresh_courses
-
-## reload the list of all courses from ISA
-courses: dcup
-	docker compose exec webapp bin/rails data:courses
-
-## seed the data for Work::Sciper
-scipers: dcup
-	docker compose exec webapp bin/rails legacy:reload_scipers
-
-legaimport: dcup
-	docker compose exec webapp bin/rails legacy:load_texts
-	docker compose exec webapp bin/rails legacy:txt_lang_detect
-	docker compose exec webapp bin/rails legacy:import
-
-nukestorage:
-	docker compose exec webapp /bin/bash -c "rm -rf storage/[0-9a-zA-Z][0-9a-zA-Z]"
-
-## restart with a fresh new dev database for the webapp
-reseed: nukedb nukestorage
-	sleep 2
-	make seed
-
-fastreseed:
-	echo "DROP DATABASE IF EXISTS people" | $(SQL)
-	echo "CREATE DATABASE people;" | $(SQL)
-	sleep 2
-	docker compose exec webapp bin/rails db:migrate
-	docker compose exec webapp bin/rails db:seed
-
-# ## load changed schema and seed
-# reschema:
-# 	docker compose exec webapp bin/rails db:schema:load
-# 	docker compose exec webapp bin/rails db:seed
-# 	make courses
-
-## delete the people database
+# drop all databases (except legacy)
 nukedb:
 	echo "DROP DATABASE IF EXISTS people" | $(SQL)
 	echo "CREATE DATABASE people;" | $(SQL)
@@ -346,13 +318,62 @@ nukedb:
 	# rm -f db/people_schema.rb
 	# rm -f db/work_schema.rb
 
-## reload UI translations from the code for /admin/translations
-reseed_translations:
+# remove local storage for file attachments
+nukestorage:
+	docker compose exec webapp /bin/bash -c "rm -rf storage/[0-9a-zA-Z][0-9a-zA-Z]"
+
+## restart with a fresh new dev database for the webapp (slow version)
+reseed: nukedb nukestorage
+	rm -f tmp/ldap_scipers_emails.txt
+	rm -f tmp/courses.json
+	sleep 2
+	make seed
+
+## reload UI translations from the source code for /admin/translations UI
+locales:
 	docker compose exec webapp ./bin/rails admin:reseed_translations
 
-## destroy and rebuild everything in the dev databases including the legacy data
-full_reseed: force_restore reseed reseed_translations
+## seed the data for Work::Sciper (more legacy related but might be used in the future too)
+scipers: dcup
+	$(RAKE) legacy:reload_scipers
+
+## run rails migration and seed with initial data (does not include legacy-migration-related tasks)
+seed: migrate structs scipers courses
+	$(RAKE) db:seed
+
+# retrive struct files from keybase
+structs:
+	rsync -av $(KBPATH)/structs/ tmp/structs/
+	$(RAKE) legacy:struct
+
+# ## load changed schema and seed
+# reschema:
+# 	$(RAKE) db:schema:load
+# 	$(RAKE) db:seed
+# 	make courses
+
+## -------------------------------------------- legacy importation related tasks
+.PHONY: legacy
+
+## Remove files used to speed-up the legacy task to force
+clean_legacy:
+	rm -f $(DUMPDIR)/cv_dump.sql.gz
+	rm -f $(DUMPDIR)/work_texts.sql.gz
+
+## run tasks to setup importation from legacy data
+legacy: restore db_restore_text
+	$(RAKE) legacy:reload_scipers
+	$(RAKE) legacy:load_texts
+	$(RAKE) legacy:txt_lang_detect
+	make db_backup_text
+	$(RAKE) legacy:refresh_adoptions
+	$(RAKE) legacy:import
+
+## compute some stats for NM about profiles and languages in the legacy database
+legacy_stats:
 	docker compose exec webapp ./bin/rails legacy:editing_stats | egrep "^(###|---)" | sed 's/^###//' > LATEST_LEGACY_STATS.txt
+
+## -------------------------------------------------------------------- Keycloak
 
 ## delete keycloak database and recreate it
 rekc:
@@ -376,16 +397,23 @@ db_backup: db_backup_people db_backup_work
 db_restore: db_restore_people db_restore_work
 
 db_backup_people:
-	$(SQLDUMP) people | gzip > tmp/dbdumps/people.sql.gz
+	$(SQLDUMP) people | gzip > $(DUMPDIR)/people.sql.gz
 
 db_backup_work:
-	$(SQLDUMP) people_work | gzip > tmp/dbdumps/work.sql.gz
+	$(SQLDUMP) people_work | gzip > $(DUMPDIR)/work.sql.gz
 
 db_restore_people:
-	zcat tmp/dbdumps/people.sql.gz | $(SQL) people
+	zcat $(DUMPDIR)/people.sql.gz | $(SQL) people
 
 db_restore_work:
-	zcat tmp/dbdumps/people.sql.gz | $(SQL) people_work
+	zcat $(DUMPDIR)/work.sql.gz | $(SQL) people_work
+
+db_backup_text:
+	$(SQLDUMP) people_work texts | gzip > $(DUMPDIR)/work_texts.sql.gz
+
+db_restore_text:
+	b="$(DUMPDIR)/work_texts.sql.gz"
+	if [ -f "$$b" ] ; then zcat "$$b" | $(SQL) people_work ; fi
 
 ## --------------------------------------------------------- Legacy DB from prod
 # since we moved this to the external script we keep them just as a reminder
@@ -421,7 +449,7 @@ restore_dinfo:
 	./bin/restoredb.sh dinfo
 
 ## -------------------------------------------------- Test (dev-like) deployment
-  .PHONY: nata_patch nata_reinit_legacy nata_reseed nata_update
+.PHONY: nata_patch nata_reinit_legacy nata_reseed nata_update
 
 
 ## redeploy app on the test server for Natalie (docker image will be rebuilt if there is a new tag)
