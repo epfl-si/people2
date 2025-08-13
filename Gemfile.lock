@@ -92,6 +92,7 @@ GEM
       metrics (~> 0.12)
       traces (~> 0.15)
     base64 (0.3.0)
+    bcrypt (3.1.20)
     benchmark (0.4.1)
     bigdecimal (3.2.2)
     bindex (0.8.1)
@@ -566,6 +567,7 @@ PLATFORMS
 DEPENDENCIES
   action_policy
   async
+  bcrypt
   bootsnap
   brakeman
   bundler-audit

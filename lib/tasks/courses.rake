@@ -11,14 +11,15 @@ namespace :data do
   end
 
   desc 'Destroy courses from database'
-  task nuke_courses: :environment do
+  task nuke_courses: %i[db:migrate environment] do
     # File.delete('tmp/courses.json') if File.exist?('tmp/courses.json')
-    Teachership.in_batches(of: 1000).destroy_all
-    Course.in_batches(of: 1000).destroy_all
+    puts "================== yes"
+    # Teachership.in_batches(of: 1000).destroy_all
+    # Course.in_batches(of: 1000).destroy_all
   end
 
   desc 'Download the list of ISA courses and fill the local DB as cache'
-  task courses: :environment do
+  task courses: %i[db:migrate environment] do
     courses_file = Rails.root.join("tmp/courses.json")
 
     if File.exist?(courses_file)

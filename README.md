@@ -55,11 +55,14 @@ requires various databases to work.
     to ssh into and dump the databases.
     Ideally, we should prepare a set of fake data instead but it is quite
     cumbersome.
- 2. migrate and seed the local application database: `make seed`
- 3. if for some reason you prefer to use the locak keycloak server: `make rekc`
- 4. if you are working on the importation of legacy profiles, then you need to
-    prepare the data with `make legaimport` which will load all text entries
-    from the legacy user profiles and try to guess their languages using AI
+ 1. migrate and seed the local application database: `make seed`
+ 1. only if you need to work on the admin interface for translation: `make locales`
+ 1. if for some reason you prefer to use the locak keycloak server: `make rekc`
+ 1. if you are working on the migration from the legacy application
+    (`ENABLE_ADOPTION` set to true), then you need to prepare the data with
+    `make legacy` which will pre-load all text entries from the legacy user
+    profiles and try to guess their languages using AI (see the
+    [LEGACY_MIGRATION](LEGACY_MIGRATION.md) file for more details)
 
 ## Debugging
 
@@ -99,15 +102,43 @@ The two main external data sources are the following web services:
 The information taken from the official sources, is integrated with information
 optionally provided by the people and kept on the internal database.
 
-The current implementation which tries to closely mimic its legacy ancestor.
-In particular, we tried to keep the idea of a profile page composed of several
-content **blocks**. We have tried to implement the blocks in a way that will
-allow new powerfull blocks to be added in the future. For the moment, we have
-just two types of blocks: _rich text boxes_ that are just a title with a free
-content in html format, and _index boxes_ that are containers of lists of
-records of the same model. Presently we have implemented models for listing
-the person's studies, work experiences, awards, selected publications, and links
-to various research or social network websites.
+The current implementation tries to closely mimic its legacy ancestor. In particular,
+we keept the idea of a profile page composed of several content **blocks**
+(all instances of the classes derived from the base `Box` model) but we
+tried to implement it in a way that will allow new powerfull blocks to be added
+in the future.
+For the moment, we have just two types of blocks: `RichTextBox` that are
+just a title with a free content in html format, and `IndexBox` that are
+containers of lists of records of the same model. We have models for listing the
+person's studies, work experiences, awards, selected publications, and links to
+various research or social network websites (`Education`, `Experience`, `Award`,
+`Publication`, `Social` models respectively).
+
+Boxes are grouped by `Section` displayed in diffent zones of the public profile
+page. Every instance of a `Box` is generated using the metadata of a `ModelBox`
+that determines in which section the box will go and other things like if the
+user can modify its title. A minimal administrative interface is provided for
+managing the sections and the model boxes so that very little is hardcoded.
+
+The public profile view is completely static and loaded at once for improving
+indexing by search engines.
+
+### Content localisation
+A record can have fields that are language independent (e.g. year, person names),
+and fields that require translation. In order to avoid extra model relationships,
+we opted for storing everything in the same record where all the translations
+for all the fields have a dedicated column in the DB. This off-course have the cost
+of multiplying the number of columns and probably space required. There is a plan
+to merge all the translations for a field in a single serialized column which
+would enable supporting an arbitrary number of langues. This requires some work
+but not too much because all localisation-related code is isolated in one module.
+
+A clever (IMHO) interface were developed for multilingual editing where the user
+could edit all the languages at the same time in a single form without the visual
+overload of haveing one field per language. Unfortunately, it have been discarded
+in favor of the current implementation which is less efficient (the form must
+be saved once foreach language) but apparently easier to understand.
+
 
 ## Framework Picks
 
