@@ -6,28 +6,10 @@ class PeopleController < ApplicationController
   layout 'public'
 
   def show
-    r = SpecialRedirect.for_sciper_or_name(params[:sciper_or_name])
-    redirect_to(r.url, allow_other_host: true) and return if r.present?
-
-    if Rails.configuration.enable_adoption
-      m = Adoption.not_yet(params[:sciper_or_name])
-      if m.present?
-        respond_to do |format|
-          format.html { render plain: m.content(I18n.locale) }
-          format.vcf do
-            set_base_data
-            render layout: false
-          end
-        end
-        # render plain: content
-        # # render body: content
-        return
-      end
-    end
+    check_for_redirect and return
+    Rails.configuration.enable_adoption and proxy_orphan and return
 
     set_show_data
-
-    @page_title = "EPFL - #{@person.name.display}"
     respond_to do |format|
       format.html do
         ActiveSupport::Notifications.instrument('profile_controller_render') do
@@ -55,9 +37,37 @@ class PeopleController < ApplicationController
         redirect_to action: :show
       end
     end
+
+    # serve the legacy profile when the new one is yet to be adopted (orphan)
+    def proxy_orphan
+      m = Adoption.not_yet(params[:sciper_or_name])
+      if m.present?
+        respond_to do |format|
+          format.html { render plain: m.content(I18n.locale) }
+          # we assume vcf from new app are ok
+          format.vcf do
+            set_base_data
+            render layout: false
+          end
+        end
+        true
+      else
+        false
+      end
+    end
   end
 
   private
+
+  def check_for_redirect
+    r = SpecialRedirect.for_sciper_or_name(params[:sciper_or_name])
+    if r.present?
+      redirect_to(r.url, allow_other_host: true)
+      true
+    else
+      false
+    end
+  end
 
   def set_base_data
     @person = Person.find(params[:sciper_or_name])
@@ -87,6 +97,8 @@ class PeopleController < ApplicationController
 
   def set_show_data
     set_base_data
+
+    @page_title = "EPFL - #{@person.name.display}"
 
     # teachers are supposed to all have a profile
     @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
