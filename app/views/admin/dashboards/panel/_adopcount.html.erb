@@ -1,0 +1,34 @@
+<h3>Adoption Counts</h3>
+
+<table class="table table-hover">
+  <tbody>
+  <tr>
+    <td>Total numer of people</td>
+    <td class="text-right"><%= @peo_tot %></td>
+  </tr>
+  <tr>
+    <td>No profile</td>
+    <td class="text-right"><%= @peo_nop %></td>
+  </tr>
+  <tr>
+    <td>Never edited legacy profile</td>
+    <td class="text-right"><%= @peo_yes %></td>
+  </tr>
+  <tr><td>Edited legacy profile</td>
+    <td class="text-right"><%= @peo_mig %></td>
+  </tr>
+
+  <tr>
+    <td>Total adoptions</td>
+    <td class="text-right"><%= @ado_tot %></td>
+  </tr>
+  <tr>
+    <td>Adopted</td>
+    <td class="text-right"><%= @ado_acc %></td>
+  </tr>
+  <tr>
+    <td>Orphans</td>
+    <td class="text-right"><%= @ado_orp %></td>
+  </tr>
+  </tbody>
+</table>

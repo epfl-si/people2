@@ -1,0 +1,6 @@
+<%= turbo_frame_tag(
+  "time", src: "time", loading: :lazy,
+  data: {controller: 'autoreload', 'autoreload-interval-value': 60000}
+) do %>
+  <%= render 'shared/spinner' %>
+<% end %>
