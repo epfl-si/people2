@@ -1,0 +1,16 @@
+<h3>Latest adoptions</h3>
+<table class="table table-hover">
+  <thead>
+    <tr><th>Sciper</th><th>Name</th><th>When</th></tr>
+  </thead>
+  <tbody>
+  <% @adoptions.each do |a| %>
+    <tr>
+      <td><%= a.sciper %></td>
+      <td><%= link_to a.fullname, person_path(sciper_or_name: a.sciper), target: "blank", 'data-turbo': "false" %></td>
+      <td><%= time_tag a.updated_at, "data-local": "time-ago", "data-format": "%B %e, %Y %l:%M%P" %></td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>

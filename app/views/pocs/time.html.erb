@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "time" do %>
+  Current time is
+  <%= time_tag @time, format: "%H:%M:%S" %>
+<% end %>

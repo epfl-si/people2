@@ -20,4 +20,10 @@ class PocsController < ApplicationController
       end
     end
   end
+
+  def reload; end
+
+  def time
+    @time = Time.zone.now
+  end
 end
