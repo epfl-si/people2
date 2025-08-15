@@ -78,7 +78,7 @@ Rails.application.routes.draw do
   end
 
   get '/:sciper_or_name', to: 'people#show', as: 'person',
-                          constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
+                          constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/i }
 
   if Rails.configuration.enable_adoption
     resources :adoptions, only: %i[update]
