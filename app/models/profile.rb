@@ -13,6 +13,7 @@ class Profile < ApplicationRecord
   # https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
   # self.primary_key = 'sciper'
   EXPERTISE_MAX_LEN = 200
+  PHONE_VRE = /\A(\+|00)?[0-9\s\-.()]+\z/
 
   include AudienceLimitable
   include Translatable
@@ -26,8 +27,8 @@ class Profile < ApplicationRecord
   audience_limit_property "personal_phone"
   audience_limit_property "personal_web_url"
 
-  validates :personal_web_url, format: { with: %r{\A(http|https)://[^\s]+\z}, message: :invalid_url, allow_blank: true }
-  validates :personal_phone, format: { with: /\A(\+|00)?[0-9\s\-.()]+\z/, message: :invalid_phone, allow_blank: true }
+  validates :personal_web_url, url: { allow_nil: true, allow_blank: false, no_local: true }
+  validates :personal_phone, format: { with: PHONE_VRE, message: :invalid_phone, allow_blank: true }
   has_many :boxes, dependent: :destroy
   has_many :model_boxes, through: :boxes, source: :model
   # has_many :section_boxes, ->(section) { where(section_id: section.id) }, class_name: 'Box'

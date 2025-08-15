@@ -517,6 +517,9 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.0.3)
     useragent (0.16.11)
+    validate_url (1.0.15)
+      activemodel (>= 3.0.0)
+      public_suffix
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -619,6 +622,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   uri (>= 0.12.4)
+  validate_url
   web-console
   webmock
   yabeda

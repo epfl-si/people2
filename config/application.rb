@@ -74,6 +74,7 @@ module People
     config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
     config.legacy_base_url = ENV.fetch('LEGACY_RO_URL', 'https://personnes.epfl.ch/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 2.days)
+    config.legacy_import_job_log_path = ENV.fetch('LEGACY_JOB_LOG', config.enable_adoption ? "legacy_import.log" : nil)
 
     # There are other ENV vars read in the yml files
     # which will probably become config maps

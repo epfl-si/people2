@@ -5,6 +5,14 @@
 # require Rails.root.join('app/services/api_base_getter').to_s
 # require Rails.root.join('app/services/api_accreds_getter').to_s
 
+class LegacyImportLogFormatter < Logger::Formatter
+  def call(severity, time, progname, msg)
+    ts = time.utc.strftime("%Y%m%d-%H%M%S.%L")
+    ms = msg.is_a?(String) ? msg : msg.inspect
+    "#{ts} #{severity} -- #{progname} | #{ms}\n"
+  end
+end
+
 class LegacyProfileImportJob < ApplicationJob
   queue_as :default
 
@@ -24,6 +32,12 @@ class LegacyProfileImportJob < ApplicationJob
     "Current work" => "currwork",
     "Travail en cours" => "currwork",
   }.freeze
+  if (lp = Rails.configuration.legacy_import_job_log_path).present?
+    JLOG = Logger.new(Rails.root.join("log", lp))
+    JLOG.formatter = LegacyImportLogFormatter.new
+  else
+    JLOG = Rails.logger
+  end
 
   def show_to_visibility(v)
     v == "1" ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
@@ -64,19 +78,32 @@ class LegacyProfileImportJob < ApplicationJob
   def perform(scipers)
     scipers = [scipers] unless scipers.is_a?(Array)
     scipers.each do |sciper|
-      ActiveRecord::Base.transaction do
-        do_perform(sciper)
-      end
+      do_perform(sciper)
     end
   end
 
+  # Give a second chanche to model by nullifying all its fields
+  # with invalid formats. In any case if they are mandatory, there will be
+  # the corresponding validation.
+  def second_chanche(sciper, m)
+    JLOG.warn(sciper) do
+      errs = m.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+      "Invalid #{m.class.name}. Trying with second_chanche. #{errs} / #{m.inspect}."
+    end
+    aa = m.errors.select { |e| %i[invalid url].include?(e.type) }.map { |e| [e.attribute, nil] }.to_h
+    m.assign_attributes(aa)
+  end
+
   def do_perform(sciper)
+    err_count = 0
     profile = Profile.for_sciper(sciper)
     return if profile.present?
 
+    JLOG.info(sciper) { "Legacy profile import STARTED" }
     begin
       cv = Legacy::Cv.find(sciper)
     rescue StandardError
+      JLOG.error(sciper) { "Legacy::Cv base profile for #{sciper} not found" }
       return
     end
     cv_en = cv.translated_part('en')
@@ -93,17 +120,28 @@ class LegacyProfileImportJob < ApplicationJob
     profile.nationality_visibility = show_to_visibility(cv.nat_show)
 
     tel = cv.tel_prive&.strip
-    profile.personal_phone = tel if tel.present?
-    profile.personal_phone_visibility = show_to_visibility(cv.tel_prive_show)
+    if tel.present? && tel
+      profile.personal_phone = tel
+      profile.personal_phone_visibility = show_to_visibility(cv.tel_prive_show)
+    end
 
     url = cv.web_perso&.strip
-    url = nil if url =~ /(personnes|people)\.epfl\.ch/
-    profile.personal_web_url = url if url.present?
-    profile.personal_web_url_visibility = show_to_visibility(cv.web_perso_show)
+    if url.present? && url !~ /(personnes|people)\.epfl\.ch/
+      profile.personal_web_url = url
+      profile.personal_web_url_visibility = show_to_visibility(cv.web_perso_show)
+    end
+
+    # It is important to not fail at this point. Therefore we try to be a bit more indulgents
+    unless profile.valid?
+      second_chanche(sciper, profile)
+      err_count += 1
+    end
 
     unless profile.save
-      errs = profile.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-      Rails.logger.debug "ERROR creating profile: #{errs}"
+      JLOG.error(sciper) do
+        errs = profile.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+        "Could not create new profile for #{sciper} errors: #{errs}."
+      end
       return
     end
 
@@ -132,8 +170,11 @@ class LegacyProfileImportJob < ApplicationJob
         b.content_fr = e_fr if e_fr.present?
         b.content_en = e_en if e_en.present?
         unless b.save
-          errs = b.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-          Rails.logger.debug "Skipping invalid expertise (sciper: #{profile.sciper}): #{errs}"
+          err_count += 10
+          JLOG.warn(sciper) do
+            errs = b.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+            "Skipping invalid expertise field: #{errs}"
+          end
         end
       end
     end
@@ -141,6 +182,13 @@ class LegacyProfileImportJob < ApplicationJob
     # -------------------------------------------------------- Free Text Boxes
     forcelang = cv.defaultcv
     detect_lang_with_ai = WITH_AI && forcelang.blank?
+    JLOG.info(sciper) do
+      if forcelang.blank?
+        "profile is multilanguage. Language will #{detect_lang_with_ai ? '' : 'NOT'} be auto-detected"
+      else
+        "profile have #{forcelang} forced language"
+      end
+    end
     SECPOS.map { |sp| sp.to_a.flatten }.each do |sec, pos|
       box_by_label = {}
 
@@ -175,9 +223,12 @@ class LegacyProfileImportJob < ApplicationJob
         b.profile = profile
         b.send("content_#{lang}=", ob.sanitized_content)
         b.send("title_#{lang}=", ob.sanitized_label)
-        unless b.save
+        next if b.save
+
+        err_count += 100
+        JLOG.warn(sciper) do
           errs = b.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-          Rails.logger.debug "Skipping invalid box #{ob.id} (sciper: #{profile.sciper}): #{errs}"
+          "Skipping invalid box #{ob.id} (sciper: #{profile.sciper}): #{errs}"
         end
       end
     end
@@ -192,8 +243,11 @@ class LegacyProfileImportJob < ApplicationJob
       b.content_fr = cv_fr.sanitized_expertise if cv_fr.expertise.present?
       b.content_en = cv_en.sanitized_expertise if cv_en.expertise.present?
       unless b.save
-        errs = b.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-        Rails.logger.debug "Skipping invalid expertise (sciper: #{profile.sciper}): #{errs}"
+        err_count += 1000
+        JLOG.warn(sciper) do
+          errs = b.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+          "Skipping invalid expertise: #{errs}"
+        end
       end
     end
 
@@ -222,9 +276,12 @@ class LegacyProfileImportJob < ApplicationJob
         visibility: visible_to_visibility(le.visible?)
       )
       e.title_en = le.sanitized_label if le.label.present?
-      unless e.save
+      next if e.save
+
+      err_count += 10_000
+      JLOG.warn(sciper) do
         errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-        Rails.logger.debug "Skipping invalid infoscience box #{le.id} (sciper: #{profile.sciper}): #{errs}"
+        "Skipping invalid infoscience box #{le.id}: #{errs}"
       end
     end
     # taken care automagically by IndexBoxable
@@ -247,9 +304,12 @@ class LegacyProfileImportJob < ApplicationJob
           visibility: AudienceLimitable::VISIBLE
         )
         e.url = le.urlpub if le.urlpub.present?
-        unless e.save
+        next if e.save
+
+        err_count += 100_000
+        JLOG.warn(sciper) do
           errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-          Rails.logger.debug "Skipping invalid publication #{le.id} (sciper: #{profile.sciper}): #{errs}"
+          "Skipping invalid publication #{le.id}: #{errs}"
         end
       end
     end
@@ -271,9 +331,12 @@ class LegacyProfileImportJob < ApplicationJob
         e.send("title_#{lang}=", le.title)
         e.send("field_#{lang}=", le.field) if le.field.present?
         e.director = le.director if le.director.present?
-        unless e.save
+        next if e.save
+
+        err_count += 1_000_000
+        JLOG.warn(sciper) do
           errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-          Rails.logger.debug "Skipping invalid education #{le.id} (sciper: #{profile.sciper}): #{errs}"
+          "Skipping invalid education #{le.id}: #{errs}"
         end
       end
     end
@@ -292,9 +355,12 @@ class LegacyProfileImportJob < ApplicationJob
         )
         e.send("title_#{lang}=", le.title)
         e.location = le.univ if le.univ?
-        unless e.save
+        next if e.save
+
+        err_count += 10_000_000
+        JLOG.warn(sciper) do
           errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-          Rails.logger.debug "Skipping invalid experience #{le.id} (sciper: #{profile.sciper}): #{errs}"
+          "Skipping invalid experience #{le.id}: #{errs}"
         end
       end
     end
@@ -315,32 +381,37 @@ class LegacyProfileImportJob < ApplicationJob
     #     e.category = cat
     #     unless e.save
     #       errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-    #       Rails.logger.debug "Skipping invalid achievement #{le.id} (sciper: #{profile.sciper}): #{errs}"
+    #       JLOG.info "Skipping invalid achievement #{le.id} (sciper: #{profile.sciper}): #{errs}"
     #     end
     #   end
     # end
 
-    return unless cv.awards.count.positive?
+    if cv.awards.count.positive?
+      b = IndexBox.from_model(mboxes['award'])
+      b.profile = profile
+      b.save
+      cv.awards.order(:ordre).each do |le|
+        lang = le.title_lang? || fallback_lang if detect_lang_with_ai
+        e = profile.awards.new(
+          year: le.year,
+          visibility: AudienceLimitable::VISIBLE
+        )
+        e.send("title_#{lang}=", le.title)
+        e.issuer = le.grantedby if le.grantedby.present?
+        e.url = le.url if le.url.present?
+        e.category = award_cats[le.category] if le.category.present?
+        e.origin = award_orig[le.origin] if le.origin.present?
+        next if e.save
 
-    b = IndexBox.from_model(mboxes['award'])
-    b.profile = profile
-    b.save
-    cv.awards.order(:ordre).each do |le|
-      lang = le.title_lang? || fallback_lang if detect_lang_with_ai
-      e = profile.awards.new(
-        year: le.year,
-        visibility: AudienceLimitable::VISIBLE
-      )
-      e.send("title_#{lang}=", le.title)
-      e.issuer = le.grantedby if le.grantedby.present?
-      e.url = le.url if le.url.present?
-      e.category = award_cats[le.category] if le.category.present?
-      e.origin = award_orig[le.origin] if le.origin.present?
-      unless e.save
-        errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
-        Rails.logger.debug "Skipping invalid award #{le.id} (sciper: #{profile.sciper}): #{errs}"
+        err_count += 100_000_000
+        JLOG.warn(sciper) do
+          errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+          "Skipping invalid award #{le.id}: #{errs}"
+        end
       end
     end
+
+    JLOG.info(sciper) { "Legacy profile import DONE. Errors: #{err_count}" }
   end
 
   # import the legacy accred preferences (only for still valid accreds)
