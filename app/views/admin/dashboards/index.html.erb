@@ -1,3 +1,18 @@
-<div class="d-flex justify-content-between align-items-start flex-wrap">
+<style>
+#panels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /*grid-template-rows: repeat(4, 1fr);*/
+  column-gap: 20px;
+  row-gap: 20px;
+  .card:has(turbo-frame[aria-busy]) {
+    border-color: #f00;
+  }
+}
+</style>
+<%
+#<div class="d-flex justify-content-between align-items-start flex-wrap">
+%>
+<div id="panels">
   <%= render partial: "panel", collection: @panels %>
 </div>

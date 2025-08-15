@@ -1,3 +1,3 @@
-<%= turbo_frame_tag("#{@panel}_panel") do %>
-  <%= render "admin/dashboards/panel/#{@panel}" %>
+<%= turbo_frame_tag("#{@panel.name}_panel") do %>
+  <%= render "admin/dashboards/panel/#{@panel.name}" %>
 <% end %>
