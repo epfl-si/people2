@@ -1,0 +1,12 @@
+<h3>Background Jobs</h3>
+<table class="table table-hover">
+  <tbody>
+  <% @counts.each do |c| %>
+    <tr>
+      <td><%= c.label %></td>
+      <td class="text-right"><%= c.value %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<p><%= link_to "Details", "/admin/jobs", target: "blank", 'data-turbo': "false" %></p>
