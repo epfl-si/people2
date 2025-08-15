@@ -1,8 +1,8 @@
-<div class="card">
+<div class="card" style="grid-column: <%= panel.gridcol.join(' / span ') %>; grid-row: <%= panel.gridrow.join(' / span ') %>;">
 <div class="card-body">
 <%= turbo_frame_tag(
-  "#{panel}_panel", src: admin_dashboard_panel_path(panel), loading: :lazy,
-  data: {controller: 'autoreload', 'autoreload-interval-value': 60000}
+  "#{panel.name}_panel", src: admin_dashboard_panel_path(panel.name), loading: :lazy,
+  data: {controller: 'autoreload', 'autoreload-interval-value': panel.period * 1000}
 ) do %>
 <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/>
