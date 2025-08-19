@@ -386,6 +386,7 @@ class LegacyProfileImportJob < ApplicationJob
     #   end
     # end
 
+    # Awards
     if cv.awards.count.positive?
       b = IndexBox.from_model(mboxes['award'])
       b.profile = profile
@@ -407,6 +408,34 @@ class LegacyProfileImportJob < ApplicationJob
         JLOG.warn(sciper) do
           errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
           "Skipping invalid award #{le.id}: #{errs}"
+        end
+      end
+    end
+
+    # Research IDs
+    if cv.social_ids.with_content.count.positive?
+      b = IndexBox.from_model(mboxes['social'])
+      b.profile = profile
+      b.save
+      cv.social_ids.with_content.each do |le|
+        unless Social.tag?(le.tag)
+          JLOG.warn(sciper) do
+            "Skipping ResearchId with tag #{le.tag} due to inexistent corresponding Social"
+          end
+          next
+        end
+
+        e = profile.socials.new(
+          tag: le.tag,
+          value: le.content,
+          visibility: le.visible? ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
+        )
+        next if e.save
+
+        err_count += 1_000_000_000
+        JLOG.warn(sciper) do
+          errs = e.errors.map { |err| "#{err.attribute}: #{err.type}" }.join(", ")
+          "Skipping invalid research id #{le.id}/#{le.tag}: #{errs}"
         end
       end
     end

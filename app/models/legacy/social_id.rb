@@ -7,6 +7,8 @@ module Legacy
     self.table_name = 'research_ids'
     belongs_to :cv, class_name: 'Cv', foreign_key: 'sciper', inverse_of: :social_ids
 
+    scope :with_content, -> { where.not("content is NULL or LTRIM(RTRIM(content)) = ''") }
+
     RESEARCH_IDS = {
       # https://orcid.org/0000-0002-1825-0097
       'orcid' => {
@@ -105,6 +107,10 @@ module Legacy
 
     def content_ok?
       re.match?(content)
+    end
+
+    def visible?
+      id_show == '1'
     end
   end
 end
