@@ -28,4 +28,23 @@ namespace :legacy do
     end
     LegacyProfileImportJob.perform_now(SCIPERS)
   end
+
+  desc 'Destroy and reimport the profile for a given sciper: SCIPER=123456 ./bin/rails legacy:reimport'
+  task reimport: :environment do
+    sciper = ENV['SCIPER']
+    unless sciper =~ /^\d{6}$/
+      puts "Invalid sciper #{sciper}"
+      next
+    end
+    Profile.for_sciper(sciper).destroy
+    per = Person.find(sciper)
+    per.profile!
+    if (m = Adoption.where(sciper: sciper)&.first)
+      m.accepted = false
+      m.save
+      # Refresh legacy pache proxy cache
+      m.content('en', force: true)
+      m.content('fr', force: true)
+    end
+  end
 end
