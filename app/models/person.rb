@@ -136,7 +136,7 @@ class Person
   def profile!
     unless defined?(@profile)
       @profile = Profile.for_sciper(sciper)
-      if @profile.nil? && can_have_profile?
+      if @profile.nil? && editable_profile?
         if Rails.configuration.enable_adoption
           LegacyProfileImportJob.perform_now(sciper)
           @profile = Profile.for_sciper(sciper)
@@ -149,14 +149,63 @@ class Person
     @profile
   end
 
-  def can_have_profile?
-    unless defined?(@can_have_profile)
-      @can_have_profile = begin
+  # The right for a person to appear on people and in any other people directory
+  # is determined by the botweb (id=1) property (or, better, policy) for at least one
+  # if his accreditations. The property can be granted to an accreditation
+  #   1. directly (join table accreds_properties),
+  #   2. through its Class but, currently no class provide botweb property
+  #   3. through its Status. Currently statuses with the botweb property are:
+  #       1  P  Personnel
+  #       2  O  Hôte
+  #       3  H  Hors EPFL
+  #       5  S  Etudiant
+  #   4. through its unit. Currently:
+  #       10000 EPFL Ecole polytechnique fédérale de Lausanne
+  #       10582 EHE Entités hôtes de l'EPFL
+  #       13380 DAR Domaine de la recherche
+  #       14435 KUONI Kuoni Business Travel
+  #       3199 ENTREPRISES Entreprises sur site
+  #      unit 10000 is the whole EPFL...
+  #  But we don't see anything of this because we delegate to the central API.
+  def visible_profile?
+    unless defined?(@visible_profile)
+      @visible_profile = begin
         a = Authorisation.property_for_sciper(sciper, "botweb")
         a.any? { |d| d.active? && d.ok? }
       end
     end
-    @can_have_profile
+    @visible_profile
+  end
+
+  # Similarly, for a person's profile to be editable, the person must have an
+  # accreditation with the gestprofil (id=7) property.
+  # The property can be granted to an accreditation
+  #   1. directly (join table accreds_properties),
+  #   2. through its Class. Currently no gestprofile is provided through class
+  #   3. through its Status. Currently statuses with the gestprofil property are:
+  #       1  P  Personnel
+  #       5  S  Etudiant
+  #   4. through its unit. Currently units providing gestprofil property are:
+  #      10000 EPFL Ecole polytechnique fédérale de Lausanne
+  #      14039 F-SPI Fondation SPI
+  #      Again most of the people since unit 10000 is included but not the
+  #      external enterprises for example.
+  # Note that legacy implementation includes two extra hardcoded rights:
+  #   $edit_profile = 1 if $accred->{statusid} =~ /^(1|5)$/;
+  #   $edit_profile = 1 i $accred->{position}->{labelfr} eq 'Professeur honoraire';
+  # The first is now included int the case 3 above;
+  # The second for the moment unevitable because there is nothing like a status,
+  # class, or unit that contains them all. Therefore, for the moment we have
+  # to keep the terrible hardcoded filter.
+  # TODO: check for a better solution to the hardcoded professor_emeritus?
+  def editable_profile?
+    unless defined?(@editable_profile)
+      @editable_profile = begin
+        a = Authorisation.property_for_sciper(sciper, "gestprofil")
+        a.any? { |d| d.active? && d.ok? } || professor_emeritus?
+      end
+    end
+    @editable_profile
   end
 
   def achieving_professor?
@@ -361,6 +410,10 @@ class Person
   # to avoid useless requests to ISA.
   def possibly_teacher?
     accreditations.any?(&:possibly_teacher?)
+  end
+
+  def professor_emeritus?
+    accreditations.any?(&:professor_emeritus?)
   end
 
   # ----------------------------------------------------------------------------

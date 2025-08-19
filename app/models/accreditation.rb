@@ -216,4 +216,8 @@ class Accreditation
   def possibly_teacher?
     unit.id == 16 || position.present? && position.possibly_teacher?
   end
+
+  def professor_emeritus?
+    position.present? && position.professor_emeritus?
+  end
 end
