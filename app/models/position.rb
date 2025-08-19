@@ -52,4 +52,8 @@ class Position
   def enseignant?
     ENS_RE.match(@label_frm)
   end
+
+  def professor_emeritus?
+    @label_frm == "Professeur honoraire"
+  end
 end

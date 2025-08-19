@@ -72,6 +72,10 @@ class PeopleController < ApplicationController
   def set_base_data
     @person = Person.find(params[:sciper_or_name])
     raise ActiveRecord::RecordNotFound if @person.blank?
+    # We could use policy but 404 it is more appropriate than a 401 in this case
+    # because the problem is not the visitor but the profile
+    # authorize! @person, to: :show?
+    raise ActionController::RoutingError, 'Not Found' unless @person.visible_profile?
 
     @sciper = @person&.sciper
     compute_audience(@sciper)

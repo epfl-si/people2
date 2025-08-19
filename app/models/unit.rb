@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Unit
-  attr_reader :id, :parent_id, :hierarchy, :level, :type, :address, :url
+  attr_reader :id, :parent_id, :hierarchy, :label, :level, :name, :type, :address, :url
 
   include Translatable
   translates :name, :label
@@ -23,6 +23,8 @@ class Unit
 
   def initialize(data)
     @id = data['id']
+    @name = data['name']
+    @label = data['labelfr']
     @name_fr = data['name']
     @name_en = data['nameen']
     @name_de = data['namede']

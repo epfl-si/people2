@@ -269,7 +269,7 @@ module API
         end
 
         # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
-        persons.select!(&:can_have_profile?)
+        persons.select!(&:visible_profile?)
         # Fetch accreditations that we will need in any case so that it is cached
         persons.each(&:accreditations)
         persons
