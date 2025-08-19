@@ -166,7 +166,8 @@ class Social < ApplicationRecord
   ].freeze
 
   RESEARCH_IDS = RESEARCH_IDS_LIST.index_by { |v| v[:tag] }.freeze
-  TAG_SELECT_OPTIONS = RESEARCH_IDS_LIST.map { |v| [v[:label], v[:tag]] }
+  TAG_SELECT_OPTIONS = RESEARCH_IDS_LIST.map { |v| [v[:label], v[:tag]] }.freeze
+  TAGS_FOR_AUTO = RESEARCH_IDS_LIST.select { |v| v[:automatic] }.map { |v| v[:tag] }.freeze
 
   SPECS_DELEGATE_METHODS = %w[
     automatic help_on_empty help_url icon img label
