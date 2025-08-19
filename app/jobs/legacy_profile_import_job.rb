@@ -324,6 +324,7 @@ class LegacyProfileImportJob < ApplicationJob
         e = profile.educations.new(
           year_begin: le.year_begin,
           year_end: le.year_end,
+          school: le.univ,
           visibility: AudienceLimitable::VISIBLE
         )
         c = education_cats[le.guess_category] || education_cats["other"]
