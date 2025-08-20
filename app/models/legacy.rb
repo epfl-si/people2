@@ -44,21 +44,20 @@ module Legacy
     "Â–" => "–",
     "â€¢" => "•",
     "â€“" => "&amp;",
+    "Â©" => "&copy;",
   }.freeze
 
   POSSIBLE_ENCODINGS = [Encoding::UTF_8, Encoding::ISO_8859_1, Encoding::ASCII_8BIT, Encoding::Windows_1251].freeze
 
+  # This function is probably just a dumber version of CharlockHolmes => useless
   def self.last_resort_deshit(c)
-    Rails.logger.debug("String with failed CharlockHolmes (undetected of failed): #{c.truncate(120)}")
+    Rails.logger.debug("Last resort deshittification for: #{c.truncate(60)}")
     POSSIBLE_ENCODINGS.each do |enc|
       return c.dup.force_encoding(enc).encode("UTF-8")
     rescue Encoding::UndefinedConversionError, Encoding::InvalidByteSequenceError
+      Rails.logger.debug("failed with encoding #{enc}")
       next
     end
-    # we could probably skip the next line but, since I spent a lot of time
-    # collecting as many shitty chars as possible from the legacy DB...
-    SHITMAP.each_pair { |k, v| c.gsub!(k, v) }
-    c.encode("UTF-8", invalid: :replace, undef: :replace)
   end
 
   def self.deshit(text)
@@ -70,6 +69,17 @@ module Legacy
     # Remove trailing br
     c.gsub!(/<br>\s*$/, "")
     c.gsub!(%r{</?div>}, "")
+
+    # d = CharlockHolmes::EncodingDetector.detect(c)
+    # if d.nil? || d[:confidence] < 95
+    #   Rails.logger.debug("Slow deshittification required for: #{c.truncate(60)}")
+    #   # Slow manual deshittification: replace stupid special chars
+    #   SHITMAP.each_pair { |k, v| c.gsub!(k, v) }
+    #   d = CharlockHolmes::EncodingDetector.detect(c)
+    # end
+    # CharlockHolmes detects UTF-8 even in presence of chars from SHITMAP
+    # Therefore, fuckoff efficiency and let's manually deshittify in any case
+    SHITMAP.each_pair { |k, v| c.gsub!(k, v) }
 
     d = CharlockHolmes::EncodingDetector.detect(c)
     if d.nil?
