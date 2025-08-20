@@ -1,6 +1,7 @@
 ---
 de:
-  action: {}
+  action:
+    preview: ''
   app: {}
   dev:
     action: {}

@@ -10,6 +10,7 @@ it:
       update:
         error: ''
         success: ''
+      success: ''
     adoptions:
       update: {}
     function_changes:

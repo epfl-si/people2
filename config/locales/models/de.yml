@@ -34,7 +34,8 @@ de:
       publication: {}
       rich_text_box:
         title: Titel
-      social: {}
+      social:
+        value: ''
       usual_name_change:
         usual_first: ''
         usual_last: ''
