@@ -78,7 +78,7 @@ fr:
         title: titre
       social:
         tag: Reseau
-        value: Identifiiant
+        value: Identifiant
       usual_name_change:
         usual_first: Prénom à afficher
         usual_last: Nom à afficher
