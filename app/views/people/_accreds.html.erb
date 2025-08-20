@@ -23,8 +23,8 @@
           </p>
         <% end %>
         <% if accred.unit.url.present? %>
-          <p>
-            <span class="sr-only"><%= t "website" %>: </span>
+          <p class="small">
+            <span class="sr-only"><%= t "generic.website" %>: </span>
             <%= link_to accred.unit.url, accred.unit.url %>
           </p>
         <% end %>

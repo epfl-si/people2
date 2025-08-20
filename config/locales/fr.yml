@@ -33,6 +33,7 @@ fr:
       adopt: Mettre cette version en ligne
       revert: Annuler
   generic:
+    website: Site web
     form:
       cancel: Annuler
       create: Enregistrer
