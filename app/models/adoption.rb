@@ -66,7 +66,7 @@ class Adoption < ApplicationRecord
 
   def fetch_legacy_content(locale)
     headers = { Host: 'people.epfl.ch' }
-    uri = URI.join(Rails.configuration.legacy_base_url, path)
+    uri = URI.join(Rails.configuration.legacy_proxy_url, path)
     uri.query = "lang=#{locale}"
     body = Net::HTTP.get(uri, headers)
     body.gsub(

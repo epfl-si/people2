@@ -89,6 +89,20 @@ services:
     networks:
       - default
 
+  legacy:
+    build: legacy
+    # It's actually more convenient to have a non-persistent cache.
+    # volumes:
+    #   - nginxcache:/tmp/cache
+    labels:
+      - traefik.docker.network=traefik
+      - traefik.http.services.legacy.loadbalancer.server.port=8181
+      - traefik.http.routers.legacy.rule=Host(`legacy.${DOMAIN:-dev.jkldsa.com}`)
+      - traefik.http.routers.legacy.tls=true
+    networks:
+      - traefik
+      - default
+
   webapp:
     build:
       context: .
@@ -130,7 +144,8 @@ services:
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
-      LEGACY_RO_URL: ${LEGACY_RO_URL:-https://personnes.epfl.ch}
+      LEGACY_PROXY: ${LEGACY_PROXY:-http://legacy:8181}
+      LEGACY_RO_URL: ${LEGACY_RO_URL:-https://legacy.${DOMAIN:-dev.jkldsa.com}}
       LEGACY_RW_URL: ${LEGACY_RW_URL:-https://test-people.epfl.ch}
       # LEGACY_PAGES_CACHE: 2days
 
@@ -184,6 +199,7 @@ services:
 
       - traefik.http.services.people2.loadbalancer.server.port=${PORT:-3000}
       - traefik.http.routers.people2.rule=Host("people.${DOMAIN:-dev.jkldsa.com}")
+
       - traefik.http.routers.people2.tls=true
       - traefik.http.routers.people2.middlewares=cgibin
 
@@ -338,6 +354,7 @@ services:
 volumes:
   mariadb: {}
   filecache: {}
+  nginxcache: {}
   storage: {}
   prometheus: {}
   grafana: {}

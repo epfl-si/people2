@@ -1,3 +1,51 @@
+# This is a CRD that will create the pods, services etc.
+- name: "Internal database server for non essential data"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: MariaDB
+      metadata:
+        name: "{{ kid.db }}"
+        namespace: "{{ namespace }}"
+      spec:
+        resources: "{{ helpers.resources }}"
+        storage:
+          size: "{{ mariadb.disk }}Gi"
+          storageClassName: ocs-storagecluster-cephfs
+          volumeClaimTemplate:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: "{{ mariadb.disk }}Gi"
+            storageClassName: ocs-storagecluster-cephfs
+        rootPasswordSecretKeyRef:
+          name: "{{ kid.db_secrets }}"
+          key: ROOT_PASSWORD
+          generate: false
+        metrics:
+          enabled: false
+          exporter:
+            # TODO: configure with vars
+            image: quay-its.epfl.ch/svc0041/mysqld-exporter:v0.15.1
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+
+
+
+
+
+
+
+
+
+
+
+
+
 - name: "MariaDB for work database"
   kubernetes.core.k8s:
     state: present
@@ -18,13 +66,7 @@
               requests:
                 storage: "{{ mariadb.disk }}Gi"
             storageClassName: ocs-storagecluster-cephfs
-        resources:
-          limits:
-            cpu: "{{ limits.cpu.max }}"
-            memory: "{{ limits.memory.max }}"
-          requests:
-            cpu: "{{ limits.cpu.min }}"
-            memory: "{{ limits.memory.min }}"
+        resources: "{{ helpers.resources }}"
         rootPasswordSecretKeyRef:
           name: mariadb-secrets
           key: ROOT_PASSWORD

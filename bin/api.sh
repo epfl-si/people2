@@ -4,7 +4,7 @@
 # ./bin/api.sh -r ".firstname" persons/121769
 
 . ./.env
-. ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
+. ${SECFILE}
 BASE=${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
 
 # ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)

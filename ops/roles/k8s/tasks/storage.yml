@@ -6,14 +6,51 @@
     definition:
       apiVersion: v1
       kind: PersistentVolumeClaim
+      # TODO: reclaim policy !!!
       metadata:
-        name: people-redis
+        name: "{{ kid.redis }}"
         namespace: "{{ namespace }}"
       spec:
         accessModes: [ReadWriteMany]
         resources:
           requests:
             storage: "{{ redis.disk }}Gi"
+        storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
+- name: Ensure PVC for legacy cache
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      # TODO: reclaim policy !!!
+      metadata:
+        name: "{{ kid.legacy_cache }}"
+        namespace: "{{ namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: "{{ legacy.cache_size }}"
+        storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
+- name: Ensure PVC for legacy data (legacy pages scrapped in advance)
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      # TODO: reclaim policy !!!
+      metadata:
+        name: "{{ kid.legacy_data }}"
+        namespace: "{{ namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        resources:
+          requests:
+            storage: "{{ legacy.data_size }}"
         storageClassName: ocs-storagecluster-cephfs
         volumeMode: Filesystem
 
@@ -44,7 +81,7 @@
       apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: people-storage
+        name: "{{ kid.uploads }}"
         namespace: "{{ namespace }}"
       spec:
         accessModes: [ReadWriteMany]

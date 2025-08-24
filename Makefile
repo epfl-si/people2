@@ -4,9 +4,9 @@ SHELL=/bin/bash
 -include .env
 KEYBASE ?= /keybase
 KBPATH ?= $(KEYBASE)/team/epfl_people.prod
-SECRETS ?= secrets_prod.sh
+SECFILE ?= $(KBPATH)/secrets.sh
 
--include $(KBPATH)/$(SECRETS)
+-include $(SECFILE)
 
 COMPOSE_FILE ?= docker-compose.yml
 SSH_AUTH_SOCK_FILE ?= $(SSH_AUTH_SOCK)
@@ -58,6 +58,10 @@ reload: envcheck
 ## restart puma withoud taking down the running container (in case of changes in gem's code within the container)
 pumareload:
 	docker compose exec webapp kill -SIGUSR2 1
+
+## reload nginx configuration of the legacy server proxy
+legacyreload:
+	docker compose exec legacy nginx -s reload
 
 ## stop the basic servers (all except test)
 down: tunnel_down
@@ -484,20 +488,33 @@ nata_trans:
 
 ## ---------------------------------------------------- Prod openshit deployment
 APP_NAME ?= people
-QUAY_REPO=quay-its.epfl.ch/svc0033/$(APP_NAME)
+QUAY_REPO=quay-its.epfl.ch/svc0033
 
 # Chemin vers le Dockerfile
 DOCKERFILE=../../../Dockerfile
 
-TAG=$(QUAY_REPO):$(shell cat VERSION)-prod
+TAG=$(QUAY_REPO)/$(APP_NAME):$(shell cat VERSION)-prod
+LPTAG=$(QUAY_REPO)/peolegacy:$(shell cat legacy/VERSION)
+
+ciccio:
+	echo lptag = $(AAA)
+
+## Build docker image for the legacy proxy
+lega_build: legacy/VERSION
+	docker compose build --no-cache legacy
+	docker build -t $(LPTAG) -f legacy/Dockerfile legacy
+
+legacy/VERSION: legacy/nginx.conf
+	awk '/^# VERSION/{print $$3};' $< > $@
 
 ## Build docker image for production
 prod_build: envcheck $(ELE_FILES) VERSION gems
 	docker build -t $(TAG) -f Dockerfile.prod .
 
 ## Push production docker image to internal quay registry
-prod_push: prod_build
+prod_push: prod_build lega_build
 	docker push $(TAG)
+	docker push $(LPTAG)
 
 ## Redeploy app to prod cluter
 prod_deploy:
@@ -513,17 +530,29 @@ prod: prod_push prod_deploy
 ## Build, tag and deploy app to production with next config (names changed in test)
 next: prod_push next_deploy
 
-## Open a shell on running application pod
+## Open a shell on running production application pod
 prod_shell:
 	./bin/oc.sh --prod shell
 
-## Open a rails console on running application pod
+## Open a rails console on running production application pod
 prod_console:
 	./bin/oc.sh --prod console
 
 ## Print logs from production application containers
 prod_logs:
 	./bin/oc.sh --prod logs
+
+## Open a shell on running staging application pod
+next_shell:
+	./bin/oc.sh --prod --next shell
+
+## Open a rails console on running staging application pod
+next_console:
+	./bin/oc.sh --prod --next console
+
+## Print logs from staging application containers
+next_logs:
+	./bin/oc.sh --prod --next logs
 
 
 OCMAINDBNAME=$(shell cat $(KBPATH)/ops/secrets.yml | ./bin/yq -r '.production.db.main_adm.dbname')

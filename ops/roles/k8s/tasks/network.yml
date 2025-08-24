@@ -1,0 +1,80 @@
+---
+
+- name: OpenShift Ingress for people RoR webapp
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: "{{ kid.app }}"
+        namespace: "{{ namespace }}"
+        labels:
+          # this label MUST NOT be removed although it is a label on a static resource
+          route: "{{ people.visibility }}"
+      spec:
+        host: "{{ hosts.people }}"
+        to:
+          kind: Service
+          name: "{{ kid.app }}"
+        port:
+          targetPort: 8080
+        tls:
+          termination: edge
+
+- name: OpenShift Ingress for legacy app proxy
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: "{{ kid.legacy }}"
+        namespace: "{{ namespace }}"
+        labels:
+          # this label MUST NOT be removed although it is a label on a static resource
+          route: "{{ people.visibility }}"
+      spec:
+        host: "{{ hosts.people }}"
+        path: "/legacy"
+        to:
+          kind: Service
+          name: "{{ kid.legacy }}"
+        port:
+          targetPort: 8181
+        tls:
+          termination: edge
+
+- name: Ensure people-webapp service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ kid.app }}"
+        namespace: "{{ namespace }}"
+      spec:
+        selector:
+          kid: "{{ kid.app }}"
+        ports:
+          - protocol: TCP
+            port: 8080
+            targetPort: 8080
+
+- name: Ensure legacy app proxy service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: "{{ kid.legacy }}"
+        namespace: "{{ namespace }}"
+      spec:
+        selector:
+          kid: "{{ kid.legacy }}"
+        ports:
+          - protocol: TCP
+            port: 8181
+            targetPort: 8181

@@ -5,6 +5,7 @@
 # include => the tasls frp, tje included are executed as an independent file => tags need to be
 
 
+
 - include_vars: main.yml
   tags: always
 
@@ -14,10 +15,19 @@
 # - include_vars: release.yml
 #   tags: always
 
-- name: Debug release
+- name: Debug configuration version
   ansible.builtin.debug:
     var: people_config_signature
   tags: debug
+
+- name: Debug people version
+  ansible.builtin.debug:
+    var: people_version
+
+- name: Debug people version
+  ansible.builtin.debug:
+    var: legacy_version
+
 
 - name: Debug secrets
   ansible.builtin.debug:
@@ -93,6 +103,8 @@
 #     - config
 #     - config.monitoring
 
-- import_tasks: route.yml
+- import_tasks: network.yml
   tags:
     - route
+    - service
+    - network

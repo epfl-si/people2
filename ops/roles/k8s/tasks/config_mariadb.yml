@@ -1,25 +1,25 @@
 ---
 
-- name: "Work database user"
+- name: "Internal database user"
   kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: User
       metadata:
-        name: "{{ _secrets.db.work.username }}"
+        name: "{{ kid.db_user }}"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
         name: "{{ _secrets.db.work.username }}"
         mariaDbRef:
-          name: mariadb
+          name: "{{ kid.db }}"
         rootPasswordSecretKeyRef:
-          name: mariadb-secrets
+          name: "{{ kid.db_secrets }}"
           key: ROOT_PASSWORD
           generate: false
         passwordSecretKeyRef:
-          name: mariadb-secrets
+          name: "{{ kid.db_secrets }}"
           key: work_password
         # This field defaults to 10
         maxUserConnections: 20
@@ -38,7 +38,7 @@
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: Database
       metadata:
-        name: "queue"
+        name: "{{ kid.db_queue }}"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
@@ -46,9 +46,9 @@
         characterSet: utf8mb4
         collate: utf8mb4_unicode_ci
         mariaDbRef:
-          name: mariadb
+          name: "{{ kid.db }}"
         rootPasswordSecretKeyRef:
-          name: mariadb-secrets
+          name: "{{ kid.db_secrets }}"
           key: ROOT_PASSWORD
           generate: false
         cleanupPolicy: Skip
@@ -62,7 +62,7 @@
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: Database
       metadata:
-        name: "work"
+        name: "{{ kid.db_work }}"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
@@ -70,9 +70,9 @@
         characterSet: utf8mb4
         collate: utf8mb4_unicode_ci
         mariaDbRef:
-          name: mariadb
+          name: "{{ kid.db }}"
         rootPasswordSecretKeyRef:
-          name: mariadb-secrets
+          name: "{{ kid.db_secrets }}"
           key: ROOT_PASSWORD
           generate: false
         cleanupPolicy: Skip
@@ -86,7 +86,7 @@
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: Grant
       metadata:
-        name: "{{ _secrets.db.queue.username }}-on-queue"
+        name: "{{ kid.db_queue }}"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
@@ -100,9 +100,9 @@
            # - "INSERT"
            # - "UPDATE"
         mariaDbRef:
-          name: mariadb
+          name: "{{ kid.db }}"
         rootPasswordSecretKeyRef:
-          name: mariadb-secrets
+          name: "{{ kid.db_secrets }}"
           key: ROOT_PASSWORD
           generate: false
         cleanupPolicy: Skip
@@ -116,7 +116,7 @@
       apiVersion: k8s.mariadb.com/v1alpha1
       kind: Grant
       metadata:
-        name: "{{ _secrets.db.work.username }}-on-work"
+        name: "{{ kid.db_work }}"
         namespace: "{{ namespace }}"
       spec:
         # If you want the user to be created with a different name than the resource name
@@ -130,9 +130,9 @@
            # - "INSERT"
            # - "UPDATE"
         mariaDbRef:
-          name: mariadb
+          name: "{{ kid.db }}"
         rootPasswordSecretKeyRef:
-          name: mariadb-secrets
+          name: "{{ kid.db_secrets }}"
           key: ROOT_PASSWORD
           generate: false
         cleanupPolicy: Skip
