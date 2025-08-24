@@ -4,7 +4,7 @@
 # that is going to replace ISA
 
 . ./.env
-. ${KBPATH:-/keybase/team/epfl_people.prod}/${SECRETS:-secrets_prod.sh}
+. ${SECFILE}
 BASE=${OASIS_BASEURL:-https://oasis-t.epfl.ch:8484}
 
 apiget() {

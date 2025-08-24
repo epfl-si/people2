@@ -23,7 +23,7 @@ You need the following installed on your system to run this application in devel
 ## Configuration and Secrets
 
 The application secrets are supposed to be accessible as env. variables set by
-`$KBPATH/$SECRETS`, a bash script that is normally located in the project's
+`$SECFILE`, a bash script that is normally located in the project's
 keybase directory `$KBPATH=/keybase/team/epfl_people.prod`. Off-course this is
 just a path and could be anything else.
 
@@ -33,10 +33,11 @@ Most of the default values should be ok. Therefore, there should be not much do
 modify.
 
 In order to run `./bin/rails` commands directly from the console instead of docker,
-secrets must be loaded into env variables with, _e.g., the following command:
+secrets must be loaded into env variables. I suggest to add the following to
+your rc file and then execute `devenv` within the project folder.
 
 ```bash
-. ./.env ; cat .env $KBPATH/$SECRETS | awk '/^[A-Z]/{print "export ", $0;}' | source /dev/stdin
+alias devenv='set -a ; . ./.env; if [ -n "$SECFILE" ] ; then . $SECFILE ; fi ; set +a'
 ```
 
 The mostly used commands are wrapped as rules in the makefile which instanciates
@@ -182,6 +183,7 @@ gem install ruby-oci8
 
 
 ### Relevant ENV variables for configuration
+TODO: This part is very updated.
 
 Common variables:
  - `RAILS_ENV`: standard
@@ -197,6 +199,20 @@ Common secrets:
 
 Development only variables:
  - `RAILS_DEVELOPMENT_HOSTS`: normally only localhost is considered a dev host. Using traefik we need to add the hosts that are actually used for Rails not to complain about security.
+
+#### Getting rid of docker compose whining noise about unset variables
+The `docker-compose.yml` file includes several environment variables without
+default value. This triggers a series of warning messages like the following
+every time you run `docker compose` on the command line and not through `make`
+
+```
+WARN[0000] The "EPFLAPI_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] The "DEV_ENTRA_TENANT_ID" variable is not set. Defaulting to a blank string.
+WARN[0000] The "DEV_ENTRA_CLIENT_ID" variable is not set. Defaulting to a blank string.
+... etc
+```
+
+To get rid of them, just source the `.env` and secrets file (see the alias above).
 
 ## Troubleshooting
 ##### Authentication fails in dev

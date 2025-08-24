@@ -7,12 +7,14 @@ all:
     inventory_environment: "prod"
 
     APP_HOSTNAME: "people.epfl.ch"
+    APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
     OC_CLUSTER: "https://api.ocpitsp0001.xaas.epfl.ch:6443"
     OC_NAMESPACE: svc0033p-people
-    RUNENV: production
+    RUNENV: prod
     RAILS_ENV: production
+    RELEASE: prod
     USE_LOCAL_ELEMENTS: "yes"
     LEGACY_RO_URL: "https://personnes.epfl.ch"
     LEGACY_RW_URL: "https://people.epfl.ch"

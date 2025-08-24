@@ -22,7 +22,8 @@ people_config:
 
   # ---------------------------------------------------- transition specific
   ENABLE_ADOPTION: "{{ people.enable_adoption }}"
-  LEGACY_RO_URL: "{{ people.legacy_ro_url }}"
+  LEGACY_PROXY: http://{{ kid.legacy }}:8181/
+  LEGACY_RO_URL: "/legacy/"
   LEGACY_RW_URL: "{{ people.legacy_rw_url }}"
 
   # LEGACY_PAGES_CACHE: 2days

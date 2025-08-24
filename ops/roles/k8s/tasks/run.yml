@@ -1,75 +1,43 @@
 ---
 
-- name: Debug people version
-  ansible.builtin.debug:
-    var: people_version
-
-- name: Ensure people-webapp service
-  kubernetes.core.k8s:
-    state: present
-    definition:
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: people
-        namespace: "{{ namespace }}"
-        labels:
-          app: people
-      spec:
-        selector:
-          app: people
-        ports:
-          - protocol: TCP
-            port: 8080
-            targetPort: 8080
-
-- name: Deploy the people_webapp
+- name: Deploy the main people webapp
   kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: people-webapp
+        name: "{{ kid.app }}"
         namespace: "{{ namespace }}"
-        labels:
-          app: people
       spec:
         replicas: 1
         selector:
           matchLabels:
-            app: people
+            kid: "{{ kid.app }}"
         template:
           metadata:
             annotations:
               config_signature: "{{ people_config_signature }} {{ people_secrets_signature }}"
             labels:
-              app: people
-              role: app
+              kid: "{{ kid.app }}"
               version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
             containers:
               - name: people
-                command: ["./bin/thrust", "./bin/rails", "server"]
                 image: "{{ people.image }}"
+                command: ["./bin/thrust", "./bin/rails", "server"]
                 imagePullPolicy: Always
+                resources: "{{ helpers.resources }}"
                 ports:
                   - containerPort: 8080
                   - containerPort: 9394
                     name: metrics
-                resources:
-                  limits:
-                    # cpu: "{{ limits.cpu.max }}"
-                    memory: "{{ limits.memory.max }}"
-                  requests:
-                    cpu: "{{ limits.cpu.min }}"
-                    memory: "{{ limits.memory.min }}"
                 envFrom:
                   - configMapRef:
-                      name: people-app-config
+                      name: "{{ kid.app_config }}"
                   - secretRef:
-                      name: people-app-secrets
+                      name: "{{ kid.app_secrets }}"
                 env:
                   - name: ENABLE_METRICS
                     value: "true"
@@ -81,22 +49,25 @@
                   # - name: THRUST_DEBUG
                   #   value: "1"
                 volumeMounts:
-                  - name: storage-volume
+                  - name: "{{ kid.app }}-nfs"
                     mountPath: /rails/storage
-                    subPath: prod_storage
-                  - name: storage-volume
+                    subPath: "{{ RUNENV }}_storage"
+                  - name: "{{ kid.app }}-nfs"
                     mountPath: /trash
-                    subPath: prod_trash
-                  - name: tmp-webapp
+                    subPath: "{{ RUNENV }}_trash"
+                  - name: "{{ kid.app }}-tmp"
                     mountPath: /rails/tmp
             volumes:
-              - name: tmp-webapp
+              - name: "{{ kid.app }}-tmp"
                 emptyDir:
                   sizeLimit: 100Mi
-              - name: storage-volume
+              - name: "{{ kid.app }}-nfs"
                 persistentVolumeClaim:
+                  # claim name MUST NOT be changed (see storage.yml for details)
                   claimName: people-storage
 
+# Job supervisor could be a container in the app pod.
+# I keep it separate because we may need fewer replicas.
 - name: Deploy the job supervisor
   kubernetes.core.k8s:
     state: present
@@ -104,22 +75,19 @@
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: people-jobs
+        name: "{{ kid.jobs }}"
         namespace: "{{ namespace }}"
-        labels:
-          app: people
       spec:
         replicas: 1
         selector:
           matchLabels:
-            app: people
+            kid: "{{ kid.jobs }}"
         template:
           metadata:
             annotations:
               config_signature: "{{ people_config_signature }} {{ people_secrets_signature }}"
             labels:
-              app: people
-              role: jobs
+              kid: "{{ kid.jobs }}"
               version: "{{ people_version }}"
           spec:
             serviceAccountName: puller
@@ -128,28 +96,61 @@
                 image: "{{ people.image }}"
                 command: ["./bin/jobs"]
                 imagePullPolicy: Always
-                resources:
-                  limits:
-                    # cpu: "{{ limits.cpu.max }}"
-                    memory: "{{ limits.memory.max }}"
-                  requests:
-                    cpu: "{{ limits.cpu.min }}"
-                    memory: "{{ limits.memory.min }}"
+                resources: "{{ helpers.resources }}"
                 envFrom:
                   - configMapRef:
-                      name: people-app-config
+                      name: "{{ kid.app_config }}"
                   - secretRef:
-                      name: people-app-secrets
+                      name: "{{ kid.app_secrets }}"
                 volumeMounts:
-                  - name: storage-volume
+                  - name: "{{ kid.jobs }}-nfs"
                     mountPath: /rails/storage
-                    subPath: prod_storage
-                  - name: tmp-jobs
+                    subPath: "{{ RUNENV }}_storage"
+                  - name: "{{ kid.jobs }}-tmp"
                     mountPath: /rails/tmp
             volumes:
-              - name: tmp-jobs
+              - name: "{{ kid.jobs }}-tmp"
                 emptyDir:
                   sizeLimit: 100Mi
-              - name: storage-volume
+              - name: "{{ kid.jobs }}-nfs"
                 persistentVolumeClaim:
+                  # claim name MUST NOT be changed (see storage.yml for details)
                   claimName: people-storage
+
+- name: Deploy the legacy app proxy (or static scrapped version)
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: "{{ kid.legacy }}"
+        namespace: "{{ namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            kid: "{{ kid.legacy }}"
+        template:
+          metadata:
+            annotations:
+              config_signature: "{{ people_config_signature }} {{ people_secrets_signature }}"
+            labels:
+              kid: "{{ kid.legacy }}"
+          spec:
+            serviceAccountName: puller
+            containers:
+              - name: legacy
+                image: "{{ legacy.image }}"
+                imagePullPolicy: Always
+                resources: "{{ helpers.resources }}"
+                ports:
+                  - containerPort: 8181
+                volumeMounts:
+                  - name: "{{ kid.legacy }}-cache"
+                    mountPath: /tmp/cache
+            volumes:
+              # TODO: we'll have to provide a persistent storage if we decide to serve static scrapped versions
+              - name: "{{ kid.legacy }}-cache"
+                emptyDir:
+                  sizeLimit: 5Gi
