@@ -9,7 +9,7 @@ module Admin
     private
 
     def admin_only!
-      authorize! :admin, to: :manage?
+      authorize! Admin, to: :manage?
     end
   end
 end
