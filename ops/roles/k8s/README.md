@@ -41,17 +41,20 @@ between objects (`[route] -> service -> [deployment] -> pod). K8s is like
 AWS: millions of options when you just need a few.
 
 ## Limits (a.k.a. the NO LIMITS MANIFESTO)
-Openshit is not able to migrate pods while they are running which would be THE
-only motivation for chosing to use such an over-complicated infrastructure.
-The scheduler is just a basic tetris of uncompressable resources that need to
-fit in a given available space. For it to work, it needs to know in advance
-the exact shape of each piece. Therefore, users are required to decide in
-advance how many resources (memory/cpu) their pods will ever be using.
-In order to avoid having your pods killed for overconsumpion, you are forced
-to overestimate their needs leaving not only most of the computing resource
-idle most of the time. Not only, since Openshit licenses are per compute unit,
-this leads to a largely suboptimal usage of the licenses. Which, in turn,
-explains why the scheduler is so dumb.
+OpenShift doesn’t support live pod migration — ironically, the one feature that
+might actually justify its over-engineered complexity. Instead, the scheduler is
+little more than a glorified game of Tetris, where rigid, indivisible blocks
+(resources, memory/cpu) have to be crammed into whatever space is left. Of
+course, to make this work, it demands that users magically predict in advance
+the exact CPU and memory their pods will ever require.
+
+To avoid unexpected termination due to resource overconsumption, users naturally
+tend to overestimate requirements, leaving much of the computing capacity sit
+idle most of the time.
+
+Since OpenShit licenses are billed per compute unit, you don’t just waste
+capacity — you waste money too. Which makes you wonder: maybe the scheduler
+isn’t _dumb_ at all. Maybe it’s just perfectly designed for license sales.
 
 Therefore, as a way to protest, I have decided to setup my resource limits
 for all pods as follows:
@@ -65,17 +68,18 @@ resources:
     memory: MINIMUM_ALLOWED_LIMIT
 ```
 
-where `limits` refer to the threshold above which the pod to be killed, and
-`request` is the minimum is the size of the tetris block. So that the above
-parameters, delegate as much as possible the process scheduling to a capable
-scheduler like the linux kernel, and minimize the risk for the pods of being
-killed.
+where `limits` define the threshold beyond which a pod gets unceremoniously
+killed, while `requests` represent the minimum size of the Tetris block.
+The idea, of course, is to offload as much scheduling as possible to something
+that actually knows what it’s doing — namely, the Linux kernel — while
+reducing the odds of pods being randomly terminated.
 
-A risk exist that the scheduler is not only dumb, but also criminal and
-instead of filling the nodes in a round-robin way, it waits for one node to
-be filled by nominal requests before moving to the next one. In this case
-my configuration would be very bad. I hope it is not the case because if it
-were we should really stop paying for licenses and sue RH.
+This still needs to be tested, because the scheduler might not just be _dumb_
+but downright criminal and, instead of distributing workloads evenly among the
+nodes, it could very well decide to _trust_ the declared _requests_ values and
+cram as much as possible into the first node before moving on to the next.
+If that’s the case, my configuration would be a complete disaster. And honestly,
+if it turns out to work that way, we should just stop paying for licenses
 
 ## Resource types
 Two types of resources:

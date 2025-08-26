@@ -31,7 +31,7 @@
       apiVersion: route.openshift.io/v1
       kind: Route
       metadata:
-        name: "{{ kid.app }}"
+        name: "{{ kid.app }}-personnes"
         namespace: "{{ namespace }}"
         labels:
           # this label MUST NOT be removed although it is a label on a static resource
