@@ -54,6 +54,7 @@ en:
         official_name: Official Name
         personal_web_url: Personal website url
         personal_phone: Personal phone number
+        photo: picture
         usual_name: Displayed and usual Name and Surname
         expertise_en: Expertise (keywords only)
         expertise_fr: Expertise (keywords only)
@@ -94,6 +95,7 @@ en:
       education: Education
       experience: Work experiences
       function_change: Position change request (accred)
+      index_box: Index Box
       infoscience: Infoscience publications link
       picture: Your picture
       profile: Profile
