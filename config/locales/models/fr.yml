@@ -54,6 +54,7 @@ fr:
         official_name: Nom officiel
         personal_web_url: Adresse du site web personnel
         personal_phone: Numéro de téléphone personnel
+        photo: photo
         usual_name: Nom et prénom affichés et d'usage
         expertise_en: Expertise (mots-clefs uniquement)
         expertise_fr: Expertise (mots-clefs uniquement)
@@ -94,9 +95,10 @@ fr:
       education: Formation
       experience: Expériences professionnelles
       function_change: Demande de changement de fonction (accred)
+      index_box: Bloc
       infoscience: Lien vers les publications Infoscience
       picture: Votre photo
-      profile: Profil
+      profile: votre profil
       publication: Publications
       rich_text_box: Bloc de texte
       social: Profils de réseau social &  identifiants de recherche
