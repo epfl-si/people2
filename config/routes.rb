@@ -76,6 +76,9 @@ Rails.application.routes.draw do
       get '/prof_awards', to: 'legacy_webservices#awards'
     end
   end
+  get '/cgi-bin/wsgetPhoto', to: 'api/v0/legacy_webservices#photo'
+  get '/cgi-bin/wsgetpeople', to: 'api/v0/legacy_webservices#people'
+  get '/cgi-bin/prof_awards', to: 'api/v0/legacy_webservices#awards'
 
   get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/i }

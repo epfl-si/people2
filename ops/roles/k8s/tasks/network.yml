@@ -22,6 +22,30 @@
         tls:
           termination: edge
 
+
+- name: OpenShift Ingress for people RoR webapp
+  when: hosts.personnes is defined
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: "{{ kid.app }}"
+        namespace: "{{ namespace }}"
+        labels:
+          # this label MUST NOT be removed although it is a label on a static resource
+          route: "{{ people.visibility }}"
+      spec:
+        host: "{{ hosts.personnes }}"
+        to:
+          kind: Service
+          name: "{{ kid.app }}"
+        port:
+          targetPort: 8080
+        tls:
+          termination: edge
+
 - name: OpenShift Ingress for legacy app proxy
   kubernetes.core.k8s:
     state: present
@@ -44,6 +68,55 @@
           targetPort: 8181
         tls:
           termination: edge
+
+- name: OpenShift Ingress for photos taken directly from the legacy app
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: "{{ kid.legacy_photo }}"
+        namespace: "{{ namespace }}"
+        labels:
+          # this label MUST NOT be removed although it is a label on a static resource
+          route: "{{ people.visibility }}"
+      spec:
+        host: "{{ hosts.people }}"
+        path: "/private"
+        to:
+          kind: Service
+          name: "{{ kid.legacy }}"
+        port:
+          targetPort: 8181
+        tls:
+          termination: edge
+
+
+# - name: OpenShift Ingress for photos taken directly from the legacy app
+#   kubernetes.core.k8s:
+#     state: present
+#     definition:
+#       apiVersion: route.openshift.io/v1
+#       kind: Route
+#       metadata:
+#         name: "{{ kid.legacy_cgibin }}"
+#         namespace: "{{ namespace }}"
+#         labels:
+#           # this label MUST NOT be removed although it is a label on a static resource
+#           route: "{{ people.visibility }}"
+#       spec:
+#         host: "{{ hosts.people }}"
+#         path: "/cgi-bin"
+#         to:
+#           kind: Service
+#           name: "{{ kid.legacy }}"
+#         port:
+#           targetPort: 8181
+#         tls:
+#           termination: edge
+
+
 
 - name: Ensure people-webapp service
   kubernetes.core.k8s:

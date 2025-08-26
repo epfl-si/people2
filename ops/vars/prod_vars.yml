@@ -6,6 +6,7 @@ ports:
 
 hosts:
   people: "{{ PEOPLE_HOSTNAME | default('people.epfl.ch') }}"
+  personnes: personnes.epfl.ch
   # docker: "{{ DOCKER_IP | default('127.0.0.1') }}"
   # traefik_console: "{{ TRAEFIK_CONSOLE_HOSTNAME | default(ansible_host) }}"
   # whoami: "{{ WHOAMI_HOSTNAME | default('peoami.fsd.team') }}"

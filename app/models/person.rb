@@ -34,6 +34,8 @@ class Person
   def self.find_by_sciper(sciper, force: false)
     data = APIPersonGetter.call!(persid: sciper, single: true, force: force)
 
+    # TODO: also find_by_sciper should update Work::Sciper
+
     # TODO: does this make sense ? The idea is that sometime the cache is invalid (nil)
     # Therefore, we might be trying to build the object from invalid data.
     # Why not trying to refresh the cache once and try again ?
@@ -89,7 +91,7 @@ class Person
     if us.count > 1
       APIPersonGetter.call!(persid: us).map { |p| new(p) }
     else
-      [new(APIPersonGetter.call!(persid: us))]
+      [new(APIPersonGetter.call!(persid: us.first))]
     end
   end
 

@@ -126,7 +126,7 @@ class Accreditation
     # TODO: remove me after final import for production
     # During development we do not want to import everything upfront.
     # Therefore, we import on request when needed.
-    if Rails.env.development? && accreds.any?(&:botweb?) # && accreds.count > 1
+    if Rails.env.development? && accreds.any?(&:botweb?) && Profile.for_sciper(sciper).blank? # && accreds.count > 1
       LegacyProfileImportJob.perform_later(sciper)
     end
     accreds

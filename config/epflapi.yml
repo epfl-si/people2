@@ -12,27 +12,27 @@ epflapi_config: &epflapi_config
 
   # ATELA (will be replaced by api)
   prefer_atela: <%= ENV.fetch("PREFER_ATELA", false) %>
-  atela_backend_url: <%= ENV.fetch("ATELA_BACKEND_URL", 'https://atela.epfl.ch/cgi-bin/atela-backend') %>
+  atela_backend_url: <%= ENV.fetch("ATELA_BACKEND_URL", 'https://atela.epfl.ch/cgi-bin/atela-backend/').gsub(/\/?$/, '/') %>
   atela_key: <%= ENV.fetch("ATELA_KEY", nil) %>
 
   # API
-  backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/') %>
+  backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/').gsub(/\/?$/, '/') %>
   username: <%= ENV.fetch("EPFLAPI_USERNAME", 'people') %>
   password: <%= ENV.fetch("EPFLAPI_PASSWORD", nil) %>
 
   max_scipers_per_request: <%= ENV.fetch("EPFLAPI_MAX_SCIPER_PER_REQUEST", 100) %>
 
   # Legacy cgi-bin
-  legacy_person_update_url: <%= ENV.fetch("LEGACY_RW_URL", "https://test-people.epfl.ch") %>/cgi-bin/updateCagaio
-  legacy_photo_url: <%= ENV.fetch("LEGACY_RO_URL", "https://personnes.epfl.ch") %>/cgi-bin/wsgetPhoto
-  legacy_course_url: <%= ENV.fetch("LEGACY_RO_URL", "https://personnes.epfl.ch") %>/cgi-bin/getCoursData
+  legacy_person_update_url: <%= ENV.fetch("LEGACY_RW_URL", "https://test-people.epfl.ch") %>/cgi-bin/updateCagaio/
+  legacy_photo_url: <%= Rails.configuration.legacy_base_url %>/cgi-bin/wsgetPhoto
+  legacy_course_url:  <%= Rails.configuration.legacy_base_url %>/cgi-bin/getCoursData
 
   # CAMIPRO
   camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY", nil) %>
   camipro_host: <%= ENV.fetch("CAMIPRO_PHOTO_HOST", "camipro-photos.epfl.ch") %>
 
   # ISA
-  isa_url: <%= ENV.fetch("ISA_URL", 'https://isa.epfl.ch/') %>
+  isa_url: <%= ENV.fetch("ISA_URL", 'https://isa.epfl.ch/').gsub(/\/?$/, '/') %>
   isa_no_check_ssl: <%= ENV.fetch("ISA_NO_CHECK_SSL", false) %>
 
 # 12-factor trumps Rails dogma, see
