@@ -71,14 +71,15 @@ Rails.application.routes.draw do
   namespace :api do
     # namespace /api/v0 is actually /cgi-bin via traefik rewrite
     namespace :v0 do
-      get '/wsgetPhoto', to: 'legacy_webservices#photo'
-      get '/wsgetpeople', to: 'legacy_webservices#people'
-      get '/prof_awards', to: 'legacy_webservices#awards'
+      get '/wsgetPhoto', to: 'photos#show'
+      get '/wsgetpeople', to: 'people#index'
+      get '/prof_awards', to: 'awards#index'
     end
   end
-  get '/cgi-bin/wsgetPhoto', to: 'api/v0/legacy_webservices#photo'
-  get '/cgi-bin/wsgetpeople', to: 'api/v0/legacy_webservices#people'
-  get '/cgi-bin/prof_awards', to: 'api/v0/legacy_webservices#awards'
+  # The following aliases should be managed by the webserver but we keep them just in case
+  get '/cgi-bin/wsgetPhoto', to: 'api/v0/photos#show'
+  get '/cgi-bin/wsgetpeople', to: 'api/v0/people#index'
+  get '/cgi-bin/prof_awards', to: 'api/v0/awards#index'
 
   get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/i }

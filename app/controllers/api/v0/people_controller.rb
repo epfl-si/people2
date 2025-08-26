@@ -2,40 +2,7 @@
 
 module API
   module V0
-    class LegacyWebservicesController < ApplicationController
-      allow_unauthenticated_access
-      protect_from_forgery
-      before_action :check_auth
-
-      # get cgi-bin/wsgetPhoto?app=...&sciper=...
-      def photo
-        sciper = params[:sciper]
-        profile = Profile.for_sciper(sciper)
-        if profile.present? && (photo = profile.photo).present? && photo.image.present?
-          logger.debug("redirecting to #{url_for(photo.image)}")
-          redirect_to url_for(photo.image)
-        else
-          logger.debug("not found")
-          raise ActionController::RoutingError, 'Not Found'
-        end
-      end
-
-      # get cgi-bin/prof_awards -> /api/v0/prof_awards
-      def awards
-        cid = APIConfigGetter.call(res: "rights")["AAR.report.control"]["id"]
-        aa = APIAuthGetter.call(authid: cid, type: 'right')
-        scipers = aa.map { |a| a["persid"] }.sort.uniq
-        @awards = Award.joins(:profile).where(profile: { sciper: scipers })
-        respond_to do |format|
-          format.json
-          format.csv do
-            filename = ['awards', Time.zone.today].join('_')
-            response.headers['Content-Type'] = 'text/csv'
-            response.headers['Content-Disposition'] = "attachment; filename=#{filename}.csv"
-          end
-        end
-      end
-
+    class PeopleController < LegacyBaseController
       # get cgi-bin/wsgetpeople. Parameters:
       # Optional:
       #  - lang      en|fr            /^(fr|en|)$/          defaults to 'en'
@@ -68,7 +35,21 @@ module API
       # TODO: most of what is done here is just passing the request to api.
       #       we should probably send people directly to api instead.
       POSITION_RE = /^(!?[[:alpha:]]+)( (or|and) (!?[[:alpha:]]+))*$/
-      def people
+      def index
+        if Rails.env.production?
+          begin
+            do_people
+          rescue StandardError
+            respond_to do |format|
+              format.json { render json: {}, status: :unprocessable_content }
+            end
+          end
+        else
+          do_people
+        end
+      end
+
+      def do_people
         @errors = []
         pp = people_params
 
@@ -102,7 +83,7 @@ module API
           end
         end
 
-        fail unless @errors.empty?
+        raise unless @errors.empty?
 
         # Mutually exclusive parameters
         mp = pp.slice("groups", "progcode", "scipers", "units").compact
@@ -114,7 +95,7 @@ module API
         choice = mp[selector].chomp
 
         send "validate_#{selector}", choice
-        fail unless @errors.empty?
+        raise unless @errors.empty?
 
         force = pp['refresh'].present?
         Rails.logger.debug("!!! FORCE=#{force ? 'yes' : 'no'}")
@@ -163,12 +144,6 @@ module API
       # ------------------------------------------------------------------------
 
       private
-
-      def fail
-        respond_to do |format|
-          format.json { render json: { errors: @errors }, status: :unprocessable_entity }
-        end
-      end
 
       def sanitize_scipers(scipers)
         # TODO: may be if we keep the list of valid scipers up to date we can
@@ -242,7 +217,7 @@ module API
         case selector
         when "units"
           units = sanitize_units(choice.split(","))
-          fail unless @errors.empty?
+          raise unless @errors.empty?
 
           # For branch non-leaf, we return a simplified version including professors only (classid: 5,6)
           if units.first.level < 4

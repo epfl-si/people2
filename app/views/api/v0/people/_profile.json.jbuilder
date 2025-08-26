@@ -2,7 +2,14 @@
 
 json.sciper profile.sciper
 json.photo_visibility profile.photo_visibility
-json.photo_url rails_representation_url(profile.photo.image.variant(:medium).processed) if profile.photo_public?
+
+img = profile&.photo&.visible_image
+if profile.photo_public? && img.present?
+  # json.photo_url url_for(img.variant(:medium2))
+  json.photo_url rails_representation_url(img.variant(:medium2))
+else
+  json.photo_url image_url('profile_image_placeholder.svg')
+end
 if profile.personal_web_url.present? && profile.personal_web_url_public?
   json.web_perso profile.personal_web_url
 else
