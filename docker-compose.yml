@@ -144,9 +144,11 @@ services:
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
-      LEGACY_PROXY: ${LEGACY_PROXY:-http://legacy:8181}
-      LEGACY_RO_URL: ${LEGACY_RO_URL:-https://legacy.${DOMAIN:-dev.jkldsa.com}}
+      # public address
+      LEGACY_BASE_URL: https://legacy.${DOMAIN:-dev.jkldsa.com}
+      # public address
       LEGACY_RW_URL: ${LEGACY_RW_URL:-https://test-people.epfl.ch}
+      LEGACY_BASEURL: ${LEGACY_RO_URL:-https://legacy.${DOMAIN:-dev.jkldsa.com}}
       # LEGACY_PAGES_CACHE: 2days
 
       HIDE_ENS_ACCREDDS: ${HIDE_ENS_ACCREDDS:-yes}
@@ -181,6 +183,7 @@ services:
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
+      - "legacy.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "ldap.epfl.ch:128.178.222.15"
     volumes:
       - ./:/srv/app

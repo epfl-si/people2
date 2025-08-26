@@ -14,6 +14,8 @@ kid:
   db_work:      "dbwork-{{ RUNENV }}"
   jobs:         "jobs-{{ RUNENV }}-{{ RELEASE }}"
   legacy:       "legacy-{{ RUNENV }}-{{ RELEASE }}"
+  legacy_photo: "legacyphoto-{{ RUNENV }}-{{ RELEASE }}"
+  legacy_cgibin: "legacycgibin-{{ RUNENV }}-{{ RELEASE }}"
   legacy_cache: "legacycache-{{ RUNENV }}-{{ RELEASE }}"
   legacy_data:  "legacydata-{{ RUNENV }}-{{ RELEASE }}"
   redis:        "redis-{{ RUNENV }}"
@@ -45,7 +47,7 @@ redis:
   memory: 3072 # Mb
   alloc_memory: 4096 # Mb
   disk: 5 # Gb
-  service: people-redis
+  service: "{{ kid.redis }}"
   save:
     time: 300 # permanent storage dump period [seconds]
     data: 512 # number of updated keys before dump to permanent storage is trggered
@@ -65,7 +67,7 @@ people:
   hostname: "{{ APP_HOSTNAME }}"
   image: "quay-its.epfl.ch/svc0033/people:{{ people_version }}-prod"
   isa_url: "{{ ISA_URL | default('https://isa.epfl.ch/services') }}"
-  legacy_ro_url: "{{ LEGACY_BASE_URL | default('https://personnes.epfl.ch') }}"
+  legacy_base_url: "https://{{ APP_HOSTNAME }}/legacy"
   legacy_rw_url: "{{ LEGACY_PATCH_URL | default('https://test-people.epfl.ch') }}"
   name_change_request_email: "{{ NAME_CHANGE_REQUEST_EMAIL | default('name.change@groupes.epfl.ch') }}"
   ollama_url: "{{ OLLAMA_URL | default('false') }}"

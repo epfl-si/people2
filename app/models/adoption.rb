@@ -38,7 +38,7 @@ class Adoption < ApplicationRecord
 
   # edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper)
 
-  private
+  # private
 
   def update_sciper_status
     s = Work::Sciper.find(sciper)
@@ -65,10 +65,9 @@ class Adoption < ApplicationRecord
   end
 
   def fetch_legacy_content(locale)
-    headers = { Host: 'people.epfl.ch' }
-    uri = URI.join(Rails.configuration.legacy_proxy_url, path)
+    uri = URI.join(Rails.configuration.legacy_base_url, path)
     uri.query = "lang=#{locale}"
-    body = Net::HTTP.get(uri, headers)
+    body = Net::HTTP.get(uri)
     body.gsub(
       Regexp.new('(src|href)="/(private/common|images|js|css)/'),
       "\\1=\"#{Rails.configuration.legacy_base_url}/\\2/"

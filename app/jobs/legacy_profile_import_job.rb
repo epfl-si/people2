@@ -109,7 +109,7 @@ class LegacyProfileImportJob < ApplicationJob
     cv_en = cv.translated_part('en')
     cv_fr = cv.translated_part('fr')
 
-    # ---------------------------------------------------------------- Profile
+    # ------------------------------------------------------------------ Profile
     profile = Profile.new_with_defaults(sciper)
     profile.birthday_visibility = show_to_visibility(cv.datenaiss_show)
     profile.photo_visibility = show_to_visibility(cv.photo_show)

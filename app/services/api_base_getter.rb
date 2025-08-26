@@ -51,7 +51,7 @@ class APIBaseGetter < ApplicationService
   end
 
   def path
-    "v1/#{@resource}"
+    @resource.to_s
   end
 
   def genreq(url = @url)

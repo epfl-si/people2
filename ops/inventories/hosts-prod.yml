@@ -16,5 +16,4 @@ all:
     RAILS_ENV: production
     RELEASE: prod
     USE_LOCAL_ELEMENTS: "yes"
-    LEGACY_RO_URL: "https://personnes.epfl.ch"
     LEGACY_RW_URL: "https://people.epfl.ch"

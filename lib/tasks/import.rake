@@ -15,7 +15,18 @@ SCIPERS = [
 ].freeze
 
 namespace :legacy do
-  desc 'Import profiles from legacy DB'
+  desc <<~IMPORT_DESC
+    Import profiles from legacy DB (-D/--describe for detailed usage)
+    In development, this will import just short list of
+    hardcoded representative profiles.
+    In production it will import all the migranda profiles. Parameters:
+      MAX only import upto MAX profiles;
+      BAS the profiles are assigned to separate jobs in batches of BAS items
+      example:
+      MAX=1000 BAS=50 ./bin/rails legacy:import
+    Development can be forcedo to work like production by setting ALL. Example:
+      ALL=1 MAX=1000 BAS=50 ./bin/rails legacy:import
+  IMPORT_DESC
   task import: :environment do
     if Rails.env.development?
       SCIPERS.each do |sciper|
@@ -25,8 +36,19 @@ namespace :legacy do
           profile.destroy
         end
       end
+      LegacyProfileImportJob.perform_now(SCIPERS)
     end
-    LegacyProfileImportJob.perform_now(SCIPERS)
+    if Rails.env.production? || ENV['ALL']
+      # Work::Sciper.migranda.in_batches(of: 100) do |ss|
+      #   scipers = ss.map(&:sciper).join(", ")
+      #   LegacyProfileImportJob.perform_now(scipers)
+      # end
+      ss = Work::Sciper.migranda.pluck(:sciper) - Profile.all.pluck(:sciper)
+      max = ENV['MAX']&.to_i
+      bas = ENV['BAS']&.to_i || 10
+      ss = ss[..max] if max.present?
+      ss.each_slice(bas) { |s| LegacyProfileImportJob.perform_later(s) }
+    end
   end
 
   desc 'Destroy and reimport the profile for a given sciper: SCIPER=123456 ./bin/rails legacy:reimport'

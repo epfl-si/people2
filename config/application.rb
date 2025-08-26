@@ -72,8 +72,7 @@ module People
 
     # TODO: remove next 3 lines after migration from legacy
     config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
-    config.legacy_proxy_url = ENV.fetch('LEGACY_PROXY', 'http://legacy:8181/')
-    config.legacy_base_url = ENV.fetch('LEGACY_RO_URL', 'https://personnes.epfl.ch/')
+    config.legacy_base_url = ENV.fetch('LEGACY_BASE_URL', 'https://people.epfl.ch/legacy/').gsub(%r{/?$}, '/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 0)
     config.legacy_import_job_log_path = ENV.fetch('LEGACY_JOB_LOG', config.enable_adoption ? "legacy_import.log" : nil)
 

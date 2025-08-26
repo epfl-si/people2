@@ -6,7 +6,6 @@
     definition:
       apiVersion: v1
       kind: PersistentVolumeClaim
-      # TODO: reclaim policy !!!
       metadata:
         name: "{{ kid.redis }}"
         namespace: "{{ namespace }}"
@@ -24,12 +23,12 @@
     definition:
       apiVersion: v1
       kind: PersistentVolumeClaim
-      # TODO: reclaim policy !!!
       metadata:
         name: "{{ kid.legacy_cache }}"
         namespace: "{{ namespace }}"
       spec:
         accessModes: [ReadWriteMany]
+        persistentVolumeReclaimPolicy: Retain
         resources:
           requests:
             storage: "{{ legacy.cache_size }}"
@@ -42,11 +41,11 @@
     definition:
       apiVersion: v1
       kind: PersistentVolumeClaim
-      # TODO: reclaim policy !!!
       metadata:
         name: "{{ kid.legacy_data }}"
         namespace: "{{ namespace }}"
       spec:
+        persistentVolumeReclaimPolicy: Retain
         accessModes: [ReadWriteMany]
         resources:
           requests:
@@ -85,6 +84,7 @@
         namespace: "{{ namespace }}"
       spec:
         accessModes: [ReadWriteMany]
+        persistentVolumeReclaimPolicy: Retain
         resources:
           requests:
             storage: 1Mi

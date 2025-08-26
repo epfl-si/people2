@@ -138,7 +138,6 @@ module API
 
         scipers = @persons.map(&:sciper).uniq
         @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
-
         respond_to do |format|
           if @errors.empty?
             if @structure.present?
@@ -220,7 +219,7 @@ module API
       def load_persons(selector, choice, force: false)
         ttl = case selector
               when "scipers"
-                if scipers.count < 8
+                if choice.split(",").count < 8
                   0
                 else
                   4.hours
@@ -240,7 +239,6 @@ module API
       end
 
       def do_load_persons(selector, choice)
-        Rails.logger.debug("do_load_persons for selector=#{selector} choice=#{choice}")
         case selector
         when "units"
           units = sanitize_units(choice.split(","))
