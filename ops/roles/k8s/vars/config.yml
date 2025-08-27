@@ -20,6 +20,8 @@ people_config:
   # USE_LOCAL_ELEMENTS: false
   USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
 
+  WSGETPEOPLE_CACHE: "{{ people.wsgetpeople_cache }}"
+
   # ---------------------------------------------------- transition specific
   ENABLE_ADOPTION: "{{ people.enable_adoption }}"
   LEGACY_BASE_URL: "{{ people.legacy_base_url }}"

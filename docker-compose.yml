@@ -136,6 +136,8 @@ services:
       # USE_LOCAL_ELEMENTS: false
       USE_LOCAL_ELEMENTS: ${USE_LOCAL_ELEMENTS:-true}
 
+      WSGETPEOPLE_CACHE: ${WSGETPEOPLE_CACHE:-0}
+
       # ----------------------------------------------------------- dev specific
       # DEV_SEEDS_PATH: db/seeds_dev/data
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-false}
