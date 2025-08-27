@@ -18,10 +18,10 @@
 #  }
 # }
 
-json.email  person.public_email
-json.nom    person.name.display_last
-json.prenom person.name.display_first
-json.sciper person.sciper
+json.email  person.public_email || ""
+json.nom    person.name.display_last || ""
+json.prenom person.name.display_first || ""
+json.sciper person.sciper.to_i
 if profile.present?
   json.people do
     json.partial! 'profile', profile: profile
