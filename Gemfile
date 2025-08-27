@@ -106,6 +106,7 @@ gem 'async'
 gem 'cld'
 
 gem 'csv'
+gem 'jwt'
 
 # Whilel waiting for an official solution, we use lograge to enable structured
 # logging.

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "net/http"
+require "jwt"
 # This controller is a customized version of the standard one created with
 # rails g authentication. Heavily inspired by
 # https://github.com/omniauth/omniauth_openid_connect/blob/master/lib/omniauth/strategies/openid_connect.rb
@@ -72,16 +73,9 @@ class SessionsController < ApplicationController
       return
     end
 
-    token = fetch_oidc_token(code)
-    id_token = token["id_token"]
+    token = JWT.decode(fetch_oidc_token(code), nil, false)[0]
 
-    if id_token.blank? || !valid_oidc_token?(id_token)
-      # TODO: render something more user-friendly
-      render plain: "Invalid ID Token", status: :unauthorized
-      return
-    end
-
-    user = User.from_oidc(decode_oidc_token(id_token))
+    user = User.from_oidc(token)
     start_new_session_for user
     redirect_to after_authentication_url
   end
@@ -110,23 +104,6 @@ class SessionsController < ApplicationController
                                 redirect_uri: callback_uri,
                               })
     JSON.parse(res.body)
-  end
-
-  def decode_oidc_token(token)
-    _, payload, = token.split(".")
-    payload += "=" * ((4 - payload.length % 4) % 4)
-    JSON.parse(Base64.decode64(payload))
-  end
-
-  def valid_oidc_token?(token)
-    data = decode_oidc_token(token)
-    exp = data["exp"]
-    return false if exp.nil? || Time.zone.at(exp) < Time.zone.now
-
-    true
-  rescue JSON::ParserError
-    Rails.logger.error("Strange Token: #{token}")
-    false
   end
 
   def new_state
