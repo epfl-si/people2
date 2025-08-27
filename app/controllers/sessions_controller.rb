@@ -73,7 +73,7 @@ class SessionsController < ApplicationController
       return
     end
 
-    token = JWT.decode(fetch_oidc_token(code), nil, false)[0]
+    token = JWT.decode(fetch_id_token(code), nil, false)[0]
 
     user = User.from_oidc(token)
     start_new_session_for user
@@ -93,7 +93,7 @@ class SessionsController < ApplicationController
     c.to_s
   end
 
-  def fetch_oidc_token(code)
+  def fetch_id_token(code)
     cfg = Rails.application.config_for(:oidc)
     uri = URI::HTTPS.build(host: cfg.server, path: cfg.base_path + cfg.token_path)
     res = Net::HTTP.post_form(uri, {
@@ -103,7 +103,7 @@ class SessionsController < ApplicationController
                                 grant_type: "authorization_code",
                                 redirect_uri: callback_uri,
                               })
-    JSON.parse(res.body)
+    JSON.parse(res.body)["id_token"]
   end
 
   def new_state
