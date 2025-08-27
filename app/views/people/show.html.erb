@@ -66,11 +66,11 @@
 
 <% if @main_zone_bbs.present? || @ta.present? %>
   <%= render "shared/tabs", tabs: (
-    (@main_zone_bbs.present? ? @main_zone_bbs.map.with_index { |(section, boxes), i|
+    (@main_zone_bbs.present? ? @main_zone_bbs.map { |(section, boxes)|
       {
         id: "section_#{section.label}",
         label: section.t_title,
-        name: "show-tabs-#{@profile.id}",
+        name: "show-tabs-#{section.label}",
         partial: "section",
         locals: {
           section: section,
@@ -81,7 +81,7 @@
     } : []) + (@ta.present? ? [{
       id: "section_teaching",
       label: t(".title.teaching"),
-      name: "show-tabs-#{@profile.id}",
+      name: "show-tabs-teaching",
       partial: "teaching"
     }] : [])
   ) %>
