@@ -76,6 +76,7 @@ people:
   repo: "https://github.com/epfl-si/people2.git"
   # storage: "{{ DATA_BASEDIR }}/people/storage"
   use_local_elements: "{{ USE_LOCAL_ELEMENTS | default('true') }}"
+  wsgetpeople_cache: "{{ WSGETPEOPLE_CACHE | default('21600') }}"
 
 route:
   name: people

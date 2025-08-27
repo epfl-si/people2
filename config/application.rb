@@ -70,6 +70,8 @@ module People
     config.force_audience = Rails.env.development? && ENV.fetch('FORCE_AUDIENCE', false)
     config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', 'name.change@groupes.epfl.ch')
 
+    config.api_v0_wsgetpeople_cache = ENV.fetch("WSGETPEOPLE_CACHE", Rails.env.production? ? 6.hours : 0).to_i
+
     # TODO: remove next 3 lines after migration from legacy
     config.enable_adoption = ENV.fetch('ENABLE_ADOPTION', 'false').match?(config.re_true)
     config.legacy_base_url = ENV.fetch('LEGACY_BASE_URL', 'https://people.epfl.ch/legacy/').gsub(%r{/?$}, '/')

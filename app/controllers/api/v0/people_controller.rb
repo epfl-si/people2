@@ -40,9 +40,8 @@ module API
           begin
             do_people
           rescue StandardError
-            respond_to do |format|
-              format.json { render json: {}, status: :unprocessable_content }
-            end
+            # render json: {errors: @errors}, status: :unprocessable_content
+            render json: {}, status: :unprocessable_content
           end
         else
           do_people
@@ -51,55 +50,23 @@ module API
 
       def do_people
         @errors = []
-        pp = people_params
-
-        # ----------------------------------------------------- input validation
-        # Optional parameters: position, struct, lang
-        if pp['lang'].present?
-          lang = pp['lang']
-          if I18n.available_locales.include?(lang.to_sym)
-            @lang = lang
-          else
-            @errors << "invalid language #{lang}"
+        extract_and_validate_params
+        @force = params['refresh'].present?
+        Rails.logger.debug("!!! FORCE=#{@force ? 'yes' : 'no'}")
+        @render_cache = Rails.configuration.api_v0_wsgetpeople_cache
+        if @render_cache.positive?
+          Rails.cache.delete(@cache_key) if @force
+          json = Rails.cache.fetch(@cache_key, expires_in: @render_cache) do
+            do_people_render
           end
+        else
+          json = do_people_render
         end
-        @lang ||= Rails.configuration.i18n.default_locale
+        render json: json
+      end
 
-        if pp['position'].present?
-          f = PositionFilter.new(pp['position'])
-          if f.valid?
-            @position = f
-          else
-            @errors << "invalid position filter #{pp['position']}"
-          end
-        end
-
-        if pp['struct']
-          struct = Structure.load(pp['struct'], @lang)
-          if struct.present?
-            @structure = struct
-          else
-            @errors << "invalid struct file name #{pp['struct']}"
-          end
-        end
-
-        raise unless @errors.empty?
-
-        # Mutually exclusive parameters
-        mp = pp.slice("groups", "progcode", "scipers", "units").compact
-        @errors << "missing mandatory parameter: groups, progcode, scipers, units" if mp.empty?
-        if mp.keys.count > 1
-          @errors << "only one of the following mandatory parameters can be present: groups, progcode, scipers, units"
-        end
-        selector = mp.keys.first
-        choice = mp[selector].chomp
-
-        send "validate_#{selector}", choice
-        raise unless @errors.empty?
-
-        force = pp['refresh'].present?
-        Rails.logger.debug("!!! FORCE=#{force ? 'yes' : 'no'}")
-        @persons = load_persons(selector, choice, force: force)
+      def do_people_render
+        @persons = load_persons(@selector, @choice, force: @force)
 
         # Filter result based on the position list provided
         # I am not 100% sure yet but legacy version selects a person if
@@ -119,17 +86,20 @@ module API
 
         scipers = @persons.map(&:sciper).uniq
         @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
-        respond_to do |format|
-          if @errors.empty?
-            if @structure.present?
-              @persons.each { |person| @structure.store!(person) }
-              format.json { render 'people_struct' }
-            else
-              format.json { render 'people_alpha' }
-            end
-          else
-            format.json { render json: { errors: @errors }, status: :unprocessable_entity }
-          end
+
+        raise unless @errors.empty?
+
+        if @structure.present?
+          @persons.each { |person| @structure.store!(person) }
+          PeopleController.render(
+            template: 'api/v0/people/people_struct',
+            assigns: { persons: @persons, profiles: @profiles, structure: @structure }
+          )
+        else
+          PeopleController.render(
+            template: 'api/v0/people/people_alpha',
+            assigns: { persons: @persons, profiles: @profiles, structure: @structure }
+          )
         end
       end
 
@@ -144,6 +114,67 @@ module API
       # ------------------------------------------------------------------------
 
       private
+
+      # takes request parameters and instanciate them in form of instance variables
+      # optional parameters: @lang, @position, @structure
+      # from mutually exclusive parameters, it extracts:
+      #   @selector the filter key (e.g. "units")
+      #   @choice   the filter parameters (e.g. the list unit names)
+      # It also builds the cache key corresponding to the request
+      def extract_and_validate_params
+        cache_key_parts = ["wsgetpeople_json"]
+
+        pp = format_params
+
+        # Optional parameters: position, struct, lang
+        if pp['lang'].present?
+          lang = pp['lang']
+          if I18n.available_locales.include?(lang.to_sym)
+            @lang = lang
+          else
+            @errors << "invalid language #{lang}"
+          end
+        end
+        @lang ||= Rails.configuration.i18n.default_locale
+        cache_key_parts << @lang
+
+        if pp['position'].present?
+          f = PositionFilter.new(pp['position'])
+          if f.valid?
+            @position = f
+            cache_key_parts << pp['position']
+          else
+            @errors << "invalid position filter #{pp['position']}"
+          end
+        end
+
+        if pp['struct']
+          struct = Structure.load(pp['struct'], @lang)
+          if struct.present?
+            @structure = struct
+            cache_key_parts << pp['struct']
+          else
+            @errors << "invalid struct file name #{pp['struct']}"
+          end
+        end
+
+        raise unless @errors.empty?
+
+        # Mutually exclusive parameters
+        mp = filter_params.compact
+        @errors << "missing mandatory parameter: groups, progcode, scipers, units" if mp.empty?
+        if mp.keys.count > 1
+          @errors << "only one of the following mandatory parameters can be present: groups, progcode, scipers, units"
+        end
+        @selector = mp.keys.first
+        @choice = mp[@selector].chomp
+        cache_key_parts << @selector
+        cache_key_parts << @choice
+        @cache_key = cache_key_parts.join('/')
+
+        send "validate_#{@selector}", @choice
+        raise unless @errors.empty?
+      end
 
       def sanitize_scipers(scipers)
         # TODO: may be if we keep the list of valid scipers up to date we can
@@ -192,20 +223,10 @@ module API
       end
 
       def load_persons(selector, choice, force: false)
-        ttl = case selector
-              when "scipers"
-                if choice.split(",").count < 8
-                  0
-                else
-                  4.hours
-                end
-              else
-                24.hours
-              end
-        if ttl.positive?
+        if @render_cache.positive?
           cache_key = "wsgetpeople_persons_#{selector}_#{choice}"
           Rails.cache.delete(cache_key) if force
-          Rails.cache.fetch(cache_key, expires_in: ttl) do
+          Rails.cache.fetch(cache_key, expires_in: @render_cache) do
             do_load_persons(selector, choice)
           end
         else
@@ -253,6 +274,14 @@ module API
           :groups, :progcode, :scipers, :units,
           :position, :struct, :lang, :refresh
         )
+      end
+
+      def filter_params
+        people_params.slice(:groups, :progcode, :scipers, :units)
+      end
+
+      def format_params
+        people_params.slice(:position, :struct, :lang)
       end
 
       # TODO: implement this. We will need an ApiAuthorisation model capable of
