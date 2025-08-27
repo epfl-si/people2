@@ -123,6 +123,9 @@ class SessionsController < ApplicationController
     return false if exp.nil? || Time.zone.at(exp) < Time.zone.now
 
     true
+  rescue JSON::ParserError
+    Rails.logger.error("Strange Token: #{token}")
+    false
   end
 
   def new_state
