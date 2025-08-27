@@ -103,7 +103,7 @@ class SessionsController < ApplicationController
                                 grant_type: "authorization_code",
                                 redirect_uri: callback_uri,
                               })
-    JSON.parse(res.body)["id_token"]
+    JSON.parse(res.body)["id_token"] || raise(res.body)
   end
 
   def new_state
