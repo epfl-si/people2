@@ -55,6 +55,7 @@ production:
     replica: true
   people:
     adapter: mysql2
+    pool: 5
     database: <%= ENV.fetch('DB_MAIN_NAME', 'people_prod') %>
     username: <%= ENV.fetch('DB_MAIN_USER', 'please_do_not_die') %>
     password: <%= ENV.fetch('DB_MAIN_PASSWORD', 'please_do_not_die') %>
