@@ -114,6 +114,7 @@ class SessionsController < ApplicationController
 
   def decode_oidc_token(token)
     _, payload, = token.split(".")
+    payload += "=" * ((4 - payload.length % 4) % 4)
     JSON.parse(Base64.decode64(payload))
   end
 
