@@ -2,13 +2,15 @@ BEGIN:VCARD
 VERSION:3.0
 FN;charset=UTF-8:<%= @person.name.display %>
 N;charset=UTF-8:<%= @person.name.display_last %>;<%= @person.name.display_first %>;;;
+<% if @person.default_address.present? %>
 ADR;WORK;PREF:;;<%= @person.default_address.lines.join(";") %>
 LABEL;WORK;PREF;charset=UTF-8:<%= @person.default_address.lines.join(";") %>
+<% end %>
 <% if @person.public_email.present? %>
 EMAIL;TYPE=INTERNET:<%= @person.public_email %>
 <% end %>
 URL:https://people.epfl.ch/<%= @person.email_user %>
-TITLE;charset=UTF-8:<%= @person.main_position.t_label%>
+TITLE;charset=UTF-8:<%= @person.main_position&.t_label || "" %>
 <% if @person.phone_visible_by?(Current.audience) && @person.default_phone.present? %>
 TEL;TYPE=WORK:<%= @person.default_phone.number %>
 <% end %>
