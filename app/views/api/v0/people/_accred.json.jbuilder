@@ -15,15 +15,15 @@
 #           ""
 #         ],
 #       },
-json.adresse     accred.unit.address.full
+json.adresse     accred.unit.address.full || ""
 json.fonction_en accred.position.t_label(gender, 'en')
 json.fonction_fr accred.position.t_label(gender, 'fr')
-json.hierarchie  accred.unit.hierarchy
-json.id_unite    accred.unit.id
-json.status      accred.t_status_label('en')
-json.status_en   accred.t_status_label('en')
-json.status_fr   accred.t_status_label('fr')
-json.order       order + 1
+json.hierarchie  accred.unit.hierarchy || ""
+json.id_unite    accred.unit.id || ""
+json.statut      accred.t_status_label || ""
+json.status_en   accred.t_status_label('en') || ""
+json.status_fr   accred.t_status_label('fr') || ""
+json.ordre       order + 1
 # json.sigle       accred.unit.t_name('fr')
-json.sigle       accred.unit_name
+json.sigle       accred.unit_name || ""
 json.rooms       room&.name || ""
