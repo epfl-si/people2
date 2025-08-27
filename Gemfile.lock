@@ -218,6 +218,8 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     json (2.13.2)
+    jwt (3.1.2)
+      base64
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -588,6 +590,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   json (>= 2.10.2)
+  jwt
   lograge
   mission_control-jobs
   mocha
