@@ -34,7 +34,8 @@ def ldap_by_sciper
     elsif (m = mma.match(l))
       r.email = m[1]
     elsif (m = mnn.match(l))
-      r.fullname = m[1].blank? ? m[2] : Legacy.deshit(Base64.decode64(m[2]))
+      r.fullname = m[1].blank? ? m[2] : "NA"
+      # Legacy.deshit(Base64.decode64(m[2]).force_encoding("UTF-8"))
     elsif (m = mdn.match(l))
       r.dn = m[1]
     end

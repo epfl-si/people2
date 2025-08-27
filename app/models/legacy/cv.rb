@@ -52,7 +52,11 @@ module Legacy
 
     # TODO: use default language config for fallback
     def translated_part(lang)
-      translations.where(cvlang: lang).first || translated_part.where(cvlang: defaultcv).first
+      if lang == defaultcv
+        translations.where(cvlang: lang)
+      else
+        translations.where(cvlang: lang).first || translated_part(defaultcv)
+      end
     end
 
     def visible_social_ids

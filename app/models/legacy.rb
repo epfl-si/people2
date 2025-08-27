@@ -32,7 +32,6 @@ module Legacy
     "Ä‡" => "ć",
     "ÃŸ" => "ß",
     "Å¡" => "š",
-    # "ï¿½" => "é",
     "Î²" => "&beta;",
     "â€œ" => "«",
     "â€" => "»",
@@ -80,7 +79,12 @@ module Legacy
     # end
     # CharlockHolmes detects UTF-8 even in presence of chars from SHITMAP
     # Therefore, fuckoff efficiency and let's manually deshittify in any case
-    SHITMAP.each_pair { |k, v| c.gsub!(k, v) }
+    SHITMAP.each_pair do |k, v|
+      c.gsub!(k, v)
+    rescue StandardError
+      Rails.logger.debug "Merda in #{c}"
+      break
+    end
 
     d = CharlockHolmes::EncodingDetector.detect(c)
     if d.nil?
