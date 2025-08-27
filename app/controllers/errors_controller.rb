@@ -6,6 +6,7 @@
 # since it needs a redirect, we have no informatinos ti provide.
 # For the moment I keep it like this so that it is easier to style.
 class ErrorsController < ApplicationController
+  allow_unauthenticated_access
   layout 'error'
 
   def internal_server_error
