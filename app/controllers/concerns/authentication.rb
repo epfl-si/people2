@@ -34,14 +34,14 @@ module Authentication
   end
 
   def request_authentication
+    Rails.logger.info caller.join("\n")
     session[:return_to_after_authenticating] = request.url
     redirect_to new_session_path
   end
 
   # TODO: restore redirect back functionality for the momen we remove it to avoid loops
   def after_authentication_url
-    # session.delete(:return_to_after_authenticating) ||
-    root_url
+    session.delete(:return_to_after_authenticating) || root_url
   end
 
   def start_new_session_for(user)
