@@ -93,30 +93,28 @@
           termination: edge
 
 
-# - name: OpenShift Ingress for photos taken directly from the legacy app
-#   kubernetes.core.k8s:
-#     state: present
-#     definition:
-#       apiVersion: route.openshift.io/v1
-#       kind: Route
-#       metadata:
-#         name: "{{ kid.legacy_cgibin }}"
-#         namespace: "{{ namespace }}"
-#         labels:
-#           # this label MUST NOT be removed although it is a label on a static resource
-#           route: "{{ people.visibility }}"
-#       spec:
-#         host: "{{ hosts.people }}"
-#         path: "/cgi-bin"
-#         to:
-#           kind: Service
-#           name: "{{ kid.legacy }}"
-#         port:
-#           targetPort: 8181
-#         tls:
-#           termination: edge
-
-
+- name: OpenShift Ingress for photos taken directly from the legacy app
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: "{{ kid.legacy_cgibin }}"
+        namespace: "{{ namespace }}"
+        labels:
+          # this label MUST NOT be removed although it is a label on a static resource
+          route: "{{ people.visibility }}"
+      spec:
+        host: "{{ hosts.people }}"
+        path: "/cgi-bin"
+        to:
+          kind: Service
+          name: "{{ kid.legacy }}"
+        port:
+          targetPort: 8181
+        tls:
+          termination: edge
 
 - name: Ensure people-webapp service
   kubernetes.core.k8s:
