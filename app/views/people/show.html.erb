@@ -66,7 +66,7 @@
 
 <% if @main_zone_bbs.present? || @ta.present? %>
   <%= render "shared/tabs", tabs: (
-    @main_zone_bbs.map.with_index { |(section, boxes), i|
+    (@main_zone_bbs.present? ? @main_zone_bbs.map.with_index { |(section, boxes), i|
       {
         id: "section_#{section.label}",
         label: section.t_title,
@@ -78,7 +78,7 @@
           sortable: false
         }
       }
-    } + (@ta.present? ? [{
+    } : []) + (@ta.present? ? [{
       id: "section_teaching",
       label: t(".title.teaching"),
       name: "show-tabs-#{@profile.id}",
