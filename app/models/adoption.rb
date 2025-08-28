@@ -25,7 +25,7 @@ class Adoption < ApplicationRecord
     @path ||= (email.present? ? email.sub("@epfl.ch", "") : sciper)
   end
 
-  # Fetch html profile from legacy server and
+  # Fetch html profile from legacy server and rewrite edit link so it points to the new app
   def content(locale, force: false)
     profile = Profile.for_sciper(sciper)
     r = Regexp.new('href="/([a-z0-9\-.]+)/edit')
@@ -53,7 +53,7 @@ class Adoption < ApplicationRecord
     s.save!
   end
 
-  # Fetch html profile from legacy server and
+  # Fetch html profile from legacy server and rewrite links
   def legacy_content(locale, force: false)
     ck = "#{cache_key}/#{locale}"
     if Rails.configuration.legacy_pages_cache.positive?

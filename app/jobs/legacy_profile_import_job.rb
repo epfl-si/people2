@@ -104,6 +104,8 @@ class LegacyProfileImportJob < ApplicationJob
     profile = Profile.for_sciper(sciper)
     return if profile.present?
 
+    return if Work::Sciper.migranda.where(sciper: sciper).blank?
+
     JLOG.info(sciper) { "Legacy profile import STARTED" }
     begin
       cv = Legacy::Cv.find(sciper)
