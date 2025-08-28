@@ -53,7 +53,7 @@ module Legacy
     # TODO: use default language config for fallback
     def translated_part(lang)
       if lang == defaultcv
-        translations.where(cvlang: lang)
+        translations.where(cvlang: lang).first
       else
         translations.where(cvlang: lang).first || translated_part(defaultcv)
       end

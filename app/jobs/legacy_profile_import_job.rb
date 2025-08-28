@@ -79,6 +79,11 @@ class LegacyProfileImportJob < ApplicationJob
     scipers = [scipers] unless scipers.is_a?(Array)
     scipers.each do |sciper|
       do_perform(sciper)
+    rescue StandardError => e
+      p = Profile.for_sciper(sciper)
+      p.destroy
+      Rails.logger.error("Failed to import profile for sciper: #{sciper}")
+      raise e
     end
   end
 
