@@ -226,8 +226,8 @@ class LegacyProfileImportJob < ApplicationJob
 
         b.visibility = 0
         b.profile = profile
-        b.send("content_#{lang}=", ob.sanitized_content)
-        b.send("title_#{lang}=", ob.sanitized_label)
+        b.send("content_#{lang.downcase}=", ob.sanitized_content)
+        b.send("title_#{lang.downcase}=", ob.sanitized_label)
         next if b.save
 
         err_count += 100
@@ -334,8 +334,8 @@ class LegacyProfileImportJob < ApplicationJob
         )
         c = education_cats[le.guess_category] || education_cats["other"]
         e.category = c
-        e.send("title_#{lang}=", le.title)
-        e.send("field_#{lang}=", le.field) if le.field.present?
+        e.send("title_#{lang.downcase}=", le.title)
+        e.send("field_#{lang.downcase}=", le.field) if le.field.present?
         e.director = le.director if le.director.present?
         next if e.save
 
@@ -359,7 +359,7 @@ class LegacyProfileImportJob < ApplicationJob
           year_end: le.year_end,
           visibility: AudienceLimitable::VISIBLE
         )
-        e.send("title_#{lang}=", le.title)
+        e.send("title_#{lang.downcase}=", le.title)
         e.location = le.univ if le.univ?
         next if e.save
 
@@ -381,7 +381,7 @@ class LegacyProfileImportJob < ApplicationJob
     #       year: le.year,
     #       visibility: AudienceLimitable::VISIBLE
     #     )
-    #     e.send("description_#{lang}=", le.description)
+    #     e.send("description_#{lang.downcase}=", le.description)
     #     e.url = le.url if le.url.present?
     #     cat = le.category.present? ? achie_cats[le.category] : achie_cats["other"]
     #     e.category = cat
@@ -403,7 +403,7 @@ class LegacyProfileImportJob < ApplicationJob
           year: le.year,
           visibility: AudienceLimitable::VISIBLE
         )
-        e.send("title_#{lang}=", le.title)
+        e.send("title_#{lang.downcase}=", le.title)
         e.issuer = le.grantedby if le.grantedby.present?
         e.url = le.url if le.url.present?
         e.category = award_cats[le.category] if le.category.present?
