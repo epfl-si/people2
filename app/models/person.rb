@@ -401,7 +401,7 @@ class Person
 
   # TODO: fix once the actual data is available in api
   def class_delegate?
-    accreditations.any?(&:student?) && rand(1..10) == 1
+    false # accreditations.any?(&:student?) && rand(1..10) == 1
   end
 
   # def gender
