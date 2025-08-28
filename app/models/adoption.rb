@@ -36,6 +36,13 @@ class Adoption < ApplicationRecord
     end
   end
 
+  def reimport
+    Profile.for_sciper(sciper).destroy
+    per = Person.find(sciper)
+    per.profile!
+    save
+  end
+
   # edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper)
 
   # private
