@@ -58,13 +58,9 @@ namespace :legacy do
       puts "Invalid sciper #{sciper}"
       next
     end
-    Profile.for_sciper(sciper).destroy
-    per = Person.find(sciper)
-    per.profile!
-    if (m = Adoption.where(sciper: sciper)&.first)
-      m.accepted = false
-      m.save
-      # Refresh legacy pache proxy cache
+    m = Adoption.where(sciper: sciper)&.first
+    if m
+      m.reimport
       m.content('en', force: true)
       m.content('fr', force: true)
     end

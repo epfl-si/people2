@@ -17,3 +17,4 @@ all:
     RELEASE: prod
     USE_LOCAL_ELEMENTS: "yes"
     LEGACY_RW_URL: "https://people.epfl.ch"
+    LEGACY_PATCH_URL: "https://people.epfl.ch"
