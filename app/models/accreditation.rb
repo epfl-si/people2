@@ -129,7 +129,8 @@ class Accreditation
     if Rails.env.development? && accreds.any?(&:botweb?) && Profile.for_sciper(sciper).blank? # && accreds.count > 1
       LegacyProfileImportJob.perform_later(sciper)
     end
-    accreds
+    # We are actually interested exclusively on visible accreditations
+    accreds.select(&:botweb?)
   end
 
   def self.for_all_full_professors
