@@ -139,7 +139,7 @@ class Person
     unless defined?(@profile)
       @profile = Profile.for_sciper(sciper)
       if @profile.nil? && editable_profile?
-        if Rails.configuration.enable_adoption
+        if Rails.configuration.enable_adoption && Work::Sciper.migranda.where(sciper: sciper).present?
           LegacyProfileImportJob.perform_now(sciper)
           @profile = Profile.for_sciper(sciper)
           @profile ||= Profile.new_with_defaults(sciper)
