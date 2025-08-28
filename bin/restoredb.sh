@@ -4,7 +4,7 @@ set -e
 . .env
 DATASRC="${DATASRC:-peo11}"
 
-DUMPDIR="${DUMPDIR:-tmp/dbdumps}"
+DUMPDIR="${DUMPDIR:-${KBPATH:-/keybase/team/epfl_people.prod}/dev/dumps}"
 
 ACCRED_TABLES="accreds accreds_properties classes deputations guests positions properties properties_units properties_status properties_classes rights rights_classes rights_persons rights_roles rights_statuses rights_units roles_persons statuses"
 BOTTIN_TABLES="annuaire_adrspost annuaire_persons annuaire_persphones annuaire_persrooms annuaire_phones rooms"
@@ -48,14 +48,12 @@ restore() {
 		tables="$CADI_TABLES"; ;;
 	dinfo)
 		tables="$DINFO_TABLES"; ;;
-	bottin)
-		tables="$BOTTIN_TABLES"; ;;
-	*)
+	cv)
 		tables=""; ;;
+	*)
+	  die "Invalid database name $db"; ;;
 	esac
 
-
-	[ -d $DUMPDIR ] || mkdir -p $DUMPDIR
 
 	dumpfile=$DUMPDIR/${db}_dump.sql.gz
 
@@ -89,18 +87,31 @@ restore() {
 }
 
 # ------------------------------------------------------------------------------
-
-db=$1
-
+dbs=""
 force=""
-if [ "$2" == "--force" ] ; then
+while [ $# -gt 0 ] ; do
+case $1 in
+--force)
   force="--force"
+  shift 1
+  ;;
+all)
+  dbs="accred cadi dinfo cv"
+  shift 1
+  ;;
+*)
+  dbs="$dbs $1"
+  shift 1;
+esac
+done
+
+if [ -n "$force" ] ; then
+  ssh $DATASRC date >/dev/null 2>&1 || die "You have no access to the source server. Cannot force dumps"
+  [ -d $DUMPDIR ] || mkdir -p $DUMPDIR || die "Could not create directory for db dumps"
+else
+  [ -d $DUMPDIR ] || die "DB dump directory $DUMPDIR not found. May be KB is not active ?"
 fi
 
-if [ "$db" == "all" ] ; then
-	for db in accred cadi cv dinfo ; do
-		restore $db $force
-	done
-else
+for db in $dbs ; do
 	restore $db $force
-fi
+done
