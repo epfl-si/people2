@@ -157,9 +157,9 @@ class LegacyProfileImportJob < ApplicationJob
     # ---------------------------------------------------------- Special Boxes
 
     # Expertise is the only rich text  box whose content is in the cv table
-    if cv_en.expertise.present? || cv_fr.expertise.present?
-      e_fr = cv_fr.sanitized_expertise || ""
-      e_en = cv_en.sanitized_expertise || ""
+    if cv_en&.expertise.present? || cv_fr&.expertise.present?
+      e_fr = cv_fr&.sanitized_expertise || ""
+      e_en = cv_en&.sanitized_expertise || ""
       if e_en.length < Profile::EXPERTISE_MAX_LEN && e_fr.length < Profile::EXPERTISE_MAX_LEN
         profile.expertise_fr = e_fr if e_fr.present?
         profile.expertise_en = e_en if e_en.present?
@@ -236,12 +236,12 @@ class LegacyProfileImportJob < ApplicationJob
     # ---------------------------------------------------------- Special Boxes
 
     # Expertise is the only rich text  box whose content is in the cv table
-    if cv_en.expertise.present? || cv_fr.expertise.present?
+    if cv_en&.expertise.present? || cv_fr&.expertise.present?
       m = mboxes['expertise']
       b = RichTextBox.from_model(m)
       b.profile = profile
-      b.content_fr = cv_fr.sanitized_expertise if cv_fr.expertise.present?
-      b.content_en = cv_en.sanitized_expertise if cv_en.expertise.present?
+      b.content_fr = cv_fr.sanitized_expertise if cv_fr&.expertise.present?
+      b.content_en = cv_en.sanitized_expertise if cv_en&.expertise.present?
       unless b.save
         err_count += 1000
         JLOG.warn(sciper) do
