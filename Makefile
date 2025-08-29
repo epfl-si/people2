@@ -226,7 +226,7 @@ patch: VERSION
 	@echo "remember to 'make tag' to store it into git once you have the commit"
 
 .git/hooks/pre-commit:
-	if [ ! -l .git/hooks ] ; then mv .git/hooks .git/hooks.trashme && ln -s ../.git_hooks .git/hooks ; fi
+	if [ ! -L .git/hooks ] ; then mv .git/hooks .git/hooks.trashme && ln -s ../.git_hooks .git/hooks ; fi
 
 .env:
 	@echo ".env file not present. Please copy .env.sample and edit to fit your setup"
