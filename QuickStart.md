@@ -14,9 +14,10 @@ not yet very reliable (read it anyway as I might forget 1/2 of the things now)
 5. all the dev is done on docker although this is slower and more cumbersome to debug but
    it makes it easier to deal with databases etc.
 6. Try to see if it starts
+  - `make up` to start the various servers
   - `make restore` to bootstrap the legacy databases (should take the dumps from KB)
   - `make seed` to boostrap the app database
-  - `make up ps logs` to start the server: the app should be at people.dev.jkldsa.com
+  - `make up ps logs` to eventually re-start the server: the app should be at people.dev.jkldsa.com
     if you didn't change DOMAIN in `.env`
 
 Deploiment:
