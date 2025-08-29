@@ -9,7 +9,7 @@ with the various side services like keycloak, mariadb, redis etc.
 
 You need the following installed on your system to run this application in development mode:
 
-- Ruby "3.3.8". We suggest to use [rbenv](https://github.com/rbenv/rbenv) for managing (`rbenv install 3.3.8`) the various ruby versions — 💡 Use [this PPA](https://launchpad.net/~instructure/+archive/ubuntu/ruby) to install it on older versions of Ubuntu Linux;
+- Ruby "3.3.8". We suggest to use [rbenv](https://github.com/rbenv/rbenv) for managing (`rbenv install 3.3.8`) the various ruby versions — 💡 Use [this PPA](https://launchpad.net/~instructure/+archive/ubuntu/ruby) to install it on older versions of Ubuntu Linux. Note that on debian-like distros, it is suggested to install rbenv with git.
 - Docker with the so-called [compose version 2](https://docs.docker.com/compose/)
   - there is a [switch](https://github.com/docker/compose/issues/1123#issuecomment-1129313318) to flip in Docker Desktop for Mac for this.
   - The project assumes a working `docker compose` command. The old (Python-based) `docker-compose` might still work.
@@ -18,7 +18,9 @@ You need the following installed on your system to run this application in devel
   `ATELA_KEY`, `CAMIPRO_PHOTO_KEY`, `DEV_ENTRA_TENANT_ID`, `DEV_ENTRA_CLIENT_ID`,
   `DEV_ENTRA_SECRET`, `EPFLAPI_PASSWORD`, `OPENAI_API_KEY`, `ORACOURS_PWD`,
   `TRANS_USER`, `TRANS_PASS`
-- [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`) and `yarn` needed for building EPFL elements.
+- If you kept the `USE_LOCAL_ELEMENTS` variable to true, you will also need
+  - a directory where epfl elements will (or is already) cloned (`ELE_SRCDIR`);
+  - [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`) and `yarn` needed for building EPFL elements.
 
 ## Configuration and Secrets
 
