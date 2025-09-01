@@ -15,6 +15,7 @@
 
 @import "elements/elements";
 @import "elements/vendors";
+@import "fonts";
 
 // helper function used in bootstrap-variables (but undefined therein)
 @function theme-color($name) {
