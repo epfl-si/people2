@@ -17,7 +17,10 @@ curl -X 'PUT' \
    -H 'accept: application/json' \
    -H 'Content-Type: application/json' \
    -d '{
-   "firstnameusual": "Giovanni",
-   "genderusual": "M",
-   "lastnameusual": "Cangiani",
+    "firstname":"Giovanni",
+    "lastname":"Cangiani",
+    "firstnameusual":"Giovanni",
+    "lastnameusual": "Cangiani",
+    "gender": "M",
+    "genderusual": "M"
    }'

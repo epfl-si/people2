@@ -9,7 +9,7 @@ with the various side services like keycloak, mariadb, redis etc.
 
 You need the following installed on your system to run this application in development mode:
 
-- Ruby "3.3.8". We suggest to use [rbenv](https://github.com/rbenv/rbenv) for managing (`rbenv install 3.3.8`) the various ruby versions — 💡 Use [this PPA](https://launchpad.net/~instructure/+archive/ubuntu/ruby) to install it on older versions of Ubuntu Linux. Note that on debian-like distros, it is suggested to install rbenv with git.
+- Ruby "3.3.8". We suggest to use [rbenv](https://github.com/rbenv/rbenv) for managing (`rbenv install 3.3.8`) the various ruby versions — 💡 Use [this PPA](https://launchpad.net/~instructure/+archive/ubuntu/ruby) to install it on older versions of Ubuntu Linux. Note that on debian-like distros, it is suggested to install rbenv with git because the one dsitributed as a deb package is outdated.
 - Docker with the so-called [compose version 2](https://docs.docker.com/compose/)
   - there is a [switch](https://github.com/docker/compose/issues/1123#issuecomment-1129313318) to flip in Docker Desktop for Mac for this.
   - The project assumes a working `docker compose` command. The old (Python-based) `docker-compose` might still work.
@@ -20,7 +20,8 @@ You need the following installed on your system to run this application in devel
   `TRANS_USER`, `TRANS_PASS`
 - If you kept the `USE_LOCAL_ELEMENTS` variable to true, you will also need
   - a directory where epfl elements will (or is already) cloned (`ELE_SRCDIR`);
-  - [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`) and `yarn` needed for building EPFL elements.
+  - [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`)
+    and `yarn` needed for building EPFL elements.
 
 ## Configuration and Secrets
 
@@ -51,14 +52,17 @@ available shortcuts.
 For the application to run we need to initialize several databases because
 it still includes the code for migrating from the legacy application which
 requires various databases to work.
- 1. restore the relevant parts of the legacy databases: `make restore`. For this
-    to work you need to have access to the legacy production server or to a
-    server that is allowed to access the various `dinfo` databases.
-    Setup a `peo11` endpoint in your `~/.ssh/config` file for the import script
-    to ssh into and dump the databases.
+ 1. restore the relevant parts of the legacy databases: `make restore`. There
+    is a dump of the relevant databases in the `dev/dumps` folder in keybase.
+    The `bin/restoredb.sh` script should use those dumps by default. It can also
+    create fresh dumps from the production servers (add `--force`) but this
+    requires access to a server that is allowed to connect to the various
+    `dinfo` databases such as the old `dinf1[12].epfl.ch` servers.
     Ideally, we should prepare a set of fake data instead but it is quite
     cumbersome.
  1. migrate and seed the local application database: `make seed`
+
+Optionally,
  1. only if you need to work on the admin interface for translation: `make locales`
  1. if for some reason you prefer to use the locak keycloak server: `make rekc`
  1. if you are working on the migration from the legacy application
