@@ -64,6 +64,7 @@ en:
   people:
     adopt:
       confirm: Publish the new version of my profile
+      confirm_from_edit_page: "Publish the new version (no way back!)"
       explain: 'New profile version: click to activate (irreversible operation)'
     admin_data:
       title: Administrative data

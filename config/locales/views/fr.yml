@@ -64,6 +64,7 @@ fr:
   people:
     adopt:
       confirm: Mettre en ligne la nouvelle version de mon profil
+      confirm_from_edit_page: "Publier la nouvelle version (opération irréversible)"
       explain: 'Nouvelle version du profil: cliquer pour l''activer (opération irréversible)'
     admin_data:
       title: Données administratives

@@ -34,10 +34,10 @@
         class: "btn btn-sm btn-secondary"
       ) %>
       <% # disable adoption button in edit page until NM confirmation %>
-      <% if false && @adoption && !@adoption.accepted %>
+      <% if @adoption && !@adoption.accepted %>
             <%= form_with(model: @adoption, class: 'form-inline ') do |form| %>
               <%= form.hidden_field :accepted, value: true %>
-              <%= form.submit t('people.adopt.confirm'), class: 'btn btn-sm btn-primary' %>
+              <%= form.submit t('people.adopt.confirm_from_edit_page'), class: 'btn btn-sm btn-primary' %>
             <% end %>
       <% end %>
       <%= link_to icon('help-circle'), help_ui_path(label: 'multilang'), method: :get, data: {turbo_stream: true, turbo_method:'get'} %>
