@@ -33,7 +33,8 @@
         target: '_blank',
         class: "btn btn-sm btn-secondary"
       ) %>
-      <% if @adoption && !@adoption.accepted %>
+      <% # disable adoption button in edit page until NM confirmation %>
+      <% if false && @adoption && !@adoption.accepted %>
             <%= form_with(model: @adoption, class: 'form-inline ') do |form| %>
               <%= form.hidden_field :accepted, value: true %>
               <%= form.submit t('people.adopt.confirm'), class: 'btn btn-sm btn-primary' %>
