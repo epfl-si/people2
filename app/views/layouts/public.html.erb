@@ -14,21 +14,23 @@
   </head>
 
   <body>
-    <%= yield :special_message %>
-    <%= render 'layouts/envbanner' unless Rails.env.production? %>
+    <div class="site d-flex flex-column min-vh-100">
+      <%= yield :special_message %>
+      <%= render 'layouts/envbanner' unless Rails.env.production? %>
+      </div>
+      <%= render "layouts/elements/header" %>
+
+      <div class="main-container pt-5">
+        <main id="main" class="content" role="main" >
+          <div class="container">
+          <%= yield %>
+          </div>
+        </main>
+      </div>
+
+      <%= render "layouts/elements/footer" %>
     </div>
-    <%= render "layouts/elements/header" %>
 
-    <div class="main-container pt-5">
-      <main id="main" class="content" role="main" >
-        <div class="container">
-        <%= yield %>
-        </div>
-      </main>
-
-
-    </div>
-    <%= render "layouts/elements/footer" %>
     <%= render "layouts/elements/foot" %>
     <%= yield :motd %>
   </body>
