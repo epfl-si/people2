@@ -17,7 +17,6 @@
     <div class="site d-flex flex-column min-vh-100">
       <%= yield :special_message %>
       <%= render 'layouts/envbanner' unless Rails.env.production? %>
-      </div>
       <%= render "layouts/elements/header" %>
 
       <div class="main-container pt-5">
