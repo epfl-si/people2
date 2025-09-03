@@ -27,6 +27,10 @@ epflapi_config: &epflapi_config
   legacy_photo_url: <%= Rails.configuration.legacy_base_url %>/cgi-bin/wsgetPhoto
   legacy_course_url:  <%= Rails.configuration.legacy_base_url %>/cgi-bin/getCoursData
 
+  # OASIS (new IS-A)
+  oasis_baseurl: "<%= ENV.fetch('OASIS_BASEURL', 'https://oasis-t.epfl.ch:8484') %>"
+  oasis_token: "<%= ENV.fetch('OASIS_TOKEN', '') %>"
+
   # CAMIPRO
   camipro_key: <%= ENV.fetch("CAMIPRO_PHOTO_KEY", nil) %>
   camipro_host: <%= ENV.fetch("CAMIPRO_PHOTO_HOST", "camipro-photos.epfl.ch") %>
