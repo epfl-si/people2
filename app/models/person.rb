@@ -65,12 +65,18 @@ class Person
       raise ActiveRecord::RecordNotFound if data.nil?
 
       r = new(data)
-      Work::Sciper.create(
-        sciper: r.sciper,
-        status: Work::Sciper::STATUS_AUTOMATIC,
-        email: e,
-        name: r.name.display
-      )
+      s = Work::Sciper.where(sciper: r.sciper).first
+      if s.present?
+        s.email = r.email
+        s.save
+      else
+        Work::Sciper.create(
+          sciper: r.sciper,
+          status: Work::Sciper::STATUS_AUTOMATIC,
+          email: e,
+          name: r.name.display
+        )
+      end
       r
     end
   end
