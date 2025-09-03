@@ -70,6 +70,7 @@ fr:
       title: Données administratives
       sciper: Numéro SCIPER
       sap: SAP ID
+      nebis: Nebis ID
       username: Nom d'utilisateur
       gid: GID
       uid: UID

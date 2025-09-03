@@ -26,14 +26,16 @@ class Adoption < ApplicationRecord
   end
 
   # Fetch html profile from legacy server and rewrite edit link so it points to the new app
-  def content(locale, force: false)
+  def content(locale, admin_data_html: nil, force: false)
     profile = Profile.for_sciper(sciper)
     r = Regexp.new('href="/([a-z0-9\-.]+)/edit')
-    if profile.present?
-      legacy_content(locale, force: force).gsub(r, "href=\"/profiles/#{profile.id}/edit\"")
-    else
-      legacy_content(locale, force: force).gsub(r, "href=\"/people/#{sciper}/profile/new\"")
-    end
+    res = if profile.present?
+            legacy_content(locale, force: force).gsub(r, "href=\"/profiles/#{profile.id}/edit\"")
+          else
+            legacy_content(locale, force: force).gsub(r, "href=\"/people/#{sciper}/profile/new\"")
+          end
+    res.sub!('<!-- %%%%% ADMIN_DATA_HERE %%%%% -->', admin_data_html) if admin_data_html.present?
+    res
   end
 
   def reimport
