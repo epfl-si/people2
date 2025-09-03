@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  establish_connection :work
   include Translatable
-  translates :title, :language
+  translates :title, :description
 
   # has_and_belongs_to_many :teachers, join_table: "teacherships", foreign_key: "profile_id"
-  has_many :teacherships, class_name: "Teachership", dependent: :destroy
+  # has_many :teacherships, class_name: "Teachership", dependent: :destroy
 
   def self.current_academic_year(d = Time.zone.today)
     y = d.year

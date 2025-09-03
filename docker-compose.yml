@@ -165,6 +165,8 @@ services:
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
       ISA_URL: ${ISA_URL:-https://isa-test.epfl.ch/services}
       OFFLINE_CACHEDIR: "/srv/filecache"
+      OASIS_BASEURL: "${OASIS_BASEURL:-https://oasis-t.epfl.ch:8484}"
+      OASIS_TOKEN: "${OASIS_BEARER}"
 
       # --> ollama.yml
       OLLAMA_URL: http://${DOCKER_IP}:11434

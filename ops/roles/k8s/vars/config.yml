@@ -82,7 +82,8 @@ people_secrets:
   ENTRA_SECRET: "{{ _secrets.entra_oidc.secret | b64encode }}"
   EPFLAPI_PASSWORD: "{{ _secrets.api.password | b64encode }}"
   CAMIPRO_PHOTO_KEY: "{{ _secrets.camipro_photo_key | b64encode }}"
-
+  OASIS_BASEURL: "{{ _secrets.oasis.baseurl | b64encode }}"
+  OASIS_TOKEN: "{{ _secrets.oasis.token | b64encode }}"
   SECRET_KEY_BASE: "{{ _secrets.secret_key_base | b64encode }}"
 
 people_config_signature: "{{ people_config | to_json | md5 }}"
