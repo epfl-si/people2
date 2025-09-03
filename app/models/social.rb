@@ -61,7 +61,7 @@ class Social < ApplicationRecord
     },
     {
       tag: 'scopus',
-      img: 'scopus.png',
+      img: 'social/scopus.png',
       url_pattern: 'https://www.scopus.com/authid/detail.uri?authorId=XXX',
       placeholder: '23049566200',
       label: 'Scopus ID',
