@@ -7,6 +7,7 @@ class PeopleController < ApplicationController
 
   def show
     check_for_redirect and return
+    set_base_data
     Rails.configuration.enable_adoption and proxy_orphan and return
 
     set_show_data
@@ -40,6 +41,7 @@ class PeopleController < ApplicationController
         @adoption.previewed = true
         @adoption.save
         @special_partial = 'adopt'
+        set_base_data
         set_show_data
         render 'people/show'
       else
@@ -52,7 +54,15 @@ class PeopleController < ApplicationController
       m = Adoption.not_yet(params[:sciper_or_name])
       if m.present?
         respond_to do |format|
-          format.html { render plain: m.content(I18n.locale) }
+          format.html do
+            admin_data_html = if @admin_data
+                                PeopleController.render(
+                                  partial: 'people/admin_data_for_legacy',
+                                  assigns: { admin_data: @admin_data }
+                                )
+                              end
+            render plain: m.content(I18n.locale, admin_data_html: admin_data_html)
+          end
           # we assume vcf from new app are ok
           format.vcf do
             set_base_data
@@ -109,8 +119,6 @@ class PeopleController < ApplicationController
   end
 
   def set_show_data
-    set_base_data
-
     @page_title = "EPFL - #{@person.name.display}"
 
     # teachers are supposed to all have a profile

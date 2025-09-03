@@ -1,23 +1,21 @@
-<section >
+<section>
   <header class="collapse-title collapse-title-desktop collapsed" data-toggle="collapse" data-target="#admin-data" aria-expanded="false" aria-controls="admin-data">
-	  <p><%= t ".admin_data.title" %></p>
+	  <p><%= t ".title" %></p>
   </header>
   <div class="collapse collapse-item collapse-item-desktop" id="admin-data">
 		<dl class="definition-list definition-list-grid data-list">
-			<dt><%= t ".admin_data.sciper" %></dt>
+			<dt><%= t ".sciper" %></dt>
 			<dd><%= @admin_data.sciper %></dd>
-			<dt><%= t ".admin_data.sap" %></dt>
-			<dd>NA</dd>
-			<dt><%= t ".admin_data.username" %></dt>
+			<dt><%= t ".sap" %></dt>
+			<dd><%= @admin_data.sapid %></dd>
+			<dt><%= t ".nebis" %></dt>
+			<dd><%= @admin_data.nebis %></dd>
+			<dt><%= t ".username" %></dt>
 			<dd><%= @admin_data.username %></dd>
-			<dt><%= t ".admin_data.gid" %></dt>
+			<dt><%= t ".gid" %></dt>
 			<dd><%= @admin_data.gid %></dd>
-			<dt><%= t ".admin_data.uid" %></dt>
-			<dd><%= @admin_data.uid %></dd>
-			<dt><%= t ".admin_data.home" %></dt>
+			<dt><%= t ".home" %></dt>
 			<dd><%= @admin_data.home %></dd>
-			<dt><%= t ".admin_data.shell" %></dt>
-			<dd><%= @admin_data.shell %></dd>
 		</dl>
   </div>
 </section>
