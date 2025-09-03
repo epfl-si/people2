@@ -16,6 +16,8 @@ class APIPersonGetter < APIBaseGetter
       :query, :email,
       # persid(str list): id of one or many persons
       :persid,
+      # persid(str list): id of one or many persons
+      :ids,
       # unitid(int list): id of one or many units where persons are accredited
       :unitid,
       # isaccredited(int): to show only accredited persons, only usefull when not providing any unitid

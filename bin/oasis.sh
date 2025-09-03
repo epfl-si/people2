@@ -2,7 +2,8 @@
 # set -x
 # Wrapper script for http queries to the new Oasis server
 # that is going to replace ISA
-
+# oasis prod: https://oasis.epfl.ch:8484
+# oasis test: https://oasis-t.epfl.ch:8484
 . ./.env
 . ${SECFILE}
 BASE=${OASIS_BASEURL:-https://oasis-t.epfl.ch:8484}

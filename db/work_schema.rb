@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2028_06_25_123223) do
+ActiveRecord::Schema[8.0].define(version: 2028_06_25_123225) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
@@ -37,6 +37,36 @@ ActiveRecord::Schema[8.0].define(version: 2028_06_25_123223) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["text_id"], name: "index_ai_translations_on_text_id"
+  end
+
+  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "acad", limit: 16, null: false
+    t.string "code", limit: 16, null: false
+    t.string "lang", limit: 2
+    t.string "title_en"
+    t.string "title_fr"
+    t.text "description_en"
+    t.text "description_fr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["acad", "code"], name: "index_courses_on_acad_and_code", unique: true
+    t.index ["code"], name: "index_courses_on_code"
+  end
+
+  create_table "phds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "sciper", null: false
+    t.string "director_sciper"
+    t.string "codirector_sciper"
+    t.string "name"
+    t.string "cursus"
+    t.integer "thesis_number"
+    t.string "thesis_title"
+    t.date "date"
+    t.integer "year", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["codirector_sciper"], name: "index_phds_on_codirector_sciper"
+    t.index ["director_sciper"], name: "index_phds_on_director_sciper"
   end
 
   create_table "scipers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
