@@ -1,4 +1,5 @@
-<section>
+<section class="mt-5">
+<% if @admin_data.present? %>
   <header class="collapse-title collapse-title-desktop collapsed" data-toggle="collapse" data-target="#admin-data" aria-expanded="false" aria-controls="admin-data">
 	  <p><%= t ".title" %></p>
   </header>
@@ -18,4 +19,11 @@
 			<dd><%= @admin_data.home %></dd>
 		</dl>
   </div>
+<% else %>
+  <% unless authenticated? %>
+    <%= button_to icon_text('use', t('.login')), new_session_path,
+      method: :get, data: { turbo: false }, class: "btn btn-link"
+    %>
+  <% end %>
+<% end %>
 </section>

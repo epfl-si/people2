@@ -55,13 +55,11 @@ class PeopleController < ApplicationController
       if m.present?
         respond_to do |format|
           format.html do
-            admin_data_html = if @admin_data
-                                PeopleController.render(
-                                  partial: 'people/admin_data_for_legacy',
-                                  assigns: { admin_data: @admin_data }
-                                )
-                              end
-            render plain: m.content(I18n.locale, admin_data_html: admin_data_html)
+            adh = PeopleController.render(
+              partial: 'people/admin_data_for_legacy',
+              assigns: { admin_data: @admin_data, authenticated: authenticated? }
+            )
+            render plain: m.content(I18n.locale, admin_data_html: adh)
           end
           # we assume vcf from new app are ok
           format.vcf do
@@ -105,7 +103,7 @@ class PeopleController < ApplicationController
     # @profile will be null if @person is not allowed to have a profile
     @profile = @person&.profile!
 
-    @admin_data = Current.audience > AudienceLimitable::WORLD ? @person.admin_data : nil
+    @admin_data = allowed_to?(:show_admin_data?, @person) ? @person.admin_data : nil
 
     Current.gender = @person.gender
 
