@@ -58,6 +58,8 @@ legacy:
   data_size: "2Gi"
 
 people:
+  app_replicas: "{{ APP_REPLICAS | default('1') | int }}"
+  job_replicas: "{{ JOB_REPLICAS | default('0') | int }}"
   visibility: "{{ APP_VISIBILITY | default('private') }}"
   api_url: "{{ EPFLAPI_BACKEND_URL | default('https://api.epfl.ch/v1') }}"
   camipro_host: "{{ CAMIPRO_PHOTO_HOST | default('camipro-photos.epfl.ch') }}"

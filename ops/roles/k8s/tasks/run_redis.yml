@@ -24,7 +24,7 @@
             containers:
               - name: redis
                 image: "{{ redis.image }}"
-                command: ["valkey-server", "--maxmemory", "{{ redis.memory }}mb", "--save", "{{ redis.save.time }}", "{{ redis.save.data }}"]
+                command: ["valkey-server", "--maxmemory", "{{ redis.memory }}mb", "--save", "{{ redis.save.time | string }}", "{{ redis.save.data | string }}"]
                 ports:
                   - containerPort: 6379 # ANSIBLE+K8S=PURE SHIT! "{{ redis.port | int }}"
                 resources: "{{ helpers.resources }}"
