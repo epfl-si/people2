@@ -1,6 +1,7 @@
 ---
 
 - name: Deploy the main people webapp
+  when: people.app_replicas | int > 0
   kubernetes.core.k8s:
     state: present
     definition:
@@ -10,7 +11,7 @@
         name: "{{ kid.app }}"
         namespace: "{{ namespace }}"
       spec:
-        replicas: 1
+        replicas: "{{ people.app_replicas | int }}"
         selector:
           matchLabels:
             kid: "{{ kid.app }}"
@@ -69,6 +70,7 @@
 # Job supervisor could be a container in the app pod.
 # I keep it separate because we may need fewer replicas.
 - name: Deploy the job supervisor
+  when: people.job_replicas | int > 0
   kubernetes.core.k8s:
     state: present
     definition:
@@ -78,7 +80,7 @@
         name: "{{ kid.jobs }}"
         namespace: "{{ namespace }}"
       spec:
-        replicas: 1
+        replicas: "{{ people.job_replicas | int }}"
         selector:
           matchLabels:
             kid: "{{ kid.jobs }}"
