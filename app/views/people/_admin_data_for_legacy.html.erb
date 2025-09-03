@@ -1,3 +1,4 @@
+<% if @admin_data.present? %>
 <button class="collapse-title collapse-title-desktop collapsed" type="button" data-toggle="collapse"  onclick="toggleVis('admin-data')">
   <span style="font-size:small; font-weight: normal;"><%= t "people.admin_data.title" %></span>
 </button>
@@ -17,3 +18,10 @@
 			<dd><%= @admin_data.home %></dd>
   </dl>
 </div>
+<% else %>
+  <% unless @authenticated %>
+    <%= button_to icon_text('use', t('people.admin_data.login')), new_session_path,
+      method: :get, data: { turbo: false }, class: "btn btn-link"
+    %>
+  <% end %>
+<% end %>

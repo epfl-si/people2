@@ -68,6 +68,7 @@ fr:
       explain: 'Nouvelle version du profil: cliquer pour l''activer (opération irréversible)'
     admin_data:
       title: Données administratives
+      login: Se connecter pour les Données administratives
       sciper: Numéro SCIPER
       sap: SAP ID
       nebis: Nebis ID

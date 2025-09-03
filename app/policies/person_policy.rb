@@ -11,8 +11,14 @@ class PersonPolicy < ApplicationPolicy
   end
 
   # TODO: should be restrict to people working at 1234 or to VPSI people ?
+  # We have restored admin_data. For the moment we disable atari
   def show_atari?
-    user.present?
+    # user.present?
+    false
+  end
+
+  def show_admin_data?
+    (Current.audience > AudienceLimitable::WORLD) && user.present?
   end
 
   def show_personal_data?

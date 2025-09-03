@@ -52,7 +52,7 @@
     <% @side_zone_bbs&.each do |section, boxes| %>
       <%= render partial: "section", locals: {section: section, boxes: boxes, sortable: false} %>
     <% end %>
-    <%= render "admin_data" if @admin_data %>
+    <%= render "admin_data" %>
   </div>
   <div class="people-contacts col-md-6 col-lg-8">
     <h1 class="mb-3"><%= @person.name.display %></h1>
