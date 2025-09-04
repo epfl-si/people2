@@ -61,7 +61,7 @@ class Person
     if s.present?
       find_by_sciper(s.sciper, force: force)
     else
-      data = APIPersonGetter.call!(email: email, single: false, force: force).select { |v| v['email'] == e }.first
+      data = APIPersonGetter.call!(email: e, single: false, force: force).select { |v| v['email'] == e }.first
       raise ActiveRecord::RecordNotFound if data.nil?
 
       r = new(data)
@@ -242,8 +242,14 @@ class Person
 
   # TODO: check if this is always the case as there might be issues with people
   #       changing name, with modified usual names etc.
+  # TODO: The hack for non-standard e-mail exposes sciper address but the page
+  #       is only reacheable using the sciper...
   def email_user
-    email.gsub(/@.*$/, '')
+    if email =~ /^[a-z-]+\.[a-z-]+/i
+      email.gsub(/@.*$/, '')
+    else
+      sciper
+    end
   end
 
   def option(key)
