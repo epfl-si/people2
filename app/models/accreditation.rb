@@ -194,7 +194,9 @@ class Accreditation
 
     @visibility[audience] = botweb? &&
                             (prefs.present? ? prefs.visible_by?(audience) : true) &&
-                            !(Rails.configuration.hide_teacher_accreds && @position.enseignant?)
+                            !(Rails.configuration.hide_teacher_accreds &&
+                              @position.enseignant?
+                             )
   end
 
   # def hidden?

@@ -97,8 +97,13 @@ class PeopleController < ApplicationController
     @sciper = @person&.sciper
     compute_audience(@sciper)
 
-    @accreds = @person.accreditations.select { |a| a.visible_by?(Current.audience) }.sort
-    raise ActiveRecord::RecordNotFound if @accreds.empty?
+    @accreds = @person.accreditations
+    if @accreds.count > 1
+      @accreds.select { |a| a.visible_by?(Current.audience) }.sort
+      raise ActiveRecord::RecordNotFound if @accreds.empty?
+    else
+      raise ActiveRecord::RecordNotFound unless @accreds.first&.botweb?
+    end
 
     # @profile will be null if @person is not allowed to have a profile
     @profile = @person&.profile!
