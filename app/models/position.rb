@@ -53,7 +53,8 @@ class Position
     ENS_RE.match(@label_frm)
   end
 
+  PE_RE = /^Professeur honoraire/
   def professor_emeritus?
-    @label_frm == "Professeur honoraire"
+    PE_RE.match(@label_frm)
   end
 end
