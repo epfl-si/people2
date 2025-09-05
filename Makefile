@@ -522,7 +522,7 @@ prod_deploy:
 
 ## Redeploy app to prod cluter with next config (names changed in test)
 next_deploy:
-	cd ops && ./possible.sh --next -t config.env -t run.app
+	cd ops && ./possible.sh --next -t run.app
 
 ## Build, tag and deploy app to production
 prod: prod_push prod_deploy
