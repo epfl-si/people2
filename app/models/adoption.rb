@@ -77,7 +77,8 @@ class Adoption < ApplicationRecord
     uri = URI.join(Rails.configuration.legacy_base_url, path)
     uri.query = "lang=#{locale}"
     body = Net::HTTP.get(uri)
-    body.gsub(
+    dbody = Legacy.char_deshit(body)
+    dbody.gsub(
       Regexp.new('(src|href)="/(private/common|images|js|css)/'),
       "\\1=\"#{Rails.configuration.legacy_base_url}/\\2/"
     )

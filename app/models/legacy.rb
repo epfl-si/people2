@@ -70,6 +70,10 @@ module Legacy
     c.gsub!(/<br>\s*$/, "")
     c.gsub!(%r{</?div>}, "")
 
+    char_deshit(c)
+  end
+
+  def self.char_deshit(c)
     # d = CharlockHolmes::EncodingDetector.detect(c)
     # if d.nil? || d[:confidence] < 95
     #   Rails.logger.debug("Slow deshittification required for: #{c.truncate(60)}")
