@@ -77,6 +77,7 @@ en:
       uid: UID
       home: Home directory
       shell: Shell
+      distros: Automatic distribution lists for %{name}
     contact:
       nationality_label: Nationality
       nav:
