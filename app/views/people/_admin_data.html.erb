@@ -18,10 +18,11 @@
 			<dt><%= t ".home" %></dt>
 			<dd><%= @admin_data.home %></dd>
 		</dl>
+		<%= link_to t("people.admin_data.distros", name: @profile.name.display), "https://cadiwww.epfl.ch/listes?sciper=#{@admin_data.sciper}", target: 'blank' %>
   </div>
 <% else %>
   <% unless authenticated? %>
-    <%= button_to icon_text('use', t('.login')), new_session_path,
+    <%= button_to icon_text('use', t('.title')), new_session_path,
       method: :get, data: { turbo: false }, class: "btn btn-link"
     %>
   <% end %>

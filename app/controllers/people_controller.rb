@@ -57,7 +57,7 @@ class PeopleController < ApplicationController
           format.html do
             adh = PeopleController.render(
               partial: 'people/admin_data_for_legacy',
-              assigns: { admin_data: @admin_data, authenticated: authenticated? }
+              assigns: { admin_data: @admin_data, name: @person.name.display, authenticated: authenticated? }
             )
             render plain: m.content(I18n.locale, admin_data_html: adh)
           end
