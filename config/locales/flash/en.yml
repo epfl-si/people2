@@ -38,6 +38,8 @@ en:
         personal_web_url_error: Error while updating your personal web
         nationality_success: Nationality updated successfully
         nationality_error: Error while updating your nationality
+    socials:
+      automatic: Could not retrive your id, please check you have one and try again later
     usual_name_changes:
       create:
         error: The request for usual name change could not be sent

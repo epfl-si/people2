@@ -52,7 +52,7 @@ module Flashable
   end
 
   # There must be a way to do an equivalent thing for turbo stream but it is more
-  # difficult because it involves rendering the flash partiaal before knowing the
+  # difficult because it involves rendering the flash partial before knowing the
   # response.status. Therefore, for the moment I just call this helper manually
   # and have to turbo_stream.replace("flash-messages", partial: "shared/flash")
   # while rendering
