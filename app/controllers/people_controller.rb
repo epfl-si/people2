@@ -99,7 +99,8 @@ class PeopleController < ApplicationController
 
     @accreds = @person.accreditations
     if @accreds.count > 1
-      @accreds.select { |a| a.visible_by?(Current.audience) }.sort
+      @accreds.select! { |a| a.visible_by?(Current.audience) }
+      @accreds.sort!
       raise ActiveRecord::RecordNotFound if @accreds.empty?
     else
       raise ActiveRecord::RecordNotFound unless @accreds.first&.botweb?
