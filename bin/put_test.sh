@@ -10,17 +10,37 @@ set -x
 BASE=${API_BASEURL:-https://api.epfl.ch/v1}
 
 ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)
-AUTH="--basic --user people:${EPFLAPI_PASSWORD}"
+# AUTH="--basic --user people:${EPFLAPI_PASSWORD}"
+
+# curl -X 'GET' \
+#   'https://api-test.epfl.ch/v1/persons/121769' \
+#    -H "authorization: Basic ${ENCPAS}" \
+#    -H 'accept: application/json'
+# exit
+
+# curl -X 'PATCH' \
+#    'https://api.epfl.ch/v1/persons/121769' \
+#    -H "authorization: Basic ${ENCPAS}" \
+#    -H 'accept: application/json' \
+#    -H 'Content-Type: application/json' \
+#    -d '{
+#     "firstnameusual":"Giovanni",
+#     "lastnameusual": "Cangiani",
+#     "genderusual": "M"
+#    }'
+
+
 curl -X 'PUT' \
-   'https://api-test.epfl.ch/v1/persons/121769' \
+   'https://api.epfl.ch/v1/persons/121769' \
    -H "authorization: Basic ${ENCPAS}" \
    -H 'accept: application/json' \
    -H 'Content-Type: application/json' \
    -d '{
-    "firstname":"Giovanni",
+    "firstname":"Giovanni Carlo",
     "lastname":"Cangiani",
+    "birthdate":"1969-08-20T00:00:00",
+    "gender":"M",
     "firstnameusual":"Giovanni",
-    "lastnameusual": "Cangiani",
-    "gender": "M",
-    "genderusual": "M"
+    "lastnameusual":"Cangiani",
+    "genderusual ":"M"
    }'

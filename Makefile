@@ -53,6 +53,7 @@ up: traefik tunnel_up dcup
 ## restart the webapp container
 reload: envcheck
 	docker compose stop webapp
+	if [ -f tmp/pids/server.pid ] ; then rm tmp/pids/server.pid ; fi
 	KILLPID=1 docker compose up -d
 
 ## restart puma withoud taking down the running container (in case of changes in gem's code within the container)
