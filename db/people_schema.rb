@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2028_06_25_123224) do
+ActiveRecord::Schema[8.0].define(version: 2028_06_25_123225) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -340,11 +340,11 @@ ActiveRecord::Schema[8.0].define(version: 2028_06_25_123224) do
   create_table "publications", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id", null: false
     t.text "title", null: false
-    t.string "url"
+    t.string "url", limit: 1024
     t.text "authors", null: false
     t.integer "year"
     t.integer "position", null: false
-    t.string "journal", null: false
+    t.string "journal", limit: 1024, null: false
     t.integer "visibility", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
