@@ -77,14 +77,16 @@ class LegacyProfileImportJob < ApplicationJob
 
   def perform(scipers)
     scipers = [scipers] unless scipers.is_a?(Array)
+    any_failed = false
     scipers.each do |sciper|
       do_perform(sciper)
     rescue StandardError => e
       p = Profile.for_sciper(sciper)
       p.destroy
-      Rails.logger.error("Failed to import profile for sciper: #{sciper}")
-      raise e
+      Rails.logger.error("Failed to import profile for sciper: #{sciper} => #{e.inspect}")
+      any_failed = true
     end
+    raise "Failed to import legacy profile(s)" if any_failed
   end
 
   # Give a second chanche to model by nullifying all its fields
