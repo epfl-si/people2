@@ -35,9 +35,12 @@ class SocialsController < ApplicationController
     if @social.save
       set_socials
       turbo_flash(:success)
+    elsif @social.automatic?
+      turbo_flash(:error, message: "flash.socials.automatic")
+      render "shared/flash"
     else
       turbo_flash(:error)
-      render :new_step2, status: :unprocessable_entity
+      render(:new_step2, status: :unprocessable_entity)
     end
   end
 
@@ -45,9 +48,12 @@ class SocialsController < ApplicationController
   def update
     if @social.update(social_params)
       turbo_flash(:success)
+    elsif @social.automatic?
+      turbo_flash(:error, message: "flash.socials.automatic")
+      render "shared/flash"
     else
       turbo_flash(:error)
-      render :edit_step2, status: :unprocessable_entity
+      render(:new_step2, status: :unprocessable_entity)
     end
   end
 
@@ -80,8 +86,8 @@ class SocialsController < ApplicationController
         turbo_flash(:success)
         render :create
       else
-        turbo_flash(:error)
-        render :new_step2, status: :unprocessable_entity
+        turbo_flash(:error, message: "flash.socials.automatic")
+        render "shared/flash"
       end
     else
       render :new_step2

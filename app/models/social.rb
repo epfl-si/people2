@@ -177,9 +177,9 @@ class Social < ApplicationRecord
   belongs_to :profile, class_name: "Profile", inverse_of: :socials
 
   before_validation :sanitize_value
-  before_save :fetch_value, if: -> { automatic? }
+  before_validation :fetch_value, if: -> { automatic? }
 
-  validates :value, presence: true, unless: -> { automatic? }
+  validates :value, presence: true # , unless: -> { automatic? }
   validate :validate_format_of_value, unless: -> { automatic? }
   validate :url_actually_exists, unless: -> { automatic? }
   validates :tag, presence: true, uniqueness: { scope: :profile_id }, inclusion: { in: RESEARCH_IDS.keys }
@@ -210,8 +210,11 @@ class Social < ApplicationRecord
   end
 
   def url
-    v = value.presence || placeholder
-    url_pattern&.sub('XXX', v)
+    if value.present?
+      url_pattern&.sub('XXX', value)
+    else
+      (persisted? ? nil : url_prefix)
+    end
   end
 
   def url_prefix
@@ -230,6 +233,10 @@ class Social < ApplicationRecord
     define_method(m) do
       specs&.send(m.to_sym)
     end
+  end
+
+  def sciper
+    @sciper ||= profile.sciper
   end
 
   private
@@ -259,11 +266,9 @@ class Social < ApplicationRecord
     raise NotImplementedError unless respond_to?(m, :include_private)
 
     v = send(m)
+    return unless v.present? && (!persisted? || updated_at < AUTO_MAX_AGE.ago)
 
-    dir = persisted? && (self[:value] != v || updated_at < AUTO_MAX_AGE.ago)
-    self.value = v
-    save if dir
-    v
+    self[:value] = v
   end
 
   def validate_format_of_value
@@ -282,10 +287,6 @@ class Social < ApplicationRecord
   # TODO: fire a request to the url and check if it actually exist
   def url_actually_exists
     true
-  end
-
-  def sciper
-    @sciper ||= profile.sciper
   end
 
   def fetch_orcid
