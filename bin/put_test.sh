@@ -29,18 +29,20 @@ ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)
 #     "genderusual": "M"
 #    }'
 
+curl -X PATCH https://api.epfl.ch/v1/persons/121769 -H "authorization: Basic ${ENCPAS}" -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"firstnameusual":"Giovanni","lastnameusual":"Cangiani","genderusual":"M"}'
 
-curl -X 'PUT' \
-   'https://api.epfl.ch/v1/persons/121769' \
-   -H "authorization: Basic ${ENCPAS}" \
-   -H 'accept: application/json' \
-   -H 'Content-Type: application/json' \
-   -d '{
-    "firstname":"Giovanni Carlo",
-    "lastname":"Cangiani",
-    "birthdate":"1969-08-20T00:00:00",
-    "gender":"M",
-    "firstnameusual":"Giovanni",
-    "lastnameusual":"Cangiani",
-    "genderusual ":"M"
-   }'
+
+# curl -X 'PUT' \
+#    'https://api.epfl.ch/v1/persons/121769' \
+#    -H "authorization: Basic ${ENCPAS}" \
+#    -H 'accept: application/json' \
+#    -H 'Content-Type: application/json' \
+#    -d '{
+#     "firstname":"Giovanni Carlo",
+#     "lastname":"Cangiani",
+#     "birthdate":"1969-08-20T00:00:00",
+#     "gender":"M",
+#     "firstnameusual":"Giovanni",
+#     "lastnameusual":"Cangiani",
+#     "genderusual ":"M"
+#    }'
