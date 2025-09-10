@@ -18,7 +18,7 @@
 			<dt><%= t ".home" %></dt>
 			<dd><%= @admin_data.home %></dd>
 		</dl>
-		<%= link_to t("people.admin_data.distros", name: @profile.name.display), "https://cadiwww.epfl.ch/listes?sciper=#{@admin_data.sciper}", target: 'blank' %>
+		<%= link_to t("people.admin_data.distros", name: @person.name.display), "https://cadiwww.epfl.ch/listes?sciper=#{@admin_data.sciper}", target: 'blank' %>
   </div>
 <% else %>
   <% unless authenticated? %>
