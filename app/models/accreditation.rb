@@ -34,10 +34,22 @@ class Accreditation
 
     # TODO: check if using status where position is not provided makes sense
     # TODO: inclusive position (at least for students)
-    posdata = data.delete('position') || {
-      'labelen' => @status_label_en,
-      'labelfr' => @status_label_fr,
-    }
+    posdata = data.delete('position')
+    if posdata.nil?
+      posdata = if student?
+                  {
+                    "labelfr" => "Etudiant",
+                    "labelen" => "Student",
+                    "labelxx" => "Etudiante",
+                    "labelinclusive" => "Etudiante/Etudiant",
+                  }
+                else
+                  data.delete('position') || {
+                    'labelen' => @status_label_en,
+                    'labelfr' => @status_label_fr,
+                  }
+                end
+    end
     @position = Position.new(posdata)
     @prefs = nil
   end

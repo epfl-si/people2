@@ -25,8 +25,7 @@ class APIPersonUpdater
     res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
       http.request(req)
     end
-    case res
-    when Net::HTTPSuccess, Net::HTTPRedirection
+    if res.is_a?(Net::HTTPOK) || res.is_a?(Net::HTTPSuccess)
       true
     else
       res.error!
