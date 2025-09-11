@@ -28,7 +28,7 @@ class FunctionChangesController < ApplicationController
         ProfileChangeMailer.with(
           function_change: @function_change,
           accreditor_sciper: as
-        ).accreditor_request.deliver_later
+        ).function_change_request.deliver_later
       end
       turbo_flash(:success)
     else
