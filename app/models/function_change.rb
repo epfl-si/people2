@@ -53,6 +53,8 @@ class FunctionChange < ApplicationRecord
     accreditation_id.split(":").last
   end
 
+  delegate :unit_name, to: :accreditation
+
   def person
     Person.find(sciper)
   end
