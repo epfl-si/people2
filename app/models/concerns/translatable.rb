@@ -63,9 +63,9 @@ module Translatable
     langs = [primary_lang] + fallback_lang
 
     if respond_to?("#{attribute}_en")
-      langs.map { |l| send("#{attribute}_#{l}") }.compact.first
+      langs.map { |l| send("#{attribute}_#{l}") }.delete_if(&:blank?).first
     else
-      langs.map { |l| instance_variable_get("@#{attribute}_#{l}") }.compact.first
+      langs.map { |l| instance_variable_get("@#{attribute}_#{l}") }.delete_if(&:blank?).first
     end
   end
 
