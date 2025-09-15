@@ -119,7 +119,7 @@
                   # claim name MUST NOT be changed (see storage.yml for details)
                   claimName: people-storage
 
-- name: Deploy the legacy app proxy (or static scrapped version)
+- name: Deploy the legacy app proxy (or static scraped version)
   kubernetes.core.k8s:
     state: present
     definition:
@@ -152,7 +152,7 @@
                   - name: "{{ kid.legacy }}-cache"
                     mountPath: /tmp/cache
             volumes:
-              # TODO: we'll have to provide a persistent storage if we decide to serve static scrapped versions
+              # TODO: we'll have to provide a persistent storage if we decide to serve static scraped versions
               - name: "{{ kid.legacy }}-cache"
                 emptyDir:
                   sizeLimit: 5Gi
