@@ -41,6 +41,7 @@ test:
     username: people
     password: mariadb
     database: cv
+    replica: true
 
 # 12 factor in production
 production:

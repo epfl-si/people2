@@ -57,4 +57,8 @@ class Position
   def professor_emeritus?
     PE_RE.match(@label_frm)
   end
+
+  def enseignant_but_not_emeritus?
+    enseignant? && !professor_emeritus?
+  end
 end
