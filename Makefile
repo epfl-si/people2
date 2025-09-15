@@ -256,6 +256,13 @@ $(ELE_DSTDIR)/%.css: $(ELE_SRCDIR)/dist/css/%.css
 
 # $(ELE_SRCDIR)/dist/css/*.css: elements_build
 
+.REMOVE_ON_ERROR: tmp/courses.json
+tmp/courses.json:
+	@set -x; case "$(DUMPDIR)" in                                                \
+	   /keybase/*) keybase fs read $(DUMPDIR)/courses.json.gz | gzip -dc > $@ ;; \
+	  *) gzip -dc "$(DUMPDIR)"/courses.json.gz > $@ ;;                           \
+	esac
+
 ## --------------------------------------------------------------------- Testing
 .PHONY: test testup test-system
 
@@ -343,7 +350,7 @@ scipers: dcup
 	$(RAKE) legacy:reload_scipers
 
 ## run rails migration and seed with initial data (does not include legacy-migration-related tasks)
-seed: migrate structs scipers courses
+seed: migrate structs scipers courses tmp/courses.json
 	$(RAKE) db:seed
 
 # retrive struct files from keybase
