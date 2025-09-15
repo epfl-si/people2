@@ -86,7 +86,7 @@ module People
     # which will probably become config maps
 
     # ENV vars that are read by files in environments/*.rb
-    # development: REDIS_CACHE, SHOW_ERROR_PAGES
+    # development: REDIS_CACHE
     # production: RAILS_LOG_LEVEL
     # db/seed.rb: DEV_SEEDS_PATH, SEEDS_PATH
 
