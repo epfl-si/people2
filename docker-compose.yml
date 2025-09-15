@@ -142,7 +142,6 @@ services:
       # DEV_SEEDS_PATH: db/seeds_dev/data
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-false}
       RAILS_DEVELOPMENT_HOSTS: ${RAILS_DEVELOPMENT_HOSTS:-people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}}
-      SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-false}
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
