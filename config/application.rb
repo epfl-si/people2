@@ -46,6 +46,10 @@ module People
     # config.active_storage.variant_processor = :mini_magick
     config.active_storage.variant_processor = :vips
 
+    config.consider_all_requests_local = false
+    # ... but see also ApplicationController#rescue_with_handler in
+    # ../app/controllers/application_controller.rb
+
     # -------------------------------------------------------------
     # Custom generic app configs: everything from ENV with defaults
     # Use as Rails.configuration.KEY
