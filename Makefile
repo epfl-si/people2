@@ -26,7 +26,7 @@ NOCIMAGE ?= jonlabelle/network-tools
 # resolved as 127.0.0.1 like for all Giovanni's domains with glob ssl certs.
 DOCKER_IP ?= $(shell docker run -it --rm $(NOCIMAGE) dig +short host.docker.internal)
 
-DUMPDIR ?= tmp/dbdumps
+DUMPDIR ?= $(KBPATH)/dev/dumps
 
 KCDUMPFILE ?= $(DUMPDIR)/keycloak.sql
 
