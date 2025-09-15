@@ -35,7 +35,7 @@
         storageClassName: ocs-storagecluster-cephfs
         volumeMode: Filesystem
 
-- name: Ensure PVC for legacy data (legacy pages scrapped in advance)
+- name: Ensure PVC for legacy data (legacy pages scraped in advance)
   kubernetes.core.k8s:
     state: present
     definition:

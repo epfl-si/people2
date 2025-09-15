@@ -25,7 +25,7 @@
           key: ROOT_PASSWORD
           generate: false
         metrics:
-          enabled: false
+          enabled: true
           exporter:
             # TODO: configure with vars
             image: quay-its.epfl.ch/svc0041/mysqld-exporter:v0.15.1
@@ -36,49 +36,3 @@
         myCnf: |
           [mariadb]
           max-connections=300
-
-
-
-
-
-
-
-
-
-
-
-
-
-- name: "MariaDB for work database"
-  kubernetes.core.k8s:
-    state: present
-    definition:
-      apiVersion: k8s.mariadb.com/v1alpha1
-      kind: MariaDB
-      metadata:
-        name: "mariadb"
-        namespace: "{{ namespace }}"
-      spec:
-        storage:
-          size: "{{ mariadb.disk }}Gi"
-          storageClassName: ocs-storagecluster-cephfs
-          volumeClaimTemplate:
-            accessModes:
-              - ReadWriteOnce
-            resources:
-              requests:
-                storage: "{{ mariadb.disk }}Gi"
-            storageClassName: ocs-storagecluster-cephfs
-        resources: "{{ helpers.resources }}"
-        rootPasswordSecretKeyRef:
-          name: mariadb-secrets
-          key: ROOT_PASSWORD
-          generate: false
-        metrics:
-          enabled: true
-          exporter:
-            image: quay-its.epfl.ch/svc0041/mysqld-exporter:v0.15.1
-            resources:
-              requests:
-                cpu: 50m
-                memory: 64Mi
