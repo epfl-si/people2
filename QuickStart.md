@@ -13,7 +13,9 @@ not yet very reliable (read it anyway as I might forget 1/2 of the things now)
 4. as usual `cp .env.sample .env` and edit. In principle it should be ok as it is
 5. all the dev is done on docker although this is slower and more cumbersome to debug but
    it makes it easier to deal with databases etc.
-6. Try to see if it starts
+6. Try to see if it builds/starts
+  - `make build` to build the docker image. This would not be necessary if we didn't have jobs
+     that requires the named image that is supposedly already built.
   - `make up` to start the various servers
   - `make restore` to bootstrap the legacy databases (should take the dumps from KB)
   - `make seed` to boostrap the app database

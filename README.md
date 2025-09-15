@@ -22,6 +22,7 @@ You need the following installed on your system to run this application in devel
   - a directory where epfl elements will (or is already) cloned (`ELE_SRCDIR`);
   - [NVM](https://github.com/nvm-sh/nvm) and node version 18.x.x (`nvm install 18`)
     and `yarn` needed for building EPFL elements.
+- mariadb dev libraries to compile the mariadb gem
 
 ## Configuration and Secrets
 
