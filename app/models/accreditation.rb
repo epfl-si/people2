@@ -138,7 +138,7 @@ class Accreditation
     # TODO: remove me after final import for production
     # During development we do not want to import everything upfront.
     # Therefore, we import on request when needed.
-    if Rails.env.development? && accreds.any?(&:botweb?) && Profile.for_sciper(sciper).blank? # && accreds.count > 1
+    if Rails.env.development? && accreds.any?(&:gestprofil?) && Profile.for_sciper(sciper).blank? # && accreds.count > 1
       LegacyProfileImportJob.perform_later(sciper)
     end
     # We are actually interested exclusively on visible accreditations
@@ -167,7 +167,7 @@ class Accreditation
     @botweb
   end
 
-  def gestpforil?
+  def gestprofil?
     unless defined?(@gestprofil)
       aa = Authorisation.property_for_sciper(sciper, 'gestprofil')
       @gestprofil = aa.find { |a| a.unit_id == @unit_id && a.ok? }.present?
@@ -197,17 +197,18 @@ class Accreditation
   end
 
   def visible_by?(audience = AudienceLimitable::WORLD)
-    # There are actually 3 level of visibility check fir accreditations.
+    # There are actually 3 level of visibility check for accreditations.
     # 1. must have the 'botweb' property (self.for_sciper)
     # 2. (done here) purely teaching position can be hidden
     # 3. (done in prefs) user can decide to hide certains accreds
+    # @visibility hash memoizes
     @visibility ||= {}
     return @visibility[audience] if @visibility.key?(audience)
 
     @visibility[audience] = botweb? &&
                             (prefs.present? ? prefs.visible_by?(audience) : true) &&
                             !(Rails.configuration.hide_teacher_accreds &&
-                              @position.enseignant?
+                              @position.enseignant_but_not_emeritus?
                              )
   end
 
