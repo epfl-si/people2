@@ -50,7 +50,7 @@ class Picture < ApplicationRecord
 
   def self.legacy_url(sciper)
     cfg = Rails.application.config_for(:epflapi)
-    token = Base64.encode64("#{cfg.username}:#{cfg.password}")
+    token = Base64.encode64("#{cfg.username}:#{cfg.password}").chomp
     "#{cfg.legacy_photo_url}?token=#{token}&app=peoplenext&sciper=#{sciper}"
   end
 
