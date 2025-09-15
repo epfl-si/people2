@@ -43,7 +43,7 @@ RAKE = docker compose exec webapp bin/rails
 ## start the dev env with sass builder and app server (try to emulate ./bin/dev)
 dev: up
 	./bin/dev -f Procfile.docker
-	make down
+	$(MAKE) down
 
 css:
 	bin/rails dartsass:watch
@@ -75,7 +75,7 @@ fulldown:
 	docker compose down
 
 traefik:
-	@if [ -n "$(TRAEFIK_PATH)" ] ; then cd "$(TRAEFIK_PATH)" && make up ; fi
+	@if [ -n "$(TRAEFIK_PATH)" ] ; then cd "$(TRAEFIK_PATH)" && $(MAKE) up ; fi
 
 tunnel_up:
 	./bin/tunneld.sh -m local start
@@ -308,7 +308,7 @@ fastreseed:
 	sleep 2
 	$(RAKE) db:migrate
 	$(RAKE) db:seed
-	make struct
+	$(MAKE) struct
 
 ## run rails migration
 migrate: dcup
@@ -332,7 +332,7 @@ reseed: nukedb nukestorage
 	rm -f tmp/ldap_scipers_emails.txt
 	rm -f tmp/courses.json
 	sleep 2
-	make seed
+	$(MAKE) seed
 
 ## reload UI translations from the source code for /admin/translations UI
 locales:
@@ -355,7 +355,7 @@ structs:
 # reschema:
 # 	$(RAKE) db:schema:load
 # 	$(RAKE) db:seed
-# 	make courses
+# 	$(MAKE) courses
 
 ## -------------------------------------------- legacy importation related tasks
 .PHONY: legacy
@@ -370,7 +370,7 @@ legacy: restore db_restore_text
 	$(RAKE) legacy:reload_scipers
 	$(RAKE) legacy:load_texts
 	$(RAKE) legacy:txt_lang_detect
-	make db_backup_text
+	$(MAKE) db_backup_text
 	$(RAKE) legacy:refresh_adoptions
 	$(RAKE) legacy:import
 
@@ -471,7 +471,7 @@ nata_reinit: dcup
 	docker compose exec webapp tar cvf - storage | ssh peonext "tar -xvf - -C data/people"
 	$(SQLDUMP) people | ssh peonext "./bin/peopledb"
 	$(SQLDUMP) people_work | ssh peonext "./bin/workdb"
-	make nata_patch
+	$(MAKE) nata_patch
 
 nata_reinit_legacy: dcup
 	$(SQLDUMP) cv | ssh peonext "./bin/legacydb"
