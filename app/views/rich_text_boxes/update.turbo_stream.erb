@@ -1,4 +1,4 @@
 <%= turbo_stream.replace dom_id(@box, "textbox_content") do %>
-  <%= render @box.to_partial_path, box: @box %>
+  <%= render 'editable_box', box: @box %>
 <% end %>
 <%= turbo_stream.replace("flash-messages", partial: "shared/flash") %>

@@ -62,7 +62,6 @@ class BoxesController < ApplicationController
   # PATCH/PUT /boxes/1 or /boxes/1.json
   def update
     respond_to do |format|
-      Rails.logger.debug("update: box_params=#{box_params.inspect}")
       if @box.update(box_params)
         format.turbo_stream do
           turbo_flash(:success)
@@ -72,7 +71,7 @@ class BoxesController < ApplicationController
       else
         format.turbo_stream do
           turbo_flash(:error)
-          render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @award }
+          render :update, status: :unprocessable_entity
         end
         format.json { render json: @box.errors, status: :unprocessable_entity }
       end
