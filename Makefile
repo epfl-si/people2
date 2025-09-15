@@ -50,8 +50,12 @@ css:
 ## start the dev tunnel and start all the servers
 up: traefik tunnel_up dcup
 
+## reload the webapp (keeping the container)
+reload:
+	touch tmp/restart.txt
+
 ## restart the webapp container
-reload: envcheck
+contreload: envcheck
 	docker compose stop webapp
 	if [ -f tmp/pids/server.pid ] ; then rm tmp/pids/server.pid ; fi
 	KILLPID=1 docker compose up -d
