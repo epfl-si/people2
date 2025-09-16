@@ -29,7 +29,8 @@ ENCPAS=$(echo -n "people:${EPFLAPI_PASSWORD}" | base64)
 #     "genderusual": "M"
 #    }'
 
-curl -X PATCH https://api.epfl.ch/v1/persons/121769 -H "authorization: Basic ${ENCPAS}" -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"firstnameusual":"Giovanni","lastnameusual":"Cangiani","genderusual":"M"}'
+# curl -X PATCH https://api.epfl.ch/v1/persons/121769 -H "authorization: Basic ${ENCPAS}" -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"firstnameusual":"Giovanni","lastnameusual":"Cangiani","genderusual":"F"}'
+curl -w "Type: %{content_type}\nCode: %{response_code}\n" -X PATCH https://api.epfl.ch/v1/persons/121769 -H "authorization: Basic ${ENCPAS}" -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"firstnameusual":"Giovanni","lastnameusual":"Cangiani","genderusual":"X"}'
 
 
 # curl -X 'PUT' \

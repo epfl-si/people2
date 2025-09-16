@@ -165,6 +165,7 @@ services:
       ENABLE_WEBMOCK: "${ENABLE_WEBMOCK:-false}"
       EPFLAPI_BACKEND_URL: ${EPFLAPI_BACKEND_URL:-https://api.epfl.ch/v1}
       EPFLAPI_PASSWORD: ${EPFLAPI_PASSWORD}
+      EPFLAPI_ENABLE_WRITING: yes
       ISA_URL: ${ISA_URL:-https://isa-test.epfl.ch/services}
       OFFLINE_CACHEDIR: "/srv/filecache"
 
