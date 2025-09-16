@@ -134,12 +134,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Overridden to selectively enable the debugger page in development,
-  # depending on `exception`
+  # depending on `exception`, if Rails.configuration.x.dwim_error_pages
+  # is set.
   def rescue_with_handler(exception)
-    return super unless Rails.env.development?
+    return super unless Rails.configuration.x&.dwim_error_pages
 
     http_status = ActionDispatch::ExceptionWrapper.status_code_for_exception(exception.class.name)
-    want_web_debugger = want_web_debugger_in_dev? exception, http_status
+    want_web_debugger = want_web_debugger? exception, http_status
 
     rescue_how = want_web_debugger ? 'with the debugger' : 'with the normal error page'
     logger.error("rescue_with_handler: processing #{exception} exception #{rescue_how}")
@@ -149,7 +150,7 @@ class ApplicationController < ActionController::Base
     super
   end
 
-  def want_web_debugger_in_dev?(_exception, http_status)
+  def want_web_debugger?(_exception, http_status)
     http_status == 500
   end
 end
