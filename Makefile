@@ -16,6 +16,7 @@ ELE_SRCDIR ?= ./vendor/elements
 ELE_DSTDIR = ./app/assets/stylesheets/elements
 ELE_FILES = $(addprefix $(ELE_DSTDIR)/,elements.css vendors.css bootstrap-variables.scss)
 
+YARN := $(shell if test -z "$(NODE_VERSION)" ; then echo yarn; else echo NODE_VERSION="$(NODE_VERSION)" $(HOME)/.nvm/nvm-exec yarn ; fi)
 
 # REBUNDLE ?= $(shell if [ -f Gemfile.lock.docker ] ; then echo "no" ; else echo "yes" ; fi)
 
@@ -244,7 +245,7 @@ elements: elements_build
 	rsync -av $(ELE_SRCDIR)/dist/ public/elements/
 
 elements_build: $(ELE_SRCDIR)
-	cd $(ELE_SRCDIR) && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn install && NODE_VERSION=18 $(HOME)/.nvm/nvm-exec yarn dist
+	cd $(ELE_SRCDIR) && $(YARN) install && $(YARN) dist
 
 $(ELE_SRCDIR):
 	cd $(dir $(ELE_SRCDIR)) && git clone git@github.com:epfl-si/elements.git
