@@ -19,6 +19,7 @@ epflapi_config: &epflapi_config
   backend_url: <%= ENV.fetch("EPFLAPI_BACKEND_URL", 'https://api.epfl.ch/').gsub(/\/?$/, '/') %>
   username: <%= ENV.fetch("EPFLAPI_USERNAME", 'people') %>
   password: <%= ENV.fetch("EPFLAPI_PASSWORD", nil) %>
+  writing_enabled: false
 
   max_scipers_per_request: <%= ENV.fetch("EPFLAPI_MAX_SCIPER_PER_REQUEST", 100) %>
 
@@ -41,8 +42,13 @@ epflapi_config: &epflapi_config
 development:
   <<: *epflapi_config
   webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
+  writing_enabled: <%= ENV.fetch('EPFLAPI_ENABLE_WRITING', 'false') == 'true' %>
+
 test:
   <<: *epflapi_config
   webmock: <%= ENV.fetch("ENABLE_WEBMOCK", false) %>
+  writing_enabled: false
+
 production:
   <<: *epflapi_config
+  writing_enabled: <%= ENV.fetch('EPFLAPI_ENABLE_WRITING', 'true') == 'true' %>
