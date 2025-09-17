@@ -23,7 +23,7 @@ class Course < ApplicationRecord
     #       2. the title is not present in the selected locale
     #       Iteally, William should include the url in the data so we don't
     #       have to play the cat and mouse game
-    translated_title = t_title!(locale)
+    translated_title = t_title(locale)
     return nil if code.blank? || translated_title.blank?
 
     t = I18n.transliterate(translated_title).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
