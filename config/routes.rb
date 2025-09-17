@@ -77,24 +77,16 @@ Rails.application.routes.draw do
     end
   end
   # The following aliases should be managed by the webserver but we keep them just in case
-  get '/cgi-bin/wsgetPhoto', to: 'api/v0/photos#show'
-  get '/cgi-bin/wsgetpeople', to: 'api/v0/people#index'
   get '/cgi-bin/prof_awards', to: 'api/v0/awards#index'
+  get '/cgi-bin/wsgetpeople', to: 'api/v0/people#index'
+  get '/cgi-bin/wsgetPhoto', to: 'api/v0/photos#show'
+  # Retrocompatibility with applications having saved the old link or
+  # generating it on the fly (being quite easy to guess)
+  get '/private/common/photos/links/:sciper.jpg', to: 'api/v0/photos#show'
 
+  # THE public profile route
   get '/:sciper_or_name', to: 'people#show', as: 'person',
                           constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/i }
-
-  if Rails.configuration.enable_adoption
-    resources :adoptions, only: %i[update]
-    get '/:sciper_or_name/preview',
-        to: 'people#preview',
-        as: 'preview',
-        constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
-    # compatibility with legacy routes
-    get '/:sciper_or_name/vcard',
-        to: redirect("/%{sciper_or_name}.vcf"),
-        constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
-  end
 
   namespace :help do
     get 'boxes/:id', to: 'helps#box', as: 'box'
@@ -124,6 +116,18 @@ Rails.application.routes.draw do
     resources :versions, only: %i[index show]
   end
   mount MissionControl::Jobs::Engine, at: "/admin/jobs"
+
+  if Rails.configuration.enable_adoption
+    resources :adoptions, only: %i[update]
+    get '/:sciper_or_name/preview',
+        to: 'people#preview',
+        as: 'preview',
+        constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
+    # compatibility with legacy routes
+    get '/:sciper_or_name/vcard',
+        to: redirect("/%{sciper_or_name}.vcf"),
+        constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
+  end
 
   if Rails.env.production?
     root 'pages#homepage'
