@@ -166,7 +166,7 @@ class ApplicationService
   end
 
   def expire_in
-    24.hours
+    30.minutes
   end
 
   # Class specific request modifiers (e.g. req.basic_auth user, pass)

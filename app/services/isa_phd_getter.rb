@@ -14,6 +14,6 @@ class IsaPhdGetter < IsaService
   end
 
   def expire_in
-    72.hours
+    24.hours
   end
 end

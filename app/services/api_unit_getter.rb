@@ -31,6 +31,6 @@ class APIUnitGetter < APIBaseGetter
   # therefore, I give to each one a different lifetime so that,
   # after the first time, they don't expire all together.
   def expire_in
-    rand(600..700).hours
+    24.hours
   end
 end
