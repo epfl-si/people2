@@ -50,6 +50,7 @@
       # DEV_SEEDS_PATH: db/seeds_dev/data
       FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
       RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(hosts.people, '') }}"
+      ERROR_PAGES: "{{ ERROR_PAGES | default('prod') }}"
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: "{{ people.enable_adoption }}"

@@ -66,6 +66,7 @@ people:
   enable_adoption: "{{ ENABLE_ADOPTION | default('false') }}"
   enable_api_cache: "{{ ENABLE_API_CACHE | default('true') }}"
   env: "{{ RAILS_ENV | default('production') }}"
+  error_pages: "{{ ERROR_PAGES | default('prod') }}"
   hostname: "{{ APP_HOSTNAME }}"
   image: "quay-its.epfl.ch/svc0033/people:{{ people_version }}-prod"
   isa_url: "{{ ISA_URL | default('https://isa.epfl.ch/services') }}"

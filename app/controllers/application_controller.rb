@@ -137,7 +137,7 @@ class ApplicationController < ActionController::Base
   # depending on `exception`, if Rails.configuration.x.dwim_error_pages
   # is set.
   def rescue_with_handler(exception)
-    return super unless Rails.configuration.x&.dwim_error_pages
+    return super if Rails.configuration.x&.dwim_error_pages.blank?
 
     http_status = ActionDispatch::ExceptionWrapper.status_code_for_exception(exception.class.name)
     want_web_debugger = want_web_debugger? exception, http_status
