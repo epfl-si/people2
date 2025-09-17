@@ -19,8 +19,17 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.
-  config.consider_all_requests_local = ENV.fetch('SHOW_ERROR_PAGES', 'no').match?(config.re_false)
+  case ENV.fetch('ERROR_PAGES', 'mix')
+  when 'prod'
+    config.consider_all_requests_local = false
+  when 'dev'
+    # Show full error reports (including 404s)
+    config.consider_all_requests_local = true
+  else
+    # Show full error reports only for 500s
+    config.consider_all_requests_local = false
+    config.x.dwim_error_pages = true
+  end
 
   # Enable server timing
   config.server_timing = true

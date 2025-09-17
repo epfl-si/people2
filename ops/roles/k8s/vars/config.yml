@@ -19,7 +19,7 @@ people_config:
   # SEEDS_PATH: db/seeds/data
   # USE_LOCAL_ELEMENTS: false
   USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
-
+  ERROR_PAGES: "{{ people.error_pages }}"
   WSGETPEOPLE_CACHE: "{{ people.wsgetpeople_cache }}"
 
   # ---------------------------------------------------- transition specific

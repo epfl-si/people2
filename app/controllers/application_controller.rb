@@ -132,4 +132,25 @@ class ApplicationController < ActionController::Base
       Rails.configuration.intranet_re.match?(request.remote_ip)
     end
   end
+
+  # Overridden to selectively enable the debugger page in development,
+  # depending on `exception`, if Rails.configuration.x.dwim_error_pages
+  # is set.
+  def rescue_with_handler(exception)
+    return super if Rails.configuration.x&.dwim_error_pages.blank?
+
+    http_status = ActionDispatch::ExceptionWrapper.status_code_for_exception(exception.class.name)
+    want_web_debugger = want_web_debugger? exception, http_status
+
+    rescue_how = want_web_debugger ? 'with the debugger' : 'with the normal error page'
+    logger.error("rescue_with_handler: processing #{exception} exception #{rescue_how}")
+
+    request.env["action_dispatch.show_detailed_exceptions"] = true if want_web_debugger
+
+    super
+  end
+
+  def want_web_debugger?(_exception, http_status)
+    http_status == 500
+  end
 end
