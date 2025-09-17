@@ -1,2 +1,2 @@
 <% if infoscience.t_title.present? %><h3><%= infoscience.t_title %></h3><% end %>
-<%= infoscience.t_content.html_safe %>
+<%= infoscience&.t_content&.html_safe %>
