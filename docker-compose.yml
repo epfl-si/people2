@@ -116,8 +116,6 @@ services:
     #   - ./bin/dev
     # command: bin/rails server -p 3000 -b 0.0.0.0
     environment: &webappenv
-      KILLPID: ${KILLPID:-no}
-
       # ------------------------------ deployment-independent mandatory ENV vars
       RAILS_ENV: development
       SUPERUSERS: "${SUPERUSERS}"
@@ -142,7 +140,7 @@ services:
       # DEV_SEEDS_PATH: db/seeds_dev/data
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-false}
       RAILS_DEVELOPMENT_HOSTS: ${RAILS_DEVELOPMENT_HOSTS:-people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}}
-      SHOW_ERROR_PAGES: ${SHOW_ERROR_PAGES:-false}
+      ERROR_PAGES: ${ERROR_PAGES:-mix}
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
