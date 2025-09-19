@@ -126,7 +126,6 @@ class ApplicationController < ActionController::Base
   # TODO: This is not the correct way of finding internal clients. The reliable
   # way is to check if X-EPFL-Internal header is set in the request.
   def intranet_client?
-    Rails.logger.info "GIOVA: HEADERS #{headers.inspect}" if request.remote_ip == "128.178.1.7"
     if headers.key? 'X-EPFL-Internal'
       headers['X-EPFL-Internal'] == "TRUE"
     else
