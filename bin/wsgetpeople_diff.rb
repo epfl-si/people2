@@ -4,7 +4,20 @@ require 'net/http'
 require 'json'
 require 'diff-lcs'
 
-HOSTS = ["people.epfl.ch", "people.dev.jkldsa.com"]
+HOSTS = [
+  {
+    host: "dinfo11.epfl.ch",
+    path: "/cgi-bin/wsgetpeople",
+    urihttp: URI::HTTP,
+    headers: {Accept: 'application/json', Host: 'people.epfl.ch'}
+  },
+  {
+    host: "people.dev.jkldsa.com",
+    path: "/cgi-bin/wsgetpeople",
+    urihttp: URI::HTTPS,
+    headers: {Accept: 'application/json'}
+  }
+]
 CACHE="tmp/wsgetpeople_cache"
 
 def log(msg)
@@ -18,13 +31,14 @@ def fetch(query, srv=1)
     log "#{query} <- #{cf}"
     json = File.read(cf)
   else
-    uri = URI::HTTPS.build(
-      host: HOSTS[srv],
-      path: "/cgi-bin/wsgetpeople",
+    hh = HOSTS[srv]
+    uri = hh[:urihttp].build(
+      host: hh[:host],
+      path: hh[:path],
       query: query
-      )
+    )
     log "#{query} -> #{uri.to_s} -> #{cf}"
-    json = Net::HTTP.get(uri)
+    json = Net::HTTP.get(uri, hh[:headers])
     File.open(cf, 'w+') do |f|
       f.puts(json)
     end
@@ -82,6 +96,8 @@ end
 class Member
   attr_reader :sciper, :email, :position, :unit
   def initialize(data)
+    puts "Member::initialize data=#{data.inspect}"
+    exit
     @sciper   = data["sciper"].to_s || ""
     @unit     = data["id_unite"].to_s || ""
     @email    = data["email"] || ""
@@ -221,13 +237,13 @@ class StructsComparer
     xlab1 = labs1 - labs0
 
     res << "   Structures:" unless xlab0.empty? && xlab1.empty?
-    xlab0.each do |l| 
+    xlab0.each do |l|
       res << " - #{l}".x0
       secs0_by_label[l].members.each do |m|
         res << "      #{m.to_s}".x0
       end
     end
-    xlab1.each do |l| 
+    xlab1.each do |l|
       res << " + #{l}".x1
       secs1_by_label[l].members.each do |m|
         res << "      #{m.to_s}".x1
