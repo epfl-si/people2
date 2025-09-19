@@ -96,8 +96,6 @@ end
 class Member
   attr_reader :sciper, :email, :position, :unit
   def initialize(data)
-    puts "Member::initialize data=#{data.inspect}"
-    exit
     @sciper   = data["sciper"].to_s || ""
     @unit     = data["id_unite"].to_s || ""
     @email    = data["email"] || ""
