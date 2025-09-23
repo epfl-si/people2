@@ -71,7 +71,11 @@ module People
     config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', 'false').match?(config.re_true)
     config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false').match?(config.re_true)
     config.hide_teacher_accreds = ENV.fetch('HIDE_ENS_ACCREDDS', 'true').match?(config.re_true)
-    config.force_audience = Rails.env.development? && ENV.fetch('FORCE_AUDIENCE', false)
+    config.force_audience = if Rails.env.development?
+                              (v = ENV.fetch('FORCE_AUDIENCE', "false")).match?(config.re_false) ? false : v.to_i
+                            else
+                              false
+                            end
     config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', 'name.change@groupes.epfl.ch')
 
     config.api_v0_wsgetpeople_cache = ENV.fetch("WSGETPEOPLE_CACHE", Rails.env.production? ? 6.hours : 0).to_i
