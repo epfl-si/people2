@@ -10,7 +10,7 @@
 		<!-- SEARCH -->
     <%= form_with url: "https://search.epfl.ch", method: :get, html: {class: "d-xl-none"} do |form| %>
       <%= form.hidden_field :filter, value: "people" %>
-      <a id="search-mobile-toggle" class="search-mobile-toggle searchform-controller" href="#">
+      <a id="search-mobile-toggle" class="search-mobile-toggle searchform-controller" href="#" data-turbo="false">
         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
         <span class="toggle-label sr-only"><%= t "action.show_hide_search_form" %></span>
       </a>
@@ -20,14 +20,15 @@
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
           </span>
         </div>
-        <label for="search" class="sr-only"><%= t "action.search_people" %></label>
-        <input type="text" class="form-control" name="search" placeholder="<%= t "action.search" %> >
+        <label for="q-mobile" class="sr-only"><%= t "action.search_people" %></label>
+        <input type="text" id="q-mobile" class="form-control" name="q" placeholder="<%= t "action.search" %>" >
         <div class="input-group-append">
           <a id="search-mobile-close" class="search-mobile-close searchform-controller" href="#">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg>
             <span class="toggle-label sr-only"><%= t "action.hide_search_form" %></span>
           </a>
         </div>
+      </div>
     <% end %>
     <div class="dropdown dropright search d-none d-xl-block show">
       <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="true">
