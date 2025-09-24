@@ -1,2 +1,12 @@
-
-<h1>Some courses are coming</h1>
+<% # Example URL:
+   # https://people.epfl.ch/cgi-bin/wsgetcours?code=CIVIL&langueens=en&format=html&cursus=ba
+%>
+<% @courses.each do |course| %>
+  <strong><%= course.title %></strong><br />
+  <em>Teacher:</em> <%= course.teachers.join(", ") %><br />
+  <%= course.slug %><br>
+  <a href="<%= course.isa_url %>" target="_blank">
+    <strong><%= course.semester %></strong>, <%= course.curricular_year %>
+  </a><br />
+  <hr />
+<% end %>
