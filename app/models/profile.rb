@@ -55,11 +55,6 @@ class Profile < ApplicationRecord
                                optional: true, inverse_of: false
 
   has_many :accreds, class_name: 'Accred', dependent: :destroy
-  # TODO: switch to new model
-
-  # has_and_belongs_to_many :courses, join_table: "teacherships"
-  has_many :teacherships, class_name: "Teachership", dependent: :destroy
-  has_many :courses, through: :teacherships
 
   # TODO: add all presence validations. Translated properties should be present
   #       in at leat one of the languages when property is visible

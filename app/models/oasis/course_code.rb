@@ -2,15 +2,22 @@
 
 module Oasis
   class CourseCode
-    attr_reader :acad, :code
+    attr_reader :acad, :code, :section, :level, :semester
 
     def initialize(data)
       @acad = data['curriculumAnneeAcademique']
       @code = data['coursCode']
+      @level = data['curriculumNiveau']
+      @section = data['matiereUnite']
+      @semester = data['curriculumSemestre']
     end
 
     def course
       OasisCourseGetter.call(acad: @acad, code: @code)
+    end
+
+    def slug_prefix
+      @code.split("-").first
     end
 
     def id

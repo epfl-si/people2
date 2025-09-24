@@ -1,12 +1,37 @@
 # frozen_string_literal: true
 
+# This model is now just a proxy/cache used exclusively to get the titles and descriptions
 class Course < ApplicationRecord
   establish_connection :work
   include Translatable
   translates :title, :description
 
-  # has_and_belongs_to_many :teachers, join_table: "teacherships", foreign_key: "profile_id"
-  # has_many :teacherships, class_name: "Teachership", dependent: :destroy
+  def self.new_from_oasis(ocode)
+    c = Course.new
+    c.update_from_oasis(ocode)
+    c
+  end
+
+  def update_from_oasis(ocode)
+    ocourse = ocode.course
+    assign_attributes({
+                        slug: ocode.code,
+                        slug_prefix: ocode.slug_prefix,
+                        acad: ocode.acad,
+                        level: ocode.level,
+                        section: ocode.section,
+                        semester: ocode.semester,
+                        lang: ocourse.lang,
+                        title_en: ocourse.title_en,
+                        title_fr: ocourse.title_fr,
+                      })
+    unless @description_en.blank? || @description_en.starts_with?("oracle.sql")
+      c.description_en = ocourse.description_en
+    end
+    return if @description_fr.blank? || @description_fr.starts_with?("oracle.sql")
+
+    c.description_fr = ocourse.description_fr
+  end
 
   def self.current_academic_year(d = Time.zone.today)
     y = d.year
@@ -30,5 +55,27 @@ class Course < ApplicationRecord
     t = I18n.transliterate(translated_title).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
     c = code.upcase.sub('(', "-").sub(')', '')
     "https://edu.epfl.ch/coursebook/#{locale}/#{t}-#{c}"
+  end
+
+  def code
+    slug
+  end
+
+  # TODO: I don't know if it makes sense to spare 4 columns like this knowing
+  # that we do not have it or de lang from Oasis
+  def title_it
+    title_en
+  end
+
+  def title_de
+    title_en
+  end
+
+  def description_it
+    description_en
+  end
+
+  def description_de
+    description_en
   end
 end

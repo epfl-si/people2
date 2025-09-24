@@ -9,7 +9,7 @@ class CreatePhdAndCourse < ActiveRecord::Migration[8.0]
       t.string  :name
       t.string  :cursus
       t.integer :thesis_number
-      t.string  :thesis_title
+      t.string  :thesis_title, limit: 500
       t.date    :date
       t.integer :year, null: false
       t.timestamps
@@ -20,16 +20,20 @@ class CreatePhdAndCourse < ActiveRecord::Migration[8.0]
 
     create_table :courses do |t|
       t.string :acad, limit: 16, null: false
-      t.string :code, limit: 16, null: false
+      t.string :slug, limit: 16, null: false
+      t.string :slug_prefix, limit: 16, null: false
       t.string :lang, limit: 2
+      t.string :level
+      t.string :section
+      t.string :semester
       t.string :title_en
       t.string :title_fr
       t.text   :description_en
       t.text   :description_fr
       t.timestamps
 
-      t.index [:code], unique: false
-      t.index %i[acad code], unique: true
+      t.index [:slug], unique: false
+      t.index %i[acad slug], unique: true
     end
   end
 end
