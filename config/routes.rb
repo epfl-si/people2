@@ -74,12 +74,14 @@ Rails.application.routes.draw do
       get '/wsgetPhoto', to: 'photos#show'
       get '/wsgetpeople', to: 'people#index'
       get '/prof_awards', to: 'awards#index'
+      get '/wsgetcours', to: 'courses#index'
     end
   end
   # The following aliases should be managed by the webserver but we keep them just in case
   get '/cgi-bin/prof_awards', to: 'api/v0/awards#index'
   get '/cgi-bin/wsgetpeople', to: 'api/v0/people#index'
   get '/cgi-bin/wsgetPhoto', to: 'api/v0/photos#show'
+  get '/cgi-bin/wsgetcours', to: 'api/v0/courses#index'
   # Retrocompatibility with applications having saved the old link or
   # generating it on the fly (being quite easy to guess)
   get '/private/common/photos/links/:sciper.jpg', to: 'api/v0/photos#show'
