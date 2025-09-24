@@ -33,7 +33,7 @@ module Oasis
                               thesis_number: @thesis_number,
                               thesis_title: @thesis_title,
                             })
-      phd.year = year if phd.year.blank?
+      phd.year = year if phd.year.blank? || phd.year < year
       phd
     end
 

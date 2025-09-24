@@ -430,6 +430,27 @@ class Person
     accreditations.any?(&:professor_emeritus?)
   end
 
+  def courses
+    # TODO: presently it can happen that a course comes from Oasis with empty code
+    @courses ||= OasisTeacherCoursesGetter.call(sciper: sciper).reject { |c| c.code.nil? }
+  end
+
+  def phds
+    @phds ||= Phd.where(director_sciper: sciper)
+  end
+
+  def current_phds
+    # Phd.current.where(director_sciper: sciper)
+    y = Time.zone.now.year
+    phds.select { |c| c.year == y }
+  end
+
+  def past_phds
+    # Phd.past.where(director_sciper: sciper)
+    y = Time.zone.now.year
+    phds.select { |c| c.year < y }
+  end
+
   # ----------------------------------------------------------------------------
 
   # Methods that are not explicitly defined are assumed to be keys of @data
@@ -447,9 +468,5 @@ class Person
     define_method m.to_sym do
       @data[m]
     end
-  end
-
-  def courses
-    Course.joins(:teacherships).where(teacherships: { sciper: sciper })
   end
 end

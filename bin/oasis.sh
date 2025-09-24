@@ -10,7 +10,7 @@ BASE=${OASIS_BASEURL:-https://oasis-t.epfl.ch:8484}
 
 apiget() {
   url="$1"
-  curl    -X GET -H "Authorization: Bearer ${OASIS_BEARER}" -H "accept: application/json" $url 2>/dev/null
+  curl    -X GET -H "Authorization: Bearer ${OASIS_BEARER}" -H "accept: application/json" "$url" 2>/dev/null
   # curl -I -X GET -H "Authorization: Bearer ${OASIS_BEARER}" -H 'accept: application/json' $url
 }
 

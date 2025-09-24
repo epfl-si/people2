@@ -14,18 +14,6 @@ module Oasis
       @description_fr = data['contenuResumeFr']
     end
 
-    def updated_course(course: nil)
-      course ||= ::Course.new(acad: @acad, code: @code)
-      course.assign_attributes({
-                                 lang: @lang,
-                                 title_en: @title_en,
-                                 title_fr: @title_fr,
-                                 description_en: @description_en,
-                                 description_fr: @description_fr,
-                               })
-      course
-    end
-
     def decode_lang(l)
       l == 'AN' ? 'EN' : 'FR'
     end

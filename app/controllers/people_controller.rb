@@ -125,19 +125,17 @@ class PeopleController < ApplicationController
   def set_show_data
     @page_title = "EPFL - #{@person.name.display}"
 
-    # teachers are supposed to all have a profile
-    @ta = Isa::Teaching.new(@sciper) if @person.possibly_teacher?
-    if @ta.present?
-      @current_phds = @ta.phd&.select(&:current?)
-      @past_phds = @ta.phd&.select(&:past?)
-      @teachings = @ta.primary_teaching + @ta.secondary_teaching + @ta.doctoral_teaching
+    if @person.possibly_teacher?
+      @courses = @person.courses # .group_by { |c| c.t_title(I18n.locale) }
+      @current_phds = @person.current_phds
+      @past_phds = @person.past_phds
+      @ta = @courses.present? || @current_phds.present? || @past_phds.present?
     else
+      @courses = nil
       @current_phds = nil
       @past_phds = nil
-      @teachings = nil
+      @ta = false
     end
-
-    @courses = @person.courses.group_by { |c| c.t_title(I18n.locale) }
 
     return unless @profile
 
