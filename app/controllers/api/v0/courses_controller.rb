@@ -5,13 +5,22 @@ module API
     class CoursesController < LegacyBaseController
       def index
         # if query string got format=html
-        raise NotImplementedError if params["format"].present && params["format"] != "html"
+        raise NotImplementedError if params["format"].present? && params["format"] != "html"
 
         slug = params['code']
         raise ArgumentError, "code parameters is mandatory" if slug.blank?
 
         level = params['cursus'] == 'ma' ? 'master' : 'bachelor'
-        @courses = Course.where(slug_prefix: slug, level: level).sort { |a, b| a.t_title <=> b.t_title }
+        # @courses = Course.where(slug_prefix: slug, level: level).sort { |a, b| a.t_title <=> b.t_title }
+        @courses = Course.where(
+          slug_prefix: slug
+        ).includes(
+          :course_instances, :teacherships
+        ).where(
+          course_instances: { level: level },
+          teacherships: { role: "Enseignement" }
+        ).sort { |a, b| a.t_title <=> b.t_title }
+
         render 'api/v0/courses/index', layout: false
       end
     end

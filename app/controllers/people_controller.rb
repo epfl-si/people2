@@ -126,7 +126,8 @@ class PeopleController < ApplicationController
     @page_title = "EPFL - #{@person.name.display}"
 
     if @person.possibly_teacher?
-      @courses = @person.courses # .group_by { |c| c.t_title(I18n.locale) }
+      @courses = @person.courses.sort { |a, b| a.t_title <=> b.t_title }
+
       @current_phds = @person.current_phds
       @past_phds = @person.past_phds
       @ta = @courses.present? || @current_phds.present? || @past_phds.present?

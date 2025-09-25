@@ -7,26 +7,8 @@ class CourseInstance < ApplicationRecord
   before_validation :ensure_course_id
   validates :course_id, presence: true
   validates :slug, presence: true
-
-  # def self.new_from_oasis(ocode)
-  #   c = Course.new
-  #   c.update_from_oasis(ocode)
-  #   c
-  # end
-
-  # def update_from_oasis(ocode)
-  #   assign_attributes({
-  #                       slug: ocode.code,
-  #                       acad: ocode.acad,
-  #                       level: ocode.level,
-  #                       section: ocode.section,
-  #                       semester: ocode.semester,
-  #                     })
-  # end
-
-  def display_semester
-    "#{slug_prefix} – #{level}"
-  end
+  include Translatable
+  translates :section
 
   def acad_semester
     "#{acad} / #{semester}"
@@ -43,5 +25,21 @@ class CourseInstance < ApplicationRecord
     return if c.blank?
 
     self.course_id = c.id
+  end
+
+  def section_en
+    Rails.application.config_for(:dinfo_codes).en.fetch(:section).fetch(section.to_sym)
+  end
+
+  def section_fr
+    Rails.application.config_for(:dinfo_codes).fr.fetch(:section).fetch(section.to_sym)
+  end
+
+  def section_it
+    section_en
+  end
+
+  def section_de
+    section_en
   end
 end
