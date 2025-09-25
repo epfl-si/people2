@@ -42,6 +42,14 @@ class Course < ApplicationRecord
     end
   end
 
+  def display_semester
+    "#{slug_prefix} – #{level}"
+  end
+
+  def acad_semester
+    "#{acad} / #{semester}"
+  end
+
   def edu_url(locale)
     # TODO: check with William in order to have exactly the same algorithm
     #       to build the url from title+code. In particular, when
@@ -78,4 +86,52 @@ class Course < ApplicationRecord
   def description_de
     description_en
   end
+
+  #   SECTION_NAMES = {
+  #   "AR"         => "Architecture",
+  #   "CGC"        => "Chimie et génie chimique",
+  #   "CMS"        => "",
+  #   "DH"         => "",
+  #   "EDAM"       => "",
+  #   "EDAR"       => "",
+  #   "EDBB"       => "",
+  #   "EDCB"       => "",
+  #   "EDCE"       => "",
+  #   "EDCH"       => "",
+  #   "EDDH"       => "",
+  #   "EDEE"       => "",
+  #   "EDEY"       => "",
+  #   "EDFI"       => "",
+  #   "EDIC"       => "",
+  #   "EDLS"       => "",
+  #   "EDMA"       => "",
+  #   "EDME"       => "",
+  #   "EDMI"       => "",
+  #   "EDMS"       => "",
+  #   "EDMT"       => "",
+  #   "EDMX"       => "",
+  #   "EDNE"       => "",
+  #   "EDOC-GE"    => "",
+  #   "EDPO"       => "",
+  #   "EDPY"       => "",
+  #   "EDRS"       => "",
+  #   "EL"         => "Génie électrique",
+  #   "EME_MES"    => "",
+  #   "GC"         => "",
+  #   "GM"         => "",
+  #   "IF"         => "",
+  #   "IN"         => "",
+  #   "MA"         => "Mathématiques",
+  #   "MT"         => "",
+  #   "MTE"        => "",
+  #   "MX"         => "",
+  #   "NX"         => "",
+  #   "PH"         => "Physique",
+  #   "PH_NE"      => "",
+  #   "SC"         => "",
+  #   "SHS"        => "",
+  #   "SIE"        => "",
+  #   "SIQ"        => "",
+  #   "SV"         => "",
+  # }
 end
