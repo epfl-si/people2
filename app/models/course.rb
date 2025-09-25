@@ -87,51 +87,13 @@ class Course < ApplicationRecord
     description_en
   end
 
-  #   SECTION_NAMES = {
-  #   "AR"         => "Architecture",
-  #   "CGC"        => "Chimie et génie chimique",
-  #   "CMS"        => "",
-  #   "DH"         => "",
-  #   "EDAM"       => "",
-  #   "EDAR"       => "",
-  #   "EDBB"       => "",
-  #   "EDCB"       => "",
-  #   "EDCE"       => "",
-  #   "EDCH"       => "",
-  #   "EDDH"       => "",
-  #   "EDEE"       => "",
-  #   "EDEY"       => "",
-  #   "EDFI"       => "",
-  #   "EDIC"       => "",
-  #   "EDLS"       => "",
-  #   "EDMA"       => "",
-  #   "EDME"       => "",
-  #   "EDMI"       => "",
-  #   "EDMS"       => "",
-  #   "EDMT"       => "",
-  #   "EDMX"       => "",
-  #   "EDNE"       => "",
-  #   "EDOC-GE"    => "",
-  #   "EDPO"       => "",
-  #   "EDPY"       => "",
-  #   "EDRS"       => "",
-  #   "EL"         => "Génie électrique",
-  #   "EME_MES"    => "",
-  #   "GC"         => "",
-  #   "GM"         => "",
-  #   "IF"         => "",
-  #   "IN"         => "",
-  #   "MA"         => "Mathématiques",
-  #   "MT"         => "",
-  #   "MTE"        => "",
-  #   "MX"         => "",
-  #   "NX"         => "",
-  #   "PH"         => "Physique",
-  #   "PH_NE"      => "",
-  #   "SC"         => "",
-  #   "SHS"        => "",
-  #   "SIE"        => "",
-  #   "SIQ"        => "",
-  #   "SV"         => "",
-  # }
+  DINFO_CODES = Rails.application.config_for(:dinfo_codes)
+
+  def section_en
+    DINFO_CODES["en"]["section"].fetch(section, section)
+  end
+
+  def section_fr
+    DINFO_CODES["fr"]["section"].fetch(section, section)
+  end
 end
