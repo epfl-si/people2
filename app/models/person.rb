@@ -431,8 +431,21 @@ class Person
   end
 
   def courses
-    # TODO: presently it can happen that a course comes from Oasis with empty code
-    @courses ||= OasisTeacherCoursesGetter.call(sciper: sciper).reject { |c| c.code.nil? }
+    # course_instances not used for the moment as it is too noisy and all the info is in edu
+    # Course.where(
+    #   acad: Course.current_academic_year
+    # ).includes(
+    #   :course_instances, :teacherships
+    # ).where(
+    #   teacherships: { sciper: sciper }
+    # )
+    Course.where(
+      acad: Course.current_academic_year
+    ).includes(
+      :teacherships
+    ).where(
+      teacherships: { sciper: sciper }
+    )
   end
 
   def phds

@@ -23,7 +23,7 @@
     <div class="list-group-item list-group-item-borderless">
       <h4><%= c.t_title %></h4>
       <p class="small">
-        <%= link_to(c.code, c.edu_url(I18n.locale)) %>
+        <%= link_to(c.code, c.edu_url(I18n.locale)) %> <%#= c.course_instances.map{|ci| "#{ci.section}/#{ci.level}"}.join(", ") %>
       </p>
       <% if (d=c.t_description).present? %>
         <p><%= d %></p>
