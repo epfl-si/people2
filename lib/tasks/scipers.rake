@@ -5,10 +5,10 @@ require Rails.root.join('app/services/application_service').to_s
 require Rails.root.join('app/services/api_base_getter').to_s
 require Rails.root.join('app/services/api_accreds_getter').to_s
 
-def ldap_by_sciper
+def ldap_by_sciper(force: false)
   ldpath = Rails.root.join("tmp/ldap_scipers_emails.txt")
   # TODO: replace with Net::LDAP or install ldapsearch in the container
-  unless File.exist?(ldpath)
+  if force || !File.exist?(ldpath)
     cmd = "ldapsearch -x -H ldap://ldap.epfl.ch:389 -b 'o=epfl,c=ch'"
     cmd += " '(&(objectClass=person)(!(ou=services)))'"
     cmd += " uniqueidentifier mail displayName"
@@ -43,6 +43,13 @@ def ldap_by_sciper
   data
 end
 
+namespace :data do
+  desc 'Update scipers name email cache'
+  task scipers: :environment do
+    NamesCacheJob.perform_now
+  end
+end
+
 namespace :legacy do
   desc 'Reload the scipers table with fresh data'
   task reload_scipers: %i[nuke_scipers scipers] do
@@ -50,21 +57,11 @@ namespace :legacy do
 
   desc 'Nuke scipers from Work::Sciper table'
   task nuke_scipers: :environment do
-    Work::Sciper.in_batches(of: 1000).delete_all
+    Work::Sciper.delete_all
   end
 
   desc 'Update the Scipers table with currently valid scipers'
   task scipers: :environment do
-    all_people = ldap_by_sciper
-
-    # all the officially existing scipers
-    all_scipers = all_people.keys
-
-    # all the scipers in the DB
-    scipers_in_db = Work::Sciper.all.pluck(:sciper)
-
-    scipers_todo = all_scipers - scipers_in_db
-
     # scipers that currently have a legacy profile
     legacy_scipers = Legacy::Cv.connection.select_all("
       SELECT DISTINCT sciper FROM common

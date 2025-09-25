@@ -32,7 +32,7 @@ class OasisBaseGetter < ApplicationService
       elsif single && data.empty?
         nil
       else
-        data.map { |v| @model.new(v) }.uniq(&:id)
+        data.map { |v| @model.new(v) }
       end
     else
       @model.new(data)

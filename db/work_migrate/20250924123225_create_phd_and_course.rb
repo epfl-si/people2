@@ -23,9 +23,6 @@ class CreatePhdAndCourse < ActiveRecord::Migration[8.0]
       t.string :slug, limit: 16, null: false
       t.string :slug_prefix, limit: 16, null: false
       t.string :lang, limit: 2
-      t.string :level
-      t.string :section
-      t.string :semester
       t.string :title_en
       t.string :title_fr
       t.text   :description_en
@@ -34,6 +31,27 @@ class CreatePhdAndCourse < ActiveRecord::Migration[8.0]
 
       t.index [:slug], unique: false
       t.index %i[acad slug], unique: true
+    end
+
+    create_table :course_instances do |t|
+      t.references :course
+      t.string :acad, limit: 16, null: false
+      t.string :slug, limit: 16, null: false
+      t.string :level
+      t.string :section
+      t.string :semester
+      t.string :details
+      t.index [:slug], unique: false
+      t.index %i[acad slug], unique: false
+      t.timestamps
+    end
+
+    create_table :teacherships do |t|
+      t.references :course
+      t.string :sciper
+      t.string :role
+      t.string :display_name
+      t.timestamps
     end
   end
 end
