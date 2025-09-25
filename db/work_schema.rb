@@ -39,14 +39,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
     t.index ["text_id"], name: "index_ai_translations_on_text_id"
   end
 
+  create_table "course_instances", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "course_id"
+    t.string "acad", limit: 16, null: false
+    t.string "slug", limit: 16, null: false
+    t.string "level"
+    t.string "section"
+    t.string "semester"
+    t.string "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["acad", "slug"], name: "index_course_instances_on_acad_and_slug"
+    t.index ["course_id"], name: "index_course_instances_on_course_id"
+    t.index ["slug"], name: "index_course_instances_on_slug"
+  end
+
   create_table "courses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "acad", limit: 16, null: false
     t.string "slug", limit: 16, null: false
     t.string "slug_prefix", limit: 16, null: false
     t.string "lang", limit: 2
-    t.string "level"
-    t.string "section"
-    t.string "semester"
     t.string "title_en"
     t.string "title_fr"
     t.text "description_en"
@@ -82,6 +94,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
     t.string "name"
     t.index ["email"], name: "index_scipers_on_email", unique: true
     t.index ["sciper"], name: "unique_scipers", unique: true
+  end
+
+  create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "course_id"
+    t.string "sciper"
+    t.string "role"
+    t.string "display_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_teacherships_on_course_id"
   end
 
   create_table "texts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

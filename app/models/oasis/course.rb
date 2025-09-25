@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
 module Oasis
-  class Course
-    attr_reader :acad, :code, :lang, :title_en, :title_fr, :description_en, :description_fr
-
+  class Course < OpenStruct
     def initialize(data)
-      @acad = data['curriculumAnneeAcademique']
-      @code = data['codeCours']
-      @lang = decode_lang(data['langueEnseignement'])
-      @title_en = data['nomCoursEn']
-      @title_fr = data['nomCoursFr']
-      @description_en = data['contenuResumeEn']
-      @description_fr = data['contenuResumeFr']
+      super({
+        acad: data['curriculumAnneeAcademique'],
+        slug: data['codeCours'],
+        lang: decode_lang(data['langueEnseignement']),
+        title_en: data['nomCoursEn'],
+        title_fr: data['nomCoursFr'],
+        description_en: data['contenuResumeEn'],
+        description_fr: data['contenuResumeFr'],
+      })
+    end
+
+    def slug_prefix
+      slug.split("-").first
     end
 
     def decode_lang(l)
       l == 'AN' ? 'EN' : 'FR'
-    end
-
-    def id
-      "#{@code}_#{acad}"
     end
 
     def ==(other)

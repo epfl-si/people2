@@ -1,31 +1,28 @@
 # frozen_string_literal: true
 
 module Oasis
-  class CourseCode
-    attr_reader :acad, :code, :section, :level, :semester
-
+  class CourseCode < OpenStruct
     def initialize(data)
-      @acad = data['curriculumAnneeAcademique']
-      @code = data['coursCode']
-      @level = data['curriculumNiveau']
-      @section = data['matiereUnite']
-      @semester = data['curriculumSemestre']
+      super({
+        acad: data['curriculumAnneeAcademique'],
+        slug: data['coursCode'],
+        level: data['curriculumNiveau'],
+        section: data['matiereUnite'],
+        semester: data['curriculumSemestre'],
+      })
     end
 
     def course
-      OasisCourseGetter.call(acad: @acad, code: @code)
+      @course ||= OasisCourseGetter.call(acad: acad, code: code)
     end
 
     def slug_prefix
       @code.split("-").first
     end
 
-    def id
-      "#{@code}_#{acad}"
-    end
-
     def ==(other)
-      @code == other.code && @acad == other.acad
+      [acad, slug, section, level,
+       semester] == [other.acad, other.slug, other.section, other.level, other.semester]
     end
   end
 end

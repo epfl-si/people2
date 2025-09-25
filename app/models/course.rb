@@ -4,33 +4,30 @@
 class Course < ApplicationRecord
   establish_connection :work
   include Translatable
+  has_many :course_instances, dependent: :destroy
+  has_many :teacherships, dependent: :destroy
+  validates :slug, uniqueness: { scope: :acad }
+
   translates :title, :description
 
-  def self.new_from_oasis(ocode)
-    c = Course.new
-    c.update_from_oasis(ocode)
+  def self.new_from_oasis(ocourse)
+    c = Course.new({
+                     slug: ocourse.slug,
+                     slug_prefix: ocourse.slug_prefix,
+                     acad: ocourse.acad,
+                   })
+    c.update_from_oasis(ocourse)
     c
   end
 
-  def update_from_oasis(ocode)
-    ocourse = ocode.course
-    assign_attributes({
-                        slug: ocode.code,
-                        slug_prefix: ocode.slug_prefix,
-                        acad: ocode.acad,
-                        level: ocode.level,
-                        section: ocode.section,
-                        semester: ocode.semester,
-                        lang: ocourse.lang,
-                        title_en: ocourse.title_en,
-                        title_fr: ocourse.title_fr,
-                      })
-    unless @description_en.blank? || @description_en.starts_with?("oracle.sql")
-      c.description_en = ocourse.description_en
+  def update_from_oasis(ocourse)
+    assign_attributes(ocourse.to_h.slice(:lang, :title_en, :title_fr))
+    unless ocourse.description_en.blank? || ocourse.description_en.starts_with?("oracle.sql")
+      self.description_en = ocourse.description_en
     end
-    return if @description_fr.blank? || @description_fr.starts_with?("oracle.sql")
+    return if ocourse.description_fr.blank? || ocourse.description_fr.starts_with?("oracle.sql")
 
-    c.description_fr = ocourse.description_fr
+    self.description_fr = ocourse.description_fr
   end
 
   def self.current_academic_year(d = Time.zone.today)
@@ -40,14 +37,6 @@ class Course < ApplicationRecord
     else
       "#{y}-#{y + 1}"
     end
-  end
-
-  def display_semester
-    "#{slug_prefix} – #{level}"
-  end
-
-  def acad_semester
-    "#{acad} / #{semester}"
   end
 
   def edu_url(locale)
@@ -65,6 +54,7 @@ class Course < ApplicationRecord
     "https://edu.epfl.ch/coursebook/#{locale}/#{t}-#{c}"
   end
 
+  # TODO: this alias should no longer be needed
   def code
     slug
   end
@@ -86,52 +76,4 @@ class Course < ApplicationRecord
   def description_de
     description_en
   end
-
-  #   SECTION_NAMES = {
-  #   "AR"         => "Architecture",
-  #   "CGC"        => "Chimie et génie chimique",
-  #   "CMS"        => "",
-  #   "DH"         => "",
-  #   "EDAM"       => "",
-  #   "EDAR"       => "",
-  #   "EDBB"       => "",
-  #   "EDCB"       => "",
-  #   "EDCE"       => "",
-  #   "EDCH"       => "",
-  #   "EDDH"       => "",
-  #   "EDEE"       => "",
-  #   "EDEY"       => "",
-  #   "EDFI"       => "",
-  #   "EDIC"       => "",
-  #   "EDLS"       => "",
-  #   "EDMA"       => "",
-  #   "EDME"       => "",
-  #   "EDMI"       => "",
-  #   "EDMS"       => "",
-  #   "EDMT"       => "",
-  #   "EDMX"       => "",
-  #   "EDNE"       => "",
-  #   "EDOC-GE"    => "",
-  #   "EDPO"       => "",
-  #   "EDPY"       => "",
-  #   "EDRS"       => "",
-  #   "EL"         => "Génie électrique",
-  #   "EME_MES"    => "",
-  #   "GC"         => "",
-  #   "GM"         => "",
-  #   "IF"         => "",
-  #   "IN"         => "",
-  #   "MA"         => "Mathématiques",
-  #   "MT"         => "",
-  #   "MTE"        => "",
-  #   "MX"         => "",
-  #   "NX"         => "",
-  #   "PH"         => "Physique",
-  #   "PH_NE"      => "",
-  #   "SC"         => "",
-  #   "SHS"        => "",
-  #   "SIE"        => "",
-  #   "SIQ"        => "",
-  #   "SV"         => "",
-  # }
 end
