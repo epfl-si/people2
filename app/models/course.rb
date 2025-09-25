@@ -76,4 +76,14 @@ class Course < ApplicationRecord
   def description_de
     description_en
   end
+
+  DINFO_CODES = Rails.application.config_for(:dinfo_codes)
+
+  def section_en
+    DINFO_CODES["en"]["section"].fetch(section, section)
+  end
+
+  def section_fr
+    DINFO_CODES["fr"]["section"].fetch(section, section)
+  end
 end
