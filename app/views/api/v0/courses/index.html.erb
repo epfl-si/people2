@@ -2,11 +2,12 @@
    # https://people.epfl.ch/cgi-bin/wsgetcours?code=CIVIL&langueens=en&format=html&cursus=ba
 %>
 <% @courses.each do |course| %>
-  <strong><%= course.title %></strong><br />
-  <em>Teacher:</em> <%= course.teachers.join(", ") %><br />
+  <strong><%= course.t_title %></strong><br>
+  <% # <em>Teacher:</em>TODO: comma separated list of teacher names<br /> %>
   <%= course.slug %><br>
-  <a href="<%= course.isa_url %>" target="_blank">
-    <strong><%= course.semester %></strong>, <%= course.curricular_year %>
-  </a><br />
-  <hr />
+    <%= link_to course.edu_url(I18n.locale), target: "_blank" do %>
+      <strong><%= course.display_semester %></strong>, <%= course.acad_semester %>
+    <% end %>
+  <br>
+  <hr>
 <% end %>
