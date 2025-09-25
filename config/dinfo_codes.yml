@@ -1,0 +1,235 @@
+# Obtained from `SELECT * FROM dinfo.isa_codes WHERE type in ('SECTION','SECTIONENG','PEDAGO','PEDAGOENG')`
+# Transformed (from DBeaver's JSON output with)
+#
+# jq '
+#   def meld(a; b):
+#     a as $a | b as $b
+#     | if ($a|type) == "object" and ($b|type) == "object"
+#       then reduce ([$a,$b]|add|keys_unsorted[]) as $k ({};
+#         .[$k] = meld( $a[$k]; $b[$k]) )
+#       elif ($a|type) == "array" and ($b|type) == "array"
+#       then $a+$b
+#       elif $b == null then $a
+#       else $b
+#       end;
+#   .isa_codes
+#   | group_by(.type)
+#   | map(
+#       {
+#         (
+#           (.[0].type | test("ENG$")) as $isEng
+#           | ($isEng | if . then "en" else "fr" end)
+#         ):
+#           {
+#             ((.[0].type | sub("ENG$"; ""))
+#              | ascii_downcase):
+#               map({ (.code): .libelle }) | add
+#           }
+#       }
+#     )
+#    | reduce .[] as $dictdict ( {}; meld(.; $dictdict) )
+# ' dinfo_codes.json | yq -P
+fr:
+  pedago:
+    ADME: Admission printemps
+    ADMH: Admission automne
+    BA1: Bachelor semestre 1
+    BA2: Bachelor semestre 2
+    BA3: Bachelor semestre 3
+    BA4: Bachelor semestre 4
+    BA5: Bachelor semestre 5
+    BA6: Bachelor semestre 6
+    E: Semestre printemps
+    EDOC: Doctorat
+    EVAL_ETE: Evaluation printemps
+    EVAL_HIV: Evaluation automne
+    H: Semestre automne
+    ISE: Intersemestre été
+    ISH: Intersemestre hiver
+    MA1: Master semestre 1
+    MA2: Master semestre 2
+    MA3: Master semestre 3
+    MA4: Master semestre 4
+    MAN: Mise à niveau
+    MI1: Mineur semestre 1
+    MI2: Mineur semestre 2
+    O1: FC - 1ère occurrence
+    O2: FC - 2ème occurrence
+    P1: FC - 1ère partie
+    P2: FC - 2ème partie
+    P3: FC - 3ème partie
+    PME: Projet Master printemps
+    PMH: Projet Master automne
+    S0: Semestre 0
+    S1: Semestre 1
+    S10: Semestre 10
+    S11: Semestre 11
+    S2: Semestre 2
+    S3: Semestre 3
+    S4: Semestre 4
+    S5: Semestre 5
+    S6: Semestre 6
+    S7: Semestre 7
+    S8: Semestre 8
+    S9: Semestre 9
+    SE: Stage été
+    SEM: Stage été master
+    SH: Stage automne
+    TPD: FC - Personal Project
+  section:
+    AA-DOC: Ecole doctorale
+    AR: Architecture
+    AUDIT: Auditeurs
+    CGC: Chimie et génie chimique
+    CMS: Cours de mathématiques spéciales
+    DH: Humanités digitales
+    EDAM: Manufacturing (edoc)
+    EDAR: Architecture et sciences de la ville (edoc)
+    EDBB: Biotechnologie et génie biologique (edoc)
+    EDCB: Biologie computationnelle et quantitative (edoc)
+    EDCE: Génie civil et environnement (edoc)
+    EDCH: Chimie et génie chimique (edoc)
+    EDDH: Humanités digitales (edoc)
+    EDEE: Génie électrique (edoc)
+    EDEN: Environnement
+    EDEY: Energie (edoc)
+    EDFI: Finance (edoc)
+    EDHP: Hors Programme
+    EDIC: Informatique et communications (edoc)
+    EDLS: Joint EPFL - ETH Zurich Doctoral Program in the Learning Sciences
+    EDMA: Mathématiques (edoc)
+    EDME: Mécanique (edoc)
+    EDMI: Microsystèmes et microélectronique (edoc)
+    EDMS: Approches moléculaires du vivant (edoc)
+    EDMT: Management de la technologie (edoc)
+    EDMX: Science et génie des matériaux (edoc)
+    EDNE: Neurosciences (edoc)
+    EDOC-GE: Cours généraux et externes EDOC
+    EDPO: Photonique (edoc)
+    EDPR: Systèmes de production et robotique (edoc)
+    EDPY: Physique (edoc)
+    EDRS: Robotique, contrôle et systèmes intelligents (edoc)
+    EDST: Structures
+    EL: Génie électrique et électronique
+    EME: EME (EPFL Middle East)
+    ENAC: Projeter ensemble ENAC
+    GC: Génie civil
+    GM: Génie mécanique
+    HPLANS: Hors plans
+    IF: Ingénierie financière
+    IN: Informatique
+    INS_TRAV: Instruments de travail
+    IST-EPFL: IST-EPFL
+    MA: Mathématiques
+    MGT: Management de la technologie et de l'ingénierie financière
+    MT: Microtechnique
+    MTE: Management de la technologie
+    MX: Science et génie des matériaux
+    NX: Neuro-X
+    PH: Physique
+    PROF_SKILLS: Professional skills
+    SC: Systèmes de communication
+    SHS: Programme Sciences humaines et sociales
+    SIE: Sciences et ingénierie de l'environnement
+    SIQ: Science et ingénierie quantiques
+    STS: Science - Technique - Société
+    SV: Ingénierie des sciences du vivant
+en:
+  pedago:
+    ADME: Admission spring
+    ADMH: Admission autumn
+    BA1: Bachelor semester 1
+    BA2: Bachelor semester 2
+    BA3: Bachelor semester 3
+    BA4: Bachelor semester 4
+    BA5: Bachelor semester 5
+    BA6: Bachelor semester 6
+    E: Spring semester
+    EDOC: Doctorat
+    EVAL_ETE: Spring evaluation
+    EVAL_HIV: Autumn evaluation
+    H: Autumn semester
+    ISE: Summer intersemestrial period
+    ISH: Winter intersemestrial period
+    MA1: Master semester 1
+    MA2: Master semester 2
+    MA3: Master semester 3
+    MA4: Master semester 4
+    MAN: Mise à niveau
+    MI1: Minor semester 1
+    MI2: Minor semester 2
+    O1: EFC - 1st Occurence
+    O2: EFC - 2nd Occurence
+    P1: EFC - 1st Part
+    P2: EFC - 2nd Part
+    P3: EFC - 3rd Part
+    PME: Master Project spring
+    PMH: Master Project autumn
+    S0: Semestre 0
+    S1: Semestre 1
+    S10: Semestre 10
+    S11: Semestre 11
+    S2: Semestre 2
+    S3: Semestre 3
+    S4: Semestre 4
+    S5: Semestre 5
+    S6: Semestre 6
+    S7: Semestre 7
+    S8: Semestre 8
+    S9: Semestre 9
+    SE: Stage été
+    SEM: Stage été master
+    SH: Stage automne
+    TPD: FC - Personal Project
+  section:
+    AR: Section of Architecture
+    AUDIT: Auditeurs
+    CGC: Section of Chemistry and Chemical Engineering
+    CMS: Special Mathematics Courses
+    DH: Section of Digital Humanities
+    EDAM: Doctoral program in advanced manufacturing
+    EDAR: Doctoral Program in Architecture and Sciences of the City
+    EDBB: Doctoral Program in Biotechnology and Bioengineering
+    EDCB: Doctoral Program in Computational and Quantitative Biology
+    EDCE: Doctoral Program in Civil and Environmental Engineering
+    EDCH: Doctoral Program in Chemistry and Chemical Engineering
+    EDDH: Doctoral Program Digital Humanities
+    EDEE: Doctoral Program in Electrical Engineering
+    EDEN: Doctoral Program in Environment
+    EDEY: Doctoral Program in Energy
+    EDFI: Doctoral Program in Finance
+    EDHP: No PhD Program
+    EDIC: Doctoral program in computer and communication sciences
+    EDLS: Doctoral Program in Learning Sciences
+    EDMA: Doctoral Program in Mathematics
+    EDME: Doctoral Program in Mechanics
+    EDMI: Doctoral Program in Microsystems and Microelectronics
+    EDMS: Doctoral Program in Molecular Life Sciences
+    EDMT: Doctoral Program in Technology Management
+    EDMX: Doctoral Program in Materials Science and Engineering
+    EDNE: Doctoral Program in Neuroscience
+    EDOC-GE: Doctoral School
+    EDPO: Doctoral Program in Photonics
+    EDPR: Doctoral Program in Manufacturing Systems and Robotics
+    EDPY: Doctoral Program in Physics
+    EDRS: Doctoral program in robotics, control, and intelligent systems
+    EDST: Doctoral Program in Structures
+    EL: Section of Electrical and Electronical Engineering
+    EME: Middle East EPFL Section
+    GC: Section of Civil Engineering
+    GM: Section of Mechanical Engineering
+    IF: Financial Engineering Section
+    IN: Section of Computer Science
+    MA: Section of Mathematics
+    MGT: Management of Technology and Financial Engineering Section
+    MT: Section of Microtechnics
+    MTE: Management of Technology and Entrepreneurship
+    MX: Section of Materials Science and Engineering
+    NX: Neuro-X section
+    PH: Section of Physics
+    SC: Section of Communication Systems
+    SHS: Humanities and Social Sciences Program
+    SIE: Section of Environmental Sciences and Engineering
+    SIQ: Quantum Science and Engineering Section
+    STS: Science-Technics and Society Program
+    SV: Section of Life Sciences Engineering
