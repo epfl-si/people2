@@ -17,13 +17,11 @@ namespace :data do
 
   desc 'Load courses that are not yet in the DB from Oasis '
   task courses: %i[db:migrate environment] do
-    acad = Course.current_academic_year
-    OasisCourseGetter.perform_now(acad)
+    OasisCourseGetter.call
   end
 
   desc 'Refresh courses with new data from Oasis'
   task refresh_courses: %i[db:migrate environment] do
-    acad = Course.current_academic_year
-    OasisCourseGetter.perform_now(acad, force_refresh: true)
+    OasisCourseGetter.call
   end
 end
