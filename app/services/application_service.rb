@@ -147,7 +147,7 @@ class ApplicationService
       end
       do_fetch_http(rediuri, limit - 1)
     else
-      Rails.logger.debug("app_service: request went bad")
+      Rails.logger.debug("app_service: request went bad (response: #{response})")
       nil
     end
   end
