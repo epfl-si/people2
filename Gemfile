@@ -148,6 +148,8 @@ gem 'paper_trail', '~> 16'
 # https://github.com/brendon/positioning
 gem 'positioning'
 
+gem 'pry', require: false
+
 # Avoid a warning message from rubyzip about broken compatibility of >=3.0
 # TODO: recheck if this is still the case
 gem 'rubyzip', '< 3.0'
