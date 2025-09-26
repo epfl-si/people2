@@ -3,7 +3,7 @@
 people_config:
   # ------------------------------ deployment-independent mandatory ENV vars
   RAILS_ENV: "{{ people.env }}"
-  SUPERUSERS: "{{ _secrets.people.superusers }}"
+  SUPERUSERS: "{{ _secrets.people.superusers | string }}"
 
   # -------------------------------------------------- with ok default value
   # APP_HOSTNAME: people.epfl.ch
@@ -20,7 +20,7 @@ people_config:
   # USE_LOCAL_ELEMENTS: false
   USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
   ERROR_PAGES: "{{ people.error_pages }}"
-  WSGETPEOPLE_CACHE: "{{ people.wsgetpeople_cache }}"
+  WSGETPEOPLE_CACHE: "{{ people.wsgetpeople_cache | string }}"
 
   # ---------------------------------------------------- transition specific
   ENABLE_ADOPTION: "{{ people.enable_adoption }}"
