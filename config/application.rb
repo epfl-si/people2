@@ -86,6 +86,11 @@ module People
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 0)
     config.legacy_import_job_log_path = ENV.fetch('LEGACY_JOB_LOG', config.enable_adoption ? "legacy_import.log" : nil)
 
+    # Expire the redirect links to active storage files (profile pictures) so that
+    # no address leading to a profile picture is premanent and user's choice
+    # of hiding the picutre becomes effective even for people who kept the link
+    config.active_storage.urls_expire_in = 24.hours
+
     # There are other ENV vars read in the yml files
     # which will probably become config maps
 
@@ -108,7 +113,6 @@ module People
     # config.assets.configure do |env|
     #   SprocketsRequireInGemExtension.inject_for_javascript(env)
     # end
-
     config.exceptions_app = routes
 
     # TODO: check this in more detail. It is supposed to avoid the following error
