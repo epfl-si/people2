@@ -145,10 +145,9 @@ services:
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
       # public address
-      LEGACY_BASE_URL: https://legacy.${DOMAIN:-dev.jkldsa.com}
+      LEGACY_BASE_URL: ${LEGACY_RO_URL:-https://legacy.${DOMAIN:-dev.jkldsa.com}}
       # public address
       LEGACY_RW_URL: ${LEGACY_RW_URL:-https://test-people.epfl.ch}
-      LEGACY_BASEURL: ${LEGACY_RO_URL:-https://legacy.${DOMAIN:-dev.jkldsa.com}}
       # LEGACY_PAGES_CACHE: 2days
 
       HIDE_ENS_ACCREDDS: ${HIDE_ENS_ACCREDDS:-yes}
