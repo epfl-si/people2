@@ -5,7 +5,10 @@ temporary:
 local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
-  public: true
+  # We are serving the profile photos that can be turned off by profile owner.
+  # Thererore, we need the ative_storage to generate volatile urls even on
+  # local disk storage which by default have permanent links.
+  public: false
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:

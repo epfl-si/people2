@@ -58,7 +58,7 @@ class Picture < ApplicationRecord
     source == 'camipro'
   end
 
-  def visible_image
+  def available_image
     if cropped_image&.attached?
       cropped_image
     elsif image&.attached?

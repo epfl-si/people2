@@ -94,7 +94,8 @@ class Person
 
     # sort.uniq is to minimize cache miss
     us = scipers.sort.uniq
-    APIPersonGetter.call!(persid: us).map { |p| new(p) }
+    res = APIPersonGetter.call!(persid: us, single: false)
+    res.map { |p| new(p) }
   end
 
   def self.for_units(units)

@@ -101,7 +101,7 @@ class ApplicationService
   def dofetch!
     Rails.logger.debug("app_service: dofetch! for url=#{@url}")
     res = dofetch
-    raise ActiveRecord::RecordNotFound if res.nil?
+    raise ActiveRecord::RecordNotFound if res.blank?
 
     res
   end

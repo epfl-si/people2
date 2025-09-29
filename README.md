@@ -93,6 +93,25 @@ and the motivation (for me the cli is more than enough):
 
 ¹ What about Windows®, you ask?... Are you sure you are a real developer?
 
+### Debugging / studying Gems
+You can view the code of a gem in your favorite `$EDITOR` with `gem open GEMNAME`.
+An easy way of debugging a gem is to monkey patch the relevant part of the Gem
+with logger statements or `debugger`.
+This can be done by copying the relevant part of the gem within a
+`Rails.application.config.to_prepare` block. Example:
+
+```ruby
+Rails.application.config.to_prepare do
+class ActiveStorage::Representations::RedirectController < ActiveStorage::Representations::BaseController
+  def show
+    debugger
+    expires_in ActiveStorage.service_urls_expire_in
+    redirect_to @representation.url(disposition: params[:disposition]), allow_other_host: true
+  end
+end
+end
+```
+
 ## Application overview
 This is the public directory of people working and studying at the
 [EPFL](https://www.epfl.ch). It is a complete rewrite of a legacy application
@@ -146,6 +165,37 @@ could edit all the languages at the same time in a single form without the visua
 overload of haveing one field per language. Unfortunately, it have been discarded
 in favor of the current implementation which is less efficient (the form must
 be saved once foreach language) but apparently easier to understand.
+
+### Profile pictures
+The legacy implementation were quite simple, efficient, and safe: the files were
+served directly by the webserver from a the `htdocs/private/common/photos/links`
+directory where, the currently active and publicly visible picture for a given
+profile where symlinked from a synlink with a static filename `SCIPER.jpg`.
+
+The advantages of this approach were that
+ 1. the image became imediately unavailable as soon as soon as the symlink
+    were removed because the user deleted or make his profile picture hidden.
+ 2. there were no need to recheck the visibility of the picture. Therefore,
+    the images could be safely and efficiently be served by Apache.
+
+Unfortunatelly not all simplicity comes without drawbacks/issues:
+ 1. only one image per profile were available (=> no alternative sizes/formats);
+ 2. could only be served by a local storage made available to all server instances (NFS);
+ 3. the link filename made the SCIPER number publicly available. This is actually
+    not difficult to fix (e.g. by hashing the SCIPER value). I thing this were
+    never fixed to avoid break compatibility with other applications relying on
+    the easily guessable url.
+
+I could off-course easily replicate the same setup in the new rails application
+by just adding few callbacks in AR models but we didn't like the fact of keeping
+the first two issues listed above. On the other hand, when I decide to diverge
+from the standard recommended _rails-way_ of doing things, I really want to do
+it for a very good reason which I could not find in this case.
+
+
+
+
+
 
 
 ## Framework Picks

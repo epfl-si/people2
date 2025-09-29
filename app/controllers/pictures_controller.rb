@@ -16,7 +16,7 @@ class PicturesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to url_for(@picture.visible_image.variant(variant))
+        redirect_to url_for(@picture.available_image.variant(variant))
       end
       format.json do
         render json: { location: image_path('profile_image_placeholder.svg') }
