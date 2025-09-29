@@ -76,7 +76,7 @@ module ApplicationHelper
 
   # options
   def profile_photo(picture, options = {})
-    img = picture&.visible_image
+    img = picture&.available_image
     options[:size] ||= '400'
     options[:variant] ||= :medium
     if img.blank?

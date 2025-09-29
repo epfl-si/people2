@@ -7,7 +7,7 @@ module API
       def show
         sciper = params[:sciper]
         profile = Profile.for_sciper(sciper)
-        img = profile&.photo&.visible_image
+        img = profile&.photo&.available_image
         raise ActionController::RoutingError, 'Not Found' if img.blank?
 
         redirect_to url_for(img.variant(:large2))

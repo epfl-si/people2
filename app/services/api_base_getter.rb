@@ -70,8 +70,10 @@ class APIBaseGetter < ApplicationService
     return data unless data.key?(@resource) # && data.key?("count")
 
     data = data[@resource]
+    # @single => we expect the request does not return an array
     return data unless @single
 
+    # Returning a different type of data for similar call. This is stupid and completely my fault!
     case data.count
     when 0
       nil
@@ -80,5 +82,11 @@ class APIBaseGetter < ApplicationService
     else
       raise "epfl_api returns multiple elements when a single one is expected url=#{@url}"
     end
+  end
+
+  # The return from dofetch depends on @single too. Therefore it have to be included in the cache key
+  def cache_key
+    uid = Digest::MD5.hexdigest(url.to_s)
+    "#{self.class.name.underscore}/#{@single ? 'S' : 'M'}/#{uid}"
   end
 end

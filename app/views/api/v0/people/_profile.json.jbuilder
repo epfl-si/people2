@@ -3,11 +3,11 @@
 json.sciper profile.sciper.to_i
 json.photo_visibility profile.photo_visibility || ""
 json.titre "" # Customizable title no longer possible NM dixit
-img = profile&.photo&.visible_image
+img = profile&.photo&.available_image
 if profile.photo_public? && img.present?
-  # json.photo_url url_for(img.variant(:medium2))
+  imgv = img.variant(:medium2).processed
   json.photo_show 1
-  json.photo_url rails_representation_url(img.variant(:medium2))
+  json.photo_url url_for(imgv)
 else
   json.photo_show 0
   json.photo_url image_url('profile_image_placeholder.svg')
