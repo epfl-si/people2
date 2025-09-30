@@ -22,7 +22,7 @@
           name: "{{ kid.db_secrets }}"
           key: work_password
         # This field defaults to 10
-        maxUserConnections: 20
+        maxUserConnections: 100
         host: "%"
         # Delete the resource in the database whenever the CR gets deleted.
         # Alternatively, you can specify Skip in order to omit deletion.
