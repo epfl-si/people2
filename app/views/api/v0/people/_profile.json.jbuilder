@@ -7,7 +7,7 @@ img = profile&.photo&.available_image
 if profile.photo_public? && img.present?
   imgv = img.variant(:medium2).processed
   json.photo_show 1
-  json.photo_url url_for(imgv)
+  json.photo_url rails_representation_url(imgv, ActiveStorage::Current.url_options)
 else
   json.photo_show 0
   json.photo_url image_url('profile_image_placeholder.svg')

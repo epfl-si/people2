@@ -120,7 +120,7 @@ class Accreditation
     accreds
   end
 
-  def self.for_sciper(sciper, force: false)
+  def self.for_sciper(sciper, force: false, all: false)
     accreds_data = APIAccredsGetter.call(persid: sciper, force: force)
     return [] if accreds_data.empty?
 
@@ -141,8 +141,8 @@ class Accreditation
     if Rails.env.development? && accreds.any?(&:gestprofil?) && Profile.for_sciper(sciper).blank? # && accreds.count > 1
       LegacyProfileImportJob.perform_later(sciper)
     end
-    # We are actually interested exclusively on visible accreditations
-    accreds.select(&:botweb?)
+    # By default we are actually interested exclusively on visible accreditations
+    all ? accreds : accreds.select(&:botweb?)
   end
 
   def self.for_all_full_professors

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   # Enable url method on active storage blobs for now we desist. We will make
   # image links invalid by rotating the SECRET_KEY_BASE.
   # (e.g. profile.photo.available_image.variant(:medium2).processed.url)
-  # include ActiveStorage::SetCurrent
+  include ActiveStorage::SetCurrent
 
   include Authentication
   include Flashable
