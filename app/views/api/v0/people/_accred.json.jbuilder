@@ -27,3 +27,4 @@ json.ordre       order + 1
 # json.sigle       accred.unit.t_name('fr')
 json.sigle       accred.unit_name || ""
 json.rooms       room&.name || ""
+json.phones      phone

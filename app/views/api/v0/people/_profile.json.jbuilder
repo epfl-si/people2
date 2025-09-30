@@ -5,7 +5,7 @@ json.photo_visibility profile.photo_visibility || ""
 json.titre "" # Customizable title no longer possible NM dixit
 img = profile&.photo&.available_image
 if profile.photo_public? && img.present?
-  imgv = img.variant(:medium2).processed
+  imgv = img.variant(:large).processed
   json.photo_show 1
   json.photo_url rails_representation_url(imgv, ActiveStorage::Current.url_options)
 else
