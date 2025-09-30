@@ -10,7 +10,7 @@ class APIGroupMembersGetter < APIBaseGetter
   end
 
   def path
-    "v1/groups/#{@id}/members"
+    "groups/#{@id}/members"
   end
 
   # def dofetch

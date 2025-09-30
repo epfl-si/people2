@@ -117,11 +117,11 @@ class Person
       id = if gn =~ /S[0-9]{5}/
              gn
            else
-             Group.find_by(name: name)&.id
+             Group.find_by(name: gn)&.id
            end
       if id.present?
         members = APIGroupMembersGetter.call(id: id)
-        members.map { |m| m["id"] }
+        members&.map { |m| m["id"] } || []
       else
         []
       end
