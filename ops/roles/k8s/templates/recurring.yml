@@ -1,0 +1,14 @@
+# https://github.com/rails/solid_queue?tab=readme-ov-file#recurring-tasks
+# https://guides.rubyonrails.org/active_job_basics.html#recurring-tasks
+# Cron jobs managed by ActiveJob+SolidQueue so we can monitor in admin/jobs
+production:
+  # Refresh the local table storing sciper <-> email <-> display name
+  refresh_names_cache:
+    class: NamesCacheJob
+    args: []
+    schedule: "4 4 * * *"
+  # Import new Phd students
+  refresh_phds:
+    class: PhdsImporterJob
+    args: []
+    schedule: "5 5 * * *"
