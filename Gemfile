@@ -113,7 +113,7 @@ gem 'jwt'
 # https://github.com/roidrage/lograge
 # https://github.com/rails/rails/issues/50452
 # https://github.com/rails/rails/pull/55334
-gem "lograge"
+# gem "lograge"
 
 # Database adapters
 # NOTE: Tim is writing an API for ISA. Therefore we might be able to get rid of this

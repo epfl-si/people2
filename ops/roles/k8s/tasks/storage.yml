@@ -53,6 +53,25 @@
         storageClassName: ocs-storagecluster-cephfs
         volumeMode: Filesystem
 
+
+- name: Ensure PVC for application logs
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: "{{ kid.logs }}"
+        namespace: "{{ namespace }}"
+      spec:
+        accessModes: [ReadWriteMany]
+        persistentVolumeReclaimPolicy: Retain
+        resources:
+          requests:
+            storage: "{{ legacy.cache_size }}"
+        storageClassName: ocs-storagecluster-cephfs
+        volumeMode: Filesystem
+
 # NFS PV storage is created and mounted to cluster nodes by cluster admin.
 # Share details are visible in the XAAS portal as people_shared_nfs.
 # With the same NFS share we can create as many mounts as we need pointing to

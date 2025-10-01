@@ -66,14 +66,16 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Logger
-  config.logger = ActiveSupport::Logger.new($stdout)
-  config.log_tags = [:request_id]
-
-  config.lograge.enabled = true
-  config.lograge.keep_original_rails_log = true
-  # In dev we keep both logs just to check how the structured one looks like
-  config.lograge.logger = ActiveSupport::Logger.new Rails.root.join("log/structured.log")
+  # Log to stdout and file to be closer to prod
+  stdout_logger = ActiveSupport::Logger.new($stdout)
+  if (lfb = ENV.fetch('LOGFILE', '')).present?
+    # lf is the basename. We attach a pod unique identifier to avoid overlaps
+    lfe = `hostname`.chomp.split("-").last
+    file_logger = ActiveSupport::Logger.new("#{lfb}_#{lfe}.log")
+    config.logger = ActiveSupport::BroadcastLogger.new(stdout_logger, file_logger)
+  else
+    config.logger = stdout_logger
+  end
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

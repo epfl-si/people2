@@ -4,6 +4,7 @@ people_config:
   # ------------------------------ deployment-independent mandatory ENV vars
   RAILS_ENV: "{{ people.env }}"
   SUPERUSERS: "{{ _secrets.people.superusers | string }}"
+  LOGFILE: "log/{{ people.env }}"
 
   # -------------------------------------------------- with ok default value
   # APP_HOSTNAME: people.epfl.ch

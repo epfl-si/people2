@@ -18,6 +18,7 @@ kid:
   legacy_cgibin: "legacycgibin-{{ RUNENV }}-{{ RELEASE }}"
   legacy_cache: "legacycache-{{ RUNENV }}-{{ RELEASE }}"
   legacy_data:  "legacydata-{{ RUNENV }}-{{ RELEASE }}"
+  logs:         "logs-{{ RUNENV }}-{{ RELEASE }}"
   redis:        "redis-{{ RUNENV }}"
   uploads:      "uploads-{{ RUNENV }}"
 
@@ -80,6 +81,7 @@ people:
   # storage: "{{ DATA_BASEDIR }}/people/storage"
   use_local_elements: "{{ USE_LOCAL_ELEMENTS | default('true') }}"
   wsgetpeople_cache: "{{ WSGETPEOPLE_CACHE | default('21600') }}"
+  logs_size: 5 #Gb
 
 route:
   name: people

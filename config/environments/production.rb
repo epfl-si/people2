@@ -54,10 +54,16 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
-  config.logger =
-    ActiveSupport::Logger.new(Rails.root.join("log/standard.log"))
-                         .tap  { |l| l.formatter = ::Logger::Formatter.new }
-                         .then { |l| ActiveSupport::TaggedLogging.new(l) }
+  # A more compact log to stdout and the usual one to file
+  stdout_logger = ActiveSupport::TaggedLogging.logger($stdout)
+  if (lfb = ENV.fetch('LOGFILE', '')).present?
+    # lf is the basename. We attach a pod unique identifier to avoid overlaps
+    lfe = `hostname`.chomp.split("-").last
+    file_logger = ActiveSupport::Logger.new("#{lfb}_#{lfe}.log")
+    config.logger = ActiveSupport::BroadcastLogger.new(stdout_logger, file_logger)
+  else
+    config.logger = stdout_logger
+  end
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -66,11 +72,6 @@ Rails.application.configure do
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
-
-  config.lograge.enabled = true
-  config.lograge.keep_original_rails_log = true
-  # In production we send structured log to stdout
-  # config.lograge.logger = ActiveSupport::Logger.new Rails.root.join("log/structured.log")
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
