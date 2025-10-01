@@ -119,6 +119,7 @@ services:
       # ------------------------------ deployment-independent mandatory ENV vars
       RAILS_ENV: development
       SUPERUSERS: "${SUPERUSERS}"
+      LOGFILE: log/dev
 
       # -------------------------------------------------- with ok default value
       # APP_HOSTNAME: people.epfl.ch
