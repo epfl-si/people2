@@ -82,6 +82,7 @@ en:
       nationality_label: Nationality
       nav:
         atari: Administrative Data
+        signatures: email signature
         vcard: vCard
     show:
       title:
