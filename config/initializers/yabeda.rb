@@ -14,6 +14,7 @@ Yabeda.configure do
     # end
     # summary :bells_ringing_duration, unit: :seconds, comment: "How long bells are ringing"
     gauge :adoptions_count, unit: :integer, comment: "Number of Adoptions"
+    counter :wsgetpeople_calls, unit: :integer, comment: "Numbers of requests for wsgetpeople"
   end
 end
 Yabeda.configure!
