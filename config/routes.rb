@@ -83,7 +83,7 @@ Rails.application.routes.draw do
   get '/cgi-bin/wsgetpeople', to: 'api/v0/people#index'
   get '/cgi-bin/wsgetPhoto', to: 'api/v0/photos#show'
   get '/cgi-bin/wsgetcours', to: 'api/v0/courses#wsgetcours'
-  get '/cgi-bin/getCours', to: 'api/v0/courses#get_course'
+  get '/cgi-bin/getCours', to: 'api/v0/courses#getcourse'
 
   # Retrocompatibility with applications having saved the old link or
   # generating it on the fly (being quite easy to guess)
