@@ -23,6 +23,7 @@ RUN apt-get update -qq && \
       libvips \
       mariadb-client \
       sqlite3 \
+      rsync \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
