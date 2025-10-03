@@ -173,6 +173,7 @@ module API
         @cache_key = cache_key_parts.join('/')
 
         send "validate_#{@selector}", @choice
+        Yabeda.people.wsgetpeople_calls.increment({ selector: @selector, valid: @errors.empty? ? 'yes' : 'no' }, by: 1)
         raise unless @errors.empty?
       end
 
