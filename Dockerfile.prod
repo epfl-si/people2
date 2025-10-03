@@ -59,8 +59,10 @@ RUN ls -l vendor && bundle install && \
 # Copy application code
 COPY . .
 
-# Get the code for /signatures
-RUN git clone --depth 1 https://github.com/epfl-si/epfl-email-signatures.git ./public/signatures
+# Get and patch the code for /signatures
+RUN git clone --depth 1 https://github.com/epfl-si/epfl-email-signatures.git ./public/signatures && \
+    rm -rf  public/signatures/.git && \
+    sed -i 's#<head>#<head>\n    <base href="/signatures/index.html" />#' public/signatures/index.html
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
