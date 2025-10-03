@@ -1,0 +1,18 @@
+<style>
+	.dotted {
+	color: #fff;
+	background-color: #fff;
+	border: 1px dotted #000;
+	border-style: none none dotted;
+}
+</style>
+<% if @display == "bycours" %>
+  <ul><%= render partial: "course", collection: @courses.sort_by(&:t_title), locals: {detail: @detail} %></ul>
+<% else
+  @courses_by_sciper.each do |sciper, courses|
+    prof = @scipers[sciper]
+%>
+    <h4><%= link_to prof.name, person_url(sciper_or_name: prof.email_user) %></h4>
+    <ul><%= render partial: "course", collection: courses.sort_by(&:t_title), locals: {detail: @detail} %></ul>
+  <% end %>
+<% end %>

@@ -20,6 +20,26 @@ class Course < ApplicationRecord
     c
   end
 
+  def self.search(filters)
+    filters[:acad] ||= current_academic_year
+    instance_filters = filters.slice(:acad, :level, :section, :semester).compact_blank
+    course_filters = filters.slice(:acad, :slug_prefix).compact_blank
+    teachership_filters = { role: "Enseignement" }.merge(filters.slice(:sciper)).compact_blank
+
+    Rails.logger.debug("Course::search. instance_filters=#{instance_filters.inspect}")
+    Rails.logger.debug("Course::search. course_filters=#{course_filters.inspect}")
+    Rails.logger.debug("Course::search. teachership_filters=#{teachership_filters.inspect}")
+
+    where(
+      course_filters
+    ).includes(
+      :course_instances, :teacherships
+    ).where(
+      course_instances: instance_filters,
+      teacherships: teachership_filters
+    )
+  end
+
   def update_from_oasis(ocourse)
     assign_attributes(ocourse.to_h.slice(:lang, :title_en, :title_fr))
     unless ocourse.description_en.blank? || ocourse.description_en.starts_with?("oracle.sql")
@@ -52,6 +72,14 @@ class Course < ApplicationRecord
     t = I18n.transliterate(translated_title).gsub(/[^A-Za-z ]/, '').downcase.gsub(/\s+/, '-')
     c = code.upcase.sub('(', "-").sub(')', '')
     "https://edu.epfl.ch/coursebook/#{locale}/#{t}-#{c}"
+  end
+
+  def teacher_names
+    teacherships.map(&:display_name)
+  end
+
+  def teacher_scipers
+    teacherships.map(&:sciper)
   end
 
   # TODO: this alias should no longer be needed

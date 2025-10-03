@@ -24,4 +24,8 @@ class Group
     @description = data["description"]
     @gid = data["gid"]
   end
+
+  def member_scipers
+    APIGroupMembersGetter.call(id: g.id).map { |m| m['id'] }
+  end
 end
