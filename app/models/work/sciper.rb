@@ -22,5 +22,21 @@ module Work
     # migrated includes also people that never created a legacy profile
     scope :migranda, -> { where(status: STATUS_WITH_LEGACY_PROFILE) }
     scope :migrated, -> { where(status: STATUS_MIGRATED) }
+
+    def display_name
+      name
+    end
+
+    # TODO: check if this is always the case as there might be issues with people
+    #       changing name, with modified usual names etc.
+    # TODO: The hack for non-standard e-mail exposes sciper address but the page
+    #       is only reacheable using the sciper...
+    def email_user
+      if email =~ /^[a-z-]+\.[a-z-]+/i
+        email.gsub(/@.*$/, '')
+      else
+        sciper
+      end
+    end
   end
 end

@@ -52,6 +52,11 @@ class Unit
     )
   end
 
+  def member_scipers
+    json = APIPersonGetter.call(unitid: id)
+    json.present? ? json.map { |p| p['id'] }.uniq : []
+  end
+
   # The units have been partially reorganized from 4 to 5 level.
   # After some reverse engineering I conclude that this concerns only the units
   # of type EPFL VPx. Example unit 13030 which is shown by api as

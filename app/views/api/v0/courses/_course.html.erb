@@ -1,0 +1,22 @@
+<% title = course.edu_url(@locale).present? ? link_to(course.t_title, course.edu_url(@locale)) : course.t_title %>
+
+<li>
+<% case detail %>
+<% when "S" %>
+    <b><%= title %></b>
+    <em>Teachers: </em><%= course.teacher_names.join(", ") %>
+<% when "M" %>
+    <b><%= title %></b><br><br>
+    <%= simple_format(course.t_description) %><br><br>
+    <em>Teachers: </em><%= course.teacher_names.join(", ") %><br>
+    <em>Language: </em><%= t course.lang %><br>
+<% when "L" %>
+    <%= title %><br><br>
+    <%= simple_format(course.t_description) %><br><br>
+    <%= course.course_instances.map(&:section).join(', ') %><br>
+    <em>Teachers: </em><%= course.teacher_names.join(", ") %><br>
+    <em>Language: </em><%= t course.lang %><br>
+    <em>Academic term: </em><%= course.course_instances.map(&:semester).join(', ') %><br>
+<% end %>
+<hr class="dotted">
+</li>
