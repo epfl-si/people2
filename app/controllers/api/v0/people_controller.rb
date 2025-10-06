@@ -36,38 +36,24 @@ module API
       #       we should probably send people directly to api instead.
       POSITION_RE = /^(!?[[:alpha:]]+)( (or|and) (!?[[:alpha:]]+))*$/
       def index
-        if Rails.env.production?
-          begin
-            do_people
-          rescue StandardError
-            # render json: {errors: @errors}, status: :unprocessable_content
-            render json: {}, status: :unprocessable_content
-          end
-        else
-          do_people
-        end
+        @cache_ttl = Rails.configuration.api_v0_wsgetpeople_cache
+        do_people
+        # if Rails.env.production?
+        #   begin
+        #     do_people
+        #   rescue ActionController::BadRequest
+        #     render json: {errors: @errors}, status: :bad_request
+        #   end
+        # else
+        #   do_people
+        # end
       end
 
       def do_people
         @errors = []
         extract_and_validate_params
         @force = params['refresh'].present?
-        Rails.logger.debug("!!! FORCE=#{@force ? 'yes' : 'no'}")
-        @render_cache = Rails.configuration.api_v0_wsgetpeople_cache
-        if @render_cache.positive?
-          Rails.cache.delete(@cache_key) if @force
-          json = Rails.cache.fetch(@cache_key, expires_in: @render_cache) do
-            do_people_render
-          end
-        else
-          json = do_people_render
-        end
-        render json: json
-      end
-
-      def do_people_render
-        @persons = load_persons(@selector, @choice, force: @force)
-
+        @people = load_people(@selector, @choice, force: @force)
         # Filter result based on the position list provided
         # I am not 100% sure yet but legacy version selects a person if
         # ANY of is positions matches (even if not in the requested unit)
@@ -76,31 +62,22 @@ module API
         # For some reason position filtering is admitted also in presence
         # of struct which will lead to quite empty struct... 37543 hits in 2024
         if @position
-          @persons.select! do |person|
+          @people.select! do |person|
             person.match_position_filter?(@position)
           end
         end
 
-        # TODO: check if @persons contains duplicates. Already checked for
+        # TODO: check if @people contains duplicates. Already checked for
         # units, sciper is automatic. It remains groups.
 
-        scipers = @persons.map(&:sciper).uniq
+        scipers = @people.map(&:sciper).uniq
         @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
 
-        raise unless @errors.empty?
+        raise ActionController::BadRequest unless @errors.empty?
 
-        if @structure.present?
-          @persons.each { |person| @structure.store!(person) }
-          PeopleController.render(
-            template: 'api/v0/people/people_struct',
-            assigns: { persons: @persons, profiles: @profiles, structure: @structure }
-          )
-        else
-          PeopleController.render(
-            template: 'api/v0/people/people_alpha',
-            assigns: { persons: @persons, profiles: @profiles, structure: @structure }
-          )
-        end
+        return if @structure.blank?
+
+        @people.each { |person| @structure.store!(person) }
       end
 
       # These seams to be the data that is consumed by wordpress
@@ -158,7 +135,7 @@ module API
           end
         end
 
-        raise unless @errors.empty?
+        raise ActionController::BadRequest unless @errors.empty?
 
         # Mutually exclusive parameters
         mp = filter_params.compact
@@ -174,7 +151,7 @@ module API
 
         send "validate_#{@selector}", @choice
         Yabeda.people.wsgetpeople_calls.increment({ selector: @selector, valid: @errors.empty? ? 'yes' : 'no' }, by: 1)
-        raise unless @errors.empty?
+        raise ActionController::BadRequest unless @errors.empty?
       end
 
       def sanitize_scipers(scipers)
@@ -186,6 +163,11 @@ module API
 
       def sanitize_units(unit_names)
         units = unit_names.uniq.map { |name| Unit.find_by(name: name) }.compact
+        if units.blank?
+          @errors << "no valid unit provided"
+          return []
+        end
+
         # levmin = units.min{|u| u.level}.level
         # levmax = units.max{|u| u.level}.level
         levmin = units.min.level
@@ -223,23 +205,23 @@ module API
         @errors << "units should be a comma separated list of unit labels"
       end
 
-      def load_persons(selector, choice, force: false)
-        if @render_cache.positive?
-          cache_key = "wsgetpeople_persons_#{selector}_#{choice}"
+      def load_people(selector, choice, force: false)
+        if @cache_ttl.positive?
+          cache_key = "wsgetpeople_people_#{selector}_#{choice}"
           Rails.cache.delete(cache_key) if force
-          Rails.cache.fetch(cache_key, expires_in: @render_cache) do
-            do_load_persons(selector, choice)
+          Rails.cache.fetch(cache_key, expires_in: @cache_ttl) do
+            do_load_people(selector, choice)
           end
         else
-          do_load_persons(selector, choice)
+          do_load_people(selector, choice)
         end
       end
 
-      def do_load_persons(selector, choice)
+      def do_load_people(selector, choice)
         case selector
         when "units"
           units = sanitize_units(choice.split(","))
-          raise unless @errors.empty?
+          raise ActionController::BadRequest unless @errors.empty?
 
           # For branch non-leaf, we return a simplified version including professors only (classid: 5,6)
           if units.first.level < 4
@@ -248,26 +230,26 @@ module API
               aa += APIAccredsGetter.call(classid: [5, 6], unitid: u.id)
             end
             scipers = aa.map { |a| a["persid"] }.uniq
-            persons = Person.for_scipers(scipers)
+            people = Person.for_scipers(scipers)
           else
-            persons = Person.for_units(units)
+            people = Person.for_units(units)
           end
         when "groups"
-          persons = Person.for_groups(choice.split(","))
+          people = Person.for_groups(choice.split(","))
         when "scipers"
-          persons = Person.for_scipers(choice.split(","))
+          people = Person.for_scipers(choice.split(","))
         when "progcode"
           scipers = IsaThDirectorsGetter.call(progcode: choice).map { |r| r["sciper"] }
-          persons = Person.for_scipers(scipers)
+          people = Person.for_scipers(scipers)
         else
           raise "Invalid selector value. This should not happen as pre-validation occurs"
         end
 
         # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
-        persons.select!(&:visible_profile?)
+        people.select!(&:visible_profile?)
         # Fetch accreditations that we will need in any case so that it is cached
-        persons.each(&:accreditations)
-        persons
+        people.each(&:accreditations)
+        people
       end
 
       def people_params
