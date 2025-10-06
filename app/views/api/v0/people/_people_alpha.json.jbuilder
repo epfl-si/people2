@@ -14,9 +14,9 @@
 #     ... PERSON DATA (see _person.json.jbuilder) ...
 #   }
 # }
-@persons.each do |person|
+people.each do |person|
   # TODO: what if it does not exist ?
-  profile = @profiles[person.sciper]
+  profile = profiles[person.sciper]
   json.set! person.sciper.to_sym do
     json.partial! 'person', person: person, profile: profile
   end
