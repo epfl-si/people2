@@ -55,7 +55,8 @@ Rails.application.configure do
   config.force_ssl = true
 
   # A more compact log to stdout and the usual one to file
-  stdout_logger = ActiveSupport::TaggedLogging.logger($stdout)
+  # stdout_logger = ActiveSupport::TaggedLogging.logger.new($stdout)
+  stdout_logger = ActiveSupport::Logger.new($stdout)
   if (lfb = ENV.fetch('LOGFILE', '')).present?
     # lf is the basename. We attach a pod unique identifier to avoid overlaps
     lfe = `hostname`.chomp.split("-").last
