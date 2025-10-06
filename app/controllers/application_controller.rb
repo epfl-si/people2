@@ -123,6 +123,18 @@ class ApplicationController < ActionController::Base
     l
   end
 
+  # The first time it just resets the timer, subsequet calls write DT since first & last call
+  def timelog(msg = "")
+    unless defined?(@timelog_start_time)
+      @timelog_start_time = @timelog_last_time = Time.zone.now
+      return
+    end
+
+    t = Time.zone.now
+    Rails.logger.debug("TIME: #{t - @timelog_start_time} #{t - @timelog_last_time} <- #{msg}")
+    @timelog_last_time = t
+  end
+
   # override if default locale needs to change (e.g. during profile editing)
   def request_default_locale
     nil

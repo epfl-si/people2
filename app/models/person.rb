@@ -105,7 +105,8 @@ class Person
           else
             uorids.sort.uniq
           end
-    APIPersonGetter.call(unitid: ids).map { |p| new(p) }.reject do |p|
+    people_data = APIPersonGetter.call(unitid: ids)
+    people_data.map { |p| new(p) }.reject do |p|
       ids.map { |id| p.accred_for_unit(id) }.compact.select(&:botweb?).empty?
     end
   end
