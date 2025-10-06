@@ -37,6 +37,7 @@ class Picture < ApplicationRecord
 
   scope :camipro, -> { where(source: 'camipro') }
   scope :legacy, -> { where(source: 'legacy') }
+  scope :without_image, -> { left_joins(:image_attachment).where(active_storage_attachments: { id: nil }) }
 
   # -------------------------------------------------------------------- camipro
 
@@ -79,7 +80,12 @@ class Picture < ApplicationRecord
 
     sciper = profile.sciper
     url = URI.parse(Picture.send("#{source}_url", sciper))
-    image.attach(io: url.open, filename: "#{sciper}.jpg")
+    begin
+      image.attach(io: url.open, filename: "#{sciper}.jpg")
+    rescue OpenURI::HTTPError
+      self.failed_attempts = failed_attempts + 1
+      save
+    end
   end
 
   def fetch
@@ -103,6 +109,8 @@ class Picture < ApplicationRecord
     return unless camipro?
     # We still allow to destroy picture if it's profile is being destroyed too
     return if destroyed_by_association
+    # If the image could not be attached in  MAX_ATTEMPTS => source does not exist
+    return unless failed_attempts < MAX_ATTEMPTS || image.attached?
 
     errors.add :base, "activerecord.errors.picture.attributes.base.undeletable"
     throw :abort
