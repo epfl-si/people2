@@ -44,12 +44,12 @@
 # ]
 
 # json.(@structure, :sections)
-json.array!(@structure.sections.reject { |s| s.items.empty? }) do |section|
+json.array!(structure.sections.reject { |s| s.items.empty? }) do |section|
   json.label section.title
 
   json.members do
     json.array!(section.items) do |person|
-      profile = @profiles[person.sciper]
+      profile = profiles[person.sciper]
       json.partial! 'flat_person', person: person, profile: profile
     end
   end

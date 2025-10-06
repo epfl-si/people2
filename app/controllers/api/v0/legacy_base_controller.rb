@@ -7,6 +7,8 @@ module API
       protect_from_forgery
       before_action :check_auth
 
+      rescue_from ActionController::BadRequest, with: :custom_bad_request
+
       private
 
       def fail
@@ -24,6 +26,19 @@ module API
       def check_auth
         Rails.logger.debug("Check Auth to be implemented")
         true
+      end
+
+      # Custom error handler for bad request parameters
+      def custom_bad_request(e)
+        err = e.message == "ActionController::BadRequest" ? @errors : [e.message]
+        respond_to do |format|
+          format.json do
+            render json: { errors: err }.to_json, status: :bad_request
+          end
+          format.html do
+            render html: err.join(", "), status: :bad_request
+          end
+        end
       end
     end
   end

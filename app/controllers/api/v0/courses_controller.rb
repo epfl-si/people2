@@ -38,30 +38,42 @@ module API
         groups = cp[:groups]&.split(COMMA_SEP_RE)
 
         if scipers.present? && (groups.present? || units.present?)
-          raise ArgumentError "use only one parameter : scipers | unit | groups"
+          raise ActionController::BadRequest, "use only one parameter : scipers | unit | groups"
         end
-        raise ArgumentError "use only one parameter : unit | groups" if groups.present? && units.present?
+
+        if groups.present? && units.present?
+          raise ActionController::BadRequest,
+                "use only one parameter : unit | groups"
+        end
 
         cursus = cp[:cursus]&.downcase || cp[:orient]&.downcase
-        raise ArgumentError "Invalid coursus" unless cursus.blank? || %w[phd ma ba mo].include?(cursus)
+        raise ActionController::BadRequest, "Invalid coursus" unless cursus.blank? || %w[phd ma ba mo].include?(cursus)
 
         level = cursus.present? ? CURSUS_TO_LEVEL[cursus] : nil
 
         sn = section_names(locale)
         sections = cp[:section]&.split(COMMA_SEP_RE)&.select { |s| sn.key?(s.to_sym) }
-        raise ArgumentError "Invalid sections" if cp[:section].present? && sections.blank?
+        raise ActionController::BadRequest, "Invalid sections" if cp[:section].present? && sections.blank?
 
         semester = cp[:sem]&.downcase
-        raise ArgumentError "Invalid semester" unless semester.blank? || semester == "hiver" || semester == "ete"
+        unless semester.blank? || semester == "hiver" || semester == "ete"
+          raise ActionController::BadRequest,
+                "Invalid semester"
+        end
 
         lang = cp[:langueens]&.downcase
-        raise ArgumentError "Invalid teaching language langueens" unless lang.blank? || lang == "en" || lang == "fr"
+        unless lang.blank? || lang == "en" || lang == "fr"
+          raise ActionController::BadRequest,
+                "Invalid teaching language langueens"
+        end
 
         @detail = cp[:detail] || "L"
-        raise ArgumentError "Invalid display. Should be S, M, or L" unless %w[S M L].include?(@detail)
+        raise ActionController::BadRequest, "Invalid display. Should be S, M, or L" unless %w[S M L].include?(@detail)
 
         @display = cp[:display] || "bycours"
-        raise ArgumentError "Invalid display. Should bycours or byprof" unless %w[bycours byprof].include?(@display)
+        unless %w[bycours byprof].include?(@display)
+          raise ActionController::BadRequest, "Invalid display. Should bycours or byprof"
+        end
 
         if groups.present?
           scipers = groups.map { |g| Group.find_by(name: g) }.compact.map(&:member_scipers).flatten.uniq
@@ -92,7 +104,7 @@ module API
         raise NotImplementedError if params["format"].present? && params["format"] != "html"
 
         slug = params['code']
-        raise ArgumentError, "code parameters is mandatory" if slug.blank?
+        raise ActionController::BadRequest, "code parameters is mandatory" if slug.blank?
 
         level = params['cursus'] == 'ma' ? 'master' : 'bachelor'
 
