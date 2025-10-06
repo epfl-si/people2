@@ -92,8 +92,9 @@ en:
         courses: Courses
         current_phd: PhD Students
         past_phd: Past EPFL PhD Students
+        past_phd_as_director: Past EPFL PhD Students
+        past_phd_as_codirector: Past EPFL PhD Students as codirector
         teaching: Teaching & PhD
-        past_phd_students: Past EPFL PhD Students
   pictures:
     form:
       selected: selected

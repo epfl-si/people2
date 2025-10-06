@@ -428,38 +428,8 @@ class Person
     accreditations.any?(&:professor_emeritus?)
   end
 
-  def courses
-    # course_instances not used for the moment as it is too noisy and all the info is in edu
-    # Course.where(
-    #   acad: Course.current_academic_year
-    # ).includes(
-    #   :course_instances, :teacherships
-    # ).where(
-    #   teacherships: { sciper: sciper }
-    # )
-    Course.where(
-      acad: Course.current_academic_year
-    ).includes(
-      :teacherships
-    ).where(
-      teacherships: { sciper: sciper }
-    )
-  end
-
-  def phds
-    @phds ||= Phd.where(director_sciper: sciper)
-  end
-
-  def current_phds
-    # Phd.current.where(director_sciper: sciper)
-    y = Time.zone.now.year
-    phds.select { |c| c.year == y }
-  end
-
-  def past_phds
-    # Phd.past.where(director_sciper: sciper)
-    y = Time.zone.now.year
-    phds.select { |c| c.year < y }
+  def teacher
+    possibly_teacher? ? Teacher.new(self) : nil
   end
 
   # ----------------------------------------------------------------------------

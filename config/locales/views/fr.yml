@@ -93,7 +93,8 @@ fr:
         current_phd: Doctorant·es actuel·les
         past_phd: A dirigé les thèses EPFL de
         teaching: Enseignement & PhD
-        past_phd_students: A dirigé les thèses EPFL de
+        past_phd_as_director: A dirigé les thèses EPFL de
+        past_phd_as_codirector: A co-dirigé les thèses EPFL de
   pictures:
     form:
       selected: sélectionné

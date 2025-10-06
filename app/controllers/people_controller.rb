@@ -125,16 +125,18 @@ class PeopleController < ApplicationController
   def set_show_data
     @page_title = "EPFL - #{@person.name.display}"
 
-    if @person.possibly_teacher?
-      @courses = @person.courses.sort { |a, b| a.t_title <=> b.t_title }
+    @teacher = @person.teacher
+    if @teacher.present?
+      @courses = @teacher.courses.sort { |a, b| a.t_title <=> b.t_title }
 
-      @current_phds = @person.current_phds
-      @past_phds = @person.past_phds
-      @ta = @courses.present? || @current_phds.present? || @past_phds.present?
+      @current_phds = @teacher.current_phds
+      @past_phds_as_director = @teacher.past_phds_as_director
+      @past_phds_as_codirector = @teacher.past_phds_as_codirector
+      @ta = [@courses, @current_phds, @past_phds_as_director, @past_phds_as_codirector].any?(&:present?)
     else
       @courses = nil
       @current_phds = nil
-      @past_phds = nil
+      @past_phds_as_director = @past_phds_as_codirector = nil
       @ta = false
     end
 
