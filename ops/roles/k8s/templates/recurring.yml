@@ -12,3 +12,8 @@ production:
     class: PhdsImporterJob
     args: []
     schedule: "5 5 * * *"
+  # Cleanup dangling pictures
+  pictures_housekeeping:
+    class: PicturesCleanupJob
+    args: []
+    schedule: "1 1 1 * *"
