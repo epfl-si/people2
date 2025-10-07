@@ -16,7 +16,7 @@
 <p id='ext_data_links'>
   <%= link_to t(".nav.vcard"), person_path(format: "vcf") %><br>
   <%= link_to t(".nav.atari"), "https://atari.epfl.ch/#{@person.sciper}", target: 'new' if allowed_to?(:show_atari?, @person) %>
-  <%= link_to t(".nav.signatures"), "/signatures", target: 'new' if allowed_to?(:show_personal_data?, @person) %>
+  <%= link_to t(".nav.signatures"), "/signatures?sciper=#{@person.sciper}", target: 'new' if allowed_to?(:show_personal_data?, @person) %>
 </p>
 </div>
 <% if @profile&.t_nationality.present? && @profile&.nationality_visible_by?(Current.audience) %>
