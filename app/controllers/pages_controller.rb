@@ -55,23 +55,7 @@ class PagesController < ApplicationController
     }
   ].freeze
   def devindex
-    @data = []
-    Profile.all.find_each do |profile|
-      person = profile.person
-      begin
-        email = person.email_user.to_s
-      rescue StandardError
-        email = nil
-      end
-      d = {
-        name: person.name.display.to_s,
-        sciper: profile.sciper.to_s,
-        email: email,
-        desc: DESCS[profile.sciper] || "Automatic Import",
-      }
-      @data << OpenStruct.new(d)
-    end
-    EXTRAPROFILES.each { |d| @data << OpenStruct.new(d) }
+    @data = EXTRAPROFILES.map { |d| OpenStruct.new(d) }
     scipers = @data.map(&:sciper).uniq
     @adoptions =
       Adoption.where(sciper: scipers)
