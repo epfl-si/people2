@@ -139,10 +139,15 @@ module API
 
         # Mutually exclusive parameters
         mp = filter_params.compact
-        @errors << "missing mandatory parameter: groups, progcode, scipers, units" if mp.empty?
-        if mp.keys.count > 1
-          @errors << "only one of the following mandatory parameters can be present: groups, progcode, scipers, units"
+        if mp.keys.empty?
+          raise ActionController::BadRequest, "missing mandatory parameter: groups, progcode, scipers, units"
         end
+
+        if mp.keys.count > 1
+          raise ActionController::BadRequest,
+                "only one of the following mandatory parameters can be present: groups, progcode, scipers, units"
+        end
+
         @selector = mp.keys.first
         @choice = mp[@selector].chomp
         cache_key_parts << @selector
