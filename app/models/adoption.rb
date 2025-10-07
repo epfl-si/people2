@@ -40,6 +40,11 @@ class Adoption < ApplicationRecord
 
   def reimport
     Profile.for_sciper(sciper).destroy
+    s = Work::Sciper.find_by(sciper: sciper)
+    if s
+      s.status = Work::Sciper::STATUS_WITH_LEGACY_PROFILE
+      s.save
+    end
     per = Person.find(sciper)
     per.profile!
     save
