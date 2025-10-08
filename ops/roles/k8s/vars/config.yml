@@ -86,5 +86,8 @@ people_secrets:
   OASIS_TOKEN: "{{ _secrets.oasis.token | b64encode }}"
   SECRET_KEY_BASE: "{{ _secrets.secret_key_base | b64encode }}"
 
+  SPYWARE_URL: "{{ _secrets.opdo.url | b64encode }}"
+  SPYWARE_KEY: "{{ _secrets.opdo.key | b64encode }}"
+
 people_config_signature: "{{ people_config | to_json | md5 }}"
 people_secrets_signature: "{{ people_secrets | to_json | md5 }}"
