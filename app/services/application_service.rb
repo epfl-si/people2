@@ -49,6 +49,7 @@ class ApplicationService
 
   # fetch calls dofetch which returns nil in case of no result
   def fetch(ttl: expire_in, force: false)
+    Rails.logger.debug("%%%%%%%%%% #{self.class.name} : #{@url}")
     # api services cache have to be enabled explicitly
     if do_cache && Rails.application.config_for(:epflapi).perform_caching
       if force

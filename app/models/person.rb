@@ -89,47 +89,6 @@ class Person
     end
   end
 
-  def self.for_scipers(scipers)
-    return [] if scipers.empty?
-
-    # sort.uniq is to minimize cache miss
-    us = scipers.sort.uniq
-    res = APIPersonGetter.call!(persid: us, single: false)
-    res.map { |p| new(p) }
-  end
-
-  def self.for_units(units)
-    uorids = units.is_a?(Array) ? units : [units]
-    ids = if uorids.first.respond_to?(:id)
-            uorids.map(&:id).sort.uniq
-          else
-            uorids.sort.uniq
-          end
-    people_data = APIPersonGetter.call(unitid: ids)
-    people_data.map { |p| new(p) }.reject do |p|
-      ids.map { |id| p.accred_for_unit(id) }.compact.select(&:botweb?).empty?
-    end
-  end
-
-  def self.for_groups(group_names)
-    gnames = group_names.is_a?(Array) ? group_names : [group_names]
-    scipers = gnames.map do |gn|
-      # unique id for groups is in the form Snnnnn
-      id = if gn =~ /S[0-9]{5}/
-             gn
-           else
-             Group.find_by(name: gn)&.id
-           end
-      if id.present?
-        members = APIGroupMembersGetter.call(id: id)
-        members&.map { |m| m["id"] } || []
-      else
-        []
-      end
-    end.flatten.uniq
-    for_scipers(scipers)
-  end
-
   # TODO: keep only this version once migration is done
   # def profile!
   #   unless defined?(@profile)
@@ -139,6 +98,14 @@ class Person
   #   @profile
   # end
 
+  # return only existing profile without attempting to create a new one
+  def profile
+    return if defined?(@profile)
+
+    @profile = Profile.for_sciper(sciper)
+  end
+
+  # return the existing profile or a newly created one
   def profile!
     unless defined?(@profile)
       @profile = Profile.for_sciper(sciper)
