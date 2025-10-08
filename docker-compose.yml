@@ -182,6 +182,10 @@ services:
       ENTRA_CLIENT_ID: "${DEV_ENTRA_CLIENT_ID}"
       ENTRA_SECRET: "${DEV_ENTRA_SECRET}"
 
+      # OPDo Storage Server
+      SPYWARE_URL: ${SPYWARE_URL}
+      SPYWARE_KEY: ${SPYWARE_KEY}
+
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"

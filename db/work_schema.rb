@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_08_094859) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
@@ -125,6 +125,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
     t.text "object", size: :long
     t.text "object_changes", size: :long
     t.datetime "created_at"
+    t.datetime "uploaded_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
