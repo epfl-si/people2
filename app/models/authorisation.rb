@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Authorisation
+  MAX_PER_REQUEST = 160
   attr_reader :name, :sciper, :resource_id, :type
 
   include Translatable
@@ -28,6 +29,19 @@ class Authorisation
 
   def unit_id
     @resource_id
+  end
+
+  def self.filter_scipers_with_property(scipers, property = 'botweb')
+    if scipers.count > MAX_PER_REQUEST
+      scipers.each_slice(MAX_PER_REQUEST).map do |scipers_batch|
+        filter_scipers_with_property(scipers_batch)
+      end.flatten
+    else
+      str = scipers.first.is_a?(String)
+      APIAuthGetter.call(
+        authid: property, type: 'property', status: 'active', persid: scipers
+      ).map { |v| str ? v["persid"].to_s : v["persid"].to_i }.sort.uniq
+    end
   end
 
   # TODO: check that the given property is in the list of available properties

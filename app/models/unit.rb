@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+# TODO: We may consider transforming this into a local Model as we can refresh it
+#   nigthly very easily as we do for scipers. The call to api /units gives the full list.
+#   ./bin/rails g migration create_units --database=work \
+#     name_en:string name_fr:string name_it:string name_de:string \
+#     label_en:string label_fr:string label_it:string label_de:string \
+#     level:integer resp_id:string kind:string address:string \
+#     ancestors:string direct_children:string  all_children:string
 class Unit
   attr_reader :id, :parent_id, :hierarchy, :label, :level, :name, :type, :address, :url
 

@@ -16,8 +16,8 @@
 # }
 people.each do |person|
   # TODO: what if it does not exist ?
-  profile = profiles[person.sciper]
+  profiles[person.sciper]
   json.set! person.sciper.to_sym do
-    json.partial! 'person', person: person, profile: profile
+    json.partial! 'person', person: person
   end
 end
