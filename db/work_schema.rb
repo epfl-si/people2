@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_09_150836) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_08_094859) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
