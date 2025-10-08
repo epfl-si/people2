@@ -4,7 +4,7 @@
 <% end %>
   <%=
     render partial: "#{box.plural_variant}/#{box.plural_variant}",
-           locals: {"#{box.plural_variant}".to_sym => box.visible_items(Current.audience)}.merge(local_assigns)
+           locals: {"#{box.plural_variant}".to_sym => box.visible_items(Current.audience).order(:position)}.merge(local_assigns)
   %>
 <% if box.show_title? %>
 </div>
