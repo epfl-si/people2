@@ -34,11 +34,12 @@ class SpywareUploadJob < ApplicationJob
 
     done = []
     begin
-      Net::HTTP.start(@uri.host, @uri.port, use_ssl: @uri.scheme == "https") do |http|
+      Net::HTTP.start(@uri.host, @uri.port, use_ssl: @uri.scheme == "https",
+                                            verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
         logs.each do |line|
           done << line.id
           # request object are designed to be single use
-          request = Net::HTTP::Post.new(@uri.path, @headers)
+          request = Net::HTTP::Post.new(@uri, @headers)
           request.body = line.to_opdo.to_json
           response = http.request(request)
           done << line.id if response.is_a?(Net::HTTPSuccess)
