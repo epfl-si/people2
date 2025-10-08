@@ -228,7 +228,7 @@ module API
         when "scipers"
           people = BulkPerson.for_scipers(choice.split(","))
         when "progcode"
-          scipers = Phd.where(cursus: choice, year: "2025").distinct.pluck(:director_sciper)
+          scipers = Phd.current.where(cursus: choice).distinct.pluck(:director_sciper)
           people = BulkPerson.for_scipers(scipers)
         else
           raise "Invalid selector value. This should not happen as pre-validation occurs"
