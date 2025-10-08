@@ -49,6 +49,9 @@
                     value: "8080"
                   - name: TARGET_PORT
                     value: "3000"
+                    # FOR thrust
+                    name: FORWARD_HEADERS
+                    value: "1"
                   # - name: THRUST_DEBUG
                   #   value: "1"
                 volumeMounts:
