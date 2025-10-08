@@ -97,6 +97,7 @@ class Profile < ApplicationRecord
     create(DEFAULTS.merge(sciper: sciper))
   end
 
+  # TODO: this is actually find_by(sciper: sciper) why duplicating ?
   def self.for_sciper(sciper)
     # returns nil when nothing found
     where(sciper: sciper).first

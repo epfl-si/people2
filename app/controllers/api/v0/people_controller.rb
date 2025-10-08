@@ -67,12 +67,6 @@ module API
           end
         end
 
-        # TODO: check if @people contains duplicates. Already checked for
-        # units, sciper is automatic. It remains groups.
-
-        scipers = @people.map(&:sciper).uniq
-        @profiles ||= Profile.where(sciper: scipers).index_by(&:sciper)
-
         raise ActionController::BadRequest unless @errors.empty?
 
         return if @structure.blank?
@@ -228,32 +222,22 @@ module API
           units = sanitize_units(choice.split(","))
           raise ActionController::BadRequest unless @errors.empty?
 
-          # For branch non-leaf, we return a simplified version including professors only (classid: 5,6)
-          if units.first.level < 4
-            aa = []
-            units.each do |u|
-              aa += APIAccredsGetter.call(classid: [5, 6], unitid: u.id)
-            end
-            scipers = aa.map { |a| a["persid"] }.uniq
-            people = Person.for_scipers(scipers)
-          else
-            people = Person.for_units(units)
-          end
+          people = BulkPerson.for_units(units)
         when "groups"
-          people = Person.for_groups(choice.split(","))
+          people = BulkPerson.for_groups(choice.split(","))
         when "scipers"
-          people = Person.for_scipers(choice.split(","))
+          people = BulkPerson.for_scipers(choice.split(","))
         when "progcode"
-          scipers = IsaThDirectorsGetter.call(progcode: choice).map { |r| r["sciper"] }
-          people = Person.for_scipers(scipers)
+          scipers = Phd.where(cursus: choice, year: "2025").distinct.pluck(:director_sciper)
+          people = BulkPerson.for_scipers(scipers)
         else
           raise "Invalid selector value. This should not happen as pre-validation occurs"
         end
 
         # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
-        people.select!(&:visible_profile?)
+        # people.select!(&:visible_profile?)
         # Fetch accreditations that we will need in any case so that it is cached
-        people.each(&:accreditations)
+        # people.each(&:accreditations)
         people
       end
 
