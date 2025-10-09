@@ -69,7 +69,7 @@ class Course < ApplicationRecord
     translated_title = t_title(locale)
     return nil if code.blank? || translated_title.blank?
 
-    t = I18n.transliterate(translated_title).strip.gsub(/[^A-Za-z -]/, '').downcase.gsub(/\s+/, '-')
+    t = I18n.transliterate(translated_title).strip.downcase.gsub(/[^A-Za-z0-9-]+/, '-')
     c = code.upcase.sub('(', "-").sub(')', '')
     s = "#{t}-#{c}".gsub(/-+/, "-")
     "https://edu.epfl.ch/coursebook/#{locale}/#{s}"
