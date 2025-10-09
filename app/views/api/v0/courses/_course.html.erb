@@ -1,4 +1,4 @@
-<% title = course.edu_url(@locale).present? ? link_to(course.t_title, course.edu_url(@locale)) : course.t_title %>
+<% title = link_to_or_text(course.t_title, course.verified_edu_url!(@locale)) %>
 
 <li>
 <% case detail %>

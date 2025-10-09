@@ -21,6 +21,7 @@ class CoursesImporterJob < ApplicationJob
         oc = OasisCourseGetter.call(acad: acad, code: slug)
         next if oc.blank?
 
+        # This will always be false when force_refresh is true
         if (c = existing[slug]).present?
           c.update_from_oasis(oc)
         else
@@ -73,6 +74,7 @@ class CoursesImporterJob < ApplicationJob
       end.compact
       Teachership.insert_all(tcs_h)
     end
+    EdurlCheckerJob.perform_now
   end
 end
 # rubocop:enable Rails/SkipsModelValidations

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_09_150836) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
@@ -65,6 +65,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
     t.text "description_fr"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "fallback_url_en", limit: 2
+    t.string "fallback_url_fr", limit: 2
+    t.boolean "urled"
     t.index ["acad", "slug"], name: "index_courses_on_acad_and_slug", unique: true
     t.index ["slug"], name: "index_courses_on_slug"
   end
@@ -125,6 +128,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_24_123225) do
     t.text "object", size: :long
     t.text "object_changes", size: :long
     t.datetime "created_at"
+    t.datetime "uploaded_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
