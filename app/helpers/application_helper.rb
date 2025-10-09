@@ -37,7 +37,7 @@ module ApplicationHelper
     if url.present?
       link_to(txt, url, opts)
     else
-      t(txt)
+      tag.span(txt)
     end
   end
 

@@ -2,7 +2,7 @@
    # https://people.epfl.ch/cgi-bin/wsgetcours?code=CIVIL&langueens=en&format=html&cursus=ba
 %>
 <% @courses.each do |course| %>
-  <strong><%= link_to course.t_title, course.edu_url(I18n.locale), target: "_blank" %></strong><br>
+  <strong><%= link_to_or_text course.t_title, course.verified_edu_url!(I18n.locale), target: "_blank" %></strong><br>
   <em>Teacher:</em> <%= course.teacherships.map{|t| t.display_name}.join(", ") %><br>
   <% course.course_instances.each do |ci| %>
     <strong><%= ci.t_section %></strong>, <%= ci.acad_semester %><br>
