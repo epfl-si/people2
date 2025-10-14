@@ -4,6 +4,8 @@ require_relative 'boot'
 
 require 'rails/all'
 
+# TODO: consider giving anyway_config a try https://github.com/palkan/anyway_config
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)

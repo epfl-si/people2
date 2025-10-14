@@ -142,6 +142,7 @@ services:
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-false}
       RAILS_DEVELOPMENT_HOSTS: ${RAILS_DEVELOPMENT_HOSTS:-people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}}
       ERROR_PAGES: ${ERROR_PAGES:-mix}
+      YABEDA_DEBUG: true
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
@@ -186,6 +187,8 @@ services:
       SPYWARE_URL: ${SPYWARE_URL}
       SPYWARE_KEY: ${SPYWARE_KEY}
 
+      # Yabeda Prometheus Exporter
+      multiprocess_files_dir: /srv/ctmp/prometheus
     extra_hosts:
       - "api.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
       - "keycloak.${DOMAIN:-dev.jkldsa.com}:${DOCKER_IP}"
@@ -195,6 +198,8 @@ services:
       - ./:/srv/app
       - storage:/srv/app/storage
       - filecache:/srv/filecache
+      # common tmp storage
+      - ctmp:/srv/ctmp
     labels:
       # There is no way to do this with labels. :_(
       # - "traefik.http.services.legacypeople.loadbalancer.servers.url=http://dinfo11.epfl.ch/"
@@ -238,6 +243,7 @@ services:
     volumes:
       - ./:/srv/app
       - storage:/srv/app/storage
+      - ctmp:/srv/ctmp
 
   prometheus:
     profiles:
@@ -362,6 +368,7 @@ services:
 
 volumes:
   mariadb: {}
+  ctmp: {}
   filecache: {}
   nginxcache: {}
   storage: {}

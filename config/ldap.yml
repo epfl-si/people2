@@ -3,6 +3,7 @@
 
 ldap_config: &ldap_config
   host: <%= ENV.fetch("LDAP_HOST", "ldap.epfl.ch") %>
+  port: 389
   base: o=epfl,c=ch
 
 development:
