@@ -2,9 +2,17 @@
 
 module Work
   class SpywareLog < Work::Base
+    OPDO_EVENT = {
+      'create': 'c',
+      'read': 'r',
+      'update': 'u',
+      'destroy': 'd',
+    }.freeze
+
     self.table_name = 'versions'
 
-    scope :uploadanda, -> { where(uploaded_at: nil).order(:created_at) }
+    scope :uploadanda, -> { where(uploaded_at: nil) }
+    scope :uploaded, -> { where.not(uploaded_at: nil) }
 
     # Pour rappel, la structure de données est la suivante:
     # doc = {
@@ -17,10 +25,10 @@ module Work
     # }
     def to_opdo
       {
-        timestamp: created_at,
+        "@timestamp": created_at,
         handler_id: author_sciper || "batch",
         handled_id: subject_sciper || "NA",
-        crudt: event,
+        crudt: OPDO_EVENT[event],
         source: ip || "NA",
         payload: object_changes || object
       }

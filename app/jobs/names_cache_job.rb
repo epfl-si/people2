@@ -23,10 +23,11 @@ class NamesCacheJob < ApplicationJob
   end
 
   def ldap_by_sciper(force: false)
+    cfg = Rails.application.config_for(:ldap)
     ldpath = Rails.root.join("tmp/ldap_scipers_emails.txt")
-    # TODO: replace with Net::LDAP or install ldapsearch in the container
+    # TODO: replace with a model in ldap, Net::LDAP or install ldapsearch in the container
     if force || !File.exist?(ldpath)
-      cmd = "ldapsearch -x -H ldap://ldap.epfl.ch:389 -b 'o=epfl,c=ch'"
+      cmd = "ldapsearch -x -H ldap://#{cfg.host}:#{cfg.port} -b '#{cfg.base}'"
       cmd += " '(&(objectClass=person)(!(ou=services))(!(employeeType=Ignore)))'"
       cmd += " uniqueidentifier mail displayName"
       cmd += " | grep -E '^(dn|mail|uniqueIdentifier|displayName):|^$' > #{ldpath}"

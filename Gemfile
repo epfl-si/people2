@@ -172,7 +172,10 @@ gem 'database_cleaner-active_record'
 # https://dev.37signals.com/kamal-prometheus/
 # https://betterstack.com/community/guides/monitoring/ruby-rails-prometheus/
 # https://github.com/yabeda-rb/yabeda-rails
+# yabeda-activejob apparently does not work
 gem "yabeda"
+gem 'yabeda-activejob'
+gem 'yabeda-http_requests'
 gem "yabeda-prometheus-mmap"
 gem "yabeda-puma-plugin"
 gem "yabeda-rails"

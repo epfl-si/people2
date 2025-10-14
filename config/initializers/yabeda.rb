@@ -15,6 +15,11 @@ Yabeda.configure do
     # summary :bells_ringing_duration, unit: :seconds, comment: "How long bells are ringing"
     gauge :adoptions_count, unit: :integer, comment: "Number of Adoptions"
     counter :wsgetpeople_calls, unit: :integer, comment: "Numbers of requests for wsgetpeople"
+    counter :opdo_upload_errors, unit: :integer,
+                                 comment: "Number of failed upload attempts of spyware logs to the OPDo server"
+    counter :opdo_uploads, unit: :integer,
+                           comment: "Number of spyware logs that have been succesfully uploaded to the OPDo server"
   end
 end
+Yabeda::ActiveJob.install!
 Yabeda.configure!

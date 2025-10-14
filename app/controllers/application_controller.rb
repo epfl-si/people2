@@ -105,7 +105,8 @@ class ApplicationController < ActionController::Base
   end
 
   def switch_locale(&action)
-    locale = params[:lang] || locale_from_http_header || request_default_locale || I18n.default_locale
+    locale = params[:lang]&.gsub(/[^a-zA-Z]/, '')
+    locale = locale_from_http_header || request_default_locale || I18n.default_locale if locale.blank?
     Current.available_locales = I18n.available_locales
     Current.primary_lang = locale
     Current.fallback_lang = request_default_locale || I18n.default_locale
