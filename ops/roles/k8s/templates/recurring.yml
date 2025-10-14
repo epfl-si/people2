@@ -20,4 +20,4 @@ production:
   push_opdo:
     class: SpywareUploadJob
     args: [{batch_size: 100, all: true}]
-    schedule: "13 * * * *"
+    schedule: "*/10 * * * *"
