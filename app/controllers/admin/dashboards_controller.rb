@@ -4,10 +4,11 @@ module Admin
   class DashboardsController < BaseController
     # This way, one day we can make this user-configurable
     PANELS = [
-      { name: "adoplatest", enabled: true, gridcol: ["auto", 3], gridrow: ["auto", 3] },
+      { name: "adoplatest", enabled: true, gridcol: ["auto", 3], gridrow: ["auto", 2] },
       { name: "adopcount", enabled: true, gridcol: ["auto", 1], gridrow: ["auto", 1] },
       { name: "scipercount", enabled: true, period: 1_800, gridcol: ["auto", 1], gridrow: ["auto", 1] },
-      { name: "jobs", enabled: true, period: 30, gridcol: ["auto", 1], gridrow: ["auto", 1] }
+      { name: "jobs", enabled: true, period: 30, gridcol: ["auto", 2], gridrow: ["auto", 1] },
+      { name: "opdo", enabled: true, period: 600, gridcol: ["auto", 2], gridrow: ["auto", 1] }
     ].map { |h| [h[:name], OpenStruct.new({ period: 60 }.merge(h))] }.to_h.freeze
 
     def index
@@ -31,6 +32,14 @@ module Admin
 
     def adoplatest
       @adoptions = Adoption.accepted.order("updated_at DESC").limit(10)
+    end
+
+    def opdo
+      @counts = [
+        { label: "Total log lines in the DB", value: Work::SpywareLog.count },
+        { label: "Already uploaded log lines", value: Work::SpywareLog.uploaded.count },
+        { label: "To be uploaded log lines", value: Work::SpywareLog.uploadanda.count }
+      ].map { |h| OpenStruct.new(h) }
     end
 
     def jobs
