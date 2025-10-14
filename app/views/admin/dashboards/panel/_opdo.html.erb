@@ -1,0 +1,11 @@
+<h3>OPDO uploads</h3>
+<table class="table table-hover">
+  <tbody>
+  <% @counts.each do |c| %>
+    <tr>
+      <td><%= c.label %></td>
+      <td class="text-right"><%= c.value %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
