@@ -114,6 +114,17 @@ module Legacy
     def visible?
       id_show == '1'
     end
+
+    def to_social(profile: nil)
+      return nil unless ::Social.tag?(tag)
+
+      e = ::Social.new(
+        tag: tag,
+        value: content,
+        visibility: visible? ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
+      )
+      e.profile = profile if profile.present?
+    end
   end
 end
 

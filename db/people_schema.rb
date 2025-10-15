@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_09_123225) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_15_072556) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -28,6 +28,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_123225) do
     t.datetime "updated_at", null: false
     t.index ["profile_id", "position"], name: "index_accreds_on_profile_id_and_position", unique: true
     t.index ["profile_id"], name: "index_accreds_on_profile_id"
+  end
+
+  create_table "accreds_aar", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "accred_id", null: false
+    t.string "sciper", null: false
+    t.integer "unit"
+    t.integer "ordre"
+    t.boolean "accred_show"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["accred_id"], name: "index_accreds_aar_on_accred_id"
   end
 
   create_table "achievements", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -126,6 +137,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_123225) do
     t.index ["origin_id"], name: "index_awards_on_origin_id"
     t.index ["profile_id", "position"], name: "index_awards_on_profile_id_and_position", unique: true
     t.index ["profile_id"], name: "index_awards_on_profile_id"
+  end
+
+  create_table "awards_aar", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "award_id", null: false
+    t.string "sciper", null: false
+    t.integer "ordre"
+    t.string "title"
+    t.string "grantedby"
+    t.string "url"
+    t.integer "year"
+    t.string "category"
+    t.string "origin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["awards_id"], name: "index_awards_aar_on_awards_id"
   end
 
   create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -466,12 +492,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_123225) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "accreds_aar", "accreds"
   add_foreign_key "achievements", "profiles"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "awards", "profiles"
   add_foreign_key "awards", "selectable_properties", column: "category_id"
   add_foreign_key "awards", "selectable_properties", column: "origin_id"
+  add_foreign_key "awards_aar", "awards", column: "awards_id"
   add_foreign_key "boxes", "model_boxes"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"

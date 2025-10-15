@@ -274,7 +274,7 @@ class LegacyProfileImportJob < ApplicationJob
       nen = cv.boxes.free_text.visible.with_content.where(cvlang: "en").count
       nfr = cv.boxes.free_text.visible.with_content.where(cvlang: "fr").count
       lang = nen >= nfr ? "en" : "fr"
-      fallback_lang = lang if detect_lang_with_ai
+      fallback_lang = detect_lang_with_ai ? lang : nil
     end
 
     # Infoscience links
@@ -306,13 +306,7 @@ class LegacyProfileImportJob < ApplicationJob
       b.profile = profile
       b.save
       cv.publications.visible.order(:ordre).each do |le|
-        e = profile.publications.new(
-          title: le.titrepub,
-          journal: le.revuepub,
-          authors: le.auteurspub,
-          visibility: AudienceLimitable::VISIBLE
-        )
-        e.url = le.urlpub if le.urlpub.present?
+        e = le.to_publication(profile: profile)
         next if e.save
 
         err_count += 100_000
@@ -329,18 +323,7 @@ class LegacyProfileImportJob < ApplicationJob
       b.profile = profile
       b.save
       cv.educations.order(:ordre).each do |le|
-        lang = le.title_lang? || fallback_lang if detect_lang_with_ai
-        e = profile.educations.new(
-          year_begin: le.year_begin,
-          year_end: le.year_end,
-          school: le.univ,
-          visibility: AudienceLimitable::VISIBLE
-        )
-        c = education_cats[le.guess_category] || education_cats["other"]
-        e.category = c
-        e.send("title_#{lang.downcase}=", le.title)
-        e.send("field_#{lang.downcase}=", le.field) if le.field.present?
-        e.director = le.director if le.director.present?
+        e = le.to_education(lang, profile: profile, fallback_lang: fallback_lang)
         next if e.save
 
         err_count += 1_000_000
@@ -357,14 +340,7 @@ class LegacyProfileImportJob < ApplicationJob
       b.profile = profile
       b.save
       cv.experiences.order(:ordre).each do |le|
-        lang = le.title_lang? || fallback_lang if detect_lang_with_ai
-        e = profile.experiences.new(
-          year_begin: le.year_begin,
-          year_end: le.year_end,
-          visibility: AudienceLimitable::VISIBLE
-        )
-        e.send("title_#{lang.downcase}=", le.title)
-        e.location = le.univ if le.univ?
+        e = le.to_experience(lang, profile: profile, fallback_lang: fallback_lang)
         next if e.save
 
         err_count += 10_000_000
@@ -402,16 +378,7 @@ class LegacyProfileImportJob < ApplicationJob
       b.profile = profile
       b.save
       cv.awards.order(:ordre).each do |le|
-        lang = le.title_lang? || fallback_lang if detect_lang_with_ai
-        e = profile.awards.new(
-          year: le.year,
-          visibility: AudienceLimitable::VISIBLE
-        )
-        e.send("title_#{lang.downcase}=", le.title)
-        e.issuer = le.grantedby if le.grantedby.present?
-        e.url = le.url if le.url.present?
-        e.category = award_cats[le.category] if le.category.present?
-        e.origin = award_orig[le.origin] if le.origin.present?
+        e = le.to_award(lang, profile: profile, fallback_lang: fallback_lang)
         next if e.save
 
         err_count += 100_000_000
@@ -434,12 +401,7 @@ class LegacyProfileImportJob < ApplicationJob
           end
           next
         end
-
-        e = profile.socials.new(
-          tag: le.tag,
-          value: le.content,
-          visibility: le.visible? ? AudienceLimitable::VISIBLE : AudienceLimitable::HIDDEN
-        )
+        e = le.to_social(profile: profile)
         next if e.save
 
         err_count += 1_000_000_000
