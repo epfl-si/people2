@@ -60,5 +60,33 @@ module Legacy
         "other"
       end
     end
+
+    def self.all_categories
+      @all_categories ||= SelectableProperty.education_category.index_by(&:label)
+    end
+
+    def to_education(lang, profile: nil, fallback_lang: nil)
+      # debugger
+
+      final_lang = if fallback_lang.present?
+                     title_lang? || fallback_lang
+                   else
+                     lang || 'en'
+                   end
+
+      e = ::Education.new(
+        year_begin: year_begin,
+        year_end: year_end,
+        school: univ,
+        visibility: AudienceLimitable::VISIBLE
+      )
+      e.profile = profile if profile.present?
+      c = Education.all_categories[guess_category] || education_cats["other"]
+      e.category = c
+      e.send("title_#{final_lang.downcase}=", title)
+      e.send("field_#{final_lang.downcase}=", field) if field.present?
+      e.director = director if director.present?
+      e
+    end
   end
 end

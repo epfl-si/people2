@@ -33,5 +33,25 @@ module Legacy
         [yb, ye]
       end
     end
+
+    def to_experience(lang, profile: nil, fallback_lang: nil)
+      # debugger
+
+      final_lang = if fallback_lang.present?
+                     title_lang? || fallback_lang
+                   else
+                     lang || 'en'
+                   end
+
+      e = ::Experience.new(
+        year_begin: year_begin,
+        year_end: year_end,
+        visibility: AudienceLimitable::VISIBLE
+      )
+      e.send("title_#{final_lang.downcase}=", title)
+      e.location = univ if univ?
+      e.profile = profile if profile.present?
+      e
+    end
   end
 end

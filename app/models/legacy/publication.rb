@@ -22,5 +22,17 @@ module Legacy
     def url
       urlpub
     end
+
+    def to_publication(profile: nil)
+      e = ::Publication.new(
+        title: titrepub,
+        journal: revuepub,
+        authors: auteurspub,
+        visibility: AudienceLimitable::VISIBLE
+      )
+      e.profile = profile if profile.present?
+      e.url = urlpub if urlpub.present?
+      e
+    end
   end
 end
