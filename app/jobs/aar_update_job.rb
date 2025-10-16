@@ -41,7 +41,8 @@ class AarUpdateJob < ApplicationJob
         grantedby: a.issuer,
         year: a.year,
         category: a.t_category('en'),
-        origin: a.t_origin("en")
+        origin: a.t_origin("en"),
+        url: a.url
       }
     end
     Aar::Award.insert_all(recs)
