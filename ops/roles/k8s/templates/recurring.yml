@@ -19,5 +19,9 @@ production:
     schedule: "1 1 1 * *"
   push_opdo:
     class: SpywareUploadJob
-    args: [{batch_size: 100, all: true}]
-    schedule: "*/10 * * * *"
+    args: [{batch_size: 100, count: 0}]
+    schedule: "*/2 * * * *"
+  push_opdo_and_purge:
+    class: SpywareUploadJob
+    args: [{batch_size: 100, count: 0, purge: 7}]
+    schedule: "10 23 * * fri"
