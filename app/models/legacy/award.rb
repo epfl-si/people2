@@ -38,6 +38,7 @@ module Legacy
       "Internal" => "epfl",
       "EPFL" => "epfl"
     }.freeze
+
     def origin_as_property
       label = ORI_LABELS[origin]
       Award.all_origins[label]
