@@ -62,6 +62,10 @@ en:
     new:
       form_title: Add an Infoscience export link
   people:
+    accreds:
+      delegate_F: class delegate
+      delegate_M: class delegate
+      delegate_X: class delegate
     adopt:
       confirm: Publish the new version of my profile
       confirm_from_edit_page: "Publish the new version (no way back!)"

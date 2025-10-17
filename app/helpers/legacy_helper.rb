@@ -4,7 +4,7 @@ module LegacyHelper
   def position_with_class_delegate(affiliation, is_delegate, gender)
     [
       "<strong>#{affiliation.position.t_label(gender)}</strong>",
-      is_delegate ? t('class_delegate') : nil,
+      affiliation.student? && is_delegate ? t("people.accreds.delegate_#{gender}") : nil,
       "<span class='font-weight-normal'>#{affiliation.t_unit_label}</span>"
     ].compact.join(', ').html_safe
   end

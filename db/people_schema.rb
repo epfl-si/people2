@@ -151,7 +151,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_072556) do
     t.string "origin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["awards_id"], name: "index_awards_aar_on_awards_id"
+    t.index ["award_id"], name: "index_awards_aar_on_award_id"
   end
 
   create_table "boxes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -499,7 +499,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_072556) do
   add_foreign_key "awards", "profiles"
   add_foreign_key "awards", "selectable_properties", column: "category_id"
   add_foreign_key "awards", "selectable_properties", column: "origin_id"
-  add_foreign_key "awards_aar", "awards", column: "awards_id"
+  add_foreign_key "awards_aar", "awards"
   add_foreign_key "boxes", "model_boxes"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
