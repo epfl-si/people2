@@ -62,6 +62,10 @@ fr:
     new:
       form_title: Ajouter un lien vers une collection Infoscience
   people:
+    accreds:
+      delegate_F: déléguée de classe
+      delegate_M: délégué de classe
+      delegate_X: délégué·e de classe
     adopt:
       confirm: Mettre en ligne la nouvelle version de mon profil
       confirm_from_edit_page: "Publier la nouvelle version (opération irréversible)"

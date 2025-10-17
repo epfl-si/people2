@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_08_094859) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_16_143322) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
@@ -97,6 +97,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_08_094859) do
     t.string "name"
     t.index ["email"], name: "index_scipers_on_email", unique: true
     t.index ["sciper"], name: "unique_scipers", unique: true
+  end
+
+  create_table "students", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "sciper", limit: 6
+    t.boolean "active", default: true
+    t.boolean "delegate", default: false
+    t.string "section"
+    t.string "semester", limit: 16
+    t.string "level", limit: 32
+    t.string "acad", limit: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sciper"], name: "index_students_on_sciper", unique: true
   end
 
   create_table "teacherships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
