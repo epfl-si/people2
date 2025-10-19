@@ -45,7 +45,7 @@ class SpywareUploadJob < ApplicationJob
 
     return unless purge.positive?
 
-    pc = Work::SpywareLog.uploaded.where('created_at < ?', purge.days.ago).count
+    Work::SpywareLog.uploaded.where('created_at < ?', purge.days.ago).count
     Work::SpywareLog.uploaded.where('created_at < ?', purge.days.ago).in_batches(of: 1000).delete_all
     # TODO: Yabeda currently does not from background jobs. I keep the statements in
     # case we find-out how to make it work. I think there is not communication
@@ -54,7 +54,7 @@ class SpywareUploadJob < ApplicationJob
     # of fixing this is at least to have the multiprocess_files_dir where
     # yabeda-prometheus write files in a directory shared between pods but it
     # is not enough or at least I didn't try that hard enough.
-    Yabeda.people.opdo_purged.increment({}, by: pc)
+    # Yabeda.people.opdo_purged.increment({}, by: pc)
   end
 
   def upload_batch(logs)
@@ -84,10 +84,10 @@ class SpywareUploadJob < ApplicationJob
     ensure
       unless done.empty?
         Work::SpywareLog.where(id: done).update_all(uploaded_at: Time.zone.now)
-        Yabeda.people.opdo_uploads.increment({}, by: done.count)
+        # Yabeda.people.opdo_uploads.increment({}, by: done.count)
       end
     end
-    Yabeda.people.opdo_upload_errors.increment({}, by: errcount) if errcount.positive?
+    # Yabeda.people.opdo_upload_errors.increment({}, by: errcount) if errcount.positive?
     errcount.zero?
   end
 
