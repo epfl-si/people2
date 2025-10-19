@@ -4,7 +4,8 @@ class OasisPhdGetter < OasisBaseGetter
   def initialize(data = {})
     current_year = Time.zone.today.year
     @year = data[:year]&.to_i || current_year
-    @url = if @year == current_year
+    @alumni = data[:alumni] || false
+    @url = if @year == current_year && !@alumni
              URI.join(baseurl, "/etudiants/phd")
            else
              URI.join(baseurl, "/alumni/doctors/#{@year}")
