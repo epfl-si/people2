@@ -94,6 +94,15 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "people2024_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: "mail.epfl.ch",
+    port: 25,
+    domain: "epfl.ch",
+    enable_starttls: false,
+    open_timeout: 5,
+    read_timeout: 5
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
