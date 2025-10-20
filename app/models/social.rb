@@ -77,7 +77,7 @@ class Social < ApplicationRecord
       label: 'Google Scholar ID',
       default_position: 3,
       icon: 'icon-googlescholar',
-      re: /^[0-9a-zA-Z.-]+$/
+      re: /^[0-9a-zA-Z._-]+$/
     },
     {
       tag: 'linkedin',
@@ -132,7 +132,7 @@ class Social < ApplicationRecord
       automatic: false,
       default_position: 8,
       icon: 'icon-bluesky',
-      re: /^[A-Za-z0-9_]+$/
+      re: /^[A-Za-z0-9._]+$/
     }
     # {
     #   tag: 'facebook',
