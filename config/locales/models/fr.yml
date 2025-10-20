@@ -70,8 +70,8 @@ fr:
         de_enabled: Profil disponible en allemand
       publication:
         authors: Auteur(s)
-        journal: Journal
-        title: titre
+        journal: Titre de la revue
+        title: Titre de la plublication
         url: URL
         year: Année
       rich_text_box:
@@ -119,7 +119,7 @@ fr:
       official_name: Prénom & nom officiels
       personal_web_url: Adresse du site web personnel
       personal_phone: Numéro de téléphone personnel
-      public_email: e-mail address
+      public_email: adresse mail
       unique_name: Prénom & nom
       usual_name: Affichage et changement du prénom et nom d'usage
     social:
