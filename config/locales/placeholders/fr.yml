@@ -54,11 +54,11 @@ fr:
         expertise_de: IT-Beratung und Entwicklung
         expertise_it: Consulenza IT e sviluppo
       publication:
-        title: Research Paper Title
+        title: Mean-Value Point in the Brillouin Zone
         url: https://example.com
         authors: John Doe, Jane Smith
         year: '2024'
-        journal: Journal of Science
+        journal: Physical Review B
       rich_text_box:
         title_en: My rich text box
         title_fr: Ma boite de contennu libre
