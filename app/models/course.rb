@@ -26,7 +26,7 @@ class Course < ApplicationRecord
   def self.search(filters)
     filters[:acad] ||= current_academic_year
     instance_filters = filters.slice(:acad, :level, :section, :semester).compact_blank
-    course_filters = filters.slice(:acad, :slug_prefix).compact_blank
+    course_filters = filters.slice(:acad, :slug_prefix, :lang).compact_blank
     teachership_filters = { role: "Enseignement" }.merge(filters.slice(:sciper)).compact_blank
 
     Rails.logger.debug("Course::search. instance_filters=#{instance_filters.inspect}")
