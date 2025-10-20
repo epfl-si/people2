@@ -61,8 +61,8 @@ module API
                 "Invalid semester"
         end
 
-        lang = cp[:langueens]&.downcase
-        unless lang.blank? || lang == "en" || lang == "fr"
+        lang = cp[:langueens]&.upcase
+        unless lang.blank? || lang == "EN" || lang == "FR"
           raise ActionController::BadRequest,
                 "Invalid teaching language langueens"
         end
@@ -85,7 +85,7 @@ module API
         #      the corresponding field in the DB which has values like "Bachelor semestre 4" or "Semestre automne"
         #      may be there is a way to translate like all odd Bachelor semester are "hiver"
         # filters = { sciper: scipers, semester: semester, section: section, level: level }
-        filters = { sciper: scipers, section: sections, level: level }
+        filters = { sciper: scipers, section: sections, level: level, lang: lang }
         @courses = Course.search(filters)
 
         return unless @display == "byprof"
