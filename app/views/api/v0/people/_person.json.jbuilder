@@ -19,8 +19,8 @@
 # }
 
 json.email  person.public_email || ""
-json.nom    person.name.display_last || ""
-json.prenom person.name.display_first || ""
+json.nom    person.firstname || ""
+json.prenom person.lastname || ""
 json.sciper person.sciper.to_i
 profile = person.profile
 if profile.present?
@@ -29,11 +29,9 @@ if profile.present?
   end
 end
 json.unites do
-  person.accreditations.select(&:visible?).sort.each_with_index do |accred, order|
+  person.accreds.each do |accred|
     json.set! accred.unit_id do
-      phone = person.visible_phones(accred.unit_id)&.map(&:number) || []
-      json.partial! 'accred', accred: accred, gender: person.gender, order: order, room: person.room(accred.unit_id),
-                              phone: phone
+      json.partial! 'accred', accred: accred
     end
   end
 end

@@ -25,21 +25,11 @@
 #           "+41 21 693 43 21"
 #         ],
 
-json.email        person.public_email
-json.nom          person.name.display_last
-json.prenom       person.name.display_first
-json.sciper       person.sciper
-a = person.default_address
-if a.present?
-  json.adresse    a.full
-  json.hierarchie a.hierarchy
-  json.id_unite   a.unit_id
-  json.sigle      a.hierarchy.split(" ").last
-end
-# json.rooms        person.rooms&.map{|r| r.name}&.join(",") || ""
-json.rooms        person.rooms&.first&.name || ""
-json.status       person.status || ""
-json.fonction_en  person.position!&.t_label(person.gender, 'en') || ""
-json.fonction_fr  person.position!&.t_label(person.gender, 'fr') || ""
-json.phones       person.visible_phones&.map(&:number)&.uniq || []
+json.email  person.public_email || ""
+json.nom    person.firstname || ""
+json.prenom person.lastname || ""
+json.sciper person.sciper.to_i
+
+json.partial! 'accred', accred: person.accreds.first
+profile = person.profile
 json.partial! 'profile', profile: profile if profile.present?
