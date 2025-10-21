@@ -25,10 +25,7 @@ class BulkPerson
     addresses_by_unit = data.delete('addresses')&.map { |d| Address.new(d) }&.group_by(&:unit_id) || {}
     rooms_by_unit = data.delete('rooms')&.map { |d| Room.new(d) }&.group_by(&:unit_id) || {}
 
-    ouids = (addresses_by_unit.keys + phones_by_unit.keys + rooms_by_unit.keys).uniq
-    # requests by units might contain positions only for the requested unit
-    unit_ids = accreds_by_unit.keys.intersection(ouids)
-
+    unit_ids = accreds_by_unit.keys
     cdata = []
     unit_ids.each_with_index do |uid, i|
       ap = accred_prefs_by_unit[uid]
