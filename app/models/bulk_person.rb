@@ -77,7 +77,7 @@ class BulkPerson
     end
   end
 
-  def self.for_scipers(scipers, adata: nil)
+  def self.for_scipers(scipers, adata: nil, filterbotweb: true)
     scipers = [scipers] unless scipers.is_a?(Array)
     if scipers.count > MAX_PER_REQUEST
       scipers.each_slice(MAX_PER_REQUEST).map do |scipers_batch|
@@ -85,8 +85,8 @@ class BulkPerson
       end.flatten
     else
       adata ||= Accreditation.by_sciper(persid: scipers)
-      okscipers = Authorisation.filter_scipers_with_property(scipers, 'botweb')
-      pdata = APIPersonGetter.call(persid: okscipers, single: false).index_by { |v| v["id"] }
+      scipers = Authorisation.filter_scipers_with_property(scipers, property: 'botweb') if filterbotweb
+      pdata = APIPersonGetter.call(persid: scipers, single: false).index_by { |v| v["id"] }
       from_data(pdata, adata)
     end
   end
@@ -99,11 +99,12 @@ class BulkPerson
     if !all && u.level < 4
       adata = Accreditation.by_sciper(classid: [5, 6], unitid: u.id)
       scipers = adata.map { |a| a["persid"] }.uniq
-      return for_scipers(scipers, adata: adata)
+      okscipers = Authorisation.filter_scipers_with_property(scipers, property: 'botweb', units: [u.id])
+      return for_scipers(okscipers, adata: adata, filterbotweb: false)
     end
     adata = Accreditation.by_sciper(unitid: u.id)
     pdata = APIPersonGetter.call(unitid: u.id).index_by { |v| v["id"] }
-    okscipers = Authorisation.filter_scipers_with_property(pdata.keys, 'botweb')
+    okscipers = Authorisation.filter_scipers_with_property(pdata.keys, property: 'botweb', units: [u.id])
     pdata = pdata.slice(*okscipers)
     from_data(pdata, adata)
   end
@@ -116,11 +117,18 @@ class BulkPerson
       for_unit(fu, all: all)
     elsif !all && fu.level < 4
       adata = Accreditation.by_sciper(classid: [5, 6], unitid: units.map(&:id))
-      scipers = adata.keys # .uniq
-      for_scipers(scipers, adata: adata)
+      scipers = Authorisation.filter_scipers_with_property(adata.keys, property: 'botweb', units: uids)
+      for_scipers(scipers, adata: adata, filterbotweb: false)
     # if we have several units, it is better to get all the scipers at once and avoid duplicates
     else
-      units.map { |u| for_unit(u) }.flatten
+      uids = units.map(&:id)
+      units.map do |u|
+        adata = Accreditation.by_sciper(unitid: u.id)
+        pdata = APIPersonGetter.call(unitid: u.id).index_by { |v| v["id"] }
+        okscipers = Authorisation.filter_scipers_with_property(pdata.keys, property: 'botweb', units: uids)
+        pdata = pdata.slice(*okscipers)
+        from_data(pdata, adata)
+      end.flatten
     end
   end
 

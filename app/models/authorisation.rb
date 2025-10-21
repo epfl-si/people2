@@ -31,16 +31,16 @@ class Authorisation
     @resource_id
   end
 
-  def self.filter_scipers_with_property(scipers, property = 'botweb')
+  def self.filter_scipers_with_property(scipers, property: 'botweb', units: nil)
     if scipers.count > MAX_PER_REQUEST
       scipers.each_slice(MAX_PER_REQUEST).map do |scipers_batch|
-        filter_scipers_with_property(scipers_batch)
+        filter_scipers_with_property(scipers_batch, property: property, units: units)
       end.flatten
     else
       str = scipers.first.is_a?(String)
-      APIAuthGetter.call(
-        authid: property, type: 'property', status: 'active', persid: scipers
-      ).map { |v| str ? v["persid"].to_s : v["persid"].to_i }.sort.uniq
+      auths = APIAuthGetter.call(authid: property, type: 'property', status: 'active', persid: scipers)
+      auths.select! { |v| units.include? v["accredunitid"] } if units.present?
+      auths.map { |v| str ? v["persid"].to_s : v["persid"].to_i }.sort.uniq
     end
   end
 
