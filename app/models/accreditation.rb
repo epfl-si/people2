@@ -3,8 +3,7 @@
 # Accreditation is the real accred coming from official EPFL accred data
 class Accreditation
   attr_accessor :prefs, :status_id
-  attr_reader :sciper, :unit_id, :unit_name, :position, :accred_order,
-              :unit_label_fr, :unit_label_en, :unit_label_it, :unit_label_de
+  attr_reader :sciper, :bunit, :unit_id, :position, :accred_order
   attr_writer :unit, :botweb, :gestprofil
 
   include ActiveModel::Model
@@ -12,18 +11,16 @@ class Accreditation
   include Translatable
   translates :unit_label, :status_label, :class_label
 
+  delegate(:unit_name, :unit_label_en, :unit_label_fr, :unit_label_it, :unit_label_de, to: :bunit)
+
   def initialize(data)
-    ud = data.delete('unit')
+    @bunit = BulkUnit.new(data.delete('unit'))
+    @unit_id = @bunit.id
+
     sd = data.delete('status')
     data.delete('class')
     @sciper = data['persid']
-    @unit_id = ud["id"].to_i
-    @unit_name = ud["name"]
-    @unit_label_fr = ud["labelfr"]
-    @unit_label_en = ud["labelen"]
-    # api.epfl.ch does not provide unit labels in it and de
-    @unit_label_it = ud["labelen"]
-    @unit_label_de = ud["labelen"]
+
     @status_id = sd['id'].to_i
     # api.epfl.ch does not provide status labels in it and de
     @status_label_fr = sd['labelfr']
@@ -120,6 +117,7 @@ class Accreditation
     accreds
   end
 
+  # This is meant for single profile as it is firing a lot of requests
   def self.for_sciper(sciper, force: false, all: false)
     accreds_data = APIAccredsGetter.call(persid: sciper, force: force)
     return [] if accreds_data.empty?
@@ -143,6 +141,33 @@ class Accreditation
     end
     # By default we are actually interested exclusively on visible accreditations
     all ? accreds : accreds.select(&:botweb?)
+  end
+
+  # *conditions are valid arguments for APIAccredsGetter.call
+  # Returns an hash with scipers as keys and an hash as value where the
+  # value hash has unit_ids as keys and corresponding Accreditation as value
+  # sciper1 => {
+  #   unit_id1 => Accred1,
+  #   unit_id2 => Accred2,
+  # },
+  # sciper2 => {
+  #   unit_id3 => Accred3,
+  #   unit_id4 => Accred4,
+  # },...
+  # Examples:
+  #  * Accreditation.by_sciper(unitid: 13030)
+  #  * Accreditation.by_sciper(classid: [5, 6], unitid: 13217)
+  #  * Accreditation.by_sciper(persid: [121769, ...])
+  def self.by_sciper(*conditions)
+    acdata_by_sciper = APIAccredsGetter.call(*conditions).group_by do |v|
+      v["persid"].to_s
+    end
+    acdata_by_sciper.transform_values do |alist|
+      alist.map do |data|
+        a = new(data)
+        [a.unit_id, a]
+      end.to_h
+    end
   end
 
   def self.for_all_full_professors

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.sciper profile.sciper.to_i
+# json.sciper profile.sciper.to_i
 json.photo_visibility profile.photo_visibility || ""
 json.titre "" # Customizable title no longer possible NM dixit
 img = profile&.photo&.available_image

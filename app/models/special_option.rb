@@ -9,8 +9,11 @@ class SpecialOption < ApplicationRecord
   validates :type, uniqueness: { scope: :sciper }
 
   def self.for_sciper_or_name(v)
-    s = v.is_a?(Integer) || v =~ /^\d{6}$/ ? { sciper: v } : { ns: v }
-    where(s)
+    if v.is_a?(Integer) || v =~ /^\d{6}$/
+      find_by(sciper: v)
+    else
+      find_by(ns: v)
+    end
   end
 
   def key
