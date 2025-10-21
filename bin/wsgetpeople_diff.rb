@@ -306,12 +306,23 @@ TESTS = [
   {
     units: "ISCS-IAM",
   },
-  # {
-  #   progcode: "EDMX",
-  #   lang: "en"
-  # },
+  {
+    units: "LAND,LASUR",
+  },
+  {
+    progcode: "EDMX",
+    lang: "en"
+  },
+  {
+    units: "ISAS-FSD",
+    struct: "default_en_struct"
+  },
   {
     units: "LAND",
+    struct: "default_en_struct",
+  },
+  {
+    units: "LASUR",
     struct: "default_en_struct"
   },
   {
