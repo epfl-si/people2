@@ -49,8 +49,7 @@ json.array!(structure.sections.reject { |s| s.items.empty? }) do |section|
 
   json.members do
     json.array!(section.items) do |person|
-      profile = profiles[person.sciper]
-      json.partial! 'flat_person', person: person, profile: profile
+      json.partial! 'flat_person', person: person
     end
   end
 end
