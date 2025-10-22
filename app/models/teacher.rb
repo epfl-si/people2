@@ -26,37 +26,24 @@ class Teacher
     )
   end
 
-  def phds_as_director
-    @phds_as_director ||= Phd.where(director_sciper: sciper)
-  end
-
-  def phds_as_codirector
-    @phds_as_codirector ||= Phd.where(codirector_sciper: sciper)
-  end
-
+  # only one AR request for all variants because the number of records is small
   def phds
-    @phds ||= phds_as_director + phds_as_codirector
+    @phds ||= Phd.where(director_sciper: sciper).or(Phd.where(codirector_sciper: sciper))
   end
 
   def current_phds
-    # Phd.current.where(director_sciper: sciper)
-    y = Time.zone.now.year
-    phds.select { |c| c.year == y }
+    phds.select { |c| c.date.blank? }
   end
 
   def past_phds
-    # Phd.past.where(director_sciper: sciper)
-    y = Time.zone.now.year
-    phds.select { |c| c.year < y }
+    phds.select { |c| c.date.present? }
   end
 
   def past_phds_as_director
-    y = Time.zone.now.year
-    phds_as_director.select { |c| c.year < y }
+    phds.select { |c| c.date.present? && c.director_sciper == sciper }
   end
 
   def past_phds_as_codirector
-    y = Time.zone.now.year
-    phds_as_codirector.select { |c| c.year < y }
+    phds.select { |c| c.date.present? && c.codirector_sciper == sciper }
   end
 end
