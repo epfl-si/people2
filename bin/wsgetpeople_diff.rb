@@ -9,13 +9,15 @@ HOSTS = [
     host: "dinfo11.epfl.ch",
     path: "/cgi-bin/wsgetpeople",
     urihttp: URI::HTTP,
-    headers: {Accept: 'application/json', Host: 'people.epfl.ch'}
+    headers: {Accept: 'application/json', Host: 'people.epfl.ch'},
+    cache: true
   },
   {
     host: "people.dev.jkldsa.com",
     path: "/cgi-bin/wsgetpeople",
     urihttp: URI::HTTPS,
-    headers: {Accept: 'application/json'}
+    headers: {Accept: 'application/json'},
+    cache: false
   }
 ]
 CACHE="tmp/wsgetpeople_cache"
@@ -26,12 +28,12 @@ end
 
 def fetch(query, srv=1)
   sig = Digest::MD5.hexdigest(query.to_s)
+  hh = HOSTS[srv]
   cf = "#{CACHE}/#{srv}/#{sig}.json"
-  if File.exist?(cf)
+  if File.exist?(cf) && hh[:cache]
     log "#{query} <- #{cf}"
     json = File.read(cf)
   else
-    hh = HOSTS[srv]
     uri = hh[:urihttp].build(
       host: hh[:host],
       path: hh[:path],
