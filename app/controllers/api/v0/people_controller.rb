@@ -228,16 +228,22 @@ module API
         when "scipers"
           people = BulkPerson.for_scipers(choice.split(","))
         when "progcode"
-          scipers = Phd.current.where(cursus: choice).distinct.pluck(:director_sciper)
+          # TODO: temporary fix while ISA still reply. I was hoping to replace
+          # the request below with just the list of thesis directors from
+          # the Phd table but the two lists are not identical. Also, the listing
+          # from ISA includes the excludeWeb field that should not be neglected.
+          # Asked Jules if we can do something similar in Oasis. See INC0751097.
+          # scipers = Phd.recent.where(cursus: choice).distinct.pluck(:director_sciper)
+          # scipers = Phd.where(cursus: choice).distinct.pluck(:director_sciper)
+          now = Time.zone.today.strftime("%F")
+          directors = IsaThDirectorsGetter.call(progcode: "EDMX").reject do |v|
+            v["visibility"]["excludeWeb"] || v["endDate"].present? && v["endDate"] < now
+          end
+          scipers = directors.map { |v| v["sciper"] }.uniq
           people = BulkPerson.for_scipers(scipers)
         else
           raise "Invalid selector value. This should not happen as pre-validation occurs"
         end
-
-        # filter out profiles without botweb property (Paraître dans l'annuaire Web de l'unité)
-        # people.select!(&:visible_profile?)
-        # Fetch accreditations that we will need in any case so that it is cached
-        # people.each(&:accreditations)
         people
       end
 
