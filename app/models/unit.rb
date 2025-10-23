@@ -8,7 +8,8 @@
 #     level:integer resp_id:string kind:string address:string \
 #     ancestors:string direct_children:string  all_children:string
 class Unit
-  attr_reader :id, :parent_id, :hierarchy, :label, :level, :name, :type, :address, :url
+  attr_reader :id, :parent_id, :hierarchy, :label, :level, :name, :type, :address, :url, :all_children_ids,
+              :direct_children_ids
 
   include Translatable
   translates :name, :label
@@ -98,12 +99,15 @@ class Unit
     @parent ||= Unit.find(@parent_id)
   end
 
-  def direct_children
-    @direct_children ||= @direct_children_ids.map { |id| Unit.find(id) }
+  def direct_children(force: false)
+    # @direct_children ||= @direct_children_ids.map { |id| Unit.find(id) }
+    @direct_children ||= APIUnitGetter.call(ids: @direct_children_ids, force: force).map do |unit_data|
+      Unit.new(unit_data)
+    end
   end
 
-  def all_children
-    @all_children ||= @all_children_ids.map { |id| Unit.find(id) }
+  def all_children(force: false)
+    @all_children ||= APIUnitGetter.call(ids: @all_children_ids, force: force).map { |unit_data| Unit.new(unit_data) }
   end
 
   def <=>(other)

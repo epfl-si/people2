@@ -39,7 +39,10 @@ class Authorisation
     else
       str = scipers.first.is_a?(String)
       auths = APIAuthGetter.call(authid: property, type: 'property', status: 'active', persid: scipers)
-      auths.select! { |v| units.include? v["accredunitid"] } if units.present?
+      if units.present?
+        units_and_child_units = (units.map(&:id) + units.map(&:all_children_ids).flatten).uniq
+        auths.select! { |v| units_and_child_units.include? v["accredunitid"] }
+      end
       auths.map { |v| str ? v["persid"].to_s : v["persid"].to_i }.sort.uniq
     end
   end
