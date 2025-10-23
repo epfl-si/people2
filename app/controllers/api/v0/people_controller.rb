@@ -65,6 +65,9 @@ module API
           @people.select! do |person|
             person.match_position_filter?(@position)
           end
+          @people.each do |person|
+            person.select_posistions!(@position)
+          end
         end
 
         raise ActionController::BadRequest unless @errors.empty?
@@ -236,7 +239,7 @@ module API
           # scipers = Phd.recent.where(cursus: choice).distinct.pluck(:director_sciper)
           # scipers = Phd.where(cursus: choice).distinct.pluck(:director_sciper)
           now = Time.zone.today.strftime("%F")
-          directors = IsaThDirectorsGetter.call(progcode: "EDMX").reject do |v|
+          directors = IsaThDirectorsGetter.call(progcode: choice).reject do |v|
             v["visibility"]["excludeWeb"] || v["endDate"].present? && v["endDate"] < now
           end
           scipers = directors.map { |v| v["sciper"] }.uniq

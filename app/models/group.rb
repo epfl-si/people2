@@ -26,6 +26,6 @@ class Group
   end
 
   def member_scipers
-    APIGroupMembersGetter.call(id: g.id).map { |m| m['id'] }
+    APIGroupMembersGetter.call(id: g.id, recursive: 1).map { |m| m['id'] }
   end
 end

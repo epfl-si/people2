@@ -28,7 +28,7 @@ json.statut      accred.t_status_label || ""
 json.status_en   accred.t_status_label('en') || ""
 json.status_fr   accred.t_status_label('fr') || ""
 
-json.rooms       accred.room_names
+json.rooms       accred.room_names&.first || ""
 json.phones      accred.phone_numbers
 
 json.ordre       accred.rank
