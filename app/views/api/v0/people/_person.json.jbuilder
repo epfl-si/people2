@@ -18,9 +18,9 @@
 #  }
 # }
 
-json.email  person.public_email || ""
-json.nom    person.firstname || ""
-json.prenom person.lastname || ""
+json.email person.public_email || ""
+json.prenom person.firstname || ""
+json.nom person.lastname || ""
 json.sciper person.sciper.to_i
 profile = person.profile
 if profile.present?

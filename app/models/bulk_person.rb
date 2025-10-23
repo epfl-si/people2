@@ -143,7 +143,7 @@ class BulkPerson
              Group.find_by(name: gn)&.id
            end
       if id.present?
-        members = APIGroupMembersGetter.call(id: id)
+        members = APIGroupMembersGetter.call(id: id, recursive: 1)
         members&.map { |m| m["id"] } || []
       else
         []

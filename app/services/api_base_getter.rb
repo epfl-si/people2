@@ -3,6 +3,7 @@
 # TODO: consider using ActiveResource + cached_resource
 
 class APIBaseGetter < ApplicationService
+  PAGESIZE = 50
   # Before calling this, child class initializer
   # must have defined @resource and optionally @idname and @params
   # This class is a generic one for GET calls of the type
@@ -19,6 +20,11 @@ class APIBaseGetter < ApplicationService
     @alias ||= {}
     @single = data.delete(:single) || false
     @noempty = true unless defined?(@allow_empty)
+    @paginate = @params.include?(:pagesize)
+    if @paginate
+      @pagesize = data.delete(:pagesize) || PAGESIZE
+      data.delete(:pageindex)
+    end
     baseurl = data.delete(:baseurl) || Rails.application.config_for(:epflapi).backend_url
     id = @idname.present? ? data.delete(@idname).to_s : nil
     args = {}
@@ -63,17 +69,48 @@ class APIBaseGetter < ApplicationService
   end
 
   def dofetch
-    body = fetch_http
+    if @single
+      dofetch_single
+    elsif @paginate
+      dofetch_paginated
+    else
+      dofetch_base
+    end
+  end
+
+  def dofetch_base(url = @url)
+    body = fetch_http(url)
     return nil unless body
 
     data = JSON.parse(body)
-    return data unless data.key?(@resource) # && data.key?("count")
+    return data unless data.key?(@resource)
 
-    data = data[@resource]
-    # @single => we expect the request does not return an array
-    return data unless @single
+    data[@resource]
+  end
 
-    # Returning a different type of data for similar call. This is stupid and completely my fault!
+  def dofetch_paginated
+    args = URI.decode_www_form(@url.query || "").to_h
+    args[:pagesize] = @pagesize
+    u = @url.dup
+    page = 0
+    data = []
+    loop do
+      args[:pageindex] = page
+      page += 1
+      u.query = URI.encode_www_form(args)
+      page_data = dofetch_base(u)
+      break if page_data.empty?
+
+      data += page_data
+      break if page_data.count < @pagesize
+    end
+    data
+  end
+
+  def dofetch_single
+    data = dofetch_base
+    return nil if data.nil?
+
     case data.count
     when 0
       nil
