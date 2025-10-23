@@ -289,7 +289,20 @@ end
 
 TESTS = [
   {
+    progcode: "EDMX",
+    position: "Professeur ordinaire",
+    lang: "en"
+  },
+  {
     scipers: "256138,269974,364830",
+    lang: "en"
+  },
+  {
+    groups: "wiki-admins",
+    lang: "en"
+  },
+  {
+    groups: "lhd_acces",
     lang: "en"
   },
   {
