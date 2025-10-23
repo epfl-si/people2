@@ -110,6 +110,7 @@ class APIBaseGetter < ApplicationService
   def dofetch_single
     data = dofetch_base
     return nil if data.nil?
+    return data unless data.is_a? Array
 
     case data.count
     when 0
