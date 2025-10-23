@@ -156,6 +156,18 @@ class BulkPerson
     end
   end
 
+  # TODO: check if this is always the case as there might be issues with people
+  #       changing name, with modified usual names etc.
+  # TODO: The hack for non-standard e-mail exposes sciper address but the page
+  #       is only reacheable using the sciper...
+  def email_user
+    if email =~ /^[a-z-]+\.[a-z-]+/i
+      email.gsub(/@.*$/, '')
+    else
+      sciper
+    end
+  end
+
   def public_email
     o = @options[:mail]
     o.present? ? o.email : email
