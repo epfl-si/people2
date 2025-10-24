@@ -61,16 +61,17 @@ class BulkPerson
   # pdata is an hash with scipers as keys and data from APIPersonGetter as values
   # adata is an hash with
   def self.from_data(pdata, adata)
-    scipers = pdata.keys
+    scipers = pdata.keys.intersection(adata.compact.keys)
     opts = SpecialOption.where(sciper: scipers).group_by(&:sciper)
 
     # we could already select only those that are visible but I prefer to have
     # all the data anyway in case we need it for other things.
     # where(accreds: {visibility: AudienceLimitable::VISIBLE})
     profiles = Profile.where(sciper: scipers).includes(:pictures, :accreds).index_by(&:sciper)
-    pdata.values.map do |d|
-      sciper = d["id"]
-      new(d, adata[sciper], profile: profiles[sciper], options: opts[sciper])
+    scipers.map do |sciper|
+      d = pdata[sciper]
+      a = adata[sciper]
+      new(d, a, profile: profiles[sciper], options: opts[sciper])
     end
   end
 
