@@ -3,9 +3,11 @@ require 'digest'
 require 'net/http'
 require 'json'
 require 'diff-lcs'
+require 'yaml'
 
 HOSTS = [
   {
+    name: 0,
     host: "dinfo11.epfl.ch",
     path: "/cgi-bin/wsgetpeople",
     urihttp: URI::HTTP,
@@ -13,6 +15,7 @@ HOSTS = [
     cache: true
   },
   {
+    name: 1,
     host: "people.dev.jkldsa.com",
     path: "/cgi-bin/wsgetpeople",
     urihttp: URI::HTTPS,
@@ -26,10 +29,9 @@ def log(msg)
   STDERR.puts msg
 end
 
-def fetch(query, srv=1)
+def fetch(query, hh)
   sig = Digest::MD5.hexdigest(query.to_s)
-  hh = HOSTS[srv]
-  cf = "#{CACHE}/#{srv}/#{sig}.json"
+  cf = "#{CACHE}/#{hh[:name]}/#{sig}.json"
   if File.exist?(cf) && hh[:cache]
     log "#{query} <- #{cf}"
     json = File.read(cf)
@@ -265,16 +267,16 @@ class StructsComparer
   end
 end
 
-def test_struct(query)
-  res0 = fetch(query, 0)
-  res1 = fetch(query, 1)
+def test_struct(query, hosts)
+  res0 = fetch(query, hosts[0])
+  res1 = fetch(query, hosts[1])
   c = StructsComparer.new(res0, res1)
   d = c.diff
 end
 
-def test_list(query)
-  res0 = fetch(query, 0)
-  res1 = fetch(query, 1)
+def test_list(query, hosts)
+  res0 = fetch(query, hosts[0])
+  res1 = fetch(query, hosts[1])
   mem0 = res0.values.map{|d| Member.new(d)}
   mem1 = res1.values.map{|d| Member.new(d)}
   c = MemberListComparer.new(mem0, mem1)
@@ -287,72 +289,28 @@ end
   Dir.mkdir(dir) unless Dir.exist?(dir)
 end
 
-TESTS = [
-  {
-    progcode: "EDMX",
-    position: "Professeur ordinaire",
-    lang: "en"
-  },
-  {
-    scipers: "256138,269974,364830",
-    lang: "en"
-  },
-  {
-    groups: "wiki-admins",
-    lang: "en"
-  },
-  {
-    groups: "lhd_acces",
-    lang: "en"
-  },
-  {
-    units: "ph-sb",
-    lang: "en"
-  },
-  {
-    units: "LASUR"
-  },
-  {
-    units: "LAND",
-  },
-  {
-    units: "ISAS-FSD",
-  },
-  {
-    units: "ISCS-IAM",
-  },
-  {
-    units: "LAND,LASUR",
-  },
-  {
-    progcode: "EDMX",
-    lang: "en"
-  },
-  {
-    units: "ISAS-FSD",
-    struct: "default_en_struct"
-  },
-  {
-    units: "LAND",
-    struct: "default_en_struct",
-  },
-  {
-    units: "LASUR",
-    struct: "default_en_struct"
-  },
-  {
-    units: "LAND,LASUR",
-    struct: "default_en_struct"
-  },
-]
+tests = []
+hosts = [0,1]
+testfile = "test/wsgetpeople.yml"
 
-TESTS.each do |params|
+while a=ARGV.shift
+  case a
+  when "-i"
+    testfile = ARGV.shift
+  when "-s"
+    hosts = ARGV.shift.split(",").map(&:to_i)
+  end
+end
+hosts = HOSTS.values_at(*hosts)
+tests = YAML.load_file(testfile)
+
+tests.each do |params|
   query=URI.encode_www_form(params)
 
-  if params.key?(:struct)
-    d = test_struct(query)
+  if params.key?(:struct) || params.key?("struct")
+    d = test_struct(query, hosts)
   else
-    d = test_list(query)
+    d = test_list(query, hosts)
   end
 
   if d.empty?

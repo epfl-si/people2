@@ -3,7 +3,7 @@
 # TODO: consider using ActiveResource + cached_resource
 
 class APIBaseGetter < ApplicationService
-  PAGESIZE = 50
+  PAGESIZE = 200
   # Before calling this, child class initializer
   # must have defined @resource and optionally @idname and @params
   # This class is a generic one for GET calls of the type
