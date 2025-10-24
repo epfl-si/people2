@@ -25,9 +25,10 @@
 #           "+41 21 693 43 21"
 #         ],
 
-json.email  person.public_email || ""
-json.nom    person.firstname || ""
-json.prenom person.lastname || ""
+json.email person.public_email || ""
+json.people_url person_url(sciper_or_name: person.email_user)
+json.prenom person.firstname || ""
+json.nom    person.lastname || ""
 json.sciper person.sciper.to_i
 
 json.partial! 'accred', accred: person.accreds.first
