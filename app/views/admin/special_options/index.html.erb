@@ -1,0 +1,16 @@
+<h1>Special Options</h1>
+<p><%= link_to(icon_text("edit", "new"), new_admin_special_option_path) %></p>
+<table class="table table-sortable" data-tablesaw-sortable>
+  <thead>
+    <tr>
+      <th data-tablesaw-sortable-col>sciper</th>
+      <th>profile</th>
+      <th data-tablesaw-sortable-col>type</th>
+      <th>value</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "option", collection: @options %>
+  </tbody>
+</table>

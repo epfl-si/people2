@@ -1,0 +1,24 @@
+<%= turbo_frame_tag :record_form do %>
+<% url = option.new_record? ? admin_special_options_path : admin_special_option_path(option) %>
+<%= form_with(model: [:admin, option], url: url, class: "instaform") do |form| %>
+
+
+  <% if option.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(option.errors.count, "error") %> prohibited this special option from being saved:</h2>
+
+      <ul>
+        <% option.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= single_text_field(form, :sciper) %>
+  <%= form.select :type,  ["SpecialMail", "SpecialRedirect"], {}, {class: "custom-select"} if option.new_record? %>
+  <%= single_text_field(form, :data) %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<% end %>

@@ -108,6 +108,7 @@ Rails.application.routes.draw do
       resources :model_boxes, only: %i[index update], controller: 'sections/model_boxes'
     end
     resources :selectable_properties, except: %i[new create destroy show]
+    resources :special_options, except: %i[show]
     resources :motds
     if Rails.env.development?
       resources :translations, except: %i[new create destroy] do

@@ -6,6 +6,7 @@ class SpecialOption < ApplicationRecord
 
   validates :sciper, presence: true
   validates :ns, presence: true
+  validates :type, uniqueness: { scope: :sciper }
 
   def self.for_sciper_or_name(v)
     s = v.is_a?(Integer) || v =~ /^\d{6}$/ ? { sciper: v } : { ns: v }
@@ -33,6 +34,10 @@ class SpecialOption < ApplicationRecord
   def self.for(sciper)
     Current.special_options ||= all.group_by(&:sciper)
     Current.special_options[sciper.to_s]
+  end
+
+  def display_name
+    ns.split(/[.-]/).map(&:capitalize).join(" ")
   end
 
   private
