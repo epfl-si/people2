@@ -34,7 +34,10 @@ class PositionFilter
       neg = t.start_with?("!")
       t = t[1..] if neg
       # The * in filter token is shell glob style but must be an exact match otherwise
-      re = Regexp.new("^#{t.gsub('*', '.*')}$", 'i')
+      # re = Regexp.new("^#{t.gsub('*', '.*')}$", 'i')
+      # Not true: in the legacy implementation (attached below) it was /$rule/i
+      # without anchors => match any substring
+      re = Regexp.new(t.gsub('*', ''), 'i')
       OpenStruct.new(
         neg: neg,
         re: re
@@ -68,3 +71,41 @@ class PositionFilter
     false
   end
 end
+
+# ------------------------------------ Legacy implementation of position matcher
+# sub match_position {
+# 	my ($position, $rule) = @_;
+
+# 	unless ($rule =~ / (or|and) /) {
+# 		if ($rule =~ /^!/) {
+# 			$rule = substr($rule, 1);
+# 			return 1 unless $position =~ /$rule/i;
+# 		} else {
+# 			return 1 if $position =~ /$rule/i;
+# 		}
+# 		return 0;
+# 	}
+# 	if ($rule =~ / or /) {
+# 		my $match = 0;
+# 		foreach my $item (split (/ or /, $rule)) {
+# 			if ($item =~ /^!/) {
+# 				$item = substr($item, 1);
+# 				return 0 if ($position =~ /$item/i);
+# 			} else {
+# 				# cannot return as of first match due to the possible presence of !
+# 				$match = 1 if ($position =~ /$item/i);
+# 			}
+# 		}
+# 		return $match;
+# 	} else {
+# 		foreach my $item (split (/ and /, $rule)) {
+# 			if ($rule =~ /^!/) {
+# 				$rule = substr($rule, 1);
+# 				return 0 if ($position =~ /$rule/i);
+# 			} else {
+# 				return 0 unless ($position =~ /$rule/i);
+# 			}
+# 		}
+# 		return 1;
+# 	}
+# }
