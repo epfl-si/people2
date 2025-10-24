@@ -1,0 +1,50 @@
+# Increasing number of scipers
+-
+  scipers: "390343"
+-
+  scipers: "419811,274559"
+-
+  scipers: "419408,340396,398275,382373"
+-
+  scipers: "391375,324376,297380,192060,417720,308131,314873,400322"
+-
+  scipers: "418465,369688,330578,330756,412519,164464,257000,414001,330220,375373,391536,361817,420563,235586,304146,396879"
+-
+  scipers: "412620,403051,288968,257586,315999,268585,417784,411817,417460,331454,137820,347837,399604,393475,221788,310768,422589,358974,380903,348264,355761,364304,411622,400793,345266,419479,273082,223776,292023,422314,362835,349359"
+
+# Few simple or multiple last level units
+-
+  units: LCAV
+-
+  units: LCAV
+  lang: fr
+-
+  units: LCAV
+  lang: en
+-
+  units: LCAV
+  struct: 1
+-
+  units: LCAV
+  struct: 1
+  lang: en
+-
+  units: LCAV
+  struct: 1
+  lang: fr
+-
+  units: LTPN,PRNMARVEL-GE
+-
+  units: LTPN,PRNMARVEL-GE
+  struct: 1
+  lang: en
+
+# Doctoral schools
+-
+  progcode: EDMA
+
+# Large units (should list only professors)
+-
+  units: STI
+-
+  units: SB
