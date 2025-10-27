@@ -86,6 +86,10 @@ Rails.application.routes.draw do
   get '/cgi-bin/wsgetcours', to: 'api/v0/courses#wsgetcours'
   get '/cgi-bin/getCours', to: 'api/v0/courses#getcourse'
 
+  # See comment in controller
+  get '/cgi-bin/people', to: 'people#super_legacy_show'
+  get '/api/v0/people', to: 'people#super_legacy_show'
+
   # Retrocompatibility with applications having saved the old link or
   # generating it on the fly (being quite easy to guess)
   get '/private/common/photos/links/:sciper.jpg', to: 'api/v0/photos#show'

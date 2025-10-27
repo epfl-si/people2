@@ -5,6 +5,22 @@ class PeopleController < ApplicationController
   allow_unauthenticated_access only: [:show]
   layout 'public'
 
+  # TODO: try to convince GIF to get rid of this archeological inheritance
+  # There are very old links from ISA (and then copied into edu) of the form
+  # https://people.epfl.ch/cgi-bin/people?id=SCIPER
+  # pointing to teacher's profile. We'll try to fix at the source. In the mean
+  # time, this is yet anoter quick temporarily fix (of the type that will for
+  # sure become persistent and unremovable) to enable backward compatibility
+  def super_legacy_show
+    sciper = params[:id].to_s
+    raise ActionController::RoutingError, 'Not Found' unless sciper =~ /[0-9]{6}/
+
+    per = Person.find sciper
+    raise ActionController::RoutingError, 'Not Found' if per.blank?
+
+    redirect_to person_path(sciper_or_name: per.email_user)
+  end
+
   def show
     check_for_redirect and return
     set_base_data

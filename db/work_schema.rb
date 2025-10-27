@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_16_143322) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_27_073903) do
   create_table "admin_translations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "file"
     t.string "key"
@@ -84,6 +84,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_143322) do
     t.integer "year", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "past", default: false
     t.index ["codirector_sciper"], name: "index_phds_on_codirector_sciper"
     t.index ["director_sciper"], name: "index_phds_on_director_sciper"
   end
