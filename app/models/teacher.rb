@@ -32,18 +32,18 @@ class Teacher
   end
 
   def current_phds
-    phds.select { |c| c.date.blank? }
+    phds.reject(&:past?)
   end
 
   def past_phds
-    phds.select { |c| c.date.present? }
+    phds.select(&:past?)
   end
 
   def past_phds_as_director
-    phds.select { |c| c.date.present? && c.director_sciper == sciper }
+    phds.select { |c| c.past? && c.director_sciper == sciper }
   end
 
   def past_phds_as_codirector
-    phds.select { |c| c.date.present? && c.codirector_sciper == sciper }
+    phds.select { |c| c.past? && c.codirector_sciper == sciper }
   end
 end

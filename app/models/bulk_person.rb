@@ -77,6 +77,8 @@ class BulkPerson
 
   def self.for_scipers(scipers, adata: nil, filterbotweb: true)
     scipers = [scipers] unless scipers.is_a?(Array)
+    return [] if scipers.empty?
+
     if scipers.count > MAX_PER_REQUEST
       scipers.each_slice(MAX_PER_REQUEST).map do |scipers_batch|
         for_scipers(scipers_batch, adata: adata)
@@ -84,6 +86,8 @@ class BulkPerson
     else
       adata ||= Accreditation.by_sciper(persid: scipers)
       scipers = Authorisation.filter_scipers_with_property(scipers, property: 'botweb') if filterbotweb
+      return [] if scipers.empty?
+
       pdata = APIPersonGetter.call(persid: scipers, single: false).index_by { |v| v["id"] }
       from_data(pdata, adata)
     end
@@ -167,6 +171,10 @@ class BulkPerson
     else
       sciper
     end
+  end
+
+  def name
+    "#{firstname} #{lastname}"
   end
 
   def public_email
