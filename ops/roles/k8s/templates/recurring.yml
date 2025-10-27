@@ -5,7 +5,7 @@ production:
   # Refresh the local table storing sciper <-> email <-> display name
   refresh_names_cache:
     class: NamesCacheJob
-    args: []
+    args: [{force: true, cleanup: true}]
     schedule: "4 4 * * *"
   # Import new Phd students
   refresh_phds:

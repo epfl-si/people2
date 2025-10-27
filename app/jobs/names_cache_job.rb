@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: it is probably more efficient from the DB point of view to just TRUNCATE
+#       the whole table and insert_all each time or at least once per week/month
 # rubocop:disable Rails/SkipsModelValidations
 class NamesCacheJob < ApplicationJob
   queue_as :default

@@ -7,14 +7,14 @@
   </p>
 <% end %>
 
-<% if @past_phds_as_director.present? ||  @past_phds_as_codirector.present? %>
-  <h3><%= t ".title.past_phd" %></h3>
-  <% if @past_phds_as_director.present? %>
-    <p><%= @past_phds_as_director.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
-  <% end %>
-  <% if @past_phds_as_codirector.present? %>
-    <p><%= @past_phds_as_codirector.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
-  <% end %>
+<% if @past_phds_as_director.present? %>
+  <h3><%= t ".title.past_phd_as_director" %></h3>
+  <p><%= @past_phds_as_director.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
+<% end %>
+
+<% if @past_phds_as_codirector.present? %>
+  <h3><%= t ".title.past_phd_as_codirector" %></h3>
+  <p><%= @past_phds_as_codirector.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
 <% end %>
 
 <% if @courses.present? %>
