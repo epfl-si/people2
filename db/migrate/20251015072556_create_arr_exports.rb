@@ -3,7 +3,7 @@
 class CreateArrExports < ActiveRecord::Migration[8.0]
   def change
     create_table :accreds_aar do |t|
-      t.references :accred, null: false, foreign_key: true
+      t.references :accred, null: false, foreign_key: false
       t.string :sciper, null: false
       t.integer :unit
       t.integer :ordre
@@ -13,7 +13,7 @@ class CreateArrExports < ActiveRecord::Migration[8.0]
     end
 
     create_table :awards_aar do |t|
-      t.references :award, null: false, foreign_key: true
+      t.references :award, null: false, foreign_key: false
       t.string  :sciper, null: false
       t.integer :ordre
       t.string  :title
