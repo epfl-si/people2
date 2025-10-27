@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_072556) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -492,14 +492,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_072556) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "accreds_aar", "accreds"
   add_foreign_key "achievements", "profiles"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "awards", "profiles"
   add_foreign_key "awards", "selectable_properties", column: "category_id"
   add_foreign_key "awards", "selectable_properties", column: "origin_id"
-  add_foreign_key "awards_aar", "awards"
   add_foreign_key "boxes", "model_boxes"
   add_foreign_key "boxes", "profiles"
   add_foreign_key "boxes", "sections"
