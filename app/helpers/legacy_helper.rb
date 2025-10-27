@@ -5,7 +5,7 @@ module LegacyHelper
     [
       "<strong>#{affiliation.position.t_label(gender)}</strong>",
       affiliation.student? && is_delegate ? t("people.accreds.delegate_#{gender}") : nil,
-      "<span class='font-weight-normal'>#{affiliation.t_unit_label}</span>"
+      "<span class='font-weight-normal'>#{affiliation.unit.t_label}</span>"
     ].compact.join(', ').html_safe
   end
 
