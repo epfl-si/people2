@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# USER                      PEOPLE                             ENTRA
+# GET /login ----------------->
+#  <--------------------------- 302: entra auth path with
+#                                    client_id, state (random session id), redirect_url
+#  -------------------------------------------------------------->
+#  <-------------------------------------------------------------- 302: oidc_callback_path with
+#                                                                       state, code
+#  ---------------------------> oidc_callback_path with state, code
+#                               * check if state corresponds to a saved new session
+#                               POST entra token path ----------->
+#                                 client_id, client_secret, code, callback_uri
+#                              <----------- id_token -------------
+#                               * decode/verify data (a.k.a. JTW token) using id_token
+
 require "net/http"
 require "jwt"
 # This controller is a customized version of the standard one created with
