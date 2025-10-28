@@ -7,7 +7,7 @@ ruby "3.3.8"
 # ---------------------------------------------------- Standard (from rails new)
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.1"
+gem "rails", "~> 8.0.2.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -92,7 +92,8 @@ end
 gem "cgi", ">= 0.3.7"
 gem "json", ">= 2.10.2"
 gem "nokogiri", ">= 1.18.3"
-gem "rack", ">= 3.1.12"
+gem "rack", ">= 3.2.3"
+gem "rexml", ">= 3.4.2"
 gem "uri", ">= 0.12.4"
 
 # ------------------------------------------------------------------------ Added
