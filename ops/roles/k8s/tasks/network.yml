@@ -94,9 +94,10 @@
 
 - name: OpenShift Routes taken directly from the legacy app
   with_items:
-    - path: "/cgi-bin/wsgetpeople"
-      name: "{{ kid.legacy_cgibin }}-people"
-      state: present
+    # Keeping this for a while in case we need to revert back
+    # - path: "/cgi-bin/wsgetpeople"
+    #   name: "{{ kid.legacy_cgibin }}-people"
+    #   state: present
     - path: "/cgi-bin/wsgetPhoto"
       name: "{{ kid.legacy_cgibin }}-photo"
       state: present
