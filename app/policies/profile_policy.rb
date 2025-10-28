@@ -13,6 +13,7 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def manage_photos?
-    owner?
+    # owner?
+    owner_or_su?
   end
 end
