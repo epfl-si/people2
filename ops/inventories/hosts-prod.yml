@@ -9,7 +9,7 @@ all:
     APP_HOSTNAME: "people.epfl.ch"
     APP_REPLICAS: 1
     JOB_REPLICAS: 1
-    APP_VERSION: 0.12.40
+    APP_VERSION: 0.12.41
     APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
@@ -21,3 +21,4 @@ all:
     USE_LOCAL_ELEMENTS: "yes"
     LEGACY_RW_URL: "https://people.epfl.ch"
     LEGACY_PATCH_URL: "https://people.epfl.ch"
+    WSGETPEOPLE_CACHE: 1800

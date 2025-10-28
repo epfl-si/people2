@@ -48,7 +48,9 @@ json.array!(structure.sections.reject { |s| s.items.empty? }) do |section|
   json.label section.title
 
   json.members do
-    json.array!(section.items) do |person|
+    json.array!(section.items.sort do |a, b|
+      "#{a.lastname} #{a.firstname}" <=> "#{b.lastname} #{b.firstname}"
+    end) do |person|
       json.partial! 'flat_person', person: person
     end
   end
