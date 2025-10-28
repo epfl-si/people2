@@ -93,6 +93,13 @@ and the motivation (for me the cli is more than enough):
 
 ¹ What about Windows®, you ask?... Are you sure you are a real developer?
 
+### Degubbing in production...
+TODO
+
+If you think you have fixed an error, deployed the fix in production and it still
+does not work, please make sure to invalidate all caches with `Rails.cache.clear`
+in a production console.
+
 ### Debugging / studying Gems
 You can view the code of a gem in your favorite `$EDITOR` with `gem open GEMNAME`.
 An easy way of debugging a gem is to monkey patch the relevant part of the Gem
