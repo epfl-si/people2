@@ -231,7 +231,6 @@ services:
     networks:
       - traefik
       - default
-    tty: true
     stdin_open: true
 
   jobs:
