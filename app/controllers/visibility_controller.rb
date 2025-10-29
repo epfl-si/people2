@@ -3,17 +3,23 @@
 class VisibilityController < ApplicationController
   # PATCH/PUT /visibility/accred/1
   def update
-    # klass = params[:model].camelize
-    # # TODO: restrict allowed values of klass
-    # @item = Kernel.const_get(klass).find params[:id]
     m = params[:model]
-    klass = m.classify.constantize
+    raise ActionController::BadRequest, "Invalid model" unless SafeReflection.allowed?(m)
+
+    klass = SafeReflection.class_for(m)
+
+    # klass = m.classify.constantize
     @item = klass.find params[:id]
     authorize! @item, to: :update?
     if (@property = params[:property]).present?
-      old_visibility = @item.send("#{@property}_visibility")
-      @item.send("#{@property}_visibility=", params[:visibility])
+      prop_visibility = @item.safe_visibility_for(@property)
+      raise ActionController::BadRequest if prop_visibility.nil?
+
+      old_visibility = @item.send(prop_visibility)
+      @item.send("#{prop_visibility}=", params[:visibility])
     else
+      raise ActionController::BadRequest unless @item.audience_limitable?
+
       old_visibility = @item.visibility
       @item.visibility = params[:visibility]
     end
@@ -36,7 +42,7 @@ class VisibilityController < ApplicationController
         end
         # Revert model to previous state
         if @property.present?
-          @item.send("#{@property}_visibility=", old_visibility)
+          @item.send("#{prop_visibility}=", old_visibility)
         else
           @item.visibility = old_visibility
         end
