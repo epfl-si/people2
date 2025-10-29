@@ -106,6 +106,15 @@ module AudienceLimitable
       define_method("#{visprefix}hidden?") do
         send(vismethod) >= NOBODY
       end
+
+      define_method("audience_limitable?") do
+        respond_to? :visibility
+      end
+
+      define_method("safe_visibility_for") do |prop|
+        m = "#{prop}_visibility"
+        m if respond_to? m
+      end
     end
   end
 end
