@@ -92,7 +92,7 @@ class Course < ApplicationRecord
 
     t = I18n.transliterate(t).strip.downcase.gsub(%r{[\s():,;./?&#'"\\+]+}, '-')
     c = slug.strip.upcase.gsub(%r{[\s():,;./?&#'"\\+]+}, '-')
-    s = "#{t}-#{c}".gsub(/-+|-$/, "-")
+    s = "#{t}-#{c}".gsub(/-+|-$/, "-").gsub(/-*$/, '')
     "https://edu.epfl.ch/coursebook/#{locale}/#{s}"
   end
 
