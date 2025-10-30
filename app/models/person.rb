@@ -390,8 +390,7 @@ class Person
   #   @data['gender'] || 'unknown'
   # end
 
-  # TODO: see if it is possible to guess if person could be a teacher in order
-  # to avoid useless requests to ISA.
+  # TODO: We could just check if there are any cours or phd
   def possibly_teacher?
     accreditations.any?(&:possibly_teacher?)
   end
