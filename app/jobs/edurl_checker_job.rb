@@ -5,7 +5,7 @@ class EdurlCheckerJob < ApplicationJob
 
   def perform
     errors = []
-    Course.where(urled: nil).in_batches(of: 100) do |courses|
+    Course.where(urled: [nil, false]).in_batches(of: 100) do |courses|
       Net::HTTP.start("edu.epfl.ch", 443, use_ssl: true) do |http|
         courses.each do |c|
           c.check_edu_urls(http)
