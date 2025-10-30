@@ -20,7 +20,12 @@ module SafeReflection
   end
 
   def class_for(name)
-    allowed_classes[name.to_s.classify]
+    klass = allowed_classes[name.to_s.classify]
+    return nil if klass.blank?
+
+    # Fix single-table inheritance. klass.find must be done in the super class
+    sklass = klass.superclass
+    sklass == ApplicationRecord ? klass : sklass
   end
 
   def allowed?(name)
