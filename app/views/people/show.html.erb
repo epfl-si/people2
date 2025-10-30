@@ -65,7 +65,7 @@
 </div><!-- people basic infos -->
 
 <% # TODO why teaching activity does not have its own specific box type? All this would be much simpler! %>
-<% if @main_zone_bbs.present? || @ta %>
+<% if @main_zone_bbs.present? %>
   <%= render "shared/tabs", tabs: (
     (@main_zone_bbs.present? ? @main_zone_bbs.map { |(section, boxes)|
       {
@@ -79,11 +79,6 @@
           sortable: false
         }
       }
-    } : []) + (@ta ? [{
-      id: "section_teaching",
-      label: t(".title.teaching"),
-      name: "show-tabs-teaching",
-      partial: "teaching"
-    }] : [])
+    } : [])
   ) %>
 <% end %>

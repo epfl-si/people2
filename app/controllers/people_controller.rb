@@ -27,6 +27,7 @@ class PeopleController < ApplicationController
     Rails.configuration.enable_adoption and proxy_orphan and return
 
     set_show_data
+    set_boxes
     respond_to do |format|
       format.html do
         ActiveSupport::Notifications.instrument('profile_controller_render') do
@@ -59,6 +60,7 @@ class PeopleController < ApplicationController
         @special_partial = 'adopt'
         set_base_data
         set_show_data
+        set_boxes
         render 'people/show'
       else
         redirect_to action: :show
@@ -141,21 +143,12 @@ class PeopleController < ApplicationController
   def set_show_data
     @page_title = "EPFL - #{@person.name.display}"
 
-    @teacher = @person.teacher
-    if @teacher.present?
-      @courses = @teacher.courses.sort { |a, b| a.t_title <=> b.t_title }
-
-      @current_phds = @teacher.current_phds
-      @past_phds_as_director = @teacher.past_phds_as_director
-      @past_phds_as_codirector = @teacher.past_phds_as_codirector
-      @ta = [@courses, @current_phds, @past_phds_as_director, @past_phds_as_codirector].any?(&:present?)
-    else
-      @courses = nil
-      @current_phds = nil
-      @past_phds_as_director = @past_phds_as_codirector = nil
-      @ta = false
+    @unsorted_boxes = []
+    tea = @person.teacher
+    if tea.present?
+      teabox = TeachingBox.new(tea)
+      @unsorted_boxes << teabox if teabox.content?
     end
-
     return unless @profile
 
     @profile_picture = @profile.photo(Current.audience).image if @profile.photo&.image&.attached?
@@ -163,10 +156,15 @@ class PeopleController < ApplicationController
     @visible_socials = @profile.socials.for_audience(Current.audience)
 
     # get sections that contain at least one box in the chosen locale
-    unsorted_boxes = @profile.boxes.for_audience(Current.audience).includes(:section).select do |b|
+    @unsorted_boxes += @profile.boxes.for_audience(Current.audience).includes(:section).select do |b|
       b.content_for?(Current.audience)
     end
-    @boxes = unsorted_boxes.sort do |a, b|
+    # @contact_sections = []
+    # @main_sections = []
+  end
+
+  def set_boxes
+    @boxes = @unsorted_boxes.sort do |a, b|
       [a.section.position, a.position] <=> [b.section.position, b.position]
     end
     @boxes_by_section = @boxes.group_by(&:section)
@@ -174,8 +172,5 @@ class PeopleController < ApplicationController
     @contact_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "contact" }
     @main_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "main" }
     @side_zone_bbs = @boxes_by_section.select { |s, _b| s.zone == "side" }
-
-    # @contact_sections = []
-    # @main_sections = []
   end
 end
