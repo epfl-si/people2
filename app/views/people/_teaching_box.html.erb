@@ -1,26 +1,26 @@
-<% if @current_phds.present? %>
+<% if box.current_phds.present? %>
   <h3><%= t ".title.current_phd" %></h3>
   <p>
-    <%= @current_phds.map{|t|
+    <%= box.current_phds.map{|t|
       link_to(t.name, person_url(sciper_or_name: t.sciper))}.join(", ").html_safe
     %>
   </p>
 <% end %>
 
-<% if @past_phds_as_director.present? %>
+<% if box.past_phds_as_director.present? %>
   <h3><%= t ".title.past_phd_as_director" %></h3>
-  <p><%= @past_phds_as_director.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
+  <p><%= box.past_phds_as_director.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
 <% end %>
 
-<% if @past_phds_as_codirector.present? %>
+<% if box.past_phds_as_codirector.present? %>
   <h3><%= t ".title.past_phd_as_codirector" %></h3>
-  <p><%= @past_phds_as_codirector.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
+  <p><%= box.past_phds_as_codirector.map{ |t| link_to(t.name, t.doi_url)}.join(", ").html_safe %></p>
 <% end %>
 
-<% if @courses.present? %>
+<% if box.courses.present? %>
   <h3><%= t ".title.courses" %></h3>
   <div class="list-group">
-  <% @courses.each do |c| %>
+  <% box.courses.each do |c| %>
     <div class="list-group-item list-group-item-borderless">
       <h4><%= c.t_title %></h4>
       <p class="small">
