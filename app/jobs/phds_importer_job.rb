@@ -42,7 +42,9 @@ class PhdsImporterJob < ApplicationJob
       # only exist in the ISA database but not in accred. We are interested only
       # in the display name. Therefore we skip Person & BulkPerson
       # bpp = BulkPerson.for_scipers(scipers, filterbotweb: false).index_by(&:sciper)
-      names = APIPersonGetter.call(persid: scipers, single: false)&.map { |v| [v["id"], v["display"]] }.to_h || {}
+      names = APIPersonGetter.call(persid: scipers, single: false)&.map do |v|
+        [v["id"], "#{v['firstname']} #{v['lastname']}"]
+      end.to_h || {}
       scipers.each do |sciper|
         ophd = ophds[sciper]
         phd = ophd.updated_phd(year: year)
