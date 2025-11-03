@@ -31,8 +31,8 @@ class Person
                      })
   end
 
-  def self.find_by_sciper(sciper, force: false)
-    data = APIPersonGetter.call!(persid: sciper, single: true, force: force)
+  def self.find_by_sciper(sciper, force: false, auth: nil)
+    data = APIPersonGetter.call!(persid: sciper, single: true, force: force, auth: auth)
 
     # TODO: also find_by_sciper should update Work::Sciper
 

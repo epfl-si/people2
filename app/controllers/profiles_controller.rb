@@ -2,12 +2,11 @@
 
 class ProfilesController < ApplicationController
   before_action :load_and_authorize_profile, except: [:new]
-  before_action :load_person, except: %i[set_favorite_picture new]
+  before_action :load_person, except: %i[set_favorite_picture]
 
   # GET /people/:sciper/profile/new
   # Profiles will be saved to DB only if an authorised person click on the edit link
   def new
-    @person = Person.find(params[:sciper])
     authorize!(@person, to: :update?)
     @profile = @person.profile!
     @profile.save unless @profile.persisted?
@@ -192,9 +191,16 @@ class ProfilesController < ApplicationController
   end
 
   def load_person
-    load_and_authorize_profile
-    @person = Person.find(@profile.sciper)
+    sciper = @profile&.sciper || params[:sciper]
+    @person = Person.find_by_sciper(sciper, force: false)
     @name = @person.name
+    return unless allowed_to?(:confidential_edit?, @profile)
+
+    # If the editor is the person itself, we can go fetch a more detailed @person
+    jwt = Current.session.jwt
+    return if jwt.blank?
+
+    @person = Person.find_by_sciper(@person.sciper, auth: jwt)
   end
 
   def profile_params

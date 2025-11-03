@@ -10,6 +10,10 @@ class PersonPolicy < ApplicationPolicy
     record.editable_profile? && (owner_or_su? || admin_for?(record))
   end
 
+  def confidential_edit?
+    owner?
+  end
+
   # TODO: should be restrict to people working at 1234 or to VPSI people ?
   # We have restored admin_data. For the moment we disable atari
   def show_atari?

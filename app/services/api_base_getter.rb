@@ -21,6 +21,7 @@ class APIBaseGetter < ApplicationService
     @alias ||= {}
     @single = data.delete(:single) || false
     @noempty = true unless defined?(@allow_empty)
+    @auth = data.delete(:auth)
     @paginate = @params.include?(:pagesize)
     if @paginate
       @pagesize = data.delete(:pagesize) || PAGESIZE
@@ -62,10 +63,13 @@ class APIBaseGetter < ApplicationService
   end
 
   def genreq(url = @url)
-    Rails.logger.debug "epfl api genreq"
-    cfg = Rails.application.config_for(:epflapi)
-    req = Net::HTTP::Get.new(url)
-    req.basic_auth cfg.username, cfg.password
+    if @auth.present?
+      req = Net::HTTP::Get.new(url, { "Authorization" => "Bearer #{@auth}" })
+    else
+      cfg = Rails.application.config_for(:epflapi)
+      req = Net::HTTP::Get.new(url)
+      req.basic_auth cfg.username, cfg.password
+    end
     req
   end
 
@@ -126,6 +130,6 @@ class APIBaseGetter < ApplicationService
   # The return from dofetch depends on @single too. Therefore it have to be included in the cache key
   def cache_key
     uid = Digest::MD5.hexdigest(url.to_s)
-    "#{self.class.name.underscore}/#{@single ? 'S' : 'M'}/#{uid}"
+    "#{self.class.name.underscore}/#{@single ? 'S' : 'M'}#{@auth.present? ? 'A' : 'G'}/#{uid}"
   end
 end

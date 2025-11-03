@@ -233,17 +233,6 @@ services:
       - default
     stdin_open: true
 
-  jobs:
-    image: people2023-webapp
-    env_file: .env
-    command: ./bin/jobs
-    environment: *webappenv
-    ports: []
-    volumes:
-      - ./:/srv/app
-      - storage:/srv/app/storage
-      - ctmp:/srv/ctmp
-
   prometheus:
     profiles:
       - full

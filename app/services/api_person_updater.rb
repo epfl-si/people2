@@ -14,14 +14,23 @@ class APIPersonUpdater
     sciper = data['sciper'] || data[:sciper]
     raise "Missing mandatory parameter sciper" if sciper.nil?
 
-    params = data.slice("firstnameusual", "lastnameusual", "inclusivity")
+    params = data.slice("firstnameusual", "lastnameusual")
+    if data.key?("inclusivity")
+      params["genderusual"] = if data["inclusivity"]
+                                "X"
+                              else
+                                ""
+                              end
+    end
 
     cfg = Rails.application.config_for(:epflapi)
     uri = URI("#{cfg.legacy_person_update_url}/#{sciper}")
     # uri.query = URI.encode_www_form(params)
     req = Net::HTTP::Put.new(uri)
     req.basic_auth(cfg.username, cfg.password)
-    req.set_form_data(params)
+    # req.set_form_data(params)
+    req.content_type = 'application/json'
+    req.body = data.to_json
     res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
       http.request(req)
     end

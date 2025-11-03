@@ -1,2 +1,3 @@
 web: bin/rails server -p 3000 --pid /tmp/rails.pid -b 0.0.0.0
+jobs: bin/jobs
 css: bin/rails dartsass:watch
