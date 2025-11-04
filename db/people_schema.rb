@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_04_090925) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -403,12 +403,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "service_auths", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "service", null: false
+    t.text "subnet"
+    t.string "user"
+    t.string "password"
+    t.string "comment"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "ip_address"
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "jwt"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 

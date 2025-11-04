@@ -24,8 +24,10 @@ module API
       #  - storing a secret_key for rapidly expiring signed requests (à la camipro photos)
       # The auth method will be chosen based on which fields are present.
       def check_auth
-        Rails.logger.debug("Check Auth to be implemented")
-        true
+        service = "v0_#{controller_name}_#{action_name}"
+        return if Utils::ServiceAuth.check(service, request, params)
+
+        raise ActionController::BadRequest, "Access denied"
       end
 
       # Custom error handler for bad request parameters
