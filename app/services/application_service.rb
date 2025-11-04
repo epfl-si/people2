@@ -131,7 +131,7 @@ class ApplicationService
 
     req = genreq(uri)
 
-    opts = { use_ssl: true, read_timeout: 100 }
+    opts = { use_ssl: true, read_timeout: 5 }
     opts.merge!(http_opts)
     response = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
       http.request(req)
