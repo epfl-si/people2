@@ -121,9 +121,11 @@
                     subPath: "{{ RUNENV }}_storage"
                   - name: "{{ kid.jobs }}-tmp"
                     mountPath: /rails/tmp
+                  - name: "{{ kid.jobs }}-logs"
+                    mountPath: /rails/log
                   - name: "{{ kid.jobs }}-rec"
                     mountPath: /rails/config/recurring.yml
-                    subpath: recurring.yml
+                    subPath: recurring.yml
                     readOnly: true
 
             volumes:
@@ -131,6 +133,9 @@
                 configMap:
                   name: "{{ kid.jobs }}-rec"
               - name: "{{ kid.jobs }}-tmp"
+                emptyDir:
+                  sizeLimit: 100Mi
+              - name: "{{ kid.jobs }}-logs"
                 emptyDir:
                   sizeLimit: 100Mi
               - name: "{{ kid.jobs }}-nfs"

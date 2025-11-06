@@ -17,12 +17,32 @@ module Authentication
 
   private
 
+  RECENT_MAX_AGE = 15.minutes
+
   def authenticated?
     resume_session
   end
 
   def require_authentication
+    Rails.logger.debug "%%%% require_authentication"
     resume_session || request_authentication
+  end
+
+  # This is similar to require_authentication but it considers the session expired
+  # quite early. This is to make sure that the JWT is recent and safe to use.
+  # TODO: this does not work because M$ returns the same JWT token until it expires.
+  #       Therefore we still have an obsolete token when we need to use it :(
+  def require_recent_authentication
+    cs = resume_session
+    if cs.blank?
+      # this should never happen because of the :require_authentication before_action
+      request_authentication
+    elsif (Time.zone.now - cs.created_at) > RECENT_MAX_AGE
+      terminate_session
+      # I was hoping to obtain a new token by reloading the page. Off-course not!
+      # request_authentication
+      redirect_to request.url
+    end
   end
 
   def resume_session

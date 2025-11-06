@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ProfilesController < ApplicationController
+  before_action :require_recent_authentication
   before_action :load_and_authorize_profile, except: [:new]
   before_action :load_person, except: %i[set_favorite_picture]
 
@@ -17,8 +18,10 @@ class ProfilesController < ApplicationController
     if params[:details]
       render 'edit_details'
     elsif params[:official_name]
+      authorize!(@profile, to: :confidential_edit?)
       render 'profiles/name_change/official'
     elsif params[:usual_name]
+      authorize!(@profile, to: :confidential_edit?)
       render 'profiles/name_change/usual'
     elsif params[:languages]
       render 'edit_languages'
@@ -49,6 +52,7 @@ class ProfilesController < ApplicationController
     when "languages"
       update_languages
     when "inclusivity"
+      authorize!(@profile, to: :confidential_edit?)
       update_inclusivity
     when "name"
       raise NotImplementedError
@@ -148,7 +152,8 @@ class ProfilesController < ApplicationController
   def update_inclusivity
     if @profile.update(profile_params)
       turbo_flash(:success, label: "inclusivity_success")
-      ProfilePatchJob.perform_later("sciper" => @profile.sciper, "inclusivity" => @profile.inclusivity ? "yes" : "no")
+      new_gender = @profile.inclusivity ? "X" : @person.genderofficial
+      ProfilePatchJob.perform_later(sciper: @profile.sciper, gender: new_gender)
       respond_to do |format|
         format.turbo_stream { render "inclusivity/update" }
       end
@@ -191,16 +196,22 @@ class ProfilesController < ApplicationController
   end
 
   def load_person
-    sciper = @profile&.sciper || params[:sciper]
-    @person = Person.find_by_sciper(sciper, force: false)
-    @name = @person.name
-    return unless allowed_to?(:confidential_edit?, @profile)
+    unless allowed_to?(:confidential_edit?, @profile)
+      @person = @person = Person.find_by_sciper(@profile.sciper, force: true)
+      return
+    end
 
-    # If the editor is the person itself, we can go fetch a more detailed @person
     jwt = Current.session.jwt
     return if jwt.blank?
 
-    @person = Person.find_by_sciper(@person.sciper, auth: jwt)
+    begin
+      @person = Person.find_by_sciper(@profile.sciper, force: true, auth: jwt)
+    rescue ActiveRecord::RecordNotFound
+      # JWT token probably expired. We need to force authentication.
+      Rails.logger.debug "Person request to api failed. Trying to force authentication"
+      require_recent_authentication
+    end
+    @profile.person = @person
   end
 
   def profile_params

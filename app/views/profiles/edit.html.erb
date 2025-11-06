@@ -61,7 +61,7 @@
 
 <section>
   <%= turbo_frame_tag "profile_section" do %>
-    <%= render "editable_profile", profile: @profile %>
+    <%= render "editable_profile", profile: @profile, person: @person %>
   <% end %>
 </section>
 

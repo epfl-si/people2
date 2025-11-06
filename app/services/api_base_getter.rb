@@ -64,7 +64,9 @@ class APIBaseGetter < ApplicationService
 
   def genreq(url = @url)
     if @auth.present?
-      req = Net::HTTP::Get.new(url, { "Authorization" => "Bearer #{@auth}" })
+      # req = Net::HTTP::Get.new(url, { "Authorization: Authorization" => "Bearer #{@auth}" })
+      req = Net::HTTP::Get.new(url)
+      req['Authorization'] = "Bearer #{@auth}"
     else
       cfg = Rails.application.config_for(:epflapi)
       req = Net::HTTP::Get.new(url)

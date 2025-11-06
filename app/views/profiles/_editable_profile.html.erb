@@ -14,27 +14,31 @@
 <% end %>
 
 <dl class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
-<!--
-  <dt><%= t "attr_labels.profile.official_name" %></dt>
-  <dd>
-    <span><%= profile.person.name.official_display %></span>
-    <%= link_to icon('edit-3'), edit_profile_path(profile, official_name: true), data: { turbo_stream: true } %>
-  </dd>
+  <% if allowed_to?(:confidential_edit?, @profile) %>
+    <dt><%= t "attr_labels.profile.official_name" %></dt>
+    <dd>
+      <span><%= person.name.official_display %></span>
+      <%= link_to icon('edit-3'), edit_profile_path(profile, official_name: true), data: { turbo_stream: true } %>
+    </dd>
 
-  <dt><%= t "attr_labels.profile.usual_name" %></dt>
-  <dd>
-    <span><%= profile.person.name.display %></span>
-    <%= link_to icon('edit-3'), edit_profile_path(profile, usual_name: true), data: { turbo_stream: true } %>
-  </dd>
+    <dt><%= t "attr_labels.profile.usual_name" %></dt>
+    <dd>
+      <span><%= profile.person.name.display %></span>
+      <%= link_to icon('edit-3'), edit_profile_path(profile, usual_name: true), data: { turbo_stream: true } %>
+    </dd>
 
-  <dt><%= t("attr_labels.profile.inclusivity") %></dt>
-  <dd class="rpush">
-    <%= turbo_frame_tag dom_id(@profile, :show_inclusivity) do %>
-      <%= render "inclusivity/inclusivity_toggle", profile: @profile %>
-    <% end %>
-  </dd>
--->
-
+    <dt><%= t("attr_labels.profile.inclusivity") %></dt>
+    <dd class="rpush">
+      <%= turbo_frame_tag dom_id(@profile, :show_inclusivity) do %>
+        <%= render "inclusivity/inclusivity_toggle", profile: @profile %>
+      <% end %>
+    </dd>
+  <% else %>
+    <dt><%= t "attr_labels.profile.usual_name" %></dt>
+    <dd>
+      <span><%= profile.person.name.display %></span>
+    </dd>
+  <% end %>
   <dt><%= t "attr_labels.profile.public_email" %></dt>
   <dd>
     <% unless profile.public_email == profile.email %>

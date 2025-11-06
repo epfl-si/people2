@@ -167,6 +167,11 @@ en:
             message_html: Please contact the <a href="mailto:rh@epfl.ch">HR team</a>
               with a copy of your ID. The update is then propagated to the IT systems.
       usual:
+        custom: Special request
+        intro: The usual (first and/or last) name refers to the first name
+          and/or surname that a person chooses to use in daily life instead
+          of the one appearing on their official identity documents.
+        self_service: From official name
         title: Usual Name Change
   publications:
     edit:
@@ -188,15 +193,26 @@ en:
     new:
       instructions_html: Please choose below from your official existing names or
         surnames those that are displayed on your profile.
+      messages:
+        quota_exceded_html: You have requested too many name changes.
+        pending_html: You have a pending name request. Please allow few days
+          for it to be propagated. Should it be uneffective after more than a
+          week, please contact the service desk.
+    create:
+      nothing_todo: "Nothing to do: the selected names are identical to the old ones"
+      invalid: "Your name cannot be changed. Use the form for unusual name requests"
   usual_name_requests:
     new:
-      instructions_one_option_html: The usual (first and/or last) name refers to the
-        first name and/or surname that a person chooses to use in daily life instead
-        of the one appearing on their official identity documents. <br>The request
-        for modification is approved and processed by the Equality Office, according
-        on these <a href="https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/">criteria</a>.
-      instructions_two_options_html: The usual (first and/or last) name refers to
-        the first name and/or surname that a person chooses to use in daily life instead
-        of the one appearing on their official identity documents. The request for
-        modification is approved and processed by the Equality Office, according these
-        <a href="https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/">criteria</a>.
+      instructions_one_option_html: To request a custom usual name, please fill the
+        form below.
+        The request will be processed and validated by the Equality Office according to
+        <a href="https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/" target="blank">
+          these criteria
+        </a>.
+      instructions_two_options_html: If the name you want cannot be composed from
+        parts of your official name, then you can make a custom name request by
+        filling out the following form.
+        The request will be processed and validated by the Equality Office according to
+        <a href="https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/" target="blank">
+          these criteria
+        </a>.
