@@ -9,7 +9,7 @@ all:
     APP_HOSTNAME: "people.epfl.ch"
     APP_REPLICAS: 1
     JOB_REPLICAS: 0
-    APP_VERSION: 0.12.47
+    APP_VERSION: 0.12.50
     APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
