@@ -1,13 +1,13 @@
-<% person = @name_change_request.person %>
-
 <p>Bonjour,</p>
 
-<p>L'utilisateur <strong><%= person.name.first %> <%= person.name.last %></strong>
-(sciper <strong><%= person.sciper %></strong>) a soumis une demande de changement de nom usuel.</p>
-
 <p>
-  <strong>Prénom actuel :</strong> <%= person.name.first %><br>
-  <strong>Nom actuel :</strong> <%= person.name.last %><br>
+  L'utilisateur <strong><%= @person.name.display %></strong>
+  (sciper <strong><%= @person.sciper %></strong>)
+  a soumis une demande de changement de nom usuel.
+</p>
+<p>
+  <strong>Prénom actuel :</strong> <%= @name_change_request.old_first %><br>
+  <strong>Nom actuel :</strong> <%= @name_change_request.old_last %><br>
   <strong>Nouveau prénom usuel demandé :</strong> <%= @name_change_request.new_first %><br>
   <strong>Nouveau nom usuel demandé :</strong> <%= @name_change_request.new_last %>
 </p>

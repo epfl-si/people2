@@ -29,7 +29,7 @@ class UsualNameChange < ApplicationRecord
   end
 
   def done?
-    new_first == profile.name.display_first && new_first == profile.name.display_last
+    new_first == profile.name.display_first && new_last == profile.name.display_last
   end
 
   def retriable?

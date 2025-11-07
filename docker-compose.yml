@@ -120,6 +120,7 @@ services:
       RAILS_ENV: development
       SUPERUSERS: "${SUPERUSERS}"
       LOGFILE: log/dev
+      NAME_CHANGE_REQUEST_EMAIL: 'giovanni.cangiani+peonc@epfl.ch'
 
       # -------------------------------------------------- with ok default value
       # APP_HOSTNAME: people.epfl.ch

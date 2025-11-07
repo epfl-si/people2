@@ -78,7 +78,7 @@ module People
                             else
                               false
                             end
-    config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', 'name.change@groupes.epfl.ch')
+    config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', nil)
 
     config.api_v0_wsgetpeople_cache = ENV.fetch("WSGETPEOPLE_CACHE", Rails.env.production? ? 6.hours : 0).to_i
 

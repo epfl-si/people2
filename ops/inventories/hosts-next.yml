@@ -21,4 +21,5 @@ all:
     LEGACY_RW_URL: "https://test-people.epfl.ch"
     EPFLAPI_BACKEND_URL: "https://api.epfl.ch/v1"
     WSGETPEOPLE_CACHE: 0
+    NAME_CHANGE_REQUEST_EMAIL: "giovanni.cangiani+peonc@epfl.ch"
     # EPFLAPI_BACKEND_URL: "https://api-test.epfl.ch/v1"

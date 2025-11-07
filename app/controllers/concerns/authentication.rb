@@ -33,6 +33,7 @@ module Authentication
   # TODO: this does not work because M$ returns the same JWT token until it expires.
   #       Therefore we still have an obsolete token when we need to use it :(
   def require_recent_authentication
+    Rails.logger.debug "%%%% require_recent_authentication"
     cs = resume_session
     if cs.blank?
       # this should never happen because of the :require_authentication before_action

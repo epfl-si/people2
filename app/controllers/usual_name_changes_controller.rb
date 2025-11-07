@@ -6,17 +6,25 @@ class UsualNameChangesController < ApplicationController
   def new
     @msg = nil
     n = @profile.usual_name_changes.count
+    if n > MAX_COUNT
+      @msg = 'quota_exceded'
+      return
+    end
+
     if n.positive?
-      if n >= MAX_COUNT
-        @msg = 'quota_exceded'
-      else
-        @unc = @profile.usual_name_changes.order(:created_at).last
-        @msg = 'pending' unless @unc.done? || @unc.retriable?
+      # If the last request is retriable that is enough time is passed and
+      # it is still not affective. We just consider it failed and replace it.
+      unc = @profile.usual_name_changes.order(:created_at).last
+      unless unc.done?
+        if unc.retriable?
+          unc.destroy
+        else
+          @msg = 'pending'
+          return
+        end
       end
     end
-    # rubocop:disable Naming/MemoizedInstanceVariableName
-    @unc ||= UsualNameChange.for(@profile, @name)
-    # rubocop:enable Naming/MemoizedInstanceVariableName
+    @unc = UsualNameChange.for(@profile, @name)
   end
 
   def create
@@ -52,7 +60,8 @@ class UsualNameChangesController < ApplicationController
     authorize! @profile, to: :confidential_edit?
 
     jwt = Current.session.jwt
-    person = Person.find_by_sciper(@profile.sciper, auth: jwt)
+    person = Person.find_by_sciper(@profile.sciper, auth: jwt, force: true)
+    @profile.person = person
     @name = person.name
   end
 end

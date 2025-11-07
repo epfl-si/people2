@@ -48,6 +48,11 @@ fr:
           attributes:
             year:
               not_a_number: n'est pas un nombre
+        usual_name_request:
+          attributes:
+            base:
+              at_least_one: Le prénom et le nom ne sont pas indiqués. Veuillez en fournir au moins un des deux
+              unchanged_names: Aucun changement par rapport au nom d'affichage actuel
   error:
     function_change:
       one: An error prevented your request to be sent
