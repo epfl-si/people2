@@ -8,7 +8,7 @@ all:
 
     APP_HOSTNAME: "people-next.epfl.ch"
     APP_REPLICAS: 1
-    JOB_REPLICAS: 0
+    JOB_REPLICAS: 1
     APP_VISIBILITY: "private"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
