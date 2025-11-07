@@ -32,7 +32,10 @@ class Room
 
   def url
     u = PLAN_URL
-    u.query = URI.encode_www_form(room: @name)
+    # Yes plan needs double equal sign (&room==INN+14)
+    #   the first one is set by encode_www_form
+    #   the second we force it as part of the query string
+    u.query = URI.encode_www_form(room: "=#{@name}")
     u
   end
 end
