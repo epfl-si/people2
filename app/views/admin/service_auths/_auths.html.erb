@@ -1,0 +1,14 @@
+<table class="table table-sortable" data-tablesaw-sortable>
+  <thead>
+    <tr>
+      <th data-tablesaw-sortable-col>Service</th>
+      <th data-tablesaw-sortable-col>Type</th>
+      <th data-tablesaw-sortable-col>Contact</th>
+      <th>Details</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "admin/service_auths/auth", collection: auths %>
+  </tbody>
+</table>

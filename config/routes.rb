@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   mount Yabeda::Prometheus::Exporter => "/metrics"
 
+  get "myip" => "api/ip#index"
+
   # namespace :oidc do
   #   # URL prefix for controllers in this section is `/oidc/`, and
   #   # controllers live in module `OIDC` (not "Oidc"), thanks to
@@ -114,6 +116,8 @@ Rails.application.routes.draw do
     resources :selectable_properties, except: %i[new create destroy show]
     resources :special_options, except: %i[show]
     resources :motds
+    resources :service_auths
+    resources :service_auths_mini, controller: "service_auths", type: "ServiceAuthMini", as: 'service_auth_mini'
     if Rails.env.development?
       resources :translations, except: %i[new create destroy] do
         patch 'autotranslate', on: :member

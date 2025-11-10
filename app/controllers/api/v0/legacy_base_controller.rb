@@ -25,7 +25,7 @@ module API
       # The auth method will be chosen based on which fields are present.
       def check_auth
         service = "v0_#{controller_name}_#{action_name}"
-        return if Utils::ServiceAuth.check(service, request, params)
+        return if ServiceAuth.check(service, request, params)
 
         raise ActionController::BadRequest, "Access denied"
       end

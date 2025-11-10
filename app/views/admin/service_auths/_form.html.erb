@@ -1,0 +1,44 @@
+<%= form_with(model: [:admin, auth], class: "instaform") do |form| %>
+
+  <% if auth.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(auth.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+        <% auth.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if auth.persisted? %>
+    <p><%= auth.class.human_name %><br><%= auth.class.description %></p>
+  <% else %>
+    <%= form_group do %>
+      <%= form.label(:type, "Type") %>
+      <%= form.select(:type, @type_select, required: true, class: "custom-select" ) %>
+    <% end %>
+  <% end %>
+
+  <%= form_group do %>
+    <%= form.label(:service, "Service") %>
+    <%= form.select(:service, @service_select, required: true, class: "custom-select" ) %>
+  <% end %>
+
+  <%= single_text_field(form, :subnet) %>
+  <%= single_text_field(form, :user) %>
+  <%= single_text_field(form, :password) %>
+  <%= single_text_field(form, :email) %>
+  <%= single_text_field(form, :comment) %>
+
+  <%# for the moment we just keep the title %>
+  <%#= single_rich_text_area(form, :help_en) %>
+  <%#= single_rich_text_area(form, :help_fr) %>
+  <%#= single_rich_text_area(form, :help_it) %>
+  <%#= single_rich_text_area(form, :help_de) %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
