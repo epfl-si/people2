@@ -95,12 +95,13 @@ module ApplicationHelper
   # Files organization is not exaclty the one that we find in the dist directory
   # path is based on the `dist` directory and have to be tweaked otherwise
   def belurl(path)
-    if Rails.configuration.use_local_elements
+    v = Rails.configuration.elements_version
+    if v == 'local'
       "/elements/#{path}"
     else
       real_path = path
                   .gsub(/^(svg|favicons)/, "icons")
-      "https://web2018.epfl.ch/8.0.0/#{real_path}"
+      "https://web2018.epfl.ch/#{v}/#{real_path}"
     end
   end
 

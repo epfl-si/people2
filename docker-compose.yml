@@ -134,7 +134,7 @@ services:
       REDIS_CACHE: redis://cache:6379/0
       # SEEDS_PATH: db/seeds/data
       # USE_LOCAL_ELEMENTS: false
-      USE_LOCAL_ELEMENTS: ${USE_LOCAL_ELEMENTS:-true}
+      ELEMENTS_VERSION: ${ELEMENTS_VERSION:-8.3.0}
 
       WSGETPEOPLE_CACHE: ${WSGETPEOPLE_CACHE:-0}
 

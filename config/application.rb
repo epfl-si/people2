@@ -71,7 +71,9 @@ module People
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
 
     config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', 'false').match?(config.re_true)
-    config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false').match?(config.re_true)
+
+    config.elements_version = ENV.fetch('ELEMENTS_VERSION', '8.3.0')
+
     config.hide_teacher_accreds = ENV.fetch('HIDE_ENS_ACCREDDS', 'true').match?(config.re_true)
     config.force_audience = if Rails.env.development?
                               (v = ENV.fetch('FORCE_AUDIENCE', "false")).match?(config.re_false) ? false : v.to_i
