@@ -109,6 +109,9 @@ module API
         level = params['cursus'] == 'ma' ? 'master' : 'bachelor'
 
         filters = { level: level, slug_prefix: slug }
+        if (l = params["langueens"]).present?
+          filters[:lang] = l.upcase
+        end
         @courses = Course.search(filters).sort { |a, b| a.t_title <=> b.t_title }
         # render 'api/v0/courses/wsgetcours', layout: false
       end
