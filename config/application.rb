@@ -90,6 +90,8 @@ module People
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 0)
     config.legacy_import_job_log_path = ENV.fetch('LEGACY_JOB_LOG', config.enable_adoption ? "legacy_import.log" : nil)
 
+    config.skip_api_access_control = false
+
     # Expire the redirect links to active storage files (profile pictures) so that
     # no address leading to a profile picture is premanent and user's choice
     # of hiding the picutre becomes effective even for people who kept the link

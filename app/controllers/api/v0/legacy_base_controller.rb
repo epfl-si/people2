@@ -24,6 +24,8 @@ module API
       #  - storing a secret_key for rapidly expiring signed requests (à la camipro photos)
       # The auth method will be chosen based on which fields are present.
       def check_auth
+        return if Rails.configuration.skip_api_access_control
+
         service = "v0_#{controller_name}_#{action_name}"
         return if ServiceAuth.check(service, request, params)
 

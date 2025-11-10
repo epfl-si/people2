@@ -42,6 +42,7 @@ module Admin
         version superusers app_hostname enable_direct_uploads hide_teacher_accreds
         force_audience api_v0_wsgetpeople_cache name_change_request_email
         enable_adoption legacy_base_url legacy_pages_cache legacy_import_job_log_path
+        skip_api_access_control
       ].each do |key|
         @appconfig[key.to_s] = Rails.configuration.send(key)
       end

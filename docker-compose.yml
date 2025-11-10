@@ -144,6 +144,7 @@ services:
       RAILS_DEVELOPMENT_HOSTS: ${RAILS_DEVELOPMENT_HOSTS:-people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}}
       ERROR_PAGES: ${ERROR_PAGES:-mix}
       YABEDA_DEBUG: true
+      SKIP_API_ACCESS_CONTROL: ${SKIP_API_ACCESS_CONTROL:-false}
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
