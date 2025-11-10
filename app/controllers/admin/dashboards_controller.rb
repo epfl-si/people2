@@ -9,7 +9,8 @@ module Admin
       { name: "scipercount", enabled: true, period: 1_800, gridcol: ["auto", 1], gridrow: ["auto", 1] },
       { name: "jobs", enabled: true, period: 30, gridcol: ["auto", 2], gridrow: ["auto", 1] },
       { name: "opdo", enabled: true, period: 600, gridcol: ["auto", 2], gridrow: ["auto", 1] },
-      { name: "reqheads", enabled: true, gridcol: ["auto", 2], gridrow: ["auto", 2] }
+      { name: "reqheads", enabled: true, period: 600, gridcol: ["auto", 2], gridrow: ["auto", 2] },
+      { name: "appconfig", enabled: true, period: 600, gridcol: ["auto", 2], gridrow: ["auto", 2] }
     ].map { |h| [h[:name], OpenStruct.new({ period: 60 }.merge(h))] }.to_h.freeze
 
     def index
@@ -33,6 +34,25 @@ module Admin
 
     def adoplatest
       @adoptions = Adoption.accepted.order("updated_at DESC").limit(10)
+    end
+
+    def appconfig
+      @appconfig = {}
+      %i[
+        version superusers app_hostname enable_direct_uploads hide_teacher_accreds
+        force_audience api_v0_wsgetpeople_cache name_change_request_email
+        enable_adoption legacy_base_url legacy_pages_cache legacy_import_job_log_path
+      ].each do |key|
+        @appconfig[key.to_s] = Rails.configuration.send(key)
+      end
+      %i[epflapi].each do |g|
+        c = Rails.application.config_for(g)
+        c.each do |k, v|
+          next if k =~ /key|pass|token/
+
+          @appconfig["#{g}.#{k}"] = v
+        end
+      end
     end
 
     def opdo
