@@ -47,7 +47,7 @@ redis:
   port: "{{ ports.redis }}"
   memory: 3072 # Mb
   alloc_memory: 4096 # Mb
-  disk: 5 # Gb
+  disk: "{{ REDIS_DISK_SIZE | default(5) }}"  # Gb
   service: "{{ kid.redis }}"
   save:
     time: 300 # permanent storage dump period [seconds]

@@ -1,3 +1,4 @@
+# Current PRODUCTION deployment on openshift
 all:
   hosts:
     prod:

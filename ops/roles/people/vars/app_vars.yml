@@ -12,6 +12,8 @@ people:
   legacy_rw_url: "{{ LEGACY_RW_URL | default('https://test-people.epfl.ch') }}"
 
   name_change_request_email: "{{ NAME_CHANGE_REQUEST_EMAIL | default('name.change@groupes.epfl.ch') }}"
+
+  oasis_url: "{{ OASIS_BASEURL | default('https://oasis-t.epfl.ch:8484') }}"
   ollama_url: "{{ OLLAMA_URL | default('http://' ~ hosts.docker ~ ':11434') }}"
   openai_url: "{{ OPENAI_URL | default('https://inference-dev.rcp.epfl.ch/v1') }}"
   redis: "{{ (SELECT_CACHE == 'local_redis') | ternary('redis://cache:6379/0', REDIS_URL) }}"

@@ -1,3 +1,7 @@
+# STAGING deployment on openshift.
+# Same namespace, databases, attachments storage, etc. as prod
+# Same secrets as prod
+# Custom app configuration
 all:
   hosts:
     next:

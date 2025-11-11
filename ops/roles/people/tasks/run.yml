@@ -29,62 +29,74 @@
     image: "people:{{ people_image_version }}"
     env: &webappenv
       # ------------------------------ deployment-independent mandatory ENV vars
-      RAILS_ENV: "{{ people.env }}"
-      SUPERUSERS: "{{ _secrets.people.superusers }}"
+      RAILS_ENV: development
+      SUPERUSERS: "${SUPERUSERS}"
+      LOGFILE: log/dev
+      NAME_CHANGE_REQUEST_EMAIL: 'giovanni.cangiani+peonc@epfl.ch'
 
       # -------------------------------------------------- with ok default value
       # APP_HOSTNAME: people.epfl.ch
-      APP_HOSTNAME: "{{ hosts.people }}"
+      APP_HOSTNAME: "{{ PEOPLE_HOSTNAME }}"
       # ENABLE_DIRECT_UPLOADS: false
       # HIDE_ENS_ACCREDDS: true
       # INTRANET_RE: '^128\.17[89]'
       # RAILS_LOG_LEVEL: info in prod
       # if REDIS_CACHE is defined then redis is used otherwise default to memory
       # note that in dev cache is enabled only if presence of tmp/caching-dev.txt
-      REDIS_CACHE: "{{ people.redis }}"
+      REDIS_CACHE: redis://cache:6379/0
       # SEEDS_PATH: db/seeds/data
       # USE_LOCAL_ELEMENTS: false
-      USE_LOCAL_ELEMENTS: "{{ people.use_local_elements }}"
+      ELEMENTS_VERSION: "{{ ELEMENTS_VERSION | default('8.3.0') }}"
+
+      WSGETPEOPLE_CACHE: 0
 
       # ----------------------------------------------------------- dev specific
       # DEV_SEEDS_PATH: db/seeds_dev/data
-      FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default(false) }}"
+      FORCE_AUDIENCE: "{{ FORCE_AUDIENCE | default('no') }}"
       RAILS_DEVELOPMENT_HOSTS: "{{ (people.env == 'development') | ternary(hosts.people, '') }}"
       ERROR_PAGES: "{{ ERROR_PAGES | default('prod') }}"
+      YABEDA_DEBUG: true
+      SKIP_API_ACCESS_CONTROL: "{{ SKIP_API_ACCESS_CONTROL | default('no') }}"
 
       # ---------------------------------------------------- transition specific
-      ENABLE_ADOPTION: "{{ people.enable_adoption }}"
-      LEGACY_RO_URL: "{{ people.legacy_ro_url }}"
-      LEGACY_RW_URL: "{{ people.legacy_rw_url }}"
-      # LEGACY_PAGES_CACHE: 2days
+      ENABLE_ADOPTION: false
+      # public address
+      LEGACY_BASE_URL: "https://people.epfl.ch/legacy"
 
-      NAME_CHANGE_REQUEST_EMAIL: "{{ people.name_change_request_email }}"
+      HIDE_ENS_ACCREDDS: "{{ HIDE_ENS_ACCREDDS | default('yes') }}"
+      NAME_CHANGE_REQUEST_EMAIL: "giovanni.cangiani+ncreq@epfl.ch"
 
       # ----------------------------- read in yml files (will go to config maps)
 
       # --> epflapi.yml
-      ATELA_KEY: "{{ _secrets.atela_key }}"
       CAMIPRO_PHOTO_KEY: "{{ _secrets.camipro_photo_key }}"
       CAMIPRO_PHOTO_HOST: "{{ people.camipro_host }}"
       ENABLE_API_CACHE: "{{ people.enable_api_cache }}"
       ENABLE_WEBMOCK: "{{ people.enable_webmock }}"
       EPFLAPI_BACKEND_URL: "{{ people.api_url }}"
       EPFLAPI_PASSWORD: "{{ _secrets.api.password }}"
-      ISA_URL: "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
+      ISA_URL:  "{{ ISA_URL | default('https://isa-test.epfl.ch/services') }}"
       OFFLINE_CACHEDIR: "/srv/filecache"
+      OASIS_BASEURL: "{{ people.oasis_url }}"
+      OASIS_TOKEN: "{{ _secrets.oasis.token }}"
 
-      # # --> ollama.yml
-      OLLAMA_URL: "{{ people.ollama_url }}"
+      # --> ollama.yml
+      OLLAMA_URL: "{{ OLLAMA_URL | default('http://' ~ hosts.docker ~ ':11434') }}"
+      # OLLAMA_URL: http://itsidevfsd0006.epfl.ch
 
       # OpenAI
       OPENAI_API_KEY: "{{ _secrets.inference.key }}"
-      OPENAI_BASE_URL: "{{ people.openai_url }}"
+      OPENAI_BASE_URL: "{{ OPENAI_URL | default('https://inference-dev.rcp.epfl.ch/v1') }}"
 
       # --> oidc.yml
-      ENTRA_TENANT_ID: "{{ _secrets.entra_oidc.tenant_id }}"
-      ENTRA_CLIENT_ID: "{{ _secrets.entra_oidc.client_id }}"
-      ENTRA_SECRET: "{{ _secrets.entra_oidc.secret }}"
-      USE_KEYCLOAK: no
+      USE_KEYCLOAK: "{{ USE_KEYCLOAK | default('no') }}"
+      ENTRA_TENANT_ID: "${DEV_ENTRA_TENANT_ID}"
+      ENTRA_CLIENT_ID: "${DEV_ENTRA_CLIENT_ID}"
+      ENTRA_SECRET: "${DEV_ENTRA_SECRET}"
+
+      # OPDo Storage Server
+      SPYWARE_URL: ${SPYWARE_URL}
+      SPYWARE_KEY: ${SPYWARE_KEY}
 
     volumes: "{{ all_volumes }}"
     restart_policy: always

@@ -58,8 +58,8 @@ while [ "$#" -gt 0 ]; do
             inventory_mode="next"
             shift
             ;;
-        --qual)
-            inventory_mode="qual"
+        --vm)
+            inventory_mode="vm"
             shift
             ;;
         --test)
