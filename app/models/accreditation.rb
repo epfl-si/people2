@@ -140,7 +140,7 @@ class Accreditation
       LegacyProfileImportJob.perform_later(sciper)
     end
     # By default we are actually interested exclusively on visible accreditations
-    all ? accreds : accreds.select(&:botweb?)
+    (all ? accreds : accreds.select(&:botweb?)).sort { |a, b| a.order <=> b.order }
   end
 
   # *conditions are valid arguments for APIAccredsGetter.call
@@ -163,7 +163,7 @@ class Accreditation
       v["persid"].to_s
     end
     acdata_by_sciper.transform_values do |alist|
-      alist.map do |data|
+      alist.sort { |a, b| a["order"] <=> b["order"] }.map do |data|
         a = new(data)
         [a.unit_id, a]
       end.to_h
