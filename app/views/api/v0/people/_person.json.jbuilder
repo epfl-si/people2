@@ -30,6 +30,8 @@ if profile.present?
   end
 end
 json.unites do
+  # TODO: WP only uses the first accred. Should we just return that one ?
+  # accred = person.accreds.sort{|a,b| a.order}.first
   person.accreds.each do |accred|
     json.set! accred.unit_id do
       json.partial! 'accred', accred: accred
