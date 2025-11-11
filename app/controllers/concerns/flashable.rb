@@ -34,8 +34,7 @@ module Flashable
 
     l = opts[:label] || default_label
     r = opts[:record] || controller_name.classify
-    tr = I18n.t(:"activerecord.models.#{r.underscore}", default: r.humanize)
-    opts[:record] || I18n.t("activerecord.models.#{controller_name.classify.underscore}")
+    tr = I18n.t(:"activerecord.models.#{r.underscore}", default: r.underscore.humanize)
     a = :"flash.#{controller_name}.#{action_name}.#{l}"
     b = :"flash.generic.#{action_name}.#{default_label}"
     c = :"flash.generic.#{default_label}"

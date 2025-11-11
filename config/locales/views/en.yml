@@ -153,10 +153,8 @@ en:
         status:
           student:
             title: Student
-            message_html: 'contact the Student Services Desk with a copy of your identity
+            message_html: contact the Student Services Desk with a copy of your identity
               documents to request this change
-
-              '
           phd:
             title: Graduate Student
             message_html: Please first contact the <a href="mailto:rh@epfl.ch">HR

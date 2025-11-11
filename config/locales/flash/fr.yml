@@ -46,6 +46,10 @@ fr:
       create:
         error: The request for usual name change could not be sent
         success: Request for usual name change sent successfully
+    usual_name_request:
+      create:
+        success: "Usual name change request sent succesfully"
+        error: "Something went wrong while saving and sanding your usual name change request"
     visibilities:
       update:
         record:
