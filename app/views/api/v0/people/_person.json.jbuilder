@@ -32,9 +32,9 @@ end
 json.unites do
   # TODO: WP only uses the first accred. Should we just return that one ?
   # accred = person.accreds.sort{|a,b| a.order}.first
-  person.accreds.each do |accred|
+  person.accreds.each_with_index do |accred, i|
     json.set! accred.unit_id do
-      json.partial! 'accred', accred: accred
+      json.partial! 'accred', accred: accred, ext_order: i + 1
     end
   end
 end

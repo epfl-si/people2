@@ -31,6 +31,6 @@ json.prenom person.firstname || ""
 json.nom    person.lastname || ""
 json.sciper person.sciper.to_i
 
-json.partial! 'accred', accred: person.accreds.first
+json.partial! 'accred', accred: person.accreds.first, ext_order: 1
 profile = person.profile
 json.partial! 'profile', profile: profile if profile.present?
