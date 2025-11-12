@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
     per = Person.find sciper
     raise ActionController::RoutingError, 'Not Found' if per.blank?
 
-    redirect_to person_path(sciper_or_name: per.email_user)
+    redirect_to person_path(sciper_or_name: per.slug)
   end
 
   def show

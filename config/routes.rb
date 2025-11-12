@@ -54,7 +54,8 @@ Rails.application.routes.draw do
     end
   end
   get 'profiles/:profile_id/sections/:section_id/boxes', to: 'boxes#index', as: 'profile_section_boxes'
-  get 'people/:sciper/profile/new', to: 'profiles#new', as: 'new_person_profile'
+  get 'people/:sciper_or_name/profile/new', to: 'profiles#new', as: 'new_person_profile',
+                                            constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/i }
 
   patch 'visibility/:model/:id', to: 'visibility#update', as: 'visibility'
 

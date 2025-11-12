@@ -165,7 +165,7 @@ class BulkPerson
   #       changing name, with modified usual names etc.
   # TODO: The hack for non-standard e-mail exposes sciper address but the page
   #       is only reacheable using the sciper...
-  def email_user
+  def slug
     if email =~ /^[a-z-]+\.[a-z-]+/i
       email.gsub(/@.*$/, '')
     else

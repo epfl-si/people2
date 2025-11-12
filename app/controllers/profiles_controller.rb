@@ -2,13 +2,14 @@
 
 class ProfilesController < ApplicationController
   before_action :require_recent_authentication
-  before_action :load_and_authorize_profile, except: [:new]
-  before_action :load_person, except: %i[set_favorite_picture]
+  before_action :load_and_authorize_profile_and_person, except: %i[new]
 
   # GET /people/:sciper/profile/new
   # Profiles will be saved to DB only if an authorised person click on the edit link
   def new
-    authorize!(@person, to: :update?)
+    @person ||= Person.find(params[:sciper_or_name])
+    authorize! @person, to: :update?
+
     @profile = @person.profile!
     @profile.save unless @profile.persisted?
     redirect_to edit_profile_path(@profile)
@@ -18,14 +19,15 @@ class ProfilesController < ApplicationController
     if params[:details]
       render 'edit_details'
     elsif params[:official_name]
-      authorize!(@profile, to: :confidential_edit?)
       render 'profiles/name_change/official'
     elsif params[:usual_name]
-      authorize!(@profile, to: :confidential_edit?)
+      authorize!(@person, to: :confidential_edit?)
+      load_confidential_person(@profile.sciper)
       render 'profiles/name_change/usual'
     elsif params[:languages]
       render 'edit_languages'
     else
+      load_confidential_person(@profile.sciper) if allowed_to?(:confidential_edit?, @person)
       force_profile_locale(@profile)
       # TODO: remove after migration from legacy
       @adoption = Adoption.where(sciper: @profile.sciper).first if Rails.configuration.enable_adoption
@@ -190,28 +192,29 @@ class ProfilesController < ApplicationController
 
   private
 
-  def load_and_authorize_profile
-    @profile ||= Profile.find(params[:id])
+  def load_and_authorize_profile_and_person
+    @profile = Profile.find(params[:id])
     authorize! @profile, to: :update?
+
+    if allowed_to?(:confidential_edit?, @profile)
+      load_confidential_person(@profile.sciper)
+    else
+      @person = Person.find_by_sciper(@profile.sciper, force: true)
+    end
   end
 
-  def load_person
-    unless allowed_to?(:confidential_edit?, @profile)
-      @person = @person = Person.find_by_sciper(@profile.sciper, force: true)
-      return
-    end
-
+  def load_confidential_person(sciper)
     jwt = Current.session.jwt
     return if jwt.blank?
 
     begin
-      @person = Person.find_by_sciper(@profile.sciper, force: true, auth: jwt)
+      @person = Person.find_by_sciper(sciper, force: true, auth: jwt)
     rescue ActiveRecord::RecordNotFound
       # JWT token probably expired. We need to force authentication.
       Rails.logger.debug "Person request to api failed. Trying to force authentication"
       require_recent_authentication
     end
-    @profile.person = @person
+    @profile.person = @person if @profile.present?
   end
 
   def profile_params

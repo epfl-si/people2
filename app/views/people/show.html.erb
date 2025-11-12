@@ -19,8 +19,8 @@
   <meta property="og:description" content="<%= @person.name.display %>'s EPFL profile">
   <meta property="og:profile:first_name" content="<% @person.name.display_first %>">
   <meta property="og:profile:last_name" content="<% @person.name.display_last %>">
-  <% if @person.email_user.present? %>
-  <meta property="og:url" content="<%= person_path(sciper_or_name: @person.email_user) %>">
+  <% if @person.slug.present? %>
+    <meta property="og:url" content="<%= person_path(sciper_or_name: @person.slug) %>">
   <% end %>
   <% if @profile_picture %>
   <meta property="og:image" content="<%= url_for(@profile_picture) %>">
@@ -41,7 +41,7 @@
   <!-- TODO: decide if we show the edit profile link always or only to logged in users -->
   <% if @profile.present? %>
   <li>
-    <%= link_to icon_text("edit", t("action.edit_profile")), @profile.persisted? ? edit_profile_path(@profile) : new_person_profile_path(sciper: @person.sciper) %>
+    <%= link_to icon_text("edit", t("action.edit_profile")), @profile.persisted? ? edit_profile_path(@profile) : new_person_profile_path(sciper_or_name: @person.slug) %>
   </li>
   <% end %>
 <% end %>
