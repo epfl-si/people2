@@ -31,4 +31,4 @@ json.status_fr   accred.t_status_label('fr') || ""
 json.rooms       accred.room_names&.first || ""
 json.phones      accred.phone_numbers
 
-json.ordre       accred.rank
+json.ordre       ext_order
