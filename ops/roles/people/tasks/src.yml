@@ -9,10 +9,10 @@
   tags:
     - people.src
 
-- name: Checkout dependencies source code
-  ansible.builtin.shell:
-    chdir: "{{ people.srcdir }}"
-    # cmd: "make gems elements"
+# - name: Checkout dependencies source code
+#   ansible.builtin.shell:
+#     chdir: "{{ people.srcdir }}"
+#     # cmd: "make gems elements"
 
 - name: People source code
   ansible.builtin.git:
