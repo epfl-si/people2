@@ -76,9 +76,9 @@ class Accreditation
   # The current implementation assumes the existence of an external ordering
   # from that will be overridden by the local sorting preferences. New accreds
   # will just be appended respecting the external ordering after those with prefs.
-  def self.for_profile(profile)
+  def self.for_profile(profile, force: false)
     sciper = profile.sciper
-    accreds = for_sciper(sciper)
+    accreds = for_sciper(sciper, force: force)
     prefs = profile.accreds
     unless prefs.empty?
       pbu = prefs.index_by(&:unit_id)

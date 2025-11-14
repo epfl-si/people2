@@ -319,12 +319,12 @@ class Person
 
   # TODO: check errors on api calls and decide how to recover
   # TODO: once accred for profile is loaded, we can update visibility on address
-  def accreditations
+  def accreditations(force: false)
     profile = profile!
     @accreditations ||= if profile.present?
-                          Accreditation.for_profile(profile)
+                          Accreditation.for_profile(profile, force: force)
                         else
-                          Accreditation.for_sciper(sciper)
+                          Accreditation.for_sciper(sciper, force: force)
                         end
   end
 
