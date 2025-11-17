@@ -55,6 +55,7 @@ class PeopleController < ApplicationController
         # and actually waiting for adoption. This will enable the option of
         # reverting to almost default profiles (keeping only the accred prefs
         # base profile)
+        @reload = true
         @adoption.previewed = true
         @adoption.save
         @special_partial = 'adopt'
@@ -106,7 +107,7 @@ class PeopleController < ApplicationController
 
   def set_base_data
     # I don't want to let anybody bypass the cache
-    @reload = authenticated? && request.get_header("HTTP_CACHE_CONTROL") == "no-cache"
+    @reload = authenticated? && request.get_header("HTTP_CACHE_CONTROL") == "no-cache" unless defined?(@reload)
     @person ||= Person.find(params[:sciper_or_name], force: @reload)
     raise ActiveRecord::RecordNotFound if @person.blank?
     # We could use policy but 404 it is more appropriate than a 401 in this case
