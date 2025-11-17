@@ -41,7 +41,9 @@ fr:
         nationality_success: Nationality updated successfully
         nationality_error: Error while updating your nationality
     socials:
-      automatic: Impossible de récupérer votre identifiant, veuillez vérifier que vous en avez un et réessayer plus tard
+      automatic:
+        default: Impossible de récupérer votre identifiant, veuillez vérifier que vous en avez un et réessayer plus tard
+        orcid: Votre Orcid n'a pa pu etre trouvé
     usual_name_changes:
       create:
         error: The request for usual name change could not be sent

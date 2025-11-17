@@ -39,14 +39,16 @@ en:
         nationality_success: Nationality updated successfully
         nationality_error: Error while updating your nationality
     socials:
-      automatic: Could not retrive your id, please check you have one and try again later
+      automatic:
+        default: Could not retrive your id, please check you have one and try again later
+        orcid: Orcid could not be saved
     usual_name_changes:
       create:
-        error: The request for usual name change could not be sent
-        success: Request for usual name change sent successfully
+        error: The request for display name change could not be sent.
+        success: Request for display name change sent successfully. Please refresh the page (ctrl-shift-R)
     usual_name_request:
       create:
-        success: "Usual name change request sent succesfully"
+        success: "Usual name change request sent succesfully."
         error: "Something went wrong while saving and sanding your usual name change request"
     visibilities:
       update:
