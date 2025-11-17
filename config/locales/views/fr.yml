@@ -193,7 +193,9 @@ fr:
       instructions_html: Choisir parmi vos prénoms ou noms officiels lequel s'affiche
         sur votre profil.
       messages:
-        quota_exceded_html: Vous avez demandé trop de changements de nom.
+        quota_exceded_html: Nous avons remarqué que vous avez demandé un changement
+          de nom à plusieurs reprises. Si cela est dû au fait que le changement
+          de nom n'a pas été appliqué, veuillez contacter le service desk.
         pending_html: Vous avez une demande de nom en attente. Veuillez patienter
           quelques jours pour qu'elle soit prise en compte. Si après plus d'une
           semaine elle est toujours pas effective, veuillez contacter le service desk

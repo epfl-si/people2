@@ -192,7 +192,9 @@ en:
       instructions_html: Please choose below from your official existing names or
         surnames those that are displayed on your profile.
       messages:
-        quota_exceded_html: You have requested too many name changes.
+        quota_exceded_html: We noticed that your have requested a display name change
+          sevaral time. If this is because the name change were not effective,
+          please contact the service desk.
         pending_html: You have a pending name request. Please allow few days
           for it to be propagated. Should it be uneffective after more than a
           week, please contact the service desk.
