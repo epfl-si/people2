@@ -41,14 +41,14 @@ en:
     socials:
       automatic:
         default: Could not retrive your id, please check you have one and try again later
-        orcid: Orcid could not be saved
+        orcid: "The system could not find your Orcid: please contact publishsupport@epfl.ch"
     usual_name_changes:
       create:
-        error: The request for display name change could not be sent.
-        success: Request for display name change sent successfully. Please refresh the page (ctrl-shift-R)
+        error: Something went wrong. Please try again later or contact the Service desk if the issue persists.
+        success: The display change of your first/last name has been processed. Please refresh the page (CTRL+SHIFT+R).
     usual_name_request:
       create:
-        success: "Usual name change request sent succesfully."
+        success: "Your request has been forwarded to the Equality Office; your profile will be updated once it has been processed."
         error: "Something went wrong while saving and sanding your usual name change request"
     visibilities:
       update:

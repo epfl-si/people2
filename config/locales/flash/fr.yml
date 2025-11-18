@@ -43,15 +43,15 @@ fr:
     socials:
       automatic:
         default: Impossible de récupérer votre identifiant, veuillez vérifier que vous en avez un et réessayer plus tard
-        orcid: Votre Orcid n'a pa pu etre trouvé
+        orcid: "Le système n’a pas trouvé votre Orcid: prière de contacter publishsupport@epfl.ch"
     usual_name_changes:
       create:
-        error: The request for usual name change could not be sent
-        success: Request for usual name change sent successfully
+        error: Une erreur s’est produite. Veuillez réessayer plus tard ou contacter le Service desk si le problème persiste.
+        success: Le changement d'affichage de votre nom/prénom a été traité, veuillez rafraîchir la page (CTRL+SHIFT+R).
     usual_name_request:
       create:
-        success: "Usual name change request sent succesfully"
-        error: "Something went wrong while saving and sanding your usual name change request"
+        success: "Demande transmise au Bureau de l’Égalité: votre profil sera mis automatiquement à jour dès que traitée."
+        error: "Une erreur s’est produite. Veuillez réessayer plus tard ou contacter le Service desk si le problème persiste."
     visibilities:
       update:
         record:
