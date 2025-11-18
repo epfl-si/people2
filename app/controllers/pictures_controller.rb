@@ -45,7 +45,7 @@ class PicturesController < ApplicationController
       else
         format.turbo_stream do
           turbo_flash(:error)
-          render :edit, status: :unprocessable_entity, locals: { profile: @profile, award: @picture }
+          render :edit, status: :unprocessable_entity, locals: { profile: @profile }
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
@@ -87,8 +87,8 @@ class PicturesController < ApplicationController
         format.json { render :show, status: :created, location: @picture }
       else
         format.turbo_stream do
-          turbo_flash(:error)
-          render :new, status: :unprocessable_entity, locals: { profile: @profile, picture: @picture }
+          turbo_flash(:error, message: @picture.errors.map(&:full_message).join(", "))
+          render :create, locals: { profile: @profile, picture: @picture }
         end
         format.json { render json: @picture.errors, status: :unprocessable_entity }
       end

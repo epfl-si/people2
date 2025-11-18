@@ -30,6 +30,7 @@ fr:
           attributes:
             base:
               undeletable: La photo CAMIPRO n'est pas supprimable
+              invalid_image_type: Type d'image non valide. Veuillez utiliser un format d'image courant tel que jpeg ou png.
         profile:
           attributes:
             expertise_en:

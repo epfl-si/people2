@@ -4,9 +4,14 @@
 require 'open-uri'
 
 class Picture < ApplicationRecord
+  VALID_MIMES = [
+    "image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp",
+    "image/jp2", "image/heic", "image/tiff"
+  ].freeze
   MAX_ATTEMPTS = 3
   include Versionable
   before_destroy :refuse_destroy_if_camipro
+  validate :permitted_mime_type
 
   belongs_to :profile
   has_one_attached :image do |attachable|
@@ -112,7 +117,13 @@ class Picture < ApplicationRecord
     # If the image could not be attached in  MAX_ATTEMPTS => source does not exist
     return unless failed_attempts < MAX_ATTEMPTS || image.attached?
 
-    errors.add :base, "activerecord.errors.picture.attributes.base.undeletable"
+    errors.add :base, "activerecord.errors.models.picture.attributes.base.undeletable"
     throw :abort
+  end
+
+  def permitted_mime_type
+    return if VALID_MIMES.include? image.blob.content_type
+
+    errors.add :base, "activerecord.errors.models.picture.attributes.base.invalid_image_type"
   end
 end

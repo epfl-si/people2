@@ -30,6 +30,7 @@ en:
           attributes:
             base:
               undeletable: CAMIPRO picture cannot be deleted
+              invalid_image_type: Invalid image type. Please use a common image format like jpeg or png
         profile:
           attributes:
             expertise_en:
