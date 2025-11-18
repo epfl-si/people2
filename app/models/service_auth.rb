@@ -21,4 +21,8 @@ class ServiceAuth < ApplicationRecord
   def self.check(service, request, params)
     where(service: service).any? { |c| c.check(request, params) }
   end
+
+  def type_description
+    "Base type. Should not be used directly"
+  end
 end

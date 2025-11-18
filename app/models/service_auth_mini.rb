@@ -32,4 +32,8 @@ class ServiceAuthMini < ServiceAuth
 
     true
   end
+
+  def type_description
+    "Basic check: only source ip address and eventually application name"
+  end
 end

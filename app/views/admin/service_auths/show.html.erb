@@ -1,20 +1,17 @@
-<h2>Message Of The Day</h2>
+<h2>Service Authorisation details</h2>
 
-<nav><%= link_to(icon_text("edit", "edit"), edit_admin_motd_path(@motd)) %> | <%= link_to(icon_text("list", "back to the list"), admin_motds_path) %></nav>
+<nav><%= link_to(icon_text("edit", "edit"), edit_admin_service_auth_path(@auth)) %> | <%= link_to(icon_text("list", "back to the list"), admin_service_auths_path) %></nav>
 
 <dl class="definition-list definition-list-grid definition-list-grid-large profile_field_inclusivity">
-  <dt>Status</dt>
-  <dd><%= @motd.visible? ? 'Visible' : 'Inactive' %></dd>
-
-  <dt>Scope</dt>
-  <dd><%= @motd.scope %></dd>
-
-  <dt>Level</dt>
-  <dd><%= @motd.level.capitalize %>: <span class="alert alert-<%= @motd.level %> ml-5"><%= @motd.title_en.truncate(30)%></span></dd>
-
-  <dt>Title in english</dt>
-  <dd><%= @motd.title_en %></dd>
-
-  <dt>Title in french</dt>
-  <dd><%= @motd.title_fr %></dd>
+  <dt>Type</dt><dd><%= @auth.type %> (<%= @auth.type_description %>)</dd>
+  <dt>Service</dt><dd><%= @auth.service %></dd>
+  <dt>Subnets</dt><dd><%= @auth.subnet %></dd>
+  <dt>Contact email</dt><dd><%= link_to(@auth.email, "mailto:#{@auth.email}") %></dd>
+  <% if @auth.user.present? %>
+  <dt></dt><dd><%= @auth.user %></dd>
+  <% end %>
+  <% if @auth.password.present? %>
+    <dt>password</dt><dd><%= @auth.password %></dd>
+  <% end %>
 </dl>
+<p><%= @auth.comment %></p>
