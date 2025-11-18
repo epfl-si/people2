@@ -14,7 +14,7 @@ class AwardsController < ApplicationController
 
   # GET /profile/profile_id/awards/new
   def new
-    @award = @profile.awards.new
+    @award = @profile.awards.new(category_id: Award.default_category&.id, origin_id: Award.default_origin&.id)
   end
 
   # GET /awards/1/edit

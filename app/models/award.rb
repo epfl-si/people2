@@ -12,6 +12,8 @@ class Award < ApplicationRecord
   translates :title
   positioned on: :profile
 
+  before_validation :ensure_properties
+
   # relaxing this one because it would kill too many awards from legacy
   # validates :issuer, presence: true
   validates :year,
@@ -20,4 +22,17 @@ class Award < ApplicationRecord
   validates :t_title, translatability: true
 
   delegate :sciper, to: :profile
+
+  private
+
+  def ensure_properties
+    if category_id.blank?
+      sp = Award.categories.where(default: true).first
+      self.category = sp if sp.present?
+    end
+    return if category_id.present?
+
+    sp = Award.origins.where(default: true).first
+    self.origin = sp if sp.present?
+  end
 end

@@ -4,6 +4,7 @@ class SelectableProperty < ApplicationRecord
   include Translatable
   translates :name
   validates :label, uniqueness: { scope: :property }
+  after_save :single_default
 
   # scope :award_category, -> { where(property: 'award_category') }
   # scope :award_origin, -> { where(property: 'award_origin') }
@@ -11,6 +12,16 @@ class SelectableProperty < ApplicationRecord
 
   def title
     "#{property.titleize} | #{label}"
+  end
+
+  def single_default
+    return unless default?
+
+    other = SelectableProperty.where(property: property, default: true).where.not(id: id)
+    other.each do |sp|
+      sp.default = false
+      sp.save
+    end
   end
 
   # TODO: get rid of this "preventive optimization" shit

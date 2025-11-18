@@ -6,8 +6,8 @@
 
   <div class="form-row-group">
     <%= single_number_field(form, :year, max: Date.today.year, required: true) %>
-    <%= property_select(form, :category, Award.categories, required: true) %>
-    <%= property_select(form, :origin, Award.origins, required: true) %>
+    <%= property_select(form, :category, Award.categories) %>
+    <%= property_select(form, :origin, Award.origins) %>
   </div>
   <%= form_actions(form, award) %>
 <% end %>

@@ -2,6 +2,9 @@
   <td><%= sp.property.titleize %></td>
   <td><%= sp.label %></td>
   <td>
+    <%= sp.default? ? 'default' : '' %>
+  </td>
+  <td>
     <%= sp.name_en %><br/>
     <%= sp.name_fr %>
   </td>

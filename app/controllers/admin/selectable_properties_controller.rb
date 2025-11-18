@@ -27,7 +27,7 @@ module Admin
 
     def sp_params
       params.require(:selectable_property).permit(
-        :name_fr, :name_en, :name_it, :name_de
+        :name_fr, :name_en, :name_it, :name_de, :default
       )
     end
   end

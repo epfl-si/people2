@@ -13,6 +13,9 @@ module WithSelectableProperties
         define_singleton_method(prop.to_s.pluralize) do
           SelectableProperty.where(property: "#{cname}_#{prop}")
         end
+        define_singleton_method("default_#{prop}") do
+          SelectableProperty.where(property: "#{cname}_#{prop}", default: true).first
+        end
         define_singleton_method("#{prop}_ids") do
           SelectableProperty.where(property: "#{cname}_#{prop}").map(&:id)
         end
