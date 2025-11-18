@@ -72,6 +72,6 @@ fr:
     no_attribute_for_locale: Prière d'ajouter un %{attribute} en %{language}
     no_title_for_locale: Prière d'ajouter un titre en %{language}
   nav:
-    app_with_version: EPFL People v. %{version}
+    app_with_version: People %{version}
     issues: problèmes
     version: v. %{version}

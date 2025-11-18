@@ -39,11 +39,17 @@ en:
         nationality_success: Nationality updated successfully
         nationality_error: Error while updating your nationality
     socials:
-      automatic: Could not retrive your id, please check you have one and try again later
+      automatic:
+        default: Could not retrive your id, please check you have one and try again later
+        orcid: "The system could not find your Orcid: please contact publishsupport@epfl.ch"
     usual_name_changes:
       create:
-        error: The request for usual name change could not be sent
-        success: Request for usual name change sent successfully
+        error: Something went wrong. Please try again later or contact the Service desk if the issue persists.
+        success: The display change of your first/last name has been processed. Please refresh the page (CTRL+SHIFT+R).
+    usual_name_request:
+      create:
+        success: "Your request has been forwarded to the Equality Office; your profile will be updated once it has been processed."
+        error: "Something went wrong while saving and sanding your usual name change request"
     visibilities:
       update:
         record:

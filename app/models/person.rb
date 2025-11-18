@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 # This class represents a person as described by api.epfl.ch
+# It is meant for working with one record at the time. Use BulkPerson for
+# a version more suited to work with many records at once.
 class Person
-  attr_reader :account, :automap, :camipro, :data, :name
+  attr_reader :account, :automap, :camipro, :data, :name, :gender, :genderofficial
 
   private_class_method :new
 
@@ -17,6 +19,10 @@ class Person
     @automap = OpenStruct.new(@data.delete('automap') || {})
     @camipro = OpenStruct.new(@data.delete('camipro') || {})
 
+    @genderusual = @data.delete('gender')
+    @genderofficial = @data.delete('genderofficial')
+    @gender = @genderusual
+
     # phones and addresses are hash with the unit_id as key
     @phones = @data.delete('phones')&.map { |d| Phone.new(d) }
     @addresses = @data.delete('addresses')&.map { |d| Address.new(d) }
@@ -24,15 +30,15 @@ class Person
 
     @name = Name.new({
                        id: sciper,
-                       usual_first: @data.delete('firstnameusual'),
-                       usual_last: @data.delete('lastnameusual'),
-                       official_first: @data.delete('firstname'),
-                       official_last: @data.delete('lastname'),
+                       usual_first: @data.delete('firstnameusual') || @data.delete('firstname'),
+                       usual_last: @data.delete('lastnameusual') || @data.delete('lastname'),
+                       official_first: @data.delete('firstnameofficial'),
+                       official_last: @data.delete('lastnameofficial'),
                      })
   end
 
-  def self.find_by_sciper(sciper, force: false)
-    data = APIPersonGetter.call!(persid: sciper, single: true, force: force)
+  def self.find_by_sciper(sciper, force: false, auth: nil)
+    data = APIPersonGetter.call!(sciper: sciper, single: true, force: force, auth: auth)
 
     # TODO: also find_by_sciper should update Work::Sciper
 
@@ -209,8 +215,8 @@ class Person
   #       changing name, with modified usual names etc.
   # TODO: The hack for non-standard e-mail exposes sciper address but the page
   #       is only reacheable using the sciper...
-  def email_user
-    if email =~ /^[a-z-]+\.[a-z-]+/i
+  def slug
+    if email.present? && email =~ /^[a-z-]+\.[a-z-]+/i
       email.gsub(/@.*$/, '')
     else
       sciper
@@ -313,12 +319,12 @@ class Person
 
   # TODO: check errors on api calls and decide how to recover
   # TODO: once accred for profile is loaded, we can update visibility on address
-  def accreditations
+  def accreditations(force: false)
     profile = profile!
     @accreditations ||= if profile.present?
-                          Accreditation.for_profile(profile)
+                          Accreditation.for_profile(profile, force: force)
                         else
-                          Accreditation.for_sciper(sciper)
+                          Accreditation.for_sciper(sciper, force: force)
                         end
   end
 
@@ -385,10 +391,6 @@ class Person
   def class_delegate?
     student.present? && student.delegate?
   end
-
-  # def gender
-  #   @data['gender'] || 'unknown'
-  # end
 
   # TODO: We could just check if there are any cours or phd
   def possibly_teacher?

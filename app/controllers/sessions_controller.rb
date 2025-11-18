@@ -39,13 +39,14 @@ class SessionsController < ApplicationController
 
   # instead of asking username/password we just redirect to the auth server
   def new
-    # If I came from this app, then we go back after login
-    rf = request.referer
-    if rf.present?
-      b = URI(rf)
-      r = URI(root_url)
-      session[:return_to_after_authenticating] = rf if b.host == r.host && b.path.start_with?(r.path)
-    end
+    # Useless: it's already set by Authentication
+    # # If I came from this app, then we go back after login
+    # rf = request.referer
+    # if rf.present?
+    #   b = URI(rf)
+    #   r = URI(root_url)
+    #   session[:return_to_after_authenticating] = rf if b.host == r.host && b.path.start_with?(r.path)
+    # end
 
     cfg = Rails.application.config_for(:oidc)
     query = {
@@ -87,10 +88,11 @@ class SessionsController < ApplicationController
       return
     end
 
-    token = JWT.decode(fetch_id_token(code), nil, false)[0]
+    jwt = fetch_id_token(code)
+    token = JWT.decode(jwt, nil, false)[0]
 
     user = User.from_oidc(token)
-    start_new_session_for user
+    start_new_session_for user, jwt
     redirect_to after_authentication_url
   end
 

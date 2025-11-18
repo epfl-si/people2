@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
     per = Person.find sciper
     raise ActionController::RoutingError, 'Not Found' if per.blank?
 
-    redirect_to person_path(sciper_or_name: per.email_user)
+    redirect_to person_path(sciper_or_name: per.slug)
   end
 
   def show
@@ -49,12 +49,13 @@ class PeopleController < ApplicationController
       @adoption = Adoption.not_yet(params[:sciper_or_name])
       if @adoption
         # Only someone that can edit the profile, is allowed to preview it
-        @person = Person.find(params[:sciper_or_name])
+        @person = Person.find(params[:sciper_or_name], force: true)
         authorize!(@person, to: :update?)
         # The first time a profile is previewed we consider it as fully migrated
         # and actually waiting for adoption. This will enable the option of
         # reverting to almost default profiles (keeping only the accred prefs
         # base profile)
+        @reload = true
         @adoption.previewed = true
         @adoption.save
         @special_partial = 'adopt'
@@ -105,7 +106,9 @@ class PeopleController < ApplicationController
   end
 
   def set_base_data
-    @person ||= Person.find(params[:sciper_or_name])
+    # I don't want to let anybody bypass the cache
+    @reload = authenticated? && request.get_header("HTTP_CACHE_CONTROL") == "no-cache" unless defined?(@reload)
+    @person ||= Person.find(params[:sciper_or_name], force: @reload)
     raise ActiveRecord::RecordNotFound if @person.blank?
     # We could use policy but 404 it is more appropriate than a 401 in this case
     # because the problem is not the visitor but the profile
@@ -115,7 +118,7 @@ class PeopleController < ApplicationController
     @sciper = @person&.sciper
     compute_audience(@sciper)
 
-    @accreds = @person.accreditations
+    @accreds = @person.accreditations(force: @reload)
     if @accreds.count > 1
       @accreds.select! { |a| a.visible_by?(Current.audience) }
       @accreds.sort!

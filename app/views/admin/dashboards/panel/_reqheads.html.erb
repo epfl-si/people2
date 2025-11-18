@@ -1,0 +1,8 @@
+<h3>Request Headers</h3>
+
+<pre style="font-size: 50%;">
+<% @hh.keys.sort.each do |k| %>
+<%= sprintf("%-30s   %s", k, @hh[k].to_s[..40]) %>
+<% end %>
+<%= sprintf("%-30s   %s", "request.remote_ip", @ip) %>
+</pre>

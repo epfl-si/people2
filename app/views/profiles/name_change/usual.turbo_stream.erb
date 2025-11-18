@@ -1,15 +1,18 @@
 <%= common_editor(title: t(".title")) do %>
-
-<% if @profile.name.customizable? %>
-  <%= turbo_frame_tag "usual_name_change", src: new_profile_usual_name_change_path(@profile), loading: :lazy do %>
-    <%= render 'shared/spinner' %>
+  <p><%= t '.intro' %></p>
+  <% if @profile.name.customizable? %>
+    <h6><%= t '.self_service' %></h6>
+    <%= turbo_frame_tag "usual_name_change", src: new_profile_usual_name_change_path(@profile), loading: :lazy do %>
+      <%= render 'shared/spinner' %>
+    <% end %>
+    <hr>
+    <h6><%= t '.custom' %></h6>
+    <%= turbo_frame_tag "usual_name_request", src: new_profile_usual_name_request_path(@profile), loading: :lazy do %>
+      <%= render 'shared/spinner' %>
+    <% end %>
+  <% else %>
+    <%= turbo_frame_tag "usual_name_request", src: new_profile_usual_name_request_path(@profile), loading: :lazy do %>
+      <%= render 'shared/spinner' %>
+    <% end %>
   <% end %>
-
-  <hr>
-<% end %>
-
-<%= turbo_frame_tag "usual_name_request", src: new_profile_usual_name_request_path(@profile), loading: :lazy do %>
-  <%= render 'shared/spinner' %>
-<% end %>
-
 <% end %>

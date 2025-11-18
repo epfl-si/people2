@@ -1,6 +1,10 @@
 <%= turbo_frame_tag :usual_name_change do %>
-  <p><%= t('.instructions_html') %></p>
-  <%= turbo_frame_tag :usual_name_change_form do %>
-    <%= render "usual_name_changes/form", unc: @unc %>
+  <% if @msg.present? %>
+    <p><%= t(".messages.#{@msg}_html") %></p>
+  <% else %>
+    <p><%= t('.instructions_html') %></p>
+    <%= turbo_frame_tag :usual_name_change_form do %>
+      <%= render "usual_name_changes/form", unc: @unc %>
+    <% end %>
   <% end %>
 <% end %>

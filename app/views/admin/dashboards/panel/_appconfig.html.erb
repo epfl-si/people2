@@ -1,0 +1,7 @@
+<h3>App Configuration</h3>
+
+<pre style="font-size: 50%;">
+<% @appconfig.keys.sort.each do |k| %>
+<%= sprintf("%-35s   %s", k, @appconfig[k]) %>
+<% end %>
+</pre>

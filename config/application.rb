@@ -71,14 +71,16 @@ module People
     config.app_hostname = ENV.fetch('APP_HOSTNAME', 'people.epfl.ch')
 
     config.enable_direct_uploads = ENV.fetch('ENABLE_DIRECT_UPLOADS', 'false').match?(config.re_true)
-    config.use_local_elements = ENV.fetch('USE_LOCAL_ELEMENTS', 'false').match?(config.re_true)
+
+    config.elements_version = ENV.fetch('ELEMENTS_VERSION', '8.3.0')
+
     config.hide_teacher_accreds = ENV.fetch('HIDE_ENS_ACCREDDS', 'true').match?(config.re_true)
     config.force_audience = if Rails.env.development?
                               (v = ENV.fetch('FORCE_AUDIENCE', "false")).match?(config.re_false) ? false : v.to_i
                             else
                               false
                             end
-    config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', 'name.change@groupes.epfl.ch')
+    config.name_change_request_email = ENV.fetch('NAME_CHANGE_REQUEST_EMAIL', nil)
 
     config.api_v0_wsgetpeople_cache = ENV.fetch("WSGETPEOPLE_CACHE", Rails.env.production? ? 6.hours : 0).to_i
 
@@ -87,6 +89,8 @@ module People
     config.legacy_base_url = ENV.fetch('LEGACY_BASE_URL', 'https://people.epfl.ch/legacy/').gsub(%r{/?$}, '/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 0)
     config.legacy_import_job_log_path = ENV.fetch('LEGACY_JOB_LOG', config.enable_adoption ? "legacy_import.log" : nil)
+
+    config.skip_api_access_control = false
 
     # Expire the redirect links to active storage files (profile pictures) so that
     # no address leading to a profile picture is premanent and user's choice

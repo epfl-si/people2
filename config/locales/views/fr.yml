@@ -166,7 +166,12 @@ fr:
               RH</a> en joignant une copie de vos papiers d'identité. La mise à jour
               est ensuite reportée dans les systèmes informatiques.
       usual:
-        title: Affichage ou modification des (pré)noms d'usage
+        custom: Demande personnalisée
+        intro: Le (pré)nom d’usage désigne le prénom et/ou le nom de famille
+          qu’une personne choisit d’utiliser dans sa vie quotidienne à la place
+          de ceux figurant sur ses documents d’identité officiels.
+        self_service: D'après le nom officiel
+        title: Modification des (pré)noms d'usage
   publications:
     edit:
       form_title: Edition de la publication
@@ -187,17 +192,29 @@ fr:
     new:
       instructions_html: Choisir parmi vos prénoms ou noms officiels lequel s'affiche
         sur votre profil.
+      messages:
+        quota_exceded_html: Nous avons remarqué que vous avez demandé un changement
+          de nom à plusieurs reprises. Si cela est dû au fait que le changement
+          de nom n'a pas été appliqué, veuillez contacter le service desk.
+        pending_html: Vous avez une demande de nom en attente. Veuillez patienter
+          quelques jours pour qu'elle soit prise en compte. Si après plus d'une
+          semaine elle est toujours pas effective, veuillez contacter le service desk
+    create:
+      nothing_todo: "Rien à faire : les noms sélectionnés sont identiques aux anciens"
+      invalid: "Your name cannot be changed. Use the form for unusual name requests"
   usual_name_requests:
     new:
-      instructions_one_option_html: Le (pré)nom d’usage désigne le prénom et/ou le
-        nom de famille qu’une personne choisit d’utiliser dans sa vie quotidienne
-        à la place de ceux figurant sur ses documents d’identité officiels.<br> La
-        demande de modification est validée et traitée par le Bureau de l'Égalité,
-        selon <a href="https://www.epfl.ch/campus/community/fr/utiliser-un-prenom-dusage-a-lepfl/">ces
-        critères</a>.
-      instructions_two_options_html: Le (pré)nom d’usage désigne le prénom et/ou le
-        nom de famille qu’une personne choisit d’utiliser dans sa vie quotidienne
-        à la place de ceux figurant sur ses documents d’identité officiels. La demande
-        de modification est validée et traitée par le Bureau de l'Égalité, selon <a
-        href="https://www.epfl.ch/campus/community/fr/utiliser-un-prenom-dusage-a-lepfl/">ces
-        critères</a>.
+
+      instructions_one_option_html : Pour demander un  (pré)nom habituel
+        personnalisé, veuillez remplir le formulaire ci-dessous.
+        La demande sera traitée et validée par le Bureau de l'égalité selon
+        <a href="https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/" target="blank">
+          ces critères
+        </a>.
+      instructions_two_options_html : Si le (pré)nom que vous souhaitez ne peut pas
+        être composé à partir de parties de votre nom officiel, vous pouvez
+        faire une demande de nom personnalisé en remplissant le formulaire suivant.
+        La demande sera traitée et validée par le Bureau de l'égalité selon
+        <a href="https://www.epfl.ch/campus/community/using-a-preferred-name-at-epfl/" target="blank">
+          ces critères
+        </a>.

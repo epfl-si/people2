@@ -30,6 +30,7 @@ en:
           attributes:
             base:
               undeletable: CAMIPRO picture cannot be deleted
+              invalid_image_type: Invalid image type. Please use a common image format like jpeg or png
         profile:
           attributes:
             expertise_en:
@@ -48,6 +49,11 @@ en:
           attributes:
             year:
               not_a_number: is not a number
+        usual_name_request:
+          attributes:
+            base:
+              at_least_one: Both first and lasname are not provided. Please provide at least one.
+              unchanged_names: No change with respect to the current display name
   error:
     function_change:
       one: An error prevented your request to be sent

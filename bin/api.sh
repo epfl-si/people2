@@ -13,8 +13,14 @@ AUTH="--basic --user people:${EPFLAPI_PASSWORD}"
 
 apiget() {
   url="$1"
-  curl -X GET $AUTH -H 'accept: application/json' "$url" 2>/dev/null
+  curl -X GET $AUTH -H 'Cache-Control: no-cache' -H 'accept: application/json' "$url" 2>/dev/null
 }
+
+# JWT="..."
+# apiget() {
+#   url="$1"
+#   curl -X GET -H 'accept: application/json' -H "Authorization: Bearer ${JWT}" "$url"
+# }
 
 apiput() {
   echo "apiput"

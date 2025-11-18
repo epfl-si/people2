@@ -12,7 +12,7 @@
   @courses_by_sciper.each do |sciper, courses|
     prof = @scipers[sciper]
 %>
-    <h4><%= link_to prof.name, person_url(sciper_or_name: prof.email_user) %></h4>
+    <h4><%= link_to prof.name, person_url(sciper_or_name: prof.slug) %></h4>
     <ul><%= render partial: "course", collection: courses.sort_by(&:t_title), locals: {detail: @detail} %></ul>
   <% end %>
 <% end %>

@@ -2,6 +2,7 @@
 
 class UsualNameRequest < ApplicationRecord
   belongs_to :profile
+  before_save :ensure_all_new_names
   after_create :deliver
 
   # Changed model name but I keep the table as is because we might need to
@@ -9,7 +10,9 @@ class UsualNameRequest < ApplicationRecord
   # used both for usual as well as official name change requests
   self.table_name = 'name_change_requests'
 
-  validates :new_first, :new_last, :reason, presence: true
+  validates :reason, presence: true
+  validate :presence_of_first_or_last_name
+  validate :something_changed
 
   def self.for(profile)
     name = profile.name
@@ -26,9 +29,26 @@ class UsualNameRequest < ApplicationRecord
 
   private
 
+  def ensure_all_new_names
+    self.new_first = old_first if new_first.blank?
+    self.new_last = old_last if new_last.blank?
+  end
+
   def deliver
     ProfileChangeMailer.with(usual_name_request: self)
                        .usual_name_request
                        .deliver_later
+  end
+
+  def presence_of_first_or_last_name
+    return if new_first.present? || new_last.present?
+
+    errors.add :base, :at_least_one # 'At least one of the names must be set'
+  end
+
+  def something_changed
+    return unless old_first == new_first && old_last == new_last
+
+    errors.add :base, :unchanged_names
   end
 end

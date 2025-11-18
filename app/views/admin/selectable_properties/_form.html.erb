@@ -17,6 +17,12 @@
   <%#= single_text_field(form, :name_it) %>
   <%#= single_text_field(form, :name_de) %>
 
+  <div class="custom-control custom-checkbox">
+    <%= form.checkbox :default, class: "custom-control-input", id: "cb_default" %>
+    <%= tag.label "Default when none selected", class: "custom-control-label", for: "cb_default" %>
+  </div>
+
+
   <div>
     <%= form.submit %>
   </div>

@@ -47,8 +47,7 @@ module Admin
     def motd_params
       params.require(:motd).permit(
         :title_fr, :title_en, :title_it, :title_de,
-        :help_en, :help_fr, :help_it, :help_de,
-        :public, :expiration, :category_id, :level
+        :public, :expiration, :level, :category_id
       )
     end
   end

@@ -29,7 +29,7 @@
       <% end %>
       <%= link_to(
         icon_text("monitor", t('action.preview')),
-        ado ? preview_path(sciper_or_name: @person.email_user, lang: I18n.locale) : person_path(sciper_or_name: @person.email_user, lang: I18n.locale),
+        ado ? preview_path(sciper_or_name: @person.slug, lang: I18n.locale) : person_path(sciper_or_name: @person.slug, lang: I18n.locale),
         target: '_blank',
         class: "btn btn-sm btn-secondary"
       ) %>
@@ -61,7 +61,7 @@
 
 <section>
   <%= turbo_frame_tag "profile_section" do %>
-    <%= render "editable_profile", profile: @profile %>
+    <%= render "editable_profile", profile: @profile, person: @person %>
   <% end %>
 </section>
 

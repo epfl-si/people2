@@ -1,13 +1,13 @@
 <%= form_with(model: [profile, award], local: false, class: "instaform") do |form| %>
   <%= render "shared/form_errors", item: award if award.errors.any? %>
   <%= translated_text_fields(form, :title, required: true) %>
-  <%= single_text_field(form, :issuer, required: true) %>
+  <%= single_text_field(form, :issuer) %>
   <%= single_text_field(form, :url) %>
 
   <div class="form-row-group">
-    <%= single_number_field(form, :year, min: Date.today.year-10, max: Date.today.year, required: true) %>
-    <%= property_select(form, :category, Award.categories, required: true) %>
-    <%= property_select(form, :origin, Award.origins, required: true) %>
+    <%= single_number_field(form, :year, max: Date.today.year, required: true) %>
+    <%= property_select(form, :category, Award.categories) %>
+    <%= property_select(form, :origin, Award.origins) %>
   </div>
   <%= form_actions(form, award) %>
 <% end %>

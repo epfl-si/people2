@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
   end
 
   def locale_from_http_header
-    al = request.env["HTTP_ACCEPT_LANGUAGE"]
+    al = request.get_header("HTTP_ACCEPT_LANGUAGE")
     return nil if al.blank?
 
     l = al.scan(/^[a-z]{2}/).first
@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
   end
 
   def intranet_client?
-    request.headers.env['HTTP_X_EPFL_INTERNAL']&.downcase == 'true'
+    request.get_header("HTTP_X_EPFL_INTERNAL")&.downcase == 'true'
   end
 
   # Overridden to selectively enable the debugger page in development,

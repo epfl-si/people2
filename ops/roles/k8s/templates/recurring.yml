@@ -2,11 +2,15 @@
 # https://guides.rubyonrails.org/active_job_basics.html#recurring-tasks
 # Cron jobs managed by ActiveJob+SolidQueue so we can monitor in admin/jobs
 production:
+  # Remove old sessions
+  sweep_sessions:
+    command: "Session.sweep"
+    schedule: every hour at minute 6
   # Refresh the local table storing sciper <-> email <-> display name
   refresh_names_cache:
     class: NamesCacheJob
     args: [{force: true, cleanup: true}]
-    schedule: "4 4 * * *"
+    schedule: every day at 4:04
   # Import new Phd students
   refresh_phds:
     class: PhdsImporterJob

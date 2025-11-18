@@ -10,17 +10,30 @@ class UsualNameChange < ApplicationRecord
   validate :last_is_compatible_with_official
 
   # Return nil if profile is not allowed to change usual name the automatic way
-  def self.for(profile)
-    name = profile.name
+  def self.for(profile, name, params = { new_first: nil, new_last: nil })
     return nil unless name.customizable?
 
     new(
-      old_first: name.usual_first || name.official_first,
-      old_last: name.usual_last || name.official_last,
       official_first: name.official_first,
       official_last: name.official_last,
+      old_first: name.display_first,
+      old_last: name.display_last,
+      new_first: params[:new_first],
+      new_last: params[:new_last],
       profile: profile
     )
+  end
+
+  def useless?
+    new_first == old_first && new_last == old_last
+  end
+
+  def done?
+    new_first == profile.name.display_first && new_last == profile.name.display_last
+  end
+
+  def retriable?
+    (Time.zone.now - created_at) > 2.days
   end
 
   private
@@ -45,7 +58,11 @@ class UsualNameChange < ApplicationRecord
   end
 
   def sync_with_source
-    ProfilePatchJob.perform_later("sciper" => profile.sciper, "firstnameusual" => new_first,
-                                  "lastnameusual" => new_last)
+    Rails.logger.debug("ProfilePatchJob with sciper: #{profile.sciper}  first: #{new_first}  last: #{new_last}")
+    ProfilePatchJob.perform_later(
+      sciper: profile.sciper,
+      firstname: new_first,
+      lastname: new_last
+    )
   end
 end

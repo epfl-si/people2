@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_18_160414) do
   create_table "accreds", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "profile_id"
     t.integer "unit_id"
@@ -330,6 +330,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
     t.index ["profile_id"], name: "index_pictures_on_profile_id"
   end
 
+  create_table "position_filters", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "label"
+    t.text "description"
+    t.text "rule", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "sciper"
     t.integer "birthday_visibility", default: 4
@@ -401,6 +409,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
     t.string "property", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "default", default: false, null: false
+  end
+
+  create_table "service_auths", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "service", null: false
+    t.text "subnet"
+    t.string "user"
+    t.string "password"
+    t.string "comment"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -409,6 +430,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "jwt"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
@@ -430,6 +452,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
     t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "structure_sections", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "structure_id", null: false
+    t.bigint "position_filter_id", null: false
+    t.integer "position", null: false
+    t.string "title_en"
+    t.string "title_fr"
+    t.string "title_it"
+    t.string "title_de"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["position_filter_id"], name: "index_structure_sections_on_position_filter_id"
+    t.index ["structure_id"], name: "index_structure_sections_on_structure_id"
   end
 
   create_table "structures", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -510,6 +546,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_27_124537) do
   add_foreign_key "pictures", "profiles"
   add_foreign_key "publications", "profiles"
   add_foreign_key "sessions", "users"
+  add_foreign_key "structure_sections", "position_filters"
+  add_foreign_key "structure_sections", "structures"
   add_foreign_key "teacherships", "courses"
   add_foreign_key "teacherships", "profiles"
   add_foreign_key "usual_name_changes", "profiles"

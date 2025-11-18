@@ -1,5 +1,7 @@
+<% if @picture.persisted? %>
 <%= turbo_stream.append "available-pictures" do %>
-<%= render "picture", picture: @picture %> 
+<%= render "picture", picture: @picture %>
+<% end %>
 <% end %>
 
 <%= turbo_stream.replace "new-picture-form" do %>

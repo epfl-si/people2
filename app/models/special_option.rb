@@ -54,7 +54,7 @@ class SpecialOption < ApplicationRecord
       return false
     end
 
-    self.ns = p.email_user
+    self.ns = p.slug
     self.sciper = p.sciper
     true
   end

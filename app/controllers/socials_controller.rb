@@ -36,7 +36,8 @@ class SocialsController < ApplicationController
       set_socials
       turbo_flash(:success)
     elsif @social.automatic?
-      turbo_flash(:error, message: "flash.socials.automatic")
+      turbo_flash(:error,
+                  tmessage: t("flash.socials.automatic.#{@social.tag}", default: "flash.socials.automatic.default"))
       render "shared/flash"
     else
       turbo_flash(:error)
@@ -49,7 +50,8 @@ class SocialsController < ApplicationController
     if @social.update(social_params)
       turbo_flash(:success)
     elsif @social.automatic?
-      turbo_flash(:error, message: "flash.socials.automatic")
+      turbo_flash(:error,
+                  tmessage: t("flash.socials.automatic.#{@social.tag}", default: "flash.socials.automatic.default"))
       render "shared/flash"
     else
       turbo_flash(:error)
@@ -86,7 +88,8 @@ class SocialsController < ApplicationController
         turbo_flash(:success)
         render :create
       else
-        turbo_flash(:error, message: "flash.socials.automatic")
+        turbo_flash(:error,
+                    tmessage: t("flash.socials.automatic.#{@social.tag}", default: "flash.socials.automatic.default"))
         render "shared/flash"
       end
     else

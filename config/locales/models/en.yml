@@ -116,12 +116,12 @@ en:
       inclusivity: Show job names in inclusive form (french version)
       nationality: Nationality
       name: Name & Surname
-      official_name: Name & Surname
+      official_name: Official name
       personal_web_url: Personal web page url
       personal_phone: Personal phone number
       public_email: e-mail address
-      unique_name: Name & Surname
-      usual_name: Display and update of usual name & surname
+      unique_name: Official name
+      usual_name: Usual display name
     social:
       tag:
         bluesky: Bluesky username

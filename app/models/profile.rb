@@ -15,6 +15,10 @@ class Profile < ApplicationRecord
   EXPERTISE_MAX_LEN = 200
   PHONE_VRE = /\A(\+|00)?[0-9\s\-.()]+\z/
 
+  # TODO: we consider our inclusivity as authoritative. We should check if it
+  #       is actually globally applied by comparing it with the one from api
+  attr_writer :person
+
   include AudienceLimitable
   include Translatable
   include Versionable

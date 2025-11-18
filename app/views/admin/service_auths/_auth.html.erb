@@ -1,0 +1,23 @@
+<tr>
+  <td><%= auth.service %></td>
+  <td><%= auth.type %></td>
+  <td><%= link_to(auth.email, "mailto:#{auth.email}") %></td>
+  <td class="small">
+    <% if auth.subnet.present? %>
+      <strong>subnet: </strong><%= auth.subnet %><br>
+    <% end %>
+    <% if auth.user.present? %>
+      <strong>user/app: </strong><%= auth.user %><br>
+    <% end %>
+    <% if auth.comment.present? %>
+      <%= auth.comment %>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to icon("info"), admin_service_auth_path(auth) %>
+    |
+    <%= link_to icon("edit"), edit_admin_service_auth_path(auth) %>
+    |
+    <%= link_to icon_text('trash-2', t('action.delete')), admin_service_auth_path(auth), class: "btn btn-secondary btn-sm", method: :delete, data: {turbo_stream: false, turbo_method:'delete'} %>
+  </td>
+</tr>

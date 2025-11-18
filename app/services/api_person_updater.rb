@@ -10,63 +10,46 @@ class APIPersonUpdater
     new.call(args)
   end
 
-  def call(data)
-    sciper = data['sciper'] || data[:sciper]
-    raise "Missing mandatory parameter sciper" if sciper.nil?
+  def call(indata)
+    data = indata.slice(:sciper, :firstname, :lastname, :gender)
+    sciper = data[:sciper] || data['sciper']
+    raise "Missing mandatory parameter sciper" unless data.key?(:sciper)
 
-    params = data.slice("firstnameusual", "lastnameusual", "inclusivity")
+    params = {}
+    params["genderUsual"] = data[:gender] if data.key?(:gender)
+    params["lastnameUsual"] = data[:lastname] if data.key?(:lastname)
+    params["firstnameUsual"] = data[:firstname] if data.key?(:firstname)
+
+    patch(sciper, params) unless params.empty?
+  end
+
+  private
+
+  def patch(sciper, params)
+    # Rails.logger.debug("%%%%%%%%% API PATCH for #{sciper} with params=#{params.inspect}")
+    # return true
+
+    baseurl = Rails.application.config_for(:epflapi).backend_url
+    uri = URI.join(baseurl, "persons/#{sciper}")
 
     cfg = Rails.application.config_for(:epflapi)
-    uri = URI("#{cfg.legacy_person_update_url}/#{sciper}")
-    # uri.query = URI.encode_www_form(params)
-    req = Net::HTTP::Put.new(uri)
-    req.basic_auth(cfg.username, cfg.password)
-    req.set_form_data(params)
-    res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+    uspa = Base64.encode64("#{cfg.username}:#{cfg.password}").chomp
+    auth = "Basic #{uspa}"
+
+    req = Net::HTTP::Patch.new(uri)
+    req["Authorization"] = auth
+    req.content_type = 'application/json'
+    req.body = params.to_json
+    opts = { use_ssl: true, read_timeout: 10 }
+    response = Net::HTTP.start(uri.hostname, uri.port, opts) do |http|
       http.request(req)
     end
-    if res.is_a?(Net::HTTPOK) || res.is_a?(Net::HTTPSuccess)
+
+    if response.is_a?(Net::HTTPSuccess) || response.is_a?(Net::HTTPOK)
       true
     else
-      res.error!
+      response.error!
       false
     end
   end
 end
-
-# curl -X 'PUT' \
-#   'https://api.epfl.ch/v1/persons/121769' \
-#   -H 'accept: application/json' \
-#   -H 'Content-Type: application/json' \
-#   -H "authorization: Basic $(echo -n "people:${EPFLAPI_PASSWORD}" | base64)" \
-#   -d '{
-#         "birthdate": "string",
-#         "firstname": "string",
-#         "firstnameusual": "M",
-#         "gender": "M",
-#         "genderusual": "string",
-#         "lastname": "string",
-#         "lastnameusual": "string",
-#         "sciper": 0
-#       }'
-
-# class APIPersonUpdater
-#   ALL_KEYS = %w[birthdate firstname firstnameusual gender genderusual lastname lastnameusual sciper].sort
-#   def call(data)
-#     sciper = data['sciper']
-#     raise "Missing mandatory parameter sciper" if sciper.blank?
-#     raise "Incomplete data" unless data.keys.sort == ALL_KEYS
-
-#     baseurl = Rails.application.config_for(:epflapi).backend_url
-#     uri = URI.join(baseurl, "persons/#{sciper}")
-#     cfg = Rails.application.config_for(:epflapi)
-#     req = Net::HTTP::Put.new(url)
-#     req.content_type = 'application/json'
-#     req.basic_auth cfg.username, cfg.password
-#     req.body = data
-#     Net::HTTP.start(uri.hostname, uri.port) do |http|
-#       http.request(req)
-#     end
-#     # TODO: check result
-#   end
-# end

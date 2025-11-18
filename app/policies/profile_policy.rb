@@ -12,6 +12,10 @@ class ProfilePolicy < ApplicationPolicy
     owner_or_su? || admin_for?(record)
   end
 
+  def confidential_edit?
+    owner?
+  end
+
   def manage_photos?
     # owner?
     owner_or_su?

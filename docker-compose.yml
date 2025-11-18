@@ -120,6 +120,7 @@ services:
       RAILS_ENV: development
       SUPERUSERS: "${SUPERUSERS}"
       LOGFILE: log/dev
+      NAME_CHANGE_REQUEST_EMAIL: 'giovanni.cangiani+peonc@epfl.ch'
 
       # -------------------------------------------------- with ok default value
       # APP_HOSTNAME: people.epfl.ch
@@ -133,7 +134,7 @@ services:
       REDIS_CACHE: redis://cache:6379/0
       # SEEDS_PATH: db/seeds/data
       # USE_LOCAL_ELEMENTS: false
-      USE_LOCAL_ELEMENTS: ${USE_LOCAL_ELEMENTS:-true}
+      ELEMENTS_VERSION: ${ELEMENTS_VERSION:-8.3.0}
 
       WSGETPEOPLE_CACHE: ${WSGETPEOPLE_CACHE:-0}
 
@@ -143,6 +144,7 @@ services:
       RAILS_DEVELOPMENT_HOSTS: ${RAILS_DEVELOPMENT_HOSTS:-people.${DOMAIN:-dev.jkldsa.com},api.${DOMAIN:-dev.jkldsa.com}}
       ERROR_PAGES: ${ERROR_PAGES:-mix}
       YABEDA_DEBUG: true
+      SKIP_API_ACCESS_CONTROL: ${SKIP_API_ACCESS_CONTROL:-false}
 
       # ---------------------------------------------------- transition specific
       ENABLE_ADOPTION: ${ENABLE_ADOPTION:-false}
@@ -232,17 +234,6 @@ services:
       - traefik
       - default
     stdin_open: true
-
-  jobs:
-    image: people2023-webapp
-    env_file: .env
-    command: ./bin/jobs
-    environment: *webappenv
-    ports: []
-    volumes:
-      - ./:/srv/app
-      - storage:/srv/app/storage
-      - ctmp:/srv/ctmp
 
   prometheus:
     profiles:

@@ -1,3 +1,4 @@
+# Current PRODUCTION deployment on openshift
 all:
   hosts:
     prod:
@@ -9,7 +10,7 @@ all:
     APP_HOSTNAME: "people.epfl.ch"
     APP_REPLICAS: 1
     JOB_REPLICAS: 0
-    APP_VERSION: 0.12.53
+    APP_VERSION: 0.13.24
     APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
@@ -22,3 +23,4 @@ all:
     LEGACY_RW_URL: "https://people.epfl.ch"
     LEGACY_PATCH_URL: "https://people.epfl.ch"
     WSGETPEOPLE_CACHE: 1800
+    NAME_CHANGE_REQUEST_EMAIL: 'name.change@groupes.epfl.ch'
