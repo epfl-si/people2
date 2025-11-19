@@ -23,7 +23,7 @@ class ServiceAuthMini < ServiceAuth
     @ipsubnets ||= ServiceAuthMini.subnet_string_to_list(subnet)
   end
 
-  def check(request, _params)
+  def check(request, params)
     if subnet.present?
       ip = IPAddr.new(request.remote_ip)
       return false unless ipsubnets.any? { |sn| sn.include? ip }
