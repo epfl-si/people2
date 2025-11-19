@@ -63,7 +63,7 @@ class Person
   def self.find_by_email(email, force: false)
     # This adds a request to the local DB but reduces cache memory usage
     e = "#{email}@epfl.ch"
-    s = Work::Sciper.where(email: e).first
+    s = Work::Sciper.find_by(email: e)
     if s.present?
       find_by_sciper(s.sciper, force: force)
     else

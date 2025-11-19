@@ -81,8 +81,9 @@ class LegacyProfileImportJob < ApplicationJob
     scipers.each do |sciper|
       do_perform(sciper)
     rescue StandardError => e
+      Rails.logger.debug("LegacyProfileImport exception: #{e.inspect}")
       p = Profile.for_sciper(sciper)
-      p.destroy
+      p.destroy if p.present?
       Rails.logger.error("Failed to import profile for sciper: #{sciper} => #{e.inspect}")
       any_failed = true
     end
