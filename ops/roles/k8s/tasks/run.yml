@@ -29,7 +29,7 @@
                 image: "{{ people.image }}"
                 command: ["./bin/thrust", "./bin/rails", "server"]
                 imagePullPolicy: Always
-                resources: "{{ helpers.resources }}"
+                resources: "{{ resources.app }}"
                 ports:
                   - containerPort: 8080
                   - containerPort: 9394
@@ -109,7 +109,7 @@
                 image: "{{ people.image }}"
                 command: ["./bin/jobs"]
                 imagePullPolicy: Always
-                resources: "{{ helpers.resources }}"
+                resources: "{{ resources.jobs }}"
                 envFrom:
                   - configMapRef:
                       name: "{{ kid.app_config }}"
@@ -170,7 +170,7 @@
               - name: legacy
                 image: "{{ legacy.image }}"
                 imagePullPolicy: Always
-                resources: "{{ helpers.resources }}"
+                resources: "{{ resources.legacy }}"
                 ports:
                   - containerPort: 8181
                 volumeMounts:

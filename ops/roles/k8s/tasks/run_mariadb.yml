@@ -9,7 +9,7 @@
         name: "{{ kid.db }}"
         namespace: "{{ namespace }}"
       spec:
-        resources: "{{ helpers.resources }}"
+        resources: "{{ resources.db }}"
         storage:
           size: "{{ mariadb.disk }}Gi"
           storageClassName: ocs-storagecluster-cephfs

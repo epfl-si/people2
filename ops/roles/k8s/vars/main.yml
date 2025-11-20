@@ -22,14 +22,37 @@ kid:
   redis:        "redis-{{ RUNENV }}"
   uploads:      "uploads-{{ RUNENV }}"
 
-helpers:
-  resources:
+resources:
+  default: &default_resources
     limits:
       # cpu:
       memory: "8192Mi"
     requests:
       cpu: "10m"
       memory: "1Mi"
+  app:
+    <<: *default_resources
+    limits:
+      # cpu:
+      memory: "6Gi"
+    requests:
+      memory: "{{ '2Gi' if RELEASE == 'prod' else '1Gi' }}"
+  db:
+    <<: *default_resources
+    requests:
+      memory: "512Mi"
+  jobs:
+    <<: *default_resources
+    requests:
+      memory: "512Mi"
+  legacy:
+    <<: *default_resources
+    requests:
+      memory: "40Mi"
+  redis:
+    <<: *default_resources
+    requests:
+      memory: "128Mi"
 
 # Quay Pull robot credentials
 _pull_robot_credential: "{{ _secrets.quay.pull_robot.name }}:{{ _secrets.quay.pull_robot.token }}"

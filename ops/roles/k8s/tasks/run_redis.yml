@@ -27,7 +27,7 @@
                 command: ["valkey-server", "--maxmemory", "{{ redis.memory }}mb", "--save", "{{ redis.save.time | string }}", "{{ redis.save.data | string }}"]
                 ports:
                   - containerPort: 6379 # ANSIBLE+K8S=PURE SHIT! "{{ redis.port | int }}"
-                resources: "{{ helpers.resources }}"
+                resources: "{{ resources.redis }}"
                 volumeMounts:
                   - name: "{{ kid.redis }}-data"
                     mountPath: /data

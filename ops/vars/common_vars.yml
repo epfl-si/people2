@@ -12,7 +12,7 @@ keycloak_version: "25.0.0"
 prometheus_version: "v3.3.0"
 grafana_version: "11.6.1"
 people_version: "{{ APP_VERSION | default(lookup('file', '../../../VERSION')) }}"
-legacy_version: "{{ APP_VERSION | default(lookup('file', '../../../VERSION')) }}"
+legacy_version: "0.1.7"
 
 nas:
   server: nas-app-ma-nfs2.epfl.ch
