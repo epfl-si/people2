@@ -8,9 +8,9 @@ all:
     inventory_environment: "prod"
 
     APP_HOSTNAME: "people.epfl.ch"
-    APP_REPLICAS: 1
+    APP_REPLICAS: 2
     JOB_REPLICAS: 0
-    APP_VERSION: 0.13.24
+    APP_VERSION: 0.13.27
     APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services

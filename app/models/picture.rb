@@ -11,7 +11,7 @@ class Picture < ApplicationRecord
   MAX_ATTEMPTS = 3
   include Versionable
   before_destroy :refuse_destroy_if_camipro
-  validate :permitted_mime_type
+  validate :permitted_mime_type, if: -> { image.present? }
 
   belongs_to :profile
   has_one_attached :image do |attachable|
@@ -87,6 +87,11 @@ class Picture < ApplicationRecord
     url = URI.parse(Picture.send("#{source}_url", sciper))
     begin
       image.attach(io: url.open, filename: "#{sciper}.jpg")
+      unless valid?
+        image.purge
+        self.failed_attempts = failed_attempts + 1
+        save
+      end
     rescue OpenURI::HTTPError
       self.failed_attempts = failed_attempts + 1
       save
@@ -122,6 +127,8 @@ class Picture < ApplicationRecord
   end
 
   def permitted_mime_type
+    return unless image.attached?
+
     return if VALID_MIMES.include? image.blob.content_type
 
     errors.add :base, "activerecord.errors.models.picture.attributes.base.invalid_image_type"
