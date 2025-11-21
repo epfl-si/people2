@@ -104,14 +104,28 @@ class ApplicationController < ActionController::Base
     Current.available_locales = tt
   end
 
+  # TODO: this part is terrible!
+  # Trying to find a way to have a locale as close as possible to user choice
+  # and a fallback locale that will be used by Translatable objects to provide
+  # content in another available locale when not available in the main locale
+  # This will result in mixed language profile pages but we consider this
+  # better than having many blank parts.
   def switch_locale(&action)
-    locale = params[:lang]&.gsub(/[^a-zA-Z]/, '')
-    locale = locale_from_http_header || request_default_locale || I18n.default_locale if locale.blank?
+    locale = (locale_from_param || locale_from_http_header || request_default_locale || I18n.default_locale).to_sym
+
+    # Current.available_locales is normally identical to I18n.available_locales
+    # except when user's profile are displayed. In which case, the choice is
+    # reduced to respect the user preference with "force_profile_locale"
     Current.available_locales = I18n.available_locales
-    Current.primary_lang = locale
-    Current.fallback_lang = request_default_locale || I18n.default_locale
+    Current.primary_lang = locale.to_s
     Current.gender = nil
     I18n.with_locale(locale, &action)
+  end
+
+  def locale_from_param
+    return nil if params[:lang].blank?
+
+    params[:lang]&.gsub(/[^a-zA-Z]/, '')&.to_sym
   end
 
   def locale_from_http_header

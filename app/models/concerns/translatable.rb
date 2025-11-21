@@ -55,18 +55,29 @@ module Translatable
     def self.validates_translatability(*attributes); end
   end
 
+  def possible_langs(primary_lang = nil, _fallback_lang = nil)
+    primary_lang ||= Current.primary_lang || I18n.locale
+    fallback_langs ||= Current.available_locales || I18n.available_locales
+    [primary_lang] + fallback_langs
+  end
+
   # return translation of a translated attribute in the required locale
   # if available otherwise return the translation in the default locale
   def translation_for(attribute, primary_lang = nil, fallback_lang = nil)
-    primary_lang ||= Current.primary_lang || I18n.locale
-    fallback_lang ||= Current.translations || %w[en fr it de]
-    langs = [primary_lang] + fallback_lang
+    langs = possible_langs(primary_lang, fallback_lang)
 
     if respond_to?("#{attribute}_en")
-      langs.map { |l| send("#{attribute}_#{l}") }.delete_if(&:blank?).first
+      langs.each do |l|
+        r = send("#{attribute}_#{l}")
+        return r if r.present?
+      end
     else
-      langs.map { |l| instance_variable_get("@#{attribute}_#{l}") }.delete_if(&:blank?).first
+      langs.each do |l|
+        r = instance_variable_get("@#{attribute}_#{l}")
+        return r if r.present?
+      end
     end
+    ""
   end
 
   # like the above but nil is returned if translation for locale is not avail.
@@ -82,12 +93,12 @@ module Translatable
   end
 
   def translated_body_for(attribute, primary_lang = nil, fallback_lang = nil)
-    primary_lang ||= Current.primary_lang || I18n.locale
-    fallback_lang ||= Current.fallback_lang || I18n.default_locale
-
-    t = send("#{attribute}_#{primary_lang}")
-    t = send("#{attribute}_#{fallback_lang}") if primary_lang != fallback_lang && (t.id.nil? || t.body.empty?)
-    t.id.nil? || t.body.nil? || t.body.empty? ? nil : t.body
+    langs = possible_langs(primary_lang, fallback_lang)
+    langs.each do |l|
+      r = send("#{attribute}_#{l}")&.body
+      return r if r.present?
+    end
+    ""
   end
 
   def inclusive_translation_for(attribute, gender = nil, primary_lang = nil, fallback_lang = nil)
@@ -96,10 +107,18 @@ module Translatable
       raise "inclusive_translation_for requires gender to be passed explicitly or set as Thread.current[:gender]"
     end
 
-    primary_lang ||= Current.primary_lang || I18n.locale
-    fallback_lang ||= Current.fallback_lang || I18n.default_locale
-    inclusive_translation_for!(attribute, gender,
-                               primary_lang) || inclusive_translation_for!(attribute, gender, fallback_lang)
+    langs = possible_langs(primary_lang, fallback_lang)
+    langs.each do |l|
+      r = inclusive_translation_for!(attribute, gender, l)
+      return r if r.present?
+    end
+    ""
+    # langs.map { |l| send("#{attribute}_#{l}")&.body }.delete_if(&:blank?).first
+
+    # primary_lang ||= Current.primary_lang || I18n.locale
+    # fallback_lang ||= Current.fallback_lang || I18n.default_locale
+    # inclusive_translation_for!(attribute, gender,
+    #                            primary_lang) || inclusive_translation_for!(attribute, gender, fallback_lang)
   end
 
   def inclusive_translation_for!(attribute, gender, locale)
