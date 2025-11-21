@@ -8,8 +8,10 @@
 #     level:integer resp_id:string kind:string address:string \
 #     ancestors:string direct_children:string  all_children:string
 class Unit
-  attr_reader :id, :parent_id, :hierarchy, :label, :level, :name, :type, :address, :url, :all_children_ids,
-              :direct_children_ids
+  attr_reader :id, :parent_id, :hierarchy, :level, :type, :address,
+              :url, :all_children_ids, :direct_children_ids,
+              :label, :label_en, :label_fr, :label_it, :label_de,
+              :name, :name_en, :name_fr, :name_it, :name_de
 
   include Translatable
   translates :name, :label
