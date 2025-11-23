@@ -204,6 +204,13 @@ group :development do
 
   gem 'rails-mermaid_erd'
 
+  # https://github.com/MiniProfiler/rack-mini-profiler
+  # add ?pp=profile-memory to the url to for a memory usage report
+  # add ?pp=flamegraph for the flamegraph of all the time spent on the various calls
+  gem 'memory_profiler'
+  gem 'rack-mini-profiler'
+  gem 'stackprof'
+
   # Code Linter / checker
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false
