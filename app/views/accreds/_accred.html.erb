@@ -10,7 +10,7 @@
         <%= link_to icon('edit-3'), new_accreditation_function_change_path(accred.accreditation_id), data: {turbo_stream: true} %>
       <% end %>
       <% if (sa = accred.short_address_and_phone).present? %>
-        <br/>
+        <br>
         <%= render "shared/item_visibility", item: accred, property: "address" %>
         <%= sa %>
         <%= link_to icon('edit-3'), "https://atela.epfl.ch/#/persons/#{@profile.sciper}", target: "blank" %>

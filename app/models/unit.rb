@@ -86,6 +86,7 @@ class Unit
   }.freeze
   def fix_for_reorg21(data)
     h21 = data['path'].split(" ")
+    @l2name = h21.count > 1 ? h21[1] : nil
     @level = h21.count
     @parent_id = data['parentid']
     if h21[1] =~ /^VP.-/
@@ -94,7 +95,20 @@ class Unit
       @level += 1
       @parent_id = VPLEVEL2[vp] if @level == 3
     end
+    @hierarchy_v = h21
     @hierarchy = h21.join(" ")
+  end
+
+  SCHOOLS = %w[ENAC IC SB STI SV].freeze
+  def school?
+    SCHOOLS.include?(@l2name)
+  end
+
+  def l2_unit
+    return nil if @l2name.blank?
+    return self if @l2name == name
+
+    Unit.find_by(name: @l2name)
   end
 
   def parent

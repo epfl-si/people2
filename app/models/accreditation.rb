@@ -223,15 +223,18 @@ class Accreditation
     Profile.for_sciper(@sciper)
   end
 
+  # If the person is a bachelor or master student (does not include PhDs)
   def student?
     # $is_student         = 1 if $accred->{statusid} =~ /^(4|5|6)$/;
     3 < @status_id && @status_id < 7
   end
 
+  # Is part of a doctoral schoold => is a graduate (PhD) student
   def doctoral?
     unit.hierarchy.split(" ")[2] == "EDOC"
   end
 
+  # This include anyone with a salary => also PhDs
   def staff?
     @status_id == 1
   end
