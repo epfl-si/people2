@@ -79,6 +79,30 @@
         requeueInterval: 30s
         retryInterval: 5s
 
+- name: "Errors database"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: Database
+      metadata:
+        name: "{{ kid.db_errors }}"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        name: "{{ _secrets.db.errors.dbname }}"
+        characterSet: utf8mb4
+        collate: utf8mb4_unicode_ci
+        mariaDbRef:
+          name: "{{ kid.db }}"
+        rootPasswordSecretKeyRef:
+          name: "{{ kid.db_secrets }}"
+          key: ROOT_PASSWORD
+          generate: false
+        cleanupPolicy: Skip
+        requeueInterval: 30s
+        retryInterval: 5s
+
 - name: "Grant access to Queue database to the app user"
   kubernetes.core.k8s:
     state: present
@@ -123,6 +147,36 @@
         username: "{{ _secrets.db.work.username }}"
         host: "%"
         database: "{{ _secrets.db.work.dbname }}"
+        table: "*"
+        privileges:
+           - "ALL PRIVILEGES"
+           # - "SELECT"
+           # - "INSERT"
+           # - "UPDATE"
+        mariaDbRef:
+          name: "{{ kid.db }}"
+        rootPasswordSecretKeyRef:
+          name: "{{ kid.db_secrets }}"
+          key: ROOT_PASSWORD
+          generate: false
+        cleanupPolicy: Skip
+        requeueInterval: 30s
+        retryInterval: 5s
+
+- name: "Grant access to Error database to the app user"
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: k8s.mariadb.com/v1alpha1
+      kind: Grant
+      metadata:
+        name: "{{ kid.db_errors }}"
+        namespace: "{{ namespace }}"
+      spec:
+        # If you want the user to be created with a different name than the resource name
+        username: "{{ _secrets.db.errors.username }}"
+        host: "%"
+        database: "{{ _secrets.db.errors.dbname }}"
         table: "*"
         privileges:
            - "ALL PRIVILEGES"

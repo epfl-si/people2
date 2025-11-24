@@ -132,6 +132,7 @@ Rails.application.routes.draw do
     resources :versions, only: %i[index show]
   end
   mount MissionControl::Jobs::Engine, at: "/admin/jobs"
+  mount SolidErrors::Engine, at: "/admin/errors"
 
   if Rails.configuration.enable_adoption
     resources :adoptions, only: %i[update]

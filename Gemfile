@@ -94,6 +94,7 @@ gem "json", ">= 2.10.2"
 gem "nokogiri", ">= 1.18.3"
 gem "rack", ">= 3.2.3"
 gem "rexml", ">= 3.4.2"
+# gem "stringio", ">= 3.1.7"
 gem "uri", ">= 0.12.4"
 
 # ------------------------------------------------------------------------ Added
@@ -169,6 +170,9 @@ gem 'rubyzip', '< 3.0'
 # ----
 gem 'connection_pool'
 gem 'database_cleaner-active_record'
+
+# https://github.com/fractaledmind/solid_errors
+gem 'solid_errors', path: 'vendor/gems/solid_errors'
 
 # https://dev.37signals.com/kamal-prometheus/
 # https://betterstack.com/community/guides/monitoring/ruby-rails-prometheus/

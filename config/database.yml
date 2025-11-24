@@ -28,6 +28,13 @@ development:
     password: mariadb
     database: people_work
     migrations_paths: db/work_migrate
+  errors:
+    adapter: mysql2
+    host: mariadb
+    username: people
+    password: mariadb
+    database: people_errors
+    migrations_paths: db/errors_migrate
 test:
   people:
     adapter: mysql2
@@ -79,5 +86,14 @@ production:
     host:     <%= ENV.fetch('DB_WORK_HOST', 'mariadb') %>
     port:     <%= ENV.fetch('DB_WORK_PORT', '3306') %>
     migrations_paths: db/work_migrate
-    schema_dump: false
+    # schema_dump: false
+  errors:
+    adapter: mysql2
+    database: <%= ENV.fetch('DB_ERRORS_NAME', 'people_prod_work') %>
+    username: <%= ENV.fetch('DB_ERRORS_USER', 'please_do_not_die') %>
+    password: <%= ENV.fetch('DB_ERRORS_PASSWORD', 'please_do_not_die') %>
+    host:     <%= ENV.fetch('DB_ERRORS_HOST', 'mariadb') %>
+    port:     <%= ENV.fetch('DB_ERRORS_PORT', '3306') %>
+    migrations_paths: db/errors_migrate
+    # schema_dump: false
 # ---------------------------------------------------------- External/Legacy DBs

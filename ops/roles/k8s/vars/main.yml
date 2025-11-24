@@ -12,6 +12,7 @@ kid:
   db_secrets:   "dbsecrets-{{ RUNENV }}"
   db_queue:     "dbqueue-{{ RUNENV }}"
   db_work:      "dbwork-{{ RUNENV }}"
+  db_errors:    "dberrors-{{ RUNENV }}"
   jobs:         "jobs-{{ RUNENV }}-{{ RELEASE }}"
   legacy:       "legacy-{{ RUNENV }}-{{ RELEASE }}"
   legacy_photo: "legacyphoto-{{ RUNENV }}-{{ RELEASE }}"
@@ -34,9 +35,9 @@ resources:
     <<: *default_resources
     limits:
       # cpu:
-      memory: "6Gi"
+      memory: "4Gi"
     requests:
-      memory: "{{ '2Gi' if RELEASE == 'prod' else '1Gi' }}"
+      memory: "{{ '4Gi' if RELEASE == 'prod' else '1Gi' }}"
   db:
     <<: *default_resources
     requests:

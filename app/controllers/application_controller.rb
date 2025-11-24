@@ -11,6 +11,14 @@ class ApplicationController < ActionController::Base
   include Authentication
   include Flashable
 
+  before_action :populate_error_context
+
+  def populate_error_context
+    Rails.error.set_context(intranet: intranet_client?)
+    Rails.error.set_context(remote_ip: request.remote_ip)
+    Rails.error.set_context(user_id: Current.user.sciper) if authenticated?
+  end
+
   def self.unique_counter_value
     @indx ||= 0
     @indx += 1
