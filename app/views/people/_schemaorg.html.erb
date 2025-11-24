@@ -1,0 +1,50 @@
+<%
+  fa = @accreds.first
+%>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+
+  "name": "<%= @person.name.display %>",
+  "givenName": "<% @person.name.display_first %>",
+  "familyName": "<% @person.name.display_last %>",
+  "jobTitle": "<%= fa.position.t_label(@person.gender) %>",
+
+<% if (pem = @person.public_email).present? %>
+  "email": "mailto:<%= @person.public_email %>",
+<% end %>
+
+<% if (pph = @person.public_phone).present? %>
+  "telephone": "<%= pph.number %>",
+<% end %>
+
+<% if @visible_socials.present? %>
+  "sameAs": <%= @visible_socials.map(&:url).to_json.html_safe %>,
+<% end %>
+
+<% if @person.student? %>
+  "MemberOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "EPFL",
+    "alternateName": "Ecole polytechnique fédérale de Lausanne",
+    "sameAs": "https://en.wikipedia.org/wiki/%C3%89cole_Polytechnique_F%C3%A9d%C3%A9rale_de_Lausanne"
+  }
+<%
+  else
+    bu = fa.unit.l2_unit
+    ot = bu.school? ? "Department" : "Organization"
+ %>
+  "MemberOf": {
+    "@type": "<%= ot %>"
+    "name": "<%= bu.t_label %>,
+    "parentOrganization": {
+      "@type": "CollegeOrUniversity",
+      "name": "EPFL",
+      "alternateName": "Ecole polytechnique fédérale de Lausanne",
+      "sameAs": "https://en.wikipedia.org/wiki/%C3%89cole_Polytechnique_F%C3%A9d%C3%A9rale_de_Lausanne"
+    }
+  }
+<% end %>
+
+</script>

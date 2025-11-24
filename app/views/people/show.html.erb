@@ -2,7 +2,7 @@
 
 <% if @special_partial.present? || @special_message.present? %>
   <% content_for :special_message do %>
-   <div id='special'>
+   <div id="special">
       <% if @special_partial %>
         <%= render @special_partial %>
       <% else %>
@@ -12,31 +12,12 @@
   <% end %>
 <% end %>
 <% content_for :head do %>
-    <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="profile">
-  <meta property="og:site_name" content="EPFL People">
-  <meta property="og:title" content="<%= @person.name.display %>">
-  <meta property="og:description" content="<%= @person.name.display %>'s EPFL profile">
-  <meta property="og:profile:first_name" content="<% @person.name.display_first %>">
-  <meta property="og:profile:last_name" content="<% @person.name.display_last %>">
-  <% if @person.slug.present? %>
-    <meta property="og:url" content="<%= person_path(sciper_or_name: @person.slug) %>">
+  <link rel="canonical" href="<%= request.base_url + "/" + @person.slug %>">
+  <!-- Open Graph / Facebook -->
+  <%= render "opengraph" %>
+  <!-- Schema.org / Google -->
+  <%= render "schemaorg" %>
   <% end %>
-  <% if @profile_picture %>
-  <meta property="og:image" content="<%= url_for(@profile_picture) %>">
-  <% end %>
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="<%= @person.name.display %>'s EPFL profile picture">
-  <meta property="fb:app_id" content="966242223397117">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<%= @person.name.display %>">
-  <meta name="twitter:description" content="<%= @person.name.display %>'s EPFL profile">
-  <% if @profile_picture %>
-  <meta name="twitter:image" content="<%= url_for(@profile_picture) %>">
-  <% end %>
-<% end %>
 <% content_for :menu do %>
   <!-- TODO: decide if we show the edit profile link always or only to logged in users -->
   <% if @profile.present? %>
@@ -64,7 +45,6 @@
   </div>
 </div><!-- people basic infos -->
 
-<% # TODO why teaching activity does not have its own specific box type? All this would be much simpler! %>
 <% if @main_zone_bbs.present? %>
   <%= render "shared/tabs", tabs: (
     (@main_zone_bbs.present? ? @main_zone_bbs.map { |(section, boxes)|

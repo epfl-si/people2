@@ -14,3 +14,10 @@ fr:
           de votre choix.</p><p>Lorsque vous choisissez d'avoir une version
           <em>multilingue</em>, assurez-vous que tous les éléments traduisibles
           sont présents dans <strong>au moins</strong> une des langues.</p>
+      inclusivity:
+        title: Forme inclusive
+        content_html: |
+          <p>Permet (en français) d’utiliser une forme qui ne révèle pas votre
+          genre.</p><p>Si aucune modification n’apparaît, cela signifie que la version
+          inclusive de votre fonction n’existe pas encore : veuillez en faire
+          la demande au <a href="mailto:1234@epfl.ch">1234@epfl.ch</a>.</p>

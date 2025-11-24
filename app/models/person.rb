@@ -268,6 +268,11 @@ class Person
     p.nil? ? default_phone.present? : p.phone_visible_by?(audience)
   end
 
+  def public_phone
+    df = default_phone
+    df.present? && phone_visible_by?(0) ? df : nil
+  end
+
   # --- address
 
   def addresses(unit_id = nil)

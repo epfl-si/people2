@@ -14,3 +14,11 @@ en:
           </p><p>When you chose to have it <em>multilanguage</em>, please make sure that
           all translatable elements are present in <strong>at least</strong> one
           of the languages.</p>
+      inclusivity:
+        title: Inclusive display
+        content_html: |
+          <p>Allows you (in French only) to use a form that does not reveal your
+          gender.</p>
+          <p>If no change appears, it means that the inclusive form of your
+          position does not yet exist; please ask it at
+          <a href="mailto:1234@epfl.ch">1234@epfl.ch</a></p>

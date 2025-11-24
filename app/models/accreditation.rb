@@ -11,8 +11,6 @@ class Accreditation
   include Translatable
   translates :unit_label, :status_label, :class_label
 
-  delegate(:unit_name, :unit_label_en, :unit_label_fr, :unit_label_it, :unit_label_de, to: :bunit)
-
   def initialize(data)
     @bunit = BulkUnit.new(data.delete('unit'))
     @unit_id = @bunit.id
@@ -96,14 +94,14 @@ class Accreditation
     next_order = (last_order || 0) + 1
     accreds.select { |a| a.prefs.nil? }.sort { |a, b| a.accred_order <=> b.accred_order }.each do |a|
       a.prefs = profile.accreds.new(
-        {
-          sciper: sciper,
-          unit_id: a.unit_id,
-          unit_en: a.unit_label_en,
-          unit_fr: a.unit_label_fr,
-          role: a.position,
-          position: next_order,
-        }.merge(Accred::DEFAULTS)
+        Accred::DEFAULTS.merge({
+                                 sciper: sciper,
+                                 unit_id: a.unit_id,
+                                 unit_en: a.unit_label_en,
+                                 unit_fr: a.unit_label_fr,
+                                 role: a.position,
+                                 position: next_order,
+                               })
       )
       next_order += 1
     end
@@ -184,6 +182,27 @@ class Accreditation
     @unit ||= Unit.find(@unit_id)
   end
 
+  # delegate(:unit_name, :unit_label_en, :unit_label_fr, :unit_label_it, :unit_label_de, to: :bunit)
+  def unit_name
+    @bunit.name
+  end
+
+  def unit_label_en
+    @bunit.label_en
+  end
+
+  def unit_label_fr
+    @bunit.label_fr
+  end
+
+  def unit_label_it
+    @bunit.label_it
+  end
+
+  def unit_label_de
+    @bunit.label_de
+  end
+
   def botweb?
     unless defined?(@botweb)
       aa = Authorisation.property_for_sciper(sciper, 'botweb')
@@ -204,15 +223,18 @@ class Accreditation
     Profile.for_sciper(@sciper)
   end
 
+  # If the person is a bachelor or master student (does not include PhDs)
   def student?
     # $is_student         = 1 if $accred->{statusid} =~ /^(4|5|6)$/;
     3 < @status_id && @status_id < 7
   end
 
+  # Is part of a doctoral schoold => is a graduate (PhD) student
   def doctoral?
     unit.hierarchy.split(" ")[2] == "EDOC"
   end
 
+  # This include anyone with a salary => also PhDs
   def staff?
     @status_id == 1
   end

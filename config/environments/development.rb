@@ -116,4 +116,13 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Configure Solid Errors
+  config.solid_errors.base_controller_class = "Admin::BaseController"
+  config.solid_errors.connects_to = { database: { writing: :errors } }
+  config.solid_errors.send_emails = true
+  config.solid_errors.email_from = "noreply@epfl.ch"
+  config.solid_errors.email_to = "fake@gmail.com"
+  # config.solid_errors.username = Rails.application.credentials.dig(:solid_errors, :username)
+  # config.solid_errors.password = Rails.application.credentials.dig(:solid_errors, :password)
 end

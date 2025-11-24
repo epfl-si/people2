@@ -72,6 +72,12 @@ people_secrets:
   DB_WORK_USER: "{{ _secrets.db.work.username  | b64encode}}"
   DB_WORK_PASSWORD: "{{ _secrets.db.work.password  | b64encode}}"
 
+  DB_ERRORS_HOST: "{{ kid.db | b64encode}}"
+  DB_ERRORS_PORT: "{{ _secrets.db.errors.port | b64encode }}"
+  DB_ERRORS_NAME: "{{ _secrets.db.errors.dbname  | b64encode}}"
+  DB_ERRORS_USER: "{{ _secrets.db.errors.username  | b64encode}}"
+  DB_ERRORS_PASSWORD: "{{ _secrets.db.errors.password  | b64encode}}"
+
   DB_LEGACY_HOST: "{{ _secrets.db.legacy.server  | b64encode}}"
   DB_LEGACY_PORT: "{{ _secrets.db.legacy.port | b64encode }}"
   DB_LEGACY_NAME: "{{ _secrets.db.legacy.dbname  | b64encode}}"

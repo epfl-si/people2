@@ -28,7 +28,7 @@ class Accred < ApplicationRecord
   delegate :doctoral?, :staff?, :student?, to: :accreditation
 
   def self.for_sciper(sciper)
-    where(sciper: sciper).order(:order)
+    where(sciper: sciper).order(:position)
   end
 
   def self.for_profile!(profile)

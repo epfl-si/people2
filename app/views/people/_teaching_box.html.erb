@@ -22,9 +22,9 @@
   <div class="list-group">
   <% box.courses.each do |c| %>
     <div class="list-group-item list-group-item-borderless">
-      <h4><%= c.t_title %></h4>
+      <h4><%= link_to_or_text(c.t_title, c.verified_edu_url!(I18n.locale)) %></h4>
       <p class="small">
-        <%= link_to_or_text(c.code, c.verified_edu_url!(I18n.locale)) %> <%#= c.course_instances.map{|ci| "#{ci.section}/#{ci.level}"}.join(", ") %>
+        <%= c.code %><%#= c.course_instances.map{|ci| "#{ci.section}/#{ci.level}"}.join(", ") %>
       </p>
       <% if (d=c.t_description).present? %>
         <p><%= d %></p>

@@ -139,8 +139,8 @@ class PeopleController < ApplicationController
     #       more content like awards, work experiences, infoscience pubs etc.
     #       that is not just a simple free text box with a title.
 
-    # take into account profile's enaled languages
-    Current.translations = @profile&.translations || I18n.available_locales
+    # take into account profile's enabled languages
+    Current.available_locales = @profile&.translations || I18n.available_locales
   end
 
   def set_show_data

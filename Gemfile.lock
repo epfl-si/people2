@@ -4,6 +4,16 @@ PATH
     openai (0.1.0.pre.alpha.5)
       connection_pool
 
+PATH
+  remote: vendor/gems/solid_errors
+  specs:
+    solid_errors (0.7.0)
+      actionpack (>= 7.0)
+      actionview (>= 7.0)
+      activerecord (>= 7.0)
+      activesupport (>= 7.0)
+      railties (>= 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -235,6 +245,7 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
+    memory_profiler (1.1.0)
     method_source (1.1.0)
     metrics (0.13.0)
     mini_magick (5.3.0)
@@ -356,6 +367,8 @@ GEM
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
+    rack-mini-profiler (4.0.1)
+      rack (>= 1.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -500,6 +513,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    stackprof (0.2.27)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.7)
@@ -601,6 +615,7 @@ DEPENDENCIES
   jbuilder
   json (>= 2.10.2)
   jwt
+  memory_profiler
   mission_control-jobs
   mocha
   mysql2
@@ -616,6 +631,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rack (>= 3.2.3)
   rack-cors
+  rack-mini-profiler
   rails (~> 8.0.2.1)
   rails-mermaid_erd
   redis (>= 4.0.1)
@@ -629,8 +645,10 @@ DEPENDENCIES
   rubyzip (< 3.0)
   selenium-webdriver
   simplecov
+  solid_errors!
   solid_queue
   sprockets-rails
+  stackprof
   stimulus-rails
   thruster
   turbo-rails
