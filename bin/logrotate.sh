@@ -1,7 +1,9 @@
 #!/bin/bash
+set -x
+set -e
 ldir=/rails/log
-bdir=/rails/storage/logs/
-now=date +%F.%s
+bdir=/rails/storage/logs_next/
+now=$(date +%F.%s)
 e=${1:-production}
 
 die() {
@@ -10,15 +12,14 @@ die() {
 }
 
 [ -d $bdir ] || die "logs backup dir $bdir not present"
-cd $ldir || die "could not change to log dir $ldir"
 
-# all log files
-al=$(ls -1rt $e_*.log)
-# last (current) log file
-cl=$(ls -1rt $e_*.log | tail -n 1)
+# compress and backup all the log files
+cat $(ls -1rt $ldir/$e_*.log) | gzip > ${bdir}/${e}_${now}.log.gz
 
-# compress and backup all old files and the current one
-cat $al | gzip > ${bdir}/${e}_${now}.log.gz
+# The old files are removed
+find $ldir -name "${e}_*.log" -cmin -180 -exec rm {} +
 
-# truncate the current log file
-: > $cl
+# truncate current (actually recent) ones
+for f in $(ls -1rt $ldir/$e_*.log); do
+  : > $f
+done
