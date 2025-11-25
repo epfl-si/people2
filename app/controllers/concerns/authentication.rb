@@ -53,10 +53,11 @@ module Authentication
 
   def request_authentication
     session[:return_to_after_authenticating] = request.url
-    redirect_to new_session_path
+    # main_app prefix required otherwise the path is not available in mounted apps like SolidErrors
+    redirect_to main_app.new_session_path
   end
 
-  # TODO: restore redirect back functionality for the momen we remove it to avoid loops
+  # TODO: restore redirect back functionality for the moment we remove it to avoid loops
   def after_authentication_url
     session.delete(:return_to_after_authenticating) || root_url
   end
