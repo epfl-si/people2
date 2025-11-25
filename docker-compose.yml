@@ -138,6 +138,10 @@ services:
 
       WSGETPEOPLE_CACHE: ${WSGETPEOPLE_CACHE:-0}
 
+      # multilanguage behaviour
+      ENABLE_FALLBACK_LANG: ${ENABLE_FALLBACK_LANG:-false}
+      ENABLE_COOL_MULTILANG: ${ENABLE_COOL_MULTILANG:-false}
+
       # ----------------------------------------------------------- dev specific
       # DEV_SEEDS_PATH: db/seeds_dev/data
       FORCE_AUDIENCE: ${FORCE_AUDIENCE:-false}

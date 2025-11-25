@@ -39,6 +39,8 @@ module People
     config.encoding = 'utf-8'
     config.i18n.default_locale = :fr
     config.i18n.available_locales = %i[en fr]
+    config.enable_fallback_lang = ENV.fetch('ENABLE_FALLBACK_LANG', 'false').match?(config.re_true)
+    config.enable_cool_multilang = ENV.fetch('ENABLE_COOL_MULTILANG', 'false').match?(config.re_true)
 
     # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.active_storage.draw_routes = true
