@@ -3,7 +3,7 @@
   <%= form.hidden_field :filter, value: "people" %>
   <div class="search-form mt-1 input-group">
     <label for="search" class="sr-only"><% t "action.search_people" %></label>
-    <input type="text" class="form-control" name="q" placeholder="<%= t "action.search" %>">
+    <input type="text" class="form-control" name="q" autofocus placeholder="<%= t "action.search" %>">
     <button type="submit" class="d-none d-xl-block btn btn-primary input-group-append"><%= t "generic.form.submit" %></button>
   </div>
 <% end %>
