@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :check_locale
   around_action :switch_locale
 
   # Enable url method on active storage blobs for now we desist. We will make
@@ -112,6 +113,13 @@ class ApplicationController < ActionController::Base
     Current.available_locales = tt
   end
 
+  def check_locale
+    locale = guess_locale
+    return if I18n.available_locales.include?(locale)
+
+    redirect_to(url_for(lang: I18n.available_locales.first))
+  end
+
   # TODO: this part is terrible!
   # Trying to find a way to have a locale as close as possible to user choice
   # and a fallback locale that will be used by Translatable objects to provide
@@ -119,7 +127,7 @@ class ApplicationController < ActionController::Base
   # This will result in mixed language profile pages but we consider this
   # better than having many blank parts.
   def switch_locale(&action)
-    locale = (locale_from_param || locale_from_http_header || request_default_locale || I18n.default_locale).to_sym
+    locale = guess_locale
 
     # Current.available_locales is normally identical to I18n.available_locales
     # except when user's profile are displayed. In which case, the choice is
@@ -128,6 +136,12 @@ class ApplicationController < ActionController::Base
     Current.primary_lang = locale.to_s
     Current.gender = nil
     I18n.with_locale(locale, &action)
+  end
+
+  def guess_locale
+    @guess_locale ||= (
+      locale_from_param || locale_from_http_header || request_default_locale || I18n.default_locale
+    ).to_sym
   end
 
   def locale_from_param
