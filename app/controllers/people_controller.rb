@@ -38,9 +38,14 @@ class PeopleController < ApplicationController
     end
   end
 
-  # GET /people/SCIPER/admin_data
+  # GET /people/:sciper_or_name/admin_data
   def admin_data
-    @person = Person.find(params[:sciper])
+    @person = Person.find(params[:sciper_or_name])
+    raise ActiveRecord::RecordNotFound if @person.blank?
+
+    compute_audience(@person&.sciper)
+    authorize! @person, to: :show_admin_data?
+    redirect_to person_path(sciper_or_name: params[:sciper_or_name]), flash: { adata: 'open' }
   end
 
   # TODO: remove after migration from legacy

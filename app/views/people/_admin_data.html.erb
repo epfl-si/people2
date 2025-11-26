@@ -1,9 +1,7 @@
-<section class="mt-5">
-<% if @admin_data.present? %>
-  <header class="collapse-title collapse-title-desktop collapsed" data-toggle="collapse" data-target="#admin-data" aria-expanded="false" aria-controls="admin-data">
-	  <p><%= t ".title" %></p>
-  </header>
-  <div class="collapse collapse-item collapse-item-desktop" id="admin-data">
+<section>
+<% if authenticated? && @admin_data.present? %>
+  <details id="admin_data" <%= flash[:adata]=='open' ? 'open=""' : '' %> >
+    <summary><%= t ".title" %></summary>
 		<dl class="definition-list definition-list-grid data-list">
 			<dt><%= t ".sciper" %></dt>
 			<dd><%= @admin_data.sciper %></dd>
@@ -17,12 +15,8 @@
 			<dd><%= @admin_data.home %></dd>
 		</dl>
 		<%= link_to t("people.admin_data.distros", name: @person.name.display), "https://cadiwww.epfl.ch/listes?sciper=#{@admin_data.sciper}", target: 'blank' %>
-  </div>
+  </details>
 <% else %>
-  <% unless authenticated? %>
-    <%= button_to icon_text('use', t('.title')), new_session_path,
-      method: :get, data: { turbo: false }, class: "btn btn-link"
-    %>
-  <% end %>
+  <%= link_to icon_text('user', t('.title')), admin_data_path(sciper_or_name: @person.slug) %>
 <% end %>
 </section>
