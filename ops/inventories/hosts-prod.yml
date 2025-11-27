@@ -10,7 +10,7 @@ all:
     APP_HOSTNAME: "people.epfl.ch"
     APP_REPLICAS: 2
     JOB_REPLICAS: 0
-    APP_VERSION: 0.13.37
+    APP_VERSION: 0.13.44
     APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
@@ -24,3 +24,4 @@ all:
     LEGACY_PATCH_URL: "https://people.epfl.ch"
     WSGETPEOPLE_CACHE: 1800
     NAME_CHANGE_REQUEST_EMAIL: 'name.change@groupes.epfl.ch'
+    TRUSTED_PROXIES: 128.178.211.4,128.178.211.5,128.178.211.14,10.20.52.6

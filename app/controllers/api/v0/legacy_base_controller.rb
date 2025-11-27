@@ -29,6 +29,8 @@ module API
         service = "v0_#{controller_name}_#{action_name}"
         return if ServiceAuth.check(service, request, params)
 
+        # Log failed access to api for a future fail2ban and easier admin
+        Rails.logger.info "API access denied from #{request.remote_ip} (#{request.headers['HTTP_X_FORWARDED_FOR']})"
         raise ActionController::BadRequest, "Access denied"
       end
 

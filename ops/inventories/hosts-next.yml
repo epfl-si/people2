@@ -14,6 +14,7 @@ all:
     APP_REPLICAS: 1
     JOB_REPLICAS: 1
     APP_VISIBILITY: "private"
+    # APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
     # ISA_URL: https://isa.epfl.ch/services
     OC_CLUSTER: "https://api.ocpitsp0001.xaas.epfl.ch:6443"
@@ -25,5 +26,6 @@ all:
     LEGACY_RW_URL: "https://test-people.epfl.ch"
     EPFLAPI_BACKEND_URL: "https://api.epfl.ch/v1"
     WSGETPEOPLE_CACHE: 0
-    NAME_CHANGE_REQUEST_EMAIL: "giovanni.cangiani+peonc@epfl.ch"
+    NAME_CHANGE_REQUEST_EMAIL: 'name.change@groupes.epfl.ch'
     # EPFLAPI_BACKEND_URL: "https://api-test.epfl.ch/v1"
+    TRUSTED_PROXIES: 10.98.42.220,10.98.42.211,10.98.42.218,10.20.52.7
