@@ -4,6 +4,7 @@ namespace: "{{ OC_NAMESPACE }}"
 
 # Kubernetes name (see README.md for naming convention)
 kid:
+  alert_rules:  "people-alerts"
   alert_conf:   "alertmanager-conf"
   alert_bot:    "alert-bot"
   app:          "app-{{ RUNENV }}-{{ RELEASE }}"
