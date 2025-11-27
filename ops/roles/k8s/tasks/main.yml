@@ -98,10 +98,10 @@
     - run
     - run.app
 
-# - import_tasks: monitoring.yml
-#   tags:
-#     - config
-#     - config.monitoring
+- import_tasks: monitoring.yml
+  tags:
+    - config
+    - config.monitoring
 
 - import_tasks: network.yml
   tags:

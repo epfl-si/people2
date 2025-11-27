@@ -14,3 +14,48 @@
         selector:
           matchLabels:
             app: people-webapp
+
+- name: AlertmanagerConfig
+  when: ENABLE_ALERTMANAGER is defined and ENABLE_ALERTMANAGER == 'yes'
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: monitoring.coreos.com/v1beta1
+      kind: AlertmanagerConfig
+      metadata:
+        name: "{{ kid.alert_conf }}"
+        namespace: "{{ namespace }}"
+      spec:
+        route:
+          receiver: "telegram"
+          groupBy: ["alertname"]
+          groupWait: 20s
+          groupInterval: 5m
+          repeatInterval: 3h
+          matchers:
+            - name: sendto
+              value: telegram
+              matchType: "="
+        receivers:
+          - name: "telegram"
+            telegramConfigs:
+              - botToken:
+                  name: "{{ kid.alert_bot }}"
+                  key: access_token
+                chatID: "{{ _secrets.telegram_alert.chat_id | int }}"
+                message: |
+                  {% raw %}
+                  {{ range .Alerts }}
+                  {{ if eq .Status "firing" }}
+                  🚨 FIRING [{{ .Annotations.summary }}]
+                  {{ .Annotations.description }}
+                  Started at (UTC): {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+                  {{ else if eq .Status "resolved" }}
+                  🟢 RESOLVED [{{ .Annotations.summary }}]
+                  {{ .Annotations.description }}
+                  Started at (UTC): {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+                  Ended at (UTC): {{ .EndsAt.Format "2006-01-02 15:04:05" }}
+                  {{ end }}
+                  {{ end }}
+                  {% endraw %}
+                sendResolved: true
+
