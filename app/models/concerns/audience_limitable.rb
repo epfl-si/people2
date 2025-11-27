@@ -41,6 +41,8 @@ module AudienceLimitable
     ].map { |h| OpenStruct.new(h) }
   }.freeze
 
+  AUDIENCE_SELECT = ALL_VISIBILITY_OPTIONS[:audience].map { |o| [o.label, o.value] }
+
   extend ActiveSupport::Concern
 
   included do

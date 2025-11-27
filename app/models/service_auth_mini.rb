@@ -30,6 +30,7 @@ class ServiceAuthMini < ServiceAuth
     end
     return false if user.present? && params['app'] != user
 
+    Current.audience = audience
     true
   end
 

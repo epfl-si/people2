@@ -50,7 +50,7 @@ module Admin
     end
 
     def auth_params(*extra)
-      all_params = (%i[service subnet user password comment email] + extra).uniq
+      all_params = (%i[service subnet user password comment email audience] + extra).uniq
       params.require(:service_auth).permit(all_params)
     end
   end

@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, auth], class: "instaform") do |form| %>
+<%= form_with(model: [:admin, auth.becomes(ServiceAuth)], class: "instaform") do |form| %>
 
   <% if auth.errors.any? %>
     <div style="color: red">
@@ -24,6 +24,11 @@
   <%= form_group do %>
     <%= form.label(:service, "Service") %>
     <%= form.select(:service, @service_select, required: true, class: "custom-select" ) %>
+  <% end %>
+
+  <%= form_group do %>
+    <%= form.label(:audience, "Access Level") %>
+    <%= form.select(:audience, AudienceLimitable::AUDIENCE_SELECT, required: false, class: "custom-select" ) %>
   <% end %>
 
   <%= single_text_field(form, :subnet) %>

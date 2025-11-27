@@ -11,7 +11,7 @@ Rails.application.configure do
   # Allow web console also from outside localhost (for using it with docker)
   config.web_console.permissions = '0.0.0.0/0'
 
-  config.skip_api_access_control = ENV.fetch('SKIP_API_ACCESS_CONTROL', false)
+  config.skip_api_access_control = ENV.fetch('SKIP_API_ACCESS_CONTROL', "false").match?(config.re_true)
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
