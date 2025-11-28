@@ -4,7 +4,9 @@ module API
   class IpController < ApplicationController
     allow_unauthenticated_access
     def index
-      render inline: request.remote_ip, content_type: 'text/plain'
+      res = "remote_ip: #{request.remote_ip}\n"
+      res << "HTTP_X_FORWARDED_FOR: #{request.headers['HTTP_X_FORWARDED_FOR']}\n"
+      render inline: res, content_type: 'text/plain'
     end
   end
 end

@@ -39,6 +39,8 @@ module People
     config.encoding = 'utf-8'
     config.i18n.default_locale = :fr
     config.i18n.available_locales = %i[en fr]
+    config.enable_fallback_lang = ENV.fetch('ENABLE_FALLBACK_LANG', 'false').match?(config.re_true)
+    config.enable_cool_multilang = ENV.fetch('ENABLE_COOL_MULTILANG', 'false').match?(config.re_true)
 
     # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.active_storage.draw_routes = true
@@ -89,6 +91,13 @@ module People
     config.legacy_base_url = ENV.fetch('LEGACY_BASE_URL', 'https://people.epfl.ch/legacy/').gsub(%r{/?$}, '/')
     config.legacy_pages_cache = ENV.fetch('LEGACY_PAGES_CACHE', 0)
     config.legacy_import_job_log_path = ENV.fetch('LEGACY_JOB_LOG', config.enable_adoption ? "legacy_import.log" : nil)
+
+    if (tp = ENV.fetch('TRUSTED_PROXIES', '')).present?
+      config.action_dispatch.trusted_proxies ||= []
+      tp.split(",").each do |a|
+        config.action_dispatch.trusted_proxies << IPAddr.new(a.strip)
+      end
+    end
 
     config.skip_api_access_control = false
 

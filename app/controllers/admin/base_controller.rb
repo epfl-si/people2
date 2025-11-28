@@ -2,7 +2,6 @@
 
 module Admin
   class BaseController < ApplicationController
-    include Authentication
     before_action :admin_only!
     layout 'admin'
 

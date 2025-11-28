@@ -58,9 +58,11 @@ Rails.application.configure do
   # stdout_logger = ActiveSupport::TaggedLogging.logger.new($stdout)
   stdout_logger = ActiveSupport::Logger.new($stdout)
   if (lfb = ENV.fetch('LOGFILE', '')).present?
+    max_log_size = ENV.fetch('LOGSIZE', 128 * 1024 * 1024).to_i
+    log_rotate_count = ENV.fetch('LOGROTATE', 8).to_i
     # lf is the basename. We attach a pod unique identifier to avoid overlaps
     lfe = `hostname`.chomp.split("-").last
-    file_logger = ActiveSupport::Logger.new("#{lfb}_#{lfe}.log")
+    file_logger = ActiveSupport::Logger.new("#{lfb}_#{lfe}.log", log_rotate_count, max_log_size)
     config.logger = ActiveSupport::BroadcastLogger.new(stdout_logger, file_logger)
   else
     config.logger = stdout_logger

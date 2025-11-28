@@ -57,8 +57,12 @@ module Translatable
 
   def possible_langs(primary_lang = nil, _fallback_lang = nil)
     primary_lang ||= Current.primary_lang || I18n.locale
-    fallback_langs ||= Current.available_locales || I18n.available_locales
-    [primary_lang] + fallback_langs
+    if Rails.configuration.enable_fallback_lang
+      fallback_langs ||= Current.available_locales || I18n.available_locales
+      [primary_lang] + fallback_langs
+    else
+      [primary_lang]
+    end
   end
 
   # return translation of a translated attribute in the required locale

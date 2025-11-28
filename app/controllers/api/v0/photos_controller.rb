@@ -7,12 +7,11 @@ module API
       def show
         sciper = params[:sciper]
         profile = Profile.for_sciper(sciper)
-        img = profile&.photo&.available_image
-        if img.present?
-          redirect_to url_for(img.variant(:large2))
-        else
-          redirect_to helpers.image_url('profile_image_placeholder.png')
-        end
+        a = Current.audience || AudienceLimitable::WORLD
+        img = profile&.photo(a)&.available_image
+        raise ActionController::RoutingError, 'Not Found' if img.blank?
+
+        redirect_to url_for(img.variant(:large2))
       end
     end
   end

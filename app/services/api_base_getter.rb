@@ -106,7 +106,7 @@ class APIBaseGetter < ApplicationService
       page += 1
       u.query = URI.encode_www_form(args)
       page_data = dofetch_base(u)
-      break if page_data.empty?
+      break if page_data.blank?
 
       data += page_data
       break if page_data.count < @pagesize

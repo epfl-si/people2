@@ -145,6 +145,10 @@ Rails.application.routes.draw do
         to: redirect("/%{sciper_or_name}.vcf"),
         constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
   end
+  get '/:sciper_or_name/admin_data',
+      to: 'people#admin_data',
+      as: 'admin_data',
+      constraints: { sciper_or_name: /([0-9]{6})|([a-z-]+\.[a-z-]+)/ }
 
   if Rails.env.production?
     root 'pages#homepage'

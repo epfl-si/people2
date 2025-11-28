@@ -21,6 +21,8 @@ people_config:
   ERROR_PAGES: "{{ people.error_pages }}"
   WSGETPEOPLE_CACHE: "{{ people.wsgetpeople_cache | string }}"
 
+  TRUSTED_PROXIES: "{{ TRUSTED_PROXIES | default('') }}"
+
   # ---------------------------------------------------- transition specific
   ENABLE_ADOPTION: "{{ people.enable_adoption }}"
   LEGACY_BASE_URL: "{{ people.legacy_base_url }}"
