@@ -3,23 +3,34 @@
 class AarUpdateJob < ApplicationJob
   queue_as :default
 
-  def perform(*_args)
-    if Aar::Accred.count.zero?
+  # TODO: the update does not work because it does not take into account
+  #   accreds that are deleted and re-created. For the moment I keep the
+  #   useless code but I don't think it's worth digging this any further
+  #   because copy from scratch is very fast (~4s).
+  def perform(refresh: true)
+    if refresh
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE accreds_aar")
       copy_accreds
-    else
-      update_accreds
-    end
-    if Aar::Award.count.zero?
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE awards_aar")
       copy_awards
     else
-      update_awards
+      if Aar::Accred.count.zero?
+        copy_accreds
+      else
+        update_accreds
+      end
+      if Aar::Award.count.zero?
+        copy_awards
+      else
+        update_awards
+      end
     end
     nil
   end
 
   # rubocop:disable Rails/SkipsModelValidations
   def copy_accreds(scope = Accred)
-    recs = scope.pluck(:id, :sciper, :unit_id, :visibility, :position).map do |v|
+    recs = scope.in_batches(of: 500).pluck(:id, :sciper, :unit_id, :visibility, :position).map do |v|
       {
         accred_id: v[0],
         sciper: v[1],
@@ -32,7 +43,7 @@ class AarUpdateJob < ApplicationJob
   end
 
   def copy_awards(scope = Award)
-    recs = scope.includes(:profile).map do |a|
+    recs = scope.in_batches(of: 200).includes(:profile).map do |a|
       {
         award_id: a.id,
         ordre: a.position,
