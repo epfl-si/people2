@@ -116,3 +116,17 @@
                     The statefulset db-prod has fewer pods than desired for over 3 minutes.
                     Available pods: {{ $value }}.
                     {%- endraw %}
+          - name: requests-alerts
+            rules:
+              - alert: HighNumberOf500
+                expr: >
+                  sum(increase(rails_requests_total{namespace="{{ namespace }}", status="500"}[5m])) > 100
+                for: 3m
+                labels:
+                  severity: critical
+                  sendto: telegram
+                annotations:
+                  summary: "High number of HTTP 500 errors"
+                  description: >
+                    The backend has experienced more than 100 HTTP 500 errors over the last 5 minutes.
+                    This condition has persisted for at least 3 minutes.
