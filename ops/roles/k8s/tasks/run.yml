@@ -42,6 +42,10 @@
                 env:
                   - name: LOGFILE
                     value: "log/{{ people.env }}"
+                  - name: LOGROTATE
+                    value: "{{ LOGROTATE | default('8') }}"
+                  - name: LOGSIZE
+                    value: "{{ LOGSIZE | default('134217728') }}"
                   - name: ENABLE_METRICS
                     value: "true"
                     # config for thruster (https://github.com/basecamp/thruster/)
@@ -50,7 +54,7 @@
                   - name: TARGET_PORT
                     value: "3000"
                     # FOR thrust
-                    name: FORWARD_HEADERS
+                  - name: FORWARD_HEADERS
                     value: "1"
                   # - name: THRUST_DEBUG
                   #   value: "1"
