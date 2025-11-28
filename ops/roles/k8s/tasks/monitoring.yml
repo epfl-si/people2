@@ -14,3 +14,105 @@
         selector:
           matchLabels:
             app: people-webapp
+
+- name: AlertmanagerConfig
+  when: ENABLE_ALERTMANAGER is defined and ENABLE_ALERTMANAGER == 'yes'
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: monitoring.coreos.com/v1beta1
+      kind: AlertmanagerConfig
+      metadata:
+        name: "{{ kid.alert_conf }}"
+        namespace: "{{ namespace }}"
+      spec:
+        route:
+          receiver: "telegram"
+          groupBy: ["alertname"]
+          groupWait: 20s
+          groupInterval: 5m
+          repeatInterval: 3h
+          matchers:
+            - name: sendto
+              value: telegram
+              matchType: "="
+        receivers:
+          - name: "telegram"
+            telegramConfigs:
+              - botToken:
+                  name: "{{ kid.alert_bot }}"
+                  key: access_token
+                chatID: "{{ _secrets.telegram_alert.chat_id | int }}"
+                message: |
+                  {% raw %}
+                  {{ range .Alerts }}
+                  {{ if eq .Status "firing" }}
+                  🚨 FIRING [{{ .Annotations.summary }}]
+                  {{ .Annotations.description }}
+                  Started at (UTC): {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+                  {{ else if eq .Status "resolved" }}
+                  🟢 RESOLVED [{{ .Annotations.summary }}]
+                  {{ .Annotations.description }}
+                  Started at (UTC): {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+                  Ended at (UTC): {{ .EndsAt.Format "2006-01-02 15:04:05" }}
+                  {{ end }}
+                  {{ end }}
+                  {% endraw %}
+                sendResolved: true
+
+- name: Monitoring - PrometheusRule
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: monitoring.coreos.com/v1
+      kind: PrometheusRule
+      metadata:
+        name: "{{ kid.alert_rules }}"
+        namespace: "{{ namespace }}"
+      spec:
+        groups:
+          - name: pod-alerts
+            rules:
+              - alert: AppProdProdPodCountLow
+                expr: >
+                  kube_deployment_status_replicas_available{deployment="app-prod-prod", namespace="{{ namespace }}"}
+                  < kube_deployment_spec_replicas{deployment="app-prod-prod", namespace="{{ namespace }}"}
+                for: 3m
+                labels:
+                  severity: critical
+                  sendto: telegram
+                annotations:
+                  summary: "Not enough pods (app-prod-prod)"
+                  description: >
+                    {% raw -%}
+                    The deployment app-prod-prod has not the desired number of pods for over 3 minutes.
+                    Available pods: {{ $value }}.
+                    {%- endraw %}
+              - alert: RedisProdPodCountLow
+                expr: >
+                  kube_deployment_status_replicas_available{deployment="redis-prod", namespace="{{ namespace }}"}
+                  < kube_deployment_spec_replicas{deployment="redis-prod", namespace="{{ namespace }}"}
+                for: 3m
+                labels:
+                  severity: critical
+                  sendto: telegram
+                annotations:
+                  summary: "Not enough pods (redis-prod)"
+                  description: >
+                    {% raw -%}
+                    Deployment redis-prod has fewer pods than desired for over 3 minutes.
+                    Available pods: {{ $value }}.
+                    {%- endraw %}
+              - alert: DBPodCountLow
+                expr: >
+                  kube_statefulset_status_replicas_available{statefulset="db-prod", namespace="{{ namespace }}"}
+                  < kube_statefulset_replicas{statefulset="db-prod", namespace="{{ namespace }}"}
+                for: 3m
+                labels:
+                  severity: critical
+                  sendto: telegram
+                annotations:
+                  summary: "Not enough pods (db-prod)"
+                  description: >
+                    {% raw -%}
+                    The statefulset db-prod has fewer pods than desired for over 3 minutes.
+                    Available pods: {{ $value }}.
+                    {%- endraw %}

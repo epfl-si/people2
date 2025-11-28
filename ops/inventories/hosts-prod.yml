@@ -24,3 +24,4 @@ all:
     LEGACY_PATCH_URL: "https://people.epfl.ch"
     WSGETPEOPLE_CACHE: 1800
     NAME_CHANGE_REQUEST_EMAIL: 'name.change@groupes.epfl.ch'
+    ENABLE_ALERTMANAGER: "yes"
