@@ -17,7 +17,6 @@ people_config:
   # note that in dev cache is enabled only if presence of tmp/caching-dev.txt
   REDIS_CACHE: "{{ people.redis }}"
   # SEEDS_PATH: db/seeds/data
-  # USE_LOCAL_ELEMENTS: false
   ERROR_PAGES: "{{ people.error_pages }}"
   WSGETPEOPLE_CACHE: "{{ people.wsgetpeople_cache | string }}"
 

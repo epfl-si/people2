@@ -10,16 +10,16 @@ all:
     APP_HOSTNAME: "people.epfl.ch"
     APP_REPLICAS: 2
     JOB_REPLICAS: 0
-    APP_VERSION: 0.13.46
+    APP_VERSION: 0.13.49
     APP_VISIBILITY: "public"
     ENABLE_ADOPTION: "yes"
+    # ELEMENTS_VERSION: "8.3.0"
     # ISA_URL: https://isa.epfl.ch/services
     OC_CLUSTER: "https://api.ocpitsp0001.xaas.epfl.ch:6443"
     OC_NAMESPACE: svc0033p-people
     RUNENV: prod
     RAILS_ENV: production
     RELEASE: prod
-    USE_LOCAL_ELEMENTS: "yes"
     LEGACY_RW_URL: "https://people.epfl.ch"
     LEGACY_PATCH_URL: "https://people.epfl.ch"
     WSGETPEOPLE_CACHE: 1800

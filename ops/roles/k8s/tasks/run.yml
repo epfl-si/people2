@@ -30,6 +30,18 @@
                 command: ["./bin/thrust", "./bin/rails", "server"]
                 imagePullPolicy: Always
                 resources: "{{ resources.app }}"
+                readinessProbe:
+                  httpGet:
+                    path: /up
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+                # livenessProbe:
+                #   httpGet:
+                #     path: /giovanni.cangiani
+                #     port: 8080
+                #   initialDelaySeconds: 60
+                #   periodSeconds: 20
                 ports:
                   - containerPort: 8080
                   - containerPort: 9394
@@ -40,12 +52,13 @@
                   - secretRef:
                       name: "{{ kid.app_secrets }}"
                 env:
+                  # Extra log human-readable files in log directory
                   - name: LOGFILE
                     value: "log/{{ people.env }}"
                   - name: LOGROTATE
-                    value: "{{ LOGROTATE | default('8') }}"
+                    value: "{{ LOGROTATE | default(8) | string }}"
                   - name: LOGSIZE
-                    value: "{{ LOGSIZE | default('134217728') }}"
+                    value: "{{ LOGSIZE | default(128) | string }}"
                   - name: ENABLE_METRICS
                     value: "true"
                     # config for thruster (https://github.com/basecamp/thruster/)

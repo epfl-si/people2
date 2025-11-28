@@ -133,7 +133,6 @@ services:
       # note that in dev cache is enabled only if presence of tmp/caching-dev.txt
       REDIS_CACHE: redis://cache:6379/0
       # SEEDS_PATH: db/seeds/data
-      # USE_LOCAL_ELEMENTS: false
       ELEMENTS_VERSION: ${ELEMENTS_VERSION:-8.3.0}
 
       WSGETPEOPLE_CACHE: ${WSGETPEOPLE_CACHE:-0}
